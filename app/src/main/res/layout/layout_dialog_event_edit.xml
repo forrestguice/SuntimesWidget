@@ -48,7 +48,7 @@
             <EditText android:id="@+id/edit_label"
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                android:hint="Event Label" android:inputType="text"
+                android:text="@string/editevent_dialog_addLabel"
                 android:paddingLeft="5dp" android:paddingRight="5dp"
                 android:layout_gravity="center_vertical" />
 
@@ -60,7 +60,7 @@
                 <ImageButton android:id="@+id/save_button" style="@style/ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionSave"
-                    android:contentDescription="@string/configAction_savePlace" />
+                    android:contentDescription="@string/configAction_saveEvent" />
 
             </LinearLayout>
 
@@ -76,20 +76,20 @@
                 <TextView android:labelFor="@+id/edit_event_angle"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                    android:text="Angle" />
+                    android:text="@string/editevent_dialog_angle" />
 
                 <EditText android:id="@+id/edit_event_angle"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:minWidth="50dp"
                     android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                    android:hint="Angle" android:inputType="text"
+                    android:hint="@string/editevent_dialog_angle_hint" android:inputType="text"
                     android:paddingLeft="5dp" android:paddingRight="5dp"
                     android:gravity="end|right"
                     android:layout_gravity="center_vertical" />
 
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="°" />
+                    android:text="@string/editevent_dialog_angle_suffix" />
 
             </LinearLayout>
 
@@ -109,12 +109,12 @@
             <TextView android:labelFor="@+id/edit_event_angle"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                android:text="ID" />
+                android:text="@string/editevent_dialog_id_label" />
 
             <EditText android:id="@+id/edit_event_id"
                 android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                android:hint="Event ID" android:inputType="text"
+                android:hint="@string/editevent_dialog_id_hint" android:inputType="text"
                 android:layout_gravity="center_vertical" />
 
             <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
@@ -130,7 +130,7 @@
         <EditText android:id="@+id/edit_uri"
             android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
             android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:enabled="false"
-            android:hint="Event Uri" android:inputType="text" android:textSize="12sp"
+            android:hint="@string/editevent_dialog_uri_hint" android:inputType="textUri" android:textSize="12sp"
             android:paddingLeft="5dp" android:paddingRight="5dp"
             android:layout_gravity="center_vertical" />
 

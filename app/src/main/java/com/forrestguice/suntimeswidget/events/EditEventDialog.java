@@ -224,12 +224,12 @@ public class EditEventDialog extends EditBottomSheetDialog
         String label = edit_label.getText().toString();
 
         if (id.trim().isEmpty() || id.contains(" ")) {
-            edit_eventID.setError(getContext().getString(R.string.addaction_error_id));    // TODO: msg
+            edit_eventID.setError(getContext().getString(R.string.editevent_dialog_id_error));
             return false;
         } else edit_eventID.setError(null);
 
         if (label.trim().isEmpty()) {
-            edit_label.setError(getContext().getString(R.string.addaction_error_title));    // TODO: msg
+            edit_label.setError(getContext().getString(R.string.editevent_dialog_label_error));
             return false;
         } else edit_label.setError(null);
 
