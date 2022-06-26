@@ -337,7 +337,7 @@ public class AlarmEventProvider extends ContentProvider
                     break;
 
                 case COLUMN_EVENT_TITLE:
-                    row[i] = event.getLabel() + (rising ? " (rising)" : " (setting)");    // TODO
+                    row[i] = context.getString(R.string.eventalias_title_format, event.getLabel(), context.getString(rising ? R.string.eventalias_title_tag_rising : R.string.eventalias_title_tag_setting));
                     break;
 
                 case COLUMN_EVENT_PHRASE:
@@ -587,20 +587,22 @@ public class AlarmEventProvider extends ContentProvider
 
         @Override
         protected String getEventTitle(Context context) {
-            return "Sun " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+            return context.getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
         }
         @Override
         protected String getEventPhrase(Context context) {
-            return "Sun " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+            return context.getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
         }
         @Override
         protected String getEventGender(Context context) {
-            return "other";   // TODO: custom twilight / angle gender
+            return context.getString(R.string.sunevent_phrase_gender);
         }
 
         @Override
         protected String getEventSummary(Context context) {
-            return "Sun (" + getAngle() + "°)";   // TODO: ii18n
+            SuntimesUtils utils = new SuntimesUtils();
+            String angle = utils.formatAsElevation(getAngle(), 0).toString();
+            return context.getString(R.string.sunevent_summary_format, context.getString(R.string.sunevent_title), angle.toString());
         }
 
         public static boolean isElevationEvent(String eventName) {
