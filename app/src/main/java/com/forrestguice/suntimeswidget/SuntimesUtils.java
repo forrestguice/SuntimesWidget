@@ -1257,6 +1257,12 @@ public class SuntimesUtils
             }
 
             SuntimesRiseSetData d = (event == SolarEvents.NOON && data.getLinked() != null ? data.getLinked() : data);
+            if (event == SolarEvents.SUNRISE) {
+                event = SolarEvents.valueOf(timeMode, true);
+            } else if (event == SolarEvents.SUNSET) {
+                event = SolarEvents.valueOf(timeMode, false);
+            }
+
             Calendar eventTime = d.getEvents(event)[0];
             if (eventTime != null)
             {
@@ -1270,7 +1276,7 @@ public class SuntimesUtils
                     displayString = displayString.replaceAll(pattern_eT, calendarTimeShortDisplayString(context, eventTime, true).toString());
                 }
                 if (displayString.contains(pattern_eA)) {
-                    Double angle = (data.angle() != null ? Double.valueOf(data.angle()) : getDegreesForEvent(event, d));
+                    Double angle = (d.angle() != null ? Double.valueOf(d.angle()) : getDegreesForEvent(event, d));
                     displayString = displayString.replaceAll(pattern_eA, (angle != null ? formatAsDegrees(angle, 1) : ""));
                 }
 

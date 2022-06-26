@@ -396,6 +396,23 @@ public enum SolarEvents
         }
         return null;
     }
+    public static SolarEvents valueOf(@Nullable WidgetSettings.TimeMode mode, boolean rising)
+    {
+        if (mode == null) {
+            return null;
+        }
+        switch (mode) {
+            case NOON: return SolarEvents.NOON;
+            case OFFICIAL: return (rising ? SolarEvents.SUNRISE : SolarEvents.SUNSET);
+            case CIVIL: return (rising ? SolarEvents.MORNING_CIVIL : SolarEvents.EVENING_CIVIL);
+            case NAUTICAL: return (rising ? SolarEvents.MORNING_NAUTICAL : SolarEvents.EVENING_NAUTICAL);
+            case ASTRONOMICAL: return (rising ? SolarEvents.MORNING_ASTRONOMICAL : SolarEvents.EVENING_ASTRONOMICAL);
+            case BLUE4: return (rising ? SolarEvents.MORNING_BLUE4 : SolarEvents.EVENING_BLUE4);
+            case BLUE8: return (rising ? SolarEvents.MORNING_BLUE8 : SolarEvents.EVENING_BLUE8);
+            case GOLD: return (rising ? SolarEvents.MORNING_GOLDEN : SolarEvents.EVENING_GOLDEN);
+            default: return null;
+        }
+    }
 
     /**
      * toMoonPhaseMode
