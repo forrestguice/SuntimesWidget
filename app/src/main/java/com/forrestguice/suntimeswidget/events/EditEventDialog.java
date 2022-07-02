@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
@@ -47,6 +48,11 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTH
 
 public class EditEventDialog extends EditBottomSheetDialog
 {
+    @Override
+    protected int getLayoutID() {
+        return R.layout.layout_dialog_event_edit;
+    }
+
     /* EventType */
     protected AlarmEventProvider.EventType type = EventSettings.PREF_DEF_EVENT_TYPE;
     public AlarmEventProvider.EventType getEventType() {
@@ -115,6 +121,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         updateViews(getActivity(), type);
     }
 
+    protected TextView text_label;
     protected EditText edit_eventID, edit_label, edit_uri;
     protected ColorChooser choose_color;
 
@@ -141,7 +148,8 @@ public class EditEventDialog extends EditBottomSheetDialog
         //});
         edit_eventID.addTextChangedListener(idWatcher);
 
-        edit_label = (EditText) dialogContent.findViewById(R.id.edit_label);
+        text_label = (TextView) dialogContent.findViewById(R.id.text_event_label);
+        edit_label = (EditText) dialogContent.findViewById(R.id.edit_event_label);
         edit_label.addTextChangedListener(labelWatcher);
 
         edit_uri = (EditText) dialogContent.findViewById(R.id.edit_uri);
@@ -198,6 +206,8 @@ public class EditEventDialog extends EditBottomSheetDialog
 
     protected void updateViews(Context context, AlarmEventProvider.EventType type)
     {
+        setEventLabel(getEventLabel());
+
         switch (type)
         {
             case SUN_ELEVATION:
@@ -233,11 +243,25 @@ public class EditEventDialog extends EditBottomSheetDialog
             return false;
         } else edit_label.setError(null);
 
+        try {
+            int angle = Integer.parseInt(edit_angle.getText().toString());
+            if (angle < MIN_ANGLE || angle > MAX_ANGLE) {
+                edit_angle.setError(getContext().getString(R.string.editevent_dialog_angle_error));
+                return false;
+            } else {
+                edit_angle.setError(null);
+            }
+        } catch (NumberFormatException e) {
+            edit_angle.setError(getContext().getString(R.string.editevent_dialog_angle_error));
+            return false;
+        }
+
         return true;
     }
+    public static final int MIN_ANGLE = -90;
+    public static final int MAX_ANGLE = 90;
 
-
-    private TextWatcher labelWatcher = new TextWatcher() {
+    private final TextWatcher labelWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
         @Override
@@ -249,7 +273,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     };
 
-    private TextWatcher idWatcher = new TextWatcher()
+    private final TextWatcher idWatcher = new TextWatcher()
     {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -261,7 +285,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     };
 
-    private TextWatcher angleWatcher = new TextWatcher() {
+    private final TextWatcher angleWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
         @Override
@@ -277,11 +301,6 @@ public class EditEventDialog extends EditBottomSheetDialog
             }
         }
     };
-
-    @Override
-    protected int getLayoutID() {
-        return R.layout.layout_dialog_event_edit;
-    }
 
     @Override
     protected void expandSheet(DialogInterface dialog)

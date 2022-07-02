@@ -45,7 +45,7 @@
 
             </LinearLayout>
 
-            <EditText android:id="@+id/edit_label"
+            <TextView android:id="@+id/text_event_label"
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
                 android:text="@string/editevent_dialog_addLabel"
@@ -68,6 +68,25 @@
 
         <LinearLayout android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:layout_marginBottom="12dp"
             android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
+
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView android:labelFor="@+id/edit_event_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+                    android:text="@string/editevent_dialog_label_label" />
+
+                <EditText android:id="@+id/edit_event_label"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:minWidth="150dp"
+                    android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+                    android:hint="@string/editevent_dialog_label_hint" android:inputType="text"
+                    android:paddingLeft="5dp" android:paddingRight="5dp"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
 
             <LinearLayout android:orientation="horizontal"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -112,7 +131,7 @@
                 android:text="@string/editevent_dialog_id_label" />
 
             <EditText android:id="@+id/edit_event_id"
-                android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
                 android:hint="@string/editevent_dialog_id_hint" android:inputType="text"
                 android:layout_gravity="center_vertical" />
@@ -128,7 +147,7 @@
         </LinearLayout>
 
         <EditText android:id="@+id/edit_uri"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
             android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:enabled="false"
             android:hint="@string/editevent_dialog_uri_hint" android:inputType="textUri" android:textSize="12sp"
             android:paddingLeft="5dp" android:paddingRight="5dp"
