@@ -136,7 +136,7 @@ public class SuntimesEquinoxSolsticeDataset
         SuntimesEquinoxSolsticeData[] dataset = {dataEquinoxSpring, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
         for (SuntimesEquinoxSolsticeData data : dataset)
         {
-            Calendar[] events = {data.eventCalendarThisYear(), data.eventCalendarOtherYear()};
+            Calendar[] events = {data.eventCalendarThisYear(), data.eventCalendarNextYear()};
             for (Calendar event : events)
             {
                 if (event != null)
@@ -213,7 +213,7 @@ public class SuntimesEquinoxSolsticeDataset
     {
         double latitude = dataEquinoxSpring.location.getLatitudeAsDouble();
         SuntimesEquinoxSolsticeData data = (latitude >= 0) ? dataEquinoxSpring : dataEquinoxAutumnal;
-        return data.eventCalendarOtherYear().getTimeInMillis() - data.eventCalendarThisYear().getTimeInMillis();
+        return data.eventCalendarNextYear().getTimeInMillis() - data.eventCalendarThisYear().getTimeInMillis();
     }
 }
 
