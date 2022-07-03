@@ -577,6 +577,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             rebuildActivity();
             return;
         }
+
+        if (key.endsWith(AppSettings.PREF_KEY_UI_SHOWCROSSQUARTER))
+        {
+            // adjust 'tracking level' widget pref whenever 'show cross-quarter days' app pref is toggled
+            boolean value = sharedPreferences.getBoolean(key, AppSettings.PREF_DEF_UI_SHOWCROSSQUARTER);
+            WidgetSettings.saveTrackingLevelPref(this, 0, (value ? WidgetSettings.TRACKINGLEVEL_MAX : WidgetSettings.TRACKINGLEVEL_MIN));
+            return;
+        }
     }
 
     protected void updateLocale()

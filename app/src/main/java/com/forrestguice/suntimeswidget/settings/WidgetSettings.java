@@ -142,6 +142,7 @@ public class WidgetSettings
     public static final TrackingMode PREF_DEF_GENERAL_TRACKINGMODE = TrackingMode.SOONEST;
 
     public static final int TRACKINGLEVEL_MIN = 0;
+    public static final int TRACKINGLEVEL_MAX = 100;
     public static final String PREF_KEY_GENERAL_TRACKINGLEVEL = "trackinglevel";
     public static final int PREF_DEF_GENERAL_TRACKINGLEVEL = TRACKINGLEVEL_MIN;
 

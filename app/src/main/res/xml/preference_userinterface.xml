@@ -111,6 +111,12 @@
             android:summary="@string/configLabel_ui_showEquinox_summary"
             android:defaultValue="@string/def_app_ui_showequinox" />
 
+        <CheckBoxPreference
+            android:key="app_ui_showcrossquarter"
+            android:title="@string/configLabel_ui_showCrossQuarter"
+            android:summary="@string/configLabel_ui_showCrossQuarter_summary"
+            android:defaultValue="@string/def_app_ui_showcrossquarter" />
+
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_general_trackingmode"
             android:title="@string/configLabel_ui_solsticeTrackingMode"

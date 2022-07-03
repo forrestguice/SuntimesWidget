@@ -92,6 +92,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWEQUINOX = "app_ui_showequinox";
     public static final boolean PREF_DEF_UI_SHOWEQUINOX = true;
 
+    public static final String PREF_KEY_UI_SHOWCROSSQUARTER = "app_ui_showcrossquarter";
+    public static final boolean PREF_DEF_UI_SHOWCROSSQUARTER = true;
+
     public static final String PREF_KEY_UI_SHOWMOON = "app_ui_showmoon";
     public static final boolean PREF_DEF_UI_SHOWMOON = true;
 
@@ -348,6 +351,12 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWEQUINOX, PREF_DEF_UI_SHOWEQUINOX);
+    }
+
+    public static boolean loadShowCrossQuarterPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWCROSSQUARTER, PREF_DEF_UI_SHOWCROSSQUARTER);
     }
 
     public static boolean loadShowMoonPref( Context context )
