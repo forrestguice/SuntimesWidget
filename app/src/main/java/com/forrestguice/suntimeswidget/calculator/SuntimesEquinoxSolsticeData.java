@@ -242,6 +242,13 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         SuntimesCalculatorDescriptor calculatorDesc = calculatorMode();
         return calculatorDesc.hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
     }
+
+    public long tropicalYearLength()
+    {
+        Calendar c1 = eventCalendarThisYear();
+        Calendar c2 = eventCalendarNextYear();
+        return ((c1 != null && c2 != null) ? (c2.getTimeInMillis() - c1.getTimeInMillis()) : 0);
+    }
 }
 
 

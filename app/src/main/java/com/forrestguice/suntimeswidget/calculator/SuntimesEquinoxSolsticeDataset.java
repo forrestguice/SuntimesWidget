@@ -213,7 +213,7 @@ public class SuntimesEquinoxSolsticeDataset
     {
         double latitude = dataEquinoxSpring.location.getLatitudeAsDouble();
         SuntimesEquinoxSolsticeData data = (latitude >= 0) ? dataEquinoxSpring : dataEquinoxAutumnal;
-        return data.eventCalendarNextYear().getTimeInMillis() - data.eventCalendarThisYear().getTimeInMillis();
+        return data.tropicalYearLength();
     }
 }
 
