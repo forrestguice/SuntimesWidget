@@ -873,15 +873,10 @@ public class SuntimesTheme
     {
         switch (event)
         {
-            case SOLSTICE_WINTER:
-                return getWinterColor();
-            case EQUINOX_AUTUMNAL:
-                return getFallColor();
-            case SOLSTICE_SUMMER:
-                return getSummerColor();
-            case EQUINOX_SPRING:
-            default:
-                return getSpringColor();
+            case SOLSTICE_WINTER: case CROSS_WINTER: return getWinterColor();
+            case EQUINOX_AUTUMNAL: case CROSS_AUTUMN: return getFallColor();
+            case SOLSTICE_SUMMER: case CROSS_SUMMER: return getSummerColor();
+            case EQUINOX_SPRING: case CROSS_SPRING: default: return getSpringColor();
         }
     }
 

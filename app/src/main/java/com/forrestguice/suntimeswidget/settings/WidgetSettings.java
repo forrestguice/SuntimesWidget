@@ -1135,9 +1135,16 @@ public class WidgetSettings
      */
     public static enum SolsticeEquinoxMode
     {
+        CROSS_SPRING("Midpoint", "Spring cross-quarter"),
         EQUINOX_SPRING("Equinox", "Spring Equinox"),
+
+        CROSS_SUMMER("Midpoint", "Summer cross-quarter"),
         SOLSTICE_SUMMER("Solstice", "Summer Solstice"),
+
+        CROSS_AUTUMN("Midpoint", "Autumn cross-quarter"),
         EQUINOX_AUTUMNAL("Equinox", "Autumnal Equinox"),
+
+        CROSS_WINTER("Midpoint", "Winter cross-quarter"),
         SOLSTICE_WINTER("Solstice", "Winter Solstice");
 
         public static boolean shortDisplayStrings = false;
@@ -1176,15 +1183,23 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_spring_short),
+                    context.getString(R.string.timeMode_cross_spring));
             EQUINOX_SPRING.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
                     context.getString(R.string.timeMode_equinox_vernal));
 
+            CROSS_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_cross_summer_short),
+                    context.getString(R.string.timeMode_cross_summer));
             SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
                     context.getString(R.string.timeMode_solstice_summer));
 
+            CROSS_AUTUMN.setDisplayStrings( context.getString(R.string.timeMode_cross_autumnal_short),
+                    context.getString(R.string.timeMode_cross_autumnal) );
             EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_equinox_autumnal_short),
                     context.getString(R.string.timeMode_equinox_autumnal) );
 
+            CROSS_WINTER.setDisplayStrings(context.getString(R.string.timeMode_cross_winter_short),
+                    context.getString(R.string.timeMode_cross_winter));
             SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
                     context.getString(R.string.timeMode_solstice_winter));
         }
