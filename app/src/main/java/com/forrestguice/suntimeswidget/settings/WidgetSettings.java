@@ -141,6 +141,10 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_TRACKINGMODE = "trackingmode";
     public static final TrackingMode PREF_DEF_GENERAL_TRACKINGMODE = TrackingMode.SOONEST;
 
+    public static final int TRACKINGLEVEL_MIN = 0;
+    public static final String PREF_KEY_GENERAL_TRACKINGLEVEL = "trackinglevel";
+    public static final int PREF_DEF_GENERAL_TRACKINGLEVEL = TRACKINGLEVEL_MIN;
+
     public static final String PREF_KEY_GENERAL_COMPAREMODE = "comparemode";
     public static final CompareMode PREF_DEF_GENERAL_COMPAREMODE = CompareMode.TOMORROW;
 
@@ -2550,6 +2554,30 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void saveTrackingLevelPref(Context context, int appWidgetId, int level)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putInt(prefs_prefix + PREF_KEY_GENERAL_TRACKINGLEVEL, level);
+        prefs.apply();
+    }
+    public static int loadTrackingLevelPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getInt(prefs_prefix + PREF_KEY_GENERAL_TRACKINGLEVEL, PREF_DEF_GENERAL_TRACKINGLEVEL);
+    }
+    public static void deleteTrackingLevelPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_TRACKINGLEVEL);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public static void saveCompareModePref(Context context, int appWidgetId, WidgetSettings.CompareMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2907,6 +2935,8 @@ public class WidgetSettings
         deleteTimeMode3Pref(context, appWidgetId);
 
         deleteRiseSetOrderPref(context, appWidgetId);
+        deleteTrackingModePref(context, appWidgetId);
+        deleteTrackingLevelPref(context, appWidgetId);
         deleteCompareModePref(context, appWidgetId);
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);

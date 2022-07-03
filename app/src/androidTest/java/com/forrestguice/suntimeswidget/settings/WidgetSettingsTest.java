@@ -820,6 +820,23 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_trackingLevelPref()
+    {
+        WidgetSettings.saveTrackingLevelPref(context, appWidgetId, 1);
+        int level1 = WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
+        assertEquals(1, level1);
+
+        WidgetSettings.saveTrackingLevelPref(context, appWidgetId, 10);
+        int level10 = WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
+        assertEquals(10, level10);
+
+        WidgetSettings.deleteTrackingLevelPref(context, appWidgetId);
+        int level0 = WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
+        assertEquals(WidgetSettings.PREF_DEF_GENERAL_TRACKINGLEVEL, level0);
+        assertEquals(0, WidgetSettings.PREF_DEF_GENERAL_TRACKINGLEVEL);
+    }
+
+    @Test
     public void test_compareModePref()
     {
         WidgetSettings.saveCompareModePref(context, appWidgetId, WidgetSettings.CompareMode.TOMORROW);
