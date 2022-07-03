@@ -99,7 +99,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
                 public void onClick(View v)
                 {
                     HelpDialog helpDialog = new HelpDialog();
-                    helpDialog.setContent(getString(R.string.help_general_timeMode2));
+                    helpDialog.setContent(getString(R.string.help_general2, getString(R.string.help_general_timeMode2), getString(R.string.help_general_timeMode2_1)));
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
