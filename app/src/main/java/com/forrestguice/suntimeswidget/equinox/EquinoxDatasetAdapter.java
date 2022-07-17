@@ -131,6 +131,12 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     }
     protected WidgetSettings.SolsticeEquinoxMode selected_mode = null;
 
+    public void setSelection(Integer position) {
+        selected_position = position;
+        notifyDataSetChanged();
+    }
+    protected Integer selected_position = null;
+
     /**
      * Clear existing data and initialize the center position.
      * @param context Context

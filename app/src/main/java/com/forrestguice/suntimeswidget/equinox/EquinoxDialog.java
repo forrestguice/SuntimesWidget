@@ -24,6 +24,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,10 +34,14 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.widget.ImageViewCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -58,9 +63,9 @@ import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
-import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -78,10 +83,6 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     protected ImageButton btn_next, btn_prev, btn_menu;
 
     protected EquinoxViewOptions options = new EquinoxViewOptions();
-    protected EquinoxDatasetAdapter card_adapter;
-    protected RecyclerView card_view;
-    protected CardLayoutManager card_layout;
-    protected CardAdapter.CardViewScroller card_scroller;
     protected boolean userSwappedCard = false;
 
     @NonNull @Override
@@ -91,7 +92,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             @Override
             public void onBackPressed() {
                 if (hasSelection()) {
-                    setSelection(null);
+                    setSelection((Integer) null);
                 } else super.onBackPressed();
             }
         };
@@ -133,23 +134,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             btn_menu.setOnClickListener(onMenuClicked);
         }
 
-        card_view = (RecyclerView)v.findViewById(R.id.info_equinoxsolstice_flipper1);
-        card_view.setHasFixedSize(true);
-        card_view.setItemViewCacheSize(7);
-        card_view.setLayoutManager(card_layout = new CardLayoutManager(context));
-        card_view.addItemDecoration(new CardAdapter.CardViewDecorator(context));
-
-        card_adapter = new EquinoxDatasetAdapter(context, options);
-        card_adapter.setEquinoxViewListener(cardListener);
-        card_view.setAdapter(card_adapter);
-        card_view.scrollToPosition(EquinoxDatasetAdapter.CENTER_POSITION);
-
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(card_view);
-        card_scroller = new CardAdapter.CardViewScroller(context);
-
-        card_view.setOnScrollListener(onCardScrollListener);
-        card_view.setLayoutFrozen(false);
+        initCardView(context, v);
 
         options.trackingMode = WidgetSettings.loadTrackingModePref(getContext(), 0);
         if (savedState != null) {
@@ -231,7 +216,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     {
         if (currentCardPosition() >= 0)
         {
-            int seekPosition = options.highlightPosition;
+            int seekPosition = EquinoxDataAdapter.CENTER_POSITION;
             if (Math.abs(position - seekPosition) > SuntimesActivity.HIGHLIGHT_SCROLLING_ITEMS) {
                 card_view.scrollToPosition(seekPosition);
             } else {
@@ -309,10 +294,8 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     public void updateViews(Context context)
     {
-        SuntimesEquinoxSolsticeDataset data = card_adapter.initData(context, EquinoxDatasetAdapter.CENTER_POSITION);
-        showEmptyView(data == null || !data.isImplemented());
-
-        int position = card_adapter.highlightNote(context);
+        showEmptyView(!isImplemented(card_adapter.initData(context, EquinoxDatasetAdapter.CENTER_POSITION)));
+        int position = -1; //card_adapter.highlightNote(context);
         if (position != -1 && !userSwappedCard) {
             card_view.setLayoutFrozen(false);
             card_view.scrollToPosition(position);
@@ -321,20 +304,32 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         Log.d("DEBUG", "EquinoxDialog updated");
     }
 
-    protected void updateViews(Context context,  SuntimesEquinoxSolsticeDataset data)
-    {
-        text_title.setText(utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear()).toString());
+    protected boolean isImplemented(SuntimesEquinoxSolsticeDataset data) {
+        return (data != null && data.isImplemented());
+    }
+    protected void updateViews(Context context,  SuntimesEquinoxSolsticeDataset data) {
+        updateViews(context, data.dataEquinoxSpring);
+    }
 
+    protected boolean isImplemented(SuntimesEquinoxSolsticeData data) {
+        return (data != null && data.isImplemented());
+    }
+    protected void updateViews(Context context,  SuntimesEquinoxSolsticeData data)
+    {
+        text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
+        text_year_length.setText(styleYearDisplayText(context, data));
+    }
+
+    protected CharSequence styleYearDisplayText(Context context, SuntimesEquinoxSolsticeData data)
+    {
         long yearLengthMillis = data.tropicalYearLength();
         double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
         String timeString = utils.timeDeltaLongDisplayString(yearLengthMillis);
         String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, utils.formatDoubleValue(yearLengthDays, 6));
         String yearString = context.getString(R.string.length_tropical_year, timeString, daysString);
-        CharSequence yearDisplay = SuntimesUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
-
-        text_year_length.setText(yearDisplay);
+        return SuntimesUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
     }
-
+    
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
@@ -435,7 +430,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         } else Log.w("EquinoxDialog", "setTrackingMode: invalid item id " + id);
     }
 
-    private void toggleCrossQuarterDays(Context context, MenuItem item) {
+    private void onToggleCrossQuarterDays(Context context, MenuItem item) {
         AppSettings.saveShowCrossQuarterPref(context, !item.isChecked());
         initAdapter(context);
     }
@@ -452,7 +447,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.action_crossquarterdays:
-                    toggleCrossQuarterDays(getActivity(), item);
+                    onToggleCrossQuarterDays(getActivity(), item);
                     return true;
 
                 case R.id.action_help:
@@ -612,6 +607,52 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    protected RecyclerView card_view;
+    protected GridLayoutManager card_layout;
+    protected CardAdapter.CardViewScroller card_scroller;
+
+    protected void initCardView(Context context, View v)
+    {
+        card_view = (RecyclerView)v.findViewById(R.id.info_equinoxsolstice_flipper1);
+        card_view.setHasFixedSize(true);
+        card_view.setItemViewCacheSize(7);
+        card_view.addItemDecoration(new CardAdapter.CardViewDecorator(context));
+
+        card_scroller = new CardAdapter.CardViewScroller(context);
+        card_view.setOnScrollListener(onCardScrollListener);
+        card_view.setLayoutFrozen(false);
+
+        SnapHelper snapHelper = new LinearSnapHelper(); //new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(card_view);
+
+        initAdapter(context);
+    }
+
+    protected int card_itemsPerPage = WidgetSettings.SolsticeEquinoxMode.values().length;
+    protected int card_orientation = LinearLayoutManager.HORIZONTAL;
+    protected EquinoxDataAdapter card_adapter;
+
+    protected void initAdapter(Context context)
+    {
+        WidgetSettings.SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? WidgetSettings.SolsticeEquinoxMode.values()
+                : new WidgetSettings.SolsticeEquinoxMode[] { WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING, WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER,
+                                                             WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL, WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER };
+        card_orientation = LinearLayoutManager.HORIZONTAL;
+        card_itemsPerPage = (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? modes.length : Math.max(4, modes.length / 2));
+
+        card_adapter = new EquinoxDataAdapter(context, modes, options);
+        card_adapter.setEquinoxViewListener(cardListener);
+        card_view.setAdapter(card_adapter);
+
+        card_layout = new GridLayoutManager(context, card_itemsPerPage, card_orientation, false);
+        card_view.setLayoutManager(card_layout);
+        card_view.scrollToPosition(EquinoxDatasetAdapter.CENTER_POSITION + modes.length);
+
+        //ViewGroup.LayoutParams params = card_view.getLayoutParams();
+        //params.height = (int)Math.ceil(card_itemsPerPage * context.getResources().getDimension(R.dimen.equinoxItem_height)) + 2;
+        //card_view.setLayoutParams(params);
+    }
+
     private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
@@ -619,8 +660,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         {
             int position = currentCardPosition();
             if (position >= 0) {
-                SuntimesEquinoxSolsticeDataset data = card_adapter.initData(getContext(), position);
-                updateViews(getContext(), data);
+                updateViews(getContext(), card_adapter.initData(getContext(), position));
             }
         }
 
@@ -657,7 +697,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     public boolean showNextCard(int position)
     {
-        int nextPosition = (position + 1);
+        int nextPosition = (position + card_itemsPerPage);
         int n = card_adapter.getItemCount();
         if (nextPosition < n) {
             userSwappedCard = true;
@@ -669,7 +709,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     public boolean showPreviousCard(int position)
     {
-        int prevPosition = (position - 1);
+        int prevPosition = (position - card_itemsPerPage);
         if (prevPosition >= 0) {
             userSwappedCard = true;
             card_scroller.setTargetPosition(prevPosition);
@@ -682,6 +722,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     {
         @Override
         public void onClick( int position ) {
+            card_adapter.setSelection(position);
         }
         @Override
         public boolean onLongClick( int position ) {
@@ -711,8 +752,11 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     public boolean hasSelection() {
         return card_adapter.hasSelection();
     }
-    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode) {
         card_adapter.setSelection(mode);
+    }
+    public void setSelection(@Nullable Integer position) {
+        card_adapter.setSelection(position);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
