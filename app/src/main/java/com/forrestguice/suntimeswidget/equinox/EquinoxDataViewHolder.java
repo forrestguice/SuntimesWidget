@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.equinox;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
 
 import android.support.v7.widget.RecyclerView;
@@ -68,16 +69,40 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
     public void bindDataToPosition(@NonNull Context context, SuntimesEquinoxSolsticeData data, int position, EquinoxViewOptions options)
     {
         this.position = position;
-        text_label.setText(data.timeMode().getLongDisplayString());
+        if (data != null && data.isCalculated())
+        {
+            Calendar event = data.eventCalendarThisYear();
+            if (event != null)
+            {
+                Calendar now = Calendar.getInstance();
+                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, event, WidgetSettings.loadShowTimeDatePref(context, 0), WidgetSettings.loadShowSecondsPref(context, 0));
+                text_datetime.setText(timeText.toString());
+                text_label.setText(data.timeMode().getLongDisplayString());
+                updateNote(context, now, data, WidgetSettings.loadShowWeeksPref(context, 0), WidgetSettings.loadShowHoursPref(context, 0), options);
+                themeViews(context, data, options);
 
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, data.eventCalendarThisYear(), WidgetSettings.loadShowTimeDatePref(context, 0), WidgetSettings.loadShowSecondsPref(context, 0));
-        text_datetime.setText(timeText.toString());
+                focusView.setVisibility(selected ? View.VISIBLE : View.GONE);
+                button_menu.setVisibility(selected ? View.VISIBLE : View.GONE);
 
-        focusView.setVisibility(selected ? View.VISIBLE : View.GONE);
-        button_menu.setVisibility(selected ? View.VISIBLE : View.GONE);
+                boolean enabled = (now.before(event));
+                text_label.setEnabled(enabled);
+                text_note.setEnabled(enabled);
+                text_datetime.setEnabled(enabled);
+                return;
+            }
+        }
 
-        updateNote(context, Calendar.getInstance(), data, WidgetSettings.loadShowWeeksPref(context, 0), WidgetSettings.loadShowHoursPref(context, 0), options);
-        themeViews(context, data, options);
+        // no data
+        focusView.setVisibility(View.GONE);
+        button_menu.setVisibility(View.GONE);
+
+        text_label.setText("");
+        text_note.setText("");
+        text_datetime.setText("");
+
+        text_label.setEnabled(false);
+        text_note.setEnabled(false);
+        text_datetime.setEnabled(false);
     }
 
     public void updateNote( Context context, Calendar now, SuntimesEquinoxSolsticeData data, boolean showWeeks, boolean showHours, EquinoxViewOptions options )
@@ -108,12 +133,12 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
     protected void themeViews(Context context, SuntimesEquinoxSolsticeData data, EquinoxViewOptions options)
     {
         if (options.labelColor != null) {
-            text_label.setTextColor(options.labelColor);
+            text_label.setTextColor(SuntimesUtils.colorStateList(options.labelColor, options.disabledColor));
         }
         if (options.textColor != null) {
-            text_note.setTextColor(options.textColor);
+            text_note.setTextColor(SuntimesUtils.colorStateList(options.textColor, options.disabledColor));
         }
-        text_datetime.setTextColor(options.getColorForMode(data.timeMode()));
+        text_datetime.setTextColor(SuntimesUtils.colorStateList(options.getColorForMode(data.timeMode()), options.disabledColor));
 
         if (options.timeSizeSp != null)
         {
@@ -126,13 +151,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
     protected void themeViews(Context context, @NonNull SuntimesTheme theme, EquinoxViewOptions options)
     {
         options.labelColor = options.textColor = theme.getTextColor();
-
-        text_label.setTextColor(theme.getTextColor());
-        text_note.setTextColor(theme.getTextColor());
-
-        text_label.setTextSize(theme.getTextSizeSp());
-        text_note.setTextSize(theme.getTextSizeSp());
-        text_datetime.setTextSize(theme.getTextSizeSp());
+        options.timeSizeSp = theme.getTimeSizeSp();
     }
 
     public static final int suggestedLayoutResID() {
