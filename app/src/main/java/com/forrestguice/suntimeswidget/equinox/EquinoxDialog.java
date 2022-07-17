@@ -384,11 +384,15 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     private void updateOverflowMenu(Context context, PopupMenu popup)
     {
         Menu menu = popup.getMenu();
+
         MenuItem trackingItem = menu.findItem(R.id.action_tracking_mode);
         if (trackingItem != null) {
             stripMenuItemLabel(trackingItem);
             updateTrackingMenu(trackingItem.getSubMenu(), WidgetSettings.loadTrackingModePref(context, 0));
         }
+
+        MenuItem crossQuarterItem = menu.findItem(R.id.action_crossquarterdays);
+        crossQuarterItem.setChecked(AppSettings.loadShowCrossQuarterPref(context));
     }
 
     private static void stripMenuItemLabel(MenuItem item) {
@@ -431,6 +435,11 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         } else Log.w("EquinoxDialog", "setTrackingMode: invalid item id " + id);
     }
 
+    private void toggleCrossQuarterDays(Context context, MenuItem item) {
+        AppSettings.saveShowCrossQuarterPref(context, !item.isChecked());
+        initAdapter(context);
+    }
+
     private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
@@ -440,6 +449,10 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             {
                 case R.id.trackRecent: case R.id.trackClosest: case R.id.trackUpcoming:
                     onTrackingModeChanged(getContext(), item.getItemId());
+                    return true;
+
+                case R.id.action_crossquarterdays:
+                    toggleCrossQuarterDays(getActivity(), item);
                     return true;
 
                 case R.id.action_help:

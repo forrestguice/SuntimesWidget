@@ -1021,7 +1021,7 @@
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Show Cross-Quarter Days</string>  <!-- TODO -->
+    <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
 
     <!-- App Setting: Solstice Tracking Mode -->

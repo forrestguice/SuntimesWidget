@@ -358,6 +358,12 @@ public class AppSettings
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWCROSSQUARTER, PREF_DEF_UI_SHOWCROSSQUARTER);
     }
+    public static void saveShowCrossQuarterPref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_SHOWCROSSQUARTER, value);
+        pref.apply();
+    }
 
     public static boolean loadShowMoonPref( Context context )
     {
