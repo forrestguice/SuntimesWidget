@@ -310,5 +310,9 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return timezone;
     }
 
+    @Override
+    public long getTropicalYearLength(Calendar date) {
+        return (long)Math.floor(365.24 * 24 * 60 * 60 * 1000);
+    }
 }
 

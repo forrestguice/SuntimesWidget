@@ -285,6 +285,16 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public long getTropicalYearLength(Calendar date)
+    {
+        int year = date.get(Calendar.YEAR);
+        AstronomicalSeason vernalEquinox = AstronomicalSeason.VERNAL_EQUINOX.onNorthernHemisphere();
+        long t0 = TemporalType.MILLIS_SINCE_UNIX.from(vernalEquinox.inYear(year));
+        long t1 = TemporalType.MILLIS_SINCE_UNIX.from(vernalEquinox.inYear(year + 1));
+        return t1 - t0;
+    }
+
+    @Override
     public boolean isDay(Calendar dateTime)
     {
         net.time4j.tz.Timezone tz = toTimezone(dateTime.getTimeZone());

@@ -27,7 +27,7 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.6.1
+ * @version 1.7.0
  */
 public interface SuntimesCalculator
 {
@@ -357,4 +357,11 @@ public interface SuntimesCalculator
      */
     TimeZone getTimeZone();
 
+    /**
+     * Get the length of the tropical year.
+     * @param date a Calendar representing a given date
+     * @return tropical year length milliseconds
+     * @since 1.7.0 (FEATURE_SOLSTICE)
+     */
+    long getTropicalYearLength( Calendar date );
 }
