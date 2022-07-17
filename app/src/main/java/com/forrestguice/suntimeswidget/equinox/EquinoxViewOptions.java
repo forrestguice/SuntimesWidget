@@ -51,14 +51,19 @@ public class EquinoxViewOptions
     @SuppressLint("ResourceType")
     public void init(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor };
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor,
+                             R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
         titleColor = noteColor;
         disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_disabled_dark));
         resID_buttonPressColor = typedArray.getResourceId(2, R.color.btn_tint_pressed_dark);
         pressedColor = ContextCompat.getColor(context, resID_buttonPressColor);
-        labelColor = textColor = seasonColors[0] = seasonColors[1] = seasonColors[2] = seasonColors[3] = null;
+        labelColor = textColor = null;
+        seasonColors[0] = ContextCompat.getColor(context, typedArray.getResourceId(3, R.color.springColor_dark));
+        seasonColors[1] = ContextCompat.getColor(context, typedArray.getResourceId(4, R.color.summerColor_dark));
+        seasonColors[2] = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.fallColor_dark));
+        seasonColors[3] =  ContextCompat.getColor(context, typedArray.getResourceId(6, R.color.winterColor_dark));
         titleSizeSp = timeSizeSp = null;
         typedArray.recycle();
     }
@@ -82,7 +87,8 @@ public class EquinoxViewOptions
         }
     }
 
-    public int getColorForMode(WidgetSettings.SolsticeEquinoxMode mode) {
+    public int getColorForMode(WidgetSettings.SolsticeEquinoxMode mode)
+    {
         switch (mode) {
             case CROSS_WINTER: case SOLSTICE_WINTER: return seasonColors[3];
             case CROSS_AUTUMN: case EQUINOX_AUTUMNAL: return seasonColors[2];
