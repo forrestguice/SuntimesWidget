@@ -317,12 +317,11 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     protected void updateViews(Context context, SuntimesEquinoxSolsticeData data)
     {
         text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
-        text_year_length.setText(styleYearDisplayText(context, data));
+        text_year_length.setText(styleYearDisplayText(context, data.calculator().getTropicalYearLength(data.calendar())));
     }
 
-    protected CharSequence styleYearDisplayText(Context context, SuntimesEquinoxSolsticeData data)
+    protected CharSequence styleYearDisplayText(Context context, long yearLengthMillis)
     {
-        long yearLengthMillis = data.tropicalYearLength();
         double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
         String timeString = utils.timeDeltaLongDisplayString(yearLengthMillis);
         String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, utils.formatDoubleValue(yearLengthDays, 6));
