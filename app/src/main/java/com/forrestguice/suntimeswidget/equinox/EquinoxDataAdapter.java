@@ -23,6 +23,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -114,7 +116,6 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         holder.position = RecyclerView.NO_POSITION;
     }
 
-
     @Override
     public void onBindViewHolder(EquinoxDataViewHolder holder, int position)
     {
@@ -129,27 +130,8 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         }
 
         holder.selected = (selected_position != null && (position == selected_position));
-        //holder.setSelected(getSelection());
-
-        SuntimesEquinoxSolsticeData data = initData(context, position);
-        holder.bindDataToPosition(context, data, position, options);
-
-        if (data.isCalculated() && data.isImplemented())
-        {
-            /*holder.enableNotes(!options.minimized);
-
-            if (position == options.highlightPosition || options.minimized)
-            {
-                EquinoxView.EquinoxNote nextNote = findClosestNote(dataset.now(), options.trackingMode, holder.notes);
-                if (nextNote == null) {
-                    nextNote = holder.notes.get(0);
-                }
-                if (nextNote != null) {
-                    nextNote.setHighlighted(true);
-                }
-            }*/
-        }
-
+        holder.highlighted = (position == options.highlightPosition);
+        holder.bindDataToPosition(context, initData(context, position), position, options);
         attachListeners(holder, position);
     }
 
@@ -222,6 +204,57 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
                 }
             }
         };
+    }
+
+    public int highlightNote(Context context)
+    {
+        ArrayList<Pair<Integer,Calendar>> notes = new ArrayList<>();
+        int position = CENTER_POSITION - 8;
+        do {
+            SuntimesEquinoxSolsticeData data1 = initData(context, position);
+            notes.add(new Pair<Integer,Calendar>(position, data1.eventCalendarThisYear()));
+            position++;
+        } while (position < CENTER_POSITION + 8);
+        return highlightPosition(findClosestNote(Calendar.getInstance(), options.trackingMode, notes));
+    }
+
+    public int highlightPosition(int position)
+    {
+        if (options.highlightPosition != position) {
+            options.highlightPosition = position;
+            notifyDataSetChanged();
+        }
+        return options.highlightPosition;
+    }
+
+    public static int findClosestNote(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
+    {
+        if (notes == null || now == null) {
+            return -1;
+        }
+
+        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
+        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+
+        Integer closest = null;
+        long timeDeltaMin = Long.MAX_VALUE;
+        for (Pair<Integer, Calendar> note : notes)
+        {
+            Calendar noteTime = note.second;
+            if (noteTime != null)
+            {
+                if ((upcoming && !noteTime.after(now)) || (recent && !noteTime.before(now)))
+                    continue;
+
+                long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
+                if (timeDelta < timeDeltaMin)
+                {
+                    timeDeltaMin = timeDelta;
+                    closest = note.first;
+                }
+            }
+        }
+        return closest != null ? closest : -1;
     }
 
 }

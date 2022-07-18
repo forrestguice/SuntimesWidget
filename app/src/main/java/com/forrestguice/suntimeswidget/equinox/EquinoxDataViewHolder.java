@@ -19,7 +19,8 @@
 package com.forrestguice.suntimeswidget.equinox;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 
 import android.support.v7.widget.RecyclerView;
@@ -115,7 +116,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
             if (calendar.before(Calendar.getInstance()))
             {
                 String noteString = context.getString(R.string.ago, noteText);
-                SpannableString noteSpan = (text_note.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, (options.minimized || highlighted ? options.noteColor : options.disabledColor))
+                SpannableString noteSpan = (text_note.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, options.disabledColor)
                         : SuntimesUtils.createBoldSpan(null, noteString, noteText));
                 text_note.setText(noteSpan);
 
@@ -127,6 +128,14 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
             }
         } else {
             text_note.setText("");
+        }
+
+        if (highlighted) {
+            text_datetime.setTypeface(text_datetime.getTypeface(), Typeface.BOLD);
+            text_datetime.setPaintFlags(text_datetime.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        } else {
+            text_datetime.setTypeface(text_datetime.getTypeface(), Typeface.NORMAL);
+            text_datetime.setPaintFlags(text_datetime.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
         }
     }
 

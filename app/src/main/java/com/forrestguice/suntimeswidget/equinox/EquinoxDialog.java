@@ -295,7 +295,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     public void updateViews(Context context)
     {
         showEmptyView(!isImplemented(card_adapter.initData(context, EquinoxDatasetAdapter.CENTER_POSITION)));
-        int position = -1; //card_adapter.highlightNote(context);
+        int position = card_adapter.highlightNote(context);
         if (position != -1 && !userSwappedCard) {
             card_view.setLayoutFrozen(false);
             card_view.scrollToPosition(position);
@@ -314,7 +314,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     protected boolean isImplemented(SuntimesEquinoxSolsticeData data) {
         return (data != null && data.isImplemented());
     }
-    protected void updateViews(Context context,  SuntimesEquinoxSolsticeData data)
+    protected void updateViews(Context context, SuntimesEquinoxSolsticeData data)
     {
         text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
         text_year_length.setText(styleYearDisplayText(context, data));
@@ -433,6 +433,13 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     private void onToggleCrossQuarterDays(Context context, MenuItem item) {
         AppSettings.saveShowCrossQuarterPref(context, !item.isChecked());
         initAdapter(context);
+        updateViews(context);
+        card_view.post(new Runnable() {
+            @Override
+            public void run() {
+                initSheet(getDialog());    // re-init dialog peek height
+            }
+        });
     }
 
     private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
@@ -639,6 +646,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                                                              WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL, WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER };
         card_orientation = LinearLayoutManager.HORIZONTAL;
         card_itemsPerPage = (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? modes.length : Math.max(4, modes.length / 2));
+        options.highlightPosition = -1;
 
         card_adapter = new EquinoxDataAdapter(context, modes, options);
         card_adapter.setEquinoxViewListener(cardListener);
