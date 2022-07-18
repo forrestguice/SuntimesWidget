@@ -37,11 +37,9 @@ import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -667,6 +665,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         {
             int position = currentCardPosition();
             if (position >= 0) {
+                Log.d("DEBUG", "onScrolled: position: " + position);
                 updateViews(getContext(), card_adapter.initData(getContext(), position));
             }
         }
@@ -696,10 +695,10 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     public int currentCardPosition()
     {
         int first = card_layout.findFirstVisibleItemPosition();
-        int last = card_layout.findLastVisibleItemPosition();
-        int p = (first + last) / 2;
+        //int last = card_layout.findLastVisibleItemPosition();
+        //int p = (first + last) / 2;
         //Log.d("DEBUG", "currentCardPosition: " + first + ", " + last + " => " + p);
-        return p;
+        return first;
     }
 
     public boolean showNextCard(int position)
