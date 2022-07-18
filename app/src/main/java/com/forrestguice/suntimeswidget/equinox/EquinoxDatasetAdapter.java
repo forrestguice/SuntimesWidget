@@ -30,7 +30,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.forrestguice.suntimeswidget.EquinoxView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -201,9 +200,9 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         options.themeOverride = theme;
     }
 
-    private EquinoxView.EquinoxViewListener viewListener;
-    public void setEquinoxViewListener( EquinoxView.EquinoxViewListener listener ) {
-        viewListener = listener;  // TODO
+    private EquinoxAdapterListener adapterListener;
+    public void setAdapterListener( EquinoxAdapterListener listener ) {
+        adapterListener = listener;  // TODO
     }
 
     private void attachListeners(final EquinoxDatasetViewHolder holder, final int position)
@@ -245,8 +244,8 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (viewListener != null) {
-                    viewListener.onClick(position);
+                if (adapterListener != null) {
+                    adapterListener.onClick(position);
                 }
             }
         };
@@ -255,8 +254,8 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (viewListener != null) {
-                    return viewListener.onLongClick(position);
+                if (adapterListener != null) {
+                    return adapterListener.onLongClick(position);
                 } else return false;
             }
         };
@@ -265,8 +264,8 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewListener != null) {
-                    viewListener.onTitleClick(position);
+                if (adapterListener != null) {
+                    adapterListener.onTitleClick(position);
                 }
             }
         };
@@ -275,8 +274,8 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (viewListener != null) {
-                    viewListener.onNextClick(position);
+                if (adapterListener != null) {
+                    adapterListener.onNextClick(position);
                 }
             }
         };
@@ -285,8 +284,8 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (viewListener != null) {
-                    viewListener.onPrevClick(position);
+                if (adapterListener != null) {
+                    adapterListener.onPrevClick(position);
                 }
             }
         };
@@ -295,8 +294,8 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (viewListener != null) {
-                    viewListener.onMenuClick(v, position, selection, selectionTime);
+                if (adapterListener != null) {
+                    adapterListener.onMenuClick(v, position, selection, selectionTime);
                 }
             }
         };
@@ -313,8 +312,8 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
 
                 } else {
                     setSelection(mode);
-                    if (viewListener != null) {
-                        viewListener.onSelected(i, mode);
+                    if (adapterListener != null) {
+                        adapterListener.onSelected(i, mode);
                     }
                 }
             }

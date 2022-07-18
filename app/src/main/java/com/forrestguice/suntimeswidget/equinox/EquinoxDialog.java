@@ -55,7 +55,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.EquinoxView;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
@@ -646,7 +645,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         options.highlightPosition = -1;
 
         card_adapter = new EquinoxDataAdapter(context, modes, options);
-        card_adapter.setEquinoxViewListener(cardListener);
+        card_adapter.setAdapterListener(cardListener);
         card_view.setAdapter(card_adapter);
 
         card_layout = new GridLayoutManager(context, card_itemsPerPage, card_orientation, false);
@@ -724,7 +723,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         return true;
     }
 
-    private EquinoxView.EquinoxViewListener cardListener = new EquinoxView.EquinoxViewListener()
+    private EquinoxAdapterListener cardListener = new EquinoxAdapterListener()
     {
         @Override
         public void onClick( int position ) {

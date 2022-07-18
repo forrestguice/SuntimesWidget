@@ -28,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.forrestguice.suntimeswidget.EquinoxView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -145,9 +144,9 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         this.modes = modes;
     }
 
-    private EquinoxView.EquinoxViewListener viewListener;
-    public void setEquinoxViewListener( EquinoxView.EquinoxViewListener listener ) {
-        viewListener = listener;  // TODO
+    private EquinoxAdapterListener adapterListener;
+    public void setAdapterListener( EquinoxAdapterListener listener ) {
+        adapterListener = listener;
     }
 
     private void attachListeners(final EquinoxDataViewHolder holder, final int position)
@@ -156,8 +155,8 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
             @Override
             public void onClick(View v)
             {
-                if (viewListener != null) {
-                    viewListener.onClick(position);
+                if (adapterListener != null) {
+                    adapterListener.onClick(position);
                 }
             }
         });
@@ -199,8 +198,8 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (viewListener != null) {
-                    viewListener.onMenuClick(v, position, selection, selectionTime);
+                if (adapterListener != null) {
+                    adapterListener.onMenuClick(v, position, selection, selectionTime);
                 }
             }
         };
