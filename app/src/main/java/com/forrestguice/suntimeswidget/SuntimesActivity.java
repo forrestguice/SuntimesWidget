@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2021 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -80,12 +80,13 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
 import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
+import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialog;
+import com.forrestguice.suntimeswidget.equinox.EquinoxCardView;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
@@ -181,7 +182,6 @@ public class SuntimesActivity extends AppCompatActivity
     private com.forrestguice.suntimeswidget.calculator.core.Location location;
     protected SuntimesNotes notes;
     protected SuntimesRiseSetDataset dataset;
-    protected SuntimesEquinoxSolsticeDataset dataset_equinox;
     protected SuntimesMoonData dataset_moon;
 
     private int color_textTimeDelta;
@@ -210,7 +210,7 @@ public class SuntimesActivity extends AppCompatActivity
     private LinearSmoothScroller card_scroller;
     private CardAdapter card_adapter;
 
-    private EquinoxView card_equinoxSolstice;
+    private EquinoxCardView card_equinoxSolstice;
     private View equinoxLayout;
 
     private TextView txt_datasource;
@@ -513,12 +513,12 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "WorldMapDialog updated on restore.");
         }
 
-        EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null)
         {
             equinoxDialog.themeViews(this, appThemeOverride);
             equinoxDialog.setDialogListener(equinoxDialogListener);
-            equinoxDialog.updateViews();
+            equinoxDialog.updateViews(this);
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
         }
 
@@ -1127,7 +1127,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         equinoxLayout = findViewById(R.id.info_time_equinox_layout);
 
-        card_equinoxSolstice = (EquinoxView) findViewById(R.id.info_date_solsticequinox);
+        card_equinoxSolstice = (EquinoxCardView) findViewById(R.id.info_date_solsticequinox);
         card_equinoxSolstice.setMinimized(true);
         card_equinoxSolstice.setOnClickListener( new View.OnClickListener()
         {
@@ -1645,12 +1645,6 @@ public class SuntimesActivity extends AppCompatActivity
         dataset = cardData.first;
         dataset_moon = cardData.second;
 
-        dataset_equinox = null;
-        if (AppSettings.loadShowEquinoxPref(context)) {
-            EquinoxView.EquinoxViewAdapter card_adapter1 = (card_equinoxSolstice != null ? card_equinoxSolstice.getAdapter() : null);
-            dataset_equinox = (card_adapter1 != null ? card_adapter1.initData(context) : null);
-        }
-
         initNotes();
     }
 
@@ -1661,9 +1655,6 @@ public class SuntimesActivity extends AppCompatActivity
         }
         if (dataset_moon != null) {
             dataset_moon.invalidateCalculation();
-        }
-        if (dataset_equinox != null) {
-            dataset_equinox.invalidateCalculation();
         }
         if (card_adapter != null) {
             card_adapter.invalidateData();
@@ -1715,7 +1706,7 @@ public class SuntimesActivity extends AppCompatActivity
         card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(context, AppWidgetManager.INVALID_APPWIDGET_ID));
         card_equinoxSolstice.updateViews(context);
         card_equinoxSolstice.post(updateEquinoxViewColumnWidth);
-
+        
         //
         // clock & date
         //
@@ -1800,7 +1791,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
-    private void updateEquinoxDialogColumnWidth(EquinoxDialog equinoxDialog)
+    private void updateEquinoxDialogColumnWidth(EquinoxCardDialog equinoxDialog)
     {
         View card = findViewById(R.id.info_time_all_today);
         if (card != null && equinoxDialog != null)
@@ -2238,7 +2229,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void showEquinoxDialog()
     {
-        final EquinoxDialog equinoxDialog = new EquinoxDialog();
+        final EquinoxCardDialog equinoxDialog = new EquinoxCardDialog();
         updateEquinoxDialogColumnWidth(equinoxDialog);
         equinoxDialog.themeViews(this, appThemeOverride);
         equinoxDialog.setDialogListener(equinoxDialogListener);
@@ -2247,18 +2238,25 @@ public class SuntimesActivity extends AppCompatActivity
     protected void dismissEquinoxDialog()
     {
         FragmentManager fragments = getSupportFragmentManager();
-        EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null) {
             equinoxDialog.dismiss();
         }
     }
-    private EquinoxDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxDialog.EquinoxDialogListener()
+    private EquinoxCardDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxCardDialog.EquinoxDialogListener()
     {
         @Override
-        public void onOptionsModified() {
+        public void onOptionsModified(boolean closeDialog)
+        {
             updateViews(SuntimesActivity.this);
-            if (AppSettings.loadShowEquinoxPref(SuntimesActivity.this)) {
-                dismissEquinoxDialog();   // dismiss the dialog if also showing the view (so any changed options are immediately visible)
+            if (AppSettings.loadShowEquinoxPref(SuntimesActivity.this))
+            {
+                if (closeDialog) {
+                    dismissEquinoxDialog();   // dismiss the dialog if also showing the view (so any changed options are immediately visible)
+                }
+                card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(SuntimesActivity.this, 0));
+                card_equinoxSolstice.initAdapter(SuntimesActivity.this);
+                card_equinoxSolstice.updateViews(SuntimesActivity.this);
             }
         }
         @Override

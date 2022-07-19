@@ -56,6 +56,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 @SuppressWarnings("Convert2Diamond")
+@Deprecated
 public class EquinoxView extends LinearLayout
 {
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedEquinoxCard";

@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.util.Calendar;
 import java.util.List;
 
+@Deprecated
 public class EquinoxDialog extends BottomSheetDialogFragment
 {
     public static final String DIALOGTAG_HELP = "equinox_help";

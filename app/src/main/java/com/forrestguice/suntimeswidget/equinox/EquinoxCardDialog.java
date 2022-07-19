@@ -781,6 +781,14 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         card_adapter.setSelection(position);
     }
 
+    public void adjustColumnWidth(int columnWidthPx)
+    {
+        options.columnWidthPx = columnWidthPx;
+        if (card_adapter != null) {
+            card_adapter.notifyDataSetChanged();
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
