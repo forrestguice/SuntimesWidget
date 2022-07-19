@@ -422,15 +422,19 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             WidgetSettings.saveTrackingModePref(context, 0, mode);
             updateViews(getActivity());
             if (dialogListener != null) {
-                dialogListener.onOptionsModified();
+                dialogListener.onOptionsModified(true);
             }
         } else Log.w("EquinoxDialog", "setTrackingMode: invalid item id " + id);
     }
 
-    private void onToggleCrossQuarterDays(Context context, MenuItem item) {
+    private void onToggleCrossQuarterDays(Context context, MenuItem item)
+    {
         AppSettings.saveShowCrossQuarterPref(context, !item.isChecked());
         initAdapter(context);
         updateViews(context);
+        if (dialogListener != null) {
+            dialogListener.onOptionsModified(false);
+        }
         card_view.post(new Runnable() {
             @Override
             public void run() {
@@ -794,6 +798,6 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}
-        public void onOptionsModified() {}
+        public void onOptionsModified(boolean closeDialog) {}
     }
 }
