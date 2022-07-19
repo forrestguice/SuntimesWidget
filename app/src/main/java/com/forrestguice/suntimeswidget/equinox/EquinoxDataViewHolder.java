@@ -117,7 +117,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
             if (calendar.before(Calendar.getInstance()))
             {
                 String noteString = context.getString(R.string.ago, noteText);
-                SpannableString noteSpan = (text_note.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, options.disabledColor)
+                SpannableString noteSpan = (text_note.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, (highlighted ? options.noteColor : options.disabledColor))
                         : SuntimesUtils.createBoldSpan(null, noteString, noteText));
                 text_note.setText(noteSpan);
 
@@ -143,12 +143,13 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
     protected void themeViews(Context context, SuntimesEquinoxSolsticeData data, EquinoxViewOptions options)
     {
         if (options.labelColor != null) {
-            text_label.setTextColor(SuntimesUtils.colorStateList(options.labelColor, options.disabledColor));
+            text_label.setTextColor(SuntimesUtils.colorStateList(options.labelColor, (options.minimized && highlighted ? options.labelColor : options.disabledColor)));
         }
         if (options.textColor != null) {
-            text_note.setTextColor(SuntimesUtils.colorStateList(options.textColor, options.disabledColor));
+            text_note.setTextColor(SuntimesUtils.colorStateList(options.textColor, (highlighted ? options.textColor : options.disabledColor)));
         }
-        text_datetime.setTextColor(SuntimesUtils.colorStateList(options.getColorForMode(data.timeMode()), options.disabledColor));
+        int modeColor = options.getColorForMode(data.timeMode());
+        text_datetime.setTextColor(SuntimesUtils.colorStateList(modeColor, (highlighted ? modeColor : options.disabledColor)));
 
         if (options.timeSizeSp != null)
         {
