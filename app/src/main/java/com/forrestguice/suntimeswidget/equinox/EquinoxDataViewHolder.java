@@ -26,6 +26,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -161,6 +162,13 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
     {
         options.labelColor = options.textColor = theme.getTextColor();
         options.timeSizeSp = theme.getTimeSizeSp();
+    }
+
+    public void adjustLabelWidth( int labelWidthPx )
+    {
+        ViewGroup.LayoutParams layoutParams = text_label.getLayoutParams();
+        layoutParams.width = labelWidthPx;
+        text_label.setLayoutParams(layoutParams);
     }
 
     public static final int suggestedLayoutResID() {

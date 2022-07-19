@@ -131,6 +131,11 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         holder.selected = (selected_position != null && (position == selected_position));
         holder.highlighted = (position == options.highlightPosition);
         holder.bindDataToPosition(context, initData(context, position), position, options);
+
+        if (options.columnWidthPx >= 0) {
+            holder.adjustLabelWidth(options.columnWidthPx);
+        }
+
         attachListeners(holder, position);
     }
 

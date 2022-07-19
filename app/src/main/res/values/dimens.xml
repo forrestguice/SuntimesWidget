@@ -3,6 +3,7 @@
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="activity_margin">8dp</dimen>
     <dimen name="dialog_margin">8dp</dimen>
+    <dimen name="dialog_margin1">4dp</dimen>
 
     <integer name="widget_size_minWidthDp4x1">250</integer>
     <dimen name="widget_size_minWidth4x1">250dp</dimen>

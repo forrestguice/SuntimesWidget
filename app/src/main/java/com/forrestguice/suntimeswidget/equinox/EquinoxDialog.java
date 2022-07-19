@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -619,7 +620,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         card_view = (RecyclerView)v.findViewById(R.id.info_equinoxsolstice_flipper1);
         card_view.setHasFixedSize(true);
         card_view.setItemViewCacheSize(7);
-        card_view.addItemDecoration(new CardAdapter.CardViewDecorator(context));
+        card_view.addItemDecoration(new CardViewDecorator(context));
 
         card_scroller = new CardAdapter.CardViewScroller(context);
         card_view.setOnScrollListener(onCardScrollListener);
@@ -750,6 +751,18 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             showContextMenu(getContext(), view, mode, datetime);
         }
     };
+
+    public static class CardViewDecorator extends RecyclerView.ItemDecoration {
+        private int marginPx;
+        public CardViewDecorator( Context context ) {
+            marginPx = (int)context.getResources().getDimension(R.dimen.dialog_margin1);
+        }
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.left = outRect.right = marginPx;
+            outRect.top = outRect.bottom = 0;
+        }
+    }
 
     public WidgetSettings.SolsticeEquinoxMode getSelection() {
         return card_adapter.getSelection();
