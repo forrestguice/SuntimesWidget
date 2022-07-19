@@ -52,7 +52,7 @@
             android:id="@+id/info_equinoxsolstice_flipper1"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            tools:listitem="@layout/info_time_solsticequinox1"
+            tools:listitem="@layout/info_time_solsticequinox2"
             android:elevation="5dp" />
 
         <android.support.constraint.ConstraintLayout
