@@ -174,7 +174,7 @@ public class EquinoxCardView extends LinearLayout
     }
 
     public boolean isImplemented(Context context) {
-        SuntimesEquinoxSolsticeData data = card_adapter.initData(context, com.forrestguice.suntimeswidget.EquinoxView.EquinoxViewAdapter.CENTER_POSITION);
+        SuntimesEquinoxSolsticeData data = card_adapter.initData(context, EquinoxDataAdapter.CENTER_POSITION);
         return (data != null && data.isImplemented());
     }
 

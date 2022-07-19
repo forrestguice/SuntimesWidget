@@ -72,7 +72,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.util.Calendar;
 import java.util.List;
 
-public class EquinoxDialog extends BottomSheetDialogFragment
+public class EquinoxCardDialog extends BottomSheetDialogFragment
 {
     public static final String DIALOGTAG_HELP = "equinox_help";
     protected static SuntimesUtils utils = new SuntimesUtils();
