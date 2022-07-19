@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -1051,8 +1052,10 @@ public class AlarmClockActivity extends AppCompatActivity
         locationBundle.putParcelable(AlarmClockActivity.EXTRA_LOCATION, location);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_LOCATION, locationBundle);
 
-        if (alarmIntent.resolveActivity(context.getPackageManager()) != null) {
+        try {
             context.startActivity(alarmIntent);
+        } catch (ActivityNotFoundException e) {
+            Log.e("AlarmClockActivity", "scheduleAlarm: " + e);
         }
     }
 

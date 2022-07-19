@@ -765,18 +765,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             calendarIntent.setComponent(new ComponentName(calendarPackage, calendarActivity));
             calendarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            PackageManager packageManager = getActivity().getPackageManager();
-            if (calendarIntent.resolveActivity(packageManager) != null)        // TODO: api30 package visibility breaks this check?
-            {
-                try {
-                    startActivity(calendarIntent);
-                    getActivity().finish();
-                    getActivity().overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
-                    return;
+            try {
+                startActivity(calendarIntent);
+                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+                return;
 
-                } catch (Exception e) {
-                    Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
-                }
+            } catch (Exception e) {
+                Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
             }
 
             AppSettings.initLocale(getActivity());
