@@ -766,7 +766,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             calendarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             PackageManager packageManager = getActivity().getPackageManager();
-            if (calendarIntent.resolveActivity(packageManager) != null)
+            if (calendarIntent.resolveActivity(packageManager) != null)        // TODO: api30 package visibility breaks this check?
             {
                 try {
                     startActivity(calendarIntent);
@@ -792,11 +792,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     {
                         Activity activity = getActivity();
                         if (activity != null) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AboutDialog.ADDONS_URL));
-                            if (intent.resolveActivity(activity.getPackageManager()) != null) {
-                                activity.startActivity(intent);
-                                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
-                            }
+                            AboutDialog.openLink(activity, AboutDialog.ADDONS_URL);
+                            activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                         }
                         return false;
                     }
