@@ -374,7 +374,7 @@ public class SuntimesData
         return (soonest != null ? soonest.getTimeInMillis() : -1);
     }
 
-    protected Calendar midpoint(Calendar c1, Calendar c2)
+    public static Calendar midpoint(Calendar c1, Calendar c2)
     {
         Calendar r = (Calendar)c1.clone();
         long d = c2.getTimeInMillis() - c1.getTimeInMillis();
