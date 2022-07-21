@@ -1553,6 +1553,10 @@
         <item>winter solstice</item>
         <item>lunar noon</item>
         <item>lunar midnight</item>
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- short labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>morning astronomical twilight (start)</item>
@@ -1582,6 +1586,10 @@
         <item>winter solstice</item>
         <item>lunar noon</item>
         <item>lunar midnight</item>
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>start of morning astronomical twilight</item>
@@ -1611,6 +1619,10 @@
         <item>winter solstice</item>
         <item>lunar noon</item>
         <item>lunar midnight</item>
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
     <string name="solarevents_event_equinox_autumnal">autumn equinox</string>   <!-- solarevents_* array value; optional if arrays are overridden by translation -->
 
@@ -1642,6 +1654,10 @@
         <item>other</item>    <!-- winter solstice -->
         <item>other</item>    <!-- lunar noon -->
         <item>female</item>   <!-- lunar midnight -->
+        <item>other</item>    <!-- cross spring -->
+        <item>other</item>    <!-- cross summer -->
+        <item>other</item>    <!-- cross autumn -->
+        <item>other</item>    <!-- cross winter -->
     </string-array>
     <integer-array name="solarevents_quantity">   <!-- one-to-one with solarevents_short; values used by SelectFormat (api24+) -->
         <item>1</item>    <!-- start of astronomical twilight -->
@@ -1671,6 +1687,10 @@
         <item>1</item>    <!-- winter solstice -->
         <item>1</item>    <!-- lunar noon -->
         <item>1</item>    <!-- lunar midnight -->
+        <item>1</item>    <!-- cross spring -->
+        <item>1</item>    <!-- cross summer -->
+        <item>1</item>    <!-- cross autumn -->
+        <item>1</item>    <!-- cross winter -->
     </integer-array>
     <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
     <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->

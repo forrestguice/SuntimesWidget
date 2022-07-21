@@ -74,6 +74,12 @@ public enum SolarEvents
 
     MOONNOON("lunar noon", "lunar noon", R.attr.moonriseIcon, 1, true),                                            // 25
     MOONNIGHT("lunar midnight", "lunar midnight", R.attr.moonsetIcon, 1, false),                                  // 26
+
+    CROSS_SPRING("cross-quarter", "spring cross-quarter", R.attr.springColor, 3, false),                          // 27
+    CROSS_SUMMER("cross-quarter", "summer cross-quarter", R.attr.summerColor, 3, false),                         // 28
+    CROSS_AUTUMNAL("cross-quarter", "autumnal cross-quarter", R.attr.fallColor, 3, false),                        // 29
+    CROSS_WINTER("cross-quarter", "winter cross-quarter", R.attr.winterColor, 3, false)                          // 30
+
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
@@ -185,7 +191,8 @@ public enum SolarEvents
                 SUNSET, EVENING_BLUE4, EVENING_CIVIL, EVENING_BLUE8, EVENING_NAUTICAL, EVENING_ASTRONOMICAL,
                 MOONRISE, MOONNOON, MOONSET, MOONNIGHT,
                 NEWMOON, FIRSTQUARTER, FULLMOON, THIRDQUARTER,
-                EQUINOX_SPRING, SOLSTICE_SUMMER, EQUINOX_AUTUMNAL, SOLSTICE_WINTER
+                CROSS_SPRING, CROSS_SUMMER, CROSS_AUTUMNAL, CROSS_WINTER,
+                EQUINOX_SPRING,  SOLSTICE_SUMMER,  EQUINOX_AUTUMNAL, SOLSTICE_WINTER
         ));
         return new SolarEventsAdapter(context, choices, northward);
     }
@@ -224,10 +231,8 @@ public enum SolarEvents
                     width = height / 2;
                     break;
 
-                case EQUINOX_SPRING:
-                case SOLSTICE_SUMMER:
-                case EQUINOX_AUTUMNAL:
-                case SOLSTICE_WINTER:
+                case CROSS_SPRING: case CROSS_SUMMER: case CROSS_AUTUMNAL: case CROSS_WINTER:
+                case EQUINOX_SPRING: case SOLSTICE_SUMMER: case EQUINOX_AUTUMNAL: case SOLSTICE_WINTER:
                     width = height = (int)resources.getDimension(R.dimen.sunIconLarge_width) / 2;
                     break;
 
@@ -423,6 +428,10 @@ public enum SolarEvents
     {
         switch (event)
         {
+            case CROSS_SPRING: return WidgetSettings.SolsticeEquinoxMode.CROSS_SPRING;
+            case CROSS_SUMMER: return WidgetSettings.SolsticeEquinoxMode.CROSS_SUMMER;
+            case CROSS_AUTUMNAL: return WidgetSettings.SolsticeEquinoxMode.CROSS_AUTUMN;
+            case CROSS_WINTER: return WidgetSettings.SolsticeEquinoxMode.CROSS_WINTER;
             case EQUINOX_SPRING: return WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
             case SOLSTICE_SUMMER: return WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER;
             case EQUINOX_AUTUMNAL: return WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL;
@@ -436,6 +445,10 @@ public enum SolarEvents
             return null;
         }
         switch (mode) {
+            case CROSS_SPRING: return SolarEvents.CROSS_SPRING;
+            case CROSS_SUMMER: return SolarEvents.CROSS_SUMMER;
+            case CROSS_AUTUMN: return SolarEvents.CROSS_AUTUMNAL;
+            case CROSS_WINTER: return SolarEvents.CROSS_WINTER;
             case EQUINOX_SPRING: return SolarEvents.EQUINOX_SPRING;
             case SOLSTICE_SUMMER: return SolarEvents.SOLSTICE_SUMMER;
             case EQUINOX_AUTUMNAL: return SolarEvents.EQUINOX_AUTUMNAL;

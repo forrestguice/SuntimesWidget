@@ -54,6 +54,7 @@ public class SolarEventIcons
             case NEWMOON: return getResID(context, R.attr.moonPhaseIcon0, R.drawable.ic_moon_new);
             case FULLMOON: return getResID(context, R.attr.moonPhaseIcon2, R.drawable.ic_moon_full);
 
+            case CROSS_SPRING: case CROSS_SUMMER: case CROSS_AUTUMNAL: case CROSS_WINTER:
             case EQUINOX_SPRING: case SOLSTICE_SUMMER: case EQUINOX_AUTUMNAL: case SOLSTICE_WINTER:
                 return R.drawable.svg_season;
 
@@ -92,10 +93,10 @@ public class SolarEventIcons
             case EVENING_ASTRONOMICAL:
                 return getColor(context, R.attr.sunsetColor, R.color.sunIcon_color_setting_dark);
 
-            case EQUINOX_SPRING: return getColor(context, R.attr.springColor, R.color.springColor_dark);
-            case SOLSTICE_SUMMER: return getColor(context, R.attr.summerColor, R.color.summerColor_dark);
-            case EQUINOX_AUTUMNAL: return getColor(context, R.attr.fallColor, R.color.fallColor_dark);
-            case SOLSTICE_WINTER: return getColor(context, R.attr.winterColor, R.color.winterColor_dark);
+            case EQUINOX_SPRING: case CROSS_SPRING: return getColor(context, R.attr.springColor, R.color.springColor_dark);
+            case SOLSTICE_SUMMER: case CROSS_SUMMER: return getColor(context, R.attr.summerColor, R.color.summerColor_dark);
+            case EQUINOX_AUTUMNAL: case CROSS_AUTUMNAL: return getColor(context, R.attr.fallColor, R.color.fallColor_dark);
+            case SOLSTICE_WINTER: case CROSS_WINTER: return getColor(context, R.attr.winterColor, R.color.winterColor_dark);
 
             case MOONRISE: case MOONNOON: case FIRSTQUARTER: return getColor(context, R.attr.moonriseColor, R.color.moonIcon_color_rising_dark);
             case MOONSET: case MOONNIGHT: case THIRDQUARTER: return getColor(context, R.attr.moonsetColor, R.color.moonIcon_color_setting_dark);

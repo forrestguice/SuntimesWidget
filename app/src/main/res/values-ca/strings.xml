@@ -1206,7 +1206,11 @@
         <item>equinocci de tardor</item>
         <item>solstici d\'hivern</item>
         <item>Migdia lunar</item>    
-        <item>Mitjanit lunar</item>    
+        <item>Mitjanit lunar</item>
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>sortida de sol astronòmica</item>
@@ -1235,7 +1239,11 @@
         <item>equinocci de tardor</item>
         <item>solstici d\'hivern</item>
         <item>Migdia lunar</item>    
-        <item>Mitjanit lunar</item>    
+        <item>Mitjanit lunar</item>
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
     <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>sortida de sol astronòmica</item>
@@ -1265,6 +1273,10 @@
         <item>solstici d\'hivern</item>
         <item>Migdia lunar</item>
         <item>Mitjanit lunar</item>
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>   <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
