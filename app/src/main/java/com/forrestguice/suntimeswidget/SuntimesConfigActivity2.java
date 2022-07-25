@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.ArrayAdapter;
@@ -147,10 +148,42 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x1()
     {
-        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos3x1.values());
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos3x1.values()) {
+            @Override
+            protected void modifyThemeValues(int position, ContentValues values) {
+                if (position >=0 && position < WidgetSettings.WidgetModeSunPos3x1.values().length) {
+                    WidgetSettings.WidgetModeSunPos3x1 mode = WidgetSettings.WidgetModeSunPos3x1.values()[position];
+                    values.put(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1, mode.name());
+                    //values.put("option_drawNow", LightMapView.LightMapColors.DRAW_NONE);
+                    values.put("option_drawNow_pointSizePx", SuntimesUtils.dpToPixels(SuntimesConfigActivity2.this, 4));
+                }
+            }
+        };
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
+    }
+
+    @Override
+    protected void saveWidgetMode3x1(Context context)
+    {
+        if (spinner_3x1mode != null) {
+            WidgetSettings.WidgetModeSunPos3x1 mode = (WidgetSettings.WidgetModeSunPos3x1) spinner_3x1mode.getSelectedItem();
+            WidgetSettings.saveSunPos3x1ModePref(context, appWidgetId, mode);
+        }
+    }
+
+    @Override
+    protected void loadWidgetMode3x1(Context context)
+    {
+        if (spinner_3x1mode != null)
+        {
+            WidgetSettings.WidgetModeSunPos3x1 mode = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+            int pos = searchForIndex(spinner_3x1mode, mode);
+            if (pos >= 0) {
+                spinner_3x1mode.setSelection(pos);
+            }
+        }
     }
 
     @Override

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2021 Forrest Guice
+    Copyright (C) 2019-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.SuntimesActionsContract;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
@@ -75,7 +76,10 @@ public class WidgetActions
     public static final String PREF_KEY_ACTION_LAUNCH_TAGS = SuntimesActionsContract.COLUMN_ACTION_TAGS;
 
     public static final String PREF_KEY_ACTION_LAUNCH = SuntimesActionsContract.COLUMN_ACTION_CLASS;
-    public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
+    public static final String PREF_DEF_ACTION_LAUNCH = SuntimesActivity.class.getName();
+
+    public static final String PREF_KEY_ACTION_LAUNCH_PACKAGE = SuntimesActionsContract.COLUMN_ACTION_PACKAGE;
+    public static final String PREF_DEF_ACTION_LAUNCH_PACKAGE = "";
 
     public static final String PREF_KEY_ACTION_LAUNCH_ACTION = SuntimesActionsContract.COLUMN_ACTION_ACTION;
     public static final String PREF_DEF_ACTION_LAUNCH_ACTION = "";
@@ -135,11 +139,11 @@ public class WidgetActions
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, @Nullable String[] tags, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString) {
-        saveActionLaunchPref(context, titleString, descString, color, tags, appWidgetId, id, launchString, type, action, dataString, mimeType, extrasString, true);
+    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, @Nullable String[] tags, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String packageName, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString) {
+        saveActionLaunchPref(context, titleString, descString, color, tags, appWidgetId, id, launchString, packageName, type, action, dataString, mimeType, extrasString, true);
     }
 
-    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, @Nullable String[] tags, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString, boolean listed)
+    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, @Nullable String[] tags, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String packageName, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString, boolean listed)
     {
         boolean hasID = true;
         if (id == null) {
@@ -163,6 +167,7 @@ public class WidgetActions
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
 
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH, (launchString != null ? launchString : ""));
+        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_PACKAGE, (packageName != null ? packageName : ""));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TYPE, (type != null ? type : SuntimesActionsContract.TYPE_ACTIVITY));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_ACTION, (action != null ? action : ""));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATA, (dataString != null ? dataString : ""));
@@ -223,6 +228,9 @@ public class WidgetActions
         } else {
             switch (key)
             {
+                case PREF_KEY_ACTION_LAUNCH_PACKAGE:
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_PACKAGE, PREF_DEF_ACTION_LAUNCH_PACKAGE);
+
                 case PREF_KEY_ACTION_LAUNCH_TYPE:
                     return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TYPE, SuntimesActionsContract.TYPE_ACTIVITY);
 
@@ -259,6 +267,7 @@ public class WidgetActions
         SharedPreferences.Editor prefs = context.getSharedPreferences(getPrefsId(appWidgetId, id), 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH );
+        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_PACKAGE );
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TYPE);
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_ACTION);
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATA);
@@ -379,6 +388,7 @@ public class WidgetActions
     {
         Intent launchIntent;
         String launchClassName = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
+        String launchPackageName = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -386,23 +396,31 @@ public class WidgetActions
 
         if (launchClassName != null && !launchClassName.trim().isEmpty())
         {
-            Class<?> launchClass;
-            try {
-                launchClass = Class.forName(launchClassName);
-                launchIntent = new Intent(context, launchClass);
+            if (launchPackageName != null && !launchPackageName.trim().isEmpty())
+            {
+                launchIntent = new Intent();
+                launchIntent.setClassName(launchPackageName, launchClassName);
 
-            } catch (ClassNotFoundException e) {
-                Log.e(TAG, "createIntent :: " + launchClassName + " cannot be found! " + e.toString());
-                if (fallbackLaunchClass != null)
-                {
-                    launchClass = fallbackLaunchClass;
+            } else {
+                Class<?> launchClass;
+                try {
+                    launchClass = Class.forName(launchClassName);       // this only works for activities in our local class path
                     launchIntent = new Intent(context, launchClass);
-                    launchIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
 
-                } else {
-                    return null;
+                } catch (ClassNotFoundException e) {
+                    Log.e(TAG, "createIntent :: " + launchClassName + " cannot be found! " + e.toString());
+                    if (fallbackLaunchClass != null)
+                    {
+                        launchClass = fallbackLaunchClass;
+                        launchIntent = new Intent(context, launchClass);
+                        launchIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
+
+                    } else {
+                        return null;
+                    }
                 }
             }
+
         } else {
             launchIntent = new Intent();
         }
@@ -469,7 +487,7 @@ public class WidgetActions
                     if (value.endsWith("L") || value.endsWith("l"))
                     {
                         try {
-                            intent.putExtra(key, Long.parseLong(value));  // long
+                            intent.putExtra(key, Long.parseLong(value.substring(0, value.length()-1)));  // long
                             Log.i(TAG, "applyExtras: applied " + extra + " (long)");
 
                         } catch (NumberFormatException e) {
@@ -495,6 +513,16 @@ public class WidgetActions
                         } catch (NumberFormatException e) {
                             intent.putExtra(key, value);  // string
                             Log.w(TAG, "applyExtras: fallback " + extra + " (float)");
+                        }
+
+                    } else {
+                        try {
+                            intent.putExtra(key, Integer.parseInt(value));  // int
+                            Log.i(TAG, "applyExtras: applied " + extra + " (int)");
+
+                        } catch (NumberFormatException e) {
+                            intent.putExtra(key, value);  // string
+                            Log.w(TAG, "applyExtras: fallback " + extra + " (int)");
                         }
                     }
 
@@ -541,7 +569,7 @@ public class WidgetActions
         PREF_DEF_ACTION_LAUNCH_DESC = context.getString(R.string.app_shortdesc);
 
         if (!hasActionLaunchPref(context, 0, "SUNTIMES")) {
-            saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC, null, new String[] {TAG_DEFAULT, TAG_SUNTIMES}, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH,
+            saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC, null, new String[] {TAG_DEFAULT, TAG_SUNTIMES}, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH, null,
                     WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
         }
 
@@ -588,7 +616,9 @@ public class WidgetActions
         OPEN_WIDGET_LIST("Suntimes", "Widget List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
         SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT}, true),
-        SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true);
+        SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true),
+        SNOOZE_ALARM("Suntimes Alarms", "Snooze", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        DISMISS_ALARM("Suntimes Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true);
 
         private String title, desc;
         private String[] tags;
@@ -652,10 +682,22 @@ public class WidgetActions
                 {
                     LaunchType launchType = LaunchType.ACTIVITY;
                     String launchString = SuntimesActivity.class.getName();
-                    String launchAction = null, launchData = null, launchMime = null, launchExtras = null;
+                    String launchPackage = null, launchAction = null, launchData = null, launchMime = null, launchExtras = null;
 
                     switch (action)
                     {
+                        case SNOOZE_ALARM:
+                            launchString = null;
+                            launchAction = AlarmClockActivity.ACTION_SNOOZE_ALARM;
+                            launchExtras = AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION + "=" + (AlarmSettings.PREF_DEF_ALARM_SNOOZE / (1000 * 60));
+                            break;
+
+                        case DISMISS_ALARM:
+                            launchString = null;
+                            launchAction = AlarmClockActivity.ACTION_DISMISS_ALARM;
+                            launchExtras = AlarmClockActivity.EXTRA_ALARM_SEARCH_MODE + "=" + AlarmClockActivity.ALARM_SEARCH_MODE_NEXT;
+                            break;
+
                         case SHOW_CALENDAR:
                             launchString = null;
                             launchAction = Intent.ACTION_VIEW;
@@ -719,7 +761,7 @@ public class WidgetActions
                     }
 
                     if (launchType != null) {
-                        saveActionLaunchPref(context, action.title(), action.desc(), null, action.getTags(), 0, action.name(), launchString, launchType.name(), launchAction, launchData, launchMime, launchExtras, action.listed());
+                        saveActionLaunchPref(context, action.title(), action.desc(), null, action.getTags(), 0, action.name(), launchString, launchPackage, launchType.name(), launchAction, launchData, launchMime, launchExtras, action.listed());
                     }
                 }
             }

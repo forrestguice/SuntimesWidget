@@ -39,6 +39,7 @@ import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -159,7 +160,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     @Nullable
-    protected static Drawable loadBackgroundDrawable(Context context, String mapTag, double[] center)
+    public static Drawable loadBackgroundDrawable(Context context, String mapTag, double[] center)
     {
         String backgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
         Drawable drawable = loadDrawableFromUri(context, backgroundString);
@@ -584,7 +585,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                     try {
-                        Uri shareURI = FileProvider.getUriForFile(context, "com.forrestguice.suntimeswidget.fileprovider", result.getExportFile());
+                        Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile());
                         shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
 
                         String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
@@ -645,6 +646,29 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     protected void onDetachedFromWindow()
     {
         super.onDetachedFromWindow();
+        stopRunningTasks();
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View view, int visibility)
+    {
+        super.onVisibilityChanged(view, visibility);
+        if (visibility != View.VISIBLE) {
+            stopRunningTasks();
+        }
+    }
+
+    @Override
+    public void onVisibilityAggregated(boolean isVisible)    // TODO: only called for api 24+ ?
+    {
+        super.onVisibilityAggregated(isVisible);
+        if (!isVisible) {
+            stopRunningTasks();
+        }
+    }
+
+    protected void stopRunningTasks()
+    {
         dismissProgress();
         if (drawTask != null) {
             drawTask.cancel(true);

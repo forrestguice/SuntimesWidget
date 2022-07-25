@@ -58,6 +58,8 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DAYCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DISPLAYSTRING;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_FALLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ISDEFAULT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR;
@@ -155,7 +157,7 @@ public class SuntimesThemeProviderTest
                 THEME_NOONICON_FILL_COLOR, THEME_NOONICON_STROKE_COLOR, THEME_NOONICON_STROKE_WIDTH,
                 THEME_RISEICON_FILL_COLOR, THEME_RISEICON_STROKE_COLOR, THEME_RISEICON_STROKE_WIDTH,
                 THEME_SETICON_FILL_COLOR, THEME_SETICON_STROKE_COLOR, THEME_SETICON_STROKE_WIDTH,
-                THEME_DAYCOLOR, THEME_CIVILCOLOR, THEME_NAUTICALCOLOR, THEME_ASTROCOLOR, THEME_NIGHTCOLOR,
+                THEME_DAYCOLOR, THEME_CIVILCOLOR, THEME_NAUTICALCOLOR, THEME_ASTROCOLOR, THEME_NIGHTCOLOR, THEME_GRAPH_POINT_FILL_COLOR, THEME_GRAPH_POINT_STROKE_COLOR,
                 THEME_SPRINGCOLOR, THEME_SUMMERCOLOR, THEME_FALLCOLOR, THEME_WINTERCOLOR,
                 THEME_MAP_BACKGROUNDCOLOR, THEME_MAP_FOREGROUNDCOLOR, THEME_MAP_SHADOWCOLOR, THEME_MAP_HIGHLIGHTCOLOR,
                 THEME_TITLESIZE, THEME_TITLEBOLD, THEME_TEXTSIZE, THEME_TIMESIZE, THEME_TIMEBOLD, THEME_TIMESUFFIXSIZE
@@ -261,6 +263,8 @@ public class SuntimesThemeProviderTest
             assertEquals("THEME_NAUTICALCOLOR", cursor.getInt(cursor.getColumnIndex(THEME_NAUTICALCOLOR)), oracle.getNauticalColor());
             assertEquals("THEME_ASTROCOLOR", cursor.getInt(cursor.getColumnIndex(THEME_ASTROCOLOR)), oracle.getAstroColor());
             assertEquals("THEME_NIGHTCOLOR", cursor.getInt(cursor.getColumnIndex(THEME_NIGHTCOLOR)), oracle.getNightColor());
+            assertEquals("THEME_GRAPH_POINT_FILL_COLOR", cursor.getInt(cursor.getColumnIndex(THEME_GRAPH_POINT_FILL_COLOR)), oracle.getGraphPointFillColor());
+            assertEquals("THEME_GRAPH_POINT_STROKE_COLOR", cursor.getInt(cursor.getColumnIndex(THEME_GRAPH_POINT_STROKE_COLOR)), oracle.getGraphPointStrokeColor());
 
             assertEquals("THEME_MAP_BACKGROUNDCOLOR", cursor.getInt(cursor.getColumnIndex(THEME_MAP_BACKGROUNDCOLOR)), oracle.getMapBackgroundColor());
             assertEquals("THEME_MAP_FOREGROUNDCOLOR", cursor.getInt(cursor.getColumnIndex(THEME_MAP_FOREGROUNDCOLOR)), oracle.getMapForegroundColor());

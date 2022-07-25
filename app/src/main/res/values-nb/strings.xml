@@ -23,6 +23,8 @@
     <string name="configAction_viewDate">Vis dato</string>
     <string name="configAction_viewDateWith">Vis dato</string>
     <string name="configAction_share">Del</string>
+    <string name="configAction_export">Eksporter</string>
+    <string name="configAction_import">Importer</string>
     <string name="configAction_sunDialog">Solens posisjon</string>
     <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
     <string name="configAction_worldMap">Verdenskart</string>
@@ -563,8 +565,8 @@
     <string name="configAction_loadAction">Last</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Slett</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Fjern alle</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Eksporter</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Importer</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Modultemaer</string>
@@ -574,9 +576,9 @@
     <string name="configAction_editTheme">Rediger</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Slett</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopier</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Eksporter</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">Importer</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -776,6 +778,8 @@
     <string name="clearalarms_dialog_cancel">Avbryt</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg --> <!-- TODO -->
 
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
     <string name="alarmlabel_dialog_cancel">Avbryt</string>    <!-- button -->
@@ -899,8 +903,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Slett</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Fjern</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Eksporter</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Importer</string>       <!-- button (contentDescription) -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->

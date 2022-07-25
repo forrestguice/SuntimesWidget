@@ -24,6 +24,8 @@
     <string name="configAction_viewDate">Отобразить дату</string>
     <string name="configAction_viewDateWith">Отобразить дату</string>
     <string name="configAction_share">Поделиться</string>
+    <string name="configAction_export">Экспорт</string>
+    <string name="configAction_import">Импорт</string>
     <string name="configAction_sunDialog">Солнечная позиция</string>
     <string name="configAction_equinoxDialog">Солнцест. / Равнод.</string>
     <string name="configAction_worldMap">Карта мира</string>
@@ -619,8 +621,8 @@
     <string name="configAction_loadAction">Загрузить</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Удалить</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Очистить все</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Экспорт</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Импорт</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Темы</string>
@@ -630,9 +632,9 @@
     <string name="configAction_editTheme">Изменить</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Удалить</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Копировать</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Экспорт</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">Импорт</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">Тема_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
@@ -834,6 +836,8 @@
     <string name="clearalarms_dialog_cancel">Отмена</string>    <!-- button -->
     <string name="clearalarms_toast_success">Все будильники удалены.</string> <!-- toast msg -->
 
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Название</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Применить</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Отмена</string>    <!-- button -->
@@ -968,8 +972,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Удалить</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Очистить</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Экспорт</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
 
     <!-- App Setting: UI -->

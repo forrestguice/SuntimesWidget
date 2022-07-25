@@ -23,6 +23,8 @@
     <string name="configAction_viewDate">Afficher la Date</string>
     <string name="configAction_viewDateWith">Afficher la Date</string>
     <string name="configAction_share">Partager</string>
+    <string name="configAction_export">Exporter</string>
+    <string name="configAction_import">Importer</string>
     <string name="configAction_sunDialog">Position du soleil</string>
     <string name="configAction_equinoxDialog">Solstice / Équinoxe</string>
     <string name="configAction_worldMap">Carte mondiale</string>  <!-- TODO -->
@@ -551,8 +553,8 @@
     <string name="configAction_loadAction">Charger</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Supprimer</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Tout effacer</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Exporter</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Importer</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
     <string name="configLabel_widgetThemeList">Thème des widgets</string>
@@ -562,8 +564,8 @@
     <string name="configAction_editTheme">Modifier</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Supprimer</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copier</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Exporter</string>    <!-- button (contentDescription) -->
-    <string name="configAction_importThemes">Importer</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -760,6 +762,8 @@
     <string name="clearalarms_dialog_cancel">Annuler</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarmes effacées.</string> <!-- toast msg -->
 
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Libellé</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Appliquer</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Annuler</string>    <!-- button -->
@@ -882,8 +886,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Supprimer</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Tout effacer</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Exporter</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interface utilisateur</string>                       <!-- group title -->

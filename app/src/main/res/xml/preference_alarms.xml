@@ -62,4 +62,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmMisc">
+
+        <CheckBoxPreference
+            android:key="dialog_importwarning_donotshowagain"
+            android:title="@string/importalarms_title_warning"
+            android:summary="@string/dialog_msg_donotshowagain"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

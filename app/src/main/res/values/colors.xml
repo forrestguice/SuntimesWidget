@@ -115,6 +115,8 @@
     <color name="graphColor_nautical_dark">#003366</color>
     <color name="graphColor_astronomical_dark">#000066</color>
     <color name="graphColor_night_dark">#ff424242</color>
+    <color name="graphColor_pointFill_dark">@color/sunIcon_color_setting_dark</color>
+    <color name="graphColor_pointStroke_dark">@color/sunIcon_color_noon_light</color>
 
     <color name="graphColor_bg_light">@color/material_grey_50</color>
     <color name="graphColor_day_light">#ffffcc00</color>
@@ -122,6 +124,8 @@
     <color name="graphColor_nautical_light">#ff007bff</color>
     <color name="graphColor_astronomical_light">#ff0000ff</color>
     <color name="graphColor_night_light">#ff757575</color>
+    <color name="graphColor_pointFill_light">@color/sunIcon_color_noon_light</color>
+    <color name="graphColor_pointStroke_light">@color/sunIcon_color_noonBorder_light</color>
 
     <!-- Dingy Yellows
     <color name="graphColor_bg_light">@color/material_grey_50</color>

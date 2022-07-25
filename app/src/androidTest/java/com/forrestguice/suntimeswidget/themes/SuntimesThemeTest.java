@@ -169,7 +169,7 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
         @Override
         public ThemeDescriptor themeDescriptor()
         {
-            return new ThemeDescriptor(TESTDEF_NAME, TESTDEF_DISPLAYSTRING, TESTDEF_VERSION);
+            return new ThemeDescriptor(TESTDEF_NAME, TESTDEF_DISPLAYSTRING, TESTDEF_VERSION, SuntimesTheme.ThemeBackground.DARK.name(), Color.RED);
         }
     }
 
