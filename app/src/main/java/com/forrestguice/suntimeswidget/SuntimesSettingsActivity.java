@@ -435,7 +435,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
         {
             if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
-                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME) || key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
+                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
             {
                 //Log.d("SettingsActivity", "Locale change detected; restarting activity");
                 updateLocale();
@@ -574,6 +574,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveLengthUnitsPref(this, 0, WidgetSettings.getLengthUnit(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH.name())));
+            rebuildActivity();
             return;
         }
     }
@@ -764,18 +765,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             calendarIntent.setComponent(new ComponentName(calendarPackage, calendarActivity));
             calendarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            PackageManager packageManager = getActivity().getPackageManager();
-            if (calendarIntent.resolveActivity(packageManager) != null)
-            {
-                try {
-                    startActivity(calendarIntent);
-                    getActivity().finish();
-                    getActivity().overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
-                    return;
+            try {
+                startActivity(calendarIntent);
+                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+                return;
 
-                } catch (Exception e) {
-                    Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
-                }
+            } catch (Exception e) {
+                Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
             }
 
             AppSettings.initLocale(getActivity());
@@ -791,11 +788,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     {
                         Activity activity = getActivity();
                         if (activity != null) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AboutDialog.ADDONS_URL));
-                            if (intent.resolveActivity(activity.getPackageManager()) != null) {
-                                activity.startActivity(intent);
-                                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
-                            }
+                            AboutDialog.openLink(activity, AboutDialog.ADDONS_URL);
+                            activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                         }
                         return false;
                     }

@@ -20,7 +20,11 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+
 import android.content.BroadcastReceiver;
+
+import android.content.ActivityNotFoundException;
+
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -725,10 +729,12 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which)
         {
+            Context context = AlarmClockActivity.this;
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
-            AlarmClockItem item = AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType());
-            AlarmNotifications.updateAlarmTime(dialog.getActivity(), item);
+            AlarmClockItem item = AlarmCreateDialog.createAlarm(context, dialog, dialog.getAlarmType());
+            AlarmNotifications.updateAlarmTime(context, item);
+            dialog.saveSettings(context);
             ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
             showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
         }
@@ -788,7 +794,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    protected void showAddDialog(AlarmClockItem.AlarmType type)
+    protected void showAddDialog(@Nullable AlarmClockItem.AlarmType type)
     {
         list.clearSelection();
 
@@ -796,7 +802,9 @@ public class AlarmClockActivity extends AppCompatActivity
         AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
         if (dialog != null) {
             dialog.loadSettings(AlarmClockActivity.this);
-            dialog.setAlarmType(type);
+            if (type != null) {
+                dialog.setAlarmType(type);
+            }
             dialog.setOnAcceptedListener(onAddAlarmAccepted);
             dialog.setOnCanceledListener(onAddAlarmCanceled);
             dialog.setOnNeutralListener(onAddAlarmNeutral);
@@ -949,7 +957,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private View.OnClickListener onFabMenuClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showAddDialog(AlarmClockItem.AlarmType.ALARM);
+            showAddDialog(null);
         }
     };
 
@@ -1072,8 +1080,10 @@ public class AlarmClockActivity extends AppCompatActivity
         locationBundle.putParcelable(AlarmClockActivity.EXTRA_LOCATION, location);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_LOCATION, locationBundle);
 
-        if (alarmIntent.resolveActivity(context.getPackageManager()) != null) {
+        try {
             context.startActivity(alarmIntent);
+        } catch (ActivityNotFoundException e) {
+            Log.e("AlarmClockActivity", "scheduleAlarm: " + e);
         }
     }
 

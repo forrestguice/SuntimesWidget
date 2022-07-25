@@ -2366,6 +2366,12 @@ public class WidgetSettings
         location.setUseAltitude(prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, defaultUseAltitude));
         return location;
     }
+    public static Location loadLocationDefault()
+    {
+        Location location = new Location(PREF_DEF_LOCATION_LABEL, PREF_DEF_LOCATION_LATITUDE, PREF_DEF_LOCATION_LONGITUDE, PREF_DEF_LOCATION_ALTITUDE);
+        location.setUseAltitude(PREF_DEF_LOCATION_ALTITUDE_ENABLED);
+        return location;
+    }
     public static void deleteLocationPref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();

@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -111,6 +110,16 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                 result = false;
                 items = null;
                 error = e;
+            }
+        }
+
+        for (AlarmClockItem item : items)
+        {
+            if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
+            {
+                // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
+                item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+                item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
             }
         }
 
@@ -227,7 +236,11 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         {
             switch (reader.peek()) {
                 case BEGIN_ARRAY: readAlarmClockItemArray(context, reader, items); break;
-                case BEGIN_OBJECT: items.add(readAlarmClockItem(context, reader)); break;
+                case BEGIN_OBJECT: AlarmClockItem item = readAlarmClockItem(context, reader);
+                    if (item != null) {
+                        items.add(item);
+                    }
+                    break;
                 default: reader.skipValue(); break;
             }
         }

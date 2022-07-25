@@ -31,6 +31,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
@@ -242,4 +243,24 @@ public class AppSettingsTest extends SuntimesActivityTestBase
         }
         assertTrue("default must belong to R.array.getFix_maxElapse_values", found);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_dialogDoNotShowAgain()
+    {
+        String dialogKey1 = "testdialog1";
+        String dialogKey2 = "testdialog2";
+
+        AppSettings.setDialogDoNotShowAgain(context, dialogKey1, false);
+        AppSettings.setDialogDoNotShowAgain(context, dialogKey2, true);
+        assertFalse(AppSettings.checkDialogDoNotShowAgain(context, dialogKey1));
+        assertTrue(AppSettings.checkDialogDoNotShowAgain(context, dialogKey2));
+
+        AppSettings.setDialogDoNotShowAgain(context, dialogKey1, true);
+        AppSettings.setDialogDoNotShowAgain(context, dialogKey2, false);
+        assertTrue(AppSettings.checkDialogDoNotShowAgain(context, dialogKey1));
+        assertFalse(AppSettings.checkDialogDoNotShowAgain(context, dialogKey2));
+    }
+
 }
