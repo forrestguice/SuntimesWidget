@@ -37,6 +37,8 @@ import com.forrestguice.suntimeswidget.R;
 
 import java.lang.ref.WeakReference;
 
+import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
+
 /**
  * AlarmSettings
  */
@@ -69,10 +71,10 @@ public class AlarmSettings
     public static final boolean PREF_DEF_ALARM_AUTOVIBRATE = false;
 
     public static final String PREF_KEY_ALARM_RINGTONE_URI_ALARM = "app_alarms_default_alarm_ringtoneuri";     // cached RingtoneManager.getActualDefaultRingtoneUri
-    public static final String PREF_KEY_ALARM_RINGTONE_NAME_ALARM = "app_alarms_default_alarm_ringtoneuri";
+    public static final String PREF_KEY_ALARM_RINGTONE_NAME_ALARM = "app_alarms_default_alarm_ringtonename";
 
     public static final String PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION = "app_alarms_default_notification_ringtoneuri";
-    public static final String PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION = "app_alarms_default_notification_ringtoneuri";
+    public static final String PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION = "app_alarms_default_notification_ringtonename";
 
     public static final String VALUE_RINGTONE_DEFAULT = "default";
 
@@ -224,11 +226,15 @@ public class AlarmSettings
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    @NonNull
     public static String getRingtoneName(Context context, Uri ringtoneUri)
     {
+        String ringtoneName = "";
         Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);      // TODO: getRingtone takes up to 100ms!
-        String ringtoneName = ringtone.getTitle(context);
-        ringtone.stop();
+        if (ringtone != null) {
+            ringtoneName = ringtone.getTitle(context);
+            ringtone.stop();
+        }
         return ringtoneName;
     }
 
@@ -263,6 +269,11 @@ public class AlarmSettings
             }
         }
         return retValue;
+    }
+
+    public static Uri getFallbackRingtoneUri(Context context, AlarmClockItem.AlarmType type) {
+        return Uri.parse(SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/"
+                + (type == AlarmClockItem.AlarmType.ALARM ? R.raw.alarmsound : R.raw.notifysound));
     }
 
     public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type) {

@@ -23,6 +23,8 @@
     <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
     <string name="configAction_share">Share</string>    <!-- TODO -->
+    <string name="configAction_export">Esportatu</string>
+    <string name="configAction_import">Inportatu</string>
     <string name="configAction_sunDialog">Eguzkiaren kokapena</string>
     <string name="configAction_equinoxDialog">Solstizioak / Ekinokzioak</string>
     <string name="configAction_worldMap">Munduko mapa</string>
@@ -563,8 +565,8 @@
     <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deleteAction">Ezabatu</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Garbitu</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Esportatu</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Inportatu</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Widgeten itxurak</string>
@@ -574,8 +576,8 @@
     <string name="configAction_editTheme">Editatu</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Ezabatu</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopiatu</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Esportatu</string>    <!-- button (contentDescription) -->
-    <string name="configAction_importThemes">Inportatu</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">itxura_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -775,6 +777,8 @@
     <string name="clearalarms_dialog_cancel">Utzi</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg --> <!-- TODO -->
 
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
     <string name="alarmlabel_dialog_cancel">Utzi</string>    <!-- button -->
@@ -898,8 +902,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deletePlace">Ezabatu</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Garbitu</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Esportatu</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Erabiltzailearen interfazea</string>                       <!-- group title -->

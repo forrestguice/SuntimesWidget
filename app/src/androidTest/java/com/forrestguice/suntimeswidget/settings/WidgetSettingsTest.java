@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
@@ -77,7 +78,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void test_lengthUnitsPref()
     {
         Context context = activityRule.getActivity();
-        int appWidgetId = Integer.MAX_VALUE;
+        int appWidgetId = 0;
 
         WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.METRIC);
         WidgetSettings.LengthUnit units3 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
@@ -89,12 +90,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteLengthUnitsPref(context, appWidgetId);
         WidgetSettings.LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
-        assertTrue("units should be default (metric) but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
+        assertTrue("units should be default (" + WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH + ") but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
 
         double meters0 = Math.PI;
         double feet0 = WidgetSettings.LengthUnit.metersToFeet(meters0);
         double meters1 = WidgetSettings.LengthUnit.feetToMeters(feet0);
         assertTrue("conversion should make round trip", (meters1-meters0 < 0.1));
+
+        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.METRIC);
+        WidgetSettings.saveLengthUnitsPref(context, Integer.MAX_VALUE, WidgetSettings.LengthUnit.IMPERIAL);
+        assertEquals(WidgetSettings.LengthUnit.IMPERIAL, WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
+
+        WidgetSettings.deleteLengthUnitsPref(context, Integer.MAX_VALUE);
+        assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
+        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.IMPERIAL);
+        assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
     }
 
     @Test
@@ -514,12 +524,14 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String desc2 = "desc2";
         int color2 = Color.BLUE;
         String value2 = "com.forrestguice.suntimeswidget.SuntimesActivity";
+        String package2 = "com.forrestguice.suntimeswidget";
         String action2 = "ACTION2";
         String data2 = "DATA2";
         String mime2 = "text/plain";
         String extras2 = "EXTRAS2";
-        WidgetActions.saveActionLaunchPref(context, title2, desc2, color2, null, appWidgetId, null, value2, WidgetActions.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
+        WidgetActions.saveActionLaunchPref(context, title2, desc2, color2, null, appWidgetId, null, value2, package2, WidgetActions.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
         String pref2_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+        String pref2_package = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String pref2_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref2_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String pref2_mime = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -528,6 +540,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String pref2_desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         int pref2_color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         assertTrue("pref value should be " + value2 + " but was " + pref2_value, pref2_value.equals(value2));
+        assertTrue("pref package should be " + value2 + " but was " + pref2_package, pref2_package.equals(package2));
         assertTrue("pref action should be " + action2 + " but was " + pref2_action, pref2_action.equals(action2));
         assertTrue("pref data should be " + data2 + " but was " + pref2_data, pref2_data.equals(data2));
         assertTrue("pref datatype should be " + mime2 + " but was " + pref2_mime, pref2_mime.equals(mime2));
@@ -540,12 +553,14 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String desc1 = "desc1";
         int color1 = Color.YELLOW;
         String value1 = "test value 1";
+        String package1 = "some.package.name";
         String action1 = "ACTION1";
         String data1 = "DATA1";
         String mime1 = "text/html";
         String extras1 = "EXTRAS1";
-        WidgetActions.saveActionLaunchPref(context, title1, desc1, color1, null, appWidgetId, null, value1, WidgetActions.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
+        WidgetActions.saveActionLaunchPref(context, title1, desc1, color1, null, appWidgetId, null, value1, package1, WidgetActions.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
         String pref1_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+        String pref1_package = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String pref1_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref1_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String pref1_mime = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -554,6 +569,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String pref1_desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         int pref1_color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         assertTrue("pref value should be " + value1 + " but was " + pref1_value, pref1_value.equals(value1));
+        assertTrue("pref package should be " + package1 + " but was " + pref1_package, pref1_package.equals(package1));
         assertTrue("pref action should be " + action1 + " but was " + pref1_action, pref1_action.equals(action1));
         assertTrue("pref data should be " + data1 + " but was " + pref1_data, pref1_data.equals(data1));
         assertTrue("pref datatype should be " + mime1 + " but was " + pref1_mime, pref1_mime.equals(mime1));
@@ -565,6 +581,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String value0 = "com.forrestguice.suntimeswidget.SuntimesActivity";
         WidgetActions.deleteActionLaunchPref(context, appWidgetId, null);
         String pref0_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+        String pref0_package = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String pref0_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref0_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String pref0_mime = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -573,6 +590,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String pref0_desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         int pref0_color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         assertTrue("pref value should be default (" + value0 + ") but was " + pref0_value, pref0_value.equals(value0) && value0.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH));
+        assertTrue("pref package should be default (empty) but was " + pref0_package, pref0_package.equals(""));
         assertTrue("pref action should be default (empty) but was " + pref0_action, pref0_action.equals(""));
         assertTrue("pref data should be default (empty) but was " + pref0_data, pref0_data.equals(""));
         assertTrue("pref datatype should be default (empty) but was " + pref0_mime, pref0_mime.equals(""));
@@ -580,6 +598,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("pref title should be default", pref0_title.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE));
         assertTrue("pref desc should be default", pref0_desc.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC));
         assertTrue("pref color should be default", pref0_color == WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR);
+    }
+
+    @Test
+    public void test_actionApplyExtras()
+    {
+        Intent intent0 = new Intent();
+        String extraString0 = "one=1&two=2L&three=3d&four=4f&string=string&bool=true&L=L";
+        WidgetActions.applyExtras(context, intent0, extraString0, null);
+        assertEquals(1, intent0.getIntExtra("one", -1));
+        assertEquals(2L, intent0.getLongExtra("two", -1L));
+        assertEquals(3d, intent0.getDoubleExtra("three", -1d));
+        assertEquals(4f, intent0.getFloatExtra("four", -1f));
+        assertEquals("string", intent0.getStringExtra("string"));
+        assertEquals("L", intent0.getStringExtra("L"));
+        assertTrue("bool", intent0.getBooleanExtra("bool", false));
     }
 
     @Test
@@ -765,6 +798,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteSunPos1x1ModePref(context, appWidgetId);
         WidgetSettings.WidgetModeSunPos1x1 pref0 = WidgetSettings.loadSunPos1x1ModePref(context, appWidgetId);
         assertTrue("pref should be default (ALTAZ) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS1x1) && pref0.equals(WidgetSettings.WidgetModeSunPos1x1.MODE1x1_ALTAZ));
+    }
+
+    @Test
+    public void test_3x1SunPosModePref()
+    {
+        WidgetSettings.saveSunPos3x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP);
+        WidgetSettings.WidgetModeSunPos3x1 pref2 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be LIGHTMAP but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP));
+
+        WidgetSettings.saveSunPos3x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP_SMALL);
+        WidgetSettings.WidgetModeSunPos3x1 pref1 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be LIGHTMAP1 but was " + pref1, pref1.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP_SMALL));
+
+        WidgetSettings.deleteSunPos3x1ModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSunPos3x1 pref0 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be default (LIGHTMAP) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1) && pref0.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP));
     }
 
     @Test

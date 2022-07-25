@@ -1,0 +1,5 @@
+- adds click to solar noon field (#562).
+- fixes bug in lunar noon field (#572).
+- fixes bug that causes background battery use (#575).
+- fixes bug "solstice dialog 'view date' menu doesn't work" (#577).
+- fixes crash when using 'fallback to last location'.

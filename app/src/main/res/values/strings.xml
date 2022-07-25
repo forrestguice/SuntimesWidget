@@ -24,6 +24,8 @@
     <string name="configAction_viewDate">View date</string>
     <string name="configAction_viewDateWith">View date</string>
     <string name="configAction_share">Share</string>
+    <string name="configAction_export">Export</string>
+    <string name="configAction_import">Import</string>
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
@@ -34,7 +36,6 @@
     <string name="configAction_options">Options</string>
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
-
 
     <!-- Shortcuts -->
 
@@ -457,6 +458,10 @@
     <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->
 
+    <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->
@@ -590,6 +595,8 @@
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->
     <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_action_launch_package" />               <!-- edittext label -->   <!-- TODO -->
     <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->
@@ -641,8 +648,8 @@
     <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Themes</string>
@@ -652,9 +659,9 @@
     <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
@@ -789,12 +796,15 @@
     <string name="configAction_editAlarm">Edit</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_exportAlarms">@string/configAction_export</string>                <!-- action button / menu item -->
+    <string name="configAction_importAlarms">@string/configAction_import</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Set Offset (Before/After)</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Set Location</string>         <!-- button (contentDescription) -->
@@ -818,6 +828,7 @@
     <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->
+    <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->    <!-- TODO -->
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->
@@ -855,6 +866,14 @@
     <string name="clearalarms_dialog_ok">Clear</string>        <!-- button -->
     <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg -->
+
+    <string name="importalarms_title_warning">Import Warning</string> <!-- toast msg -->
+    <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->  <!-- TODO -->
+    <string name="importalarms_toast_success">Imported <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <plurals name="alarmPlural">
+        <item quantity="one">%d alarm</item>
+        <item quantity="other">%d alarms</item>
+    </plurals>   <!-- TODO -->
 
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
@@ -992,8 +1011,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
 
     <!-- App Setting: UI -->
@@ -1162,6 +1181,8 @@
     <string name="configActionDesc_prevCard">Show previous card</string>
     <string name="configActionDesc_showCard">@string/configAction_viewDate</string>
     <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>
+    <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
+    <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
     <string name="configActionDesc_alarmList">Alarm List</string>
     <string name="configActionDesc_themeList">Theme List</string>
     <string name="configActionDesc_actionList">Action List</string>
@@ -1193,13 +1214,15 @@
         <item>@string/app_name</item>
         <item>@string/app_name</item>
 
-        <item>@string/app_name</item>
+        <item>@string/app_name_alarmclock</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
 
         <item>@string/configAction_showCalendar</item>
         <item>@string/configAction_mapLocation</item>
+        <item>@string/configLabel_alarmClock</item>
+        <item>@string/configLabel_alarmClock</item>
     </string-array>
     <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1232,6 +1255,8 @@
 
         <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configActionDesc_mapLocation</item>
+        <item>@string/configActionDesc_alarmSnooze</item>
+        <item>@string/configActionDesc_alarmDismiss</item>
     </string-array>
 
     <!-- App Setting: time zone sort modes -->
@@ -1744,7 +1769,7 @@
     <string name="themesexport_dialog_message">Exporting themes to file.</string>
 
     <!-- Dialog: Import / Export -->
-    <string name="msg_export_success">Temporary copy at <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_success">Saved to <xliff:g id="filepath">%s</xliff:g></string>   <!-- TODO: update -->
     <string name="msg_export_failure">Export to <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
 
@@ -1970,7 +1995,10 @@
         <b>Action:</b> An action string.<br/><small>e.g. <em>android.intent.action.VIEW</em></small>
         <br/>
         <br/>
-        <b>Class:</b> A fully qualified class name.<br/><small>e.g. <em>suntimeswidget.SuntimesActivity</em></small>
+        <b>Package:</b> A package name.<br/><small>e.g. <em>app.package.name</em></small>
+        <br/>
+        <br/>
+        <b>Class:</b> A fully qualified class name.<br/><small>e.g. <em>app.package.name.MainActivity</em></small>
         <br/>
         <br/>
         <b>Data:</b> A Uri that contains or points to attached data. Supports <em>%s</em>ubstitutions. <small>e.g. <em>geo:%lat,%lon</em></small>
@@ -1980,7 +2008,7 @@
         <br/>
         <br/>
         <b>Extras:</b> An <em>&amp;</em> delimited string containing extra values. Supports <em>%s</em>ubstitutions.<br/><br/>Values may be <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> or String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
-    ]]></string> <!-- TODO -->
+    ]]></string> <!-- TODO: added Package: -->
     <string name="help_action_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#actions</string>
     <string name="help_widgetlist"><![CDATA[
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
@@ -2024,6 +2052,7 @@
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

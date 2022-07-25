@@ -24,6 +24,8 @@
     <string name="configAction_viewDate">Veure data</string>
     <string name="configAction_viewDateWith">Veure data</string>
     <string name="configAction_share">Compartir</string>
+    <string name="configAction_export">Exportar</string>
+    <string name="configAction_import">Importar</string>
     <string name="configAction_sunDialog">Posició del Sol</string>
     <string name="configAction_equinoxDialog">Solstici / equinocci</string>
     <string name="configAction_worldMap">Mapa del món</string>
@@ -559,8 +561,8 @@
     <string name="configAction_loadAction">Carregar</string>         <!-- button (contentDescription) -->  
     <string name="configAction_deleteAction">Eliminar</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Eliminar tot</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Exportar</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Importar</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Temes de giny</string>
@@ -570,9 +572,9 @@
     <string name="configAction_editTheme">Editar</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Esborrar</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copiar</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Exportar</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_shareTheme">@string/configAction_share</string>
-    <string name="configAction_importThemes">Importar</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -767,7 +769,9 @@
     <string name="clearalarms_dialog_message">Estàs segur de voler esborrar totes les alarmes?</string>   <!-- dialog msg --> 
     <string name="clearalarms_dialog_ok">Esborra</string>        <!-- button --> 
     <string name="clearalarms_dialog_cancel">Canceŀla</string>    <!-- button -->
-    <string name="clearalarms_toast_success">Alarmes esborrades.</string> <!-- toast msg --> 
+    <string name="clearalarms_toast_success">Alarmes esborrades.</string> <!-- toast msg -->
+
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
 
     <string name="alarmlabel_dialog_title">Etiqueta</string>        <!-- dialog title -->  
     <string name="alarmlabel_dialog_ok">Aplica</string>        <!-- button --> 
@@ -891,8 +895,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Elimina</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Elimina tot</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Exportar</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfície d\'usuari</string>                       <!-- group title -->

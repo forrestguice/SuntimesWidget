@@ -214,7 +214,7 @@ public class AboutActivity extends AppCompatActivity
                 nameView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openLink(getActivity(), AboutDialog.WEBSITE_URL);
+                        AboutDialog.openLink(getActivity(), AboutDialog.WEBSITE_URL);
                     }
                 });
             }
@@ -309,14 +309,6 @@ public class AboutActivity extends AppCompatActivity
                 versionString += " " + smallText("[" + BuildConfig.BUILD_TYPE + "]");
             }
             return getString(R.string.app_version, versionString);
-        }
-
-        protected void openLink(Activity activity, String url)
-        {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            if (activity != null && intent.resolveActivity(activity.getPackageManager()) != null) {
-                startActivity(intent);
-            }
         }
     }
 

@@ -38,6 +38,7 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -260,10 +261,29 @@ public class AlarmDatabaseAdapter
         String[] query = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
         return getAllAlarms(n, query, selection, selectionArgs);
     }
+
+    public Cursor getAllAlarmsByState(int n, int... alarmState)
+    {
+        StringBuilder selection = new StringBuilder(KEY_STATE + " = ?");
+        String[] selectionArgs = new String[alarmState.length];
+        selectionArgs[0] = Integer.toString(alarmState[0]);
+        for (int i=1; i<alarmState.length; i++) {
+            selection.append(" OR " + KEY_STATE + " = ?");
+            selectionArgs[i] = Integer.toString(alarmState[i]);
+        }
+
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection.toString(), selectionArgs, null, null, KEY_STATE_ALARMID + " DESC", n+"" )
+                                 : database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection.toString(), selectionArgs, null, null, KEY_STATE_ALARMID + " DESC" );
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
     public Cursor getAllAlarms(int n, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
-        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, "_id DESC", n+"" )
-                                 : database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, "_id DESC" );
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, KEY_ROWID + " DESC", n+"" )
+                                 : database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, KEY_ROWID + " DESC" );
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -654,6 +674,7 @@ public class AlarmDatabaseAdapter
         private boolean flag_add = false;
         private boolean flag_withState = true;
         private AlarmClockItem lastItem;
+        private AlarmClockItem[] items = null;
 
         public AlarmUpdateTask(@NonNull Context context)
         {
@@ -693,15 +714,18 @@ public class AlarmDatabaseAdapter
                 updated = updated && itemUpdated;
             }
             db.close();
+            this.items = Arrays.copyOf(items, items.length);
             return updated;
         }
 
         @Override
         protected void onPostExecute(Boolean result)
         {
-            Log.d(TAG, "Item Saved: " + lastItem.rowID + ":" + (lastItem.state != null ? lastItem.state.getState() : null));
-            if (listener != null)
+            Log.d(TAG, "Item Saved: " + (lastItem != null ? lastItem.rowID + ":" + (lastItem.state != null ? lastItem.state.getState() : null) : "null"));
+            if (listener != null) {
                 listener.onFinished(result, lastItem);
+                listener.onFinished(result, items);
+            }
         }
 
         protected AlarmItemTaskListener listener = null;
@@ -714,6 +738,7 @@ public class AlarmDatabaseAdapter
     public static abstract class AlarmItemTaskListener
     {
         public void onFinished(Boolean result, AlarmClockItem item) {}
+        public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {}
     }
 
     /**
@@ -887,10 +912,19 @@ public class AlarmDatabaseAdapter
             param_enabledOnly = value;
         }
 
+        private int[] param_withAlarmState = null;
+        public void setParam_withAlarmState(int... state) {
+            param_withAlarmState = Arrays.copyOf(state, state.length);
+        }
+
         private Long param_nowMillis = null;    // list all items, else find next upcoming from now
         public void setParam_nowMillis( Long value ) {
             param_nowMillis = value;
-    }
+        }
+
+        protected boolean passesFilter(Cursor cursor, long rowID) {
+            return true;
+        }
 
         @Override
         protected Long[] doInBackground(Void... voids)
@@ -902,10 +936,17 @@ public class AlarmDatabaseAdapter
                 alarmIds.add(db.findUpcomingAlarmId(param_nowMillis));
 
             } else {
-                Cursor cursor = db.getAllAlarms(0, false, param_enabledOnly);
+                Cursor cursor = (param_withAlarmState != null)
+                        ? db.getAllAlarmsByState(0, param_withAlarmState)
+                        : db.getAllAlarms(0, false, param_enabledOnly);
+
                 while (!cursor.isAfterLast())
                 {
-                    alarmIds.add(cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID)));
+                    String index = (param_withAlarmState != null) ? AlarmDatabaseAdapter.KEY_STATE_ALARMID : AlarmDatabaseAdapter.KEY_ROWID;
+                    long alarmId = cursor.getLong(cursor.getColumnIndex(index));
+                    if (passesFilter(cursor, alarmId)) {
+                        alarmIds.add(alarmId);
+                    }
                     cursor.moveToNext();
                 }
             }

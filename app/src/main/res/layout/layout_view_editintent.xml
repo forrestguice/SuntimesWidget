@@ -126,23 +126,6 @@
             android:orientation="horizontal"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <TextView android:labelFor="@+id/appwidget_action_launch_action"
-                android:id="@+id/appwidget_action_launch_action_label"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_action_launch_action" />
-
-            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_action" android:layout_width="0dp"
-                android:layout_height="wrap_content" android:layout_weight="1"
-                android:hint="@string/configHint_action_launch_action" android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:inputType="textMultiLine|textNoSuggestions" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
-
             <TextView android:labelFor="@+id/appwidget_action_launch"
                 android:id="@+id/appwidget_action_launch_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -157,6 +140,74 @@
         </LinearLayout>
 
         <LinearLayout
+            android:orientation="horizontal" android:animateLayoutChanges="true"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <TextView android:labelFor="@+id/appwidget_action_launch_package"
+                android:id="@+id/appwidget_action_launch_package_label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_action_launch_package" />
+
+            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_package" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:hint="@string/configHint_action_launch_package" android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textMultiLine|textNoSuggestions" />
+
+            <View android:layout_height="48dp" android:layout_width="1dp" android:background="@null" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_package_clear"
+                style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionCancel"
+                android:visibility="gone"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:scaleX="0.8" android:scaleY="0.8"
+                android:contentDescription="@string/dialog_cancel" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_package_suggest"
+                style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionExpand"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:scaleX="0.8" android:scaleY="0.8"
+                android:contentDescription="@string/configLabel_action_launch_package" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <TextView android:labelFor="@+id/appwidget_action_launch_action"
+                android:id="@+id/appwidget_action_launch_action_label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="@string/configLabel_action_launch_action" />
+
+            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_action" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:hint="@string/configHint_action_launch_action" android:text=""
+                android:layout_gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textMultiLine|textNoSuggestions" />
+
+            <View android:layout_height="48dp" android:layout_width="1dp" android:background="@null" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_action_clear"
+                style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionCancel"
+                android:visibility="gone"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:scaleX="0.8" android:scaleY="0.8"
+                android:contentDescription="@string/dialog_cancel" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_action_suggest"
+                style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionExpand"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:layout_gravity="bottom"
+                android:scaleX="0.8" android:scaleY="0.8"
+                android:contentDescription="@string/configLabel_action_launch_action" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -165,7 +216,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch_data" />
 
-            <EditText android:id="@+id/appwidget_action_launch_data" android:layout_width="0dp"
+            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_data" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch_data" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"

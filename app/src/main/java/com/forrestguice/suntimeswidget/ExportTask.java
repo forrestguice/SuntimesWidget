@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,9 +18,19 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.OpenableColumns;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import java.io.BufferedOutputStream;
@@ -34,11 +44,14 @@ import java.util.Comparator;
 @SuppressWarnings("Convert2Diamond")
 public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.ExportResult>
 {
+    public static final String FILE_PROVIDER_AUTHORITY = "com.forrestguice.suntimeswidget.fileprovider";
+
     public static final long MIN_WAIT_TIME = 2000;
     public static final long CACHE_MAX = 256000;
 
     protected WeakReference<Context> contextRef;
 
+    protected Uri exportUri = null;
     protected String exportTarget;
     protected File exportFile;
     protected int numEntries;
@@ -68,6 +81,14 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         this.exportTarget = exportTarget;
         this.saveToCache = saveToCache;
         this.useExternalStorage = useExternalStorage;
+    }
+    public ExportTask(Context context, Uri exportUri)
+    {
+        this.contextRef = new WeakReference<Context>(context);
+        this.exportTarget = null;
+        this.exportUri = exportUri;
+        this.saveToCache = false;
+        this.useExternalStorage = false;
     }
 
     /**
@@ -137,7 +158,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         if (context == null)
         {
             Log.w("ExportTask", "Reference (weak) to context is null at start of doInBackground; cancelling...");
-            return new ExportResult(false, null, "");
+            return new ExportResult(false, exportUri, null, "");
         }
 
         long startTime = System.currentTimeMillis();
@@ -159,7 +180,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
                 } catch (IOException e) {
                     Log.w("ExportTask", "Canceling export; failed to create external temp file.");
-                    return new ExportResult(false, null, "");
+                    return new ExportResult(false, null, null, "");
                 }
 
             } else {                 // save to: external download dir
@@ -171,7 +192,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
                 if (targetExists && !overwriteTarget)
                 {
                     Log.w("ExportTask", "Canceling export; the target already exists (and overwrite flag is false). " + exportFile.getAbsolutePath());
-                    return new ExportResult(false, exportFile, mimeType);
+                    return new ExportResult(false, exportUri,  exportFile, mimeType);
 
                 } else if (targetExists) {
                     int c = 0;
@@ -191,12 +212,16 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
             } catch (IOException e) {
                 Log.w("ExportTask", "Canceling export; failed to create internal temp file.");
-                return new ExportResult(false, null, "");
+                return new ExportResult(false, exportUri, null, "");
             }
+
+        } else if (exportUri != null) {    // save to user provided URI
+            Log.d("ExportTask", "saving to uri: " + exportUri);
+            exportFile = null;
 
         } else {
             Log.w("ExportTask", "Canceling export; external storage is unavailable.");
-            return new ExportResult(false, null, "");
+            return new ExportResult(false, exportUri, null, "");
         }
 
         //
@@ -205,7 +230,10 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         boolean exported = false;
         BufferedOutputStream out = null;
         try {
-            out = new BufferedOutputStream(new FileOutputStream(exportFile));
+            out = new BufferedOutputStream((exportUri != null)
+                            ? context.getContentResolver().openOutputStream(exportUri)
+                            : new FileOutputStream(exportFile)
+            );
             exported = export(context, out);
 
         } catch (IOException e) {
@@ -234,7 +262,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         {
             endTime = System.currentTimeMillis();
         }
-        return new ExportResult(exported, exportFile, mimeType);
+        return new ExportResult(exported, exportUri, exportFile, mimeType);
     }
 
     protected abstract boolean export(Context context, BufferedOutputStream out) throws IOException;
@@ -256,15 +284,19 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
      */
     public static class ExportResult
     {
-        public ExportResult( boolean result, File exportFile, String mimeType )
+        public ExportResult( boolean result, Uri exportUri, File exportFile, String mimeType )
         {
             this.result = result;
+            this.exportUri = exportUri;
             this.exportFile = exportFile;
             this.mimeType = mimeType;
         }
 
         private final boolean result;
         public boolean getResult() { return result; }
+
+        private final Uri exportUri;
+        public Uri getExportUri() { return exportUri; }
 
         private final File exportFile;
         public File getExportFile() { return exportFile; }
@@ -390,4 +422,72 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
             taskListener.onFinished(result);
         }
     }
+
+    /**
+     */
+    public static void shareResult(Context context, File file, String mimeType)
+    {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType(mimeType);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        try {
+            Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, file);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+            context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
+
+        } catch (Exception e) {
+            Log.e("ExportTask", "shareResult: Failed to share file URI! " + e);
+        }
+    }
+
+    public static Intent getOpenFileIntent(String mimeType)
+    {
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+
+        } else {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        }
+
+        intent.setType(mimeType);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        return intent;
+    }
+
+    @TargetApi(19)
+    public static Intent getCreateFileIntent(String suggestedFileName, String mimeType)
+    {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.putExtra(Intent.EXTRA_TITLE, suggestedFileName);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType(mimeType);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        return intent;
+    }
+
+    @Nullable
+    public static String getFileName(@Nullable ContentResolver resolver, @Nullable Uri uri)
+    {
+        if (resolver != null && uri != null)
+        {
+            Cursor cursor = resolver.query(uri, null, null, null, null);
+            if (cursor != null)
+            {
+                cursor.moveToFirst();
+                String filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                cursor.close();
+                return filename;
+            }
+        }
+        return null;
+    }
+
 }
