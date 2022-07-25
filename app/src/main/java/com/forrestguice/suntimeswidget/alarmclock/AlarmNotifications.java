@@ -537,7 +537,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                 } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e1) {    // default failed too..
                     Log.e(TAG, "startAlert: failed to play " + defaultUri.toString() + " ..(1) " + e);
-                    Uri fallbackUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
+                    Uri fallbackUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.type);
                     try {
                         startAlert(context, fallbackUri, isAlarm);  // (2)
 
@@ -2141,6 +2141,11 @@ public class AlarmNotifications extends BroadcastReceiver
             if (cursor != null)
             {
                 cursor.moveToFirst();
+                if (cursor.isAfterLast()) {
+                    Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is missing (no rows) :: " + uri_calc);
+                    return null;
+                }
+
                 int i_eventTime = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_TIMEMILLIS);
                 Long eventTimeMillis = i_eventTime >= 0 ? cursor.getLong(i_eventTime) : null;
                 cursor.close();

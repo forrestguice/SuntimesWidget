@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -953,13 +954,17 @@ public class PlacesListFragment extends Fragment
         {
             String filename = exportTarget + ExportPlacesTask.FILEEXT;
             Intent intent = ExportTask.getCreateFileIntent(filename, ExportPlacesTask.MIMETYPE);
-            startActivityForResult(intent, EXPORT_REQUEST);
+            try {
+                startActivityForResult(intent, EXPORT_REQUEST);
+                return;
 
-        } else {
-            ExportPlacesTask task = new ExportPlacesTask(context, exportTarget, true, true);  // export to external cache
-            task.setTaskListener(exportPlacesListener);
-            task.execute();
+            } catch (ActivityNotFoundException e) {
+                Log.e("exportPlaces", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+            }
         }
+        ExportPlacesTask task = new ExportPlacesTask(context, exportTarget, true, true);  // export to external cache
+        task.setTaskListener(exportPlacesListener);
+        task.execute();
     }
 
     public void exportPlaces(Context context, @NonNull Uri uri)

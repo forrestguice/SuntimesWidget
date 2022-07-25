@@ -406,7 +406,6 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Log.d("DEBUG", "onItemSelected: " + position);
             setAlarmType((AlarmClockItem.AlarmType) parent.getItemAtPosition(position));
-            updateViews(getActivity());
         }
 
         @Override
@@ -415,6 +414,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     private void updateViews(Context context)
     {
+        if (context == null || !isAdded()) {
+            return;
+        }
         detachListeners();
 
         if (btn_alarms != null) {
@@ -422,7 +424,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
 
         AlarmClockItem.AlarmType alarmType = getAlarmType();
-        AlarmClockItem item = createAlarm(AlarmCreateDialog.this, alarmType);
+        AlarmClockItem item = createAlarm(context, AlarmCreateDialog.this, alarmType);
         item.offset = getOffset();
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
 
@@ -719,19 +721,20 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     protected void animatePreviewOffset(final AlarmCreateDialog dialog, final boolean enable)
     {
-        if (dialog == null || dialog.getActivity() == null || !isAdded()) {
+        Context context = (dialog != null ? dialog.getActivity() : null);
+        if (context == null || !isAdded()) {
             return;
         }
 
-        AlarmClockItem item = createAlarm(dialog, getAlarmType());
+        AlarmClockItem item = createAlarm(context, dialog, getAlarmType());
         item.offset = getOffset();
-        boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item);
+        boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
 
         if (text_time != null) {
-            text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(getActivity(), item, enable) : "");
+            text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, enable) : "");
         }
         if (text_date != null) {
-            text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(getActivity(), item, enable): "");
+            text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item, enable): "");
         }
 
         if (Build.VERSION.SDK_INT >= 14)
@@ -793,7 +796,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     }
 
     public int getMode() {
-        return tabs.getSelectedTabPosition();
+        return (tabs != null ? tabs.getSelectedTabPosition() : getArguments().getInt(EXTRA_MODE, 0));
     }
 
     public String getEvent()
@@ -804,7 +807,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public Location getLocation()
     {
         Location location = getArguments().getParcelable(EXTRA_LOCATION);
-        return (location != null ? location : WidgetSettings.loadLocationPref(getActivity(), 0));
+        return (location != null ? location
+                                 : isAdded() ? WidgetSettings.loadLocationPref(getActivity(), 0)
+                                             : WidgetSettings.loadLocationDefault());
     }
     public void setEvent( String event, Location location )
     {
@@ -896,6 +901,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 fragment.setType(getAlarmType());
             }
         }
+        updateViews(getContext());
     }
     public AlarmClockItem.AlarmType getAlarmType() {
         return (AlarmClockItem.AlarmType) getArguments().getSerializable(EXTRA_ALARMTYPE);
@@ -930,7 +936,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         dialog.setData(context, sunData, moonData, equinoxData);
     }
 
-    public static AlarmClockItem createAlarm(@NonNull AlarmCreateDialog dialog, AlarmClockItem.AlarmType type)
+    public static AlarmClockItem createAlarm(@NonNull Context context, @NonNull AlarmCreateDialog dialog, AlarmClockItem.AlarmType type)
     {
         long date;
         int hour;
@@ -953,7 +959,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             timezone = dialog.getTimeZone();
             event = null;
         }
-        return AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), date, hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmSettings.getDefaultRingtoneName(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        return AlarmListDialog.createAlarm(context, type, "", event, dialog.getLocation(), date, hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmSettings.getDefaultRingtoneName(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     public static void updateAlarmItem(AlarmCreateDialog dialog, AlarmClockItem item)

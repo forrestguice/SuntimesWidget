@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -509,21 +510,25 @@ public class AlarmListDialog extends DialogFragment
         AlarmListDialogAdapter adapter = getAdapter();
         if (context != null && adapter != null)
         {
-            AlarmClockItem[] items = adapter.getItems().toArray(new AlarmClockItem[0]);
+            AlarmClockItem[] items = getItemsForExport();
             if (items.length > 0)
             {
                 if (Build.VERSION.SDK_INT >= 19)
                 {
                     String filename = exportTarget + AlarmClockItemExportTask.FILEEXT;
                     Intent intent = ExportTask.getCreateFileIntent(filename, AlarmClockItemExportTask.MIMETYPE);
-                    startActivityForResult(intent, REQUEST_EXPORT_URI);
+                    try {
+                        startActivityForResult(intent, REQUEST_EXPORT_URI);
+                        return true;
 
-                } else {
-                    exportTask = new AlarmClockItemExportTask(context, exportTarget, true, true);    // export to external cache
-                    exportTask.setItems(items);
-                    exportTask.setTaskListener(exportListener);
-                    exportTask.execute();
+                    } catch (ActivityNotFoundException e) {
+                        Log.e("ExportAlarms", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+                    }
                 }
+                exportTask = new AlarmClockItemExportTask(context, exportTarget, true, true);    // export to external cache
+                exportTask.setItems(items);
+                exportTask.setTaskListener(exportListener);
+                exportTask.execute();
                 return true;
             } else return false;
         }
@@ -536,7 +541,7 @@ public class AlarmListDialog extends DialogFragment
             Log.e("ExportAlarms", "Already busy importing/exporting! ignoring request");
 
         } else {
-            AlarmClockItem[] items = adapter.getItems().toArray(new AlarmClockItem[0]);
+            AlarmClockItem[] items = getItemsForExport();
             if (items.length > 0)
             {
                 exportTask = new AlarmClockItemExportTask(context, uri);    // export directly to uri
@@ -545,6 +550,14 @@ public class AlarmListDialog extends DialogFragment
                 exportTask.execute();
             }
         }
+    }
+
+    protected AlarmClockItem[] getItemsForExport()
+    {
+        List<AlarmClockItem> itemList = adapter.getItems();
+        AlarmListDialogAdapter.sortItems(itemList, AlarmSettings.SORT_BY_CREATION);   // list is displayed youngest -> oldest
+        Collections.reverse(itemList);                                                // should be reversed for export (so import encounters/adds older items first)
+        return itemList.toArray(new AlarmClockItem[0]);
     }
 
     protected AlarmClockItemExportTask exportTask = null;
@@ -900,8 +913,8 @@ public class AlarmListDialog extends DialogFragment
                 }
 
             } else {
-                items.add(item);
-                notifyDataSetChanged();
+                items.add(0, item);
+                sortItems();
             }
         }
 
@@ -943,26 +956,38 @@ public class AlarmListDialog extends DialogFragment
 
         protected List<AlarmClockItem> sortItems(List<AlarmClockItem> items)
         {
-            final long now = Calendar.getInstance().getTimeInMillis();
-            final int sortMode = AlarmSettings.loadPrefAlarmSort(contextRef.get());
-            Collections.sort(items, new Comparator<AlarmClockItem>()
-            {
-                @Override
-                public int compare(AlarmClockItem o1, AlarmClockItem o2)
-                {
-                    switch (sortMode)
-                    {
-                        case AlarmSettings.SORT_BY_ALARMTIME:                // nearest alarm time first
-                            return compareLong((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
-
-                        case AlarmSettings.SORT_BY_CREATION:
-                        default: return compareLong(o2.rowID, o1.rowID);    // newest items first
-                    }
-                }
-            });
+            sortItems(items, AlarmSettings.loadPrefAlarmSort(contextRef.get()));
             return items;
         }
 
+        public static List<AlarmClockItem> sortItems(List<AlarmClockItem> items, final int sortMode)
+        {
+            final long now = Calendar.getInstance().getTimeInMillis();
+            switch (sortMode)
+            {
+                case AlarmSettings.SORT_BY_ALARMTIME:    // nearest alarm time first
+                    Collections.sort(items, new Comparator<AlarmClockItem>() {
+                        @Override
+                        public int compare(AlarmClockItem o1, AlarmClockItem o2) {
+                            return compareLong((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
+                        }
+                    });
+                    break;
+
+                case AlarmSettings.SORT_BY_CREATION:    // newest items first
+                default:
+                    Collections.sort(items, new Comparator<AlarmClockItem>() {
+                        @Override
+                        public int compare(AlarmClockItem o1, AlarmClockItem o2) {
+                            return compareLong(o2.rowID, o1.rowID);
+                        }
+                    });
+                    break;
+            }
+            return items;
+        }
+
+        @SuppressWarnings("UseCompareMethod")
         static int compareLong(long x, long y) {
             return (x < y) ? -1 : ((x == y) ? 0 : 1);    // copied from Long.compare to support api < 19
         }
