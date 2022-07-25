@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.themes;
 
 /**
  * WidgetThemeProviderContract
- * @version 1 (0.1.0)
+ * @version 3 (0.1.2)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.theme.provider"
@@ -44,12 +44,13 @@ package com.forrestguice.suntimeswidget.themes;
  *   1 initial version
  *   2 fixes comment for THEME_PADDING to indicate these are actually dp values,
  *     adds THEME_PADDING_PIXELS suffix (may be appended to THEME_PADDING*).
+ *   3 adds GRAPH_POINT_FILL_COLOR and GRAPH_POINT_STROKE_COLOR (disambiguate from THEME_NOONICON_).
  */
 public interface SuntimesThemeContract
 {
     String AUTHORITY = "suntimeswidget.theme.provider";
-    String VERSION_NAME = "v0.1.1";
-    int VERSION_CODE = 2;
+    String VERSION_NAME = "v0.1.2";
+    int VERSION_CODE = 3;
 
     /**
      * THEME
@@ -122,6 +123,8 @@ public interface SuntimesThemeContract
     String THEME_NAUTICALCOLOR = "nauticalcolor";                                                   // int (color)
     String THEME_ASTROCOLOR = "astrocolor";                                                         // int (color)
     String THEME_NIGHTCOLOR = "nightcolor";                                                         // int (color)
+    String THEME_GRAPH_POINT_FILL_COLOR = "graphpointfillcolor";                                    // int (color)
+    String THEME_GRAPH_POINT_STROKE_COLOR = "graphpointstrokecolor";                                // int (color)
 
     String THEME_SPRINGCOLOR = "springcolor";                                                       // int (color)
     String THEME_SUMMERCOLOR = "summercolor";                                                       // int (color)
@@ -168,7 +171,7 @@ public interface SuntimesThemeContract
             THEME_NOONICON_FILL_COLOR, THEME_NOONICON_STROKE_COLOR, THEME_NOONICON_STROKE_WIDTH,
             THEME_RISEICON_FILL_COLOR, THEME_RISEICON_STROKE_COLOR, THEME_RISEICON_STROKE_WIDTH,
             THEME_SETICON_FILL_COLOR, THEME_SETICON_STROKE_COLOR, THEME_SETICON_STROKE_WIDTH,
-            THEME_DAYCOLOR, THEME_CIVILCOLOR, THEME_NAUTICALCOLOR, THEME_ASTROCOLOR, THEME_NIGHTCOLOR,
+            THEME_DAYCOLOR, THEME_CIVILCOLOR, THEME_NAUTICALCOLOR, THEME_ASTROCOLOR, THEME_NIGHTCOLOR, THEME_GRAPH_POINT_FILL_COLOR, THEME_GRAPH_POINT_STROKE_COLOR,
             THEME_SPRINGCOLOR, THEME_SUMMERCOLOR, THEME_FALLCOLOR, THEME_WINTERCOLOR,
             THEME_MAP_BACKGROUNDCOLOR, THEME_MAP_FOREGROUNDCOLOR, THEME_MAP_SHADOWCOLOR, THEME_MAP_HIGHLIGHTCOLOR,
             THEME_TITLESIZE, THEME_TITLEBOLD, THEME_TEXTSIZE, THEME_TIMESIZE, THEME_TIMEBOLD, THEME_TIMESUFFIXSIZE

@@ -23,6 +23,8 @@
     <string name="configAction_viewDate">Datum bekijken</string>
     <string name="configAction_viewDateWith">Datum bekijken</string>
     <string name="configAction_share">Share</string>
+    <string name="configAction_export">Export</string>    <!-- TODO -->
+    <string name="configAction_import">Import</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Positie van de zon</string>
     <string name="configAction_equinoxDialog">Zonnewende / Equinox</string>
     <string name="configAction_worldMap">Wereldkaart</string>
@@ -605,8 +607,8 @@
     <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Themes</string>
@@ -616,9 +618,9 @@
     <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
@@ -820,6 +822,8 @@
     <string name="clearalarms_dialog_cancel">@string/dialog_cancel</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg -->
 
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">@string/dialog_cancel</string>    <!-- button -->
@@ -944,8 +948,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
 
     <!-- App Setting: UI -->
@@ -1073,67 +1077,6 @@
     <string name="configActionDesc_themeList">Theme List</string>
     <string name="configActionDesc_actionList">Action List</string>
     <string name="configActionDesc_widgetList">Widget List</string>
-
-    <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/configAction_showCalendar</item>
-        <item>@string/configAction_mapLocation</item>
-    </string-array>
-    <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_setAlarm</item>
-
-        <item>@string/configActionDesc_nextCard</item>
-        <item>@string/configActionDesc_prevCard</item>
-        <item>@string/configActionDesc_swapCards</item>
-        <item>@string/configActionDesc_showCard</item>
-
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
-
-        <item>@string/configActionDesc_setDate</item>
-        <item>@string/configActionDesc_setLocation</item>
-        <item>@string/configActionDesc_setTimeZone</item>
-
-        <item>@string/configActionDesc_worldMap</item>
-        <item>@string/configActionDesc_equinoxDialog</item>
-        <item>@string/configActionDesc_moon</item>
-        <item>@string/configActionDesc_sunDialog</item>
-
-        <item>@string/configActionDesc_alarmList</item>
-        <item>@string/configActionDesc_themeList</item>
-        <item>@string/configActionDesc_actionList</item>
-        <item>@string/configActionDesc_widgetList</item>
-
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_mapLocation</item>
-    </string-array>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>

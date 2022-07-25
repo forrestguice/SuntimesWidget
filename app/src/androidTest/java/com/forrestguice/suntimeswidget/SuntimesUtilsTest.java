@@ -25,6 +25,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 import android.text.style.ImageSpan;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
@@ -421,6 +422,105 @@ public class SuntimesUtilsTest
         for (String r0 : result0) {
             assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
         }
+    }
+
+    @Test
+    public void test_initDisplayStrings_executionTime()
+    {
+        double bench_millis = 0, threshold_millis = 1.5;
+        double bench_fast = Double.POSITIVE_INFINITY, bench_slow = 0;
+        long bench_start = 0, bench_end = 0;
+        int n = 100;
+        for (int i = 0; i < n; i++)
+        {
+            bench_start = System.nanoTime();
+            SuntimesUtils.initDisplayStrings(mockContext);
+            bench_end = System.nanoTime();
+            double bench_millis0 = ((bench_end - bench_start) / 1000000.0);
+            //Log.d("SuntimesUtilsTest", "SuntimesUtils.initDisplayStrings in " + bench_millis0);
+            if (bench_millis0 < bench_fast) {
+                bench_fast = bench_millis0;
+            }
+            if (bench_millis0 > bench_slow) {
+                bench_slow = bench_millis0;
+            }
+            bench_millis += bench_millis0;
+        }
+        bench_millis /= ((double)n);
+        Log.d("SuntimesUtilsTest", "avg SuntimesUtils.initDisplayStrings in " + bench_millis + ", [" + bench_fast + " .. " + bench_slow + "]");
+        assertTrue("initDisplayStrings takes less than " + threshold_millis + " ms", bench_millis < threshold_millis);
+    }
+
+    @Test
+    public void test_calendarDateTimeDisplayString_12hr_executionTime()
+    {
+        SuntimesUtils.initDisplayStrings(mockContext);
+
+        long utcMillis = 1493315892762L;                          // april 27
+        TimeZone tz = TimeZone.getTimeZone("US/Arizona");
+        Calendar now = Calendar.getInstance(tz);
+        now.setTimeInMillis(utcMillis);
+
+        SuntimesUtils.TimeDisplayText text;
+        double bench_millis = 0, threshold_millis = 2;
+        double bench_fast = Double.POSITIVE_INFINITY, bench_slow = 0;
+        long bench_start = 0, bench_end = 0;
+        int n = 100;
+        for (int i = 0; i < n; i++)
+        {
+            bench_start = System.nanoTime();
+            text = utils.calendarTime12HrDisplayString(mockContext, now, false);
+            bench_end = System.nanoTime();
+
+            double bench_millis0 = ((bench_end - bench_start) / 1000000.0);
+            //Log.d("SuntimesUtilsTest", "SuntimesUtils.calendarDateTimeDisplay in " + bench_millis0);
+            if (bench_millis0 < bench_fast) {
+                bench_fast = bench_millis0;
+            }
+            if (bench_millis0 > bench_slow) {
+                bench_slow = bench_millis0;
+            }
+            bench_millis += bench_millis0;
+        }
+        bench_millis /= ((double)n);
+        Log.d("SuntimesUtilsTest", "avg SuntimesUtils.calendarDateTimeDisplay in " + bench_millis + ", [" + bench_fast + " .. " + bench_slow + "]");
+        assertTrue("calendarDateTimeDisplay takes less than " + threshold_millis + " ms .. took " + bench_millis, bench_millis < threshold_millis);
+    }
+
+    @Test
+    public void test_calendarDateTimeDisplayString_24hr_executionTime()
+    {
+        SuntimesUtils.initDisplayStrings(mockContext);
+
+        long utcMillis = 1493315892762L;                          // april 27
+        TimeZone tz = TimeZone.getTimeZone("US/Arizona");
+        Calendar now = Calendar.getInstance(tz);
+        now.setTimeInMillis(utcMillis);
+
+        String text;
+        double bench_millis = 0, threshold_millis = 2;
+        double bench_fast = Double.POSITIVE_INFINITY, bench_slow = 0;
+        long bench_start = 0, bench_end = 0;
+        int n = 100;
+        for (int i = 0; i < n; i++)
+        {
+            bench_start = System.nanoTime();
+            text = utils.calendarTime24HrString(mockContext, now, false);
+            bench_end = System.nanoTime();
+
+            double bench_millis0 = ((bench_end - bench_start) / 1000000.0);
+            Log.d("SuntimesUtilsTest", "SuntimesUtils.initDisplayStrings in " + bench_millis0);
+            if (bench_millis0 < bench_fast) {
+                bench_fast = bench_millis0;
+            }
+            if (bench_millis0 > bench_slow) {
+                bench_slow = bench_millis0;
+            }
+            bench_millis += bench_millis0;
+        }
+        bench_millis /= ((double)n);
+        Log.d("SuntimesUtilsTest", "avg SuntimesUtils.calendarDateTimeDisplay in " + bench_millis + ", [" + bench_fast + " .. " + bench_slow + "]");
+        assertTrue("calendarDateTimeDisplay takes less than " + threshold_millis + " ms .. took " + bench_millis, bench_millis < threshold_millis);
     }
 
 }

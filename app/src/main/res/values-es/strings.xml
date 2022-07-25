@@ -26,6 +26,8 @@
     <string name="configAction_viewDate">Ver fecha</string>
     <string name="configAction_viewDateWith">Ver fecha</string>
     <string name="configAction_share">Compartir</string>
+    <string name="configAction_export">Exportar</string>
+    <string name="configAction_import">Importar</string>
     <string name="configAction_sunDialog">Posición del Sol</string>
     <string name="configAction_equinoxDialog">Solsticio / Equinoccio</string>
     <string name="configAction_worldMap">Mapa del mundo</string>
@@ -556,8 +558,8 @@
     <string name="configAction_loadAction">Cargar</string>         <!-- button (contentDescription) -->  
     <string name="configAction_deleteAction">Borrar</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Borrar todo</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_exportActions">Exportar</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Importar</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     
     <string name="configLabel_widgetThemeList">Temas de widget</string>
@@ -567,9 +569,9 @@
     <string name="configAction_editTheme">Editar</string>         
     <string name="configAction_deleteTheme">Borrar</string>     
     <string name="configAction_copyTheme">Copiar</string>
-    <string name="configAction_exportThemes">Exportar</string>
+    <string name="configAction_exportThemes">@string/configAction_export</string>
     <string name="configAction_shareTheme">@string/configAction_share</string>
-    <string name="configAction_importThemes">Importar</string>    
+    <string name="configAction_importThemes">@string/configAction_import</string>
 
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->
@@ -765,7 +767,9 @@
     <string name="clearalarms_dialog_message">¿Estás seguro de querer suprimir todas las alarmas?</string>   <!-- dialog msg --> 
     <string name="clearalarms_dialog_ok">Aplicar</string>        <!-- button --> 
     <string name="clearalarms_dialog_cancel">Cancelar</string>    <!-- button --> 
-    <string name="clearalarms_toast_success">Alarmas suprimidas.</string> <!-- toast msg --> 
+    <string name="clearalarms_toast_success">Alarmas suprimidas.</string> <!-- toast msg -->
+
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
 
     <string name="alarmlabel_dialog_title">Etiqueta</string>        <!-- dialog title -->  
     <string name="alarmlabel_dialog_ok">Aplicar</string>        <!-- button --> 
@@ -889,8 +893,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Borrar</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_exportPlaces">Exportar</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     
     <string name="configLabel_ui">Interfaz de usuario</string>

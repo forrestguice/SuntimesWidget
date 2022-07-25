@@ -12,18 +12,15 @@
 
                 <item android:id="@+id/trackRecent"
                     android:title="@string/trackingMode_recent"
-                    android:icon="?attr/icActionSort"
-                    android:checkable="true" />
+                    android:icon="?attr/icActionSort" />
 
                 <item android:id="@+id/trackClosest"
                     android:title="@string/trackingMode_closest"
-                    android:icon="?attr/icActionSort"
-                    android:checkable="true" />
+                    android:icon="?attr/icActionSort" />
 
                 <item android:id="@+id/trackUpcoming"
                     android:title="@string/trackingMode_soonest"
-                    android:icon="?attr/icActionSort"
-                    android:checkable="true" />
+                    android:icon="?attr/icActionSort" />
 
             </group>
         </menu>

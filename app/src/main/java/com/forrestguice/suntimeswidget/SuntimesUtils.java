@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
@@ -75,6 +76,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -83,10 +86,15 @@ import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.IllegalFormatConversionException;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -154,45 +162,46 @@ public class SuntimesUtils
         is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
                                                     : (mode == TimeFormatMode.MODE_24HR);
 
-        strTimeShorter = context.getString(R.string.delta_day_shorter);
-        strTimeLonger = context.getString(R.string.delta_day_longer);
-        strYears = context.getString(R.string.delta_years);
-        strWeeks = context.getString(R.string.delta_weeks);
-        strDays = context.getString(R.string.delta_days);
-        strHours = context.getString(R.string.delta_hours);
-        strMinutes = context.getString(R.string.delta_minutes);
-        strSeconds = context.getString(R.string.delta_seconds);
+        Resources res = context.getResources();
+        strTimeShorter = res.getString(R.string.delta_day_shorter);
+        strTimeLonger = res.getString(R.string.delta_day_longer);
+        strYears = res.getString(R.string.delta_years);
+        strWeeks = res.getString(R.string.delta_weeks);
+        strDays = res.getString(R.string.delta_days);
+        strHours = res.getString(R.string.delta_hours);
+        strMinutes = res.getString(R.string.delta_minutes);
+        strSeconds = res.getString(R.string.delta_seconds);
 
-        strAltSymbol = context.getString(R.string.widgetLabel_altitude_symbol);
-        strRaSymbol = context.getString(R.string.widgetLabel_rightAscension_symbol);
-        strDecSymbol = context.getString(R.string.widgetLabel_declination_symbol);
+        strAltSymbol = res.getString(R.string.widgetLabel_altitude_symbol);
+        strRaSymbol = res.getString(R.string.widgetLabel_rightAscension_symbol);
+        strDecSymbol = res.getString(R.string.widgetLabel_declination_symbol);
 
-        strDegreesFormat = context.getString(R.string.degrees_format);
-        strDirectionFormat = context.getString(R.string.direction_format);
-        strElevationFormat = context.getString(R.string.elevation_format);
-        strRaFormat = context.getString(R.string.rightascension_format);
-        strDeclinationFormat = context.getString(R.string.declination_format);
-        strDistanceFormat = context.getString(R.string.distance_format);
+        strDegreesFormat = res.getString(R.string.degrees_format);
+        strDirectionFormat = res.getString(R.string.direction_format);
+        strElevationFormat = res.getString(R.string.elevation_format);
+        strRaFormat = res.getString(R.string.rightascension_format);
+        strDeclinationFormat = res.getString(R.string.declination_format);
+        strDistanceFormat = res.getString(R.string.distance_format);
 
-        strTimeDeltaFormat = context.getString(R.string.delta_format);
-        strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
-        strTimeVeryShortFormat24 = context.getString(R.string.time_format_24hr_veryshort);
-        strTimeVeryShortFormat12s = context.getString(R.string.time_format_12hr_veryshort_withseconds);
-        strTimeVeryShortFormat24s = context.getString(R.string.time_format_24hr_veryshort_withseconds);
-        strTimeNone = context.getString(R.string.time_none);
-        strTimeLoading = context.getString(R.string.time_loading);
+        strTimeDeltaFormat = res.getString(R.string.delta_format);
+        strTimeVeryShortFormat12 = res.getString(R.string.time_format_12hr_veryshort);
+        strTimeVeryShortFormat24 = res.getString(R.string.time_format_24hr_veryshort);
+        strTimeVeryShortFormat12s = res.getString(R.string.time_format_12hr_veryshort_withseconds);
+        strTimeVeryShortFormat24s = res.getString(R.string.time_format_24hr_veryshort_withseconds);
+        strTimeNone = res.getString(R.string.time_none);
+        strTimeLoading = res.getString(R.string.time_loading);
 
-        strDateYearFormat = context.getString(R.string.dateyear_format_short);
-        strDateShortFormat = context.getString(R.string.date_format_short);
-        strDateLongFormat = context.getString(R.string.date_format_long);
+        strDateYearFormat = res.getString(R.string.dateyear_format_short);
+        strDateShortFormat = res.getString(R.string.date_format_short);
+        strDateLongFormat = res.getString(R.string.date_format_long);
 
-        strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
-        strDateTimeShortFormat = dateTimeFormatShort(context, is24, false);  //  context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
-        strDateTimeLongFormat = dateTimeFormatLong(context, is24, false);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
+        strTimeShortFormat12 = res.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
+        strDateTimeShortFormat = dateTimeFormatShort(res, is24, false);  //  context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+        strDateTimeLongFormat = dateTimeFormatLong(res, is24, false);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
 
-        strTimeShortFormat12s = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
-        strDateTimeShortFormatSec = dateTimeFormatShort(context, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
-        strDateTimeLongFormatSec = dateTimeFormatLong(context, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
+        strTimeShortFormat12s = res.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strDateTimeShortFormatSec = dateTimeFormatShort(res, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
+        strDateTimeLongFormatSec = dateTimeFormatLong(res, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
         CardinalDirection.initDisplayStrings(context);
 
@@ -202,15 +211,15 @@ public class SuntimesUtils
         //Log.d("DEBUG", "SuntimesUtils initialized: " + initCount + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
 
-    public static String dateTimeFormatShort(Context context, boolean is24, boolean showSeconds)
+    public static String dateTimeFormatShort(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
-        return context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+        return res.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
     }
-    public static String dateTimeFormatLong(Context context, boolean is24, boolean showSeconds)
+    public static String dateTimeFormatLong(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
-        return context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
+        return res.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
     }
 
     public static boolean isInitialized()
@@ -319,8 +328,9 @@ public class SuntimesUtils
 
         public static void initDisplayStrings( Context context )
         {
-            String[] modes_short = context.getResources().getStringArray(R.array.directions_short);
-            String[] modes_long = context.getResources().getStringArray(R.array.directions_long);
+            Resources res = context.getResources();
+            String[] modes_short = res.getStringArray(R.array.directions_short);
+            String[] modes_long = res.getStringArray(R.array.directions_long);
             if (modes_long.length != modes_short.length)
             {
                 Log.e("initDisplayStrings", "The size of directions_short and solarevents_long DOES NOT MATCH!");
@@ -583,15 +593,27 @@ public class SuntimesUtils
 
     public String calendarTime24HrString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
-        Locale locale = getLocale();
-        String format = (showSeconds ? strTimeVeryShortFormat24s : strTimeVeryShortFormat24);  // HH:mm or HH:mm:ss
-        SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
-
         Date time = cal.getTime();
         applyTimeZone(time, cal.getTimeZone());
+        SimpleDateFormat timeFormat = initTimeFormat_24(showSeconds);
         timeFormat.setTimeZone(cal.getTimeZone());
         return timeFormat.format(time);
     }
+    private SimpleDateFormat initTimeFormat_24(boolean showSeconds)
+    {
+        if (showSeconds)
+        {
+            if (timeFormat_24s == null)
+                return (timeFormat_24s = new SimpleDateFormat(strTimeVeryShortFormat24s, getLocale()));
+            else return timeFormat_24s;
+
+        } else {
+            if (timeFormat_24 == null) {
+                return (timeFormat_24 = new SimpleDateFormat(strTimeVeryShortFormat24, getLocale()));
+            } else return timeFormat_24;
+        }
+    }
+    private SimpleDateFormat timeFormat_24, timeFormat_24s;
 
     /**
      * applyTimeZone
@@ -646,23 +668,35 @@ public class SuntimesUtils
         //   dansk               6.47 AM        11.46 PM           (da)
         //   norsk bokmal        6.47 a.m.      11.46 p.m.         (nb)
 
-        Locale locale = getLocale();
-
-        String format = (showSeconds ? strTimeVeryShortFormat12s : strTimeVeryShortFormat12);  // h:mm or h:mm:ss
-        SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
+        SimpleDateFormat timeFormat = initTimeFormat_12(showSeconds);
         timeFormat.setTimeZone(cal.getTimeZone());
-
-        //Log.d("DEBUG","TimeFormat: " + timeFormat.toPattern() + " (" + locale.toString() + ")");
-
-        SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
-        suffixFormat.setTimeZone(cal.getTimeZone());
+        timeFormat_12_suffix.setTimeZone(cal.getTimeZone());
 
         Date time = cal.getTime();
         applyTimeZone(time, cal.getTimeZone());
-        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", suffixFormat.format(time));
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", timeFormat_12_suffix.format(time));
         retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
     }
+
+    private SimpleDateFormat initTimeFormat_12(boolean showSeconds)
+    {
+        if (timeFormat_12_suffix == null) {
+            timeFormat_12_suffix = new SimpleDateFormat(strTimeSuffixFormat, getLocale());  // a
+        }
+        if (showSeconds)
+        {
+            if (timeFormat_12s == null)
+                return (timeFormat_12s = new SimpleDateFormat(strTimeVeryShortFormat12s, getLocale()));
+            else return timeFormat_12s;
+
+        } else {
+            if (timeFormat_12 == null) {
+                return (timeFormat_12 = new SimpleDateFormat(strTimeVeryShortFormat12, getLocale()));
+            } else return timeFormat_12;
+        }
+    }
+    private SimpleDateFormat timeFormat_12, timeFormat_12s, timeFormat_12_suffix;
 
     public String calendarTime12HrString(Context context, @NonNull Calendar cal)
     {
@@ -811,7 +845,7 @@ public class SuntimesUtils
         Locale locale = getLocale();
         SimpleDateFormat dateTimeFormat;
         if (showTime) {
-            dateTimeFormat = new SimpleDateFormat((showYear ? dateTimeFormatLong(context, formatIs24, showSeconds) : dateTimeFormatShort(context, formatIs24, showSeconds)), locale);
+            dateTimeFormat = new SimpleDateFormat((showYear ? dateTimeFormatLong(context.getResources(), formatIs24, showSeconds) : dateTimeFormatShort(context.getResources(), formatIs24, showSeconds)), locale);
         } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : strDateShortFormat), locale);
         //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
 
@@ -1178,9 +1212,21 @@ public class SuntimesUtils
         String modePattern = "%M";
         String modePatternShort = "%m";
         String orderPattern = "%o";
+        String[] patterns = new String[] { modePattern, modePatternShort, orderPattern };
+
+        SolarEvents[] events = { SolarEvents.SUNRISE, SolarEvents.NOON, SolarEvents.SUNSET };
+        HashMap<SolarEvents, String> patterns_em = getPatternsForEvent_em(events);
+        HashMap<SolarEvents, String> patterns_et = getPatternsForEvent_et(events);
+        HashMap<SolarEvents, String> patterns_eT = getPatternsForEvent_eT(events);
+        HashMap<SolarEvents, String> patterns_eA = getPatternsForEvent_eA(events);
 
         if (data == null) {
-            return displayString.replaceAll(modePatternShort, "").replaceAll(modePattern, "").replaceAll(orderPattern, "");
+            displayString = removePatterns(displayString, Arrays.asList(patterns));
+            displayString = removePatterns(displayString, patterns_em.values());
+            displayString = removePatterns(displayString, patterns_et.values());
+            displayString = removePatterns(displayString, patterns_eT.values());
+            displayString = removePatterns(displayString, patterns_eA.values());
+            return displayString;
         }
 
         WidgetSettings.TimeMode timeMode = data.timeMode();
@@ -1189,9 +1235,47 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         displayString = displayString.replaceAll(orderPattern, order.toString());
+
+        for (SolarEvents event : events)
+        {
+            String pattern_em = patterns_em.get(event);
+            String pattern_et = patterns_et.get(event);
+            String pattern_eT = patterns_eT.get(event);
+            String pattern_eA = patterns_eA.get(event);
+            if (!displayString.contains(pattern_em) && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT) && !displayString.contains(pattern_eA)) {
+                continue;
+            }
+
+            SuntimesRiseSetData d = (event == SolarEvents.NOON && data.getLinked() != null ? data.getLinked() : data);
+            Calendar eventTime = d.getEvents(event)[0];
+            if (eventTime != null)
+            {
+                if (displayString.contains(pattern_em)) {
+                    displayString = displayString.replaceAll(pattern_em, eventTime.getTimeInMillis() + "");
+                }
+                if (displayString.contains(pattern_et)) {
+                    displayString = displayString.replaceAll(pattern_et, calendarTimeShortDisplayString(context, eventTime, false).toString());
+                }
+                if (displayString.contains(pattern_eT)) {
+                    displayString = displayString.replaceAll(pattern_eT, calendarTimeShortDisplayString(context, eventTime, true).toString());
+                }
+                if (displayString.contains(pattern_eA)) {
+                    Double angle = getDegreesForEvent(event, d);
+                    displayString = displayString.replaceAll(pattern_eA, (angle != null ? formatAsDegrees(angle, 1) : ""));
+                }
+
+            } else {
+                displayString = displayString.replaceAll(pattern_em, "");
+                displayString = displayString.replaceAll(pattern_et, "");
+                displayString = displayString.replaceAll(pattern_eT, "");
+                displayString = displayString.replaceAll(pattern_eA, "");
+            }
+
+        }
+
         return displayString;
     }
-
+    
     public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesMoonData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
@@ -1238,8 +1322,172 @@ public class SuntimesUtils
         return displayString;
     }
 
-    public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesRiseSetDataset dataset) {
-        return displayStringForTitlePattern(context, titlePattern, (dataset != null ? dataset.dataActual : null));
+    @Nullable
+    public static Double getDegreesForEvent(SolarEvents event, SuntimesRiseSetData data)
+    {
+        switch (event)
+        {
+            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL: return -18d;
+            case MORNING_NAUTICAL: case EVENING_NAUTICAL: return -12d;
+            case MORNING_BLUE8: case EVENING_BLUE8: return -8d;
+            case MORNING_CIVIL: case EVENING_CIVIL: return -6d;
+            case MORNING_BLUE4: case EVENING_BLUE4: return -4d;
+            case MORNING_GOLDEN: case EVENING_GOLDEN: return 6d;
+            case SUNRISE: case SUNSET: return 0d;
+            case NOON:
+                SuntimesCalculator calculator = data.calculator();
+                Calendar noonTime = (data != null ? data.sunriseCalendarToday() : null);
+                SuntimesCalculator.SunPosition noonPosition = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
+                return noonPosition.elevation;
+            default: return null;
+        }
+    }
+
+    @Nullable
+    public static String getPatternForEvent(@NonNull String prefix, SolarEvents event)
+    {
+        switch (event)
+        {
+            case MORNING_ASTRONOMICAL: return prefix + "ar";
+            case EVENING_ASTRONOMICAL: return prefix + "as";
+            case MORNING_NAUTICAL: return prefix + "nr";
+            case EVENING_NAUTICAL: return prefix + "ns";
+            case MORNING_CIVIL: return prefix + "cr";
+            case EVENING_CIVIL: return prefix + "cs";
+            case SUNRISE: return prefix + "sr";
+            case NOON: return prefix + "sn";
+            case SUNSET: return prefix + "ss";
+            case MORNING_GOLDEN: return prefix + "gr";
+            case EVENING_GOLDEN: return prefix + "gs";
+            case MORNING_BLUE4: return prefix + "b4r";
+            case EVENING_BLUE4: return prefix + "b4s";
+            case MORNING_BLUE8: return prefix + "b8r";
+            case EVENING_BLUE8: return prefix + "b8s";
+            default: return null;
+        }
+    }
+    @Nullable
+    public static String getPatternForEvent_em(SolarEvents event) {
+        return getPatternForEvent("%em@", event);    // miliseconds
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_em(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_em(event));
+        }
+        return patterns;
+    }
+
+    @Nullable
+    public static String getPatternForEvent_et(SolarEvents event) {
+        return getPatternForEvent("%et@", event);    // formatted time
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_et(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_et(event));
+        }
+        return patterns;
+    }
+
+    @Nullable
+    public static String getPatternForEvent_eT(SolarEvents event) {
+        return getPatternForEvent("%eT@", event);    // formatted time (wth seconds)
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_eT(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_eT(event));
+        }
+        return patterns;
+    }
+
+    @Nullable
+    public static String getPatternForEvent_eA(SolarEvents event) {
+        return getPatternForEvent("%eA@", event);    // formatted angle (deg)
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_eA(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_eA(event));
+        }
+        return patterns;
+    }
+
+    public static String removePatterns(String displayString, Collection<String> patterns) {
+        String value = displayString;
+        for (String pattern : patterns) {
+            value = value.replaceAll(pattern, "");
+        }
+        return value;
+    }
+
+    @Nullable
+    public static SolarEvents[] getRiseSetDatasetEvents()
+    {
+        return new SolarEvents[] {
+                SolarEvents.MORNING_ASTRONOMICAL, SolarEvents.EVENING_ASTRONOMICAL,
+                SolarEvents.MORNING_NAUTICAL, SolarEvents.EVENING_NAUTICAL,
+                SolarEvents.MORNING_CIVIL, SolarEvents.EVENING_CIVIL,
+                SolarEvents.SUNRISE, SolarEvents.NOON, SolarEvents.SUNSET,
+                SolarEvents.MORNING_GOLDEN, SolarEvents.EVENING_GOLDEN,
+                SolarEvents.MORNING_BLUE4, SolarEvents.EVENING_BLUE4,
+                SolarEvents.MORNING_BLUE8, SolarEvents.EVENING_BLUE8 };
+    }
+
+    public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesRiseSetDataset dataset)
+    {
+        String displayString = titlePattern;
+
+        SolarEvents[] events = getRiseSetDatasetEvents();
+        HashMap<SolarEvents, String> patterns0 = getPatternsForEvent_em(events);
+        HashMap<SolarEvents, String> patterns1 = getPatternsForEvent_et(events);
+        HashMap<SolarEvents, String> patterns2 = getPatternsForEvent_eT(events);
+        HashMap<SolarEvents, String> patterns3 = getPatternsForEvent_eA(events);
+
+        if (dataset != null && dataset.isCalculated())
+        {
+            for (SolarEvents event : patterns0.keySet())
+            {
+                String pattern_em = patterns0.get(event);   // %em .. eventMillis
+                String pattern_et = patterns1.get(event);   // %et .. eventTime (formatted)
+                String pattern_eT = patterns2.get(event);   // %eT .. eventTime (formatted)
+                String pattern_eA = patterns3.get(event);   // %eA .. eventAngle (formatted)
+                if (!displayString.contains(pattern_em) && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT) && !displayString.contains(pattern_eA)) {
+                    continue;
+                }
+
+                Calendar[] eventTimes = (pattern_em != null ? dataset.getRiseSetEvents(event) : null);
+                Calendar eventTime = (eventTimes != null && eventTimes[0] != null ? eventTimes[0] : null);
+
+                if (eventTime != null)
+                {
+                    if (displayString.contains(pattern_em)) {
+                        displayString = displayString.replaceAll(pattern_em, eventTime.getTimeInMillis() + "");
+                    }
+                    if (displayString.contains(pattern_et)) {
+                        displayString = displayString.replaceAll(pattern_et, calendarTimeShortDisplayString(context, eventTime, false).toString());
+                    }
+                    if (displayString.contains(pattern_eT)) {
+                        displayString = displayString.replaceAll(pattern_eT, calendarTimeShortDisplayString(context, eventTime, true).toString());
+                    }
+                    if (displayString.contains(pattern_eA)) {
+                        Double angle = getDegreesForEvent(event, dataset.dataNoon);
+                        displayString = displayString.replaceAll(pattern_eA, angle != null ? formatAsDegrees(angle, 1) : "");
+                    }
+                } else {
+                    displayString = displayString.replaceAll(pattern_em, "");
+                    displayString = displayString.replaceAll(pattern_et, "");
+                    displayString = displayString.replaceAll(pattern_eT, "");
+                    displayString = displayString.replaceAll(pattern_eA, "");
+                }
+            }
+        } else {
+            displayString = removePatterns(displayString, patterns0.values());
+            displayString = removePatterns(displayString, patterns1.values());
+            displayString = removePatterns(displayString, patterns2.values());
+        }
+        return displayStringForTitlePattern(context, displayString, (dataset != null ? dataset.dataActual : null));
     }
 
     public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesData data)

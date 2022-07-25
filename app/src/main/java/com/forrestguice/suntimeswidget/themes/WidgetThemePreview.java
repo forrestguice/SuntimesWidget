@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_8;
 import com.forrestguice.suntimeswidget.layouts.PositionLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
@@ -176,7 +177,17 @@ public class WidgetThemePreview
             updatePreview_moon(previewLayout, values);
 
         } else if (WidgetSettings.WidgetModeSunPos3x1.supportsLayout(layoutID)) {
-            updatePreview_position0(previewLayout, values, 128, 32);
+            WidgetSettings.WidgetModeSunPos3x1 mode;
+            try {
+                mode = WidgetSettings.WidgetModeSunPos3x1.valueOf(values.getAsString(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1));
+            } catch (IllegalArgumentException e) {
+                mode = WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP;
+            }
+            switch (mode) {
+                case MODE3x1_LIGHTMAP_SMALL: updatePreview_position0(previewLayout, values, 128, SunPosLayout_3X1_0.HEIGHT_SMALL - 4); break;
+                case MODE3x1_LIGHTMAP_MEDIUM: updatePreview_position0(previewLayout, values, 128, SunPosLayout_3X1_0.HEIGHT_MEDIUM - 4); break;
+                case MODE3x1_LIGHTMAP: default: updatePreview_position0(previewLayout, values, 128, SunPosLayout_3X1_0.HEIGHT_LARGE - 4); break;
+            }
 
         } else if (WorldMapWidgetSettings.WorldMapWidgetMode.supportsLayout(layoutID)) {
             WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.WorldMapWidgetMode.findMode(layoutID);
@@ -205,6 +216,15 @@ public class WidgetThemePreview
             colors.colorNautical = values.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
             colors.colorAstro = values.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);;
             colors.colorNight = values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR);;
+            colors.colorPointFill = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR);
+            colors.colorPointStroke = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR);
+
+            if (values.getAsInteger("option_drawNow") != null) {
+                colors.option_drawNow = values.getAsInteger("option_drawNow");
+            }
+            if (values.getAsInteger("option_drawNow_pointSizePx") != null) {
+                colors.option_drawNow_pointSizePx = values.getAsInteger("option_drawNow_pointSizePx");
+            }
 
             LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
             drawTask.setListener(new LightMapView.LightMapTaskListener()
@@ -239,8 +259,8 @@ public class WidgetThemePreview
             options.sunShadowColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_SHADOWCOLOR);
             options.moonLightColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR);
 
-            options.sunFillColor = values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_FILL_COLOR);
-            options.sunStrokeColor = values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR);
+            options.sunFillColor = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR);
+            options.sunStrokeColor = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR);
             options.sunScale = 24;      // extra large so preview of colors is visible
 
             options.moonFillColor = values.getAsInteger(SuntimesThemeContract.THEME_MOONFULLCOLOR);

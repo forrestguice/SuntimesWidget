@@ -372,6 +372,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return supportedModes;
     }
 
+    @SuppressWarnings("ResourceType")
     protected void initViews(final Context context)
     {
         initToolbar(context);
@@ -2272,10 +2273,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     public static class WidgetModeAdapter extends ArrayAdapter<WidgetSettings.WidgetModeDisplay>
     {
-        private int resourceID, dropDownResourceID;
-        private WidgetSettings.WidgetModeDisplay[] objects;
-        private WidgetThemePreview preview;
-        private ContentValues themeValues = null;
+        protected int resourceID, dropDownResourceID;
+        protected WidgetSettings.WidgetModeDisplay[] objects;
+        protected WidgetThemePreview preview;
+        protected ContentValues themeValues = null;
 
         public WidgetModeAdapter(@NonNull Context context, int resource) {
             super(context, resource);
@@ -2319,7 +2320,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             return getItemView(position, convertView, parent, true, resourceID);
         }
 
-        private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize, int resID)
+        protected void modifyThemeValues(int position, ContentValues values) {
+            /* EMPTY */
+        }
+
+        protected View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize, int resID)
         {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             View view = (convertView == null) ? layoutInflater.inflate(resID, parent, false) : convertView;
@@ -2342,6 +2347,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     previewArea.removeAllViewsInLayout();
                     View previewView = layoutInflater.inflate(item.getLayoutID(), previewArea, true);
                     if (themeValues != null) {
+                        modifyThemeValues(position, themeValues);
                         preview.updatePreview(item.getLayoutID(), previewView, themeValues);
                     }
                 }

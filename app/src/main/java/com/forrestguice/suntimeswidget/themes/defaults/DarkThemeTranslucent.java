@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -29,7 +30,7 @@ public class DarkThemeTranslucent extends DarkThemeTrans
     public static final String THEMEDEF_NAME = "dark_translucent";
     public static final String THEMEDEF_DISPLAYSTRING = "Dark (translucent)";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
-    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
+    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION, ThemeBackground.COLOR.name(), Color.parseColor("#82212121"));
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.COLOR;
     public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_dark;

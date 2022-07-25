@@ -9,18 +9,16 @@
             app:showAsAction="never"
             android:orderInCategory="500">
 
-            <menu >
+            <menu>
                 <group android:checkableBehavior="single">
 
                     <item android:id="@+id/sortByAlarmTime"
                         android:title="@string/configAction_sortAlarms_by_time"
-                        android:icon="?attr/icActionSort"
-                        android:checkable="true" />
+                        android:icon="?attr/icActionSort" />
 
                     <item android:id="@+id/sortByCreation"
                         android:title="@string/configAction_sortAlarms_by_creation"
-                        android:icon="?attr/icActionSort"
-                        android:checkable="true" />
+                        android:icon="?attr/icActionSort" />
 
                 </group>
             </menu>
@@ -31,7 +29,19 @@
             android:icon="?attr/icActionDelete"
             android:title="@string/configAction_clearAlarms"
             app:showAsAction="never"
-            android:orderInCategory="501" />
+            android:orderInCategory="510" />
+
+        <item android:id="@+id/action_export"
+            android:icon="?attr/icActionSave"
+            android:title="@string/configAction_exportAlarms"
+            app:showAsAction="never"
+            android:orderInCategory="520" />
+
+        <item android:id="@+id/action_import"
+            android:icon="?attr/icActionCopy"
+            android:title="@string/configAction_importAlarms"
+            app:showAsAction="never"
+            android:orderInCategory="530" />
 
     </group>
 </menu>

@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +34,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -157,13 +159,12 @@ public class AboutDialog extends BottomSheetDialogFragment
         return getString(R.string.app_version, versionString);
     }
 
-    protected void openLink(String url)
+    public static void openLink(Context context, String url)
     {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        Activity activity = getActivity();
-        if (activity != null && intent.resolveActivity(activity.getPackageManager()) != null)
-        {
-            startActivity(intent);
+        try {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (ActivityNotFoundException e) {
+            Log.e("About", "openLink: " + e);
         }
     }
 
@@ -176,7 +177,7 @@ public class AboutDialog extends BottomSheetDialogFragment
             @Override
             public void onClick(View v)
             {
-                openLink(WEBSITE_URL);
+                openLink(getActivity(), WEBSITE_URL);
             }
         });
 

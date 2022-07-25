@@ -119,8 +119,9 @@ public class SuntimesWidget2 extends SuntimesWidget0
                                                                                       : new SunPosLayout_3X2_0();
                 else if (mustFitWithinDp[1] >= minDimen_x2)
                     layout = new SunPosLayout_3X2_0();
-                else layout = new SunPosLayout_3X1_0();
-
+                else {
+                    layout = WidgetSettings.loadSunPos3x1ModePref_asLayout(context, appWidgetId);  // new SunPosLayout_3X1_0();
+                }
             } else {
                 layout = WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
             }

@@ -30,6 +30,7 @@ import android.graphics.PorterDuff;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -66,6 +67,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
 public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAdapterListener
@@ -573,7 +575,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.type.getDisplayString());
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type, true));    // TODO: setDefaultRingtoneUri may block (potential ANR)...
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         startActivityForResult(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE);
     }
@@ -595,64 +597,77 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     }
     protected void onRingtoneResult(final Uri uri, boolean isAudioFile)
     {
-        final AlarmClockItem item = editor.getItem();
-        if (uri != null)
-        {
-            Log.d(TAG, "onActivityResult: uri: " + uri);
-            Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
-            if (ringtone != null)
-            {
-                ringtone.stop();
-                item.ringtoneName = ringtoneTitle(getContentResolver(), uri, ringtone, isAudioFile);
-                item.ringtoneURI = uri.toString();
+        OnRingtoneResultTask task = new OnRingtoneResultTask(this, uri, isAudioFile);
+        task.setTaskListener(new OnRingtoneResultTask.TaskListener() {
+            @Override
+            public void onFinished(Boolean result) {
                 editor.notifyItemChanged();
-                Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + item.ringtoneName);
+            }
+        });
+        task.execute(editor.getItem());
+    }
+
+    /**
+     * OnRingtoneResultTask
+     */
+    public static class OnRingtoneResultTask extends AsyncTask<AlarmClockItem, Void, Boolean>
+    {
+        private WeakReference<Context> contextRef;
+        private boolean isAudioFile;
+        private Uri uri;
+
+        public OnRingtoneResultTask(Context context, Uri uri, boolean isAudioFile)
+        {
+            contextRef = new WeakReference<>(context);
+            this.uri = uri;
+            this.isAudioFile = isAudioFile;
+        }
+
+        @Override
+        protected Boolean doInBackground(AlarmClockItem... items)
+        {
+            AlarmClockItem item = items[0];
+            Context context = contextRef.get();
+            if (context != null && uri != null)
+            {
+                //Log.d(TAG, "OnRingtoneResult: uri: " + uri);
+                Ringtone ringtone = RingtoneManager.getRingtone(context, uri);
+                if (ringtone != null)
+                {
+                    ringtone.stop();
+                    item.ringtoneName = AlarmSettings.getRingtoneTitle(context, uri, ringtone, isAudioFile);
+                    item.ringtoneURI = uri.toString();
+                    //Log.d(TAG, "OnRingtoneResult: uri: " + item.ringtoneURI + ", title: " + item.ringtoneName);
+
+                } else {
+                    item.ringtoneName = null;
+                    item.ringtoneURI = null;
+                    //Log.d(TAG, "OnRingtoneResult: uri: " + uri + " <null ringtone>");
+                }
 
             } else {
                 item.ringtoneName = null;
                 item.ringtoneURI = null;
-                editor.notifyItemChanged();
-                Log.d(TAG, "onActivityResult: uri: " + uri + " <null ringtone>");
+                //Log.d(TAG, "OnRingtoneResult: null uri");
             }
-
-        } else {
-            item.ringtoneName = null;
-            item.ringtoneURI = null;
-            editor.notifyItemChanged();
-            Log.d(TAG, "onActivityResult: null uri");
+            return true;
         }
-    }
 
-    protected String ringtoneTitle(@NonNull ContentResolver resolver, @NonNull Uri uri, @NonNull Ringtone ringtone, boolean isAudioFile)
-    {
-        String ringtoneTitle = ringtone.getTitle(this);
-        ringtone.stop();
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (listener != null) {
+                listener.onFinished(result);
+            }
+        }
 
-        String retValue = ringtoneTitle;
-        if (isAudioFile)
+        protected TaskListener listener = null;
+        public void setTaskListener( TaskListener l )
         {
-            Cursor cursor = null;
-            try {
-                cursor = resolver.query(uri, null, null, null, null);
-                if (cursor != null) {
-                    cursor.moveToFirst();
-                    retValue = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
-                    cursor.close();
-                }
-
-            } catch (IllegalArgumentException e) {
-                String[] filePath = ringtoneTitle.split("/");
-                String fileName = filePath[filePath.length - 1];
-                retValue = fileName == null ? null
-                                            : ((fileName.contains(".")) ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName);
-
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
-            }
+            listener = l;
         }
-        return retValue;
+        public static abstract class TaskListener {
+            public void onFinished(Boolean result) {}
+        }
     }
 
     protected void audioFilePicker(@NonNull AlarmClockItem item)

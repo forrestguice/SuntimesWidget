@@ -36,6 +36,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -139,6 +143,9 @@ public class AppSettings
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putBoolean(PREF_KEY_FIRST_LAUNCH, value).apply();
     }
+
+    public static final String PREF_KEY_DIALOG = "dialog";
+    public static final String PREF_KEY_DIALOG_DONOTSHOWAGAIN = "donotshowagain";
 
     /**
      * Language modes (system, user defined)
@@ -587,6 +594,47 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_GETFIX_PASSIVE, PREF_DEF_GETFIX_PASSIVE);
+    }
+
+    /**
+     * @return true; dialog should not be shown (user has check 'do not show again')
+     */
+    public static boolean checkDialogDoNotShowAgain( Context context, String dialogKey ) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_DIALOG + "_" + dialogKey + "_" + PREF_KEY_DIALOG_DONOTSHOWAGAIN, false);
+    }
+    public static void setDialogDoNotShowAgain(Context context, String dialogKey, boolean value)
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_DIALOG + "_" + dialogKey + "_" + PREF_KEY_DIALOG_DONOTSHOWAGAIN, value);
+        pref.apply();
+    }
+    public static AlertDialog.Builder buildAlertDialog(final String key, @NonNull LayoutInflater inflater,
+                                                       int iconResId, @Nullable String title, @NonNull String message, @Nullable final DialogInterface.OnClickListener onOkClicked)
+    {
+        final Context context = inflater.getContext();
+        View dialogView = inflater.inflate(R.layout.layout_dialog_alert, null);
+        final CheckBox check_notagain = (CheckBox) dialogView.findViewById(R.id.check_donotshowagain);
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        if (title != null) {
+            dialog.setTitle(title);
+        }
+        dialog.setMessage(message)
+                .setView(dialogView)
+                .setIcon(iconResId)
+                .setCancelable(false)
+                .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        if (check_notagain != null) {
+                            AppSettings.setDialogDoNotShowAgain(context, key, check_notagain.isChecked());
+                        }
+                        onOkClicked.onClick(dialog, which);
+                    }
+                });
+        return dialog;
     }
 
     /**

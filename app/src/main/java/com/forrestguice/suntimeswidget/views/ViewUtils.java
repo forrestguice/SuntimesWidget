@@ -21,8 +21,13 @@ package com.forrestguice.suntimeswidget.views;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Build;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 public class ViewUtils
@@ -93,4 +98,28 @@ public class ViewUtils
             }
         }
     }
+
+    public static void initPeekHeight(DialogInterface dialog, int bottomViewResId)
+    {
+        if (dialog != null) {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            if (layout != null)
+            {
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                View divider1 = bottomSheet.findViewById(bottomViewResId);
+                if (divider1 != null)
+                {
+                    Rect headerBounds = new Rect();
+                    divider1.getDrawingRect(headerBounds);
+                    layout.offsetDescendantRectToMyCoords(divider1, headerBounds);
+                    behavior.setPeekHeight(headerBounds.bottom); // + (int)getResources().getDimension(R.dimen.dialog_margin));
+
+                } else {
+                    behavior.setPeekHeight(-1);
+                }
+            }
+        }
+    }
+
 }

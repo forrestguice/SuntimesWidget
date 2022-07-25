@@ -275,18 +275,13 @@ public class SuntimesMoonData extends SuntimesMoonData0
             //Log.d("DEBUG", "using approximate lunar noon tomorrow");
         }
 
-        double moonIllumination = ((noonToday != null)
-                ? calculator.getMoonIlluminationForDate(noonToday)            // prefer illumination at "noon"
-                : calculator.getMoonIlluminationForDate(todaysCalendar));         // fallback to illumination "right now"
-
-        if (moonIllumination >= 0)
-        {
+        double moonIllumination = ((noonToday != null) ? calculator.getMoonIlluminationForDate(noonToday) : 0);
+        if (moonIllumination >= 0) {
             this.moonIlluminationToday = moonIllumination;
         }
 
-        double moonIllumination1 = ((noonTomorrow != null) ? calculator.getMoonIlluminationForDate(noonTomorrow) : moonIllumination);
-        if (moonIllumination1 >= 0)
-        {
+        double moonIllumination1 = ((noonTomorrow != null) ? calculator.getMoonIlluminationForDate(noonTomorrow) : 0);
+        if (moonIllumination1 >= 0) {
             this.moonIlluminationTomorrow = moonIllumination1;
         }
 

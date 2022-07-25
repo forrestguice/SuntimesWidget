@@ -916,10 +916,32 @@ public class LocationConfigView extends LinearLayout
     @Override
     protected void onDetachedFromWindow()
     {
+        cleanupAdapter();
+        super.onDetachedFromWindow();
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View view, int visibility)
+    {
+        super.onVisibilityChanged(view, visibility);
+        if (visibility != View.VISIBLE) {
+            cleanupAdapter();
+        }
+    }
+
+    @Override
+    public void onVisibilityAggregated(boolean isVisible)    // TODO: only called for api 24+ ?
+    {
+        super.onVisibilityAggregated(isVisible);
+        if (!isVisible) {
+            cleanupAdapter();
+        }
+    }
+
+    protected void cleanupAdapter() {
         if (getFixAdapter != null) {
             getFixAdapter.changeCursor(null);    // closes previous cursor
         }
-        super.onDetachedFromWindow();
     }
 
     /**

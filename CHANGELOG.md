@@ -1,5 +1,47 @@
 ### ~
 
+### v0.14.6 (2022-06-04)
+* fixes crash when changing an alarm's time/event (#605).
+* fixes bug where units setting is ignored (altitude displayed in feet) (#604); [Android Go]
+* updates translation to Czech (cs) (#606 by utaxiu).
+
+### v0.14.5 (2022-05-14)
+* fixes bug "default alarm sound fails to play" (#593); adds fallback ringtones (rtttl).
+* fixes bug "sounding/snoozing notification is unexpectedly canceled" (#594).
+* fixes bugs in alarm dialog; dialog creates items of wrong type; dialog last selection not saved.
+* fixes bug where alarm import is unable to select previously exported files (#588).
+* adds export file selection (alarms/places/themes) using Storage Access Framework (api19+) (older devices still use `ACTION_SEND`).
+* adds import warning dialog; alarm sounds and actions may revert to defaults (not retained).
+* adds widget title %substitutions; %em (event time millis), %et (formatted event time), %eT (formatted event time w/ seconds), and %eA (event angle) (#599).
+
+### v0.14.4 (2022-05-03)
+* adds import/export to SuntimesAlarms (#588); save and load alarms as JSON.
+* adds widget layouts (3x1 sun position); show the lightmap graph with reduced height (#589).
+* extends map widgets to use the dialog configuration; shared options for center/background/tint, sunlight/moonlight, location, latitudes, and graticule (#493).
+* extends the widget action dialog to suggest package/class names (#546).
+* fixes bug where widget actions that use an explicit intent fail to launch (#546).
+* fixes bug where widget action extras are not correctly applied (#546); ints omitted, longs applied as String.
+* fixes bug where the sun position dialog and map dialog animations run in the background (#582).
+* fixes bug in sun position widgets where the theme colors aren't applied; fixes default colors (#589); adds graph pointFill and pointStroke colors.
+* fixes bug where single-select menu items are displayed as checkboxes instead of radio buttons (#590).
+* fixes bug where the widget theme spinner fails to show the background preview.
+* fixes issue with 'Advanced' settings discoverability (#581).
+* fixes SuntimesAlarms intent-filter to support standard AlarmClock intents; `android.intent.action.SHOW_ALARMS`, `android.intent.action.DISMISS_ALARM` (`EXTRA_ALARM_SEARCH_MODE`), and `android.intent.action.SNOOZE_ALARM` (`android.intent.extra.alarm.SNOOZE_DURATION`); adds 'snooze alarm' and 'dismiss alarm' default actions.
+* updates translation to Polish and Esperanto (eo, pl) (#585 by Verdulo).
+* updates translation to Brazilian Portuguese (pt-br) (#587 by naoliv).
+
+### v0.14.3 (2022-04-11)
+* adds click to solar noon field; opens the lightmap dialog (#562).
+* changes click on sunrise/sunset headers; opens the lightmap dialog if configured to show azimuth (#562).
+* fixes lunar noon field; omit on days it doesn't occur (#572).
+* fixes bug "solstice dialog 'view date' menu doesn't work" (#577).
+* fixes bug where the AlarmNotifications service fails to stop (battery use in background) (#575).
+* fixes ANR when showing alarm dialog (#576); misc changes to ringtone management.
+* fixes app crash when using 'fallback to last location'.
+* fixes bug where changes made in the PlacesActivity aren't displayed by the location spinner.
+* changes action prefix to "suntimes.action"; remaps legacy actions.
+* misc layout changes (enlarged click areas); misc cleanup/refactoring.
+
 ### v0.14.2 (2022-03-14)
 * fixes crash when using 'sun position' app shortcut (#567).
 * fixes bug where "search places doesn't work" (#566).

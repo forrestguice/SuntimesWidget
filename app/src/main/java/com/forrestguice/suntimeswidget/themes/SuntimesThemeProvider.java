@@ -48,6 +48,8 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DAYCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DISPLAYSTRING;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_FALLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ISDEFAULT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR;
@@ -426,6 +428,12 @@ public class SuntimesThemeProvider extends ContentProvider
                     break;
                 case THEME_NIGHTCOLOR:
                     row[i] = theme.getNightColor();
+                    break;
+                case THEME_GRAPH_POINT_FILL_COLOR:
+                    row[i] = theme.getGraphPointFillColor();
+                    break;
+                case THEME_GRAPH_POINT_STROKE_COLOR:
+                    row[i] = theme.getGraphPointStrokeColor();
                     break;
 
                 case THEME_MAP_BACKGROUNDCOLOR:
