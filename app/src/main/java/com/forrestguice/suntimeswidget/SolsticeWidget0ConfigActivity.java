@@ -19,8 +19,11 @@
 package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -28,6 +31,9 @@ import android.widget.CompoundButton;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
+
+import java.util.List;
 
 /**
  * Solstice / Equinox widget config activity.
@@ -85,10 +91,10 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_timeMode != null)
         {
-            ArrayAdapter<WidgetSettings.SolsticeEquinoxMode> spinner_timeModeAdapter;
-            spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.SolsticeEquinoxMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.SolsticeEquinoxMode.values() );
-            spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_timeMode.setAdapter(spinner_timeModeAdapter);
+            EquinoxModeAdapter adapter = new EquinoxModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.SolsticeEquinoxMode.values());
+            adapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
+            adapter.setThemeValues(themeValues);
+            spinner_timeMode.setAdapter(adapter);
         }
 
         if (button_timeModeHelp != null)
@@ -122,6 +128,22 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
+    protected void updateTimeModeAdapter(ContentValues themeValues)
+    {
+        if (spinner_timeMode != null)
+        {
+            EquinoxModeAdapter adapter = (EquinoxModeAdapter) spinner_timeMode.getAdapter();
+            if (adapter != null)
+            {
+                WidgetSettings.SolsticeEquinoxMode selected = (WidgetSettings.SolsticeEquinoxMode) spinner_timeMode.getSelectedItem();
+                adapter.setThemeValues(themeValues);
+                spinner_timeMode.setAdapter(adapter);
+                spinner_timeMode.setSelection(adapter.getPosition(selected));
+            }
+        }
+    }
+
+    @Override
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
     {
         return SuntimesCalculatorDescriptor.values(this, requiredFeatures);
@@ -131,16 +153,25 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void loadTimeMode(Context context)
     {
-        WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
-        spinner_timeMode.setSelection(timeMode.ordinal());
+        if (spinner_timeMode != null) {
+            EquinoxModeAdapter adapter = (EquinoxModeAdapter) spinner_timeMode.getAdapter();
+            if (adapter != null) {
+                WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
+                spinner_timeMode.setSelection(adapter.getPosition(timeMode));
+            }
+        }
     }
 
     @Override
     protected void saveTimeMode(Context context)
     {
-        final WidgetSettings.SolsticeEquinoxMode[] timeModes = WidgetSettings.SolsticeEquinoxMode.values();
-        WidgetSettings.SolsticeEquinoxMode timeMode = timeModes[ spinner_timeMode.getSelectedItemPosition()];
-        WidgetSettings.saveTimeMode2Pref(context, appWidgetId, timeMode);
+        if (spinner_timeMode != null) {
+            EquinoxModeAdapter adapter = (EquinoxModeAdapter) spinner_timeMode.getAdapter();
+            if (adapter != null) {
+                WidgetSettings.SolsticeEquinoxMode timeMode = adapter.getItem(spinner_timeMode.getSelectedItemPosition());
+                WidgetSettings.saveTimeMode2Pref(context, appWidgetId, ((timeMode != null) ? timeMode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE2));
+            }
+        }
     }
 
     public static final boolean DEF_SHOWTITLE = false;
@@ -159,6 +190,43 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected void initWidgetModeLayout(Context context) {
+    }
+
+    /**
+     * EquinoxModeAdapter
+     */
+    public static class EquinoxModeAdapter extends ModeAdapterBase<WidgetSettings.SolsticeEquinoxMode>
+    {
+        public EquinoxModeAdapter(@NonNull Context context, int resource) {
+            super(context, resource);
+        }
+        public EquinoxModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.SolsticeEquinoxMode[] objects) {
+            super(context, resource, objects);
+        }
+        public EquinoxModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.SolsticeEquinoxMode> objects) {
+            super(context, resource, objects);
+        }
+
+        @Override
+        protected String getNameForMode(WidgetSettings.SolsticeEquinoxMode mode) {
+            return mode.name();
+        }
+
+        @Override
+        protected int getColorForMode(WidgetSettings.SolsticeEquinoxMode mode)
+        {
+            if (themeValues == null) {
+                return Color.TRANSPARENT;
+            }
+            switch (mode)
+            {
+                case SOLSTICE_SUMMER: case CROSS_SUMMER: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUMMERCOLOR);
+                case EQUINOX_AUTUMNAL: case CROSS_AUTUMN: return themeValues.getAsInteger(SuntimesThemeContract.THEME_FALLCOLOR);
+                case SOLSTICE_WINTER: case CROSS_WINTER: return themeValues.getAsInteger(SuntimesThemeContract.THEME_WINTERCOLOR);
+                case EQUINOX_SPRING: case CROSS_SPRING: default:
+                return themeValues.getAsInteger(SuntimesThemeContract.THEME_SPRINGCOLOR);
+            }
+        }
     }
 
 }
