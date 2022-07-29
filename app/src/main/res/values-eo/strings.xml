@@ -989,7 +989,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Valido de GPS‑lego</string>
+    <string name="configLabel_getFix_maxAge">Valido de GPS‑lego</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary">Senvalidiĝi post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>neniam</item>

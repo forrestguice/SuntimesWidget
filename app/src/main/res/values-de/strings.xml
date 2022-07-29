@@ -1005,7 +1005,7 @@
   </string-array>
 
   <!-- App Setting: GPS fix max age -->
-  <string name="configLabel_getFix_maxAge">GPS - Aktueller Standort</string>
+  <string name="configLabel_getFix_maxAge">GPS - Aktueller Standort</string>    <!-- TODO: "GPS" to "Location" -->
   <string name="configLabel_getFix_maxAge_summary">Maximal vor <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> ermittelter Standort gilt als aktuell</string>
   <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
       <item>Kein</item>

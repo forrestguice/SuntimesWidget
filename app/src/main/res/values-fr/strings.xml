@@ -990,7 +990,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Tolérance d\'ancienneté GPS</string>
+    <string name="configLabel_getFix_maxAge">Tolérance d\'ancienneté GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary"><xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g> considéré comme récent</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>aucun</item>

@@ -1020,7 +1020,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPSaren berritasunaren gehienezko adina</string>
+    <string name="configLabel_getFix_maxAge">GPSaren berritasunaren gehienezko adina</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> berritzat hartzen da</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>none</item>  <!-- TODO -->
