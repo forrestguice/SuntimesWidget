@@ -17,10 +17,13 @@
 */
 package com.forrestguice.suntimeswidget.equinox;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +34,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,6 +45,7 @@ import com.forrestguice.suntimeswidget.cards.CardAdapter;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 @SuppressWarnings("Convert2Diamond")
 public class EquinoxCardView extends LinearLayout
@@ -50,10 +55,11 @@ public class EquinoxCardView extends LinearLayout
     protected boolean userSwappedCard = false;
 
     protected TextView empty;
-    private RecyclerView card_view;
-    private LinearLayoutManager card_layout;
-    private EquinoxDataAdapter card_adapter;
-    private CardAdapter.CardViewScroller card_scroller;
+    protected RecyclerView card_view;
+    protected LinearLayoutManager card_layout;
+    protected EquinoxDataAdapter card_adapter;
+    protected CardAdapter.CardViewScroller card_scroller;
+    protected ImageButton resetBackButton, resetForwardButton;
 
     public EquinoxCardView(Context context) {
         super(context);
@@ -91,6 +97,14 @@ public class EquinoxCardView extends LinearLayout
             LinearLayout.LayoutParams lp = generateLayoutParams(attrs);
             options.centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
+
+        resetBackButton = (ImageButton) findViewById(R.id.info_time_prevbtn);
+        resetBackButton.setOnClickListener(onResetClicked);
+        resetBackButton.setVisibility(VISIBLE);
+
+        resetForwardButton = (ImageButton) findViewById(R.id.info_time_nextbtn);
+        resetForwardButton.setOnClickListener(onResetClicked);
+        resetForwardButton.setVisibility(GONE);
 
         empty = (TextView)findViewById(R.id.txt_empty);
         initCardView(context);
@@ -144,16 +158,14 @@ public class EquinoxCardView extends LinearLayout
         card_view.setLayoutParams(params);
     }
 
-    public void updateViews(Context context) {
+    public void updateViews(Context context)
+    {
         SuntimesEquinoxSolsticeData data = card_adapter.initData(context, EquinoxDataAdapter.CENTER_POSITION);
         updateViews(context, data);
 
         int position = card_adapter.highlightNote(context);
-        if (position != -1 && !userSwappedCard) {
-            card_view.setLayoutFrozen(false);
+        if (position != -1) {
             card_view.scrollToPosition(position);
-            Log.d("DEBUG", "scroll to " + position);
-            card_view.setLayoutFrozen(false);
         }
         Log.d("DEBUG", "EquinoxDialog updated");
     }
@@ -162,7 +174,18 @@ public class EquinoxCardView extends LinearLayout
         showEmptyView(data == null || !data.isImplemented());
     }
 
-    protected void themeViews(Context context) {}
+    protected void themeViews(Context context)
+    {
+        int[] colorAttrs = {  R.attr.text_accentColor, R.attr.buttonPressColor, R.attr.text_disabledColor };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int accentColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
+        @SuppressLint("ResourceType") int pressedColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.btn_tint_pressed_dark));
+        @SuppressLint("ResourceType") int disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.text_disabled_dark));
+        typedArray.recycle();
+
+        ImageViewCompat.setImageTintList(resetForwardButton, SuntimesUtils.colorStateList(accentColor, disabledColor, pressedColor));
+        ImageViewCompat.setImageTintList(resetBackButton, SuntimesUtils.colorStateList(accentColor, disabledColor, pressedColor));
+    }
 
     public void themeViews(Context context, SuntimesTheme theme)
     {
@@ -170,6 +193,8 @@ public class EquinoxCardView extends LinearLayout
         {
             options.init(theme);
             card_adapter.setThemeOverride(theme);
+            ImageViewCompat.setImageTintList(resetForwardButton, SuntimesUtils.colorStateList(theme.getAccentColor(), options.disabledColor, theme.getActionColor()));
+            ImageViewCompat.setImageTintList(resetBackButton, SuntimesUtils.colorStateList(theme.getAccentColor(), options.disabledColor, theme.getActionColor()));
         }
     }
 
@@ -220,14 +245,43 @@ public class EquinoxCardView extends LinearLayout
         @Override public void onMenuClick(View view, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {}
     };
 
+    private View.OnClickListener onResetClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int position = card_adapter.highlightNote(getContext());
+            if (position >= 0) {
+                card_view.scrollToPosition(position);
+            }
+        }
+    };
+
+    protected void updateResetButtons(int current)
+    {
+        int highlighted = card_adapter.highlightNote(getContext());
+        if (current < highlighted)
+        {
+            resetBackButton.setVisibility(View.GONE);
+            ViewUtils.fadeInButton(resetForwardButton, ViewUtils.ANIM_VERYLONG);
+
+        } else if (current > highlighted) {
+            ViewUtils.fadeInButton(resetBackButton, ViewUtils.ANIM_VERYLONG);
+            resetForwardButton.setVisibility(View.GONE);
+
+        } else {
+            resetBackButton.setVisibility(View.GONE);
+            resetForwardButton.setVisibility(View.GONE);
+        }
+    }
+
     private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy)
         {
-            int position = currentCardPosition();
-            if (position >= 0) {
-                updateViews(getContext(), card_adapter.initData(getContext(), position));
+            int current = currentCardPosition();
+            if (current >= 0) {
+                updateViews(getContext(), card_adapter.initData(getContext(), current));
+                updateResetButtons(current);
             }
         }
 
@@ -235,7 +289,7 @@ public class EquinoxCardView extends LinearLayout
         public void onScrollStateChanged(RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
-            if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
+            if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                 userSwappedCard = true;
             }
         }
