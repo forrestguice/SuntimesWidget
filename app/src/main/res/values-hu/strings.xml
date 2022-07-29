@@ -1249,7 +1249,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS kikapcsolva. Bekapcsolja?</string>
+    <string name="gps_dialog_msg">GPS kikapcsolva. Bekapcsolja?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">Igen</string>
     <string name="gps_dialog_cancel">Nem</string>
 

@@ -1282,7 +1282,7 @@
 
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS已被禁用，要啟用嗎？</string>
+    <string name="gps_dialog_msg">GPS已被禁用，要啟用嗎？</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">是</string>
     <string name="gps_dialog_cancel">否</string>
 

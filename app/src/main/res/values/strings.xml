@@ -1663,7 +1663,7 @@
     <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>
+    <string name="gps_dialog_msg">Location is disabled. Enable it?</string>
     <string name="gps_dialog_ok">Yes</string>
     <string name="gps_dialog_cancel">No</string>
 

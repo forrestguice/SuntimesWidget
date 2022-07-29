@@ -1266,7 +1266,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS jest wyłączony. Czy włączyć go?</string>
+    <string name="gps_dialog_msg">GPS jest wyłączony. Czy włączyć go?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">Tak</string>
     <string name="gps_dialog_cancel">Nie</string>
 

@@ -1275,7 +1275,7 @@
     </string-array>    <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPSa ezgaituta dago. Gaitu?</string>
+    <string name="gps_dialog_msg">GPSa ezgaituta dago. Gaitu?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">Bai</string>
     <string name="gps_dialog_cancel">Ez</string>
 
