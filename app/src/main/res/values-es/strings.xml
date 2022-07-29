@@ -997,7 +997,7 @@
     <string name="timezone_sort_msg">Zonas horarias ordenadas (%1$s).</string>
 
     
-    <string name="configLabel_getFix_maxElapse">Plazo para obtener posición con GPS</string>
+    <string name="configLabel_getFix_maxElapse">Plazo para obtener posición con GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxElapse_summary">Abandonar tras <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  
         <item>15 segundos</item>

@@ -994,7 +994,7 @@
   <string name="timezone_sort_msg">Zeitzonen sortiert (%1$s).</string>      <!-- toast msg -->
 
   <!-- App Setting: GPS fix time limit -->
-  <string name="configLabel_getFix_maxElapse">GPS - Zeitlimit</string>
+  <string name="configLabel_getFix_maxElapse">GPS - Zeitlimit</string>    <!-- TODO: "GPS" to "Location" -->
   <string name="configLabel_getFix_maxElapse_summary">Aufgeben nach <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
   <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
       <item>15 Sekunden</item>
