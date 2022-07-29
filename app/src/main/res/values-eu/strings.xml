@@ -1283,7 +1283,7 @@
     <string name="gps_lastfix_title_set">Kokapena ezarri</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Azken kokapena</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Kokapena eskuratzen</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->

@@ -1257,7 +1257,7 @@
     <string name="gps_lastfix_title_set">Hely megadása</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Utolsó megadott hely</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Hely keresése</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">A GPS nem találja a keresett helyet; visszatérés az utolsó ismert helyre.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_notfound">A GPS nem találja a keresett helyet; visszatérés az utolsó ismert helyre.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
     <string name="gps_lastfix_toast_cancelled">GPS frissítése megszakadt.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->

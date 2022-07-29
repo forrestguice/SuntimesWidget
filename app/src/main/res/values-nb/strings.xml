@@ -1274,7 +1274,7 @@
     <string name="gps_lastfix_title_set">Bestem posisjon</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Siste posisjon</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Henter posisjon</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_notfound">GPS mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
     <string name="gps_lastfix_toast_cancelled">GPS-oppdatering avbrutt.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->

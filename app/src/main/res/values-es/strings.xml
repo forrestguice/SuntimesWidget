@@ -1270,7 +1270,7 @@
     <string name="gps_lastfix_title_set">Configurar posición</string>
     <string name="gps_lastfix_title_found">Última posición</string>
     <string name="gps_lastfix_title_searching">Obteniendo posición</string>
-    <string name="gps_lastfix_toast_notfound">El GPS no pudo obtener posición; utilizando la última posición conocida.</string>
+    <string name="gps_lastfix_toast_notfound">El GPS no pudo obtener posición; utilizando la última posición conocida.</string>  <!-- TODO: removed "GPS" -->
     <string name="gps_lastfix_toast_cancelled">Actualización de GPS cancelada.</string>   <!-- TODO: "gps update" to "location update" -->
 
     
