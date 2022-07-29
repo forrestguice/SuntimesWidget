@@ -209,28 +209,29 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         switch (timeMode)
         {
             case CROSS_SPRING:
-                if (location.getLatitudeAsDouble() >= 0)
+                if (localizeHemisphere && location.getLatitudeAsDouble() < 0)
                 {
-                    eventCalendarLastYear = null;
-                    eventCalendarThisYear = midpoint(calculator.getWinterSolsticeForYear(lastYearCalendar), calculator.getSpringEquinoxForYear(thisYearCalendar));
-                    eventCalendarNextYear = midpoint(calculator.getWinterSolsticeForYear(thisYearCalendar), calculator.getSpringEquinoxForYear(nextYearCalendar));
-                } else {
                     eventCalendarNextYear = midpoint(calculator.getWinterSolsticeForYear(lastYearCalendar), calculator.getSpringEquinoxForYear(lastYearCalendar));
                     eventCalendarThisYear = midpoint(calculator.getWinterSolsticeForYear(thisYearCalendar), calculator.getSpringEquinoxForYear(thisYearCalendar));
                     eventCalendarNextYear = midpoint(calculator.getWinterSolsticeForYear(nextYearCalendar), calculator.getSpringEquinoxForYear(nextYearCalendar));
+
+                } else {
+                    eventCalendarLastYear = null;
+                    eventCalendarThisYear = midpoint(calculator.getWinterSolsticeForYear(lastYearCalendar), calculator.getSpringEquinoxForYear(thisYearCalendar));
+                    eventCalendarNextYear = midpoint(calculator.getWinterSolsticeForYear(thisYearCalendar), calculator.getSpringEquinoxForYear(nextYearCalendar));
                 }
                 break;
 
             case CROSS_AUTUMN:
-                if (location.getLatitudeAsDouble() >= 0)
+                if (localizeHemisphere && location.getLatitudeAsDouble() < 0)
                 {
-                    eventCalendarLastYear = midpoint(calculator.getSummerSolsticeForYear(lastYearCalendar), calculator.getAutumnalEquinoxForYear(lastYearCalendar));
-                    eventCalendarThisYear = midpoint(calculator.getSummerSolsticeForYear(thisYearCalendar), calculator.getAutumnalEquinoxForYear(thisYearCalendar));
-                    eventCalendarNextYear = midpoint(calculator.getSummerSolsticeForYear(nextYearCalendar), calculator.getAutumnalEquinoxForYear(nextYearCalendar));
-                } else {
                     eventCalendarNextYear = null;
                     eventCalendarThisYear = midpoint(calculator.getSummerSolsticeForYear(lastYearCalendar), calculator.getAutumnalEquinoxForYear(thisYearCalendar));
                     eventCalendarNextYear = midpoint(calculator.getSummerSolsticeForYear(thisYearCalendar), calculator.getAutumnalEquinoxForYear(nextYearCalendar));
+                } else {
+                    eventCalendarLastYear = midpoint(calculator.getSummerSolsticeForYear(lastYearCalendar), calculator.getAutumnalEquinoxForYear(lastYearCalendar));
+                    eventCalendarThisYear = midpoint(calculator.getSummerSolsticeForYear(thisYearCalendar), calculator.getAutumnalEquinoxForYear(thisYearCalendar));
+                    eventCalendarNextYear = midpoint(calculator.getSummerSolsticeForYear(nextYearCalendar), calculator.getAutumnalEquinoxForYear(nextYearCalendar));
                 }
                 break;
 
