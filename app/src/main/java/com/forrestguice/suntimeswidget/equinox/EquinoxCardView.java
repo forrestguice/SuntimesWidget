@@ -126,9 +126,9 @@ public class EquinoxCardView extends LinearLayout
 
     public void initAdapter(Context context)
     {
-        WidgetSettings.SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? WidgetSettings.SolsticeEquinoxMode.values()
-                : new WidgetSettings.SolsticeEquinoxMode[] { WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING, WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER,
-                WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL, WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER };
+        boolean southernHemisphere = (WidgetSettings.loadLocalizeHemispherePref(context, 0)) && (WidgetSettings.loadLocationPref(context, 0).getLatitudeAsDouble() < 0);
+        WidgetSettings.SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? WidgetSettings.SolsticeEquinoxMode.values(southernHemisphere)
+                                                                                                   : WidgetSettings.SolsticeEquinoxMode.partialValues(southernHemisphere);
         options.highlightPosition = -1;
 
         card_adapter = new EquinoxDataAdapter(context, modes, options);

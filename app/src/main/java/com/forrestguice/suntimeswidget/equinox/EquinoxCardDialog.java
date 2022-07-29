@@ -642,9 +642,9 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
     protected void initAdapter(Context context)
     {
-        WidgetSettings.SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? WidgetSettings.SolsticeEquinoxMode.values()
-                : new WidgetSettings.SolsticeEquinoxMode[] { WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING, WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER,
-                                                             WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL, WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER };
+        boolean southernHemisphere = (WidgetSettings.loadLocalizeHemispherePref(context, 0)) && (WidgetSettings.loadLocationPref(context, 0).getLatitudeAsDouble() < 0);
+        WidgetSettings.SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? WidgetSettings.SolsticeEquinoxMode.values(southernHemisphere)
+                                                                                                   : WidgetSettings.SolsticeEquinoxMode.partialValues(southernHemisphere);
         card_orientation = LinearLayoutManager.HORIZONTAL;
         card_itemsPerPage = (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? modes.length : Math.max(4, modes.length / 2));
         options.highlightPosition = -1;

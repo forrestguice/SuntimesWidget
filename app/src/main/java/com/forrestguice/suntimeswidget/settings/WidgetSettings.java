@@ -1208,6 +1208,15 @@ public class WidgetSettings
             SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
                     context.getString(R.string.timeMode_solstice_winter));
         }
+
+        public static SolsticeEquinoxMode[] values(boolean southernHemisphere) {
+            return (southernHemisphere) ? new WidgetSettings.SolsticeEquinoxMode[] { CROSS_AUTUMN, EQUINOX_AUTUMNAL, CROSS_WINTER, SOLSTICE_WINTER, CROSS_SPRING, EQUINOX_SPRING, CROSS_SUMMER, SOLSTICE_SUMMER } : values();
+        }
+
+        public static SolsticeEquinoxMode[] partialValues(boolean southernHemisphere) {
+            return (southernHemisphere) ? new WidgetSettings.SolsticeEquinoxMode[] { EQUINOX_AUTUMNAL, SOLSTICE_WINTER, EQUINOX_SPRING, SOLSTICE_SUMMER }
+                                        : new WidgetSettings.SolsticeEquinoxMode[] { EQUINOX_SPRING, SOLSTICE_SUMMER, EQUINOX_AUTUMNAL, SOLSTICE_WINTER };
+        }
     }
 
     /**
