@@ -1266,7 +1266,7 @@
   <string name="gps_lastfix_title_found">Letzter Standort</string>            <!-- may appear in ActionBar title -->
   <string name="gps_lastfix_title_searching">Suche Standort</string>     <!-- may appear in ActionBar title -->
   <string name="gps_lastfix_toast_notfound">GPS-Standortbestimmung fehlgeschlagen; Letzter Standort wird benutzt.</string>
-  <string name="gps_lastfix_toast_cancelled">GPS-Standortbestimmung abgebrochen.</string>
+  <string name="gps_lastfix_toast_cancelled">GPS-Standortbestimmung abgebrochen.</string>  <!-- TODO: "gps update" to "location update" -->
 
   <!-- Dialog: KeepTrying GPS? -->
   <string name="gps_keeptrying_title">Position unbekannt</string>

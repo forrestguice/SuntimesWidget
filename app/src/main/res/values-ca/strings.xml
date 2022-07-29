@@ -1277,7 +1277,7 @@
     <string name="gps_lastfix_title_found">Última posició</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Obtenint posició</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Posició no trobada; utilizant l\'última posició coneguda.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Actualizació de GPS canceŀlada.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_cancelled">Actualizació de GPS canceŀlada.</string> <!-- displayed briefly when gps refresh cancelled -->   <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Sense posició</string>

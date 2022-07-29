@@ -1369,7 +1369,7 @@
     <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">No Fix</string>
