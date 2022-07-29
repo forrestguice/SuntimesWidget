@@ -1,5 +1,11 @@
 ### ~
 
+### v0.14.7 (2022-07-31)
+* fixes app crash when changing locales (#482).
+* fixes app crash when exporting alarms (#612).
+* fixes bug "alarm import/export does not retain sorted order" (#610).
+* fixes bug "alarm list is not sorted after adding items" (#609).
+
 ### v0.14.6 (2022-06-04)
 * fixes crash when changing an alarm's time/event (#605).
 * fixes bug where units setting is ignored (altitude displayed in feet) (#604); [Android Go]
