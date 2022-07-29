@@ -95,6 +95,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWMOON = "app_ui_showmoon";
     public static final boolean PREF_DEF_UI_SHOWMOON = true;
 
+    public static final String PREF_KEY_UI_SHOWMAPBUTTON = "app_ui_showmapbutton";
+    public static final boolean PREF_DEF_UI_SHOWMAPBUTTON = true;
+
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
@@ -376,6 +379,12 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWDATASOURCE, PREF_DEF_UI_SHOWDATASOURCE);
+    }
+
+    public static boolean loadShowMapButtonPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWMAPBUTTON, PREF_DEF_UI_SHOWMAPBUTTON);
     }
 
     public static boolean[] loadShowFieldsPref( Context context )

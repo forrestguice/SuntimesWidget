@@ -1019,6 +1019,10 @@
     <string name="configLabel_ui_showdatasource">Show Data Source</string>
     <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
 
+    <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
+    <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
+
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label -->
@@ -2058,6 +2062,7 @@
     <string name="def_app_ui_showheader_icon" translatable="false">true</string>
     <string name="def_app_ui_showheader_text" translatable="false">1</string>  <!-- 1: labels -->
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
+    <string name="def_app_ui_showmapbutton" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
