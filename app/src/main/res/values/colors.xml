@@ -26,6 +26,7 @@
     <color name="card_bg_darktrans">#aa212121</color>
     <color name="widget_bg_dark">#82212121</color>
     <color name="fab_ripple_dark">@color/grey_900</color>
+    <color name="snackbar_text_dark">@android:color/primary_text_dark</color>
 
     <color name="text_disabled_light">#39000000</color>
     <color name="text_accent_light">@color/deep_teal_500</color>
@@ -37,6 +38,7 @@
     <color name="card_bg_lighttrans">#aaffffff</color>
     <color name="widget_bg_light">@color/card_bg_lighttrans</color>
     <color name="fab_ripple_light">@color/grey_50</color>
+    <color name="snackbar_text_light">@android:color/primary_text_light</color>
 
     <!-- alarm cards -->
     <color name="grid_selected_light">@color/text_accent_light</color>

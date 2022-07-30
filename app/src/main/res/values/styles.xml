@@ -66,7 +66,7 @@
         <item name="tagColor_error">@color/errorTag_light</item>
         <item name="tagColor_dst">@color/dstTag_light</item>
 
-        <item name="snackbar_textColor">@android:color/primary_text_light</item>
+        <item name="snackbar_textColor">@color/snackbar_text_light</item>
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
@@ -195,7 +195,7 @@
         <item name="tagColor_error">@color/errorTag_dark</item>
         <item name="tagColor_dst">@color/dstTag_dark</item>
 
-        <item name="snackbar_textColor">@android:color/primary_text_dark</item>
+        <item name="snackbar_textColor">@color/snackbar_text_dark</item>
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
