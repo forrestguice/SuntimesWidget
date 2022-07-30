@@ -184,7 +184,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         GetFixUI.themeIcons(this);
 
         super.onCreate(icicle);

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -482,6 +483,13 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_APPEARANCE_THEME_DARK, PREF_DEF_APPEARANCE_THEME_DARK);
+    }
+
+    public static int setTheme(Activity activity, String appTheme)
+    {
+        int themeResID = AppSettings.themePrefToStyleId(activity, appTheme, null);
+        activity.setTheme(themeResID);
+        return themeResID;
     }
 
     public static int loadTheme(Context context)
