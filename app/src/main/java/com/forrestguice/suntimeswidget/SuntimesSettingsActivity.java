@@ -1477,8 +1477,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void updatePref_ui_themeOverride(String mode, ListPreference darkPref, ListPreference lightPref)
     {
-        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
-        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
+        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
     }
 
     /**

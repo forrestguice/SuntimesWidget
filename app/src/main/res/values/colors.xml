@@ -16,6 +16,53 @@
 
     <color name="text_alertDialogListItem">#000000</color>
 
+    <!-- "night" overridable -->
+
+    <color name="dialog_frame">@color/dialog_frame_light</color>
+    <color name="dialog_bg">@color/dialog_bg_light</color>
+    <color name="dialog_bg_alt">@color/dialog_bg_light</color>
+    <color name="card_bg">@color/card_bg_light</color>
+    <color name="card_bg_trans">@color/card_bg_lighttrans</color>
+
+    <color name="hr">@color/hr_light</color>
+    <color name="text_disabled">@color/text_disabled_light</color>
+    <color name="text_accent">@color/text_accent_light</color>
+    <color name="snackbar_text">@color/snackbar_text_light</color>
+
+    <color name="alarm_enabled">@color/alarm_enabled_light</color>
+    <color name="grid_selected">@color/grid_selected_light</color>
+    <color name="btn_tint_pressed">@color/btn_tint_pressed_light</color>
+
+    <color name="graphColor_bg">@color/graphColor_bg_light</color>
+    <color name="graphColor_day">@color/graphColor_day_light</color>
+    <color name="graphColor_night">@color/graphColor_night_light</color>
+    <color name="graphColor_civil">@color/graphColor_civil_light</color>
+    <color name="graphColor_nautical">@color/graphColor_nautical_light</color>
+    <color name="graphColor_astronomical">@color/graphColor_astronomical_light</color>
+    <color name="graphColor_pointFill">@color/graphColor_pointFill_light</color>
+    <color name="graphColor_pointStroke">@color/graphColor_pointStroke_light</color>
+
+    <color name="warningTag">@color/warningTag_light</color>
+    <color name="errorTag">@color/errorTag_light</color>
+    <color name="dstTag">@color/dstTag_light</color>
+
+    <color name="sunIcon_color_rising">@color/sunIcon_color_rising_light</color>
+    <color name="sunIcon_color_setting">@color/sunIcon_color_setting_light</color>
+
+    <color name="moonIcon_color_rising">@color/moonIcon_color_rising_light</color>
+    <color name="moonIcon_color_setting">@color/moonIcon_color_setting_light</color>
+
+    <color name="springColor">@color/springColor_light</color>
+    <color name="summerColor">@color/summerColor_light</color>
+    <color name="fallColor">@color/fallColor_light</color>
+    <color name="winterColor">@color/winterColor_light</color>
+
+    <color name="tagColor_warning">@color/warningTag_light</color>
+    <color name="tagColor_error">@color/errorTag_light</color>
+    <color name="tagColor_dst">@color/dstTag_light</color>
+
+    <!-- general -->
+
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
     <color name="hr_dark">#33ffffff</color>

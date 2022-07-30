@@ -1054,11 +1054,13 @@
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
         <item>@string/appThemes_nightMode</item>
+        <item>@string/appThemes_systemDefault</item>
     </string-array>
     <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
         <item>light</item>
         <item>dark</item>
         <item>daynight</item>
+        <item>system</item>
     </string-array>
 
     <!-- App Setting: time format -->
