@@ -939,11 +939,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Világos színtéma</string>
     <string name="appThemes_darkTheme">Sötét színtéma</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Világos / Sötét színtéma (Éjszakai&#160;mód)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Világos / Sötét színtéma (Éjszakai&#160;mód)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">

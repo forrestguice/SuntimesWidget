@@ -957,11 +957,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Argia</string>
     <string name="appThemes_darkTheme">Iluna</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Argia / iluna (Gau&#160;modua)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Argia / iluna (Gau&#160;modua)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->

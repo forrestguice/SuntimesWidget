@@ -964,11 +964,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Jasna skórka</string>
     <string name="appThemes_darkTheme">Ciemna skórka</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Jasna skórka (dzień) / Ciemna skórka (noc)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Jasna skórka (dzień) / Ciemna skórka (noc)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <string name="configActionDesc_doNothing">Nie rób nic</string>
     <string name="configActionDesc_nextNote">Pokaż następną notatkę</string>

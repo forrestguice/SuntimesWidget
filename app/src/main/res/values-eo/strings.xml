@@ -948,11 +948,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Hela etoso</string>
     <string name="appThemes_darkTheme">Malhela etoso</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Hela (tage) / malhela (nokte)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Hela (tage) / malhela (nokte)</string>  <!-- TODO -->
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <string name="configActionDesc_doNothing">Fari nenion</string>
     <string name="configActionDesc_nextNote">Montri sekvan noton</string>

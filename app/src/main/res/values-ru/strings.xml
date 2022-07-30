@@ -1028,11 +1028,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Светлая тема</string>
     <string name="appThemes_darkTheme">Темная тема</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Выбирать по времени (темная - ночью)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Выбирать по времени (темная - ночью)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->

@@ -958,11 +958,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Lyst tema</string>
     <string name="appThemes_darkTheme">Mørkt tema</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Lyst tema / Mørkt tema (nattmodus)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Lyst tema / Mørkt tema (nattmodus)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <string name="configActionDesc_doNothing">Ikke gjør noe</string>
     <string name="configActionDesc_nextNote">Vis neste notis</string>

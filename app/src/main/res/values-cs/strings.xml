@@ -1018,11 +1018,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Světlé téma</string>
     <string name="appThemes_darkTheme">Tmavé téma</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Světlé téma / Tmavé téma (Noční&#160;režim)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Světlé téma / Tmavé téma (Noční&#160;režim)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->

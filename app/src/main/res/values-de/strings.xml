@@ -963,11 +963,8 @@
   <!-- App Setting: UI Theme -->
   <string name="appThemes_lightTheme">Helles Thema</string>
   <string name="appThemes_darkTheme">Dunkles Thema</string>
-  <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-    <item>@string/appThemes_lightTheme</item>
-    <item>@string/appThemes_darkTheme</item>
-    <item>Helles Thema / dunkles Thema (Nachtmodus)</item>
-  </string-array>
+  <string name="appThemes_nightMode">Helles Thema / dunkles Thema (Nachtmodus)</string>
+  <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
   <string name="configActionDesc_doNothing">Nichts tun</string>
   <string name="configActionDesc_nextNote">Nächste Kurzinfo anzeigen</string>

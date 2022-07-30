@@ -945,11 +945,8 @@
 
     <string name="appThemes_lightTheme">Tema claro</string>
     <string name="appThemes_darkTheme">Tema oscuro</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Tema claro/Tema oscuro (modo&#160;noche)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Tema claro/Tema oscuro (modo&#160;noche)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
     
     <string-array name="timeFormatMode_display">                      
         <item>@string/timeFormatMode_system</item>

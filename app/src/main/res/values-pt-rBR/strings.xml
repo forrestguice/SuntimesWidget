@@ -999,11 +999,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Tema Claro</string>
     <string name="appThemes_darkTheme">Tema Escuro</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Tema Claro / Tema Escuro (Modo&#160;Noturno)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Tema Claro / Tema Escuro (Modo&#160;Noturno)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
