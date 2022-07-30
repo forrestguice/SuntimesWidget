@@ -6,9 +6,9 @@
 
     <!-- Theme: Light (left-to-right) -->
     <style name="AppThemeBase.Light" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="dialogFrame">@android:color/white</item>
+        <item name="dialogFrame">@color/dialog_frame_light</item>
         <item name="dialogBackground">@color/dialog_bg_light</item>
-        <item name="dialogBackgroundAlt">@color/grey_300</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_light</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
         <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
@@ -71,7 +71,7 @@
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
         <item name="fab_backgroundColor">@color/text_accent_light</item>
-        <item name="fab_rippleColor">@color/grey_50</item>
+        <item name="fab_rippleColor">@color/fab_ripple_light</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
@@ -135,9 +135,9 @@
 
     <!-- Theme: Dark (left-to-right) -->
     <style name="AppThemeBase.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="dialogFrame">@color/grey_800</item>
+        <item name="dialogFrame">@color/dialog_frame_dark</item>
         <item name="dialogBackground">@color/dialog_bg_dark</item>
-        <item name="dialogBackgroundAlt">@color/grey_900</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_dark</item>
         <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
         <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
@@ -200,7 +200,7 @@
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
         <item name="fab_backgroundColor">@color/text_accent_dark</item>
-        <item name="fab_rippleColor">@color/grey_900</item>
+        <item name="fab_rippleColor">@color/fab_ripple_dark</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>

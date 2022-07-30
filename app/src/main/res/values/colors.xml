@@ -19,18 +19,24 @@
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
     <color name="hr_dark">#33ffffff</color>
+    <color name="dialog_frame_dark">@color/grey_800</color>
     <color name="dialog_bg_dark">@color/grey_850</color>
+    <color name="dialog_bg_alt_dark">@color/grey_900</color>
     <color name="card_bg_dark">@color/grey_800</color>
     <color name="card_bg_darktrans">#aa212121</color>
     <color name="widget_bg_dark">#82212121</color>
+    <color name="fab_ripple_dark">@color/grey_900</color>
 
     <color name="text_disabled_light">#39000000</color>
     <color name="text_accent_light">@color/deep_teal_500</color>
     <color name="hr_light">#1f000000</color>
+    <color name="dialog_frame_light">@android:color/white</color>
     <color name="dialog_bg_light">@color/grey_50</color>
+    <color name="dialog_bg_alt_light">@color/grey_300</color>
     <color name="card_bg_light">@android:color/white</color>
     <color name="card_bg_lighttrans">#aaffffff</color>
     <color name="widget_bg_light">@color/card_bg_lighttrans</color>
+    <color name="fab_ripple_light">@color/grey_50</color>
 
     <!-- alarm cards -->
     <color name="grid_selected_light">@color/text_accent_light</color>
