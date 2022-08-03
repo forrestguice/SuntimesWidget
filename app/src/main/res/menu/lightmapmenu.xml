@@ -17,7 +17,7 @@
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_worldmap"
-                    android:icon="?attr/icActionMap"
+                    android:icon="?attr/icActionWorldMap"
                     android:title="@string/configAction_worldMap"
                     app:showAsAction="never" />
 

@@ -948,11 +948,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Hela etoso</string>
     <string name="appThemes_darkTheme">Malhela etoso</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Hela (tage) / malhela (nokte)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Hela (tage) / malhela (nokte)</string>  <!-- TODO -->
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <string name="configActionDesc_doNothing">Fari nenion</string>
     <string name="configActionDesc_nextNote">Montri sekvan noton</string>
@@ -978,7 +975,7 @@
     <string name="configActionDesc_widgetList">Listo de fenestraĵoj</string>
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Tempolimo de GPS</string>
+    <string name="configLabel_getFix_maxElapse">Tempolimo de GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxElapse_summary">Rezigni post <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekundoj</item>
@@ -989,7 +986,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Valido de GPS‑lego</string>
+    <string name="configLabel_getFix_maxAge">Valido de GPS‑lego</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary">Senvalidiĝi post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>neniam</item>
@@ -1243,7 +1240,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS estas malaktiva. Ĉu aktivigi ĝin?</string>
+    <string name="gps_dialog_msg">GPS estas malaktiva. Ĉu aktivigi ĝin?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">Jes</string>
     <string name="gps_dialog_cancel">Ne</string>
 
@@ -1251,8 +1248,8 @@
     <string name="gps_lastfix_title_set">Pozicio agordita</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Pozicio determinita</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Determinado de pozicio</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS ne povis trovi pozicion, reiranta lastan scian pozicion.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Aktualigo de GPS ĉesigita.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_notfound">GPS ne povis trovi pozicion, reiranta lastan scian pozicion.</string>  <!-- displayed briefly after gps has failed to get a location -->  <!-- TODO: removed "GPS" -->
+    <string name="gps_lastfix_toast_cancelled">Aktualigo de GPS ĉesigita.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Pozicio nekonata</string>

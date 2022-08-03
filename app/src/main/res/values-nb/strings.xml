@@ -958,11 +958,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Lyst tema</string>
     <string name="appThemes_darkTheme">Mørkt tema</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Lyst tema / Mørkt tema (nattmodus)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Lyst tema / Mørkt tema (nattmodus)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <string name="configActionDesc_doNothing">Ikke gjør noe</string>
     <string name="configActionDesc_nextNote">Vis neste notis</string>
@@ -1000,7 +997,7 @@
     <string name="timezone_sort_msg">Tidssoner sortert (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPS - tidsbegrensning</string>
+    <string name="configLabel_getFix_maxElapse">GPS - tidsbegrensning</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxElapse_summary">Gi opp etter <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekunder</item>
@@ -1011,7 +1008,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Maks tid for siste GPS</string>
+    <string name="configLabel_getFix_maxAge">Maks tid for siste GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> betraktet som siste</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>ingen</item>
@@ -1266,7 +1263,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS er deaktivert. Aktivere nå?</string>
+    <string name="gps_dialog_msg">GPS er deaktivert. Aktivere nå?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">Ja</string>
     <string name="gps_dialog_cancel">Nei</string>
 
@@ -1274,8 +1271,8 @@
     <string name="gps_lastfix_title_set">Bestem posisjon</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Siste posisjon</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Henter posisjon</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">GPS-oppdatering avbrutt.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_notfound">GPS mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
+    <string name="gps_lastfix_toast_cancelled">GPS-oppdatering avbrutt.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Ingen posisjonsfastsettelse</string>

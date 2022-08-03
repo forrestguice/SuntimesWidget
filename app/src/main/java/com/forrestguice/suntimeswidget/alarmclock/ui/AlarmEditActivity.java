@@ -181,7 +181,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+        appThemeResID = AppSettings.setTheme(this, appTheme);
 
         String themeName = AppSettings.getThemeOverride(this, appThemeResID);
         if (themeName != null) {

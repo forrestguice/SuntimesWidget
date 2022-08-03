@@ -46,7 +46,7 @@
         android:background="?attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/worldmap_dialog_action_menu"
-        android:src="?attr/icActionMap"
+        android:src="?attr/icActionWorldMap"
         style="?attr/actionOverflowButtonStyle" />
 
     <View android:id="@+id/worldmapdialog_header"

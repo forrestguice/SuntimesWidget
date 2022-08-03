@@ -964,11 +964,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Jasna skórka</string>
     <string name="appThemes_darkTheme">Ciemna skórka</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Jasna skórka (dzień) / Ciemna skórka (noc)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Jasna skórka (dzień) / Ciemna skórka (noc)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <string name="configActionDesc_doNothing">Nie rób nic</string>
     <string name="configActionDesc_nextNote">Pokaż następną notatkę</string>
@@ -1001,7 +998,7 @@
     <string name="timezone_sort_msg">Strefy czasowe posortowane (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Limit czasu GPS</string>
+    <string name="configLabel_getFix_maxElapse">Limit czasu GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxElapse_summary">Zrezygnuj po <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekundach</item>
@@ -1012,7 +1009,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Czas aktualności GPS</string>
+    <string name="configLabel_getFix_maxAge">Czas aktualności GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary">Aktualny przez <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>nigdy</item>
@@ -1266,7 +1263,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS jest wyłączony. Czy włączyć go?</string>
+    <string name="gps_dialog_msg">GPS jest wyłączony. Czy włączyć go?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">Tak</string>
     <string name="gps_dialog_cancel">Nie</string>
 
@@ -1274,8 +1271,8 @@
     <string name="gps_lastfix_title_set">Ustaw lokalizację</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Ostatnia lokalizacja</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Ustalanie lokalizacji</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS nie mógł ustalić lokalizacji, powrót do ostatniej znanej lokalizacji.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Anulowano odświeżanie GPS.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_notfound">GPS nie mógł ustalić lokalizacji, powrót do ostatniej znanej lokalizacji.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
+    <string name="gps_lastfix_toast_cancelled">Anulowano odświeżanie GPS.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Pozycja nieznana</string>

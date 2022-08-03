@@ -1019,6 +1019,10 @@
     <string name="configLabel_ui_showdatasource">Show Data Source</string>
     <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
 
+    <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
+    <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
+
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label -->
@@ -1044,15 +1048,19 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Light Theme</string>
     <string name="appThemes_darkTheme">Dark Theme</string>
+    <string name="appThemes_nightMode">Light Theme / Dark Theme (Night&#160;Mode)</string>  <!-- TODO -->
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Light Theme / Dark Theme (Night&#160;Mode)</item>
+        <item>@string/appThemes_nightMode</item>
+        <item>@string/appThemes_systemDefault</item>
     </string-array>
     <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
         <item>light</item>
         <item>dark</item>
         <item>daynight</item>
+        <item>system</item>
     </string-array>
 
     <!-- App Setting: time format -->
@@ -1249,8 +1257,8 @@
     <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title -->
     <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->
 
-    <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPS time limit</string>
+    <!-- App Setting: location fix time limit -->
+    <string name="configLabel_getFix_maxElapse">Location time limit</string>
     <string name="configLabel_getFix_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 seconds</item>
@@ -1267,8 +1275,8 @@
         <item>600000</item>
     </string-array>
 
-    <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPS recent max age</string>
+    <!-- App Setting: location fix max age -->
+    <string name="configLabel_getFix_maxAge">Location recent max age</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>none</item>
@@ -1662,19 +1670,19 @@
     <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
     <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
 
-    <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>
+    <!-- Dialog: Enable Location? -->
+    <string name="gps_dialog_msg">Location is disabled. Enable it?</string>
     <string name="gps_dialog_ok">Yes</string>
     <string name="gps_dialog_cancel">No</string>
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Set Position</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by lookup -->
+    <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while lookup in progress -->
+    <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after failing to get a location -->
+    <string name="gps_lastfix_toast_cancelled">Location update cancelled.</string> <!-- displayed briefly when location refresh cancelled -->
 
-    <!-- Dialog: KeepTrying GPS? -->
+    <!-- Dialog: KeepTrying Location? -->
     <string name="gps_keeptrying_title">No Fix</string>
     <string name="gps_keeptrying_msg">Unable to get a fix.</string>
     <string name="gps_keeptrying_ok">Keep Trying</string>
@@ -2058,6 +2066,7 @@
     <string name="def_app_ui_showheader_icon" translatable="false">true</string>
     <string name="def_app_ui_showheader_text" translatable="false">1</string>  <!-- 1: labels -->
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
+    <string name="def_app_ui_showmapbutton" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
