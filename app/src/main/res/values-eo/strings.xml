@@ -285,7 +285,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Aspekto</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Aspekto</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_mode">Etoso</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Baskuli inter aranĝoj por plenigi disponeblan spacon</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleText">Skali tekstojn kaj bildsimbolojn</string>  <!-- checkbox label -->
@@ -376,6 +376,10 @@
     <string name="widgetMode1x1_decright">Deklinacio kaj rektascensio</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Nuna distanco</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Sekva apogeo aŭ perigeo</string>     <!-- setting -->
+    
+    <string name="widgetMode3x1_lightmap_large">Lum-mapo</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_medium">Lum-mapo (meza)</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_small">Lum-mapo (malgranda)</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Norma</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polusa (nordo)</string>     <!-- setting -->
@@ -537,12 +541,12 @@
 
     <string name="clearactions_dialog_msg">Ĉu vi certe volas restarigi implicitajn valorojn?\n\nĈiuj propraj agoj foriĝos.</string>
     <string name="clearactions_dialog_ok">Forigi ĉiujn</string>
-    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
+    <string name="clearactions_dialog_cancel">Nuligi</string>  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Reagordis agojn al implicitaj valoroj.</string>
 
     <string name="saveaction_dialog_title">Aldoni agon</string>
     <string name="saveaction_dialog_ok">Konservi</string>
-    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
+    <string name="saveaction_dialog_cancel">Nuligi</string>  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Proponi</string>
     <string name="saveaction_toast">Konservis agon “%1$s” (%2$s).</string>
 
@@ -928,7 +932,11 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
-
+    
+     <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Montri butonon de mapo</string>
+    <string name="configLabel_ui_showmapbutton_summary">Sur la ag-strio montri butonon, kiu malfermas implicitan aplikaĵon de mapo.</string>
+    
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Kolumn-titoloj</string>              <!-- group title -->
     <string name="configLabel_ui_showheader_icon">Montri bildsimbolon en kulumn-titolo</string> <!-- checkbox label -->
@@ -946,10 +954,10 @@
     <string name="configLabel_ui_showbluehour">Blua horo</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Hela etoso</string>
-    <string name="appThemes_darkTheme">Malhela etoso</string>
-    <string name="appThemes_nightMode">Hela / malhela (nokta reĝimo)</string>
-    <string name="appThemes_systemDefault">Laŭ operaciumo</string>
+    <string name="appThemes_lightTheme">hela</string>
+    <string name="appThemes_darkTheme">malhela</string>
+    <string name="appThemes_nightMode">hela / malhela (dum nokta reĝimo)</string>
+    <string name="appThemes_systemDefault">laŭ operaciumo</string>
 
     <string name="configActionDesc_doNothing">Fari nenion</string>
     <string name="configActionDesc_nextNote">Montri sekvan noton</string>
@@ -973,6 +981,8 @@
     <string name="configActionDesc_themeList">Listo de etosoj</string>
     <string name="configActionDesc_actionList">Listo de agoj</string>
     <string name="configActionDesc_widgetList">Listo de fenestraĵoj</string>
+    <string name="configActionDesc_nextSunrise">Montri sekvan sunleviĝon</string>
+    <string name="configActionDesc_nextSunset">Montri sekvan sunsubiron</string>
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Tempolimo de pozici-determinado</string>
@@ -1514,6 +1524,7 @@
 
     <string name="dialog_ok">Bone</string>
     <string name="dialog_cancel">Nuligi</string>
+    <string name="dialog_msg_donotshowagain">Ne demandi min denove</string>  <!-- checkbox text -->
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
