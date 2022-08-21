@@ -510,7 +510,7 @@
     <string name="configLabel_action_id">Identigilo:</string>                 <!-- edittext label -->
     <string name="configLabel_action_launch">Klaso:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-
+    <string name="configLabel_action_launch_package">Pakaĵo:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_title">Nomo de ago</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">Konciza priskribo</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">Tipo:</string>                 <!-- spinner label -->
@@ -736,6 +736,7 @@
     <string name="alarmAction_snoozeMsg">Prokrastis por <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">Alarmo silentiĝis.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Alarmo baldaŭas</string>     <!-- notification msg -->
+    <string name="alarmAction_alertFailedMsg">Fiaskis ludi sonon!</string>         <!-- error toast -->
 
     <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
@@ -773,7 +774,13 @@
     <string name="clearalarms_dialog_cancel">Nuligi</string>    <!-- button -->
     <string name="clearalarms_toast_success">Forigis ĉiujn alarmojn.</string> <!-- toast msg -->
 
-    <string name="importalarms_toast_success">Enportis %s alarmojn.</string> <!-- toast msg -->
+    <string name="importalarms_title_warning">Averto pri enportado</string> <!-- toast msg -->
+    <string name="importalarms_msg_warning">Enportitaj alarmoj povas restarigi iujn agordojn al implicitaj valoroj.\n\nEble vi devos reagordi iujn sonojn kaj agojn.</string> <!-- toast msg -->
+    <string name="importalarms_toast_success">Enportis <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <plurals name="alarmPlural">
+        <item quantity="one">%d alarmon</item>
+        <item quantity="other">%d alarmojn</item>
+    </plurals>
 
     <string name="alarmlabel_dialog_title">Etikedo</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apliki</string>        <!-- button -->
