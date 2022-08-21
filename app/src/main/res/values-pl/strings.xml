@@ -1006,7 +1006,6 @@
     <string name="configActionDesc_themeList">Lista skórek</string>
     <string name="configActionDesc_actionList">Lista akcji</string>
     <string name="configActionDesc_widgetList">Lista widżetów</string>
-    <string name="configActionDesc_widgetList">Widget List</string>
     <string name="configActionDesc_nextSunrise">Wyświetl następny wschód Słońca</string>
     <string name="configActionDesc_nextSunset">Wyświetl następny zachód Słońca</string>
 
