@@ -285,7 +285,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Aspekto</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Aspekto</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_mode">Etoso</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Baskuli inter aranĝoj por plenigi disponeblan spacon</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleText">Skali tekstojn kaj bildsimbolojn</string>  <!-- checkbox label -->
@@ -376,6 +376,10 @@
     <string name="widgetMode1x1_decright">Deklinacio kaj rektascensio</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Nuna distanco</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Sekva apogeo aŭ perigeo</string>     <!-- setting -->
+    
+    <string name="widgetMode3x1_lightmap_large">Lum-mapo</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_medium">Lum-mapo (meza)</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_small">Lum-mapo (malgranda)</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Norma</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polusa (nordo)</string>     <!-- setting -->
@@ -506,7 +510,7 @@
     <string name="configLabel_action_id">Identigilo:</string>                 <!-- edittext label -->
     <string name="configLabel_action_launch">Klaso:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-
+    <string name="configLabel_action_launch_package">Pakaĵo:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_title">Nomo de ago</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">Konciza priskribo</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">Tipo:</string>                 <!-- spinner label -->
@@ -537,12 +541,12 @@
 
     <string name="clearactions_dialog_msg">Ĉu vi certe volas restarigi implicitajn valorojn?\n\nĈiuj propraj agoj foriĝos.</string>
     <string name="clearactions_dialog_ok">Forigi ĉiujn</string>
-    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
+    <string name="clearactions_dialog_cancel">Nuligi</string>  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Reagordis agojn al implicitaj valoroj.</string>
 
     <string name="saveaction_dialog_title">Aldoni agon</string>
     <string name="saveaction_dialog_ok">Konservi</string>
-    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
+    <string name="saveaction_dialog_cancel">Nuligi</string>  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Proponi</string>
     <string name="saveaction_toast">Konservis agon “%1$s” (%2$s).</string>
 
@@ -732,6 +736,7 @@
     <string name="alarmAction_snoozeMsg">Prokrastis por <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">Alarmo silentiĝis.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Alarmo baldaŭas</string>     <!-- notification msg -->
+    <string name="alarmAction_alertFailedMsg">Fiaskis ludi sonon!</string>         <!-- error toast -->
 
     <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
@@ -769,7 +774,13 @@
     <string name="clearalarms_dialog_cancel">Nuligi</string>    <!-- button -->
     <string name="clearalarms_toast_success">Forigis ĉiujn alarmojn.</string> <!-- toast msg -->
 
-    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+    <string name="importalarms_title_warning">Averto pri enportado</string> <!-- toast msg -->
+    <string name="importalarms_msg_warning">Enportitaj alarmoj povas restarigi iujn agordojn al implicitaj valoroj.\n\nEble vi devos reagordi iujn sonojn kaj agojn.</string> <!-- toast msg -->
+    <string name="importalarms_toast_success">Enportis <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <plurals name="alarmPlural">
+        <item quantity="one">%d alarmon</item>
+        <item quantity="other">%d alarmojn</item>
+    </plurals>
 
     <string name="alarmlabel_dialog_title">Etikedo</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apliki</string>        <!-- button -->
@@ -928,7 +939,11 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
-
+    
+     <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Montri butonon de mapo</string>
+    <string name="configLabel_ui_showmapbutton_summary">Sur la ag-strio montri butonon, kiu malfermas implicitan aplikaĵon de mapo.</string>
+    
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Kolumn-titoloj</string>              <!-- group title -->
     <string name="configLabel_ui_showheader_icon">Montri bildsimbolon en kulumn-titolo</string> <!-- checkbox label -->
@@ -946,10 +961,10 @@
     <string name="configLabel_ui_showbluehour">Blua horo</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Hela etoso</string>
-    <string name="appThemes_darkTheme">Malhela etoso</string>
-    <string name="appThemes_nightMode">Hela (tage) / malhela (nokte)</string>  <!-- TODO -->
-    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
+    <string name="appThemes_lightTheme">hela</string>
+    <string name="appThemes_darkTheme">malhela</string>
+    <string name="appThemes_nightMode">hela / malhela (dum nokta reĝimo)</string>
+    <string name="appThemes_systemDefault">laŭ operaciumo</string>
 
     <string name="configActionDesc_doNothing">Fari nenion</string>
     <string name="configActionDesc_nextNote">Montri sekvan noton</string>
@@ -973,9 +988,11 @@
     <string name="configActionDesc_themeList">Listo de etosoj</string>
     <string name="configActionDesc_actionList">Listo de agoj</string>
     <string name="configActionDesc_widgetList">Listo de fenestraĵoj</string>
+    <string name="configActionDesc_nextSunrise">Montri sekvan sunleviĝon</string>
+    <string name="configActionDesc_nextSunset">Montri sekvan sunsubiron</string>
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Tempolimo de GPS</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="configLabel_getFix_maxElapse">Tempolimo de pozici-determinado</string>
     <string name="configLabel_getFix_maxElapse_summary">Rezigni post <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekundoj</item>
@@ -986,7 +1003,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Valido de GPS‑lego</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="configLabel_getFix_maxAge">Valido de determinita pozicio</string>
     <string name="configLabel_getFix_maxAge_summary">Senvalidiĝi post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>neniam</item>
@@ -1240,7 +1257,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS estas malaktiva. Ĉu aktivigi ĝin?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
+    <string name="gps_dialog_msg">Pozici-trovado estas malaktiva. Ĉu aktivigi ĝin?</string>
     <string name="gps_dialog_ok">Jes</string>
     <string name="gps_dialog_cancel">Ne</string>
 
@@ -1248,8 +1265,8 @@
     <string name="gps_lastfix_title_set">Pozicio agordita</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Pozicio determinita</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Determinado de pozicio</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS ne povis trovi pozicion, reiranta lastan scian pozicion.</string>  <!-- displayed briefly after gps has failed to get a location -->  <!-- TODO: removed "GPS" -->
-    <string name="gps_lastfix_toast_cancelled">Aktualigo de GPS ĉesigita.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
+    <string name="gps_lastfix_toast_notfound">Pozici-trova servo ne povas determini vian aktualan pozicion, reagordante al la lasta konata pozicio.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">Aktualigo de via pozicio ĉesigita.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Pozicio nekonata</string>
@@ -1514,6 +1531,7 @@
 
     <string name="dialog_ok">Bone</string>
     <string name="dialog_cancel">Nuligi</string>
+    <string name="dialog_msg_donotshowagain">Ne demandi min denove</string>  <!-- checkbox text -->
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
