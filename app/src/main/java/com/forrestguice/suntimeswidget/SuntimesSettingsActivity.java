@@ -1906,6 +1906,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        pref.setText((pref.isMetric() ? observerHeight : WidgetSettings.LengthUnit.metersToFeet(observerHeight)) + "");
         pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
     }
     private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)
