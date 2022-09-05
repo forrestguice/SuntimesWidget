@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -98,6 +99,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
+
+    protected static final String HELPTAG_SUBSTITUTIONS = "help_substitutions";
 
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
@@ -726,6 +729,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     HelpDialog helpDialog = new HelpDialog();
                     helpDialog.setContent(getString(R.string.help_appearance_title));
+                    helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+                    helpDialog.setNeutralButtonListener(helpDialogListener_substitutions, HELPTAG_SUBSTITUTIONS);
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
@@ -2265,6 +2270,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onBackPressed();
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
+
+    /**
+     * HelpDialog (title substitutions)
+     */
+    private final View.OnClickListener helpDialogListener_substitutions = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.help_substitutions_url))));
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 

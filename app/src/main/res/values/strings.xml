@@ -1872,7 +1872,8 @@
                 * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: add "%em, %et, %eT, %eA" (#599) to online-help -->
+    <string name="help_substitutions_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#data-substitutions</string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
