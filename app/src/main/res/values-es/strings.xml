@@ -945,11 +945,8 @@
 
     <string name="appThemes_lightTheme">Tema claro</string>
     <string name="appThemes_darkTheme">Tema oscuro</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Tema claro/Tema oscuro (modo&#160;noche)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Tema claro/Tema oscuro (modo&#160;noche)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
     
     <string-array name="timeFormatMode_display">                      
         <item>@string/timeFormatMode_system</item>
@@ -997,7 +994,7 @@
     <string name="timezone_sort_msg">Zonas horarias ordenadas (%1$s).</string>
 
     
-    <string name="configLabel_getFix_maxElapse">Plazo para obtener posición con GPS</string>
+    <string name="configLabel_getFix_maxElapse">Plazo para obtener posición con GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxElapse_summary">Abandonar tras <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  
         <item>15 segundos</item>
@@ -1008,7 +1005,7 @@
     </string-array>
 
     
-    <string name="configLabel_getFix_maxAge">Antigüedad de la posición GPS</string>
+    <string name="configLabel_getFix_maxAge">Antigüedad de la posición GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary">Actualizar al cabo de <xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">
         <item>nunca</item>  
@@ -1262,7 +1259,7 @@
     </string-array>    <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">El GPS está desactivado. ¿Activarlo?</string>
+    <string name="gps_dialog_msg">El GPS está desactivado. ¿Activarlo?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">Sí</string>
     <string name="gps_dialog_cancel">No</string>
 
@@ -1270,8 +1267,8 @@
     <string name="gps_lastfix_title_set">Configurar posición</string>
     <string name="gps_lastfix_title_found">Última posición</string>
     <string name="gps_lastfix_title_searching">Obteniendo posición</string>
-    <string name="gps_lastfix_toast_notfound">El GPS no pudo obtener posición; utilizando la última posición conocida.</string>
-    <string name="gps_lastfix_toast_cancelled">Actualización de GPS cancelada.</string> 
+    <string name="gps_lastfix_toast_notfound">El GPS no pudo obtener posición; utilizando la última posición conocida.</string>  <!-- TODO: removed "GPS" -->
+    <string name="gps_lastfix_toast_cancelled">Actualización de GPS cancelada.</string>   <!-- TODO: "gps update" to "location update" -->
 
     
     <string name="gps_keeptrying_title">Sin posición</string>

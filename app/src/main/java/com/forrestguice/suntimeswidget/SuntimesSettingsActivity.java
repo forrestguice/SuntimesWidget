@@ -147,7 +147,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         setResult(RESULT_OK);
         context = SuntimesSettingsActivity.this;
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(AppSettings.themePrefToStyleId(this, appTheme));
+        AppSettings.setTheme(this, appTheme);
 
         super.onCreate(icicle);
         initLocale(icicle);
@@ -766,18 +766,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             calendarIntent.setComponent(new ComponentName(calendarPackage, calendarActivity));
             calendarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            PackageManager packageManager = getActivity().getPackageManager();
-            if (calendarIntent.resolveActivity(packageManager) != null)
-            {
-                try {
-                    startActivity(calendarIntent);
-                    getActivity().finish();
-                    getActivity().overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
-                    return;
+            try {
+                startActivity(calendarIntent);
+                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+                return;
 
-                } catch (Exception e) {
-                    Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
-                }
+            } catch (Exception e) {
+                Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
             }
 
             AppSettings.initLocale(getActivity());
@@ -793,11 +789,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     {
                         Activity activity = getActivity();
                         if (activity != null) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AboutDialog.ADDONS_URL));
-                            if (intent.resolveActivity(activity.getPackageManager()) != null) {
-                                activity.startActivity(intent);
-                                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
-                            }
+                            AboutDialog.openLink(activity, AboutDialog.ADDONS_URL);
+                            activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                         }
                         return false;
                     }
@@ -1506,8 +1499,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void updatePref_ui_themeOverride(String mode, ListPreference darkPref, ListPreference lightPref)
     {
-        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
-        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
+        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
     }
 
     /**
@@ -1935,6 +1928,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        pref.setText((pref.isMetric() ? observerHeight : WidgetSettings.LengthUnit.metersToFeet(observerHeight)) + "");
         pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
     }
     private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)

@@ -100,6 +100,12 @@
             android:defaultValue="@string/def_app_ui_showheader_text" />
 
         <CheckBoxPreference
+            android:key="app_ui_showmapbutton"
+            android:title="@string/configLabel_ui_showmapbutton"
+            android:summary="@string/configLabel_ui_showmapbutton_summary"
+            android:defaultValue="@string/def_app_ui_showmapbutton" />
+
+        <CheckBoxPreference
             android:key="app_ui_showdatasource"
             android:title="@string/configLabel_ui_showdatasource"
             android:summary="@string/configLabel_ui_showdatasource_summary"

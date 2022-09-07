@@ -387,7 +387,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+        appThemeResID = AppSettings.setTheme(this, appTheme);
 
         String themeName = AppSettings.getThemeOverride(this, appThemeResID);
         if (themeName != null)
@@ -1049,6 +1049,17 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (actionBarMenu != null)
         {
+            if (Build.VERSION.SDK_INT >= 11)
+            {
+                MenuItem mapItem = actionBarMenu.findItem(R.id.action_location_show);
+                if (mapItem != null)
+                {
+                    boolean showMapButton = AppSettings.loadShowMapButtonPref(this);
+                    int showAsAction = (showMapButton ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER);
+                    mapItem.setShowAsAction(showAsAction);
+                }
+            }
+
             MenuItem refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
             if (refreshItem != null)
             {

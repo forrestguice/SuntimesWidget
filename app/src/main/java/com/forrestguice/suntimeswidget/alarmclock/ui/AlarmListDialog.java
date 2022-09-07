@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -515,14 +516,18 @@ public class AlarmListDialog extends DialogFragment
                 {
                     String filename = exportTarget + AlarmClockItemExportTask.FILEEXT;
                     Intent intent = ExportTask.getCreateFileIntent(filename, AlarmClockItemExportTask.MIMETYPE);
-                    startActivityForResult(intent, REQUEST_EXPORT_URI);
+                    try {
+                        startActivityForResult(intent, REQUEST_EXPORT_URI);
+                        return true;
 
-                } else {
-                    exportTask = new AlarmClockItemExportTask(context, exportTarget, true, true);    // export to external cache
-                    exportTask.setItems(items);
-                    exportTask.setTaskListener(exportListener);
-                    exportTask.execute();
+                    } catch (ActivityNotFoundException e) {
+                        Log.e("ExportAlarms", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+                    }
                 }
+                exportTask = new AlarmClockItemExportTask(context, exportTarget, true, true);    // export to external cache
+                exportTask.setItems(items);
+                exportTask.setTaskListener(exportListener);
+                exportTask.execute();
                 return true;
             } else return false;
         }
