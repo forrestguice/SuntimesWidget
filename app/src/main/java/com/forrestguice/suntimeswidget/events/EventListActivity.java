@@ -47,6 +47,7 @@ public class EventListActivity extends AppCompatActivity
     public static final String ADAPTER_MODIFIED = "isModified";
     public static final String PARAM_SELECTED = "selected";
     public static final String PARAM_NOSELECT = "noselect";
+    public static final String PARAM_EXPANDED = "expanded";
 
     private EventListHelper helper;
     private String preselectedEvent;
@@ -77,8 +78,9 @@ public class EventListActivity extends AppCompatActivity
         preselectedEvent = intent.getStringExtra(PARAM_SELECTED);
 
         helper = new EventListHelper(this, getSupportFragmentManager());
-        helper.initViews(this, findViewById(android.R.id.content), icicle);
+        helper.setExpanded(intent.getBooleanExtra(PARAM_EXPANDED, false));
         helper.setDisallowSelect(intent.getBooleanExtra(PARAM_NOSELECT, false));
+        helper.initViews(this, findViewById(android.R.id.content), icicle);
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);

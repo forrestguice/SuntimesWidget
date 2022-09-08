@@ -37,7 +37,11 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ListView android:id="@+id/list_events" android:nestedScrollingEnabled="true"
+            <ExpandableListView android:id="@+id/explist_events" android:nestedScrollingEnabled="true" android:visibility="gone"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_vertical" android:layout_gravity="center_vertical" />
+
+            <ListView android:id="@+id/list_events" android:nestedScrollingEnabled="true" android:visibility="gone"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:gravity="center_vertical" android:layout_gravity="center_vertical" />
 

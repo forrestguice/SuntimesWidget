@@ -22,8 +22,8 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,6 +40,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -64,9 +66,10 @@ public class EventListHelper
     private WeakReference<Context> contextRef;
     private android.support.v4.app.FragmentManager fragmentManager;
 
+    private int selectedChild = -1;
     private EventSettings.EventAlias selectedItem;
     private ListView list;
-    private EventDisplayAdapter adapter;
+    private EventDisplayAdapterInterface adapter;
     protected ActionMode actionMode = null;
     protected EventAliasActionMode1 actionModeCallback = new EventAliasActionMode1();
 
@@ -100,6 +103,11 @@ public class EventListHelper
         disallowSelect = value;
     }
 
+    private boolean expanded = false;
+    public void setExpanded( boolean value ) {
+        expanded = value;
+    }
+
     public void setSelected( String eventID ) {
         Log.d("DEBUG", "setSelected: " + eventID);
         selectedItem = adapter.findItemByID(eventID);
@@ -108,18 +116,20 @@ public class EventListHelper
 
     public void onRestoreInstanceState(Bundle savedState)
     {
+        expanded = savedState.getBoolean("expanded", expanded);
         disallowSelect = savedState.getBoolean("disallowSelect", disallowSelect);
         adapterModified = savedState.getBoolean("adapterModified", adapterModified);
 
         String eventID = savedState.getString("selectedItem");
         if (eventID != null && !eventID.trim().isEmpty()) {
             setSelected(eventID);
-            triggerActionMode(list, adapter.getSelected());
+            triggerActionMode(list, adapter.getSelected(), adapter.getSelectedChild());
         }
     }
 
     public void onSaveInstanceState( Bundle outState )
     {
+        outState.putBoolean("expanded", expanded);
         outState.putBoolean("disallowSelect", disallowSelect);
         outState.putBoolean("adapterModified", adapterModified);
         outState.putString("selectedItem", selectedItem != null ? selectedItem.getID() : "");
@@ -148,9 +158,15 @@ public class EventListHelper
 
     public String getAliasUri()
     {
-        if (list != null) {
+        if (list != null)
+        {
+            String suffix = "";
+            if (selectedChild >= 0) {
+                suffix = ((selectedChild == 0) ? AlarmEventProvider.ElevationEvent.SUFFIX_RISING : AlarmEventProvider.ElevationEvent.SUFFIX_SETTING);
+            }
+
             EventSettings.EventAlias selected = adapter.getSelected();
-            return selected != null ? selected.getAliasUri() : null;
+            return selected != null ? selected.getAliasUri() + suffix : null;
         } else return null;
     }
 
@@ -179,17 +195,53 @@ public class EventListHelper
             return;
         }
 
-        list = (ListView) content.findViewById(R.id.list_events);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                list.setSelection(position);
-                adapter.setSelected(selectedItem = (EventSettings.EventAlias) list.getItemAtPosition(position));
-                updateViews(contextRef.get());
-                triggerActionMode(view, selectedItem);
-            }
-        });
+        list = expanded ? (ListView) content.findViewById(R.id.explist_events) : (ListView) content.findViewById(R.id.list_events);
+        list.setVisibility(View.VISIBLE);
+
+        if (expanded)
+        {
+            final ExpandableListView expandedList = (ExpandableListView) list;
+
+            expandedList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                @Override
+                public void onGroupExpand(int groupPosition)
+                {
+                    for (int i=0; i<expandedList.getCount(); i++) {
+                        if (i != groupPosition) {
+                            expandedList.collapseGroup(i);
+                        }
+                    }
+                    adapter.setSelected(selectedItem = (EventSettings.EventAlias) expandedList.getAdapter().getItem(groupPosition));
+                    adapter.setSelected(selectedChild = 0);
+                    updateViews(contextRef.get());
+                    triggerActionMode(expandedList.getSelectedView(), selectedItem, selectedChild);
+                }
+            });
+
+            expandedList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id)
+                {
+                    adapter.setSelected(selectedItem = (EventSettings.EventAlias) expandedList.getAdapter().getItem(groupPosition));
+                    adapter.setSelected(selectedChild = childPosition);
+                    updateViews(contextRef.get());
+                    triggerActionMode(view, selectedItem, childPosition);
+                    return true;
+                }
+            });
+
+        } else {
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                {
+                    list.setSelection(position);
+                    adapter.setSelected(selectedItem = (EventSettings.EventAlias) list.getItemAtPosition(position));
+                    updateViews(contextRef.get());
+                    triggerActionMode(view, selectedItem);
+                }
+            });
+        }
         initAdapter(context);
 
         //ImageButton button_menu = (ImageButton) content.findViewById(R.id.edit_event_menu);
@@ -211,8 +263,19 @@ public class EventListHelper
                 return o1.getID().compareTo(o2.getID());
             }
         });
-        adapter = new EventDisplayAdapter(context, R.layout.layout_listitem_events, events.toArray(new EventSettings.EventAlias[0]));
-        list.setAdapter(adapter);
+
+        if (expanded)
+        {
+            ExpandableEventDisplayAdapter adapter0 = new ExpandableEventDisplayAdapter(context, R.layout.layout_listitem_events, R.layout.layout_listitem_events1, events);
+            ExpandableListView expandedList = (ExpandableListView) list;
+            expandedList.setAdapter(adapter0);
+            adapter = adapter0;
+
+        } else {
+            EventDisplayAdapter adapter0 = new EventDisplayAdapter(context, R.layout.layout_listitem_events, events.toArray(new EventSettings.EventAlias[0]));
+            list.setAdapter(adapter0);
+            adapter = adapter0;
+        }
     }
 
     protected View.OnClickListener onMenuButtonClicked = new View.OnClickListener() {
@@ -334,7 +397,7 @@ public class EventListHelper
                 adapterModified = true;
 
                 setSelected(eventID);
-                triggerActionMode(list, selectedItem);
+                triggerActionMode(list, selectedItem, selectedChild);
             }
         };
     }
@@ -417,14 +480,193 @@ public class EventListHelper
         helpDialog.show(fragmentManager, DIALOGTAG_HELP);
     }
 
+    public interface EventDisplayAdapterInterface
+    {
+        EventSettings.EventAlias getSelected();
+        int getSelectedChild();
+        void setSelected( EventSettings.EventAlias item );
+        void setSelected(int i);
+        EventSettings.EventAlias findItemByID(String eventID);
+    }
+
+    /**
+     * ExpandableEventDisplayAdapter
+     */
+    public static class ExpandableEventDisplayAdapter extends BaseExpandableListAdapter implements EventDisplayAdapterInterface
+    {
+        private WeakReference<Context> contextRef;
+        private int groupResourceID, childResourceID;
+        private List<EventSettings.EventAlias> objects;
+        private EventSettings.EventAlias selectedItem;
+        private int selectedChild = -1;
+
+        public ExpandableEventDisplayAdapter(Context context, int groupResourceID, int childResourceID, @NonNull List<EventSettings.EventAlias> objects)
+        {
+            this.contextRef = new WeakReference<>(context);
+            this.groupResourceID = groupResourceID;
+            this.childResourceID = childResourceID;
+            this.objects = objects;
+        }
+
+        @Override
+        public int getGroupCount() {
+            return objects.size();
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            return objects.get(groupPosition);
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return 2;
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View view, ViewGroup parent)
+        {
+            Context context = contextRef.get();
+            if (context == null) {
+                return view;
+            }
+            if (view == null) {
+                LayoutInflater layoutInflater = LayoutInflater.from(context);
+                view = layoutInflater.inflate(groupResourceID, parent, false);
+            }
+
+            view.setPadding((int)context.getResources().getDimension(R.dimen.eventIcon_width), 0, 0, 0);
+
+            EventSettings.EventAlias item = (EventSettings.EventAlias) getGroup(groupPosition);
+            if (item == null) {
+                Log.w("getGroupView", "group at position " + groupPosition + " is null.");
+                return view;
+            }
+
+            if (selectedItem != null && item.getID().equals(selectedItem.getID())) {
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.text_accent_dark));
+            } else view.setBackgroundColor(Color.TRANSPARENT);
+
+
+            TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
+            if (primaryText != null) {
+                primaryText.setText(item.toString());
+            }
+
+            TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
+            if (secondaryText != null) {
+                secondaryText.setText(item.getSummary(context));
+            }
+
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            if (icon != null) {
+                icon.setBackgroundColor(item.getColor());
+            }
+            return view;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent)
+        {
+            Context context = contextRef.get();
+            if (context == null) {
+                return view;
+            }
+            if (view == null) {
+                LayoutInflater layoutInflater = LayoutInflater.from(context);
+                view = layoutInflater.inflate(childResourceID, parent, false);
+            }
+
+            view.setPadding((int)context.getResources().getDimension(R.dimen.eventIcon_width), 0, 0, 0);
+
+            boolean rising = (childPosition == 0);
+            EventSettings.EventAlias item = (EventSettings.EventAlias) getGroup(groupPosition);
+            String displayString = item.toString() + " " + context.getString(rising ? R.string.eventalias_title_tag_rising : R.string.eventalias_title_tag_setting);  // TODO
+
+            if (selectedItem != null && item.getID().equals(selectedItem.getID()) && (selectedChild == childPosition)) {
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.text_accent_dark));
+            } else view.setBackgroundColor(Color.TRANSPARENT);
+
+            TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
+            if (primaryText != null) {
+                primaryText.setText(displayString);
+            }
+
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            if (icon != null)
+            {
+                Drawable drawable = ContextCompat.getDrawable(context, (rising ? R.drawable.svg_sunrise : R.drawable.svg_sunset));
+                drawable.setTint(item.getColor());
+                icon.setImageDrawable( drawable );
+            }
+
+            return view;
+        }
+
+        public void setSelected( EventSettings.EventAlias item ) {
+            selectedItem = item;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public void setSelected(int i) {
+            selectedChild = i;
+        }
+
+        public EventSettings.EventAlias getSelected() {
+            return selectedItem;
+        }
+
+        public int getSelectedChild() {
+            return selectedChild;
+        }
+
+        public EventSettings.EventAlias findItemByID(String eventID)
+        {
+            for (int i=0; i<objects.size(); i++) {
+                EventSettings.EventAlias item = objects.get(i);
+                if (item != null && item.getID().equals(eventID)) {
+                    Log.d("DEBUG", "findItemByID: " + eventID + " .. " + item.toString());
+                    return item;
+                }
+            }
+            Log.d("DEBUG", "findItemByID: " + eventID + " .. null");
+            return null;
+        }
+    }
+
     /**
      * EventDisplayAdapter
      */
-    public static class EventDisplayAdapter extends ArrayAdapter<EventSettings.EventAlias>
+    public static class EventDisplayAdapter extends ArrayAdapter<EventSettings.EventAlias> implements EventDisplayAdapterInterface
     {
         private int resourceID, dropDownResourceID;
         private EventSettings.EventAlias selectedItem;
-        private EventSettings.EventAlias[] objects;
 
         public EventDisplayAdapter(@NonNull Context context, int resource) {
             super(context, resource);
@@ -449,8 +691,18 @@ public class EventListHelper
             selectedItem = item;
             notifyDataSetChanged();
         }
+
+        @Override
+        public void setSelected(int i) {
+            /* EMPTY */
+        }
+
         public EventSettings.EventAlias getSelected() {
             return selectedItem;
+        }
+
+        public int getSelectedChild() {
+            return -1;
         }
 
         public EventSettings.EventAlias findItemByID(String eventID)
@@ -498,7 +750,9 @@ public class EventListHelper
             } else view.setBackgroundColor(Color.TRANSPARENT);
 
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
-            primaryText.setText(item.toString());
+            if (primaryText != null) {
+                primaryText.setText(item.toString());
+            }
 
             TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
             if (secondaryText != null) {
@@ -517,10 +771,18 @@ public class EventListHelper
      * triggerActionMode
      */
     public boolean triggerActionMode() {
-        return triggerActionMode(list, selectedItem);
+        return triggerActionMode(list, selectedItem, selectedChild);
     }
-    protected boolean triggerActionMode(View view, EventSettings.EventAlias item)
+    protected boolean triggerActionMode(View view, EventSettings.EventAlias item) {
+        return triggerActionMode(view, item, -1);
+    }
+    protected boolean triggerActionMode(View view, EventSettings.EventAlias item, int i)
     {
+        Context context = contextRef.get();
+        if (context == null) {
+             return false;
+        }
+
         if (Build.VERSION.SDK_INT >= 11)
         {
             if (actionMode == null)
@@ -529,16 +791,21 @@ public class EventListHelper
                 {
                     setSelected(item.getID());
                     actionModeCallback.setItem(item);
+                    actionModeCallback.setItemChild(i);
                     actionMode = list.startActionModeForChild(view, actionModeCallback);
-                    if (actionMode != null) {
-                        actionMode.setTitle(item.getLabel());
+                    if (actionMode != null)
+                    {
+                        if (i >= 0) {
+                            boolean rising = (i == 0);
+                            actionMode.setTitle(context.getString(R.string.eventalias_title_format, item.getLabel(), context.getString(rising ? R.string.eventalias_title_tag_rising : R.string.eventalias_title_tag_setting)));
+                        } else actionMode.setTitle(item.getLabel());
                     }
                 }
                 return true;
 
             } else {
                 actionMode.finish();
-                triggerActionMode(view, item);
+                triggerActionMode(view, item, i);
                 return false;
             }
 
@@ -559,6 +826,11 @@ public class EventListHelper
         protected EventSettings.EventAlias event = null;
         public void setItem(EventSettings.EventAlias item) {
             event = item;
+        }
+
+        protected int itemChild = -1;
+        public void setItemChild(int i) {
+            itemChild = i;
         }
 
         protected boolean onCreateActionMode(MenuInflater inflater, Menu menu) {

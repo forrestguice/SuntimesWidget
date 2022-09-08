@@ -477,6 +477,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
             if (i == -1)
             {
                 Intent intent = new Intent(getActivity(), EventListActivity.class);
+                intent.putExtra(EventListActivity.PARAM_EXPANDED, true);
                 startActivityForResult(intent, REQUEST_EVENTALIAS);
                 return true;
 
@@ -512,7 +513,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
                         String eventUri = data.getStringExtra(EventListActivity.SELECTED_EVENTURI);
                         if (eventUri != null) {
-                            setChoice(eventUri + AlarmEventProvider.ElevationEvent.SUFFIX_RISING);
+                            setChoice(eventUri); // + AlarmEventProvider.ElevationEvent.SUFFIX_RISING);
                         }
                     }
                 }
