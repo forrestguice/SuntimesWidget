@@ -86,6 +86,7 @@
         <item name="icActionWarning">@drawable/ic_action_warning_ref</item>
         <item name="icActionError">@drawable/ic_action_error_ref</item>
         <item name="icActionWidgets">@drawable/ic_action_widget_ref</item>
+        <item name="icActionEvents">@drawable/ic_action_events_ref</item>
         <item name="icActionAppearance">@drawable/ic_palette_ref</item>
         <item name="icActionExtension">@drawable/ic_action_extension_ref</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_ref_18</item>

@@ -41,6 +41,7 @@
     <drawable name="ic_action_warning_ref">@drawable/ic_action_warning_light</drawable>
     <drawable name="ic_action_error_ref">@drawable/ic_action_error_light</drawable>
     <drawable name="ic_action_widget_ref">@drawable/ic_action_widget_light</drawable>
+    <drawable name="ic_action_events_ref">@drawable/ic_action_widget_light</drawable>  <!-- TODO -->
     <drawable name="ic_palette_ref">@drawable/ic_palette_light</drawable>
     <drawable name="ic_action_extension_ref">@drawable/ic_action_extension_light</drawable>
     <drawable name="baseline_terrain_ref_18">@drawable/baseline_terrain_black_18</drawable>
