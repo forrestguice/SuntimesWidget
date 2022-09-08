@@ -19,14 +19,17 @@
 package com.forrestguice.suntimeswidget.events;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -42,15 +45,46 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
 public class EditEventDialog extends EditBottomSheetDialog
 {
+    public static final String ARG_DIALOGMODE = "dialogMode";
+    public static final String ARG_MODIFIED = "isModified";
+
+    public EditEventDialog()
+    {
+        super();
+        Bundle args = new Bundle();
+        args.putInt(ARG_DIALOGMODE, DIALOG_MODE_ADD);
+        args.putBoolean(ARG_MODIFIED, false);
+        setArguments(args);
+    }
+
     @Override
     protected int getLayoutID() {
         return R.layout.layout_dialog_event_edit;
+    }
+
+    /* Dialog Mode */
+    public static final int DIALOG_MODE_ADD = 0;
+    public static final int DIALOG_MODE_EDIT = 1;
+
+    public int dialogMode() {
+        return getArguments().getInt(ARG_DIALOGMODE);
+    }
+    public void setDialogMode(int mode) {
+        getArguments().putInt(ARG_DIALOGMODE, mode);
+    }
+
+    /* isModified */
+    public boolean isModified() {
+        return getArguments().getBoolean(ARG_MODIFIED);
+    }
+    public void setIsModified(boolean modified) {
+        getArguments().putBoolean(ARG_MODIFIED, modified);
     }
 
     /* EventType */
@@ -107,6 +141,17 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     }
 
+    protected String uri1 = null;
+    public String getEventUri1() {
+        return uri1;
+    }
+    public void setEventUri1(String value) {
+        uri1 = value;
+        if (edit_uri1 != null) {
+            edit_uri1.setText(uri1);
+        }
+    }
+
     /* Event */
     public EventSettings.EventAlias getEvent() {
         return new EventSettings.EventAlias(type, getEventID(), getEventLabel(), getEventColor(), getEventUri());
@@ -118,11 +163,12 @@ public class EditEventDialog extends EditBottomSheetDialog
         setEventLabel(event.getLabel());
         setEventColor(event.getColor());
         setEventUri(event.getUri());
+        setEventUri1(event.getAliasUri());
         updateViews(getActivity(), type);
     }
 
     protected TextView text_label;
-    protected EditText edit_eventID, edit_label, edit_uri;
+    protected EditText edit_eventID, edit_label, edit_uri, edit_uri1;
     protected ColorChooser choose_color;
 
     @SuppressLint("SetTextI18n")
@@ -134,6 +180,21 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
     private int angle = 0;
     protected EditText edit_angle;
+
+    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
+        Dialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
+            @Override
+            public void onBackPressed() {
+                confirmDiscardChanges(getActivity());
+            }
+        };
+        dialog.setOnShowListener(onDialogShow);
+        return dialog;
+    }
 
     @Override
     protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
@@ -149,24 +210,27 @@ public class EditEventDialog extends EditBottomSheetDialog
         edit_eventID.addTextChangedListener(idWatcher);
 
         text_label = (TextView) dialogContent.findViewById(R.id.text_event_label);
+        if (text_label != null) {
+            text_label.setText(context.getString((dialogMode() == DIALOG_MODE_ADD) ? R.string.editevent_dialog_title : R.string.editevent_dialog_title1));
+        }
+
         edit_label = (EditText) dialogContent.findViewById(R.id.edit_event_label);
         edit_label.addTextChangedListener(labelWatcher);
 
         edit_uri = (EditText) dialogContent.findViewById(R.id.edit_uri);
+        edit_uri1 = (EditText) dialogContent.findViewById(R.id.edit_uri1);
 
         ColorChooserView colorView = (ColorChooserView) dialogContent.findViewById(R.id.chooser_eventColor);
         choose_color = new ColorChooser(context, colorView.getLabel(), colorView.getEdit(), colorView.getButton(), "event");
         choose_color.setFragmentManager(getChildFragmentManager());
         choose_color.setCollapsed(true);
+        choose_color.setColorChangeListener(onColorChanged);
 
         ImageButton cancelButton = (ImageButton) dialogContent.findViewById(R.id.cancel_button);
-        if (cancelButton != null) {
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getDialog().cancel();
-                }
-            });
+        if (cancelButton != null)
+        {
+            cancelButton.requestFocus();
+            cancelButton.setOnClickListener(onCancelButtonClicked);
         }
 
         ImageButton saveButton = (ImageButton) dialogContent.findViewById(R.id.save_button);
@@ -186,9 +250,10 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         if (eventID == null) {
             eventID = EventSettings.suggestEventID(context);
-            if (label == null || label.trim().isEmpty()) {
-                label = eventID;
-            }
+        }
+
+        if (label == null || label.trim().isEmpty()) {
+            label = EventSettings.suggestEventLabel(context, eventID);
         }
 
         super.initViews(context, dialogContent, savedState);
@@ -228,34 +293,49 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     @Override
-    protected boolean validateInput()
+    protected boolean validateInput() {
+        return validateInput_id() && validateInput_label() && validateInput_angle();
+    }
+    @Override
+    protected void checkInput() {
+        validateInput();
+    }
+
+    protected boolean validateInput_id()
     {
         String id = edit_eventID.getText().toString();
-        String label = edit_label.getText().toString();
-
         if (id.trim().isEmpty() || id.contains(" ")) {
             edit_eventID.setError(getContext().getString(R.string.editevent_dialog_id_error));
             return false;
-        } else edit_eventID.setError(null);
+        }
+        edit_eventID.setError(null);
+        return true;
+    }
 
+    protected boolean validateInput_label()
+    {
+        String label = edit_label.getText().toString();
         if (label.trim().isEmpty()) {
             edit_label.setError(getContext().getString(R.string.editevent_dialog_label_error));
             return false;
-        } else edit_label.setError(null);
+        }
+        edit_label.setError(null);
+        return true;
+    }
 
+    protected boolean validateInput_angle()
+    {
         try {
             int angle = Integer.parseInt(edit_angle.getText().toString());
             if (angle < MIN_ANGLE || angle > MAX_ANGLE) {
                 edit_angle.setError(getContext().getString(R.string.editevent_dialog_angle_error));
                 return false;
-            } else {
-                edit_angle.setError(null);
             }
         } catch (NumberFormatException e) {
             edit_angle.setError(getContext().getString(R.string.editevent_dialog_angle_error));
             return false;
         }
-
+        edit_angle.setError(null);
         return true;
     }
     public static final int MIN_ANGLE = -90;
@@ -269,7 +349,8 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         @Override
         public void afterTextChanged(Editable s) {
-            checkInput();
+            validateInput_label();
+            setIsModified(true);
         }
     };
 
@@ -281,7 +362,10 @@ public class EditEventDialog extends EditBottomSheetDialog
         public void onTextChanged(CharSequence s, int start, int before, int count) {}
         @Override
         public void afterTextChanged(Editable s) {
-            checkInput();
+            if (validateInput_id()) {
+                setEventUri1(AlarmAddon.getEventInfoUri(AUTHORITY, s.toString()));
+            }
+            setIsModified(true);
         }
     };
 
@@ -296,11 +380,46 @@ public class EditEventDialog extends EditBottomSheetDialog
             try {
                 int angle = Integer.parseInt(s.toString());
                 setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, AlarmEventProvider.SunElevationEvent.NAME_PREFIX + angle));
+                setIsModified(true);
             } catch (NumberFormatException e) {
                 Log.e("EditEventDialog", "not an angle: " + e);
             }
         }
     };
+
+    private final ColorDialog.ColorChangeListener onColorChanged = new ColorDialog.ColorChangeListener() {
+        @Override
+        public void onColorChanged(int color) {
+            super.onColorChanged(color);
+            setIsModified(true);
+        }
+    };
+
+    private final View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            confirmDiscardChanges(getActivity());
+        }
+    };
+
+    protected void confirmDiscardChanges(final Context context)
+    {
+        if (isModified())
+        {
+            String message = context.getString(R.string.discardchanges_dialog_message);
+            AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(context.getString(R.string.discardchanges_dialog_ok), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            getDialog().cancel();
+                        }
+                    })
+                    .setNegativeButton(context.getString(R.string.discardchanges_dialog_cancel), null);
+            confirm.show();
+
+        } else {
+            getDialog().cancel();
+        }
+    }
 
     @Override
     protected void expandSheet(DialogInterface dialog)
@@ -310,13 +429,14 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
 
         BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        bottomSheet.setCancelable(false);
+
         FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
         if (layout != null)
         {
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            ViewUtils.initPeekHeight(getDialog(), R.id.layout_dialog_content0);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }

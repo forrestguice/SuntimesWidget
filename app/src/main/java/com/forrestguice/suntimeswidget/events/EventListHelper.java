@@ -289,10 +289,11 @@ public class EventListHelper
     {
         final Context context = contextRef.get();
         final EditEventDialog saveDialog = new EditEventDialog();
+        saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_ADD);
         saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                //saveDialog.setData(data);
+                saveDialog.setIsModified(false);
             }
         });
         saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
@@ -305,10 +306,12 @@ public class EventListHelper
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
             final EditEventDialog saveDialog = new EditEventDialog();
+            saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_EDIT);
             saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface dialog) {
                     saveDialog.setEvent(EventSettings.loadEvent(context, eventID));
+                    saveDialog.setIsModified(false);
                 }
             });
 

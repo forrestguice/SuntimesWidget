@@ -191,6 +191,10 @@ public class EventSettings
         return id;
     }
 
+    public static String suggestEventLabel(Context context, @Nullable String eventID) {
+        return context.getString(R.string.editevent_dialog_label_suggested);
+    }
+
     public static EventAlias saveEvent(Context context, @NonNull AlarmEventProvider.EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
     {
         if (id == null) {

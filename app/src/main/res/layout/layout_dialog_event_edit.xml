@@ -46,10 +46,21 @@
             </LinearLayout>
 
             <TextView android:id="@+id/text_event_label"
-                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="72dp"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                android:text="@string/editevent_dialog_addLabel"
+                android:text="@string/editevent_dialog_title"
+                android:gravity="start|left" android:padding="0dp"
+                android:layout_marginLeft="0dp" android:layout_marginStart="0dp"
+                android:layout_marginRight="20dp" android:layout_marginEnd="20dp"
+                android:layout_gravity="center_vertical" />
+
+            <EditText android:id="@+id/edit_event_label"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:minWidth="150dp"
+                android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+                android:hint="@string/editevent_dialog_label_hint" android:inputType="text"
                 android:paddingLeft="5dp" android:paddingRight="5dp"
+                android:nextFocusDown="@+id/edit_event_angle"
                 android:layout_gravity="center_vertical" />
 
             <LinearLayout android:id="@+id/controlPanel1"
@@ -73,25 +84,6 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
-                <TextView android:labelFor="@+id/edit_event_label"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                    android:text="@string/editevent_dialog_label_label" />
-
-                <EditText android:id="@+id/edit_event_label"
-                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                    android:minWidth="150dp"
-                    android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                    android:hint="@string/editevent_dialog_label_hint" android:inputType="text"
-                    android:paddingLeft="5dp" android:paddingRight="5dp"
-                    android:layout_gravity="center_vertical" />
-
-            </LinearLayout>
-
-            <LinearLayout android:orientation="horizontal"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
                 <TextView android:labelFor="@+id/edit_event_angle"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
@@ -101,7 +93,7 @@
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:minWidth="50dp"
                     android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                    android:hint="@string/editevent_dialog_angle_hint" android:inputType="text"
+                    android:hint="@string/editevent_dialog_angle_hint" android:inputType="numberSigned"
                     android:paddingLeft="5dp" android:paddingRight="5dp"
                     android:gravity="end|right"
                     android:layout_gravity="center_vertical" />
@@ -110,7 +102,16 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="@string/editevent_dialog_angle_suffix" />
 
+                <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
+                    android:id="@+id/chooser_eventColor"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_gravity="center_vertical"
+                    app:hintText="@string/configHint_themeColorSunrise"
+                    app:labelText="Color" app:reverse="false" />
+
             </LinearLayout>
+
 
         </LinearLayout>
 
@@ -136,15 +137,14 @@
                 android:hint="@string/editevent_dialog_id_hint" android:inputType="text"
                 android:layout_gravity="center_vertical" />
 
-            <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
-                android:id="@+id/chooser_eventColor"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"
-                app:hintText="@string/configHint_themeColorSunrise"
-                app:labelText="Color" app:reverse="false" />
-
         </LinearLayout>
+
+        <EditText android:id="@+id/edit_uri1"
+            android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+            android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:enabled="false"
+            android:hint="@string/editevent_dialog_uri_hint" android:inputType="textUri" android:textSize="12sp"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:layout_gravity="center_vertical" />
 
         <EditText android:id="@+id/edit_uri"
             android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"

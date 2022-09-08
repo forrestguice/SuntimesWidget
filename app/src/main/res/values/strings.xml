@@ -795,21 +795,23 @@
     <string name="editevent_dialog_id_error">@string/addaction_error_id</string>    <!-- TODO -->
     <string name="editevent_dialog_uri_hint">Event Uri</string>    <!-- TODO -->
 
+    <string name="editevent_dialog_title">Add Event</string>    <!-- TODO -->
+    <string name="editevent_dialog_title1">Edit Event</string>    <!-- TODO -->
     <string name="editevent_dialog_label_label">Label</string>    <!-- TODO -->
     <string name="editevent_dialog_label_hint">Event Label</string>    <!-- TODO -->
     <string name="editevent_dialog_label_error">@string/addaction_error_title</string>    <!-- TODO -->
-    <string name="editevent_dialog_addLabel">Add Event</string>    <!-- TODO -->
+    <string name="editevent_dialog_label_suggested">Custom Angle</string>    <!-- TODO -->
 
     <string name="editevent_dialog_angle">Angle</string>    <!-- TODO -->
     <string name="editevent_dialog_angle_hint">-6</string>    <!-- TODO -->
     <string name="editevent_dialog_angle_suffix">°</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_error">TODO</string>    <!-- TODO -->
+    <string name="editevent_dialog_angle_error">Angle is required!</string>    <!-- TODO -->
 
-    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAny alarms, notifications, or widgets using this event may no longer function and should be reassigned.</string>    <!-- TODO -->
+    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may cease to work and should be reassigned.</string>    <!-- TODO -->
     <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
     <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAny alarms, notifications, or widgets using these events may no longer function and should be reassigned.</string>   <!-- TODO -->
+    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAlarms, notifications, or widgets using these events may cease to work and should be reassigned.</string>   <!-- TODO -->
     <string name="clearevents_dialog_ok">Clear</string>   <!-- TODO -->
     <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
     <string name="clearevents_toast">Custom events cleared.</string>   <!-- TODO -->
