@@ -19,11 +19,15 @@
 package com.forrestguice.suntimeswidget.events;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -44,15 +48,19 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -72,6 +80,9 @@ public class EventListHelper
     private EventDisplayAdapterInterface adapter;
     protected ActionMode actionMode = null;
     protected EventAliasActionMode1 actionModeCallback = new EventAliasActionMode1();
+
+    protected ProgressBar progress;
+    protected View progressLayout;
 
     protected boolean adapterModified = false;
     public boolean isAdapterModified() {
@@ -197,6 +208,10 @@ public class EventListHelper
 
         list = expanded ? (ListView) content.findViewById(R.id.explist_events) : (ListView) content.findViewById(R.id.list_events);
         list.setVisibility(View.VISIBLE);
+
+        progress = (ProgressBar) content.findViewById(R.id.progress);
+        progressLayout = content.findViewById(R.id.progressLayout);
+        showProgress(false);
 
         if (expanded)
         {
@@ -402,13 +417,138 @@ public class EventListHelper
         };
     }
 
-    public void exportEvents() {
-        // TODO
+    /**
+     * ExportTask
+     */
+    protected EventExportTask exportTask = null;
+
+    public boolean exportEvents(Activity activity)
+    {
+        if (exportTask != null) { // && importTask != null) {
+            Log.e("ExportAlarms", "Already busy importing/exporting! ignoring request");
+            return false;
+        }
+
+        String exportTarget = "SuntimesEvents";
+        Context context = contextRef.get();
+        if (context != null && adapter != null)
+        {
+            EventSettings.EventAlias[] items = getItemsForExport();
+            if (items.length > 0)
+            {
+                if (Build.VERSION.SDK_INT >= 19)
+                {
+                    String filename = exportTarget + EventExportTask.FILEEXT;
+                    Intent intent = ExportTask.getCreateFileIntent(filename, EventExportTask.MIMETYPE);
+                    try {
+                        activity.startActivityForResult(intent, EventListActivity.REQUEST_EXPORT_URI);
+                        return true;
+
+                    } catch (ActivityNotFoundException e) {
+                        Log.e("ExportEvents", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+                    }
+                }
+                exportTask = new EventExportTask(context, exportTarget, true, true);    // export to external cache
+                exportTask.setItems(items);
+                exportTask.setTaskListener(exportListener);
+                exportTask.execute();
+                return true;
+            } else return false;
+        }
+        return false;
     }
+
+    protected void exportEvents(Context context, @NonNull Uri uri)
+    {
+        if (exportTask != null) { // && importTask != null) {
+            Log.e("ExportEvents", "Already busy importing/exporting! ignoring request");
+
+        } else {
+            EventSettings.EventAlias[] items = getItemsForExport();
+            if (items.length > 0)
+            {
+                exportTask = new EventExportTask(context, uri);    // export directly to uri
+                exportTask.setItems(items);
+                exportTask.setTaskListener(exportListener);
+                exportTask.execute();
+            }
+        }
+    }
+
+    protected EventSettings.EventAlias[] getItemsForExport()
+    {
+        List<EventSettings.EventAlias> itemList = adapter.getItems();
+        Collections.reverse(itemList);                                                // should be reversed for export (so import encounters/adds older items first)
+        return itemList.toArray(new EventSettings.EventAlias[0]);
+    }
+
+    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    {
+        @Override
+        public void onStarted() {
+            showProgress(true);
+        }
+
+        @Override
+        public void onFinished(ExportTask.ExportResult results)
+        {
+            exportTask = null;
+            showProgress(false);
+
+            Context context = contextRef.get();
+            if (context != null)
+            {
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
+
+                if (results.getResult())
+                {
+                    //if (isAdded()) {
+                        String successMessage = context.getString(R.string.msg_export_success, path);
+                        Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
+                        // TODO: use a snackbar instead; offer 'copy path' action
+                    //}
+
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        if (results.getExportUri() == null) {
+                            ExportTask.shareResult(context, results.getExportFile(), results.getMimeType());
+                        }
+                    } else {
+                        ExportTask.shareResult(context, results.getExportFile(), results.getMimeType());
+                    }
+                    return;
+                }
+
+                //if (isAdded()) {
+                    String failureMessage = context.getString(R.string.msg_export_failure, path);
+                    Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                //}
+            }
+        }
+    };
+
+    protected void showProgress(boolean visible)
+    {
+        if (progress != null) {
+            progress.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+        if (progressLayout != null) {
+            progressLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    /**
+     * ImportTask
+     */
 
     public void importEvents() {
         // TODO
         adapterModified = true;
+    }
+
+    protected void importEvents(Context context, @NonNull Uri uri)
+    {
+        // TODO
     }
 
     public void clearEvents()
@@ -480,6 +620,9 @@ public class EventListHelper
         helpDialog.show(fragmentManager, DIALOGTAG_HELP);
     }
 
+    /**
+     * AdapterInterface
+     */
     public interface EventDisplayAdapterInterface
     {
         EventSettings.EventAlias getSelected();
@@ -487,6 +630,7 @@ public class EventListHelper
         void setSelected( EventSettings.EventAlias item );
         void setSelected(int i);
         EventSettings.EventAlias findItemByID(String eventID);
+        List<EventSettings.EventAlias> getItems();
     }
 
     /**
@@ -658,6 +802,11 @@ public class EventListHelper
             Log.d("DEBUG", "findItemByID: " + eventID + " .. null");
             return null;
         }
+
+        @Override
+        public List<EventSettings.EventAlias> getItems() {
+            return objects;
+        }
     }
 
     /**
@@ -714,6 +863,20 @@ public class EventListHelper
                 }
             }
             return null;
+        }
+
+        @Override
+        public List<EventSettings.EventAlias> getItems()
+        {
+            ArrayList<EventSettings.EventAlias> items = new ArrayList<>();
+            for (int i=0; i<getCount(); i++)
+            {
+                EventSettings.EventAlias item = getItem(i);
+                if (item != null) {
+                    items.add(item);
+                }
+            }
+            return items;
         }
 
         @Override

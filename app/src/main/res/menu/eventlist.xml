@@ -16,7 +16,6 @@
         <item android:id="@+id/exportEvents"
             android:title="@string/configAction_exportEvents"
             android:icon="?attr/icActionSave"
-            android:visible="false"
             app:showAsAction="never" />
 
         <item android:id="@+id/importEvents"

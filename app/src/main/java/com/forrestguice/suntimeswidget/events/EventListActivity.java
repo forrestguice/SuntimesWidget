@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.events;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -31,10 +32,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -48,6 +47,9 @@ public class EventListActivity extends AppCompatActivity
     public static final String PARAM_SELECTED = "selected";
     public static final String PARAM_NOSELECT = "noselect";
     public static final String PARAM_EXPANDED = "expanded";
+
+    public static final int REQUEST_IMPORT_URI = 300;
+    public static final int REQUEST_EXPORT_URI = 400;
 
     private EventListHelper helper;
     private String preselectedEvent;
@@ -94,6 +96,34 @@ public class EventListActivity extends AppCompatActivity
         if (preselectedEvent != null && !preselectedEvent.trim().isEmpty()) {
             helper.setSelected(preselectedEvent);
             helper.triggerActionMode();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case REQUEST_EXPORT_URI:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        helper.exportEvents(EventListActivity.this, uri);
+                    }
+                }
+                break;
+
+            case REQUEST_IMPORT_URI:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        helper.importEvents(EventListActivity.this, uri);
+                    }
+                }
+                break;
         }
     }
 
@@ -156,7 +186,7 @@ public class EventListActivity extends AppCompatActivity
                 return true;
 
             case R.id.exportEvents:
-                helper.exportEvents();
+                helper.exportEvents(EventListActivity.this);
                 return true;
 
             case R.id.importEvents:
