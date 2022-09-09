@@ -477,7 +477,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
             if (i == -1)
             {
                 Intent intent = new Intent(getActivity(), EventListActivity.class);
-                intent.putExtra(EventListActivity.PARAM_EXPANDED, true);
+                intent.putExtra(EventListActivity.EXTRA_EXPANDED, true);
                 startActivityForResult(intent, REQUEST_EVENTALIAS);
                 return true;
 

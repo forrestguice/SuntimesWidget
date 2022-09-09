@@ -1190,7 +1190,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         Intent intent = new Intent(context, EventListActivity.class);
         WidgetSettings.RiseSetDataMode item = (WidgetSettings.RiseSetDataMode) spinner_timeMode.getSelectedItem();
-        intent.putExtra(EventListActivity.PARAM_SELECTED, item.name());
+        intent.putExtra(EventListActivity.EXTRA_SELECTED, item.name());
         return intent;
     }
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="300dp">
+
+    <LinearLayout android:id="@+id/listLayout"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ExpandableListView android:id="@+id/explist_events" android:nestedScrollingEnabled="true" android:visibility="gone"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center_vertical" android:layout_gravity="center_vertical" />
+
+        <ListView android:id="@+id/list_events" android:nestedScrollingEnabled="true" android:visibility="gone"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center_vertical" android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <FrameLayout android:id="@+id/progressLayout"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_gravity="center" android:visibility="visible">
+
+        <ProgressBar android:id="@+id/progress" android:indeterminateTint="?attr/colorAccent"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:visibility="visible" />
+
+    </FrameLayout>
+
+</FrameLayout>

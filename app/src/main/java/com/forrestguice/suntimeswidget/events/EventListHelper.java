@@ -32,6 +32,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -67,6 +68,9 @@ import java.util.List;
 
 public class EventListHelper
 {
+    public static final int REQUEST_IMPORT_URI = 300;
+    public static final int REQUEST_EXPORT_URI = 400;
+
     public static final String DIALOGTAG_ADD = "add";
     public static final String DIALOGTAG_EDIT = "edit";
     public static final String DIALOGTAG_HELP = "help";
@@ -422,10 +426,10 @@ public class EventListHelper
      */
     protected EventExportTask exportTask = null;
 
-    public boolean exportEvents(Activity activity)
+    public boolean exportEvents(Fragment fragment)
     {
         if (exportTask != null) { // && importTask != null) {
-            Log.e("ExportAlarms", "Already busy importing/exporting! ignoring request");
+            Log.e("ExportEvents", "Already busy importing/exporting! ignoring request");
             return false;
         }
 
@@ -441,7 +445,7 @@ public class EventListHelper
                     String filename = exportTarget + EventExportTask.FILEEXT;
                     Intent intent = ExportTask.getCreateFileIntent(filename, EventExportTask.MIMETYPE);
                     try {
-                        activity.startActivityForResult(intent, EventListActivity.REQUEST_EXPORT_URI);
+                        fragment.startActivityForResult(intent, REQUEST_EXPORT_URI);
                         return true;
 
                     } catch (ActivityNotFoundException e) {
@@ -482,11 +486,21 @@ public class EventListHelper
         return itemList.toArray(new EventSettings.EventAlias[0]);
     }
 
-    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    private ExportTask.TaskListener exportListener0 = null;
+    public void setExportTaskListener(ExportTask.TaskListener listener) {
+        exportListener0 = listener;
+    }
+
+    private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
         @Override
-        public void onStarted() {
+        public void onStarted()
+        {
             showProgress(true);
+
+            if (exportListener0 != null) {
+                exportListener0.onStarted();
+            }
         }
 
         @Override
@@ -495,34 +509,8 @@ public class EventListHelper
             exportTask = null;
             showProgress(false);
 
-            Context context = contextRef.get();
-            if (context != null)
-            {
-                File file = results.getExportFile();
-                String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
-
-                if (results.getResult())
-                {
-                    //if (isAdded()) {
-                        String successMessage = context.getString(R.string.msg_export_success, path);
-                        Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
-                        // TODO: use a snackbar instead; offer 'copy path' action
-                    //}
-
-                    if (Build.VERSION.SDK_INT >= 19) {
-                        if (results.getExportUri() == null) {
-                            ExportTask.shareResult(context, results.getExportFile(), results.getMimeType());
-                        }
-                    } else {
-                        ExportTask.shareResult(context, results.getExportFile(), results.getMimeType());
-                    }
-                    return;
-                }
-
-                //if (isAdded()) {
-                    String failureMessage = context.getString(R.string.msg_export_failure, path);
-                    Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
-                //}
+            if (exportListener0 != null) {
+                exportListener0.onFinished(results);
             }
         }
     };

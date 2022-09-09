@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout
@@ -32,30 +32,16 @@
             app:title="@string/eventlist_dialog_title"
             app:popupTheme="?attr/actionBarPopupTheme" />
 
-        <LinearLayout android:id="@android:id/content"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent" android:layout_height="match_parent">
 
-            <ExpandableListView android:id="@+id/explist_events" android:nestedScrollingEnabled="true" android:visibility="gone"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:layout_gravity="center_vertical" />
+            <!--<fragment android:id="@+id/eventListFragment"
+                android:name="com.forrestguice.suntimeswidget.events.EventListFragment"
+                android:layout_width="match_parent" android:layout_height="match_parent" />-->
 
-            <ListView android:id="@+id/list_events" android:nestedScrollingEnabled="true" android:visibility="gone"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:layout_gravity="center_vertical" />
-
-        </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 
-    <FrameLayout android:id="@+id/progressLayout"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_gravity="center" android:visibility="visible">
-
-        <ProgressBar android:id="@+id/progress" android:indeterminateTint="?attr/colorAccent"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_gravity="center" android:visibility="visible" />
-
-    </FrameLayout>
-
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

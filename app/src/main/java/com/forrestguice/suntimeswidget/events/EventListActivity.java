@@ -21,17 +21,18 @@ package com.forrestguice.suntimeswidget.events;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -43,16 +44,13 @@ public class EventListActivity extends AppCompatActivity
 
     public static final String SELECTED_EVENTID = "eventID";
     public static final String SELECTED_EVENTURI = "eventUri";
-    public static final String ADAPTER_MODIFIED = "isModified";
-    public static final String PARAM_SELECTED = "selected";
-    public static final String PARAM_NOSELECT = "noselect";
-    public static final String PARAM_EXPANDED = "expanded";
 
-    public static final int REQUEST_IMPORT_URI = 300;
-    public static final int REQUEST_EXPORT_URI = 400;
+    public static final String ADAPTER_MODIFIED = EventListFragment.ADAPTER_MODIFIED;
+    public static final String EXTRA_SELECTED = EventListFragment.EXTRA_SELECTED;
+    public static final String EXTRA_NOSELECT = EventListFragment.EXTRA_NOSELECT;
+    public static final String EXTRA_EXPANDED = EventListFragment.EXTRA_EXPANDED;
 
-    private EventListHelper helper;
-    private String preselectedEvent;
+    protected EventListFragment list;
 
     public EventListActivity() {
         super();
@@ -66,23 +64,26 @@ public class EventListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onCreate(Bundle icicle)
+    public void onCreate(Bundle savedState)
     {
         setTheme(AppSettings.loadTheme(this));
-        super.onCreate(icicle);
+        super.onCreate(savedState);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
 
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_activity_eventlist);
-
         Intent intent = getIntent();
-        preselectedEvent = intent.getStringExtra(PARAM_SELECTED);
 
-        helper = new EventListHelper(this, getSupportFragmentManager());
-        helper.setExpanded(intent.getBooleanExtra(PARAM_EXPANDED, false));
-        helper.setDisallowSelect(intent.getBooleanExtra(PARAM_NOSELECT, false));
-        helper.initViews(this, findViewById(android.R.id.content), icicle);
+        list = new EventListFragment();
+        list.setDisallowSelect(intent.getBooleanExtra(EXTRA_NOSELECT, false));
+        list.setExpanded(intent.getBooleanExtra(EXTRA_EXPANDED, false));
+        list.setPreselected(intent.getStringExtra(EXTRA_SELECTED));
+
+        FragmentManager fragments = getSupportFragmentManager();
+        FragmentTransaction transaction = fragments.beginTransaction();
+        transaction.replace(R.id.fragmentContainer, list, "EventList");
+        transaction.commit();
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
@@ -92,84 +93,46 @@ public class EventListActivity extends AppCompatActivity
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        if (preselectedEvent != null && !preselectedEvent.trim().isEmpty()) {
-            helper.setSelected(preselectedEvent);
-            helper.triggerActionMode();
-        }
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode)
-        {
-            case REQUEST_EXPORT_URI:
-                if (resultCode == Activity.RESULT_OK)
-                {
-                    Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        helper.exportEvents(EventListActivity.this, uri);
-                    }
-                }
-                break;
-
-            case REQUEST_IMPORT_URI:
-                if (resultCode == Activity.RESULT_OK)
-                {
-                    Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        helper.importEvents(EventListActivity.this, uri);
-                    }
-                }
-                break;
-        }
-    }
-
-    private View.OnClickListener onItemAccepted = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent();
-            intent.putExtra(SELECTED_EVENTID, helper.getEventID());
-            intent.putExtra(SELECTED_EVENTURI, helper.getAliasUri());
-            intent.putExtra(ADAPTER_MODIFIED, helper.isAdapterModified());
-            setResult(Activity.RESULT_OK, intent);
-            finish();
-            overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
-        }
-    };
 
     @Override
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(getSupportFragmentManager());
-        helper.setOnItemAcceptedListener(onItemAccepted);
-        helper.onResume();
+        list.setFragmentListener(listFragmentListener);
+    }
+
+    private EventListFragment.FragmentListener listFragmentListener = new EventListFragment.FragmentListener()
+    {
+        @Override
+        public void onItemPicked(String eventID, String eventUri) {
+            pickEvent(eventID, eventUri);
+        }
+    };
+
+    private void pickEvent(String eventID, String eventUri)
+    {
+        Intent intent = new Intent();
+        intent.putExtra(SELECTED_EVENTID, eventID);
+        intent.putExtra(SELECTED_EVENTURI, eventUri);
+        intent.putExtra(ADAPTER_MODIFIED, list.isModified());
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+        overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
+    }
+
+    private void cancelPickEvent()
+    {
+        Intent intent = new Intent();
+        intent.putExtra(ADAPTER_MODIFIED, list.isModified());
+        setResult(((list.isModified()) ? Activity.RESULT_OK : Activity.RESULT_CANCELED), intent);
+        finish();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
 
     @Override
     public void onBackPressed() {
-        onCancelled.onClick(null);
-    }
-    private View.OnClickListener onCancelled = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent();
-            intent.putExtra(ADAPTER_MODIFIED, helper.isAdapterModified());
-            setResult(((helper.isAdapterModified()) ? Activity.RESULT_OK : Activity.RESULT_CANCELED), intent);
-            finish();
-            overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
-        }
-    };
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.eventlist, menu);
-        return true;
+        cancelPickEvent();
     }
 
     @Override
@@ -177,26 +140,6 @@ public class EventListActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
-            case R.id.addEvent:
-                helper.addEvent();
-                return true;
-
-            case R.id.clearEvents:
-                helper.clearEvents();
-                return true;
-
-            case R.id.exportEvents:
-                helper.exportEvents(EventListActivity.this);
-                return true;
-
-            case R.id.importEvents:
-                helper.importEvents();
-                return true;
-
-            case R.id.helpEvents:
-                helper.showHelp();
-                return true;
-
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -213,17 +156,4 @@ public class EventListActivity extends AppCompatActivity
         SuntimesUtils.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
-
-    @Override
-    public void onSaveInstanceState( Bundle outState ) {
-        super.onSaveInstanceState(outState);
-        helper.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(@NonNull Bundle savedState) {
-        super.onRestoreInstanceState(savedState);
-        helper.onRestoreInstanceState(savedState);
-    }
-
 }
