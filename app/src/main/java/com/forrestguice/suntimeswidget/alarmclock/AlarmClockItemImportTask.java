@@ -28,6 +28,8 @@ import android.support.annotation.Nullable;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.ExportTask;
+
 import org.json.JSONObject;
 
 import java.io.EOFException;
@@ -370,26 +372,9 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             reader.endArray();
         }
 
-        public static HashMap<String,String> toMap(ContentValues values)
-        {
-            HashMap<String,String> map = new HashMap<>();
-            if (Build.VERSION.SDK_INT >= 11)
-            {
-                for (String key : values.keySet()) {
-                    map.put(key, values.getAsString(key));
-                }
-            } else {
-                for (Map.Entry<String,Object> entry : values.valueSet()) {
-                    Object value = entry.getValue();
-                    map.put(entry.getKey(), ((value != null) ? value.toString() : null));
-                }
-            }
-            return map;
-        }
-
         public static String toJson(AlarmClockItem item)
         {
-            HashMap<String,String> map = toMap(item.asContentValues(true));
+            HashMap<String,String> map = ExportTask.toMap(item.asContentValues(true));
             return new JSONObject(map).toString();
         }
     }

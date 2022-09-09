@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -40,6 +41,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("Convert2Diamond")
 public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.ExportResult>
@@ -488,6 +491,23 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
             }
         }
         return null;
+    }
+
+    public static HashMap<String,String> toMap(ContentValues values)
+    {
+        HashMap<String,String> map = new HashMap<>();
+        if (Build.VERSION.SDK_INT >= 11)
+        {
+            for (String key : values.keySet()) {
+                map.put(key, values.getAsString(key));
+            }
+        } else {
+            for (Map.Entry<String,Object> entry : values.valueSet()) {
+                Object value = entry.getValue();
+                map.put(entry.getKey(), ((value != null) ? value.toString() : null));
+            }
+        }
+        return map;
     }
 
 }
