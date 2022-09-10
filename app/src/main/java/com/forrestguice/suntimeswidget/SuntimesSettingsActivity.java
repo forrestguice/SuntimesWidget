@@ -1327,7 +1327,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
         Preference manage_events = findPreference("manage_events");
         if (manage_events != null) {
-            manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(context));
+            manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(SuntimesSettingsActivity.this));
         }
     }
 
@@ -1393,12 +1393,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         });
     }
 
-    public static Preference.OnPreferenceClickListener getOnManageEventsClickedListener(final Context context)
+    public static Preference.OnPreferenceClickListener getOnManageEventsClickedListener(final Activity activity)
     {
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                context.startActivity(new Intent(context, EventListActivity.class));
+                activity.startActivity(new Intent(activity, EventListActivity.class));
+                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 return false;
             }
         };
