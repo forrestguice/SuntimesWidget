@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -361,13 +360,14 @@ public class AlarmEvent
     public static AlarmEventAdapter createAdapter(Context context, boolean northward)
     {
         ArrayList<AlarmEventItem> items = new ArrayList<>();
+        for (String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION)) {
+            EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
+        }
         SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
         for (SolarEvents event : solarEventsAdapter.getChoices()) {
             items.add(new AlarmEventItem(event));
-        }
-        for (EventSettings.EventAlias alias : EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION)) {
-            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
-            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
         }
         return new AlarmEventAdapter(context, items);
     }
