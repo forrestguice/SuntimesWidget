@@ -2042,8 +2042,7 @@
     ]]></string>
     <string name="help_eventlist"><![CDATA[
           [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
-          \n
-          Custom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.
+          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.
     ]]></string>    <!-- TODO -->
     <!--<string name="help_alarmclock" />-->
     <string name="help_themelist">
