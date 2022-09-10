@@ -285,6 +285,13 @@ public class EventSettings
         }
         return false;
     }
+    public static void saveEventFlag(Context context, @NonNull String id, @NonNull String key, boolean value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
+        prefs.putBoolean(prefs_prefix + key, value);
+        prefs.apply();
+    }
 
     public static EventAlias loadEvent(Context context, @NonNull String id)
     {
@@ -335,6 +342,9 @@ public class EventSettings
 
     public static boolean isShown(Context context, @NonNull String id) {
         return loadEventFlag(context, id, PREF_KEY_EVENT_SHOWN);
+    }
+    public static void setShown(Context context, @NonNull String id, boolean value) {
+        saveEventFlag(context, id, PREF_KEY_EVENT_SHOWN, value);
     }
 
     public static String getEventUriLastPathSegment(Context context, @NonNull String id)
