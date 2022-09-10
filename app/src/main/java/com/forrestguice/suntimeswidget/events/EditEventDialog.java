@@ -34,6 +34,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -152,9 +154,22 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     }
 
+    /* isShown */
+    protected Boolean shown = false;
+    public boolean getEventIsShown() {
+        return (check_shown != null ? check_shown.isChecked() : shown);
+    }
+    public void setEventIsShown(boolean value)
+    {
+        shown = value;
+        if (check_shown != null) {
+            check_shown.setChecked(shown);
+        }
+    }
+
     /* Event */
     public EventSettings.EventAlias getEvent() {
-        return new EventSettings.EventAlias(type, getEventID(), getEventLabel(), getEventColor(), getEventUri());
+        return new EventSettings.EventAlias(type, getEventID(), getEventLabel(), getEventColor(), getEventUri(), getEventIsShown());
     }
     public void setEvent(EventSettings.EventAlias event)
     {
@@ -164,12 +179,14 @@ public class EditEventDialog extends EditBottomSheetDialog
         setEventColor(event.getColor());
         setEventUri(event.getUri());
         setEventUri1(event.getAliasUri());
+        setEventIsShown(event.isShown());
         updateViews(getActivity(), type);
     }
 
     protected TextView text_label;
     protected EditText edit_eventID, edit_label, edit_uri, edit_uri1;
     protected ColorChooser choose_color;
+    protected CheckBox check_shown;
 
     @SuppressLint("SetTextI18n")
     protected void setAngle(int value ) {
@@ -200,14 +217,18 @@ public class EditEventDialog extends EditBottomSheetDialog
     protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
         edit_eventID = (EditText) dialogContent.findViewById(R.id.edit_event_id);
-        //edit_eventID.setAdapter(adapter);
-        //edit_eventID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        //    @Override
-        //    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //        setEventID((String)parent.getItemAtPosition(position));
-        //    }
-        //});
-        edit_eventID.addTextChangedListener(idWatcher);
+        if (edit_eventID != null)
+        {
+            //edit_eventID.setAdapter(adapter);
+            //edit_eventID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //    @Override
+            //    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //        setEventID((String)parent.getItemAtPosition(position));
+            //    }
+            //});
+            edit_eventID.addTextChangedListener(idWatcher);
+        }
+
 
         text_label = (TextView) dialogContent.findViewById(R.id.text_event_label);
         if (text_label != null) {
@@ -215,16 +236,26 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
 
         edit_label = (EditText) dialogContent.findViewById(R.id.edit_event_label);
-        edit_label.addTextChangedListener(labelWatcher);
+        if (edit_label != null) {
+            edit_label.addTextChangedListener(labelWatcher);
+        }
 
         edit_uri = (EditText) dialogContent.findViewById(R.id.edit_uri);
         edit_uri1 = (EditText) dialogContent.findViewById(R.id.edit_uri1);
 
         ColorChooserView colorView = (ColorChooserView) dialogContent.findViewById(R.id.chooser_eventColor);
-        choose_color = new ColorChooser(context, colorView.getLabel(), colorView.getEdit(), colorView.getButton(), "event");
+        if (colorView != null) {
+            choose_color = new ColorChooser(context, colorView.getLabel(), colorView.getEdit(), colorView.getButton(), "event");
+        } else choose_color = new ColorChooser(context, null, null, null, "event");
+
         choose_color.setFragmentManager(getChildFragmentManager());
         choose_color.setCollapsed(true);
         choose_color.setColorChangeListener(onColorChanged);
+
+        check_shown = (CheckBox) dialogContent.findViewById(R.id.check_shown);
+        if (check_shown != null) {
+            check_shown.setOnCheckedChangeListener(onCheckShownChanged);
+        }
 
         ImageButton cancelButton = (ImageButton) dialogContent.findViewById(R.id.cancel_button);
         if (cancelButton != null)
@@ -262,10 +293,21 @@ public class EditEventDialog extends EditBottomSheetDialog
     @Override
     protected void updateViews(Context context)
     {
-        edit_eventID.setText(eventID);
-        edit_label.setText(label != null ? label : eventID);
-        edit_uri.setText(uri != null ? uri : "");
-        choose_color.setColor(color);
+        if (edit_eventID != null) {
+            edit_eventID.setText(eventID);
+        }
+        if (edit_label != null) {
+            edit_label.setText(label != null ? label : eventID);
+        }
+        if (edit_uri != null) {
+            edit_uri.setText(uri != null ? uri : "");
+        }
+        if (choose_color != null) {
+            choose_color.setColor(color);
+        }
+        if (check_shown != null) {
+            check_shown.setChecked(shown);
+        }
         updateViews(context, getEventType());
     }
 
@@ -384,6 +426,13 @@ public class EditEventDialog extends EditBottomSheetDialog
             } catch (NumberFormatException e) {
                 Log.e("EditEventDialog", "not an angle: " + e);
             }
+        }
+    };
+
+    private final CompoundButton.OnCheckedChangeListener onCheckShownChanged = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            setIsModified(true);
         }
     };
 

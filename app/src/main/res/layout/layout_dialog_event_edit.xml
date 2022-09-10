@@ -112,7 +112,6 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
     </LinearLayout>
@@ -126,7 +125,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:gravity="center_vertical" android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
 
-            <TextView android:labelFor="@+id/edit_event_angle"
+            <TextView android:labelFor="@+id/edit_event_id"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
                 android:text="@string/editevent_dialog_id_label" />
@@ -135,7 +134,14 @@
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
                 android:hint="@string/editevent_dialog_id_hint" android:inputType="text"
+                android:layout_marginEnd="8dp"
                 android:layout_gravity="center_vertical" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/check_shown"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:contentDescription="@string/editevent_dialog_showevent"
+                android:button="?attr/checkVisibility" />
 
         </LinearLayout>
 

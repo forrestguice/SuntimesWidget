@@ -800,6 +800,7 @@
     <string name="editevent_dialog_id_hint">Event ID</string>    <!-- TODO -->
     <string name="editevent_dialog_id_error">@string/addaction_error_id</string>    <!-- TODO -->
     <string name="editevent_dialog_uri_hint">Event Uri</string>    <!-- TODO -->
+    <string name="editevent_dialog_showevent">Display this event within the app.</string>
 
     <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title --> <!-- TODO -->
     <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title --> <!-- TODO -->
