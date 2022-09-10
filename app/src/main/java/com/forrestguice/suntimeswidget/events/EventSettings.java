@@ -65,7 +65,10 @@ public class EventSettings
     public static final boolean PREF_DEF_EVENT_SHOWN = false;
 
     public static final String PREF_KEY_EVENT_LIST = "list";
+    public static final String PREF_KEY_EVENT_LISTSHOWN = "list_shown";
+
     public static final String PREF_DEF_EVENT_ID = "CUSTOM";
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,6 +236,21 @@ public class EventSettings
         eventList.add(id);
         putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LIST, eventList);
         prefs.apply();
+
+        Set<String> eventList1 = loadVisibleEvents(context, type);
+        if (event.isShown()) {
+            eventList1.add(id);
+        } else eventList1.remove(id);
+        putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LISTSHOWN, eventList1);
+        prefs.apply();
+    }
+
+    public static Set<String> loadVisibleEvents(Context context, AlarmEventProvider.EventType type)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
+        String listKey = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LISTSHOWN;
+        Set<String> eventList = getStringSet(prefs, listKey, null);
+        return (eventList != null) ? new TreeSet<String>(eventList) : new TreeSet<String>();
     }
 
     public static Set<String> loadEventList(Context context, AlarmEventProvider.EventType type)
@@ -327,6 +345,11 @@ public class EventSettings
         prefs.remove(prefs_prefix0 + PREF_KEY_EVENT_SHOWN);
         prefs.apply();
 
+        Set<String> eventList1 = loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        eventList1.remove(id);
+        putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LISTSHOWN, eventList1);
+        prefs.apply();
+
         Set<String> eventList = loadEventList(context, type);
         eventList.remove(id);
         putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LIST, eventList);
@@ -343,8 +366,17 @@ public class EventSettings
     public static boolean isShown(Context context, @NonNull String id) {
         return loadEventFlag(context, id, PREF_KEY_EVENT_SHOWN);
     }
-    public static void setShown(Context context, @NonNull String id, boolean value) {
+    public static void setShown(Context context, @NonNull String id, boolean value)
+    {
         saveEventFlag(context, id, PREF_KEY_EVENT_SHOWN, value);
+
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
+        Set<String> eventList1 = loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        if (value) {
+            eventList1.add(id);
+        } else eventList1.remove(id);
+        putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + AlarmEventProvider.EventType.SUN_ELEVATION.name() + "_" + PREF_KEY_EVENT_LISTSHOWN, eventList1);
+        prefs.apply();
     }
 
     public static String getEventUriLastPathSegment(Context context, @NonNull String id)

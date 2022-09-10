@@ -1412,20 +1412,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private static void initPref_ui_customevents(final Context context, final PreferenceCategory category)
     {
         ArrayList<Preference> eventPrefs = new ArrayList<>();
-        for (final String eventID : EventSettings.loadEventList(context, AlarmEventProvider.EventType.SUN_ELEVATION))
+        for (final String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION))
         {
-            if (EventSettings.isShown(context, eventID))
-            {
-                EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID);
-                final CheckBoxPreference pref = new CheckBoxPreference(context);
-                pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
-                pref.setTitle(event.getLabel());
-                pref.setSummary(event.getSummary(context));
-                pref.setPersistent(false);
-                pref.setChecked(true);
-                pref.setOnPreferenceChangeListener(customEventListener(context, eventID, category, pref));
-                eventPrefs.add(pref);
-            }
+            EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID);
+            final CheckBoxPreference pref = new CheckBoxPreference(context);
+            pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
+            pref.setTitle(event.getLabel());
+            pref.setSummary(event.getSummary(context));
+            pref.setPersistent(false);
+            pref.setChecked(true);
+            pref.setOnPreferenceChangeListener(customEventListener(context, eventID, category, pref));
+            eventPrefs.add(pref);
         }
 
         Collections.sort(eventPrefs, new Comparator<Preference>() {
