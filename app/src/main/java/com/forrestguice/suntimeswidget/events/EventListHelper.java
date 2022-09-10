@@ -283,7 +283,7 @@ public class EventListHelper
         Collections.sort(events, new Comparator<EventSettings.EventAlias>() {
             @Override
             public int compare(EventSettings.EventAlias o1, EventSettings.EventAlias o2) {
-                return o1.getID().compareTo(o2.getID());
+                return o1.getLabel().compareTo(o2.getLabel());
             }
         });
 
