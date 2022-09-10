@@ -127,6 +127,7 @@
     <attr name="icActionGPS_searching" format="reference" />
 
     <attr name="checkVibrate" format="reference" />
+    <attr name="checkVisibility" format="reference" />
 
     <declare-styleable name="EditActionView">
         <attr name="startExpanded" format="boolean" />
