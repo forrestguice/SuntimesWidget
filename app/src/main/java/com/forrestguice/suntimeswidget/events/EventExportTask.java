@@ -23,11 +23,8 @@ import android.net.Uri;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 
-import org.json.JSONObject;
-
 import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * AsyncTask that writes EventAlias objects to text file (json array).
@@ -68,11 +65,6 @@ public class EventExportTask extends ExportTask
         return items;
     }
 
-    public static String toJson(EventSettings.EventAlias item)
-    {
-        HashMap<String,String> map = toMap(item.toContentValues());
-        return new JSONObject(map).toString();
-    }
 
     @Override
     protected boolean export(Context context, BufferedOutputStream out) throws IOException
@@ -83,7 +75,7 @@ public class EventExportTask extends ExportTask
             out.write("[".getBytes());
             for (int i=0; i<items.length; i++)
             {
-                String jsonString = toJson(items[i]);
+                String jsonString = EventImportTask.EventAliasJson.toJson(items[i]);
                 out.write(jsonString.getBytes());
                 if (i != items.length-1) {
                     out.write(", ".getBytes());

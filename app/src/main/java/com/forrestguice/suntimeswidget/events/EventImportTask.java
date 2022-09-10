@@ -16,10 +16,9 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.alarmclock;
+package com.forrestguice.suntimeswidget.events;
 
 import android.annotation.TargetApi;
-import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -42,10 +41,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * AsyncTask that reads AlarmClockItem objects from text file (json array).
- * @see AlarmClockItem
+ * AsyncTask that reads EventAlias objects from text file (json array).
+ * @see EventSettings.EventAlias
  */
-public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, AlarmClockItemImportTask.TaskResult>
+public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, EventImportTask.TaskResult>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
@@ -62,7 +61,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         return isPaused;
     }
 
-    public AlarmClockItemImportTask(Context context)
+    public EventImportTask(Context context)
     {
         contextRef = new WeakReference<>(context);
     }
@@ -87,7 +86,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
 
         long startTime = System.currentTimeMillis();
         boolean result = false;
-        ArrayList<AlarmClockItem> items = new ArrayList<>();
+        ArrayList<EventSettings.EventAlias> items = new ArrayList<>();
         Exception error = null;
 
         Context context = contextRef.get();
@@ -98,7 +97,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                 if (in != null)
                 {
                     Log.d(getClass().getSimpleName(), "doInBackground: reading");
-                    AlarmClockItemJson.readAlarmClockItems(context, in, items);
+                    EventAliasJson.readEventAliasItems(context, in, items);
                     result = true;
                     error = null;
 
@@ -115,16 +114,6 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             }
         }
 
-        for (AlarmClockItem item : items)
-        {
-            if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
-            {
-                // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
-                item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
-                item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
-            }
-        }
-
         Log.d(getClass().getSimpleName(), "doInBackground: waiting");
         long endTime = System.currentTimeMillis();
         while ((endTime - startTime) < MIN_WAIT_TIME || isPaused) {
@@ -132,11 +121,11 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         }
 
         Log.d(getClass().getSimpleName(), "doInBackground: finishing");
-        return new TaskResult(result, uri, (items != null ? items.toArray(new AlarmClockItem[0]) : null), error);
+        return new TaskResult(result, uri, (items != null ? items.toArray(new EventSettings.EventAlias[0]) : null), error);
     }
 
     @Override
-    protected void onProgressUpdate(AlarmClockItem... progressItems) {
+    protected void onProgressUpdate(EventSettings.EventAlias... progressItems) {
         super.onProgressUpdate(progressItems);
     }
 
@@ -154,7 +143,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, Uri uri, @Nullable AlarmClockItem[] items, Exception e)
+        public TaskResult(boolean result, Uri uri, @Nullable EventSettings.EventAlias[] items, Exception e)
         {
             this.result = result;
             this.items = items;
@@ -168,8 +157,8 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             return result;
         }
 
-        private AlarmClockItem[] items;
-        public AlarmClockItem[] getItems()
+        private EventSettings.EventAlias[] items;
+        public EventSettings.EventAlias[] getItems()
         {
             return items;
         }
@@ -208,13 +197,13 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
     }
 
     /**
-     * AlarmClockItemJson
+     * EventAliasJson
      */
-    public static class AlarmClockItemJson
+    public static class EventAliasJson
     {
-        public static final String TAG = "AlarmJsonParser";
+        public static final String TAG = "EventJsonParser";
 
-        public static void readAlarmClockItems(Context context, InputStream in, ArrayList<AlarmClockItem> items) throws IOException
+        public static void readEventAliasItems(Context context, InputStream in, ArrayList<EventSettings.EventAlias> items) throws IOException
         {
             if (Build.VERSION.SDK_INT >= 11)
             {
@@ -222,7 +211,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                 JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
                 reader.setLenient(true);
                 try {
-                    readAlarmClockItems(context, reader, items);
+                    readEventAliasItems(context, reader, items);
                 } finally {
                     reader.close();
                     in.close();
@@ -234,11 +223,11 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         }
 
         @TargetApi(11)
-        protected static void readAlarmClockItems(Context context, JsonReader reader, ArrayList<AlarmClockItem> items) throws IOException
+        protected static void readEventAliasItems(Context context, JsonReader reader, ArrayList<EventSettings.EventAlias> items) throws IOException
         {
             switch (reader.peek()) {
-                case BEGIN_ARRAY: readAlarmClockItemArray(context, reader, items); break;
-                case BEGIN_OBJECT: AlarmClockItem item = readAlarmClockItem(context, reader);
+                case BEGIN_ARRAY: readEventAliasArray(context, reader, items); break;
+                case BEGIN_OBJECT: EventSettings.EventAlias item = readEventAlias(context, reader);
                     if (item != null) {
                         items.add(item);
                     }
@@ -248,12 +237,12 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         }
 
         @TargetApi(11)
-        protected static void readAlarmClockItemArray(Context context, JsonReader reader, ArrayList<AlarmClockItem> items) throws IOException
+        protected static void readEventAliasArray(Context context, JsonReader reader, ArrayList<EventSettings.EventAlias> items) throws IOException
         {
             try {
                 reader.beginArray();
                 while (reader.hasNext()) {
-                    readAlarmClockItems(context, reader, items);
+                    readEventAliasItems(context, reader, items);
                 }
                 reader.endArray();
             } catch (EOFException e) {
@@ -263,19 +252,16 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
 
         @Nullable
         @TargetApi(11)
-        protected static AlarmClockItem readAlarmClockItem(Context context, JsonReader reader)
+        protected static EventSettings.EventAlias readEventAlias(Context context, JsonReader reader)
         {
             Map<String, Object> map = readJsonObject(reader);
             if (map != null)
             {
                 try {
-                    AlarmClockItem item = new AlarmClockItem();
-                    item.fromContentValues(context, ExportTask.toContentValues(map));
-                    AlarmNotifications.updateAlarmTime(context, item);
-                    return item;
+                    return new EventSettings.EventAlias(ExportTask.toContentValues(map));
 
                 } catch (Exception e) {
-                    Log.e(TAG, "readAlarmClockItem: skipping item because of " + e);
+                    Log.e(TAG, "readEventAlias: skipping item because of " + e);
                     return null;
                 }
             } else return null;
@@ -335,9 +321,9 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             reader.endArray();
         }
 
-        public static String toJson(AlarmClockItem item)
+        public static String toJson(EventSettings.EventAlias item)
         {
-            HashMap<String,String> map = ExportTask.toMap(item.asContentValues(true));
+            HashMap<String,String> map = ExportTask.toMap(item.toContentValues());
             return new JSONObject(map).toString();
         }
     }

@@ -510,4 +510,41 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         return map;
     }
 
+    /* https://stackoverflow.com/a/59211956 */
+    public static ContentValues toContentValues(Map<String, Object> map)
+    {
+        ContentValues values = new ContentValues();
+        for (Map.Entry<String, Object> entry : map.entrySet())
+        {
+            String key = entry.getKey();
+            Object obj = entry.getValue();
+
+            if (obj instanceof Integer) {
+                values.put(key, (Integer) obj);
+
+            } else if (obj instanceof Long) {
+                values.put(key, (Long) obj);
+
+            } else if (obj instanceof Short) {
+                values.put(key, (Short) obj);
+
+            } else if (obj instanceof Float) {
+                values.put(key, (Float) obj);
+
+            } else if (obj instanceof Double) {
+                values.put(key, (Double) obj);
+
+            } else if (obj instanceof Byte) {
+                values.put(key, (Byte) obj);
+
+            } else if (obj instanceof Boolean) {
+                values.put(key, (Boolean) obj);
+
+            } else if (obj instanceof String) {
+                values.put(key, (String) obj);
+            }
+        }
+        return values;
+    }
+
 }

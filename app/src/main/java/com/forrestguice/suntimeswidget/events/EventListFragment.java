@@ -26,7 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -92,6 +91,7 @@ public class EventListFragment extends Fragment
         helper.setFragmentManager(getChildFragmentManager());
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.setExportTaskListener(exportListener);
+        helper.setImportTaskListener(importListener);
         helper.onResume();
     }
 
@@ -152,7 +152,7 @@ public class EventListFragment extends Fragment
                 return true;
 
             case R.id.importEvents:
-                helper.importEvents();
+                helper.importEvents(EventListFragment.this);
                 return true;
 
             case R.id.helpEvents:
@@ -203,6 +203,40 @@ public class EventListFragment extends Fragment
         return getArguments().getBoolean(EXTRA_NOSELECT, false);
     }
 
+    /**
+     * ImportListener
+     */
+    private EventImportTask.TaskListener importListener = new EventImportTask.TaskListener() {
+        @Override
+        public void onStarted() {
+            setRetainInstance(true);
+        }
+
+        @Override
+        public void onFinished(EventImportTask.TaskResult result)
+        {
+            setRetainInstance(false);
+
+            if (isAdded())
+            {
+                if (!result.getResult())
+                {
+                    Uri uri = result.getUri();   // import failed
+                    String path = ((uri != null) ? uri.toString() : "<path>");
+                    String failureMessage = getString(R.string.msg_import_failure, path);
+                    Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+
+                } //else {
+                  //  String successMessage = getString(R.string.msg_import_success, result.getUri().toString());
+                  //  Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
+                //}
+            }
+        }
+    };
+
+    /**
+     * ExportListener
+     */
     private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
         @Override

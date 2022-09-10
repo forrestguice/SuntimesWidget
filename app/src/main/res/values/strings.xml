@@ -787,8 +787,14 @@
     <string name="configAction_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
+    <plurals name="eventPlural">
+        <item quantity="one">%d event</item>
+        <item quantity="other">%d events</item>
+    </plurals>   <!-- TODO -->
 
     <string name="editevent_dialog_id_label">ID</string>    <!-- TODO -->
     <string name="editevent_dialog_id_hint">Event ID</string>    <!-- TODO -->

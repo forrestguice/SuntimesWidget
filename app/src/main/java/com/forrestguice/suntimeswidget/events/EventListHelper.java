@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.events;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -32,6 +31,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
@@ -59,9 +59,9 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 
-import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -422,13 +422,13 @@ public class EventListHelper
     }
 
     /**
-     * ExportTask
+     * Export Events
      */
     protected EventExportTask exportTask = null;
 
     public boolean exportEvents(Fragment fragment)
     {
-        if (exportTask != null) { // && importTask != null) {
+        if (exportTask != null && importTask != null) {
             Log.e("ExportEvents", "Already busy importing/exporting! ignoring request");
             return false;
         }
@@ -464,7 +464,7 @@ public class EventListHelper
 
     protected void exportEvents(Context context, @NonNull Uri uri)
     {
-        if (exportTask != null) { // && importTask != null) {
+        if (exportTask != null && importTask != null) {
             Log.e("ExportEvents", "Already busy importing/exporting! ignoring request");
 
         } else {
@@ -526,18 +526,117 @@ public class EventListHelper
     }
 
     /**
-     * ImportTask
+     * Import Events
      */
+    protected EventImportTask importTask = null;
 
-    public void importEvents() {
-        // TODO
-        adapterModified = true;
+    public void importEvents(Fragment fragment)
+    {
+        if (importTask != null && exportTask != null) {
+            Log.e("ImportEvents", "Already busy importing/exporting! ignoring request");
+            return;
+        }
+        Intent intent = ExportTask.getOpenFileIntent(EventExportTask.MIMETYPE);
+        fragment.startActivityForResult(intent, REQUEST_IMPORT_URI);
     }
 
     protected void importEvents(Context context, @NonNull Uri uri)
     {
-        // TODO
+        if (importTask != null && exportTask != null) {
+            Log.e("ImportEvents", "Already busy importing/exporting! ignoring request");
+
+        } else if (context != null) {
+            importTask = new EventImportTask(context);
+            importTask.setTaskListener(importListener);
+            importTask.execute(uri);
+        }
     }
+
+    private EventImportTask.TaskListener importListener0 = null;
+    public void setImportTaskListener(EventImportTask.TaskListener listener) {
+        importListener0 = listener;
+    }
+
+    private EventImportTask.TaskListener importListener =  new EventImportTask.TaskListener()
+    {
+        @Override
+        public void onStarted()
+        {
+            showProgress(true);
+
+            if (importListener0 != null) {
+                importListener0.onStarted();
+            }
+        }
+
+        @Override
+        public void onFinished(EventImportTask.TaskResult result)
+        {
+            importTask = null;
+            showProgress(false);
+
+            if (importListener0 != null) {
+                importListener0.onFinished(result);
+            }
+
+            if (result.getResult())
+            {
+                Context context = contextRef.get();
+                EventSettings.EventAlias[] items = result.getItems();
+
+                if (context != null)
+                {
+                    for (int i=0; i<items.length; i++)
+                    {
+                        if (items[i] != null) {
+                            EventSettings.saveEvent(context, items[i]);
+                        }
+                    }
+                }
+
+                initAdapter(context);
+                updateViews(context);
+                adapterModified = true;
+                offerUndoImport(context, new ArrayList<EventSettings.EventAlias>(Arrays.asList(items)));
+            }
+        }
+    };
+
+    public void offerUndoImport(Context context, final List<EventSettings.EventAlias> items)
+    {
+        View view = list;
+        if (context != null && view != null)
+        {
+            String plural = context.getResources().getQuantityString(R.plurals.eventPlural, items.size(), items.size());
+            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.importevents_toast_success, plural), Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Context context = contextRef.get();
+                    if (context != null)
+                    {
+                        for (EventSettings.EventAlias item : items) {
+                            if (item != null) {
+                                EventSettings.deleteEvent(context, item.getID());
+                            }
+                        }
+                        initAdapter(context);
+                        updateViews(context);
+                        adapterModified = true;
+                    }
+                }
+            });
+            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            snackbar.setDuration(UNDO_IMPORT_MILLIS);
+            snackbar.show();
+        }
+    }
+    public static final int UNDO_IMPORT_MILLIS = 8000;
+
+    /**
+     * Delete Events
+     */
 
     public void clearEvents()
     {
