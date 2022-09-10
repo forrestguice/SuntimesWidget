@@ -33,7 +33,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -62,6 +61,9 @@ public class EventSettings
     public static final String PREF_KEY_EVENT_COLOR = "color"; // SuntimesEventContract.COLUMN_EVENT_COLOR;  // TODO: contract class
     public static int PREF_DEF_EVENT_COLOR = Color.YELLOW;
 
+    public static final String PREF_KEY_EVENT_SHOWN = "shown"; // SuntimesEventContract.COLUMN_EVENT_SHOWN;  // TODO: contract class
+    public static final boolean PREF_DEF_EVENT_SHOWN = false;
+
     public static final String PREF_KEY_EVENT_LIST = "list";
     public static final String PREF_DEF_EVENT_ID = "CUSTOM";
 
@@ -73,13 +75,14 @@ public class EventSettings
      */
     public static final class EventAlias
     {
-        public EventAlias(@NonNull AlarmEventProvider.EventType type, @NonNull String id, @Nullable String label, @Nullable Integer color, @Nullable String uri)
+        public EventAlias(@NonNull AlarmEventProvider.EventType type, @NonNull String id, @Nullable String label, @Nullable Integer color, @Nullable String uri, boolean shown)
         {
             this.type = type;
             this.id = id;
             this.label = (label != null ? label : id);
             this.color = (color != null ? color : PREF_DEF_EVENT_COLOR);
             this.uri = uri;
+            this.shown = shown;
             this.summary = null;
         }
 
@@ -90,6 +93,7 @@ public class EventSettings
             this.label = other.label;
             this.color = other.color;
             this.uri = other.uri;
+            this.shown = other.shown;
             this.summary = other.summary;
         }
 
@@ -100,6 +104,7 @@ public class EventSettings
             this.label = values.getAsString(PREF_KEY_EVENT_LABEL);
             this.color = values.getAsInteger(PREF_KEY_EVENT_COLOR);
             this.uri = values.getAsString(PREF_KEY_EVENT_URI);
+            this.shown = values.getAsBoolean(PREF_KEY_EVENT_SHOWN);
             this.summary = null;
         }
 
@@ -111,6 +116,7 @@ public class EventSettings
             values.put(PREF_KEY_EVENT_LABEL, this.label);
             values.put(PREF_KEY_EVENT_COLOR, this.color);
             values.put(PREF_KEY_EVENT_URI, this.uri);
+            values.put(PREF_KEY_EVENT_SHOWN, this.shown);
             return values;
         }
 
@@ -131,6 +137,11 @@ public class EventSettings
             return uri;
         }
         private final String uri;
+
+        private boolean shown;
+        public boolean isShown() {
+            return shown;
+        }
 
         private final String label;
         public String getLabel() {
@@ -200,7 +211,7 @@ public class EventSettings
         if (id == null) {
             id = suggestEventID(context);
         }
-        EventAlias alias = new EventAlias(type, id, label, color, uri);
+        EventAlias alias = new EventAlias(type, id, label, color, uri, false);
         saveEvent(context, alias);
         return alias;
     }
@@ -215,6 +226,7 @@ public class EventSettings
         prefs.putString(prefs_prefix0 + PREF_KEY_EVENT_TYPE, type.name());
         prefs.putString(prefs_prefix0 + PREF_KEY_EVENT_LABEL, event.getLabel());
         prefs.putInt(prefs_prefix0 + PREF_KEY_EVENT_COLOR, event.getColor());
+        prefs.putBoolean(prefs_prefix0 + PREF_KEY_EVENT_SHOWN, event.isShown());
         prefs.apply();
 
         Set<String> eventList = loadEventList(context, type);
@@ -261,6 +273,19 @@ public class EventSettings
         }
     }
 
+    public static boolean loadEventFlag(Context context, @NonNull String id, @NonNull String key)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
+
+        switch (key)
+        {
+            case PREF_KEY_EVENT_SHOWN:
+                return prefs.getBoolean(prefs_prefix + PREF_KEY_EVENT_SHOWN, PREF_DEF_EVENT_SHOWN);
+        }
+        return false;
+    }
+
     public static EventAlias loadEvent(Context context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
@@ -268,7 +293,8 @@ public class EventSettings
         return new EventAlias(getType(context, id), id,
                 loadEventValue(context, id, PREF_KEY_EVENT_LABEL),
                 prefs.getInt(prefs_prefix + PREF_KEY_EVENT_COLOR, PREF_DEF_EVENT_COLOR),
-                loadEventValue(context, id, PREF_KEY_EVENT_URI));
+                loadEventValue(context, id, PREF_KEY_EVENT_URI),
+                loadEventFlag(context, id, PREF_KEY_EVENT_SHOWN));
     }
 
     public static List<EventAlias> loadEvents(Context context, AlarmEventProvider.EventType type)
@@ -291,6 +317,7 @@ public class EventSettings
         prefs.remove(prefs_prefix0 + PREF_KEY_EVENT_TYPE);
         prefs.remove(prefs_prefix0 + PREF_KEY_EVENT_LABEL);
         prefs.remove(prefs_prefix0 + PREF_KEY_EVENT_COLOR);
+        prefs.remove(prefs_prefix0 + PREF_KEY_EVENT_SHOWN);
         prefs.apply();
 
         Set<String> eventList = loadEventList(context, type);
@@ -304,6 +331,10 @@ public class EventSettings
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
         return prefs.contains(prefs_prefix + PREF_KEY_EVENT_TYPE);
+    }
+
+    public static boolean isShown(Context context, @NonNull String id) {
+        return loadEventFlag(context, id, PREF_KEY_EVENT_SHOWN);
     }
 
     public static String getEventUriLastPathSegment(Context context, @NonNull String id)
