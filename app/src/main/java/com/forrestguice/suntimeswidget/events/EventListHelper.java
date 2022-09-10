@@ -878,7 +878,7 @@ public class EventListHelper
             if (icon != null)
             {
                 Drawable drawable = ContextCompat.getDrawable(context, (rising ? R.drawable.svg_sunrise : R.drawable.svg_sunset));
-                drawable.setTint(item.getColor());
+                EventIcons.tintDrawable(drawable, item.getColor());
                 icon.setImageDrawable( drawable );
             }
 
