@@ -59,6 +59,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
@@ -66,6 +67,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
@@ -84,6 +86,7 @@ import java.io.File;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -124,6 +127,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final int REQUEST_TAPACTION_DATE0 = 50;
     public static final int REQUEST_TAPACTION_DATE1 = 60;
     public static final int REQUEST_TAPACTION_NOTE = 70;
+    public static final int REQUEST_MANAGE_EVENTS = 80;
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -172,6 +176,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             case REQUEST_TAPACTION_DATE1:
             case REQUEST_TAPACTION_NOTE:
                 onPickAction(requestCode, resultCode, data);
+                break;
+
+            case REQUEST_MANAGE_EVENTS:
+                onManageEvents(requestCode, resultCode, data);
                 break;
         }
     }
@@ -231,6 +239,24 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             } else if (adapterModified) {
                 rebuildActivity();
             }
+        }
+    }
+
+    private void onManageEvents(int requestCode, int resultCode, Intent data)
+    {
+        boolean adapterModified = data.getBooleanExtra(ActionListActivity.ADAPTER_MODIFIED, false);
+
+        if (resultCode == RESULT_OK)
+        {
+            String eventID = data.getStringExtra(EventListActivity.SELECTED_EVENTID);
+            if (eventID != null) {
+                EventSettings.setShown(context, eventID, true);
+                adapterModified = true;
+            }
+        }
+
+        if (adapterModified) {
+            rebuildActivity();
         }
     }
 
@@ -1329,6 +1355,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (manage_events != null) {
             manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(SuntimesSettingsActivity.this));
         }
+
+        PreferenceCategory category = (PreferenceCategory) findPreference("custom_events");
+        initPref_ui_customevents(this, category);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -1374,7 +1403,73 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(fragment.getActivity()));
         }
 
+        PreferenceCategory category = (PreferenceCategory) fragment.findPreference("custom_events");
+        initPref_ui_customevents(activity, category);
+
         updatePref_ui_themeOverride(AppSettings.loadThemePref(activity), overrideTheme_dark, overrideTheme_light);
+    }
+
+    private static void initPref_ui_customevents(final Context context, final PreferenceCategory category)
+    {
+        ArrayList<Preference> eventPrefs = new ArrayList<>();
+        for (final String eventID : EventSettings.loadEventList(context, AlarmEventProvider.EventType.SUN_ELEVATION))
+        {
+            if (EventSettings.isShown(context, eventID))
+            {
+                EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID);
+                final CheckBoxPreference pref = new CheckBoxPreference(context);
+                pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
+                pref.setTitle(event.getLabel());
+                pref.setSummary(event.getSummary(context));
+                pref.setPersistent(false);
+                pref.setChecked(true);
+                pref.setOnPreferenceChangeListener(customEventListener(context, eventID, category, pref));
+                eventPrefs.add(pref);
+            }
+        }
+
+        Collections.sort(eventPrefs, new Comparator<Preference>() {
+            @Override
+            public int compare(Preference o1, Preference o2) {
+                return o1.getTitle().toString().compareTo(o2.getTitle().toString());
+            }
+        });
+        for (int i=0; i<eventPrefs.size(); i++) {
+            category.addPreference(eventPrefs.get(i));
+        }
+    }
+
+    protected static Preference.OnPreferenceChangeListener customEventListener(final Context context, final String eventID, final PreferenceCategory category, final CheckBoxPreference pref)
+    {
+        return new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Boolean checked = (Boolean) newValue;
+                if (!checked)
+                {
+                    AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                            .setMessage(context.getString(R.string.editevent_dialog_showevent_off))
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int whichButton)
+                                {
+                                    EventSettings.setShown(context, eventID, false);
+                                    category.removePreference(pref);
+                                }
+                            })
+                            .setNegativeButton(context.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    pref.setChecked(true);
+                                }
+                            });
+                    confirm.show();
+                }
+                return true;
+            }
+        };
     }
 
     private static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
@@ -1398,7 +1493,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                activity.startActivity(new Intent(activity, EventListActivity.class));
+                activity.startActivityForResult(new Intent(activity, EventListActivity.class), REQUEST_MANAGE_EVENTS);
                 activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 return false;
             }

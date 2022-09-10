@@ -29,6 +29,19 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="custom_events"
+        android:title="@string/configLabel_ui_fields1">
+
+        <Preference
+            android:key="manage_events"
+            android:title="@string/configLabel_manageEvents"
+            android:icon="?attr/icActionEvents"
+            android:summary="@string/configLabel_manageEvents_summary"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/configLabel_ui_fields">
 
         <CheckBoxPreference
@@ -65,18 +78,6 @@
             android:key="app_ui_showfields_5"
             android:title="@string/configLabel_ui_showgoldhour"
             android:defaultValue="@string/def_app_ui_showgoldhour" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/configLabel_ui_fields1">
-
-        <Preference
-            android:key="manage_events"
-            android:title="@string/configLabel_manageEvents"
-            android:icon="?attr/icActionEvents"
-            android:summary="@string/configLabel_manageEvents_summary"
-            android:persistent="false" />
 
     </PreferenceCategory>
 
