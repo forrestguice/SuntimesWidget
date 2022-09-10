@@ -18,12 +18,14 @@
 
 package com.forrestguice.suntimeswidget.events;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -35,6 +37,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -700,11 +704,33 @@ public class EventListHelper
         }
     }
 
+    @SuppressLint("ResourceType")
     public void showHelp()
     {
-        HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(contextRef.get().getString(R.string.help_eventlist));
-        helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+        Context context = contextRef.get();
+        if (context != null)
+        {
+            int iconSize = (int) context.getResources().getDimension(R.dimen.helpIcon_size);
+            int[] iconAttrs = { R.attr.icActionNew, R.attr.icActionEdit, R.attr.icActionDelete };
+            TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
+            ImageSpan addIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0);
+            ImageSpan editIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_edit), iconSize, iconSize, 0);
+            ImageSpan deleteIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_discard), iconSize, iconSize, 0);
+            typedArray.recycle();
+
+            SuntimesUtils.ImageSpanTag[] helpTags = {
+                    new SuntimesUtils.ImageSpanTag("[Icon Add]", addIcon),
+                    new SuntimesUtils.ImageSpanTag("[Icon Edit]", editIcon),
+                    new SuntimesUtils.ImageSpanTag("[Icon Delete]", deleteIcon),
+            };
+
+            String helpString = context.getString(R.string.help_eventlist);
+            SpannableStringBuilder helpSpan = SuntimesUtils.createSpan(context, helpString, helpTags);
+
+            HelpDialog helpDialog = new HelpDialog();
+            helpDialog.setContent(helpSpan);
+            helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+        }
     }
 
     /**
