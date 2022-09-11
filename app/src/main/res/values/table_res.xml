@@ -9,7 +9,7 @@
     <dimen name="moonphase_column0_width">75dp</dimen>
 
     <dimen name="table_cell_spacing">10dp</dimen>     <!-- spacing between rows -->
-    <dimen name="table_cell_spacing_half">5dp</dimen>
+    <dimen name="table_cell_spacing_half">8dp</dimen>
     <integer name="table_weight0">9</integer>
     <integer name="table_weight1">1</integer>
 
@@ -49,6 +49,8 @@
     <dimen name="table_heading_label_iconSpacing">2dp</dimen>
 
     <dimen name="table_heading_iconsize">24dp</dimen>
+
+    <integer name="tablerow_label_fontsize">12</integer>  <!-- sp -->
 
     <style name="TableHeadImageView" parent="SunsetTimeImageView">      <!-- rise/set header icons-->
         <item name="android:layout_gravity">center</item>
