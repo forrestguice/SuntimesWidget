@@ -37,12 +37,14 @@ import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -51,6 +53,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.TimeZone;
 
 public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
@@ -124,6 +127,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         date.add(Calendar.DATE, position - TODAY_POSITION);
 
         SuntimesRiseSetDataset sun = new SuntimesRiseSetDataset(context);
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        for (String eventID : eventIDs)
+        {
+            SuntimesRiseSetData d = new SuntimesRiseSetData(context, 0);
+            d.setDataMode(new WidgetSettings.EventAliasTimeMode(EventSettings.loadEvent(context, eventID)));
+            sun.putData(eventID, d);
+        }
         sun.setTodayIs(date);
         sun.calculateData();
 
