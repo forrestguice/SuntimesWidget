@@ -25,7 +25,6 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.events.EventSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -196,9 +195,9 @@ public class SuntimesRiseSetData extends SuntimesData
         return new Calendar[] { sunriseCalendarToday, sunsetCalendarToday, sunriseCalendarOther, sunsetCalendarOther, midnight };
     }
 
-    public Calendar[] getEvents(SolarEvents event)
+    public Calendar[] getEvents(boolean isRising)
     {
-        if (event.isRising())
+        if (isRising)
             return new Calendar[] { sunriseCalendarToday, sunriseCalendarOther };
         else return new Calendar[] { sunsetCalendarToday, sunsetCalendarOther };
     }

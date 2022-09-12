@@ -1263,7 +1263,7 @@ public class SuntimesUtils
                 event = SolarEvents.valueOf(timeMode, false);
             }
 
-            Calendar eventTime = d.getEvents(event)[0];
+            Calendar eventTime = d.getEvents(event.isRising())[0];
             if (eventTime != null)
             {
                 if (displayString.contains(pattern_em)) {

@@ -507,21 +507,21 @@ public class SuntimesRiseSetDataset
     {
         switch (event) {
             case NOON:
-                return dataNoon.getEvents(event);
+                return dataNoon.getEvents(event.isRising());
             case SUNRISE: case SUNSET:
-                return dataActual.getEvents(event);
+                return dataActual.getEvents(event.isRising());
             case MORNING_CIVIL: case EVENING_CIVIL:
-                return dataCivil.getEvents(event);
+                return dataCivil.getEvents(event.isRising());
             case MORNING_NAUTICAL: case EVENING_NAUTICAL:
-                return dataNautical.getEvents(event);
+                return dataNautical.getEvents(event.isRising());
             case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL:
-                return dataAstro.getEvents(event);
+                return dataAstro.getEvents(event.isRising());
             case MORNING_GOLDEN: case EVENING_GOLDEN:
-                return dataGold.getEvents(event);
+                return dataGold.getEvents(event.isRising());
             case MORNING_BLUE4: case EVENING_BLUE4:
-                return dataBlue4.getEvents(event);
+                return dataBlue4.getEvents(event.isRising());
             case MORNING_BLUE8: case EVENING_BLUE8:
-                return dataBlue8.getEvents(event);
+                return dataBlue8.getEvents(event.isRising());
         }
         return new Calendar[] { null, null };
     }
