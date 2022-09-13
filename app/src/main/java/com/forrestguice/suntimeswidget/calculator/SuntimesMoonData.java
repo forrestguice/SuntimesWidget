@@ -178,15 +178,13 @@ public class SuntimesMoonData extends SuntimesMoonData0
                                 moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow(), midnight };
     }
 
-    public Calendar[] getRiseSetEvents(SolarEvents event)
+    public Calendar[] getRiseSetEvents(String eventID)
     {
-        switch (event) {
-            case MOONRISE:
-                return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow() };
-            case MOONSET:
-                return new Calendar[] { moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow() };
-        }
-        return new Calendar[] { null, null, null };
+        if (SolarEvents.MOONRISE.name().equals(eventID)) {
+            return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow() };
+        } else if (SolarEvents.MOONSET.name().equals(eventID)) {
+            return new Calendar[] { moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow() };
+        } else return new Calendar[] { null, null };
     }
 
     /**

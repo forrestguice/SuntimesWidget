@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -2854,27 +2854,18 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
+    public static void saveTimeNoteRisePref(Context context, int appWidgetId, String riseChoice)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, riseChoice.name());
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, riseChoice);
         prefs.apply();
     }
-    public static SolarEvents loadTimeNoteRisePref(Context context, int appWidgetId)
+    public static String loadTimeNoteRisePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
-
-        SolarEvents riseMode;
-        try {
-            riseMode = SolarEvents.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            riseMode = PREF_DEF_GENERAL_TIMENOTE_RISE;
-        }
-        return riseMode;
+        return prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
     }
     public static void deleteTimeNoteRisePref(Context context, int appWidgetId)
     {
@@ -2887,27 +2878,18 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimeNoteSetPref(Context context, int appWidgetId, SolarEvents setChoice)
+    public static void saveTimeNoteSetPref(Context context, int appWidgetId, String setChoice)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, setChoice.name());
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, setChoice);
         prefs.apply();
     }
-    public static SolarEvents loadTimeNoteSetPref(Context context, int appWidgetId)
+    public static String loadTimeNoteSetPref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
-
-        SolarEvents setMode;
-        try {
-            setMode = SolarEvents.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            setMode = PREF_DEF_GENERAL_TIMENOTE_SET;
-        }
-        return setMode;
+        return prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
     }
     public static void deleteTimeNoteSetPref(Context context, int appWidgetId)
     {

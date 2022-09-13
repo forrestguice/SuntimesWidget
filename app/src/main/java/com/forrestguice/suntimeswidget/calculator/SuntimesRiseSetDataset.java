@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2021 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,7 +21,9 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -503,27 +505,34 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public Calendar[] getRiseSetEvents(SolarEvents event)
+    public Calendar[] getRiseSetEvents(String eventID)
     {
-        switch (event) {
-            case NOON:
-                return dataNoon.getEvents(event.isRising());
-            case SUNRISE: case SUNSET:
-                return dataActual.getEvents(event.isRising());
-            case MORNING_CIVIL: case EVENING_CIVIL:
-                return dataCivil.getEvents(event.isRising());
-            case MORNING_NAUTICAL: case EVENING_NAUTICAL:
-                return dataNautical.getEvents(event.isRising());
-            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL:
-                return dataAstro.getEvents(event.isRising());
-            case MORNING_GOLDEN: case EVENING_GOLDEN:
-                return dataGold.getEvents(event.isRising());
-            case MORNING_BLUE4: case EVENING_BLUE4:
-                return dataBlue4.getEvents(event.isRising());
-            case MORNING_BLUE8: case EVENING_BLUE8:
-                return dataBlue8.getEvents(event.isRising());
+        //Log.d("DEBUG", "getRiseSetEvents: " + eventID);
+        SuntimesRiseSetData d;
+        if (SolarEvents.hasValue(eventID))
+        {
+            try {
+                SolarEvents event = SolarEvents.valueOf(eventID);
+                d = getData(SolarEvents.toTimeMode(eventID).name());
+                if (d != null) {
+                    return d.getEvents(event.isRising());
+                } else return new Calendar[] { null, null };
+
+            } catch (IllegalArgumentException | NullPointerException e) {
+                Log.w(getClass().getSimpleName(), "getRisSetEvents: " + e);
+            }
         }
-        return new Calendar[] { null, null };
+
+        //Log.d("DEBUG", "getRiseSetEvents: EventAlias: " + eventID);
+        boolean isRising = eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
+        if (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) || eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf("_"));
+        }
+        d = getData(eventID);
+
+        if (d != null) {
+            return d.getEvents(isRising);
+        } else return new Calendar[] { null, null };
     }
 
     @Override
@@ -533,5 +542,3 @@ public class SuntimesRiseSetDataset
     }
 
 }
-
-

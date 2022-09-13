@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2021 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -305,7 +305,7 @@ public class SuntimesActivity extends AppCompatActivity
                 showMapPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_ADD_ALARM)) {
-                scheduleAlarm(SolarEvents.valueOf(intent.getStringExtra(EXTRA_SOLAREVENT), null));
+                scheduleAlarm(intent.getStringExtra(EXTRA_SOLAREVENT));
 
             } else if (action.equals(ACTION_CONFIG_TIMEZONE)) {
                 configTimeZone();
@@ -314,7 +314,11 @@ public class SuntimesActivity extends AppCompatActivity
                 configDate();
 
             } else if (action.equals(ACTION_NOTE_SEEK)) {
-                seekNextNote(SolarEvents.valueOf(intent.getStringExtra(EXTRA_SOLAREVENT), SolarEvents.SUNSET));
+                String eventID = intent.getStringExtra(EXTRA_SOLAREVENT);
+                if (eventID == null) {
+                    eventID = SolarEvents.SUNSET.name();
+                }
+                seekNextNote(eventID);
 
             } else if (action.equals(ACTION_NOTE_NEXT)) {
                 setUserSwappedCard( false, "handleIntent (nextNote)" );
@@ -1572,13 +1576,13 @@ public class SuntimesActivity extends AppCompatActivity
     {
         scheduleAlarm(null);
     }
-    protected void scheduleAlarm( SolarEvents event )
+    protected void scheduleAlarm( String eventID )
     {
         if (dataset.isCalculated())
         {
             AlarmCreateDialog dialog = new AlarmCreateDialog();
             dialog.loadSettings(SuntimesActivity.this);
-            dialog.setEvent((event != null ? event.name() : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));    // TODO: bug; dialog fails to switch tabs if already showing "by time"
+            dialog.setEvent((eventID != null ? eventID : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));    // TODO: bug; dialog fails to switch tabs if already showing "by time"
             dialog.setShowAlarmListButton(true);
             dialog.setOnAcceptedListener(onScheduleAlarm);
             dialog.setOnNeutralListener(onManageAlarms);
@@ -1646,7 +1650,10 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void scheduleAlarmFromNote()
     {
-        scheduleAlarm(notes.getNote().noteMode);
+        NoteData note = notes.getNote();
+        if (note != null) {
+            scheduleAlarm(note.noteMode);
+        }
     }
 
     protected void calculateData( Context context )
@@ -1911,10 +1918,11 @@ public class SuntimesActivity extends AppCompatActivity
         //lightmap.updateViews(false);
     }
 
-    protected void seekNextNote(SolarEvents event)
+    protected void seekNextNote(String eventID)
     {
-        setUserSwappedCard(false, "seekNextNote: " + event);
-        notes.setNoteIndex(notes.getNoteIndex(event));
+        //Log.d("DEBUG", "seekNextNote: " + eventID);
+        setUserSwappedCard(false, "seekNextNote: " + eventID);
+        notes.setNoteIndex(notes.getNoteIndex(eventID));
         NoteData note = notes.getNote();
         if (note != null) {
             highlightTimeField1(note.noteMode);
@@ -1942,17 +1950,17 @@ public class SuntimesActivity extends AppCompatActivity
                     txt_time.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            seekNextNote(SolarEvents.SUNRISE);
+                            seekNextNote(SolarEvents.SUNRISE.name());
                         }
                     }, 500);
                 }
             } else {
-                seekNextNote(SolarEvents.SUNRISE);
+                seekNextNote(SolarEvents.SUNRISE.name());
             }
         }
         @Override
         public boolean onSunriseHeaderLongClick(CardAdapter adapter, int position) {
-            seekNextNote(SolarEvents.SUNRISE);
+            seekNextNote(SolarEvents.SUNRISE.name());
             return true;
         }
 
@@ -1968,19 +1976,19 @@ public class SuntimesActivity extends AppCompatActivity
                             txt_time.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    seekNextNote(SolarEvents.SUNSET);
+                                    seekNextNote(SolarEvents.SUNSET.name());
                                 }
                             }, 500);
                         }
                     });
                 }
             } else {
-                seekNextNote(SolarEvents.SUNSET);
+                seekNextNote(SolarEvents.SUNSET.name());
             }
         }
         @Override
         public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position) {
-            seekNextNote(SolarEvents.SUNSET);
+            seekNextNote(SolarEvents.SUNSET.name());
             return true;
         }
 
@@ -2274,7 +2282,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
         @Override
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {
-            scheduleAlarm(SolarEvents.valueOf(suggestedEvent));
+            scheduleAlarm(SolarEvents.valueOf(suggestedEvent).name());
         }
         @Override
         public void onShowMap( long suggestDate ) {
@@ -2305,7 +2313,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         @Override
         public void onSetAlarm( SolarEvents suggestedEvent ) {
-            scheduleAlarm(suggestedEvent);
+            scheduleAlarm(suggestedEvent.name());
         }
         @Override
         public void onShowMap( long suggestDate ) {
@@ -2324,9 +2332,10 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
-    public void highlightTimeField1(SolarEvents event)
+    public void highlightTimeField1(String eventID)
     {
-        int cardPosition = card_adapter.highlightField(this, event);
+        //Log.d("DEBUG", "highlightTimeField1: " + eventID);
+        int cardPosition = card_adapter.highlightField(this, eventID);
         if (!checkUserSwappedCard() && cardPosition != -1) {
             scrollTo(cardPosition);
         }

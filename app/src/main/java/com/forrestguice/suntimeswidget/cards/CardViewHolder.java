@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2021 Forrest Guice
+    Copyright (C) 2019-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.cards;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.InsetDrawable;
@@ -33,12 +32,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
-import android.util.EventLog;
-import android.util.Log;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,14 +56,12 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -92,7 +85,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     public ArrayList<TimeFieldRow> rows;
     public TimeFieldRow row_astro, row_nautical, row_civil, row_actual, row_solarnoon;
     public TimeFieldRow row_gold, row_blue8, row_blue4;
-    public HashMap<SolarEvents, TextView> timeFields;
+    public HashMap<String, TextView> timeFields;
     public View noonClickArea;
 
     public CustomRows customRows;
@@ -151,23 +144,31 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         rows.addAll(customRows.initRows(view.getContext(), EventSettings.loadVisibleEvents(view.getContext(), AlarmEventProvider.EventType.SUN_ELEVATION)));
 
         timeFields = new HashMap<>();
-        timeFields.put(SolarEvents.SUNRISE, row_actual.getField(0));
-        timeFields.put(SolarEvents.SUNSET, row_actual.getField(1));
-        timeFields.put(SolarEvents.MORNING_CIVIL, row_civil.getField(0));
-        timeFields.put(SolarEvents.EVENING_CIVIL, row_civil.getField(1));
-        timeFields.put(SolarEvents.MORNING_NAUTICAL, row_nautical.getField(0));
-        timeFields.put(SolarEvents.EVENING_NAUTICAL, row_nautical.getField(1));
-        timeFields.put(SolarEvents.MORNING_ASTRONOMICAL, row_astro.getField(0));
-        timeFields.put(SolarEvents.EVENING_ASTRONOMICAL, row_astro.getField(1));
-        timeFields.put(SolarEvents.NOON, row_solarnoon.getField(1));
-        timeFields.put(SolarEvents.MORNING_GOLDEN, row_gold.getField(0));
-        timeFields.put(SolarEvents.EVENING_GOLDEN, row_gold.getField(1));
-        timeFields.put(SolarEvents.MORNING_BLUE8, row_blue8.getField(0));
-        timeFields.put(SolarEvents.EVENING_BLUE8, row_blue8.getField(1));
-        timeFields.put(SolarEvents.MORNING_BLUE4, row_blue4.getField(0));
-        timeFields.put(SolarEvents.EVENING_BLUE4, row_blue4.getField(1));
-        timeFields.put(SolarEvents.MOONRISE, moonrise.getTimeViews(SolarEvents.MOONRISE)[0]);
-        timeFields.put(SolarEvents.MOONSET, moonrise.getTimeViews(SolarEvents.MOONSET)[0]);
+        timeFields.put(SolarEvents.SUNRISE.name(), row_actual.getField(0));
+        timeFields.put(SolarEvents.SUNSET.name(), row_actual.getField(1));
+        timeFields.put(SolarEvents.MORNING_CIVIL.name(), row_civil.getField(0));
+        timeFields.put(SolarEvents.EVENING_CIVIL.name(), row_civil.getField(1));
+        timeFields.put(SolarEvents.MORNING_NAUTICAL.name(), row_nautical.getField(0));
+        timeFields.put(SolarEvents.EVENING_NAUTICAL.name(), row_nautical.getField(1));
+        timeFields.put(SolarEvents.MORNING_ASTRONOMICAL.name(), row_astro.getField(0));
+        timeFields.put(SolarEvents.EVENING_ASTRONOMICAL.name(), row_astro.getField(1));
+        timeFields.put(SolarEvents.NOON.name(), row_solarnoon.getField(1));
+        timeFields.put(SolarEvents.MORNING_GOLDEN.name(), row_gold.getField(0));
+        timeFields.put(SolarEvents.EVENING_GOLDEN.name(), row_gold.getField(1));
+        timeFields.put(SolarEvents.MORNING_BLUE8.name(), row_blue8.getField(0));
+        timeFields.put(SolarEvents.EVENING_BLUE8.name(), row_blue8.getField(1));
+        timeFields.put(SolarEvents.MORNING_BLUE4.name(), row_blue4.getField(0));
+        timeFields.put(SolarEvents.EVENING_BLUE4.name(), row_blue4.getField(1));
+        timeFields.put(SolarEvents.MOONRISE.name(), moonrise.getTimeViews(SolarEvents.MOONRISE)[0]);
+        timeFields.put(SolarEvents.MOONSET.name(), moonrise.getTimeViews(SolarEvents.MOONSET)[0]);
+
+        HashMap<String,TimeFieldRow> timeFields0 = customRows.getTimeFieldRows();
+        for (String eventID : timeFields0.keySet())
+        {
+            TimeFieldRow row = timeFields0.get(eventID);
+            timeFields.put(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING, row.getField(0));
+            timeFields.put(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING, row.getField(1));
+        }
 
         lightmap = (LightMapView) view.findViewById(R.id.info_time_lightmap);
 
@@ -197,8 +198,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         row_gold.setVisible(options.showGold);
 
         resetHighlight();
-        if (options.highlightEvent != null && options.highlightPosition == position) {
-            highlightField(options.highlightEvent);
+        if (options.highlightEventID != null && options.highlightPosition == position) {
+            highlightField(options.highlightEventID);
         }
 
         // sun fields
@@ -528,11 +529,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         textView.setText(SuntimesUtils.createBoldColorSpan(null, dayLength_label, dayLengthStr, highlightColor));
     }
 
-    public void highlightField( SolarEvents highlightEvent )
+    public void highlightField( String highlightEventID )
     {
-        for (SolarEvents event : timeFields.keySet()) {
-            if (event == highlightEvent) {
-                TimeFieldRow.highlight(timeFields.get(event));
+        for (String eventID : timeFields.keySet()) {
+            if (eventID.equals(highlightEventID)) {
+                TimeFieldRow.highlight(timeFields.get(eventID));
                 break;
             }
         }

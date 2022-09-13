@@ -176,6 +176,17 @@ public enum SolarEvents
         return defaultType;
     }
 
+    public static boolean hasValue(String eventID)
+    {
+        SolarEvents[] values = values();
+        for (int i=0; i<values.length; i++) {
+            if (values[i].name().equals(eventID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static SolarEventsAdapter createAdapter(Context context, boolean northward)
     {
         ArrayList<SolarEvents> choices = new ArrayList<SolarEvents>(Arrays.asList(

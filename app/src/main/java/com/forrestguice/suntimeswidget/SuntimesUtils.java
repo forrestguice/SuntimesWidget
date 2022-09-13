@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -1473,7 +1473,7 @@ public class SuntimesUtils
                     continue;
                 }
 
-                Calendar[] eventTimes = (pattern_em != null ? dataset.getRiseSetEvents(event) : null);
+                Calendar[] eventTimes = (pattern_em != null ? dataset.getRiseSetEvents(event.name()) : null);
                 Calendar eventTime = (eventTimes != null && eventTimes[0] != null ? eventTimes[0] : null);
 
                 if (eventTime != null)
