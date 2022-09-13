@@ -34,6 +34,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Pair;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -657,18 +658,18 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         public static int[] resID_rising = new int[] {R.id.bucket1_rising, R.id.bucket2_rising, R.id.bucket3_rising, R.id.bucket4_rising, R.id.bucket5_rising, R.id.bucket6_rising, R.id.bucket7_rising, R.id.bucket8_rising};
         public static int[] resID_setting = new int[] {R.id.bucket1_setting, R.id.bucket2_setting, R.id.bucket3_setting, R.id.bucket4_setting, R.id.bucket5_setting, R.id.bucket6_setting, R.id.bucket7_setting, R.id.bucket8_setting};
 
-        public LinearLayout[] bucket_labels = new LinearLayout[resID_labels.length];
-        public LinearLayout[] bucket_rising = new LinearLayout[bucket_labels.length];
-        public LinearLayout[] bucket_setting = new LinearLayout[bucket_labels.length];
-        public ArrayList<ArrayList<Integer>> bucket_angles = new ArrayList<ArrayList<Integer>>();
+        public LinearLayout[] layout_labels = new LinearLayout[resID_labels.length];
+        public LinearLayout[] layout_rising = new LinearLayout[layout_labels.length];
+        public LinearLayout[] layout_setting = new LinearLayout[layout_labels.length];
+        public ArrayList<ArrayList<Integer>> angleList = new ArrayList<ArrayList<Integer>>();
 
         public CustomRows(View view, CardAdapter.CardAdapterOptions options)
         {
-            for (int i=0; i<bucket_labels.length; i++) {
-                bucket_labels[i] = (LinearLayout) view.findViewById(resID_labels[i]);
-                bucket_rising[i] = (LinearLayout) view.findViewById(resID_rising[i]);
-                bucket_setting[i] = (LinearLayout) view.findViewById(resID_setting[i]);
-                bucket_angles.add(new ArrayList<Integer>());
+            for (int i = 0; i< layout_labels.length; i++) {
+                layout_labels[i] = (LinearLayout) view.findViewById(resID_labels[i]);
+                layout_rising[i] = (LinearLayout) view.findViewById(resID_rising[i]);
+                layout_setting[i] = (LinearLayout) view.findViewById(resID_setting[i]);
+                angleList.add(new ArrayList<Integer>());
             }
             hideAll();
         }
@@ -702,33 +703,45 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             {
                 case SUN_ELEVATION:
                     AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
-                    int angle = event0.getAngle();
-                    int i = getBucketForAngle(angle);
+                    int angle = (event0 != null ? event0.getAngle() : 0);
+                    int i = getLayoutForAngle(angle);
 
-                    ArrayList<Integer> angles = bucket_angles.get(i);
+                    ArrayList<Integer> angles = angleList.get(i);
                     int j = getPositionForAngle(angles, angle);
                     angles.add(j, angle);
+
+                    LinearLayout.LayoutParams[] layout = new LinearLayout.LayoutParams[3];
+                    boolean isLastItem = (j == angles.size() - 1);
+                    int margin = (isLastItem ? 0 : (int)context.getResources().getDimension(R.dimen.table_cell_spacing));
+                    for (int k=0; k<layout.length; k++)
+                    {
+                        layout[k] = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        layout[k].setMargins(0, 0, 0, margin);
+                    }
 
                     TextView text_label = new TextView(context);
                     text_label.setTextSize(context.getResources().getInteger(R.integer.tablerow_label_fontsize));
                     text_label.setText(event.getLabel());
                     text_label.setTextColor(color_label);
                     text_label.getPaint().setAntiAlias(true);
-                    bucket_labels[i].addView(text_label, j);
+                    text_label.setLayoutParams(layout[0]);
+                    layout_labels[i].addView(text_label, j);
 
                     TextView text_rising = new TextView(context);
                     text_rising.setTextSize(context.getResources().getInteger(R.integer.tablerow_label_fontsize));
                     text_rising.setText(context.getString(R.string.time_none));
                     text_rising.setTextColor(color_rising);
                     text_rising.getPaint().setAntiAlias(true);
-                    bucket_rising[i].addView(text_rising, j);
+                    text_rising.setLayoutParams(layout[1]);
+                    layout_rising[i].addView(text_rising, j);
 
                     TextView text_setting = new TextView(context);
                     text_setting.setTextSize(context.getResources().getInteger(R.integer.tablerow_label_fontsize));
                     text_setting.setText(context.getString(R.string.time_none));
                     text_setting.setTextColor(color_setting);
                     text_setting.getPaint().setAntiAlias(true);
-                    bucket_setting[i].addView(text_setting, j);
+                    text_setting.setLayoutParams(layout[2]);
+                    layout_setting[i].addView(text_setting, j);
 
                     setVisibility(i, true);
                     return new TimeFieldRow(text_label, text_rising, text_setting);
@@ -747,7 +760,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             return 0;
         }
 
-        public int getBucketForAngle(int angle) {
+        public int getLayoutForAngle(int angle) {
             if (angle >= 6) {
                 return 7;
             } else if (angle >= 0) {
@@ -767,32 +780,32 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
         public void setVisibility(int i, boolean visible)
         {
-            if (i>=0 && i<bucket_labels.length) {
+            if (i>=0 && i< layout_labels.length) {
                 int visibility = (visible ? View.VISIBLE : View.GONE);
-                bucket_labels[i].setVisibility(visibility);
-                bucket_rising[i].setVisibility(visibility);
-                bucket_setting[i].setVisibility(visibility);
+                layout_labels[i].setVisibility(visibility);
+                layout_rising[i].setVisibility(visibility);
+                layout_setting[i].setVisibility(visibility);
             }
         }
 
         protected void clearRow(int i)
         {
-            if (i>=0 && i<bucket_labels.length) {
-                bucket_labels[i].removeAllViews();
-                bucket_rising[i].removeAllViews();
-                bucket_setting[i].removeAllViews();
-                bucket_angles.get(i).clear();
+            if (i>=0 && i< layout_labels.length) {
+                layout_labels[i].removeAllViews();
+                layout_rising[i].removeAllViews();
+                layout_setting[i].removeAllViews();
+                angleList.get(i).clear();
             }
         }
 
         public void hideAll() {
-            for (int i=0; i<bucket_labels.length; i++) {
+            for (int i = 0; i< layout_labels.length; i++) {
                 setVisibility(i, false);
             }
         }
 
         public void clearAll() {
-            for (int i=0; i<bucket_labels.length; i++) {
+            for (int i = 0; i< layout_labels.length; i++) {
                 clearRow(i);
             }
             rows.clear();
