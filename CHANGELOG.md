@@ -1,5 +1,12 @@
 ### ~
 
+### v0.14.8 (2022-09-26)
+* fixes crash when location is set to high latitudes (#623).
+* fixes appearance of location icons when using system dark mode.
+* fixes bug where the "observer height" preference sometimes displays stale values.
+* adds link to online help for widget "title substitutions".
+* updates translation to Polish and Esperanto (eo, pl) (#619 by Verdulo).
+
 ### v0.14.7 (2022-08-02)
 * adds support for system dark mode (night mode).
 * adds option to show/hide the map button; fixes map icon (#573).
