@@ -1,7 +1,7 @@
 ### ~
 
 ### v0.14.8 (2022-09-26)
-* fixes "app crash when location is set to high latitudes" (#623).
+* fixes crash when location is set to high latitudes (#623).
 * fixes appearance of location icons when using system dark mode.
 * fixes bug where the "observer height" preference sometimes displays stale values.
 * adds link to online help for widget "title substitutions".
