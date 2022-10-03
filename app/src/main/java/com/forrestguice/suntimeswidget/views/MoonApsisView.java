@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2021 Forrest Guice
+    Copyright (C) 2019-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -40,6 +40,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -93,6 +94,7 @@ public class MoonApsisView extends LinearLayout
         card_view.setLayoutManager(card_layout);
 
         card_adapter = new MoonApsisAdapter(context);
+        card_adapter.setAdapterListener(card_listener);
         card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / 3);  // initial width; 3 to screen; reassigned later in onSizeChanged
 
         card_view.setAdapter(card_adapter);
@@ -135,6 +137,14 @@ public class MoonApsisView extends LinearLayout
             card_adapter.setItemWidth((w - (margin * 2)) / 2);   // 2 to view
         }
     }
+
+    private final MoonApsisAdapterListener card_listener = new MoonApsisAdapterListener()
+    {
+        @Override
+        public void onClick(MoonApsisAdapter adapter, int position) {
+            //Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();  // TODO
+        }
+    };
 
     private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
         @Override
@@ -263,6 +273,7 @@ public class MoonApsisView extends LinearLayout
         @Override
         public void onViewRecycled(MoonApsisField holder)
         {
+            detachClickListeners(holder);
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
                 data.remove(holder.position);
             }
@@ -292,6 +303,7 @@ public class MoonApsisView extends LinearLayout
             holder.isRising = (isRising ? (offset == 0) : (offset != 0));
             themeViews(context, holder, isAgo);
             holder.bindDataToPosition(context, moon, holder.isRising, position);
+            attachClickListeners(holder, position);
         }
 
         protected void initData( Context context ) {
@@ -405,6 +417,42 @@ public class MoonApsisView extends LinearLayout
         public boolean isRising() {
             return isRising;
         }
+
+        private void attachClickListeners(@NonNull MoonApsisField holder, int position) {
+            holder.layout.setOnClickListener(onItemClick(position));
+        }
+
+        private void detachClickListeners(@NonNull MoonApsisField holder) {
+            holder.layout.setOnClickListener(null);
+        }
+
+        private OnClickListener onItemClick(final int position) {
+            return new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (adapterListener != null) {
+                        adapterListener.onClick(MoonApsisAdapter.this, position);
+                    }
+                }
+            };
+        }
+
+        /**
+         * setAdapterListener
+         * @param listener
+         */
+        public void setAdapterListener( @NonNull MoonApsisAdapterListener listener ) {
+            adapterListener = listener;
+        }
+        private MoonApsisAdapterListener adapterListener = new MoonApsisAdapterListener();
+    }
+
+    /**
+     * MoonApsisAdapterListener
+     */
+    public static class MoonApsisAdapterListener
+    {
+        public void onClick(MoonApsisAdapter adapter, int position) {}
     }
 
     /**
