@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+@Deprecated
 @SuppressWarnings("Convert2Diamond")
 public class MoonPhasesView extends LinearLayout
 {

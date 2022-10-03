@@ -41,10 +41,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.cards.CardAdapter;
+import com.forrestguice.suntimeswidget.cards.CardViewHolder;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -104,6 +107,7 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.setLayoutManager(card_layout);
 
         card_adapter = new PhaseAdapter(context);
+        card_adapter.setAdapterListener(card_listener);
         card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / 4);  // initial width; reassigned later in onSizeChanged
 
         card_view.setAdapter(card_adapter);
@@ -211,6 +215,13 @@ public class MoonPhasesView1 extends LinearLayout
         }
         showEmptyView( !hasSupport );
     }
+
+    private PhaseAdapterListener card_listener = new PhaseAdapterListener()
+    {
+        public void onClick(PhaseAdapter adapter, int position) {
+            //Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();  // TODO
+        }
+    };
 
     private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
         @Override
@@ -334,11 +345,13 @@ public class MoonPhasesView1 extends LinearLayout
             themeViews(context, holder, isAgo);
 
             holder.bindDataToPosition(context, moon, holder.phase, position);
+            attachClickListeners(holder, position);
         }
 
         @Override
         public void onViewRecycled(PhaseField holder)
         {
+            detachClickListeners(holder);
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
                 data.remove(holder.position);
             }
@@ -451,6 +464,42 @@ public class MoonPhasesView1 extends LinearLayout
             int textColor = isAgo ? colorDisabled : colorText;
             holder.themeViews(titleColor, spTitle, boldTitle, timeColor, spTime, boldTime, textColor, bitmap);
         }
+
+        private void attachClickListeners(@NonNull PhaseField holder, int position) {
+            holder.layout.setOnClickListener(onItemClick(position));
+        }
+
+        private void detachClickListeners(@NonNull PhaseField holder) {
+            holder.layout.setOnClickListener(null);
+        }
+
+        private OnClickListener onItemClick(final int position) {
+            return new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (adapterListener != null) {
+                        adapterListener.onClick(PhaseAdapter.this, position);
+                    }
+                }
+            };
+        }
+
+        /**
+         * setAdapterListener
+         * @param listener
+         */
+        public void setAdapterListener( @NonNull PhaseAdapterListener listener ) {
+            adapterListener = listener;
+        }
+        private PhaseAdapterListener adapterListener = new PhaseAdapterListener();
+    }
+
+    /**
+     * PhaseAdapterListener
+     */
+    public static class PhaseAdapterListener
+    {
+        public void onClick(PhaseAdapter adapter, int position) {}
     }
 
     /**
