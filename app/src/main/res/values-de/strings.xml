@@ -734,6 +734,7 @@
   <string name="configAction_undo">Rückgängig</string>               <!-- button  (contentDescription) -->
 
   <string name="alarmAction_dismiss">Verwerfen</string>                <!-- notification action  button -->
+  <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
   <string name="alarmAction_snooze">Schlummern</string>                  <!-- notification action  button   -->
   <string name="alarmAction_timeout">Zeitbeschränkung</string>                  <!-- notification  action button -->
 

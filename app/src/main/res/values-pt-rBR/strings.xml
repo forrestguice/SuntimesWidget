@@ -775,6 +775,7 @@
     <string name="configAction_undo">Desfazer</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Dispensar</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
     <string name="alarmAction_snooze">Soneca</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Tempo esgotado</string>                  <!-- notification action button -->
 

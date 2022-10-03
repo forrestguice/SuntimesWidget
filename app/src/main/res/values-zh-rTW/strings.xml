@@ -740,6 +740,7 @@
     <string name="configAction_undo">撤銷</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">解除</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
     <string name="alarmAction_snooze">延時</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">超時</string>                  <!-- notification action button -->
 

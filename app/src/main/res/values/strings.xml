@@ -793,6 +793,7 @@
     <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">Dismiss Alarm</string>                <!-- notification action button; context specific "Dismiss Early", same as "Dismiss Alarm Early", or "Dismiss Alarm" -->
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Timeout</string>                  <!-- notification action button -->
 

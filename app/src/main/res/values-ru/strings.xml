@@ -790,6 +790,7 @@
     <string name="configAction_undo">Отменить</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Отключить</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
     <string name="alarmAction_snooze">Отложить</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Смещение</string>                  <!-- notification action button -->
 

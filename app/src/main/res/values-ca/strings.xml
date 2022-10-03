@@ -726,7 +726,8 @@
     <string name="configAction_disableAlarm">Desa i deshabilita</string>               <!-- button (contentDescription) -->  
     <string name="configAction_undo">Desfer</string>               <!-- button (contentDescription) -->  
 
-    <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->  
+    <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
     <string name="alarmAction_snooze">Posposar</string>                  <!-- notification action button -->  
     <string name="alarmAction_timeout">Expirar</string>                  <!-- notification action button -->  
 
