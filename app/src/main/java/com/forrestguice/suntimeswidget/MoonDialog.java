@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -50,19 +51,26 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.map.WorldMapDialog;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.MoonApsisView;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MoonDialog extends BottomSheetDialogFragment
 {
     public static final String ARG_DATETIME = "datetime";
+
+    public static final String MAPTAG_MOON = "_moon";
 
     private SuntimesUtils utils = new SuntimesUtils();
 
@@ -95,13 +103,14 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
 
     private TextView dialogTitle;
+    private TextView dialogTime;
     private MoonRiseSetView moonriseset;
     private MoonPhaseView currentphase;
     private MoonPhasesView1 moonphases;
     private MoonApsisView moonapsis;
     private TextView moondistance, moondistance_label, moondistance_note;
 
-    private int riseColor, setColor, timeColor;
+    private int riseColor, setColor, timeColor, warningColor;
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -214,6 +223,17 @@ public class MoonDialog extends BottomSheetDialogFragment
     public void initViews(Context context, View dialogView)
     {
         dialogTitle = (TextView) dialogView.findViewById(R.id.moondialog_title);
+
+        dialogTime = (TextView) dialogView.findViewById(R.id.info_time_moon);
+        if (dialogTime != null) {
+            dialogTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showTimeZoneMenu(getContext(), v);
+                }
+            });
+        }
+
         moonriseset = (MoonRiseSetView) dialogView.findViewById(R.id.moonriseset_view);
         currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
 
@@ -243,10 +263,14 @@ public class MoonDialog extends BottomSheetDialogFragment
             int textColor = themeOverride.getTextColor();
             riseColor = themeOverride.getMoonriseTextColor();
             setColor = themeOverride.getMoonsetTextColor();
+            float timeSizeSp = themeOverride.getTimeSizeSp();
 
             dialogTitle.setTextColor(titleColor);
             dialogTitle.setTextSize(themeOverride.getTitleSizeSp());
             dialogTitle.setTypeface(dialogTitle.getTypeface(), (themeOverride.getTitleBold() ? Typeface.BOLD : Typeface.NORMAL));
+
+            dialogTime.setTextColor(titleColor);
+            dialogTime.setTextSize(timeSizeSp);
 
             moonriseset.themeViews(context, themeOverride);
             currentphase.themeViews(context, themeOverride);
@@ -263,11 +287,12 @@ public class MoonDialog extends BottomSheetDialogFragment
             moondistance_note.setTextSize(themeOverride.getTextSizeSp());
 
         } else {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor, R.attr.tagColor_warning };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             timeColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
             riseColor = ContextCompat.getColor(context, typedArray.getResourceId(1, timeColor));
             setColor = ContextCompat.getColor(context, typedArray.getResourceId(2, timeColor));
+            warningColor = ContextCompat.getColor(context, typedArray.getResourceId(3, timeColor));
             typedArray.recycle();
         }
     }
@@ -292,6 +317,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         moonphases.updateViews(context);
         moonapsis.updateViews(context);
         updateMoonApsis();
+        updateTimeText();
 
         final long datetime = arg_dateTime();
         if (datetime != -1)
@@ -300,8 +326,42 @@ public class MoonDialog extends BottomSheetDialogFragment
             moonphases.scrollToDate(datetime);
             moonapsis.scrollToDate(datetime);
         }
-
         startUpdateTask();
+    }
+
+    protected void updateTimeText()
+    {
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
+        Calendar now = Calendar.getInstance();
+        long nowMillis = now.getTimeInMillis();
+        long arg_dateTime = arg_dateTime();
+        long moonTimeMillis = (arg_dateTime != -1 ? arg_dateTime : nowMillis);
+
+        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_MOON, WidgetTimezones.TZID_SUNTIMES);
+        TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone() : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble());
+
+        Calendar moonTime = Calendar.getInstance(tz);
+        moonTime.setTimeInMillis(moonTimeMillis);
+        boolean nowIsAfter = now.after(moonTime);
+
+        String suffix = "";
+        boolean isOffset = Math.abs(nowMillis - moonTimeMillis) > 60 * 1000;
+        if (isOffset) {
+            suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+        }
+
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, moonTime);
+        if (dialogTime != null)
+        {
+            String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, moonTime.getTimeZone());
+            if (suffix.isEmpty())
+                dialogTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
+            else dialogTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, warningColor));
+        }
     }
 
     private void updateMoonApsis()
@@ -346,6 +406,31 @@ public class MoonDialog extends BottomSheetDialogFragment
             showContextMenu(getActivity(), v, adapter, position, isRising);
         }
     };
+
+    protected boolean showTimeZoneMenu(Context context, View view)
+    {
+        PopupMenu menu = WorldMapDialog.createMenu(context, view, R.menu.moonmenu_tz, onTimeZoneMenuClick);
+        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_MOON, WidgetTimezones.TZID_SUNTIMES));
+        menu.show();
+        return true;
+    }
+    private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context != null) {
+                String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
+                if (tzID != null) {
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_MOON, tzID);
+                    updateViews();
+                }
+                return (tzID != null);
+            } else return false;
+        }
+    };
+
 
     protected boolean showContextMenu(final Context context, View view, MoonPhasesView1.PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase)
     {
@@ -546,6 +631,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         {
             if (data != null && currentphase != null)
             {
+                updateTimeText();
                 currentphase.updatePosition();
                 currentphase.postDelayed(this, UPDATE_RATE0);
             }
