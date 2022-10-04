@@ -2180,6 +2180,12 @@ public class SuntimesActivity extends AppCompatActivity
         public void onShowMap( long suggested) {
             showMapPositionAt(suggested);
         }
+
+        @Override
+        public void onShowMoonInfo(long suggestDate) {
+            showMoonPositionAt(suggestDate);
+        }
+
         @Override
         public void onShowDate(long suggested) {
             scrollToDate(suggested);
@@ -2226,6 +2232,11 @@ public class SuntimesActivity extends AppCompatActivity
             afterConfigDate();*/
 
             scrollToDate(suggested);
+        }
+
+        @Override
+        public void onShowMoonInfo(long suggested) {
+            showMoonPositionAt(suggested - (60 * 1000));
         }
     };
     public void showMapPositionAt(@Nullable Long dateTime)
@@ -2284,6 +2295,12 @@ public class SuntimesActivity extends AppCompatActivity
         public void onShowPosition( long suggested ) {
             showSunPositionAt(suggested);
         }
+
+        @Override
+        public void onShowMoonInfo(long suggested) {
+            showMoonPositionAt(suggested);
+        }
+
         @Override
         public void onShowDate(long suggested) {
             scrollToDate(suggested);

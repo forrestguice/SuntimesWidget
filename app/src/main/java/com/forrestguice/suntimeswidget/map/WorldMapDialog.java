@@ -1150,6 +1150,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_moon:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMoonInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                        collapseSheet(getDialog());
+                    }
+                    return true;
+
                 case R.id.action_date:
                     if (dialogListener != null) {
                         dialogListener.onShowDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
@@ -1436,6 +1443,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         public void onShowDate( long suggestedDate ) {}
         public void onShowPosition( long suggestDate ) {}
+        public void onShowMoonInfo( long suggestDate ) {}
     }
 
 }

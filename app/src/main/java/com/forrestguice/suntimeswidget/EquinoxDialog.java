@@ -394,6 +394,13 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_moon:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMoonInfo(itemTime);
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
+
                 case R.id.action_worldmap:
                     if (dialogListener != null) {
                         dialogListener.onShowMap(itemTime);
@@ -465,6 +472,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
+        public void onShowMoonInfo( long suggestDate ) {}
         public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified() {}
     }
