@@ -2293,13 +2293,14 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Show the moon dialog.
      */
-    protected void showMoonDialog()
+    protected MoonDialog showMoonDialog()
     {
         MoonDialog moonDialog = new MoonDialog();
         moonDialog.themeViews(this, appThemeOverride);
         moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
         moonDialog.setDialogListener(moonDialogListener);
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
+        return moonDialog;
     }
     private MoonDialog.MoonDialogListener moonDialogListener = new MoonDialog.MoonDialogListener()
     {
@@ -2320,6 +2321,16 @@ public class SuntimesActivity extends AppCompatActivity
             scrollToDate(suggested);
         }
     };
+    public void showMoonPositionAt(@Nullable Long dateTime)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        MoonDialog dialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        dialog = showMoonDialog();
+        dialog.showPositionAt(dateTime);
+    }
 
     /**
      * Show data source labels / ui.

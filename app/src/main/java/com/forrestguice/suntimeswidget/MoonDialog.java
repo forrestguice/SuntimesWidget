@@ -62,7 +62,16 @@ import java.util.List;
 
 public class MoonDialog extends BottomSheetDialogFragment
 {
+    public static final String ARG_DATETIME = "datetime";
+
     private SuntimesUtils utils = new SuntimesUtils();
+
+    public MoonDialog()
+    {
+        Bundle args = new Bundle();
+        args.putLong(ARG_DATETIME, -1);
+        setArguments(args);
+    }
 
     private SuntimesMoonData data;
     public void setData( SuntimesMoonData data )
@@ -72,6 +81,14 @@ public class MoonDialog extends BottomSheetDialogFragment
             data.calculate();
         }
         this.data = data;
+    }
+
+    public void showPositionAt(@Nullable Long datetime)
+    {
+        getArguments().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
+        if (isAdded()) {
+            updateViews();
+        }
     }
 
     private TextView dialogTitle;
