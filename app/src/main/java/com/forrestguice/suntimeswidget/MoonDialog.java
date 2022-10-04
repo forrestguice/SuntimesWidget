@@ -98,19 +98,39 @@ public class MoonDialog extends BottomSheetDialogFragment
 
     private void expandSheet(DialogInterface dialog)
     {
-        if (dialog == null) {
-            return;
+        if (dialog != null) {
+            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            if (bottomSheet != null) {
+                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
         }
+    }
+    private void collapseSheet(Dialog dialog)
+    {
+        if (dialog != null) {
+            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            if (bottomSheet != null) {
+                bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        }
+    }
 
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
+    @Nullable
+    private BottomSheetBehavior initSheet(DialogInterface dialog)
+    {
+        if (dialog != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            if (layout != null)
+            {
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                behavior.setHideable(false);
+                behavior.setSkipCollapsed(true);
+                return behavior;
+            }
         }
+        return null;
     }
 
     private void initPeekHeight(DialogInterface dialog)
