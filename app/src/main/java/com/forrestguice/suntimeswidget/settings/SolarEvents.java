@@ -413,6 +413,19 @@ public enum SolarEvents
         }
         return null;
     }
+    public static SolarEvents valueOf(@Nullable SuntimesCalculator.MoonPhase phase)
+    {
+        if (phase == null) {
+            return null;
+        }
+        switch (phase) {
+            case NEW: return SolarEvents.NEWMOON;
+            case FULL: return SolarEvents.FULLMOON;
+            case FIRST_QUARTER: return SolarEvents.FIRSTQUARTER;
+            case THIRD_QUARTER: return SolarEvents.THIRDQUARTER;
+            default: return null;
+        }
+    }
 
     /**
      * toSolsticeEquinoxMode
