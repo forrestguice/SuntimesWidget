@@ -140,9 +140,9 @@ public class MoonApsisView extends LinearLayout
     private final MoonApsisAdapterListener card_listener = new MoonApsisAdapterListener()
     {
         @Override
-        public void onClick(View view, MoonApsisAdapter adapter, int position) {
+        public void onClick(View view, MoonApsisAdapter adapter, int position, boolean isRising) {
             if (viewListener != null) {
-                viewListener.onClick(view, adapter, position);
+                viewListener.onClick(view, adapter, position, isRising);
             }
         }
     };
@@ -256,7 +256,7 @@ public class MoonApsisView extends LinearLayout
      */
     public static class MoonApsisAdapterListener
     {
-        public void onClick(View view, MoonApsisAdapter adapter, int position) {}
+        public void onClick(View view, MoonApsisAdapter adapter, int position, boolean isRising) {}
     }
 
     /**
@@ -330,7 +330,7 @@ public class MoonApsisView extends LinearLayout
             holder.isRising = (isRising ? (offset == 0) : (offset != 0));
             themeViews(context, holder, isAgo);
             holder.bindDataToPosition(context, moon, holder.isRising, position);
-            attachClickListeners(holder, position);
+            attachClickListeners(holder, position, holder.isRising);
         }
 
         protected void initData( Context context ) {
@@ -340,7 +340,7 @@ public class MoonApsisView extends LinearLayout
             isRising = (perigee.first != null && !perigee.first.before(apogee.first));
         }
 
-        protected SuntimesMoonData0 initData( Context context, int position )
+        public SuntimesMoonData0 initData( Context context, int position )
         {
             int offset = (position - CENTER_POSITION) % 2;
             int firstPosition = position;
@@ -445,20 +445,20 @@ public class MoonApsisView extends LinearLayout
             return isRising;
         }
 
-        private void attachClickListeners(@NonNull MoonApsisField holder, int position) {
-            holder.layout.setOnClickListener(onItemClick(position));
+        private void attachClickListeners(@NonNull MoonApsisField holder, int position, boolean isRising) {
+            holder.layout.setOnClickListener(onItemClick(position, isRising));
         }
 
         private void detachClickListeners(@NonNull MoonApsisField holder) {
             holder.layout.setOnClickListener(null);
         }
 
-        private OnClickListener onItemClick(final int position) {
+        private OnClickListener onItemClick(final int position, final boolean isRising) {
             return new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (adapterListener != null) {
-                        adapterListener.onClick(v, MoonApsisAdapter.this, position);
+                        adapterListener.onClick(v, MoonApsisAdapter.this, position, isRising);
                     }
                 }
             };

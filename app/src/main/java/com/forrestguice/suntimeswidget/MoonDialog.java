@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2021 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -34,6 +34,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
+import android.util.Pair;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -47,6 +48,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -311,8 +313,8 @@ public class MoonDialog extends BottomSheetDialogFragment
 
     private MoonApsisView.MoonApsisViewListener moonapsis_listener = new MoonApsisView.MoonApsisViewListener() {
         @Override
-        public void onClick(View v, MoonApsisView.MoonApsisAdapter adapter, int position) {
-            showContextMenu(getActivity(), v, adapter, position);
+        public void onClick(View v, MoonApsisView.MoonApsisAdapter adapter, int position, boolean isRising) {
+            showContextMenu(getActivity(), v, adapter, position, isRising);
         }
     };
 
@@ -340,21 +342,26 @@ public class MoonDialog extends BottomSheetDialogFragment
         return false;
     }
 
-    protected boolean showContextMenu(final Context context, View view, MoonApsisView.MoonApsisAdapter adapter, int position)
+    protected boolean showContextMenu(final Context context, View view, MoonApsisView.MoonApsisAdapter adapter, int position, boolean isRising)
     {
-        long datetime = 0;  // TODO
+        SuntimesMoonData0 data = adapter.initData(context, position);
+        Pair<Calendar, SuntimesCalculator.MoonPosition> event = isRising ? data.getMoonApogee() : data.getMoonPerigee();
 
-        PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.moonapsis_context, menu.getMenu());
-        menu.setOnDismissListener(onMoonApsisContextMenuDismissed);
-        menu.setOnMenuItemClickListener(onContextMenuClick);
-        updateContextMenu(context, menu, datetime);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        if (event.first != null)
+        {
+            PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
+            MenuInflater inflater = menu.getMenuInflater();
+            inflater.inflate(R.menu.moonapsis_context, menu.getMenu());
+            menu.setOnDismissListener(onMoonApsisContextMenuDismissed);
+            menu.setOnMenuItemClickListener(onContextMenuClick);
+            updateContextMenu(context, menu, event.first.getTimeInMillis());
+            SuntimesUtils.forceActionBarIcons(menu.getMenu());
 
-        moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
-        menu.show();
-        return true;
+            moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
+            menu.show();
+            return true;
+        }
+        return false;
     }
 
     private void updateContextMenu(Context context, PopupMenu menu, final long datetime) {
