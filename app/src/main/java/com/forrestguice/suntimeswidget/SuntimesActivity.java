@@ -2309,7 +2309,15 @@ public class SuntimesActivity extends AppCompatActivity
         }
         @Override
         public void onShowMap( long suggestDate ) {
-            showWorldMapDialog();   // TODO: at suggested date
+            showMapPositionAt(suggestDate);
+        }
+        @Override
+        public void onShowPosition( long suggested ) {
+            showSunPositionAt(suggested);
+        }
+        @Override
+        public void onShowDate(long suggested) {
+            scrollToDate(suggested);
         }
     };
 

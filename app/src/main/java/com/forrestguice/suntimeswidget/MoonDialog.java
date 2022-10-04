@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -32,8 +33,13 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.PopupMenu;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -41,12 +47,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.MoonApsisView;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class MoonDialog extends BottomSheetDialogFragment
 {
@@ -184,9 +194,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         dialogTitle = (TextView) dialogView.findViewById(R.id.moondialog_title);
         moonriseset = (MoonRiseSetView) dialogView.findViewById(R.id.moonriseset_view);
         currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
+
         moonphases = (MoonPhasesView1) dialogView.findViewById(R.id.moonphases_view);
+        moonphases.setViewListener(moonphases_listener);
 
         moonapsis = (MoonApsisView) dialogView.findViewById(R.id.moonapsis_view);
+        moonapsis.setViewListener(moonapsis_listener);
+
         moondistance = (TextView) dialogView.findViewById(R.id.moonapsis_current_distance);
         moondistance_label = (TextView) dialogView.findViewById(R.id.moonapsis_current_label);
         moondistance_note = (TextView) dialogView.findViewById(R.id.moonapsis_current_note);
@@ -288,6 +302,180 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     }
 
+    private MoonPhasesView1.MoonPhasesViewListener moonphases_listener = new MoonPhasesView1.MoonPhasesViewListener() {
+        @Override
+        public void onClick(View v, MoonPhasesView1.PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase) {
+            showContextMenu(getActivity(), v, adapter, position, phase);
+        }
+    };
+
+    private MoonApsisView.MoonApsisViewListener moonapsis_listener = new MoonApsisView.MoonApsisViewListener() {
+        @Override
+        public void onClick(View v, MoonApsisView.MoonApsisAdapter adapter, int position) {
+            showContextMenu(getActivity(), v, adapter, position);
+        }
+    };
+
+    protected boolean showContextMenu(final Context context, View view, MoonPhasesView1.PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase)
+    {
+        SuntimesMoonData1 data = adapter.initData(context, position);
+        if (data != null)
+        {
+            Calendar date = data.moonPhaseCalendar(phase);
+            if (date != null)
+            {
+                PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
+                MenuInflater inflater = menu.getMenuInflater();
+                inflater.inflate(R.menu.moonphase_context, menu.getMenu());
+                menu.setOnDismissListener(onMoonPhaseContextMenuDismissed);
+                menu.setOnMenuItemClickListener(onContextMenuClick);
+                updateContextMenu(context, menu, SolarEvents.valueOf(phase), date.getTimeInMillis());
+                SuntimesUtils.forceActionBarIcons(menu.getMenu());
+
+                moonphases.lockScrolling();   // prevent the popupmenu from nudging the view
+                menu.show();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean showContextMenu(final Context context, View view, MoonApsisView.MoonApsisAdapter adapter, int position)
+    {
+        long datetime = 0;  // TODO
+
+        PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.moonapsis_context, menu.getMenu());
+        menu.setOnDismissListener(onMoonApsisContextMenuDismissed);
+        menu.setOnMenuItemClickListener(onContextMenuClick);
+        updateContextMenu(context, menu, datetime);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+
+        moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
+        menu.show();
+        return true;
+    }
+
+    private void updateContextMenu(Context context, PopupMenu menu, final long datetime) {
+        updateContextMenu(context, menu, null, datetime);
+    }
+
+    private void updateContextMenu(Context context, PopupMenu menu, @Nullable SolarEvents event, final long datetime)
+    {
+        Intent data = new Intent();
+        data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
+        if (event != null) {
+            data.putExtra("event", event.name());
+        }
+        updateContextMenu(context, menu, data);
+    }
+
+    private void updateContextMenu(Context context, PopupMenu menu, Intent data)
+    {
+        Menu m = menu.getMenu();
+        setDataToMenu(m, data);
+
+        MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
+        if (addonSubmenuItem != null) {
+            List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
+            if (!addonMenuItems.isEmpty()) {
+                SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
+                long datetime = data.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, 0);
+                MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
+            }
+        }
+    }
+
+    private static void setDataToMenu(Menu m, Intent data)
+    {
+        if (m != null) {
+            for (int i = 0; i < m.size(); i++) {
+                m.getItem(i).setIntent(data);
+                setDataToMenu(m.getItem(i).getSubMenu(), data);
+            }
+        }
+    }
+
+    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
+            Intent itemData = item.getIntent();
+            long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
+            SolarEvents event = (itemData != null && itemData.hasExtra("event") ? SolarEvents.valueOf(itemData.getStringExtra("event")) : null);
+
+            switch (item.getItemId())
+            {
+                case R.id.action_alarm:
+                    if (dialogListener != null) {
+                        dialogListener.onSetAlarm(event);
+                        collapseSheet(getDialog());
+                    }
+                    return true;
+
+                case R.id.action_sunposition:
+                    if (dialogListener != null) {
+                        dialogListener.onShowPosition(itemTime);
+                        collapseSheet(getDialog());
+                    }
+                    return true;
+
+                case R.id.action_worldmap:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMap(itemTime);
+                        collapseSheet(getDialog());
+                    }
+                    return true;
+
+                case R.id.action_date:
+                    if (dialogListener != null) {
+                        dialogListener.onShowDate(itemTime);
+                    }
+                    collapseSheet(getDialog());
+                    return true;
+
+                // TODO
+                //case R.id.action_share:
+                //    shareItem(getContext(), itemData);
+                //    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
+    private PopupMenu.OnDismissListener onMoonPhaseContextMenuDismissed = new PopupMenu.OnDismissListener() {
+        @Override
+        public void onDismiss(PopupMenu menu) {
+            moonapsis.post(new Runnable() {
+                @Override
+                public void run() {                      // a submenu may be shown after the popup is dismissed
+                    moonphases.unlockScrolling();           // so defer unlockScrolling until after it is shown
+                }
+            });
+        }
+    };
+
+    private PopupMenu.OnDismissListener onMoonApsisContextMenuDismissed = new PopupMenu.OnDismissListener() {
+        @Override
+        public void onDismiss(PopupMenu menu) {
+            moonapsis.post(new Runnable() {
+                @Override
+                public void run() {                      // a submenu may be shown after the popup is dismissed
+                    moonapsis.unlockScrolling();           // so defer unlockScrolling until after it is shown
+                }
+            });
+        }
+    };
+
     /**@Override
     public void onSaveInstanceState( Bundle outState )
     {
@@ -364,5 +552,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     {
         public void onSetAlarm( SolarEvents suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
+        public void onShowPosition( long suggestedDate ) {}
+        public void onShowDate( long suggestedDate ) {}
     }
 }
