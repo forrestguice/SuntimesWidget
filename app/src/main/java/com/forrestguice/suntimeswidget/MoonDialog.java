@@ -90,6 +90,9 @@ public class MoonDialog extends BottomSheetDialogFragment
             updateViews();
         }
     }
+    protected long arg_dateTime() {
+        return getArguments().getLong(ARG_DATETIME, -1);
+    }
 
     private TextView dialogTitle;
     private MoonRiseSetView moonriseset;
@@ -289,6 +292,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         moonphases.updateViews(context);
         moonapsis.updateViews(context);
         updateMoonApsis();
+
+        final long datetime = arg_dateTime();
+        if (datetime != -1)
+        {
+            moonphases.scrollToDate(datetime);
+        }
+
         startUpdateTask();
     }
 

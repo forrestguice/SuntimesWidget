@@ -278,6 +278,13 @@ public class MoonPhasesView1 extends LinearLayout
         //content.setOnLongClickListener(listener);
     }*/
 
+    public void scrollToDate( long datetime )
+    {
+        int position = card_adapter.getPositionForDate(getContext(), datetime);
+        position += ((position > PhaseAdapter.CENTER_POSITION) ? 3 : 0);
+        card_view.scrollToPosition(position);
+    }
+
     public void lockScrolling() {
         card_view.setLayoutFrozen(true);
     }
@@ -426,13 +433,23 @@ public class MoonPhasesView1 extends LinearLayout
 
                 Calendar date = Calendar.getInstance(moon.timezone());
                 date.setTimeInMillis(moon0.moonPhaseCalendar(moon0.nextPhase(moon.now())).getTimeInMillis());
-                date.add(Calendar.HOUR, (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d));   // avg length of synodic month (28.53) may vary ~ +-6 hr
+                date.add(Calendar.HOUR, (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d));   // avg length of synodic month (29.53) may vary ~ +-6 hr
                 date.add(Calendar.HOUR, (int)(-24 * 3.5));                                            // so offset several days to overcome potential drift
                 moon.setTodayIs(date);
             }
 
             moon.calculate();
             return moon;
+        }
+
+        public int getPositionForDate(Context context, long datetime)
+        {
+            SuntimesMoonData1 moon0 = initData(context, CENTER_POSITION);
+            long dateCenter = moon0.moonPhaseCalendar(moon0.nextPhase(moon0.now())).getTimeInMillis();
+            long deltaMs = (datetime - dateCenter);
+            double deltaHours = deltaMs / (1000d * 60d * 60d);
+            double deltaMonth = (deltaHours / (29.53d * 24d));
+            return (int)(CENTER_POSITION + (4 * deltaMonth));
         }
 
         @SuppressLint("ResourceType")
