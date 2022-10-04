@@ -40,7 +40,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -141,8 +140,10 @@ public class MoonApsisView extends LinearLayout
     private final MoonApsisAdapterListener card_listener = new MoonApsisAdapterListener()
     {
         @Override
-        public void onClick(MoonApsisAdapter adapter, int position) {
-            //Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();  // TODO
+        public void onClick(View view, MoonApsisAdapter adapter, int position) {
+            if (viewListener != null) {
+                viewListener.onClick(view, adapter, position);
+            }
         }
     };
 
@@ -238,6 +239,24 @@ public class MoonApsisView extends LinearLayout
     public void setOnLongClickListener( OnLongClickListener listener)
     {
         content.setOnLongClickListener(listener);
+    }
+
+    private MoonApsisViewListener viewListener = null;
+    public void setViewListener(MoonApsisViewListener listener) {
+        this.viewListener = listener;
+    }
+    
+    /**
+     * MoonApsisViewListener
+     */
+    public static class MoonApsisViewListener extends  MoonApsisAdapterListener {}
+
+    /**
+     * MoonApsisAdapterListener
+     */
+    public static class MoonApsisAdapterListener
+    {
+        public void onClick(View view, MoonApsisAdapter adapter, int position) {}
     }
 
     /**
@@ -439,7 +458,7 @@ public class MoonApsisView extends LinearLayout
                 @Override
                 public void onClick(View v) {
                     if (adapterListener != null) {
-                        adapterListener.onClick(MoonApsisAdapter.this, position);
+                        adapterListener.onClick(v, MoonApsisAdapter.this, position);
                     }
                 }
             };
@@ -453,14 +472,6 @@ public class MoonApsisView extends LinearLayout
             adapterListener = listener;
         }
         private MoonApsisAdapterListener adapterListener = new MoonApsisAdapterListener();
-    }
-
-    /**
-     * MoonApsisAdapterListener
-     */
-    public static class MoonApsisAdapterListener
-    {
-        public void onClick(MoonApsisAdapter adapter, int position) {}
     }
 
     /**
