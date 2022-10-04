@@ -41,13 +41,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.cards.CardAdapter;
-import com.forrestguice.suntimeswidget.cards.CardViewHolder;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -218,8 +215,12 @@ public class MoonPhasesView1 extends LinearLayout
 
     private PhaseAdapterListener card_listener = new PhaseAdapterListener()
     {
-        public void onClick(PhaseAdapter adapter, int position) {
-            //Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();  // TODO
+        @Override
+        public void onClick(View v, PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase)
+        {
+            if (viewListener != null) {
+                viewListener.onClick(v, adapter, position, phase);
+            }
         }
     };
 
@@ -284,6 +285,25 @@ public class MoonPhasesView1 extends LinearLayout
     public void unlockScrolling() {
         card_view.setLayoutFrozen(false);
     }
+
+    private MoonPhasesViewListener viewListener = null;
+    public void setViewListener(MoonPhasesViewListener listener) {
+        this.viewListener = listener;
+    }
+
+    /**
+     * MoonPhasesViewListener
+     */
+    public static class MoonPhasesViewListener extends PhaseAdapterListener {}
+
+    /**
+     * PhaseAdapterListener
+     */
+    public static class PhaseAdapterListener
+    {
+        public void onClick(View v, PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase) {}
+    }
+
     /**
      * PhaseAdapter
      */
@@ -375,7 +395,7 @@ public class MoonPhasesView1 extends LinearLayout
             nextPhase = moon.nextPhase(moon.calendar());
         }
 
-        protected SuntimesMoonData1 initData( Context context, int position )
+        public SuntimesMoonData1 initData( Context context, int position )
         {
             int offset = (position - CENTER_POSITION) % 4;
             int firstPosition = position;
@@ -473,19 +493,19 @@ public class MoonPhasesView1 extends LinearLayout
         }
 
         private void attachClickListeners(@NonNull PhaseField holder, int position) {
-            holder.layout.setOnClickListener(onItemClick(position));
+            holder.layout.setOnClickListener(onItemClick(position, holder.phase));
         }
 
         private void detachClickListeners(@NonNull PhaseField holder) {
             holder.layout.setOnClickListener(null);
         }
 
-        private OnClickListener onItemClick(final int position) {
+        private OnClickListener onItemClick(final int position, final SuntimesCalculator.MoonPhase phase) {
             return new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (adapterListener != null) {
-                        adapterListener.onClick(PhaseAdapter.this, position);
+                        adapterListener.onClick(v, PhaseAdapter.this, position, phase);
                     }
                 }
             };
@@ -499,14 +519,6 @@ public class MoonPhasesView1 extends LinearLayout
             adapterListener = listener;
         }
         private PhaseAdapterListener adapterListener = new PhaseAdapterListener();
-    }
-
-    /**
-     * PhaseAdapterListener
-     */
-    public static class PhaseAdapterListener
-    {
-        public void onClick(PhaseAdapter adapter, int position) {}
     }
 
     /**
