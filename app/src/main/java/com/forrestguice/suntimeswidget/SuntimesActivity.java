@@ -2014,15 +2014,19 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onLightmapClick(CardAdapter adapter, int position) {
+            onLightmapAction(adapter, position);
+        }
+        @Override
+        public boolean onLightmapLongClick(CardAdapter adapter, int position) {
+            onLightmapAction(adapter, position);
+            return true;
+        }
+        protected void onLightmapAction(CardAdapter adapter, int position)
+        {
             Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = adapter.initData(SuntimesActivity.this, position);
             if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null) {
                 showSunPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
             } else showLightMapDialog();
-        }
-        @Override
-        public boolean onLightmapLongClick(CardAdapter adapter, int position) {
-            onLightmapClick(adapter, position);
-            return true;
         }
 
         @Override
