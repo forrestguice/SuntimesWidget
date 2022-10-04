@@ -1996,12 +1996,20 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onMoonHeaderClick(CardAdapter adapter, int position) {
-            showMoonDialog();
+            onMoonHeaderAction(adapter, position);
         }
         @Override
-        public boolean onMoonHeaderLongClick(CardAdapter adapter, int position) {
-            showMoonDialog();
+        public boolean onMoonHeaderLongClick(CardAdapter adapter, int position)
+        {
+            onMoonHeaderAction(adapter, position);
             return true;
+        }
+        protected void onMoonHeaderAction(CardAdapter adapter, int position)
+        {
+            Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = adapter.initData(SuntimesActivity.this, position);
+            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null) {
+                showMoonPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
+            } else showMoonDialog();
         }
 
         @Override
