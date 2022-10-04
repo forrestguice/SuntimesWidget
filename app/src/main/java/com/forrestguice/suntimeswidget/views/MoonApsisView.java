@@ -41,10 +41,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.MoonPhasesView1;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -223,6 +225,14 @@ public class MoonApsisView extends LinearLayout
         return card_adapter.isRising();
     }
 
+    public void scrollToDate( long datetime )
+    {
+        int position = card_adapter.getPositionForDate(getContext(), datetime);
+        position += ((position > MoonPhasesView1.PhaseAdapter.CENTER_POSITION) ? 1 : 0);
+        card_view.scrollToPosition(position);
+        card_view.smoothScrollBy(1, 0);   // triggers snap
+    }
+
     public void lockScrolling() {
         card_view.setLayoutFrozen(true);
     }
@@ -391,6 +401,23 @@ public class MoonApsisView extends LinearLayout
             }
             moon.calculate();
             return moon;
+        }
+
+        public int getPositionForDate(Context context, long datetime)
+        {
+            double offset = 0;
+            SuntimesMoonData0 moon0 = initData(context, CENTER_POSITION);
+            Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = moon0.getMoonPerigee();
+            Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = moon0.getMoonApogee();
+            if (perigee.first != null && apogee.first != null)
+            {
+                long dateCenter = (isRising ? apogee.first.getTimeInMillis() : perigee.first.getTimeInMillis());
+                long deltaMs = (datetime - dateCenter);
+                double deltaHours = deltaMs / (1000d * 60d * 60d);
+                double deltaMonth = (deltaHours / (27.55455d * 24d));
+                offset = (2 * deltaMonth);
+            }
+            return (int)(CENTER_POSITION + offset);
         }
 
         @Override

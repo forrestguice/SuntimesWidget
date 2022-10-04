@@ -296,7 +296,9 @@ public class MoonDialog extends BottomSheetDialogFragment
         final long datetime = arg_dateTime();
         if (datetime != -1)
         {
+            //moonriseset.scrollToDate(datetime);  // TODOs
             moonphases.scrollToDate(datetime);
+            moonapsis.scrollToDate(datetime);
         }
 
         startUpdateTask();

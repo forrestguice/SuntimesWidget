@@ -283,6 +283,7 @@ public class MoonPhasesView1 extends LinearLayout
         int position = card_adapter.getPositionForDate(getContext(), datetime);
         position += ((position > PhaseAdapter.CENTER_POSITION) ? 3 : 0);
         card_view.scrollToPosition(position);
+        card_view.smoothScrollBy(1, 0);   // triggers snap
     }
 
     public void lockScrolling() {
