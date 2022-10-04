@@ -277,6 +277,13 @@ public class MoonPhasesView1 extends LinearLayout
         //content.setOnLongClickListener(listener);
     }*/
 
+    public void lockScrolling() {
+        card_view.setLayoutFrozen(true);
+    }
+
+    public void unlockScrolling() {
+        card_view.setLayoutFrozen(false);
+    }
     /**
      * PhaseAdapter
      */
