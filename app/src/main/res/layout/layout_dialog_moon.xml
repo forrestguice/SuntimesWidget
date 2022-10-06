@@ -21,7 +21,7 @@
     android:id="@+id/moondialog_layout"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical" android:background="?attr/dialogBackground"
-    android:padding="8dp">
+    android:paddingLeft="8dp" android:paddingRight="8dp" android:paddingTop="8dp">
 
     <TextView android:id="@+id/moondialog_title" style="@style/TableHeadTextView"
         android:text="@string/timeMode_moon"
@@ -31,7 +31,6 @@
         style="@style/SunsetTimeTextView"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         tools:text="June 3, 6:00 PM Apparent Solar Time" android:gravity="end|right"
-        android:background="?attr/selectableItemBackground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />
 
@@ -50,21 +49,21 @@
 
         <View android:id="@+id/header_gutter3" android:background="@color/transparent" android:visibility="invisible"
             android:layout_width="0dp" android:layout_height="1dp"
-            app:layout_constraintHorizontal_weight="@integer/table_weight0"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/moonphase_view"
             app:layout_constraintEnd_toStartOf="@+id/moonriseset_view"/>
 
-        <com.forrestguice.suntimeswidget.MoonRiseSetView
+        <com.forrestguice.suntimeswidget.moon.MoonRiseSetView1
             android:id="@+id/moonriseset_view" app:showPosition="true"
             android:layout_marginStart="16dp" android:layout_marginLeft="16dp" android:layout_marginBottom="4dp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_width="0dp" android:layout_height="wrap_content" app:layout_constraintHorizontal_weight="48"
             app:layout_constraintStart_toEndOf="@+id/header_gutter3"
             app:layout_constraintEnd_toStartOf="@+id/header_gutter2"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <View android:id="@+id/header_gutter2" android:background="@color/transparent" android:visibility="invisible"
             android:layout_width="0dp" android:layout_height="1dp"
-            app:layout_constraintHorizontal_weight="@integer/table_weight1"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/moonriseset_view"
             app:layout_constraintEnd_toEndOf="parent"/>
 

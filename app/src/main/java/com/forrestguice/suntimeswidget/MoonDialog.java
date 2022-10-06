@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -51,10 +50,10 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
+import com.forrestguice.suntimeswidget.moon.MoonRiseSetView1;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -64,7 +63,6 @@ import com.forrestguice.suntimeswidget.views.MoonApsisView;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 public class MoonDialog extends BottomSheetDialogFragment
 {
@@ -104,7 +102,7 @@ public class MoonDialog extends BottomSheetDialogFragment
 
     private TextView dialogTitle;
     private TextView dialogTime;
-    private MoonRiseSetView moonriseset;
+    private MoonRiseSetView1 moonriseset;
     private MoonPhaseView currentphase;
     private MoonPhasesView1 moonphases;
     private MoonApsisView moonapsis;
@@ -225,16 +223,18 @@ public class MoonDialog extends BottomSheetDialogFragment
         dialogTitle = (TextView) dialogView.findViewById(R.id.moondialog_title);
 
         dialogTime = (TextView) dialogView.findViewById(R.id.info_time_moon);
-        if (dialogTime != null) {
+        /*if (dialogTime != null) {
             dialogTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showTimeZoneMenu(getContext(), v);
                 }
             });
-        }
+        }*/
 
-        moonriseset = (MoonRiseSetView) dialogView.findViewById(R.id.moonriseset_view);
+        moonriseset = (MoonRiseSetView1) dialogView.findViewById(R.id.moonriseset_view);
+        moonriseset.setViewListener(moonriseset_listener);
+
         currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
 
         moonphases = (MoonPhasesView1) dialogView.findViewById(R.id.moonphases_view);
@@ -322,7 +322,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         final long datetime = arg_dateTime();
         if (datetime != -1)
         {
-            //moonriseset.scrollToDate(datetime);  // TODOs
+            moonriseset.scrollToDate(datetime);
             moonphases.scrollToDate(datetime);
             moonapsis.scrollToDate(datetime);
         }
@@ -341,10 +341,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         long arg_dateTime = arg_dateTime();
         long moonTimeMillis = (arg_dateTime != -1 ? arg_dateTime : nowMillis);
 
-        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_MOON, WidgetTimezones.TZID_SUNTIMES);
-        TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone() : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble());
-
-        Calendar moonTime = Calendar.getInstance(tz);
+        Calendar moonTime = Calendar.getInstance(data.timezone());
         moonTime.setTimeInMillis(moonTimeMillis);
         boolean nowIsAfter = now.after(moonTime);
 
@@ -393,6 +390,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     }
 
+    private MoonRiseSetView1.MoonRiseSetViewListener moonriseset_listener = new MoonRiseSetView1.MoonRiseSetViewListener() {
+        @Override
+        public void onClick(View v, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID) {
+            showContextMenu(getActivity(), v, adapter, position, eventID);
+        }
+    };
+
     private MoonPhasesView1.MoonPhasesViewListener moonphases_listener = new MoonPhasesView1.MoonPhasesViewListener() {
         @Override
         public void onClick(View v, MoonPhasesView1.PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase) {
@@ -431,6 +435,37 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
+    protected static PopupMenu createMenu(Context context, View view, int menuResID, PopupMenu.OnMenuItemClickListener onClickListener, PopupMenu.OnDismissListener onDismissListener)
+    {
+        PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(menuResID, menu.getMenu());
+        menu.setOnDismissListener(onDismissListener);
+        menu.setOnMenuItemClickListener(onClickListener);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        return menu;
+    }
+
+    protected boolean showContextMenu(final Context context, View view, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID)
+    {
+        SuntimesMoonData data = adapter.initData(context, position);
+        if (data != null && eventID != null)
+        {
+            Calendar date = eventID.equals(SolarEvents.MOONRISE.name())
+                    ? data.moonriseCalendarToday()
+                    : eventID.equals(SolarEvents.MOONSET.name())
+                        ? data.moonsetCalendarToday() : data.moonriseCalendarToday();
+            if (date != null)
+            {
+                PopupMenu menu = createMenu(context, view, R.menu.moonriseset_context, onContextMenuClick, onMoonRiseSetContextMenuDismissed);
+                updateContextMenu(context, menu, eventID, date.getTimeInMillis());
+                moonriseset.lockScrolling();   // prevent the popupmenu from nudging the view
+                menu.show();
+                return true;
+            }
+        }
+        return false;
+    }
 
     protected boolean showContextMenu(final Context context, View view, MoonPhasesView1.PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase)
     {
@@ -440,14 +475,8 @@ public class MoonDialog extends BottomSheetDialogFragment
             Calendar date = data.moonPhaseCalendar(phase);
             if (date != null)
             {
-                PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
-                MenuInflater inflater = menu.getMenuInflater();
-                inflater.inflate(R.menu.moonphase_context, menu.getMenu());
-                menu.setOnDismissListener(onMoonPhaseContextMenuDismissed);
-                menu.setOnMenuItemClickListener(onContextMenuClick);
+                PopupMenu menu = createMenu(context, view, R.menu.moonphase_context, onContextMenuClick, onMoonPhaseContextMenuDismissed);
                 updateContextMenu(context, menu, SolarEvents.valueOf(phase), date.getTimeInMillis());
-                SuntimesUtils.forceActionBarIcons(menu.getMenu());
-
                 moonphases.lockScrolling();   // prevent the popupmenu from nudging the view
                 menu.show();
                 return true;
@@ -463,14 +492,8 @@ public class MoonDialog extends BottomSheetDialogFragment
 
         if (event.first != null)
         {
-            PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
-            MenuInflater inflater = menu.getMenuInflater();
-            inflater.inflate(R.menu.moonapsis_context, menu.getMenu());
-            menu.setOnDismissListener(onMoonApsisContextMenuDismissed);
-            menu.setOnMenuItemClickListener(onContextMenuClick);
+            PopupMenu menu = createMenu(context, view, R.menu.moonapsis_context, onContextMenuClick, onMoonApsisContextMenuDismissed);
             updateContextMenu(context, menu, event.first.getTimeInMillis());
-            SuntimesUtils.forceActionBarIcons(menu.getMenu());
-
             moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
             menu.show();
             return true;
@@ -479,15 +502,19 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
 
     private void updateContextMenu(Context context, PopupMenu menu, final long datetime) {
-        updateContextMenu(context, menu, null, datetime);
+        updateContextMenu(context, menu, (String) null, datetime);
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu, @Nullable SolarEvents event, final long datetime)
+    private void updateContextMenu(Context context, PopupMenu menu, @Nullable SolarEvents event, final long datetime) {
+        updateContextMenu(context, menu, (event != null ? event.name() : null), datetime);
+    }
+
+    private void updateContextMenu(Context context, PopupMenu menu, @Nullable String eventID, final long datetime)
     {
         Intent data = new Intent();
         data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
-        if (event != null) {
-            data.putExtra("event", event.name());
+        if (eventID != null) {
+            data.putExtra("event", eventID);
         }
         updateContextMenu(context, menu, data);
     }
@@ -573,7 +600,19 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
-    private PopupMenu.OnDismissListener onMoonPhaseContextMenuDismissed = new PopupMenu.OnDismissListener() {
+    private final PopupMenu.OnDismissListener onMoonRiseSetContextMenuDismissed = new PopupMenu.OnDismissListener() {
+        @Override
+        public void onDismiss(PopupMenu menu) {
+            moonriseset.post(new Runnable() {
+                @Override
+                public void run() {                      // a submenu may be shown after the popup is dismissed
+                    moonriseset.unlockScrolling();           // so defer unlockScrolling until after it is shown
+                }
+            });
+        }
+    };
+
+    private final PopupMenu.OnDismissListener onMoonPhaseContextMenuDismissed = new PopupMenu.OnDismissListener() {
         @Override
         public void onDismiss(PopupMenu menu) {
             moonapsis.post(new Runnable() {
@@ -585,7 +624,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
-    private PopupMenu.OnDismissListener onMoonApsisContextMenuDismissed = new PopupMenu.OnDismissListener() {
+    private final PopupMenu.OnDismissListener onMoonApsisContextMenuDismissed = new PopupMenu.OnDismissListener() {
         @Override
         public void onDismiss(PopupMenu menu) {
             moonapsis.post(new Runnable() {
