@@ -21,6 +21,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -29,6 +31,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -112,6 +115,8 @@ public class MoonRiseSetView1 extends LinearLayout
         card_view.setHasFixedSize(true);
         card_view.setItemViewCacheSize(7);
         card_view.setLayoutManager(card_layout);
+
+        card_view.addItemDecoration(new MoonRiseSetDivider(context, MoonRiseSetAdapter.CENTER_POSITION));
 
         card_adapter = new MoonRiseSetAdapter(context);
         card_adapter.setAdapterListener(card_listener);
@@ -659,6 +664,66 @@ public class MoonRiseSetView1 extends LinearLayout
             params.width = pixels;
             layout.setLayoutParams( params );
         }
+    }
 
+    /**
+     * MoonRiseSetDivider
+     */
+    public static class MoonRiseSetDivider extends RecyclerView.ItemDecoration
+    {
+        protected Drawable divider;
+        protected int centerPosition;
+        private final Rect bounds = new Rect();
+
+        public MoonRiseSetDivider(Context context, int centerPosition)
+        {
+            this.centerPosition = centerPosition;
+            TypedArray a = context.obtainStyledAttributes(new int[] { android.R.attr.listDivider });
+            divider = a.getDrawable(0);
+            a.recycle();
+        }
+
+        @Override
+        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state)
+        {
+            if (parent.getLayoutManager() == null) {
+                return;
+            }
+
+            c.save();
+            int top, bottom;
+            if (parent.getClipToPadding())
+            {
+                top = parent.getPaddingTop();
+                bottom = parent.getHeight() - parent.getPaddingBottom();
+                c.clipRect(parent.getPaddingLeft(), top, parent.getWidth() - parent.getPaddingRight(), bottom);
+            } else {
+                top = 0;
+                bottom = parent.getHeight();
+            }
+
+            int n = parent.getChildCount();
+            for (int i=0; i<n; i++)
+            {
+                View child = parent.getChildAt(i);
+                int position = parent.getChildAdapterPosition(child);
+                if ((position - centerPosition) % 2 == 0) {
+                    continue;
+                }
+
+                parent.getLayoutManager().getDecoratedBoundsWithMargins(child, bounds);
+                int right = bounds.right + Math.round(ViewCompat.getTranslationX(child));
+                int left = right - divider.getIntrinsicWidth();
+
+                divider.setBounds(left, top, right, bottom);
+                divider.draw(c);
+            }
+            c.restore();
+        }
+
+        @Override
+        public void getItemOffsets(Rect rect, View v, RecyclerView parent, RecyclerView.State state) {
+            rect.set(0, 0, divider.getIntrinsicWidth(), 0);
+        }
     }
 }
