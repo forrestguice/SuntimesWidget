@@ -1,0 +1,665 @@
+/**
+    Copyright (C) 2022 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package com.forrestguice.suntimeswidget.moon;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v4.widget.ImageViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.MoonPhasesView1;
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
+
+import java.lang.ref.WeakReference;
+import java.util.Calendar;
+import java.util.HashMap;
+
+@SuppressWarnings("Convert2Diamond")
+public class MoonRiseSetView1 extends LinearLayout
+{
+    private SuntimesUtils utils = new SuntimesUtils();
+    private boolean isRtl = false;
+    private boolean centered = false;
+
+    private RecyclerView card_view;
+    private MoonRiseSetAdapter card_adapter;
+    private LinearLayoutManager card_layout;
+    private ImageButton forwardButton, backButton;
+
+    public MoonRiseSetView1(Context context)
+    {
+        super(context);
+        init(context, null);
+    }
+
+    public MoonRiseSetView1(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+        applyAttributes(context, attrs);
+        init(context, attrs);
+    }
+
+    private void applyAttributes(Context context, AttributeSet attrs)
+    {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MoonRiseSetView1, 0, 0);
+        try {
+            setShowPosition(a.getBoolean(R.styleable.MoonRiseSetView_showPosition, false));
+        } finally {
+            a.recycle();
+        }
+    }
+
+    private void init(Context context, AttributeSet attrs)
+    {
+        initLocale(context);
+        LayoutInflater.from(context).inflate(R.layout.layout_view_moonriseset1, this, true);
+
+        if (attrs != null)
+        {
+            LayoutParams lp = generateLayoutParams(attrs);
+            centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
+        }
+
+        card_layout = new LinearLayoutManager(context);
+        card_layout.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        card_view = (RecyclerView)findViewById(R.id.moonriseset_card);
+        card_view.setHasFixedSize(true);
+        card_view.setItemViewCacheSize(7);
+        card_view.setLayoutManager(card_layout);
+
+        card_adapter = new MoonRiseSetAdapter(context);
+        card_adapter.setAdapterListener(card_listener);
+        card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / 4);  // initial width; reassigned later in onSizeChanged
+        card_adapter.setShowPosition(showPosition);
+
+        card_view.setAdapter(card_adapter);
+        card_view.scrollToPosition(MoonRiseSetAdapter.CENTER_POSITION);
+
+        GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.START); // new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(card_view);
+
+        forwardButton = (ImageButton)findViewById(R.id.info_time_nextbtn);
+        forwardButton.setOnClickListener(onResetClick1);
+        forwardButton.setVisibility(GONE);
+
+        backButton = (ImageButton)findViewById(R.id.info_time_prevbtn);
+        backButton.setOnClickListener(onResetClick0);
+        backButton.setVisibility(VISIBLE);
+        backButton.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int position = card_layout.findFirstVisibleItemPosition();
+                if (position == MoonRiseSetAdapter.CENTER_POSITION) {
+                    ViewUtils.fadeOutButton(backButton, ViewUtils.ANIM_VERYLONG);
+                }
+            }
+        }, 1200);
+
+        card_view.setOnScrollListener(onScrollChanged);
+
+        initTheme(context);
+        if (isInEditMode()) {
+            updateViews(context, null);
+        }
+    }
+
+    public void initLocale(Context context)
+    {
+        SuntimesUtils.initDisplayStrings(context);
+        isRtl = AppSettings.isLocaleRtl(context);
+    }
+
+    @Override
+    public void onSizeChanged( int w, int h, int oldWidth, int oldHeight )
+    {
+        super.onSizeChanged(w, h, oldWidth, oldHeight);
+        if (card_adapter != null) {
+            int margin = 0;
+            card_adapter.setItemWidth((w - (margin * 2)) / itemsPerView);
+        }
+    }
+    private int itemsPerView = 3;
+
+    @SuppressLint("ResourceType")
+    protected void initTheme(Context context)
+    {
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating, R.attr.text_accentColor };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = R.color.transparent;
+        colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        colorPressed = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        colorBackground = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, typedArray.getResourceId(3, def)), (int)(9d * (254d / 10d)));
+        colorAccent = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+
+        typedArray.recycle();
+
+        themeDrawables();
+    }
+    private int colorEnabled, colorPressed, colorDisabled, colorBackground, colorAccent;
+
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        card_adapter.applyTheme(context, theme);
+        colorAccent = theme.getAccentColor();
+        colorPressed = theme.getActionColor();
+        themeDrawables();
+    }
+
+    private void themeDrawables()
+    {
+        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
+        SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
+
+        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
+        SuntimesUtils.colorizeImageView(backButton, colorBackground);
+    }
+
+    public void updateViews(Context context, SuntimesMoonData data)
+    {
+        if (isInEditMode()) {
+            return;
+        }
+        //if (data != null && data.isCalculated()) {
+        //} else {}
+    }
+
+    private void setShowPosition(boolean value) {
+        showPosition = value;
+        if (card_adapter != null) {
+            card_adapter.setShowPosition(value);
+        }
+    }
+    private boolean showPosition = false;
+
+    private final MoonRiseSetAdapterListener card_listener = new MoonRiseSetAdapterListener()
+    {
+        @Override
+        public void onClick(View v, MoonRiseSetAdapter adapter, int position, String eventID)
+        {
+            if (viewListener != null) {
+                viewListener.onClick(v, adapter, position, eventID);
+            }
+        }
+    };
+
+    private final RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        {
+            super.onScrollStateChanged(recyclerView, newState);
+            int position = card_layout.findFirstVisibleItemPosition();
+
+            if (position < MoonPhasesView1.PhaseAdapter.CENTER_POSITION)
+            {
+                ViewUtils.fadeInButton(forwardButton, ViewUtils.ANIM_VERYLONG);
+                backButton.setVisibility(View.GONE);
+
+            } else if (position > MoonPhasesView1.PhaseAdapter.CENTER_POSITION) {
+                forwardButton.setVisibility(View.GONE);
+                ViewUtils.fadeInButton(backButton, ViewUtils.ANIM_VERYLONG);
+
+            } else {
+                ViewUtils.fadeOutButton(forwardButton, ViewUtils.ANIM_LONG);
+                ViewUtils.fadeOutButton(backButton, ViewUtils.ANIM_LONG);
+            }
+        }
+    };
+
+    private final OnClickListener onResetClick0 = new OnClickListener() {
+        @Override
+        public void onClick(View v) {      // back to position; scrolling from right-to-left
+            card_view.scrollToPosition(MoonRiseSetAdapter.CENTER_POSITION);
+            card_view.smoothScrollBy(1, 0); // triggers a snap
+        }
+    };
+    private final OnClickListener onResetClick1 = new OnClickListener() {
+        @Override
+        public void onClick(View v) {      // forward to position; scrolling from left-to-right
+            card_view.scrollToPosition(MoonRiseSetAdapter.CENTER_POSITION + 3);
+            card_view.smoothScrollBy(1, 0); // triggers a snap
+        }
+    };
+
+    public void scrollToDate( long datetime )
+    {
+        int position = card_adapter.getPositionForDate(getContext(), datetime);
+        position += ((position > MoonRiseSetAdapter.CENTER_POSITION) ? 1 : 0);
+        card_view.scrollToPosition(position);
+        card_view.smoothScrollBy(1, 0);   // triggers snap
+    }
+    public void lockScrolling() {
+        card_view.setLayoutFrozen(true);
+    }
+    public void unlockScrolling() {
+        card_view.setLayoutFrozen(false);
+    }
+
+    private MoonRiseSetViewListener viewListener = null;
+    public void setViewListener(MoonRiseSetViewListener listener) {
+        this.viewListener = listener;
+    }
+
+    /**
+     * MoonRiseSetViewListener
+     */
+    public static class MoonRiseSetViewListener extends MoonRiseSetAdapterListener {}
+
+    /**
+     * MoonRiseSetAdapterListener
+     */
+    public static class MoonRiseSetAdapterListener
+    {
+        public void onClick(View v, MoonRiseSetAdapter adapter, int position, String eventID) {}
+    }
+
+    /**
+     * MoonRiseSetAdapter
+     */
+    public static class MoonRiseSetAdapter extends RecyclerView.Adapter<MoonRiseSetField>
+    {
+        public static final int MAX_POSITIONS = 200;
+        public static final int CENTER_POSITION = 100;
+
+        private WeakReference<Context> contextRef;
+        @SuppressLint("UseSparseArrays")
+        private HashMap<Integer, SuntimesMoonData> data = new HashMap<>();
+
+        public MoonRiseSetAdapter(Context context) {
+            contextRef = new WeakReference<>(context);
+            initData(context);
+            initTheme(context);
+        }
+
+        private int itemWidth = -1;
+        public void setItemWidth( int pixels ) {
+            itemWidth = pixels;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public MoonRiseSetField onCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            LayoutInflater layout = LayoutInflater.from(parent.getContext());
+            View view = layout.inflate(MoonRiseSetField.getLayoutID(), parent, false);
+            return new MoonRiseSetField(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MoonRiseSetField holder, int position)
+        {
+            Context context = contextRef.get();
+            if (context == null) {
+                Log.e("MoonRiseSetAdapter", "null context!");
+                return;
+            }
+
+            holder.setShowPosition(showPosition);   // option must be set before binding data
+
+            SuntimesMoonData d = initData(context, position);
+            holder.onBindDataToPosition(context, d, position);
+
+            Calendar event = ((holder.eventID != null && holder.eventID.equals(SolarEvents.MOONRISE.name()))
+                    ? d.moonriseCalendarToday() : d.moonsetCalendarToday());
+            boolean isAgo = d.now().after(event);
+            themeViews(context, holder, isAgo);
+
+            if (itemWidth > 0) {
+                holder.resizeField(holder.layout.getVisibility() == VISIBLE ? itemWidth : 0);
+            }
+
+            attachClickListeners(holder, position);
+        }
+
+        private boolean boldTime = false;
+        private Float spTime = null, spText = null;
+        private int colorDisabled, colorTime, colorText;
+        private int colorRising, colorSetting;
+
+        @SuppressLint("ResourceType")
+        private void initTheme(Context context)
+        {
+            int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor,
+                    R.attr.moonriseColor, R.attr.moonsetColor };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            int def = R.color.transparent;
+            colorTime = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+            colorText = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+            colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+            colorRising = ContextCompat.getColor(context, typedArray.getResourceId(3, R.color.moonIcon_color_rising));
+            colorSetting = ContextCompat.getColor(context, typedArray.getResourceId(4, R.color.moonIcon_color_setting));
+            typedArray.recycle();
+        }
+
+        protected void applyTheme(Context context, SuntimesTheme theme)
+        {
+            colorTime = theme.getTimeColor();
+            colorText = theme.getTextColor();
+            spTime = theme.getTimeSizeSp();
+            spText = theme.getTextSizeSp();
+            boldTime = theme.getTimeBold();
+            colorRising = theme.getMoonriseTextColor();
+            colorSetting = theme.getMoonsetTextColor();
+        }
+
+        protected void themeViews(Context context, @NonNull MoonRiseSetField holder, boolean isAgo)
+        {
+            int timeColor = isAgo ? colorDisabled : colorTime;
+            int textColor = isAgo ? colorDisabled : colorText;
+            holder.themeViews(timeColor, spTime, boldTime, textColor, spText);
+        }
+
+        @Override
+        public void onViewRecycled(MoonRiseSetField holder)
+        {
+            detachClickListeners(holder);
+            if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
+                data.remove(holder.position);
+            }
+            holder.onRecycled();
+        }
+
+        @Override
+        public int getItemCount() {
+            return MAX_POSITIONS;
+        }
+
+        protected void initData( Context context ) {
+            SuntimesMoonData d = initData(context, CENTER_POSITION);
+        }
+
+        public SuntimesMoonData initData( Context context, int position )
+        {
+            int offset = (position - CENTER_POSITION) % 2;
+            int position0 = position;
+            if (offset > 0) {
+                position0 = position - (offset);
+            } else if (offset < 0) {
+                position0 = position - (2 + (offset));
+            }
+
+            SuntimesMoonData d = data.get(position0);
+            if (d == null) {
+                d = createData(context, position0);
+                for (int i=0; i<2; i++) {
+                    data.put(position0 + i, d);
+                }
+            }
+            return d;
+        }
+
+        public SuntimesMoonData createData( Context context, int position )
+        {
+            SuntimesMoonData d = new SuntimesMoonData(context, 0, "moon");
+            if (position != CENTER_POSITION)
+            {
+                SuntimesMoonData d0 = initData(context, CENTER_POSITION);
+                Calendar rising = d0.moonriseCalendarToday();
+                Calendar setting = d0.moonsetCalendarToday();
+                boolean isRising = (rising != null && rising.before(setting));
+
+                Calendar date = Calendar.getInstance(d.timezone());
+                if (isRising && rising != null) {
+                    date.setTimeInMillis(rising.getTimeInMillis());
+                } else if (setting != null) {
+                    date.setTimeInMillis(setting.getTimeInMillis());
+                } else {
+                    return null;
+                }
+
+                double dayMillis = 24d * 60d * 60d * 1000;
+                int rawOffset = position - CENTER_POSITION;
+                double offset = (rawOffset >> 1) * dayMillis;
+                date.setTimeInMillis((long)(date.getTimeInMillis() + offset));
+                d.setTodayIs(date);
+            }
+            d.calculate();
+            return d;
+        }
+
+        public static boolean isRising(SuntimesMoonData d) {
+            Calendar rising = d.moonriseCalendarToday();
+            return (rising != null && rising.before(d.moonsetCalendarToday()));
+        }
+
+        public int getPositionForDate(Context context, long datetime)
+        {
+            SuntimesMoonData d = initData(context, CENTER_POSITION);
+            Calendar dateCenter = isRising(d) ? d.moonriseCalendarToday() : d.moonsetCalendarToday();
+            if (dateCenter != null)
+            {
+                long deltaMs = (datetime - dateCenter.getTimeInMillis());
+                double deltaDays = deltaMs / (1000d * 60d * 60d * 24d);
+                return (int)(CENTER_POSITION + Math.ceil(2 * deltaDays));
+            }
+            return CENTER_POSITION;
+        }
+
+        private void setShowPosition(boolean value) {
+            showPosition = value;
+        }
+        private boolean showPosition = false;
+
+        private void attachClickListeners(@NonNull MoonRiseSetField holder, int position) {
+            holder.layout.setOnClickListener(onItemClick(position, holder.eventID));
+        }
+
+        private void detachClickListeners(@NonNull MoonRiseSetField holder) {
+            holder.layout.setOnClickListener(null);
+        }
+
+        private OnClickListener onItemClick(final int position, final String eventID) {
+            return new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (adapterListener != null) {
+                        adapterListener.onClick(v, MoonRiseSetAdapter.this, position, eventID);
+                    }
+                }
+            };
+        }
+
+        /**
+         * setAdapterListener
+         * @param listener
+         */
+        public void setAdapterListener( @NonNull MoonRiseSetAdapterListener listener ) {
+            adapterListener = listener;
+        }
+        private MoonRiseSetAdapterListener adapterListener = new MoonRiseSetAdapterListener();
+    }
+
+    /**
+     * MoonRiseSetField
+     */
+    public static class MoonRiseSetField extends RecyclerView.ViewHolder
+    {
+        private SuntimesUtils utils = new SuntimesUtils();
+
+        public int position = RecyclerView.NO_POSITION;
+        public String eventID = null;
+
+        public View layout;
+        public ImageView iconView;
+        public TextView timeView;
+        public TextView positionView;
+        protected boolean rising = true;
+
+        public static int getLayoutID() {
+            return R.layout.info_time_moonriseset;
+        }
+
+        public MoonRiseSetField(View view)
+        {
+            super(view);
+            layout = view.findViewById(R.id.layout_moonriseset);
+            iconView = (ImageView)view.findViewById(R.id.icon_time_moonriseset);
+            timeView = (TextView)view.findViewById(R.id.text_time_moonriseset);
+            positionView = (TextView)view.findViewById(R.id.text_info_moonriseset);
+        }
+
+        public void onBindDataToPosition(Context context, SuntimesMoonData data, int position)
+        {
+            this.position = position;
+
+            SuntimesCalculator calculator = data.calculator();
+            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            boolean isEven = ((position - MoonRiseSetAdapter.CENTER_POSITION) % 2 == 0);
+
+            Calendar event;
+            Drawable icon;
+            if (MoonRiseSetAdapter.isRising(data))
+            {
+                eventID = (isEven ? SolarEvents.MOONRISE.name() : SolarEvents.MOONSET.name());
+                event = (isEven ? data.moonriseCalendarToday() : data.moonsetCalendarToday());
+                icon = ContextCompat.getDrawable(context, isEven ? R.drawable.ic_moon_rise : R.drawable.ic_moon_set);   // TODO: themed (apply colorRising, colorSetting)
+
+            } else {
+                eventID = (isEven ? SolarEvents.MOONSET.name() : SolarEvents.MOONRISE.name());
+                event = isEven ? data.moonsetCalendarToday() : data.moonriseCalendarToday();
+                icon = ContextCompat.getDrawable(context, isEven ? R.drawable.ic_moon_set : R.drawable.ic_moon_rise);   // TODO: themed (apply colorRising, colorSetting)
+            }
+
+            iconView.setBackground(icon);
+            updateField(context, event, showSeconds);
+            if (positionView.getVisibility() == VISIBLE) {
+                updateField(context, ((event != null) ? calculator.getMoonPosition(event) : null));
+            }
+            layout.setVisibility(event != null ? VISIBLE : GONE);
+        }
+
+        public void onRecycled()
+        {
+            this.position = RecyclerView.NO_POSITION;
+            this.eventID = null;
+        }
+
+        public void themeViews(SuntimesTheme theme)
+        {
+            int color = (rising ? theme.getMoonriseTextColor() : theme.getMoonsetTextColor());
+            timeView.setTextColor(color);
+            timeView.setTextSize(theme.getTimeSizeSp());
+            timeView.setTypeface(timeView.getTypeface(), theme.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL);
+            positionView.setTextColor(color);
+            positionView.setTextSize(theme.getTimeSuffixSizeSp());
+            SuntimesUtils.tintDrawable((LayerDrawable)iconView.getBackground(), color, color, 0);
+        }
+
+        public void themeViews(int timeColor, @Nullable Float timeSizeSp, boolean timeBold, int textColor, @Nullable Float textSizeSp)
+        {
+            timeView.setTextColor(timeColor);
+            positionView.setTextColor(textColor);
+
+            if (timeSizeSp != null) {
+                positionView.setTextSize(timeSizeSp);
+                timeView.setTextSize(timeSizeSp);
+                timeView.setTypeface(timeView.getTypeface(), (timeBold ? Typeface.BOLD : Typeface.NORMAL));
+            }
+            if (textSizeSp != null) {
+                positionView.setTextSize(textSizeSp);
+            }
+        }
+
+
+        public void updateField(Context context, Calendar dateTime, boolean showSeconds)
+        {
+            SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
+            timeView.setText(text.toString());
+        }
+
+        public void updateField(Context context, SuntimesCalculator.Position position)
+        {
+            if (position == null)
+            {
+                positionView.setText("");
+                positionView.setContentDescription("");
+
+            } else {
+                SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
+                String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+                SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
+                azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+                positionView.setText(azimuthSpan);
+
+                SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
+                positionView.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+            }
+        }
+
+        public void setShowPosition( boolean value ) {
+            positionView.setVisibility((value ? View.VISIBLE : View.GONE));
+        }
+
+        public void setMarginStartEnd( int startMargin, int endMargin )
+        {
+            if (layout.getLayoutParams() instanceof MarginLayoutParams)
+            {
+                MarginLayoutParams params = (MarginLayoutParams) layout.getLayoutParams();
+                if (Build.VERSION.SDK_INT < 17)
+                {
+                    params.setMargins(startMargin, 0, endMargin, 0);
+
+                } else if (layout.getLayoutParams() instanceof MarginLayoutParams) {
+                    params.setMarginStart(startMargin);
+                    params.setMarginEnd(endMargin);
+                }
+                layout.setLayoutParams(params);
+                layout.requestLayout();
+            }
+        }
+
+        public void resizeField(int pixels) {
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) layout.getLayoutParams();
+            params.width = pixels;
+            layout.setLayoutParams( params );
+        }
+
+    }
+}

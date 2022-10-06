@@ -149,6 +149,9 @@
     <declare-styleable name="MoonRiseSetView">
         <attr name="showPosition" />
     </declare-styleable>
+    <declare-styleable name="MoonRiseSetView1">
+        <attr name="showPosition" />
+    </declare-styleable>
 
     <declare-styleable name="ColorChooserView">
         <attr name="labelText" format="string" />
