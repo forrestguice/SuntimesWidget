@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:src="?attr/icActionPrevious"
-                android:background="@drawable/ic_colortab"
+                android:background="@drawable/ic_colortab1"
                 android:padding="4dp"
                 android:contentDescription="@string/today" />
 
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:src="?attr/icActionNext"
-                android:background="@drawable/ic_colortab"
+                android:background="@drawable/ic_colortab1"
                 android:padding="4dp"
                 android:contentDescription="@string/today" />
         </LinearLayout>
