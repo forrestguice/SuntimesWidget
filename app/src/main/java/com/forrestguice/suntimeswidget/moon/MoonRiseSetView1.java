@@ -22,6 +22,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -116,7 +118,7 @@ public class MoonRiseSetView1 extends LinearLayout
         card_view.setItemViewCacheSize(7);
         card_view.setLayoutManager(card_layout);
 
-        card_view.addItemDecoration(new MoonRiseSetDivider(context, MoonRiseSetAdapter.CENTER_POSITION));
+        card_view.addItemDecoration(new MoonRiseSetDivider1(context, MoonRiseSetAdapter.CENTER_POSITION));
 
         card_adapter = new MoonRiseSetAdapter(context);
         card_adapter.setAdapterListener(card_listener);
@@ -149,9 +151,6 @@ public class MoonRiseSetView1 extends LinearLayout
         card_view.setOnScrollListener(onScrollChanged);
 
         initTheme(context);
-        if (isInEditMode()) {
-            updateViews(context, null);
-        }
     }
 
     public void initLocale(Context context)
@@ -241,12 +240,12 @@ public class MoonRiseSetView1 extends LinearLayout
             super.onScrollStateChanged(recyclerView, newState);
             int position = card_layout.findFirstVisibleItemPosition();
 
-            if (position < MoonPhasesView1.PhaseAdapter.CENTER_POSITION)
+            if (position < MoonRiseSetView1.MoonRiseSetAdapter.CENTER_POSITION)
             {
                 ViewUtils.fadeInButton(forwardButton, ViewUtils.ANIM_VERYLONG);
                 backButton.setVisibility(View.GONE);
 
-            } else if (position > MoonPhasesView1.PhaseAdapter.CENTER_POSITION) {
+            } else if (position > MoonRiseSetView1.MoonRiseSetAdapter.CENTER_POSITION) {
                 forwardButton.setVisibility(View.GONE);
                 ViewUtils.fadeInButton(backButton, ViewUtils.ANIM_VERYLONG);
 
@@ -309,8 +308,8 @@ public class MoonRiseSetView1 extends LinearLayout
      */
     public static class MoonRiseSetAdapter extends RecyclerView.Adapter<MoonRiseSetField>
     {
-        public static final int MAX_POSITIONS = 200;
-        public static final int CENTER_POSITION = 100;
+        public static final int CENTER_POSITION = 800;
+        public static final int MAX_POSITIONS = CENTER_POSITION * 2;
 
         private WeakReference<Context> contextRef;
         @SuppressLint("UseSparseArrays")
@@ -666,6 +665,38 @@ public class MoonRiseSetView1 extends LinearLayout
         }
     }
 
+    private class MoonRiseSetDivider1 extends MoonRiseSetDivider
+    {
+        protected final Paint paintText = new Paint();
+
+        public MoonRiseSetDivider1(Context context, int centerPosition)
+        {
+            super(context, centerPosition);
+            paintText.setAntiAlias(true);
+            paintText.setTextSize(14);
+            paintText.setTypeface(Typeface.DEFAULT_BOLD);
+        }
+
+        @Override
+        protected void drawFooter(Canvas c, int position, float x, float y)
+        {
+            SuntimesMoonData d = card_adapter.initData(getContext(), position);
+            Calendar date = d.calendar();
+            String dateText = utils.calendarDateDisplayString(getContext(), date).toString();
+
+            int textColor = colorDisabled;
+            Calendar now = d.now();
+            if (date.get(Calendar.YEAR) == now.get(Calendar.YEAR) && date.get(Calendar.DAY_OF_YEAR) == now.get(Calendar.DAY_OF_YEAR)) {
+                textColor = colorAccent;
+            } else if (now.before(date)) {
+                textColor = colorEnabled;
+            }
+            paintText.setColor(textColor);
+
+            c.drawText(dateText, x + SuntimesUtils.dpToPixels(getContext(), 8), y - SuntimesUtils.dpToPixels(getContext(), 2), paintText);
+        }
+    }
+
     /**
      * MoonRiseSetDivider
      */
@@ -707,18 +738,29 @@ public class MoonRiseSetView1 extends LinearLayout
             {
                 View child = parent.getChildAt(i);
                 int position = parent.getChildAdapterPosition(child);
-                if ((position - centerPosition) % 2 == 0) {
-                    continue;
-                }
-
                 parent.getLayoutManager().getDecoratedBoundsWithMargins(child, bounds);
-                int right = bounds.right + Math.round(ViewCompat.getTranslationX(child));
-                int left = right - divider.getIntrinsicWidth();
 
-                divider.setBounds(left, top, right, bottom);
-                divider.draw(c);
+                if ((position - centerPosition) % 2 == 0) {
+                    int left = bounds.left + Math.round(ViewCompat.getTranslationX(child));
+                    drawHeader(c, position, left, top);
+                    drawFooter(c, position, left, bottom);
+
+                } else {
+                    int right = bounds.right + Math.round(ViewCompat.getTranslationX(child));
+                    int left = right - divider.getIntrinsicWidth();
+                    divider.setBounds(left, top, right, bottom);
+                    divider.draw(c);
+                }
             }
             c.restore();
+        }
+
+        protected void drawFooter(Canvas c, int position, float x, float y) {
+            /* EMPTY */
+        }
+
+        protected void drawHeader(Canvas c, int position, float x, float y) {
+            /* EMPTY */
         }
 
         @Override

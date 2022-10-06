@@ -3,7 +3,7 @@
     android:id="@+id/layout_moonriseset"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
     android:orientation="vertical" android:background="?attr/selectableItemBackground"
-    android:padding="8dp">
+    android:paddingLeft="8dp" android:paddingRight="8dp" android:paddingTop="8dp" android:paddingBottom="16dp">
 
     <ImageView android:id="@+id/icon_time_moonriseset"
         style="@style/TableHeadImageView"
