@@ -60,7 +60,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.views.MoonApsisView;
+import com.forrestguice.suntimeswidget.moon.MoonApsisView;
 
 import java.util.Calendar;
 import java.util.List;

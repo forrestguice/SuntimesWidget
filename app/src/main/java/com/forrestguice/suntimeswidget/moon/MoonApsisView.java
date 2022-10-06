@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget.views;
+package com.forrestguice.suntimeswidget.moon;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -49,6 +49,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
