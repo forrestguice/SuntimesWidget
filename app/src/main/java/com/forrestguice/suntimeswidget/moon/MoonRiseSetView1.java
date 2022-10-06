@@ -205,13 +205,8 @@ public class MoonRiseSetView1 extends LinearLayout
         SuntimesUtils.colorizeImageView(backButton, colorBackground);
     }
 
-    public void updateViews(Context context, SuntimesMoonData data)
-    {
-        if (isInEditMode()) {
-            return;
-        }
-        //if (data != null && data.isCalculated()) {
-        //} else {}
+    public void updateViews(Context context) {
+        /* EMPTY */
     }
 
     private void setShowPosition(boolean value) {
@@ -221,6 +216,20 @@ public class MoonRiseSetView1 extends LinearLayout
         }
     }
     private boolean showPosition = false;
+
+    public SuntimesMoonData getData() {
+        return card_adapter.initData(getContext(), getDataPosition());
+    }
+    public SuntimesMoonData getData(int adapterPosition)
+    {
+        if (card_adapter != null) {
+            return card_adapter.initData(getContext(), adapterPosition);
+        }
+        return null;
+    }
+    public int getDataPosition() {
+        return card_layout.findFirstCompletelyVisibleItemPosition();
+    }
 
     private final MoonRiseSetAdapterListener card_listener = new MoonRiseSetAdapterListener()
     {

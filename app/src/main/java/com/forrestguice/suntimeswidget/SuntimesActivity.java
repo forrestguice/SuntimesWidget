@@ -2326,7 +2326,8 @@ public class SuntimesActivity extends AppCompatActivity
     {
         MoonDialog moonDialog = new MoonDialog();
         moonDialog.themeViews(this, appThemeOverride);
-        moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
+        SuntimesMoonData d = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition()).second;
+        moonDialog.setData((d != null) ? d : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
         moonDialog.setDialogListener(moonDialogListener);
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
         return moonDialog;

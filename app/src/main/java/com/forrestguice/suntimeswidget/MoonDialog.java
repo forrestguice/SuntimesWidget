@@ -83,8 +83,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     private SuntimesMoonData data;
     public void setData( SuntimesMoonData data )
     {
-        if (data != null && !data.isCalculated() && data.isImplemented())
-        {
+        if (data != null && !data.isCalculated() && data.isImplemented()) {
             data.calculate();
         }
         this.data = data;
@@ -313,7 +312,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     {
         stopUpdateTask();
         Context context = getContext();
-        moonriseset.updateViews(context, data);
+        moonriseset.updateViews(context);
         currentphase.updateViews(context, data);
         moonphases.updateViews(context);
         moonapsis.updateViews(context);
