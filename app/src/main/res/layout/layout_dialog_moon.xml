@@ -75,7 +75,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"/>
 
-    <com.forrestguice.suntimeswidget.MoonPhasesView1
+    <com.forrestguice.suntimeswidget.moon.MoonPhasesView1
         android:id="@+id/moonphases_view"
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
 

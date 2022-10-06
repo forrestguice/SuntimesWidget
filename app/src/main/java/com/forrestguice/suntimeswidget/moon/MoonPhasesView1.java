@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.moon;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -42,6 +42,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -199,7 +201,7 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
-    protected void updateViews( Context context )
+    public void updateViews( Context context )
     {
         if (isInEditMode()) {
             return;
