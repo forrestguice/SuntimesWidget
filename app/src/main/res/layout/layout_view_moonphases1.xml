@@ -32,7 +32,7 @@
             <ImageButton
                 android:id="@+id/info_time_prevbtn"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="end" android:scaleX="0.9" android:scaleY="0.9"
                 android:src="?attr/icActionPrevious"
                 android:background="@drawable/ic_colortab1"
                 android:padding="4dp"
@@ -41,7 +41,7 @@
             <ImageButton
                 android:id="@+id/info_time_nextbtn"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="end" android:scaleX="0.9" android:scaleY="0.9"
                 android:src="?attr/icActionNext"
                 android:background="@drawable/ic_colortab1"
                 android:padding="4dp"
