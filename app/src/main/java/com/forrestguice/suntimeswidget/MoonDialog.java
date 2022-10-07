@@ -70,6 +70,7 @@ public class MoonDialog extends BottomSheetDialogFragment
 {
     public static final String ARG_DATETIME = "datetime";
 
+    public static final String DIALOGTAG_HELP = "moon_help";
     public static final String MAPTAG_MOON = "_moon";
 
     private SuntimesUtils utils = new SuntimesUtils();
@@ -410,10 +411,6 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     }
 
-    protected void showHelp(Context context) {
-        Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show();  // TODO
-    }
-
     private final MoonRiseSetView1.MoonRiseSetViewListener moonriseset_listener = new MoonRiseSetView1.MoonRiseSetViewListener() {
         @Override
         public void onClick(View v, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID) {
@@ -648,6 +645,17 @@ public class MoonDialog extends BottomSheetDialogFragment
             String displayString = (eventID != null ? SolarEvents.valueOf(eventID).getLongDisplayString() : null);
             ViewUtils.shareItem(context, displayString, itemMillis);
         }
+    }
+
+    protected void showHelp(Context context)
+    {
+        String topic1 = context.getString(R.string.help_general_moondialog);
+        //String topic2 = context.getString(R.string.help_general_);
+        String helpContent = topic1;  // context.getString(R.string.help_general2, topic1, topic2);
+
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(helpContent);
+        helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 
     private final PopupMenu.OnDismissListener onMoonRiseSetContextMenuDismissed = new PopupMenu.OnDismissListener() {

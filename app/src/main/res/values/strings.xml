@@ -1907,6 +1907,10 @@
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
     ]]></string>
 
+    <string name="help_general_moondialog"><![CDATA[
+          <b>TODO:</b> TODO.<br/><br/>
+    ]]></string>   <!-- TODO -->
+
     <string name="help_general_timeMode2"><![CDATA[
           <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
           <b>Summer Solstice:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
