@@ -303,7 +303,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         if (theme != null) {
             themeOverride = theme;
             if (moonriseset != null) {
-                themeViews(context);
+                moonriseset.themeViews(context, theme);
+            }
+            if (moonphases != null) {
+                moonphases.themeViews(context, theme);
+            }
+            if (moonapsis != null) {
+                moonapsis.themeViews(context, theme);
             }
         }
     }

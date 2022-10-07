@@ -542,6 +542,8 @@ public class MoonRiseSetView1 extends LinearLayout
         public TextView timeView;
         public TextView positionView;
         protected boolean rising = true;
+        public Drawable icon_rising, icon_setting;
+        public int color_rising, color_setting;
 
         public static int getLayoutID() {
             return R.layout.info_time_moonriseset;
@@ -555,6 +557,17 @@ public class MoonRiseSetView1 extends LinearLayout
             timeView = (TextView)view.findViewById(R.id.text_time_moonriseset);
             positionView = (TextView)view.findViewById(R.id.text_info_moonriseset);
             resizeField(itemWidth);
+            initDrawables(view.getContext());
+        }
+
+        protected void initDrawables(Context context)
+        {
+            TypedArray a = context.obtainStyledAttributes(new int[] { R.attr.moonriseIcon, R.attr.moonsetIcon, R.attr.moonriseColor, R.attr.moonsetColor });
+            icon_rising = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_moon_rise)).mutate();
+            icon_setting = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.ic_moon_set)).mutate();
+            color_rising = ContextCompat.getColor(context, a.getResourceId(2, R.color.moonIcon_color_rising));
+            color_setting = ContextCompat.getColor(context, a.getResourceId(3, R.color.moonIcon_color_setting));
+            a.recycle();
         }
 
         public void onBindDataToPosition(Context context, SuntimesMoonData data, int position)
@@ -571,12 +584,12 @@ public class MoonRiseSetView1 extends LinearLayout
             {
                 eventID = (isEven ? SolarEvents.MOONRISE.name() : SolarEvents.MOONSET.name());
                 event = (isEven ? data.moonriseCalendarToday() : data.moonsetCalendarToday());
-                icon = ContextCompat.getDrawable(context, isEven ? R.drawable.ic_moon_rise : R.drawable.ic_moon_set);   // TODO: themed (apply colorRising, colorSetting)
+                icon = (isEven ? icon_rising : icon_setting);
 
             } else {
                 eventID = (isEven ? SolarEvents.MOONSET.name() : SolarEvents.MOONRISE.name());
                 event = isEven ? data.moonsetCalendarToday() : data.moonriseCalendarToday();
-                icon = ContextCompat.getDrawable(context, isEven ? R.drawable.ic_moon_set : R.drawable.ic_moon_rise);   // TODO: themed (apply colorRising, colorSetting)
+                icon = isEven ? icon_setting : icon_rising;
             }
 
             iconView.setBackground(icon);
@@ -617,8 +630,9 @@ public class MoonRiseSetView1 extends LinearLayout
             if (textSizeSp != null) {
                 positionView.setTextSize(textSizeSp);
             }
+            //int color = (rising ? risingColor : settingColor);
+            //SuntimesUtils.tintDrawable((LayerDrawable)iconView.getBackground(), color, color, 0);
         }
-
 
         public void updateField(Context context, Calendar dateTime, boolean showSeconds)
         {
