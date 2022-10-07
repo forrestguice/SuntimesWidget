@@ -60,7 +60,7 @@ public enum SolarEvents
     EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge, 0, false),  // 14
 
     MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                                 // 15
-    MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false),                                                   // 16
+    MOONSET("moonset", "moonset", R.attr.moonsetIcon, 1, false),                                                   // 16
 
     NEWMOON("new moon", "new moon", R.attr.moonPhaseIcon0, 2, true),                                             // 17
     FIRSTQUARTER("first quarter", "first quarter", R.attr.moonPhaseIcon1, 2, true),                              // 18
