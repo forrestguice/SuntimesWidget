@@ -44,8 +44,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
@@ -107,6 +109,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     private MoonPhasesView1 moonphases;
     private MoonApsisView moonapsis;
     private TextView moondistance, moondistance_label, moondistance_note;
+    private ImageButton menuButton;
 
     private int riseColor, setColor, timeColor, warningColor;
 
@@ -247,6 +250,11 @@ public class MoonDialog extends BottomSheetDialogFragment
         moondistance_label = (TextView) dialogView.findViewById(R.id.moonapsis_current_label);
         moondistance_note = (TextView) dialogView.findViewById(R.id.moonapsis_current_note);
         moondistance_note.setVisibility(View.GONE);
+
+        menuButton = (ImageButton) dialogView.findViewById(R.id.menu_button);
+        if (menuButton != null) {
+            menuButton.setOnClickListener(onMenuClicked);
+        }
 
         if (context != null) {
             currentphase.adjustColumnWidth(context.getResources().getDimensionPixelSize(R.dimen.moonphase_column0_width));
@@ -396,21 +404,25 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     }
 
-    private MoonRiseSetView1.MoonRiseSetViewListener moonriseset_listener = new MoonRiseSetView1.MoonRiseSetViewListener() {
+    protected void showHelp(Context context) {
+        Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show();  // TODO
+    }
+
+    private final MoonRiseSetView1.MoonRiseSetViewListener moonriseset_listener = new MoonRiseSetView1.MoonRiseSetViewListener() {
         @Override
         public void onClick(View v, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID) {
             showContextMenu(getActivity(), v, adapter, position, eventID);
         }
     };
 
-    private MoonPhasesView1.MoonPhasesViewListener moonphases_listener = new MoonPhasesView1.MoonPhasesViewListener() {
+    private final MoonPhasesView1.MoonPhasesViewListener moonphases_listener = new MoonPhasesView1.MoonPhasesViewListener() {
         @Override
         public void onClick(View v, MoonPhasesView1.PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase) {
             showContextMenu(getActivity(), v, adapter, position, phase);
         }
     };
 
-    private MoonApsisView.MoonApsisViewListener moonapsis_listener = new MoonApsisView.MoonApsisViewListener() {
+    private final MoonApsisView.MoonApsisViewListener moonapsis_listener = new MoonApsisView.MoonApsisViewListener() {
         @Override
         public void onClick(View v, MoonApsisView.MoonApsisAdapter adapter, int position, boolean isRising) {
             showContextMenu(getActivity(), v, adapter, position, isRising);
@@ -441,16 +453,57 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
-    protected static PopupMenu createMenu(Context context, View view, int menuResID, PopupMenu.OnMenuItemClickListener onClickListener, PopupMenu.OnDismissListener onDismissListener)
+    private final View.OnClickListener onMenuClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showOverflowMenu(getActivity(), v);
+        }
+    };
+
+    protected static PopupMenu createMenu(Context context, View view, int menuResID, @Nullable PopupMenu.OnMenuItemClickListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener) {
+        return createMenu(context, view, menuResID, Gravity.NO_GRAVITY, onClickListener, onDismissListener);
+    }
+    protected static PopupMenu createMenu(Context context, View view, int menuResID, int gravity, @Nullable PopupMenu.OnMenuItemClickListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener)
     {
-        PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
+        PopupMenu menu = new PopupMenu(context, view, gravity);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(menuResID, menu.getMenu());
-        menu.setOnDismissListener(onDismissListener);
-        menu.setOnMenuItemClickListener(onClickListener);
+        if (onDismissListener != null) {
+            menu.setOnDismissListener(onDismissListener);
+        }
+        if (onClickListener != null) {
+            menu.setOnMenuItemClickListener(onClickListener);
+        }
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         return menu;
     }
+
+    protected boolean showOverflowMenu(final Context context, View view)
+    {
+        PopupMenu menu = createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick, null);
+        updateOverflowMenu(context, menu);
+        menu.show();
+        return true;
+    }
+    private void updateOverflowMenu(Context context, PopupMenu popup) {
+        /* EMPTY */
+    }
+    private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            switch (item.getItemId())
+            {
+                case R.id.action_help:
+                    showHelp(getContext());
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
 
     protected boolean showContextMenu(final Context context, View view, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID)
     {

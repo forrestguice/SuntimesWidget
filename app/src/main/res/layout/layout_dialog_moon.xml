@@ -21,21 +21,46 @@
     android:id="@+id/moondialog_layout"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical" android:background="?attr/dialogBackground"
-    android:paddingLeft="8dp" android:paddingRight="8dp" android:paddingTop="8dp">
+    android:paddingLeft="0dp" android:paddingRight="0dp" android:paddingTop="8dp">
 
-    <TextView android:id="@+id/moondialog_title" style="@style/TableHeadTextView"
-        android:text="@string/timeMode_moon"
-        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <android.support.constraint.ConstraintLayout android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" android:layout_marginRight="0dp"
+        android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
+        android:layout_marginTop="0dp" android:layout_marginBottom="0dp">
 
-    <TextView android:id="@+id/info_time_moon"
-        style="@style/SunsetTimeTextView"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        tools:text="June 3, 6:00 PM Apparent Solar Time" android:gravity="end|right"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />
+        <LinearLayout android:orientation="vertical" android:layout_margin="0dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView android:id="@+id/moondialog_title" style="@style/TableHeadTextView"
+                android:text="@string/timeMode_moon"  android:layout_marginBottom="0dp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+            <TextView android:id="@+id/info_time_moon"
+                style="@style/SunsetTimeTextView" android:layout_marginTop="2dp" android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                tools:text="June 3, 6:00 PM Mountain Standard Time" android:gravity="end|right"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />
+
+        </LinearLayout>
+
+        <ImageButton android:id="@+id/menu_button"
+            android:layout_width="48dp" android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            style="?attr/actionOverflowButtonStyle" android:background="?attr/selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/configAction_overflow" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp" android:layout_marginBottom="0dp">
 
         <com.forrestguice.suntimeswidget.MoonPhaseView
             android:id="@+id/moonphase_view" app:illuminationAtLunarNoon="false" app:showPosition="true"
@@ -50,6 +75,7 @@
         <View android:id="@+id/header_gutter3" android:background="@color/transparent" android:visibility="invisible"
             android:layout_width="0dp" android:layout_height="1dp"
             app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/moonphase_view"
             app:layout_constraintEnd_toStartOf="@+id/moonriseset_view"/>
 
@@ -63,6 +89,7 @@
 
         <View android:id="@+id/header_gutter2" android:background="@color/transparent" android:visibility="invisible"
             android:layout_width="0dp" android:layout_height="1dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/moonriseset_view"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -72,21 +99,24 @@
     <View android:id="@+id/divider1"
         style="@style/SunsetTimeHorizontalRule"
         android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"/>
 
     <com.forrestguice.suntimeswidget.moon.MoonPhasesView1
         android:id="@+id/moonphases_view"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
     <View android:id="@+id/divider2"
         style="@style/SunsetTimeHorizontalRule"
         android:layout_width="match_parent" android:layout_height="1dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp" android:layout_marginBottom="8dp"/>
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
         android:orientation="horizontal">
 
         <LinearLayout
