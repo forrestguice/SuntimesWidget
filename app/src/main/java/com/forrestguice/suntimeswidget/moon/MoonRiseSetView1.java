@@ -37,6 +37,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -122,7 +123,6 @@ public class MoonRiseSetView1 extends LinearLayout
 
         card_adapter = new MoonRiseSetAdapter(context);
         card_adapter.setAdapterListener(card_listener);
-        card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / 4);  // initial width; reassigned later in onSizeChanged
         card_adapter.setShowPosition(showPosition);
 
         card_view.setAdapter(card_adapter);
@@ -268,24 +268,23 @@ public class MoonRiseSetView1 extends LinearLayout
     private final OnClickListener onResetClick0 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // back to position; scrolling from right-to-left
-            card_view.scrollToPosition(MoonRiseSetAdapter.CENTER_POSITION);
-            card_view.smoothScrollBy(1, 0); // triggers a snap
+            scrollToCenter();
         }
     };
     private final OnClickListener onResetClick1 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // forward to position; scrolling from left-to-right
-            card_view.scrollToPosition(MoonRiseSetAdapter.CENTER_POSITION + 3);
-            card_view.smoothScrollBy(1, 0); // triggers a snap
+            scrollToCenter();
         }
     };
 
-    public void scrollToDate( long datetime )
-    {
-        int position = card_adapter.getPositionForDate(getContext(), datetime);
-        position += ((position > MoonRiseSetAdapter.CENTER_POSITION) ? 1 : 0);
-        card_view.scrollToPosition(position);
-        card_view.smoothScrollBy(1, 0);   // triggers snap
+    public void scrollToCenter() {
+        card_layout.scrollToPositionWithOffset(MoonRiseSetAdapter.CENTER_POSITION, 0);
+        card_view.smoothScrollBy(1, 0); // triggers a snap
+    }
+    public void scrollToDate( long datetime ) {
+        card_layout.scrollToPositionWithOffset(card_adapter.getPositionForDate(getContext(), datetime), 0);
+        card_view.smoothScrollBy(1, 0); // triggers a snap
     }
     public void lockScrolling() {
         card_view.setLayoutFrozen(true);
@@ -317,12 +316,12 @@ public class MoonRiseSetView1 extends LinearLayout
      */
     public static class MoonRiseSetAdapter extends RecyclerView.Adapter<MoonRiseSetField>
     {
-        public static final int CENTER_POSITION = 800;
+        public static final int CENTER_POSITION = 1000;
         public static final int MAX_POSITIONS = CENTER_POSITION * 2;
 
-        private WeakReference<Context> contextRef;
+        private final WeakReference<Context> contextRef;
         @SuppressLint("UseSparseArrays")
-        private HashMap<Integer, SuntimesMoonData> data = new HashMap<>();
+        private final HashMap<Integer, SuntimesMoonData> data = new HashMap<>();
 
         public MoonRiseSetAdapter(Context context) {
             contextRef = new WeakReference<>(context);
@@ -330,7 +329,7 @@ public class MoonRiseSetView1 extends LinearLayout
             initTheme(context);
         }
 
-        private int itemWidth = -1;
+        private int itemWidth = LayoutParams.WRAP_CONTENT;
         public void setItemWidth( int pixels ) {
             itemWidth = pixels;
             notifyDataSetChanged();
@@ -341,7 +340,7 @@ public class MoonRiseSetView1 extends LinearLayout
         {
             LayoutInflater layout = LayoutInflater.from(parent.getContext());
             View view = layout.inflate(MoonRiseSetField.getLayoutID(), parent, false);
-            return new MoonRiseSetField(view);
+            return new MoonRiseSetField(view, itemWidth);
         }
 
         @Override
@@ -362,10 +361,7 @@ public class MoonRiseSetView1 extends LinearLayout
                     ? d.moonriseCalendarToday() : d.moonsetCalendarToday());
             boolean isAgo = d.now().after(event);
             themeViews(context, holder, isAgo);
-
-            if (itemWidth > 0) {
-                holder.resizeField(holder.layout.getVisibility() == VISIBLE ? itemWidth : 0);
-            }
+            holder.resizeField(event != null ? itemWidth : View.GONE);
 
             attachClickListeners(holder, position);
         }
@@ -415,6 +411,7 @@ public class MoonRiseSetView1 extends LinearLayout
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
                 data.remove(holder.position);
             }
+            holder.resizeField(itemWidth);
             holder.onRecycled();
         }
 
@@ -489,7 +486,7 @@ public class MoonRiseSetView1 extends LinearLayout
             {
                 long deltaMs = (datetime - dateCenter.getTimeInMillis());
                 double deltaDays = deltaMs / (1000d * 60d * 60d * 24d);
-                return (int)(CENTER_POSITION + Math.ceil(2 * deltaDays));
+                return (CENTER_POSITION + (2 * (int)Math.floor(deltaDays)));
             }
             return CENTER_POSITION;
         }
@@ -548,13 +545,14 @@ public class MoonRiseSetView1 extends LinearLayout
             return R.layout.info_time_moonriseset;
         }
 
-        public MoonRiseSetField(View view)
+        public MoonRiseSetField(View view, int itemWidth)
         {
             super(view);
             layout = view.findViewById(R.id.layout_moonriseset);
             iconView = (ImageView)view.findViewById(R.id.icon_time_moonriseset);
             timeView = (TextView)view.findViewById(R.id.text_time_moonriseset);
             positionView = (TextView)view.findViewById(R.id.text_info_moonriseset);
+            resizeField(itemWidth);
         }
 
         public void onBindDataToPosition(Context context, SuntimesMoonData data, int position)
@@ -584,7 +582,7 @@ public class MoonRiseSetView1 extends LinearLayout
             if (positionView.getVisibility() == VISIBLE) {
                 updateField(context, ((event != null) ? calculator.getMoonPosition(event) : null));
             }
-            layout.setVisibility(event != null ? VISIBLE : GONE);
+            layout.setVisibility(event != null ? VISIBLE : INVISIBLE);
         }
 
         public void onRecycled()
