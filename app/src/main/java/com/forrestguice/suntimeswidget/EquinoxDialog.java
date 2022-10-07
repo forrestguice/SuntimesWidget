@@ -425,7 +425,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         }
     };
 
-    protected void shareItem(Context context, Intent itemData)
+    protected void shareItem(Context context, Intent itemData)  // TODO: refactor to use ViewUtils after v0.15.0 branches are merged
     {
         WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
         long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;

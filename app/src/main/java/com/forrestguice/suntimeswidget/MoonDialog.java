@@ -53,8 +53,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.map.WorldMapDialog;
-import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.moon.MoonPhasesView1;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView1;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -63,6 +61,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.moon.MoonApsisView;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -124,11 +123,18 @@ public class MoonDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
+        initLocale(getContext());
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_moon, parent, false);
         initViews(getContext(), dialogContent);
         themeViews(getContext());
         return dialogContent;
+    }
+
+    public void initLocale(Context context)
+    {
+        SuntimesUtils.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(context);
     }
 
     @Override
@@ -429,30 +435,6 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
-    protected boolean showTimeZoneMenu(Context context, View view)
-    {
-        PopupMenu menu = WorldMapDialog.createMenu(context, view, R.menu.moonmenu_tz, onTimeZoneMenuClick);
-        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_MOON, WidgetTimezones.TZID_SUNTIMES));
-        menu.show();
-        return true;
-    }
-    private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
-    {
-        @Override
-        public boolean onMenuItemClick(MenuItem item)
-        {
-            Context context = getContext();
-            if (context != null) {
-                String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
-                if (tzID != null) {
-                    WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_MOON, tzID);
-                    updateViews();
-                }
-                return (tzID != null);
-            } else return false;
-        }
-    };
-
     private final View.OnClickListener onMenuClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -616,12 +598,12 @@ public class MoonDialog extends BottomSheetDialogFragment
 
             Intent itemData = item.getIntent();
             long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
-            SolarEvents event = (itemData != null && itemData.hasExtra("event") ? SolarEvents.valueOf(itemData.getStringExtra("event")) : null);
 
             switch (item.getItemId())
             {
                 case R.id.action_alarm:
                     if (dialogListener != null) {
+                        SolarEvents event = (itemData != null && itemData.hasExtra("event") ? SolarEvents.valueOf(itemData.getStringExtra("event")) : null);
                         dialogListener.onSetAlarm(event);
                         collapseSheet(getDialog());
                     }
@@ -648,16 +630,25 @@ public class MoonDialog extends BottomSheetDialogFragment
                     collapseSheet(getDialog());
                     return true;
 
-                // TODO
-                //case R.id.action_share:
-                //    shareItem(getContext(), itemData);
-                //    return true;
+                case R.id.action_share:
+                    shareItem(context, itemData);
+                    return true;
 
                 default:
                     return false;
             }
         }
     };
+
+    protected void shareItem(Context context, Intent itemData)
+    {
+        String eventID = (itemData != null && itemData.hasExtra("event") ? itemData.getStringExtra("event") : null);
+        long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
+        if (itemMillis != -1L) {
+            String displayString = (eventID != null ? SolarEvents.valueOf(eventID).getLongDisplayString() : null);
+            ViewUtils.shareItem(context, displayString, itemMillis);
+        }
+    }
 
     private final PopupMenu.OnDismissListener onMoonRiseSetContextMenuDismissed = new PopupMenu.OnDismissListener() {
         @Override
