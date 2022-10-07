@@ -361,7 +361,9 @@ public class MoonRiseSetView1 extends LinearLayout
                     ? d.moonriseCalendarToday() : d.moonsetCalendarToday());
             boolean isAgo = d.now().after(event);
             themeViews(context, holder, isAgo);
-            holder.resizeField(event != null ? itemWidth : View.GONE);
+            if (event != null) {
+                holder.resizeField(itemWidth);
+            } else holder.hideField();
 
             attachClickListeners(holder, position);
         }
@@ -668,6 +670,13 @@ public class MoonRiseSetView1 extends LinearLayout
         public void resizeField(int pixels) {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) layout.getLayoutParams();
             params.width = pixels;
+            params.height = LayoutParams.WRAP_CONTENT;
+            layout.setLayoutParams( params );
+        }
+
+        public void hideField() {
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) layout.getLayoutParams();
+            params.width = params.height = 0;
             layout.setLayoutParams( params );
         }
     }
