@@ -45,15 +45,15 @@ import java.util.Calendar;
 @SuppressWarnings("Convert2Diamond")
 public class MoonPhaseView extends LinearLayout
 {
-    private SuntimesUtils utils = new SuntimesUtils();
-    private boolean isRtl = false;
-    private boolean centered = false;
-    private boolean illumAtNoon = false;
-    private boolean showPosition = false;
-    private boolean northward = false;
+    protected SuntimesUtils utils = new SuntimesUtils();
+    protected boolean isRtl = false;
+    protected boolean centered = false;
+    protected boolean illumAtNoon = false;
+    protected boolean showPosition = false;
+    protected boolean northward = false;
 
-    private LinearLayout content;
-    private TextView phaseText, illumText, azimuthText, elevationText;
+    protected LinearLayout content;
+    protected TextView phaseText, illumText, azimuthText, elevationText;
 
     protected SuntimesMoonData data = null;  // cached
 
@@ -70,7 +70,7 @@ public class MoonPhaseView extends LinearLayout
         init(context, attrs);
     }
 
-    private void applyAttributes(Context context, AttributeSet attrs)
+    protected void applyAttributes(Context context, AttributeSet attrs)
     {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MoonPhaseView, 0, 0);
         try {
@@ -81,11 +81,15 @@ public class MoonPhaseView extends LinearLayout
         }
     }
 
+    protected int getLayoutResID() {
+        return R.layout.layout_view_moonphase;
+    }
+
     private void init(Context context, AttributeSet attrs)
     {
         initLocale(context);
         themeViews(context);
-        LayoutInflater.from(context).inflate(R.layout.layout_view_moonphase, this, true);
+        LayoutInflater.from(context).inflate(getLayoutResID(), this, true);
 
         if (attrs != null)
         {

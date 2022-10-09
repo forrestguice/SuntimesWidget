@@ -62,7 +62,7 @@
         android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
         android:layout_marginTop="4dp" android:layout_marginBottom="0dp">
 
-        <com.forrestguice.suntimeswidget.MoonPhaseView
+        <com.forrestguice.suntimeswidget.moon.MoonPhaseView1
             android:id="@+id/moonphase_view" app:illuminationAtLunarNoon="false" app:showPosition="true"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"

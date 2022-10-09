@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.moon.MoonPhaseView1;
 import com.forrestguice.suntimeswidget.moon.MoonPhasesView1;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView1;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -105,7 +106,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     private TextView dialogTitle;
     private TextView dialogTime;
     private MoonRiseSetView1 moonriseset;
-    private MoonPhaseView currentphase;
+    private MoonPhaseView1 currentphase;
     private MoonPhasesView1 moonphases;
     private MoonApsisView moonapsis;
     private TextView moondistance, moondistance_label, moondistance_note;
@@ -245,7 +246,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         moonriseset = (MoonRiseSetView1) dialogView.findViewById(R.id.moonriseset_view);
         moonriseset.setViewListener(moonriseset_listener);
 
-        currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
+        currentphase = (MoonPhaseView1) dialogView.findViewById(R.id.moonphase_view);
 
         moonphases = (MoonPhasesView1) dialogView.findViewById(R.id.moonphases_view);
         moonphases.setViewListener(moonphases_listener);
