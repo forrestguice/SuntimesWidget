@@ -33,7 +33,9 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -47,7 +49,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
@@ -59,7 +60,6 @@ import com.forrestguice.suntimeswidget.moon.MoonRiseSetView1;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.moon.MoonApsisView;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -92,10 +92,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         this.data = data;
     }
 
-    public void showPositionAt(@Nullable Long datetime)
+    public void showPositionAt(@Nullable Long datetime) {
+        showPositionAt(datetime, true);
+    }
+    public void showPositionAt(@Nullable Long datetime, boolean updateViews)
     {
         getArguments().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
-        if (isAdded()) {
+        if (isAdded() && updateViews) {
             updateViews();
         }
     }
@@ -103,16 +106,16 @@ public class MoonDialog extends BottomSheetDialogFragment
         return getArguments().getLong(ARG_DATETIME, -1);
     }
 
-    private TextView dialogTitle;
-    private TextView dialogTime;
+    private TextView text_dialogTitle;
+    private TextView text_dialogTime, text_dialogTimeOffset;
     private MoonRiseSetView1 moonriseset;
     private MoonPhaseView1 currentphase;
     private MoonPhasesView1 moonphases;
     private MoonApsisView moonapsis;
     private TextView moondistance, moondistance_label, moondistance_note;
-    private ImageButton menuButton;
+    private ImageButton resetButton, menuButton;
 
-    private int riseColor, setColor, timeColor, warningColor;
+    private int riseColor, setColor, timeColor, warningColor, pressedColor, disabledColor;
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -223,7 +226,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             Context context = getContext();
             if (context != null) {
                 updateViews();
-                dialogTitle.post(initPeekHeight);
+                text_dialogTitle.post(initPeekHeight);
             }
             startUpdateTask();
         }
@@ -231,9 +234,10 @@ public class MoonDialog extends BottomSheetDialogFragment
 
     public void initViews(Context context, View dialogView)
     {
-        dialogTitle = (TextView) dialogView.findViewById(R.id.moondialog_title);
+        text_dialogTitle = (TextView) dialogView.findViewById(R.id.moondialog_title);
 
-        dialogTime = (TextView) dialogView.findViewById(R.id.info_time_moon);
+        text_dialogTime = (TextView) dialogView.findViewById(R.id.info_time_moon);
+        text_dialogTimeOffset = (TextView) dialogView.findViewById(R.id.info_time_offset);
         /*if (dialogTime != null) {
             dialogTime.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -259,6 +263,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         moondistance_note = (TextView) dialogView.findViewById(R.id.moonapsis_current_note);
         moondistance_note.setVisibility(View.GONE);
 
+        resetButton = (ImageButton) dialogView.findViewById(R.id.media_reset);
+        if (resetButton != null)
+        {
+            resetButton.setEnabled(false);
+            resetButton.setOnClickListener(onResetClicked);
+        }
+
         menuButton = (ImageButton) dialogView.findViewById(R.id.menu_button);
         if (menuButton != null) {
             menuButton.setOnClickListener(onMenuClicked);
@@ -279,14 +290,20 @@ public class MoonDialog extends BottomSheetDialogFragment
             int textColor = themeOverride.getTextColor();
             riseColor = themeOverride.getMoonriseTextColor();
             setColor = themeOverride.getMoonsetTextColor();
+            pressedColor = themeOverride.getAccentColor();
+            warningColor = themeOverride.getActionColor();
             float timeSizeSp = themeOverride.getTimeSizeSp();
+            float textSizeSp = themeOverride.getTextSizeSp();
 
-            dialogTitle.setTextColor(titleColor);
-            dialogTitle.setTextSize(themeOverride.getTitleSizeSp());
-            dialogTitle.setTypeface(dialogTitle.getTypeface(), (themeOverride.getTitleBold() ? Typeface.BOLD : Typeface.NORMAL));
+            text_dialogTitle.setTextColor(titleColor);
+            text_dialogTitle.setTextSize(themeOverride.getTitleSizeSp());
+            text_dialogTitle.setTypeface(text_dialogTitle.getTypeface(), (themeOverride.getTitleBold() ? Typeface.BOLD : Typeface.NORMAL));
 
-            dialogTime.setTextColor(titleColor);
-            dialogTime.setTextSize(timeSizeSp);
+            text_dialogTime.setTextColor(titleColor);
+            text_dialogTime.setTextSize(timeSizeSp);
+
+            text_dialogTimeOffset.setTextColor(textColor);
+            text_dialogTimeOffset.setTextSize(textSizeSp);
 
             moonriseset.themeViews(context, themeOverride);
             currentphase.themeViews(context, themeOverride);
@@ -300,17 +317,21 @@ public class MoonDialog extends BottomSheetDialogFragment
             moondistance.setTextSize(themeOverride.getTimeSuffixSizeSp());
 
             moondistance_note.setTextColor(timeColor);
-            moondistance_note.setTextSize(themeOverride.getTextSizeSp());
+            moondistance_note.setTextSize(textSizeSp);
 
         } else {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor, R.attr.tagColor_warning };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor, R.attr.tagColor_warning, R.attr.buttonPressColor, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             timeColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
             riseColor = ContextCompat.getColor(context, typedArray.getResourceId(1, timeColor));
             setColor = ContextCompat.getColor(context, typedArray.getResourceId(2, timeColor));
             warningColor = ContextCompat.getColor(context, typedArray.getResourceId(3, timeColor));
+            pressedColor = ContextCompat.getColor(context, typedArray.getResourceId(4, timeColor));
+            disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(5, timeColor));
             typedArray.recycle();
         }
+
+        ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(warningColor, disabledColor, pressedColor));
     }
 
     private SuntimesTheme themeOverride = null;
@@ -330,19 +351,26 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     }
 
-    public void updateViews()
+    public void updateViews() {
+        updateViews(true);
+    }
+    public void updateViews(boolean scrollViews)
     {
         stopUpdateTask();
         Context context = getContext();
+        updateTimeText();
         moonriseset.updateViews(context);
         currentphase.updateViews(context, data);
         moonphases.updateViews(context);
         moonapsis.updateViews(context);
         updateMoonApsis();
-        updateTimeText();
+
+        if (resetButton != null) {
+            resetButton.setEnabled(isOffset(getNow()));
+        }
 
         final long datetime = arg_dateTime();
-        if (datetime != -1)
+        if (datetime != -1 && scrollViews)
         {
             moonriseset.scrollToDate(datetime);
             moonphases.scrollToDate(datetime);
@@ -358,29 +386,53 @@ public class MoonDialog extends BottomSheetDialogFragment
             return;
         }
 
+        long nowMillis = getNow();
         Calendar now = Calendar.getInstance();
-        long nowMillis = now.getTimeInMillis();
-        long arg_dateTime = arg_dateTime();
-        long moonTimeMillis = (arg_dateTime != -1 ? arg_dateTime : nowMillis);
+        now.setTimeInMillis(getNow());
 
-        Calendar moonTime = Calendar.getInstance(data.timezone());
-        moonTime.setTimeInMillis(moonTimeMillis);
-        boolean nowIsAfter = now.after(moonTime);
+        long dialogTimeMillis = getDialogTime();
+
+        Calendar dialogTime = Calendar.getInstance(data.timezone());
+        dialogTime.setTimeInMillis(dialogTimeMillis);
+        boolean nowIsAfter = now.after(dialogTime);
 
         String suffix = "";
-        boolean isOffset = Math.abs(nowMillis - moonTimeMillis) > 60 * 1000;
-        if (isOffset) {
+        if (isOffset(nowMillis, dialogTimeMillis)) {
             suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
         }
 
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, moonTime);
-        if (dialogTime != null)
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, dialogTime);
+        if (text_dialogTime != null)
         {
-            String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, moonTime.getTimeZone());
-            if (suffix.isEmpty())
-                dialogTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
-            else dialogTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, warningColor));
+            //String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, moonTime.getTimeZone());
+            if (suffix.isEmpty()) {
+                text_dialogTime.setText(timeText.toString());
+                // dialogTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
+            } else text_dialogTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText.toString(), suffix), suffix, warningColor));
         }
+
+        if (text_dialogTimeOffset != null) {
+            if (!suffix.isEmpty())
+            {
+                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, dialogTimeMillis, false, true, false);
+                offsetText.setSuffix("");
+                String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString());
+                text_dialogTimeOffset.setText(SuntimesUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));
+            } else text_dialogTimeOffset.setText(" ");
+        }
+    }
+
+    protected long getNow() {
+        return System.currentTimeMillis();
+    }
+    protected long getDialogTime() {
+        return (arg_dateTime() != -1 ? arg_dateTime() : getNow());
+    }
+    protected  boolean isOffset(long nowMillis) {
+        return isOffset(nowMillis, getDialogTime());
+    }
+    protected boolean isOffset(long nowMillis, long eventMillis) {
+        return Math.abs(nowMillis - eventMillis) > 60 * 1000;
     }
 
     private void updateMoonApsis()
@@ -412,7 +464,40 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     }
 
-    private final MoonRiseSetView1.MoonRiseSetViewListener moonriseset_listener = new MoonRiseSetView1.MoonRiseSetViewListener() {
+    protected void scrollAllToMoonRiseSet(int position)
+    {
+        setData(moonriseset.getData(position));
+        boolean isCentered = (position == MoonRiseSetView1.MoonRiseSetAdapter.CENTER_POSITION || position == MoonRiseSetView1.MoonRiseSetAdapter.CENTER_POSITION + 1);
+        if (isCentered)
+        {
+            showPositionAt(null, false);  // set position without triggering normal update..
+            updateViews(false);                     // to avoid infinite-scroll (scrolling moonriseset may trigger this method)
+            moonphases.scrollToCenter();
+            moonapsis.scrollToCenter();
+
+        } else {
+            boolean scrollForward = (data.calendar().getTimeInMillis() >= getNow());
+            long datetime = data.nowThen(data.calendar()).getTimeInMillis() + ((60 * 1000) * (scrollForward ? 1 : -1));   // plus or minus a minute to round off the display value
+            showPositionAt(datetime, false);     // set position without triggering normal update..
+            updateViews(false);                   // to avoid infinite-scroll (scrolling moonriseset may trigger this method)
+            moonphases.scrollToDate(datetime);
+            moonapsis.scrollToDate(datetime);
+        }
+    }
+
+    private final MoonRiseSetView1.MoonRiseSetViewListener moonriseset_listener = new MoonRiseSetView1.MoonRiseSetViewListener()
+    {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState, int position) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                scrollAllToMoonRiseSet(position);
+            }
+        }
+
+        @Override
+        public void onResetClick(View v) {
+        }
+
         @Override
         public void onClick(View v, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID) {
             showContextMenu(getActivity(), v, adapter, position, eventID);
@@ -432,6 +517,22 @@ public class MoonDialog extends BottomSheetDialogFragment
             showContextMenu(getActivity(), v, adapter, position, isRising);
         }
     };
+
+    private final View.OnClickListener onResetClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            resetDialog();
+        }
+    };
+
+    protected void resetDialog()
+    {
+        setData(moonriseset.getDataAtCenter());
+        showPositionAt(null);
+        moonriseset.scrollToCenter();   // onScrollChanged triggers rest of reset sequence
+        //moonphases.scrollToCenter();
+        //moonapsis.scrollToCenter();
+    }
 
     private final View.OnClickListener onMenuClicked = new View.OnClickListener() {
         @Override

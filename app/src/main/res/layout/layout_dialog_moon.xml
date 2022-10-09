@@ -21,46 +21,59 @@
     android:id="@+id/moondialog_layout"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical" android:background="?attr/dialogBackground"
-    android:paddingLeft="0dp" android:paddingRight="0dp" android:paddingTop="8dp">
+    android:paddingLeft="0dp" android:paddingRight="0dp" android:paddingTop="4dp">
 
     <android.support.constraint.ConstraintLayout android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginLeft="8dp" android:layout_marginRight="0dp"
         android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
-        android:layout_marginTop="0dp" android:layout_marginBottom="0dp">
+        android:layout_marginTop="0dp" android:layout_marginBottom="4dp">
 
-        <LinearLayout android:orientation="vertical" android:layout_margin="0dp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+        <LinearLayout
+            android:orientation="vertical" android:layout_margin="0dp"
+            android:layout_width="0dp" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/moondialog_actionbar"
+            app:layout_constraintHorizontal_chainStyle="spread_inside">
 
             <TextView android:id="@+id/moondialog_title" style="@style/TableHeadTextView"
-                android:text="@string/timeMode_moon"  android:layout_marginBottom="0dp"
+                android:text="@string/timeMode_moon" android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             <TextView android:id="@+id/info_time_moon"
-                style="@style/SunsetTimeTextView" android:layout_marginTop="2dp" android:layout_marginBottom="4dp"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                tools:text="June 3, 6:00 PM Mountain Standard Time" android:gravity="end|right"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />
+                style="@style/SunsetTimeTextView" android:layout_marginTop="2dp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="start|left"
+                tools:text="June 3, 6:00 PM"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />
 
         </LinearLayout>
 
-        <ImageButton android:id="@+id/menu_button"
-            android:layout_width="48dp" android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            style="?attr/actionOverflowButtonStyle" android:background="?attr/selectableItemBackground"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/configAction_overflow" />
+        <LinearLayout android:id="@+id/moondialog_actionbar" android:orientation="horizontal"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone">
+
+            <ImageButton android:id="@+id/media_reset"
+                android:layout_width="48dp" android:layout_height="48dp"
+                android:padding="12dp" android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/worldmap_dialog_action_reset"
+                android:src="?attr/icActionTimeReset" android:scaleType="fitXY" />
+
+            <ImageButton android:id="@+id/menu_button"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                style="?attr/actionOverflowButtonStyle" android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/configAction_overflow" />
+
+        </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-        android:layout_marginTop="4dp" android:layout_marginBottom="0dp">
+        android:layout_marginTop="0dp" android:layout_marginBottom="4dp">
 
         <com.forrestguice.suntimeswidget.moon.MoonPhaseView1
             android:id="@+id/moonphase_view" app:illuminationAtLunarNoon="false" app:showPosition="true"
@@ -85,7 +98,7 @@
             android:layout_width="0dp" android:layout_height="wrap_content" app:layout_constraintHorizontal_weight="48"
             app:layout_constraintStart_toEndOf="@+id/header_gutter3"
             app:layout_constraintEnd_toStartOf="@+id/header_gutter2"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View android:id="@+id/header_gutter2" android:background="@color/transparent" android:visibility="invisible"
             android:layout_width="0dp" android:layout_height="1dp"
@@ -94,14 +107,75 @@
             app:layout_constraintStart_toEndOf="@+id/moonriseset_view"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <TextView android:id="@+id/info_time_offset" style="@style/SunsetTimeTextView2" android:visibility="visible"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp"
+            android:textColor="?android:textColorSecondary"
+            app:layout_constraintStart_toStartOf="@+id/moonphase_view" app:layout_constraintEnd_toEndOf="@+id/moonphase_view"
+            app:layout_constraintTop_toBottomOf="@+id/moonphase_view"
+            tools:text="30m from now" android:gravity="center_horizontal" />
+
     </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout android:orientation="vertical" android:visibility="visible"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp">
+
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+            android:background="?attr/hrColor" android:visibility="gone" />
+
+        <!--<LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <ToggleButton android:id="@+id/media_expand" style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="32dp" android:layout_height="32dp"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+                android:contentDescription="@string/expandMore"
+                android:textOn="" android:textOff="" android:checked="false"
+                android:background="?attr/icActionExpand" android:scaleType="fitXY" />
+
+        </LinearLayout>-->
+
+        <!-- <LinearLayout android:orientation="horizontal" android:visibility="visible"
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/media_play"
+                android:layout_width="32dp" android:layout_height="32dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/worldmap_dialog_action_play"
+                android:src="?attr/icActionPlay" android:scaleType="fitXY" />
+
+            <ImageButton android:id="@+id/media_pause"
+                android:layout_width="32dp" android:layout_height="32dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/worldmap_dialog_action_pause"
+                android:src="?attr/icActionPause" android:scaleType="fitXY"
+                android:visibility="gone" />
+
+            <ImageButton android:id="@+id/media_prev"
+                android:layout_width="32dp" android:layout_height="32dp"
+                android:contentDescription="@string/worldmap_dialog_action_prev"
+                android:background="?attr/selectableItemBackground"
+                android:src="?attr/icActionPrevious" android:scaleType="fitXY" />
+
+            <ImageButton android:id="@+id/media_next"
+                android:layout_width="32dp" android:layout_height="32dp"
+                android:contentDescription="@string/worldmap_dialog_action_next"
+                android:background="?attr/selectableItemBackground"
+                android:src="?attr/icActionNext" android:scaleType="fitXY" />
+
+        </LinearLayout> -->
+
+
+    </LinearLayout>
 
     <View android:id="@+id/divider1"
         style="@style/SunsetTimeHorizontalRule"
         android:layout_width="match_parent" android:layout_height="1dp"
         android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginTop="0dp" android:layout_marginBottom="8dp"/>
 
     <com.forrestguice.suntimeswidget.moon.MoonPhasesView1
         android:id="@+id/moonphases_view"
@@ -122,7 +196,7 @@
         <LinearLayout
             android:id="@+id/moonapsis_current_layout"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="vertical" android:minWidth="75dp"
             android:layout_marginLeft="8dp" android:layout_marginRight="16dp"
             android:layout_marginStart="8dp" android:layout_marginEnd="16dp">
 
