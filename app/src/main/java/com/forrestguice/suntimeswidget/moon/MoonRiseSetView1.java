@@ -227,6 +227,9 @@ public class MoonRiseSetView1 extends LinearLayout
         }
         return null;
     }
+    public SuntimesMoonData getDataAtCenter() {
+        return card_adapter.initData(getContext(), MoonRiseSetAdapter.CENTER_POSITION);
+    }
     public int getDataPosition() {
         return card_layout.findFirstCompletelyVisibleItemPosition();
     }
