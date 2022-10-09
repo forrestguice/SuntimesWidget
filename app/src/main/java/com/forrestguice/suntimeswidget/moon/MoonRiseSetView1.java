@@ -265,18 +265,28 @@ public class MoonRiseSetView1 extends LinearLayout
                 ViewUtils.fadeOutButton(forwardButton, ViewUtils.ANIM_LONG);
                 ViewUtils.fadeOutButton(backButton, ViewUtils.ANIM_LONG);
             }
+
+            if (viewListener != null) {
+                viewListener.onScrollStateChanged(recyclerView, newState, position);
+            }
         }
     };
 
     private final OnClickListener onResetClick0 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // back to position; scrolling from right-to-left
+            if (viewListener != null) {
+                viewListener.onResetClick(v);
+            }
             scrollToCenter();
         }
     };
     private final OnClickListener onResetClick1 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // forward to position; scrolling from left-to-right
+            if (viewListener != null) {
+                viewListener.onResetClick(v);
+            }
             scrollToCenter();
         }
     };
@@ -304,14 +314,18 @@ public class MoonRiseSetView1 extends LinearLayout
     /**
      * MoonRiseSetViewListener
      */
-    public static class MoonRiseSetViewListener extends MoonRiseSetAdapterListener {}
+    public static class MoonRiseSetViewListener extends MoonRiseSetAdapterListener
+    {
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState, int position) { /* EMPTY */ }
+        public void onResetClick(View v) { /* EMPTY */ }
+    }
 
     /**
      * MoonRiseSetAdapterListener
      */
     public static class MoonRiseSetAdapterListener
     {
-        public void onClick(View v, MoonRiseSetAdapter adapter, int position, String eventID) {}
+        public void onClick(View v, MoonRiseSetAdapter adapter, int position, String eventID) { /* EMPTY */ }
     }
 
     /**
