@@ -225,12 +225,18 @@ public class MoonApsisView extends LinearLayout
         return card_adapter.isRising();
     }
 
+    public void scrollToCenter() {
+        card_layout.scrollToPositionWithOffset(MoonApsisAdapter.CENTER_POSITION, 0);
+        card_view.smoothScrollBy(1, 0); // triggers a snap
+    }
     public void scrollToDate( long datetime )
     {
         int position = card_adapter.getPositionForDate(getContext(), datetime);
-        position += ((position > MoonPhasesView1.PhaseAdapter.CENTER_POSITION) ? 1 : 0);
-        card_view.scrollToPosition(position);
-        card_view.smoothScrollBy(1, 0);   // triggers snap
+        boolean alreadyInPosition = (position == card_layout.findFirstVisibleItemPosition());
+        card_layout.scrollToPositionWithOffset(position, 0);
+        if (!alreadyInPosition) {
+            card_view.smoothScrollBy(1, 0);   // triggers snap
+        }
     }
 
     public void lockScrolling() {

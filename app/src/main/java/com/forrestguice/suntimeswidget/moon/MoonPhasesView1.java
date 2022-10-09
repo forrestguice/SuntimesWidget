@@ -264,28 +264,18 @@ public class MoonPhasesView1 extends LinearLayout
         }
     };
 
-    /**@Override
-    public void setOnClickListener( OnClickListener listener )
-    {
-        super.setOnClickListener(listener);
-        // TODO
-        //content.setOnClickListener(listener);
-    }*/
-
-    /**@Override
-    public void setOnLongClickListener( OnLongClickListener listener)
-    {
-        super.setOnLongClickListener(listener);
-        // TODO
-        //content.setOnLongClickListener(listener);
-    }*/
-
+    public void scrollToCenter() {
+        card_layout.scrollToPositionWithOffset(MoonPhasesView1.PhaseAdapter.CENTER_POSITION, 0);
+        card_view.smoothScrollBy(1, 0); // triggers a snap
+    }
     public void scrollToDate( long datetime )
     {
         int position = card_adapter.getPositionForDate(getContext(), datetime);
-        position += ((position > PhaseAdapter.CENTER_POSITION) ? 3 : 0);
-        card_view.scrollToPosition(position);
-        card_view.smoothScrollBy(1, 0);   // triggers snap
+        boolean alreadyInPosition = (position == card_layout.findFirstVisibleItemPosition());
+        card_layout.scrollToPositionWithOffset(position, 0);
+        if (!alreadyInPosition) {
+            card_view.smoothScrollBy(1, 0);   // triggers snap
+        }
     }
 
     public void lockScrolling() {
