@@ -100,6 +100,31 @@ public class MoonRiseSetView1 extends LinearLayout
         }
     }
 
+    protected void initAdapter(Context context)
+    {
+        if (card_adapter != null) {
+            card_view.setAdapter(null);
+        }
+
+        card_adapter = new MoonRiseSetAdapter(context, showLunarNoon);
+        card_adapter.setAdapterListener(card_listener);
+        card_adapter.setShowPosition(showPosition);
+
+        initDecorations(context);
+        card_view.setAdapter(card_adapter);
+    }
+
+    private void initDecorations(Context context)
+    {
+        if (dividers != null) {
+            card_view.removeItemDecoration(dividers);
+            dividers = null;
+        }
+        dividers = new MoonRiseSetDivider1(context, MoonRiseSetAdapter.CENTER_POSITION, card_adapter.getItemsPerDay());
+        card_view.addItemDecoration(dividers);
+    }
+    private MoonRiseSetDivider1 dividers = null;
+
     private void init(Context context, AttributeSet attrs)
     {
         initLocale(context);
@@ -110,6 +135,7 @@ public class MoonRiseSetView1 extends LinearLayout
             LayoutParams lp = generateLayoutParams(attrs);
             centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
+        showLunarNoon = AppSettings.loadShowLunarNoonPref(context);
 
         card_layout = new LinearLayoutManager(context);
         card_layout.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -119,12 +145,7 @@ public class MoonRiseSetView1 extends LinearLayout
         card_view.setItemViewCacheSize(7);
         card_view.setLayoutManager(card_layout);
 
-        card_adapter = new MoonRiseSetAdapter(context);
-        card_adapter.setAdapterListener(card_listener);
-        card_adapter.setShowPosition(showPosition);
-
-        card_view.addItemDecoration(new MoonRiseSetDivider1(context, MoonRiseSetAdapter.CENTER_POSITION, card_adapter.getItemsPerDay()));
-        card_view.setAdapter(card_adapter);
+        initAdapter(context);
         card_view.scrollToPosition(MoonRiseSetAdapter.CENTER_POSITION);
 
         GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.START); // new LinearSnapHelper();
@@ -215,6 +236,18 @@ public class MoonRiseSetView1 extends LinearLayout
         }
     }
     private boolean showPosition = false;
+
+    public void setShowLunarNoon(boolean value) {
+        showLunarNoon = value;
+        if (card_adapter != null)
+        {
+            long date = getData().calendar().getTimeInMillis();
+            initAdapter(getContext());
+            onSizeChanged(getWidth(), getHeight(), getWidth(), getHeight());
+            scrollToDate(date);
+        }
+    }
+    private boolean showLunarNoon = AppSettings.PREF_DEF_UI_SHOWLUNARNOON;
 
     public int getItemsPerDay() {
         return card_adapter.getItemsPerDay();
@@ -343,8 +376,11 @@ public class MoonRiseSetView1 extends LinearLayout
         @SuppressLint("UseSparseArrays")
         private final HashMap<Integer, SuntimesMoonData> data = new HashMap<>();
 
-        public MoonRiseSetAdapter(Context context) {
+        public MoonRiseSetAdapter(Context context, boolean showLunarNoon) {
             contextRef = new WeakReference<>(context);
+            allEvents = (showLunarNoon
+                    ? new MoonRiseSetEvent[] { MoonRiseSetEvent.MOONRISE, MoonRiseSetEvent.MOONNOON, MoonRiseSetEvent.MOONSET, MoonRiseSetEvent.MOONNIGHT }
+                    : new MoonRiseSetEvent[] { MoonRiseSetEvent.MOONRISE, MoonRiseSetEvent.MOONSET });
             initData(context);
             initTheme(context);
         }
@@ -512,7 +548,7 @@ public class MoonRiseSetView1 extends LinearLayout
         protected MoonRiseSetEvent[] getAllEvents() {
             return allEvents;
         }
-        private final MoonRiseSetEvent[] allEvents = new MoonRiseSetEvent[] { MoonRiseSetEvent.MOONRISE, MoonRiseSetEvent.MOONNOON, MoonRiseSetEvent.MOONSET, MoonRiseSetEvent.MOONNIGHT };
+        private final MoonRiseSetEvent[] allEvents;
 
         protected MoonRiseSetEvent getFirstEvent(SuntimesMoonData d) {
             return MoonRiseSetEvent.findFirstEvent(d, getAllEvents());

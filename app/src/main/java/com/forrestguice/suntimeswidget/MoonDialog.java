@@ -536,10 +536,9 @@ public class MoonDialog extends BottomSheetDialogFragment
 
     protected void toggleLunarNoon(Context context)
     {
-        WidgetSettings.loadShowNoonPref();
-        // TODO: get existing setting
-        // TODO: save toggled setting
-        // TODO: apply the setting (update the adapter)
+        boolean value = AppSettings.loadShowLunarNoonPref(context);
+        AppSettings.saveShowLunarNoonPref(context, !value);
+        moonriseset.setShowLunarNoon(!value);
     }
 
     private final View.OnClickListener onMenuClicked = new View.OnClickListener() {
@@ -579,7 +578,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         Menu menu = popup.getMenu();
         MenuItem lunarNoonItem = menu.findItem(R.id.action_lunarnoon_show);
         if (lunarNoonItem != null) {
-            lunarNoonItem.setChecked(true);    // TODO: from settings
+            lunarNoonItem.setChecked(AppSettings.loadShowLunarNoonPref(context));
         }
     }
     private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()

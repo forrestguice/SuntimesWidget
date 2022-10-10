@@ -1010,6 +1010,10 @@
     <string name="configLabel_ui_showmoon">Show Moon</string>
     <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>
 
+    <!-- App Setting: Show Lunar Noon -->
+    <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
@@ -2067,6 +2071,7 @@
 
     <string name="def_app_ui_showwarnings" translatable="false">true</string>
     <string name="def_app_ui_showmoon" translatable="false">true</string>
+    <string name="def_app_ui_showmoon_noon" translatable="false">false</string>
     <string name="def_app_ui_showequinox" translatable="false">true</string>
     <string name="def_app_ui_showlightmap" translatable="false">true</string>
     <string name="def_app_ui_showgoldhour" translatable="false">true</string>
