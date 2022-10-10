@@ -352,8 +352,9 @@ public class MoonRiseSetView1 extends LinearLayout
         }
 
         public int getItemsPerDay() {
-            return 2;
+            return itemsPerDay;
         }
+        protected int itemsPerDay = 2;
 
         @Override
         public MoonRiseSetField onCreateViewHolder(ViewGroup parent, int viewType)
@@ -372,13 +373,11 @@ public class MoonRiseSetView1 extends LinearLayout
                 return;
             }
 
-            holder.setShowPosition(showPosition);   // option must be set before binding data
-
             SuntimesMoonData d = initData(context, position);
-            holder.onBindDataToPosition(context, d, position);
+            holder.setShowPosition(showPosition);   // option must be set before binding data
+            holder.onBindDataToPosition(context, d, position, getEventAt(d, position));
 
-            Calendar event = ((holder.eventID != null && holder.eventID.equals(SolarEvents.MOONRISE.name()))
-                    ? d.moonriseCalendarToday() : d.moonsetCalendarToday());
+            Calendar event = MoonRiseSetEvent.getCalendarForEvent(d, holder.eventID);
             boolean isAgo = d.now().after(event);
             themeViews(context, holder, isAgo);
             if (event != null) {
@@ -448,18 +447,18 @@ public class MoonRiseSetView1 extends LinearLayout
 
         public SuntimesMoonData initData( Context context, int position )
         {
-            int offset = (position - CENTER_POSITION) % 2;
+            int offset = (position - CENTER_POSITION) % itemsPerDay;
             int position0 = position;
             if (offset > 0) {
                 position0 = position - (offset);
             } else if (offset < 0) {
-                position0 = position - (2 + (offset));
+                position0 = position - (itemsPerDay + (offset));
             }
 
             SuntimesMoonData d = data.get(position0);
             if (d == null) {
                 d = createData(context, position0);
-                for (int i=0; i<2; i++) {
+                for (int i=0; i<itemsPerDay; i++) {
                     data.put(position0 + i, d);
                 }
             }
@@ -497,18 +496,28 @@ public class MoonRiseSetView1 extends LinearLayout
 
         public static boolean isRising(SuntimesMoonData d) {
             Calendar rising = d.moonriseCalendarToday();
-            return (rising != null && rising.before(d.moonsetCalendarToday()));
+            return (rising != null && rising.before(d.moonsetCalendarToday()));    // TODO
+        }
+
+        protected MoonRiseSetEvent getEventAt(SuntimesMoonData d, int position)
+        {
+            int offset = (position - MoonRiseSetAdapter.CENTER_POSITION) % itemsPerDay;
+            if (MoonRiseSetAdapter.isRising(d)) {                                                   // TODO
+                return (offset == 0 ? MoonRiseSetEvent.MOONRISE : MoonRiseSetEvent.MOONSET);
+            } else {
+                return (offset == 0 ? MoonRiseSetEvent.MOONSET : MoonRiseSetEvent.MOONRISE);
+            }
         }
 
         public int getPositionForDate(Context context, long datetime)
         {
             SuntimesMoonData d = initData(context, CENTER_POSITION);
-            Calendar dateCenter = isRising(d) ? d.moonriseCalendarToday() : d.moonsetCalendarToday();
+            Calendar dateCenter = MoonRiseSetEvent.getCalendarForEvent(d, getEventAt(d, CENTER_POSITION));
             if (dateCenter != null)
             {
                 long deltaMs = (datetime - dateCenter.getTimeInMillis());
                 double deltaDays = deltaMs / (1000d * 60d * 60d * 24d);
-                return (CENTER_POSITION + (2 * (int)Math.floor(deltaDays)));
+                return (CENTER_POSITION + (itemsPerDay * (int)Math.floor(deltaDays)));
             }
             return CENTER_POSITION;
         }
@@ -519,7 +528,7 @@ public class MoonRiseSetView1 extends LinearLayout
         private boolean showPosition = false;
 
         private void attachClickListeners(@NonNull MoonRiseSetField holder, int position) {
-            holder.layout.setOnClickListener(onItemClick(position, holder.eventID));
+            holder.layout.setOnClickListener(onItemClick(position, holder.eventID.name()));
         }
 
         private void detachClickListeners(@NonNull MoonRiseSetField holder) {
@@ -552,18 +561,17 @@ public class MoonRiseSetView1 extends LinearLayout
      */
     public static class MoonRiseSetField extends RecyclerView.ViewHolder
     {
-        private SuntimesUtils utils = new SuntimesUtils();
-
         public int position = RecyclerView.NO_POSITION;
-        public String eventID = null;
+        public MoonRiseSetEvent eventID = null;
 
         public View layout;
         public ImageView iconView;
         public TextView timeView;
         public TextView positionView;
-        protected boolean rising = true;
+
         public Drawable icon_rising, icon_setting;
         public int color_rising, color_setting;
+        private final SuntimesUtils utils = new SuntimesUtils();
 
         public static int getLayoutID() {
             return R.layout.info_time_moonriseset;
@@ -590,31 +598,41 @@ public class MoonRiseSetView1 extends LinearLayout
             a.recycle();
         }
 
-        public void onBindDataToPosition(Context context, SuntimesMoonData data, int position)
+        protected Drawable getIconForEvent(@Nullable MoonRiseSetEvent event)
+        {
+            if (event == null) {
+                return null;
+            }
+            switch (event) {
+                //case MOONNOON: return icon_noon;    // TODO
+                //case MOONNIGHT: return icon_midnight;
+                case MOONSET: return icon_setting;
+                case MOONRISE: default: return icon_rising;
+            }
+        }
+
+        protected int getColorForEvent(@Nullable MoonRiseSetEvent event)
+        {
+            if (event == null) {
+                return Color.TRANSPARENT;
+            }
+            switch (event) {
+                case MOONNIGHT: case MOONSET: return color_setting;
+                case MOONNOON: case MOONRISE: default: return color_rising;
+            }
+        }
+
+        public void onBindDataToPosition(Context context, @Nullable SuntimesMoonData data, int position, @Nullable MoonRiseSetEvent eventID)
         {
             this.position = position;
+            this.eventID = eventID;
 
-            SuntimesCalculator calculator = data.calculator();
-            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-            boolean isEven = ((position - MoonRiseSetAdapter.CENTER_POSITION) % 2 == 0);
-
-            Calendar event;
-            Drawable icon;
-            if (MoonRiseSetAdapter.isRising(data))
+            Calendar event = MoonRiseSetEvent.getCalendarForEvent(data, eventID);
+            iconView.setBackground(getIconForEvent(eventID));
+            updateField(context, event, WidgetSettings.loadShowSecondsPref(context, 0));
+            if (positionView.getVisibility() == VISIBLE && data != null)
             {
-                eventID = (isEven ? SolarEvents.MOONRISE.name() : SolarEvents.MOONSET.name());
-                event = (isEven ? data.moonriseCalendarToday() : data.moonsetCalendarToday());
-                icon = (isEven ? icon_rising : icon_setting);
-
-            } else {
-                eventID = (isEven ? SolarEvents.MOONSET.name() : SolarEvents.MOONRISE.name());
-                event = isEven ? data.moonsetCalendarToday() : data.moonriseCalendarToday();
-                icon = isEven ? icon_setting : icon_rising;
-            }
-
-            iconView.setBackground(icon);
-            updateField(context, event, showSeconds);
-            if (positionView.getVisibility() == VISIBLE) {
+                SuntimesCalculator calculator = data.calculator();
                 updateField(context, ((event != null) ? calculator.getMoonPosition(event) : null));
             }
             layout.setVisibility(event != null ? VISIBLE : INVISIBLE);
@@ -628,7 +646,9 @@ public class MoonRiseSetView1 extends LinearLayout
 
         public void themeViews(SuntimesTheme theme)
         {
-            int color = (rising ? theme.getMoonriseTextColor() : theme.getMoonsetTextColor());
+            this.color_rising = theme.getMoonriseTextColor();
+            this.color_setting = theme.getMoonsetTextColor();
+            int color = getColorForEvent(eventID);
             timeView.setTextColor(color);
             timeView.setTextSize(theme.getTimeSizeSp());
             timeView.setTypeface(timeView.getTypeface(), theme.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL);
@@ -716,12 +736,34 @@ public class MoonRiseSetView1 extends LinearLayout
     }
 
     /**
+     * MoonRiseSetEvent
+     */
+    public static enum MoonRiseSetEvent
+    {
+        MOONRISE, MOONNOON, MOONSET, MOONNIGHT;    // needs to match enum values from SolarEvents
+        private MoonRiseSetEvent() {}
+
+        public static Calendar getCalendarForEvent(@Nullable SuntimesMoonData data, @Nullable MoonRiseSetEvent event)
+        {
+            if (event == null || data == null) {
+                return null;
+            }
+            switch (event) {
+                case MOONNOON: return data.getLunarNoonToday();
+                case MOONNIGHT: return data.getLunarMidnightToday();
+                case MOONSET: return data.moonsetCalendarToday();
+                case MOONRISE: default: return data.moonriseCalendarToday();
+            }
+        }
+    }
+
+    /**
      * MoonRiseSetDivider1
      */
     private class MoonRiseSetDivider1 extends MoonRiseSetDivider
     {
         protected final Paint paintText = new Paint();
-        private int[] text_offset = new int[] {0, 0};
+        protected final int[] text_offset = new int[] {0, 0};
 
         public MoonRiseSetDivider1(Context context, int centerPosition, int itemsPerDay)
         {
