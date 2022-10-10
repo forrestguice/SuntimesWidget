@@ -52,9 +52,9 @@
         <LinearLayout android:id="@+id/moondialog_actionbar" android:orientation="horizontal"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone">
+            android:visibility="visible">
 
-            <ImageButton android:id="@+id/media_reset"
+            <ImageButton android:id="@+id/media_reset" android:visibility="gone"
                 android:layout_width="48dp" android:layout_height="48dp"
                 android:padding="12dp" android:background="?attr/selectableItemBackground"
                 android:contentDescription="@string/worldmap_dialog_action_reset"

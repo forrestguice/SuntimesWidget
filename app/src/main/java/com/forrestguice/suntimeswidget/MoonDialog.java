@@ -534,6 +534,14 @@ public class MoonDialog extends BottomSheetDialogFragment
         //moonapsis.scrollToCenter();
     }
 
+    protected void toggleLunarNoon(Context context)
+    {
+        WidgetSettings.loadShowNoonPref();
+        // TODO: get existing setting
+        // TODO: save toggled setting
+        // TODO: apply the setting (update the adapter)
+    }
+
     private final View.OnClickListener onMenuClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -566,8 +574,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         menu.show();
         return true;
     }
-    private void updateOverflowMenu(Context context, PopupMenu popup) {
-        /* EMPTY */
+    private void updateOverflowMenu(Context context, PopupMenu popup)
+    {
+        Menu menu = popup.getMenu();
+        MenuItem lunarNoonItem = menu.findItem(R.id.action_lunarnoon_show);
+        if (lunarNoonItem != null) {
+            lunarNoonItem.setChecked(true);    // TODO: from settings
+        }
     }
     private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
@@ -576,6 +589,10 @@ public class MoonDialog extends BottomSheetDialogFragment
         {
             switch (item.getItemId())
             {
+                case R.id.action_lunarnoon_show:
+                    toggleLunarNoon(getContext());
+                    return true;
+
                 case R.id.action_help:
                     showHelp(getContext());
                     return true;
