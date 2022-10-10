@@ -36,6 +36,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Pair;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -765,14 +767,31 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     }
 
+    @SuppressLint("ResourceType")
     protected void showHelp(Context context)
     {
-        String topic1 = context.getString(R.string.help_general_moondialog);
-        //String topic2 = context.getString(R.string.help_general_);
-        String helpContent = topic1;  // context.getString(R.string.help_general2, topic1, topic2);
+        int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
+        int[] iconAttrs = { R.attr.moonriseColor, R.attr.moonsetColor, R.attr.moonnoonIcon, R.attr.moonnightIcon };
+        TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
+        int moonriseColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.moonIcon_color_rising_dark));
+        int moonsetColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.moonIcon_color_setting_dark));
+        ImageSpan risingIcon = SuntimesUtils.createImageSpan(context, R.drawable.svg_sunrise, iconSize, iconSize, moonriseColor);
+        ImageSpan settingIcon = SuntimesUtils.createImageSpan(context, R.drawable.svg_sunset, iconSize, iconSize, moonsetColor);
+        ImageSpan noonIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_moon_noon), iconSize, iconSize/2, moonriseColor);
+        ImageSpan midnightIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_moon_night), iconSize, iconSize/2, moonsetColor);
+        typedArray.recycle();
+
+        SuntimesUtils.ImageSpanTag[] helpTags = {
+                new SuntimesUtils.ImageSpanTag("[Icon Rising]", risingIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Setting]", settingIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Noon]", noonIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Midnight]", midnightIcon),
+        };
+        String helpString = getString(R.string.help_general_moondialog);
+        SpannableStringBuilder helpSpan = SuntimesUtils.createSpan(context, helpString, helpTags);
 
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(helpContent);
+        helpDialog.setContent(helpSpan);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 

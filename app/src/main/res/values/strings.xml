@@ -1912,7 +1912,9 @@
     ]]></string>
 
     <string name="help_general_moondialog"><![CDATA[
-          <b>TODO:</b> TODO.<br/><br/>
+          Displays:\n
+          [Icon Rising] moonrise, [Icon Setting] moonset, [Icon Noon] lunar noon, and [Icon Midnight] lunar midnight.\n
+          \n
     ]]></string>   <!-- TODO -->
 
     <string name="help_general_timeMode2"><![CDATA[
