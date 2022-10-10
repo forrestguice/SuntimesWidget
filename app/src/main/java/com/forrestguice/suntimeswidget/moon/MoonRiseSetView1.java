@@ -119,12 +119,11 @@ public class MoonRiseSetView1 extends LinearLayout
         card_view.setItemViewCacheSize(7);
         card_view.setLayoutManager(card_layout);
 
-        card_view.addItemDecoration(new MoonRiseSetDivider1(context, MoonRiseSetAdapter.CENTER_POSITION));
-
         card_adapter = new MoonRiseSetAdapter(context);
         card_adapter.setAdapterListener(card_listener);
         card_adapter.setShowPosition(showPosition);
 
+        card_view.addItemDecoration(new MoonRiseSetDivider1(context, MoonRiseSetAdapter.CENTER_POSITION, card_adapter.getItemsPerDay()));
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(MoonRiseSetAdapter.CENTER_POSITION);
 
@@ -350,6 +349,10 @@ public class MoonRiseSetView1 extends LinearLayout
         public void setItemWidth( int pixels ) {
             itemWidth = pixels;
             notifyDataSetChanged();
+        }
+
+        public int getItemsPerDay() {
+            return 2;
         }
 
         @Override
@@ -712,16 +715,22 @@ public class MoonRiseSetView1 extends LinearLayout
         }
     }
 
+    /**
+     * MoonRiseSetDivider1
+     */
     private class MoonRiseSetDivider1 extends MoonRiseSetDivider
     {
         protected final Paint paintText = new Paint();
+        private int[] text_offset = new int[] {0, 0};
 
-        public MoonRiseSetDivider1(Context context, int centerPosition)
+        public MoonRiseSetDivider1(Context context, int centerPosition, int itemsPerDay)
         {
-            super(context, centerPosition);
+            super(context, centerPosition, itemsPerDay);
             paintText.setAntiAlias(true);
             paintText.setTextSize(14);
             paintText.setTypeface(Typeface.DEFAULT_BOLD);
+            text_offset[0] = SuntimesUtils.dpToPixels(getContext(), 8);   // 8dp (from left side)
+            text_offset[1] = SuntimesUtils.dpToPixels(getContext(), 2);   // 2dp (from bottom)
         }
 
         @Override
@@ -740,7 +749,7 @@ public class MoonRiseSetView1 extends LinearLayout
             }
             paintText.setColor(textColor);
 
-            c.drawText(dateText, x + SuntimesUtils.dpToPixels(getContext(), 8), y - SuntimesUtils.dpToPixels(getContext(), 2), paintText);
+            c.drawText(dateText, x + text_offset[0], y - text_offset[1], paintText);
         }
     }
 
@@ -751,11 +760,18 @@ public class MoonRiseSetView1 extends LinearLayout
     {
         protected Drawable divider;
         protected int centerPosition;
+        protected int itemsPerDay;
         private final Rect bounds = new Rect();
 
-        public MoonRiseSetDivider(Context context, int centerPosition)
+        public MoonRiseSetDivider(Context context, int centerPosition, int itemsPerDay)
         {
             this.centerPosition = centerPosition;
+            this.itemsPerDay = itemsPerDay;
+            initDrawables(context);
+        }
+
+        protected void initDrawables(Context context)
+        {
             TypedArray a = context.obtainStyledAttributes(new int[] { android.R.attr.listDivider });
             divider = a.getDrawable(0);
             a.recycle();
@@ -787,12 +803,14 @@ public class MoonRiseSetView1 extends LinearLayout
                 int position = parent.getChildAdapterPosition(child);
                 parent.getLayoutManager().getDecoratedBoundsWithMargins(child, bounds);
 
-                if ((position - centerPosition) % 2 == 0) {
+                int offset = Math.abs((position - centerPosition) % itemsPerDay);
+
+                if (offset == 0) {
                     int left = bounds.left + Math.round(ViewCompat.getTranslationX(child));
                     drawHeader(c, position, left, top);
                     drawFooter(c, position, left, bottom);
 
-                } else {
+                } else if (offset == (itemsPerDay - 1)) {
                     int right = bounds.right + Math.round(ViewCompat.getTranslationX(child));
                     int left = right - divider.getIntrinsicWidth();
                     divider.setBounds(left, top, right, bottom);
