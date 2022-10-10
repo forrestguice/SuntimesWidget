@@ -47,6 +47,8 @@
     <attr name="moonriseColor" format="reference" />
     <attr name="moonsetIcon" format="reference" />
     <attr name="moonsetColor" format="reference" />
+    <attr name="moonnoonIcon" format="reference" />
+    <attr name="moonnightIcon" format="reference" />
 
     <attr name="moonPhaseIcon0" format="reference" />
     <attr name="moonPhaseIcon1" format="reference" />
