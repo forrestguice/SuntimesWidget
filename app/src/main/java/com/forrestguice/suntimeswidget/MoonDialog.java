@@ -467,7 +467,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     protected void scrollAllToMoonRiseSet(int position)
     {
         setData(moonriseset.getData(position));
-        boolean isCentered = (position == MoonRiseSetView1.MoonRiseSetAdapter.CENTER_POSITION || position == MoonRiseSetView1.MoonRiseSetAdapter.CENTER_POSITION + 1);
+        boolean isCentered = (position >= MoonRiseSetView1.MoonRiseSetAdapter.CENTER_POSITION && position < MoonRiseSetView1.MoonRiseSetAdapter.CENTER_POSITION + moonriseset.getItemsPerDay());
         if (isCentered)
         {
             showPositionAt(null, false);  // set position without triggering normal update..
