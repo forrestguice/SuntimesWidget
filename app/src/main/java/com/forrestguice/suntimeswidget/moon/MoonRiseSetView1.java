@@ -216,6 +216,10 @@ public class MoonRiseSetView1 extends LinearLayout
     }
     private boolean showPosition = false;
 
+    public int getItemsPerDay() {
+        return card_adapter.getItemsPerDay();
+    }
+
     public SuntimesMoonData getData() {
         return card_adapter.initData(getContext(), getDataPosition());
     }
@@ -351,11 +355,6 @@ public class MoonRiseSetView1 extends LinearLayout
             notifyDataSetChanged();
         }
 
-        public int getItemsPerDay() {
-            return itemsPerDay;
-        }
-        protected int itemsPerDay = 2;
-
         @Override
         public MoonRiseSetField onCreateViewHolder(ViewGroup parent, int viewType)
         {
@@ -447,12 +446,14 @@ public class MoonRiseSetView1 extends LinearLayout
 
         public SuntimesMoonData initData( Context context, int position )
         {
+            int itemsPerDay = getItemsPerDay();
             int offset = (position - CENTER_POSITION) % itemsPerDay;
+
             int position0 = position;
             if (offset > 0) {
-                position0 = position - (offset);
+                position0 = position - offset;
             } else if (offset < 0) {
-                position0 = position - (itemsPerDay + (offset));
+                position0 = position - (itemsPerDay + offset);
             }
 
             SuntimesMoonData d = data.get(position0);
@@ -484,29 +485,48 @@ public class MoonRiseSetView1 extends LinearLayout
                     return null;
                 }
 
-                double dayMillis = 24d * 60d * 60d * 1000;
-                int rawOffset = position - CENTER_POSITION;
-                double offset = (rawOffset >> 1) * dayMillis;
-                date.setTimeInMillis((long)(date.getTimeInMillis() + offset));
+                date.setTimeInMillis((long)(date.getTimeInMillis() + getOffsetMillis(position)));
                 d.setTodayIs(date);
             }
             d.calculate();
             return d;
         }
 
-        public static boolean isRising(SuntimesMoonData d) {
-            Calendar rising = d.moonriseCalendarToday();
-            return (rising != null && rising.before(d.moonsetCalendarToday()));    // TODO
+        /*protected double getOffsetMillis(int position)
+        {
+            double dayMillis = 24d * 60d * 60d * 1000;
+            int rawOffset = position - CENTER_POSITION;
+            return (rawOffset >> 1) * dayMillis;
+        }*/
+
+        protected double getOffsetMillis(int position)
+        {
+            double dayMillis = 24d * 60d * 60d * 1000;
+            int rawOffset = position - CENTER_POSITION;
+            return ((rawOffset / (1d * getItemsPerDay())) * dayMillis);
+        }
+
+        public int getItemsPerDay() {
+            return allEvents.length;
+        }
+        protected MoonRiseSetEvent[] getAllEvents() {
+            return allEvents;
+        }
+        private final MoonRiseSetEvent[] allEvents = new MoonRiseSetEvent[] { MoonRiseSetEvent.MOONRISE, MoonRiseSetEvent.MOONNOON, MoonRiseSetEvent.MOONSET, MoonRiseSetEvent.MOONNIGHT };
+
+        protected MoonRiseSetEvent getFirstEvent(SuntimesMoonData d) {
+            return MoonRiseSetEvent.findFirstEvent(d, getAllEvents());
         }
 
         protected MoonRiseSetEvent getEventAt(SuntimesMoonData d, int position)
         {
-            int offset = (position - MoonRiseSetAdapter.CENTER_POSITION) % itemsPerDay;
-            if (MoonRiseSetAdapter.isRising(d)) {                                                   // TODO
-                return (offset == 0 ? MoonRiseSetEvent.MOONRISE : MoonRiseSetEvent.MOONSET);
-            } else {
-                return (offset == 0 ? MoonRiseSetEvent.MOONSET : MoonRiseSetEvent.MOONRISE);
+            MoonRiseSetEvent[] allEvents = getAllEvents();
+            int firstEvent = MoonRiseSetEvent.getEventOrdinal(allEvents, getFirstEvent(d));
+            int offset = (position - MoonRiseSetAdapter.CENTER_POSITION) % allEvents.length;
+            if (offset < 0) {
+                offset += allEvents.length;
             }
+            return allEvents[(firstEvent + offset) % allEvents.length];
         }
 
         public int getPositionForDate(Context context, long datetime)
@@ -517,7 +537,7 @@ public class MoonRiseSetView1 extends LinearLayout
             {
                 long deltaMs = (datetime - dateCenter.getTimeInMillis());
                 double deltaDays = deltaMs / (1000d * 60d * 60d * 24d);
-                return (CENTER_POSITION + (itemsPerDay * (int)Math.floor(deltaDays)));
+                return (CENTER_POSITION + (getItemsPerDay() * (int)Math.floor(deltaDays)));
             }
             return CENTER_POSITION;
         }
@@ -757,6 +777,31 @@ public class MoonRiseSetView1 extends LinearLayout
                 case MOONRISE: default: return data.moonriseCalendarToday();
             }
         }
+
+        public static MoonRiseSetEvent findFirstEvent(SuntimesMoonData d, MoonRiseSetEvent[] events)
+        {
+            MoonRiseSetEvent firstEvent = events[0];
+            Calendar firstCalendar = MoonRiseSetEvent.getCalendarForEvent(d, events[0]);
+            for (int i=1; i<events.length; i++)
+            {
+                Calendar calendar = MoonRiseSetEvent.getCalendarForEvent(d, events[i]);
+                if (calendar != null && calendar.before(firstCalendar)) {
+                    firstEvent = events[i];
+                    firstCalendar = calendar;
+                }
+            }
+            return firstEvent;
+        }
+
+        public static int getEventOrdinal(MoonRiseSetEvent[] events, MoonRiseSetEvent event) {
+            for (int i=0; i<events.length; i++) {
+                if (events[i] == event) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
     }
 
     /**
@@ -847,7 +892,10 @@ public class MoonRiseSetView1 extends LinearLayout
                 int position = parent.getChildAdapterPosition(child);
                 parent.getLayoutManager().getDecoratedBoundsWithMargins(child, bounds);
 
-                int offset = Math.abs((position - centerPosition) % itemsPerDay);
+                int offset = (position - centerPosition) % itemsPerDay;
+                if (offset < 0) {
+                    offset += itemsPerDay;
+                }
 
                 if (offset == 0) {
                     int left = bounds.left + Math.round(ViewCompat.getTranslationX(child));
