@@ -569,7 +569,7 @@ public class MoonRiseSetView1 extends LinearLayout
         public TextView timeView;
         public TextView positionView;
 
-        public Drawable icon_rising, icon_setting;
+        public Drawable icon_rising = null, icon_setting = null, icon_noon = null, icon_midnight = null;
         public int color_rising, color_setting;
         private final SuntimesUtils utils = new SuntimesUtils();
 
@@ -590,11 +590,13 @@ public class MoonRiseSetView1 extends LinearLayout
 
         protected void initDrawables(Context context)
         {
-            TypedArray a = context.obtainStyledAttributes(new int[] { R.attr.moonriseIcon, R.attr.moonsetIcon, R.attr.moonriseColor, R.attr.moonsetColor });
+            TypedArray a = context.obtainStyledAttributes(new int[] { R.attr.moonriseIcon, R.attr.moonsetIcon, R.attr.moonriseColor, R.attr.moonsetColor, R.attr.moonnoonIcon, R.attr.moonnightIcon });
             icon_rising = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_moon_rise)).mutate();
             icon_setting = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.ic_moon_set)).mutate();
             color_rising = ContextCompat.getColor(context, a.getResourceId(2, R.color.moonIcon_color_rising));
             color_setting = ContextCompat.getColor(context, a.getResourceId(3, R.color.moonIcon_color_setting));
+            icon_noon = ContextCompat.getDrawable(context, a.getResourceId(4, R.drawable.ic_moon_noon)).mutate();
+            icon_midnight = ContextCompat.getDrawable(context, a.getResourceId(5, R.drawable.ic_moon_night)).mutate();
             a.recycle();
         }
 
@@ -604,8 +606,8 @@ public class MoonRiseSetView1 extends LinearLayout
                 return null;
             }
             switch (event) {
-                //case MOONNOON: return icon_noon;    // TODO
-                //case MOONNIGHT: return icon_midnight;
+                case MOONNOON: return icon_noon;
+                case MOONNIGHT: return icon_midnight;
                 case MOONSET: return icon_setting;
                 case MOONRISE: default: return icon_rising;
             }
