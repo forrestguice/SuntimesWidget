@@ -72,8 +72,8 @@ public enum SolarEvents
     EQUINOX_AUTUMNAL("equinox", "autumnal equinox", R.attr.fallColor, 3, false),                                      // 23
     SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 3, true),                                      // 24
 
-    MOONNOON("lunar noon", "lunar noon", R.attr.moonriseIcon, 1, true),                                            // 25
-    MOONNIGHT("lunar midnight", "lunar midnight", R.attr.moonsetIcon, 1, false),                                  // 26
+    MOONNOON("lunar noon", "lunar noon", R.attr.moonnoonIcon, 1, true),                                            // 25
+    MOONNIGHT("lunar midnight", "lunar midnight", R.attr.moonnightIcon, 1, false),                                  // 26
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;

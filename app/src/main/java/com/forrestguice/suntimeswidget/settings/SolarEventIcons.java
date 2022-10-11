@@ -40,12 +40,15 @@ public class SolarEventIcons
         switch (event)
         {
             case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case MORNING_CIVIL:
-            case MORNING_BLUE4: case SUNRISE: case MORNING_GOLDEN: case MOONRISE: case MOONNOON:
+            case MORNING_BLUE4: case SUNRISE: case MORNING_GOLDEN: case MOONRISE:
                 return R.drawable.svg_sunrise;
 
             case EVENING_GOLDEN: case SUNSET: case EVENING_BLUE4: case EVENING_CIVIL: case EVENING_BLUE8:
-            case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL: case MOONSET: case MOONNIGHT:
+            case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL: case MOONSET:
                 return R.drawable.svg_sunset;
+
+            case MOONNOON: return R.drawable.svg_moon_noon;
+            case MOONNIGHT: return R.drawable.svg_moon_night;
 
             case FIRSTQUARTER: return (northward) ? R.drawable.svg_moon_q3 : R.drawable.svg_moon_q1;
             case THIRDQUARTER: return (northward) ? R.drawable.svg_moon_q1 : R.drawable.svg_moon_q3;
