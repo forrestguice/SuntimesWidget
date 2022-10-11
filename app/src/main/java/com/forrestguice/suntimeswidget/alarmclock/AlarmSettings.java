@@ -313,7 +313,7 @@ public class AlarmSettings
         }
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        prefs.putString(key_uri, uri.toString());
+        prefs.putString(key_uri, uri != null ? uri.toString() : null);
         prefs.putString(key_name, getRingtoneName(context, uri));
         prefs.apply();
         return uri;
