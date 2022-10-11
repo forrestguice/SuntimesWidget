@@ -730,6 +730,12 @@ public class MoonDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_moon:
+                    //moonriseset.setViewListener(null);
+                    showPositionAt(itemTime);
+                    //moonriseset.setViewListener(moonriseset_listener);
+                    return true;
+
                 case R.id.action_worldmap:
                     if (dialogListener != null) {
                         dialogListener.onShowMap(itemTime);
