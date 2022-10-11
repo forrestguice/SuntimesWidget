@@ -609,10 +609,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         SuntimesMoonData data = adapter.initData(context, position);
         if (data != null && eventID != null)
         {
-            Calendar date = eventID.equals(SolarEvents.MOONRISE.name())
-                    ? data.moonriseCalendarToday()
-                    : eventID.equals(SolarEvents.MOONSET.name())
-                        ? data.moonsetCalendarToday() : data.moonriseCalendarToday();
+            Calendar date = MoonRiseSetView1.MoonRiseSetEvent.getCalendarForEvent(data, eventID);
             if (date != null)
             {
                 PopupMenu menu = createMenu(context, view, R.menu.moonriseset_context, onContextMenuClick, onMoonRiseSetContextMenuDismissed);

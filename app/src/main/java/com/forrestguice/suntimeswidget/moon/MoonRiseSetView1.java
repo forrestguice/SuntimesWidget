@@ -801,6 +801,18 @@ public class MoonRiseSetView1 extends LinearLayout
         MOONRISE, MOONNOON, MOONSET, MOONNIGHT;    // needs to match enum values from SolarEvents
         private MoonRiseSetEvent() {}
 
+        public static Calendar getCalendarForEvent(@Nullable SuntimesMoonData data, @Nullable String eventID)
+        {
+            if (eventID == null || data == null) {
+                return null;
+            }
+            try {
+                return getCalendarForEvent(data, MoonRiseSetEvent.valueOf(eventID));
+            } catch (IllegalArgumentException e) {
+                Log.w("MoonRiseSetEvent", "Unrecognized eventID: " + eventID + ": " + e);
+                return getCalendarForEvent(data, (MoonRiseSetEvent) null);
+            }
+        }
         public static Calendar getCalendarForEvent(@Nullable SuntimesMoonData data, @Nullable MoonRiseSetEvent event)
         {
             if (event == null || data == null) {
