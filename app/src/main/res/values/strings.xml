@@ -226,7 +226,7 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
     <!--<string name="date_any">Any Date</string>-->   <!-- no particular date; unset date -->
 
-    <string name="share_format">Copied.. <xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
     <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- location display formats -->
@@ -1912,10 +1912,10 @@
     ]]></string>
 
     <string name="help_general_moondialog"><![CDATA[
-          Displays:\n
-          [Icon Rising] moonrise, [Icon Setting] moonset, [Icon Noon] lunar noon, and [Icon Midnight] lunar midnight.\n
-          \n
-    ]]></string>   <!-- TODO -->
+          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
+          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
+          \n\nShare [Icon Share] will copy text to the clipboard.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
 
     <string name="help_general_timeMode2"><![CDATA[
           <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
