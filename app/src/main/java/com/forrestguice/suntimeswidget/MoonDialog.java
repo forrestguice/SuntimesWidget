@@ -245,25 +245,11 @@ public class MoonDialog extends BottomSheetDialogFragment
 
         text_dialogTime = (TextView) dialogView.findViewById(R.id.info_time_moon);
         text_dialogTimeOffset = (TextView) dialogView.findViewById(R.id.info_time_offset);
-        /*if (dialogTime != null) {
-            dialogTime.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showTimeZoneMenu(getContext(), v);
-                }
-            });
-        }*/
 
         moonriseset = (MoonRiseSetView1) dialogView.findViewById(R.id.moonriseset_view);
-        moonriseset.setViewListener(moonriseset_listener);
-
         currentphase = (MoonPhaseView1) dialogView.findViewById(R.id.moonphase_view);
-
         moonphases = (MoonPhasesView1) dialogView.findViewById(R.id.moonphases_view);
-        moonphases.setViewListener(moonphases_listener);
-
         moonapsis = (MoonApsisView) dialogView.findViewById(R.id.moonapsis_view);
-        moonapsis.setViewListener(moonapsis_listener);
 
         moondistance = (TextView) dialogView.findViewById(R.id.moonapsis_current_distance);
         moondistance_label = (TextView) dialogView.findViewById(R.id.moonapsis_current_label);
@@ -305,6 +291,24 @@ public class MoonDialog extends BottomSheetDialogFragment
         if (context != null) {
             currentphase.adjustColumnWidth(context.getResources().getDimensionPixelSize(R.dimen.moonphase_column0_width));
         }
+        attachListeners();
+    }
+
+    protected void attachListeners()
+    {
+        moonriseset.setViewListener(moonriseset_listener);
+        currentphase.setOnClickListener(currentphase_onClickListener);
+        currentphase.setOnLongClickListener(currentphase_onLongClickListener);
+        moonphases.setViewListener(moonphases_listener);
+        moonapsis.setViewListener(moonapsis_listener);
+    }
+    protected void detachListeners()
+    {
+        moonriseset.setViewListener(null);
+        currentphase.setOnClickListener(null);
+        currentphase.setOnLongClickListener(null);
+        moonphases.setViewListener(null);
+        moonapsis.setViewListener(null);
     }
 
     @SuppressLint("ResourceType")
@@ -452,8 +456,10 @@ public class MoonDialog extends BottomSheetDialogFragment
     protected long getNow() {
         return System.currentTimeMillis();
     }
-    protected long getDialogTime() {
-        return (arg_dateTime() != -1 ? arg_dateTime() : getNow());
+    protected long getDialogTime()
+    {
+        long offsetMillis = getOffsetMinutes() * 60 * 1000;
+        return (arg_dateTime() != -1 ? arg_dateTime() : getNow()) + offsetMillis;
     }
     protected  boolean isOffset(long nowMillis) {
         return isOffset(nowMillis, getDialogTime());
@@ -545,6 +551,20 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
+    private final View.OnClickListener currentphase_onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showMediaMenu(getActivity(), v);
+        }
+    };
+    private final View.OnLongClickListener currentphase_onLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            togglePlay();
+            return true;
+        }
+    };
+
     private final View.OnClickListener onPlayClicked = new View.OnClickListener()
     {
         @Override
@@ -621,6 +641,9 @@ public class MoonDialog extends BottomSheetDialogFragment
         return menu;
     }
 
+    /**
+     * Overflow Menu
+     */
     protected boolean showOverflowMenu(final Context context, View view)
     {
         PopupMenu menu = createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick, null);
@@ -657,6 +680,60 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
+    /**
+     * MediaMenu
+     */
+    protected boolean showMediaMenu(final Context context, View view)
+    {
+        PopupMenu menu = createMenu(context, view, R.menu.moonmenu_media, onMediaMenuClick, null);
+        updateMediaMenu(context, menu);
+        menu.show();
+        return true;
+    }
+    private void updateMediaMenu(Context context, PopupMenu popup)
+    {
+        Menu menu = popup.getMenu();
+        MenuItem playItem = menu.findItem(R.id.action_play);
+        if (playItem != null) {
+            playItem.setVisible( !isPlaying() );
+        }
+        MenuItem pauseItem = menu.findItem(R.id.action_pause);
+        if (pauseItem != null) {
+            pauseItem.setVisible( isPlaying() );
+        }
+        MenuItem resetItem = menu.findItem(R.id.action_reset);
+        if (resetItem != null) {
+            resetItem.setEnabled(isOffset(getNow()));
+        }
+    }
+    private PopupMenu.OnMenuItemClickListener onMediaMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            switch (item.getItemId())
+            {
+                case R.id.action_play:
+                    playMap();
+                    return true;
+
+                case R.id.action_pause:
+                    stopMap(false);
+                    return true;
+
+                case R.id.action_reset:
+                    stopMap(true);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
+    /**
+     * ContextMenu
+     */
     protected boolean showContextMenu(final Context context, View view, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID)
     {
         SuntimesMoonData data = adapter.initData(context, position);
@@ -827,7 +904,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     protected void showHelp(Context context)
     {
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
-        int[] iconAttrs = { R.attr.moonriseColor, R.attr.moonsetColor, R.attr.moonnoonIcon, R.attr.moonnightIcon };
+        int[] iconAttrs = { R.attr.moonriseColor, R.attr.moonsetColor, R.attr.moonnoonIcon, R.attr.moonnightIcon, R.attr.icActionShare };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         int moonriseColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.moonIcon_color_rising_dark));
         int moonsetColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.moonIcon_color_setting_dark));
@@ -835,6 +912,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         ImageSpan settingIcon = SuntimesUtils.createImageSpan(context, R.drawable.svg_sunset, iconSize, iconSize, moonsetColor);
         ImageSpan noonIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_moon_noon), iconSize, iconSize/2, moonriseColor);
         ImageSpan midnightIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_moon_night), iconSize, iconSize/2, moonsetColor);
+        ImageSpan shareIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_share), iconSize, iconSize, 0);
         typedArray.recycle();
 
         SuntimesUtils.ImageSpanTag[] helpTags = {
@@ -842,6 +920,7 @@ public class MoonDialog extends BottomSheetDialogFragment
                 new SuntimesUtils.ImageSpanTag("[Icon Setting]", settingIcon),
                 new SuntimesUtils.ImageSpanTag("[Icon Noon]", noonIcon),
                 new SuntimesUtils.ImageSpanTag("[Icon Midnight]", midnightIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Share]", shareIcon),
         };
         String helpString = getString(R.string.help_general_moondialog);
         SpannableStringBuilder helpSpan = SuntimesUtils.createSpan(context, helpString, helpTags);
@@ -911,19 +990,28 @@ public class MoonDialog extends BottomSheetDialogFragment
     public int getOffsetMinutes() {
         return getArguments().getInt(ARG_PLAY_OFFSET);
     }
-    protected void setOffsetMinutes(int value) {
+    public void setOffsetMinutes(int value) {
         getArguments().putInt(ARG_PLAY_OFFSET, value);
         updateViews();
     }
 
-    protected void playMap()
+    public void playMap()
     {
         getArguments().putBoolean(ARG_PLAYING, true);
         //updateViews();  // TODO: start update task
         updateMediaButtons();
     }
 
-    protected void stopMap(boolean reset)
+    public void togglePlay()
+    {
+        if (isPlaying()) {
+            stopMap(false);
+        } else {
+            playMap();
+        }
+    }
+
+    public void stopMap(boolean reset)
     {
         getArguments().putBoolean(ARG_PLAYING, false);
         updateMediaButtons();

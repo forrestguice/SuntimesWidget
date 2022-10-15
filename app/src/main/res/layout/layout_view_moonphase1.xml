@@ -23,7 +23,8 @@
 
         <LinearLayout android:id="@+id/moonphase_layout" android:orientation="vertical"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="2dp" android:layout_marginBottom="2dp" android:weightSum="4">
+            android:layout_marginTop="2dp" android:layout_marginBottom="2dp" android:weightSum="4"
+            android:background="?attr/selectableItemBackground">
 
             <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:orientation="horizontal">
