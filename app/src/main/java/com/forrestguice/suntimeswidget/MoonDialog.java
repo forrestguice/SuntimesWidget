@@ -56,6 +56,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.moon.MoonPhaseView1;
 import com.forrestguice.suntimeswidget.moon.MoonPhasesView1;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView1;
@@ -72,6 +73,8 @@ import java.util.List;
 public class MoonDialog extends BottomSheetDialogFragment
 {
     public static final String ARG_DATETIME = "datetime";
+    public static final String ARG_PLAYING = "playing";
+    public static final String ARG_PLAY_OFFSET = "offsetMinutes";
 
     public static final String DIALOGTAG_HELP = "moon_help";
     public static final String MAPTAG_MOON = "_moon";
@@ -82,6 +85,8 @@ public class MoonDialog extends BottomSheetDialogFragment
     {
         Bundle args = new Bundle();
         args.putLong(ARG_DATETIME, -1);
+        args.putBoolean(ARG_PLAYING, false);
+        args.putInt(ARG_PLAY_OFFSET, 0);
         setArguments(args);
     }
 
@@ -115,7 +120,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     private MoonPhasesView1 moonphases;
     private MoonApsisView moonapsis;
     private TextView moondistance, moondistance_label, moondistance_note;
-    private ImageButton resetButton, menuButton;
+    private ImageButton playButton, pauseButton, nextButton, prevButton, resetButton, menuButton;
 
     private int riseColor, setColor, timeColor, warningColor, pressedColor, disabledColor;
 
@@ -264,6 +269,26 @@ public class MoonDialog extends BottomSheetDialogFragment
         moondistance_label = (TextView) dialogView.findViewById(R.id.moonapsis_current_label);
         moondistance_note = (TextView) dialogView.findViewById(R.id.moonapsis_current_note);
         moondistance_note.setVisibility(View.GONE);
+
+        playButton = (ImageButton) dialogView.findViewById(R.id.media_play);
+        if (playButton != null) {
+            playButton.setOnClickListener(onPlayClicked);
+        }
+
+        pauseButton = (ImageButton) dialogView.findViewById(R.id.media_pause);
+        if (pauseButton != null) {
+            pauseButton.setOnClickListener(onPauseClicked);
+        }
+
+        nextButton = (ImageButton) dialogView.findViewById(R.id.media_next);
+        if (nextButton != null) {
+            nextButton.setOnClickListener(onNextClicked);
+        }
+
+        prevButton = (ImageButton) dialogView.findViewById(R.id.media_prev);
+        if (prevButton != null) {
+            prevButton.setOnClickListener(onPrevClicked);
+        }
 
         resetButton = (ImageButton) dialogView.findViewById(R.id.media_reset);
         if (resetButton != null)
@@ -520,10 +545,38 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
+    private final View.OnClickListener onPlayClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            playMap();
+        }
+    };
+    private final View.OnClickListener onPauseClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            stopMap(false);
+        }
+    };
+    private final View.OnClickListener onNextClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            setOffsetMinutes(getOffsetMinutes() + WorldMapDialog.SEEK_STEPSIZE_5m);
+        }
+    };
+    private final View.OnClickListener onPrevClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            setOffsetMinutes(getOffsetMinutes() - WorldMapDialog.SEEK_STEPSIZE_5m);
+        }
+    };
     private final View.OnClickListener onResetClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            resetDialog();
+            stopMap(true);
         }
     };
 
@@ -842,6 +895,45 @@ public class MoonDialog extends BottomSheetDialogFragment
         //currentphase.saveState(outState);
         //moonphases.saveState(outState);
     }*/
+
+    protected void updateMediaButtons()
+    {
+        boolean isPlaying = isPlaying();
+        if (playButton != null && pauseButton != null) {
+            pauseButton.setVisibility(isPlaying ? View.VISIBLE : View.GONE);
+            playButton.setVisibility(isPlaying ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    public boolean isPlaying() {
+        return getArguments().getBoolean(ARG_PLAYING);
+    }
+    public int getOffsetMinutes() {
+        return getArguments().getInt(ARG_PLAY_OFFSET);
+    }
+    protected void setOffsetMinutes(int value) {
+        getArguments().putInt(ARG_PLAY_OFFSET, value);
+        updateViews();
+    }
+
+    protected void playMap()
+    {
+        getArguments().putBoolean(ARG_PLAYING, true);
+        //updateViews();  // TODO: start update task
+        updateMediaButtons();
+    }
+
+    protected void stopMap(boolean reset)
+    {
+        getArguments().putBoolean(ARG_PLAYING, false);
+        updateMediaButtons();
+
+        // TODO: stop update task
+        if (reset) {
+            getArguments().putInt(ARG_PLAY_OFFSET, 0);
+            resetDialog();
+        }
+    }
 
     private void startUpdateTask()
     {
