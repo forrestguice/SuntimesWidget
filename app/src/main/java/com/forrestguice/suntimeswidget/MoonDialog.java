@@ -72,6 +72,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -488,7 +489,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         return (arg_dateTime() != -1 ? arg_dateTime() : getNow()) + offsetMillis;
     }
     protected Calendar getDialogCalendar() {
-        Calendar c = Calendar.getInstance(data.timezone());
+        Calendar c = Calendar.getInstance(data != null ? data.timezone() : TimeZone.getDefault());
         c.setTimeInMillis(getDialogTime());
         return c;
     }
@@ -541,12 +542,15 @@ public class MoonDialog extends BottomSheetDialogFragment
             moonapsis.scrollToCenter();
 
         } else {
-            boolean scrollForward = (data.calendar().getTimeInMillis() >= getNow());
-            long datetime = data.nowThen(data.calendar()).getTimeInMillis() + ((60 * 1000) * (scrollForward ? 1 : -1));   // plus or minus a minute to round off the display value
-            showPositionAt(datetime, false);     // set position without triggering normal update..
-            updateViews(false);                   // to avoid infinite-scroll (scrolling moonriseset may trigger this method)
-            moonphases.scrollToDate(datetime);
-            moonapsis.scrollToDate(datetime);
+            if (data != null)
+            {
+                boolean scrollForward = (data.calendar().getTimeInMillis() >= getNow());
+                long datetime = data.nowThen(data.calendar()).getTimeInMillis() + ((60 * 1000) * (scrollForward ? 1 : -1));   // plus or minus a minute to round off the display value
+                showPositionAt(datetime, false);     // set position without triggering normal update..
+                updateViews(false);                   // to avoid infinite-scroll (scrolling moonriseset may trigger this method)
+                moonphases.scrollToDate(datetime);
+                moonapsis.scrollToDate(datetime);
+            }
         }
     }
 

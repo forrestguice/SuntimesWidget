@@ -242,10 +242,12 @@ public class MoonRiseSetView1 extends LinearLayout
         showLunarNoon = value;
         if (card_adapter != null)
         {
-            long date = getData().calendar().getTimeInMillis();
+            Long date = (getData() != null ? getData().calendar().getTimeInMillis() : null);
             initAdapter(getContext());
             onSizeChanged(getWidth(), getHeight(), getWidth(), getHeight());
-            scrollToDate(date);
+            if (date != null) {
+                scrollToDate(date);
+            }
         }
     }
     private boolean showLunarNoon = AppSettings.PREF_DEF_UI_SHOWLUNARNOON;
@@ -414,7 +416,7 @@ public class MoonRiseSetView1 extends LinearLayout
             holder.onBindDataToPosition(context, d, position, getEventAt(d, position));
 
             Calendar event = MoonRiseSetEvent.getCalendarForEvent(d, holder.eventID);
-            boolean isAgo = d.now().after(event);
+            boolean isAgo = Calendar.getInstance().after(event);
             themeViews(context, holder, isAgo);
             if (event != null) {
                 holder.resizeField(itemWidth);
@@ -481,6 +483,7 @@ public class MoonRiseSetView1 extends LinearLayout
             SuntimesMoonData d = initData(context, CENTER_POSITION);
         }
 
+        @NonNull
         public SuntimesMoonData initData( Context context, int position )
         {
             int itemsPerDay = getItemsPerDay();
@@ -878,19 +881,22 @@ public class MoonRiseSetView1 extends LinearLayout
         protected void drawFooter(Canvas c, int position, float x, float y)
         {
             SuntimesMoonData d = card_adapter.initData(getContext(), position);
-            Calendar date = d.calendar();
-            String dateText = utils.calendarDateDisplayString(getContext(), date).toString();
+            if (d != null)
+            {
+                Calendar date = d.calendar();
+                String dateText = utils.calendarDateDisplayString(getContext(), date).toString();
 
-            int textColor = colorDisabled;
-            Calendar now = d.now();
-            if (date.get(Calendar.YEAR) == now.get(Calendar.YEAR) && date.get(Calendar.DAY_OF_YEAR) == now.get(Calendar.DAY_OF_YEAR)) {
-                textColor = colorAccent;
-            } else if (now.before(date)) {
-                textColor = colorEnabled;
+                int textColor = colorDisabled;
+                Calendar now = d.now();
+                if (date.get(Calendar.YEAR) == now.get(Calendar.YEAR) && date.get(Calendar.DAY_OF_YEAR) == now.get(Calendar.DAY_OF_YEAR)) {
+                    textColor = colorAccent;
+                } else if (now.before(date)) {
+                    textColor = colorEnabled;
+                }
+                paintText.setColor(textColor);
+
+                c.drawText(dateText, x + text_offset[0], y - text_offset[1], paintText);
             }
-            paintText.setColor(textColor);
-
-            c.drawText(dateText, x + text_offset[0], y - text_offset[1], paintText);
         }
     }
 
