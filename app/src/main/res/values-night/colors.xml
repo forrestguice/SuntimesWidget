@@ -7,7 +7,7 @@
     <color name="card_bg">@color/card_bg_dark</color>
     <color name="card_bg_trans">@color/card_bg_darktrans</color>
 
-    <color name="hr">@color/hr_light</color>
+    <color name="hr">@color/hr_dark</color>
     <color name="text_disabled">@color/text_disabled_dark</color>
     <color name="text_accent">@color/text_accent_dark</color>
     <color name="snackbar_text">@color/snackbar_text_dark</color>
