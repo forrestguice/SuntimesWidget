@@ -1,5 +1,13 @@
 ### ~
 
+### v0.14.9 (2022-10-17)
+* fixes wrong or missing colors when using system dark mode.
+* fixes lightmap "long click" to be consistent with a normal click.
+* fixes notification "dismiss" button to help improve context (#628).
+* updates translation to Norwegian (nb) (#632 by FTno).
+* updates translation to German (de) (#631 by CSTRSK).
+* updates translation to Czech (cs) (#630 by utaxiu).
+
 ### v0.14.8 (2022-09-26)
 * fixes crash when location is set to high latitudes (#623).
 * fixes appearance of location icons when using system dark mode.

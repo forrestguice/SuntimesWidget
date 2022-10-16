@@ -1,0 +1,3 @@
+- updates translation to Czech.
+- updates translation to German.
+- updates translation to Norwegian.
