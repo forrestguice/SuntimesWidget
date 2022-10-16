@@ -193,35 +193,36 @@ public class MoonRiseSetView1 extends LinearLayout
     @SuppressLint("ResourceType")
     protected void initTheme(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating, R.attr.text_accentColor };
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating, R.attr.text_accentColor, R.attr.tagColor_warning };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
-        colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-        colorPressed = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-        colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.grey_50));
+        colorPressed = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.btn_tint_pressed));
+        colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.text_accent));
         colorBackground = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, typedArray.getResourceId(3, def)), (int)(9d * (254d / 10d)));
-        colorAccent = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
-
+        colorAccent = ContextCompat.getColor(context, typedArray.getResourceId(4, R.color.text_accent));
+        colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.warningTag));
         typedArray.recycle();
 
         themeDrawables();
     }
-    private int colorEnabled, colorPressed, colorDisabled, colorBackground, colorAccent;
+    private int colorEnabled, colorPressed, colorDisabled, colorBackground, colorAccent, colorWarning;
 
     public void themeViews(Context context, SuntimesTheme theme)
     {
         card_adapter.applyTheme(context, theme);
         colorAccent = theme.getAccentColor();
         colorPressed = theme.getActionColor();
+        colorWarning = theme.getActionColor();
         themeDrawables();
     }
 
     private void themeDrawables()
     {
-        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
+        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorWarning, colorDisabled, colorPressed));
         SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
 
-        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
+        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorWarning, colorDisabled, colorPressed));
         SuntimesUtils.colorizeImageView(backButton, colorBackground);
     }
 

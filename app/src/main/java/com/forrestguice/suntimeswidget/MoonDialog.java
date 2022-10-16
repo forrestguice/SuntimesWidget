@@ -128,7 +128,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     private ImageButton playButton, pauseButton, nextButton, prevButton, resetButton, menuButton;
     private View mediaAnchor = null;
 
-    private int riseColor, setColor, timeColor, warningColor, pressedColor, disabledColor;
+    private int riseColor, setColor, timeColor, warningColor, accentColor, normalColor, pressedColor, disabledColor;
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -331,11 +331,11 @@ public class MoonDialog extends BottomSheetDialogFragment
         if (themeOverride != null)
         {
             int titleColor = themeOverride.getTitleColor();
-            timeColor = themeOverride.getTimeColor();
+            timeColor = normalColor = themeOverride.getTimeColor();
             int textColor = themeOverride.getTextColor();
             riseColor = themeOverride.getMoonriseTextColor();
             setColor = themeOverride.getMoonsetTextColor();
-            pressedColor = themeOverride.getAccentColor();
+            pressedColor = accentColor = themeOverride.getAccentColor();
             warningColor = themeOverride.getActionColor();
             float timeSizeSp = themeOverride.getTimeSizeSp();
             float textSizeSp = themeOverride.getTextSizeSp();
@@ -365,18 +365,21 @@ public class MoonDialog extends BottomSheetDialogFragment
             moondistance_note.setTextSize(textSizeSp);
 
         } else {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor, R.attr.tagColor_warning, R.attr.buttonPressColor, R.attr.text_disabledColor };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor, R.attr.tagColor_warning, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.text_accentColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-            timeColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
-            riseColor = ContextCompat.getColor(context, typedArray.getResourceId(1, timeColor));
-            setColor = ContextCompat.getColor(context, typedArray.getResourceId(2, timeColor));
-            warningColor = ContextCompat.getColor(context, typedArray.getResourceId(3, timeColor));
-            pressedColor = ContextCompat.getColor(context, typedArray.getResourceId(4, timeColor));
+            timeColor = normalColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.grey_50));
+            riseColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.sunIcon_color_rising));
+            setColor = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.sunIcon_color_setting));
+            warningColor = ContextCompat.getColor(context, typedArray.getResourceId(3, R.color.warningTag));
+            pressedColor = ContextCompat.getColor(context, typedArray.getResourceId(4, R.color.btn_tint_pressed));
             disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(5, timeColor));
+            accentColor = ContextCompat.getColor(context, typedArray.getResourceId(6, R.color.text_accent));
             typedArray.recycle();
         }
 
-        ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(warningColor, disabledColor, pressedColor));
+        if (resetButton != null) {
+            ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(warningColor, disabledColor, pressedColor));
+        }
     }
 
     private SuntimesTheme themeOverride = null;
@@ -775,8 +778,9 @@ public class MoonDialog extends BottomSheetDialogFragment
 
             //int gravity = (Gravity.TOP | Gravity.START);
             //popupWindow.showAsDropDown((isCollapsed() ? v : text_dialogTitle), SuntimesUtils.dpToPixels(context, -8), SuntimesUtils.dpToPixels(context, 8), gravity);
-            //popupWindow.showAsDropDown(isCollapsed() && mediaAnchor != null ? mediaAnchor : text_dialogTimeOffset);
-            popupWindow.showAsDropDown(mediaAnchor != null ? mediaAnchor : text_dialogTimeOffset);
+            popupWindow.showAsDropDown(isCollapsed() && menuButton != null ? menuButton : text_dialogTimeOffset);
+            //popupWindow.showAsDropDown(mediaAnchor != null ? mediaAnchor : text_dialogTimeOffset);
+            popupWindow.showAsDropDown(menuButton);
         }
     }
 
@@ -791,22 +795,27 @@ public class MoonDialog extends BottomSheetDialogFragment
                 ImageButton resetButton = (ImageButton) popupView.findViewById(R.id.media_reset);
                 if (resetButton != null) {
                     resetButton.setOnClickListener(createMediaPopupListener(popupView, onResetClicked));
+                    ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(warningColor, disabledColor, pressedColor));
                 }
                 ImageButton playButton = (ImageButton) popupView.findViewById(R.id.media_play);
                 if (playButton != null) {
                     playButton.setOnClickListener(createMediaPopupListener(popupView, onPlayClicked));
+                    ImageViewCompat.setImageTintList(playButton, SuntimesUtils.colorStateList(normalColor, disabledColor, pressedColor));
                 }
                 ImageButton pauseButton = (ImageButton) popupView.findViewById(R.id.media_pause);
                 if (pauseButton != null) {
                     pauseButton.setOnClickListener(createMediaPopupListener(popupView, onPauseClicked));
+                    ImageViewCompat.setImageTintList(pauseButton, SuntimesUtils.colorStateList(accentColor, disabledColor, pressedColor));
                 }
                 ImageButton nextButton = (ImageButton) popupView.findViewById(R.id.media_next);
                 if (nextButton != null) {
                     nextButton.setOnClickListener(createMediaPopupListener(popupView, onNextClicked));
+                    ImageViewCompat.setImageTintList(nextButton, SuntimesUtils.colorStateList(normalColor, disabledColor, pressedColor));
                 }
                 ImageButton prevButton = (ImageButton) popupView.findViewById(R.id.media_prev);
                 if (prevButton != null) {
                     prevButton.setOnClickListener(createMediaPopupListener(popupView, onPrevClicked));
+                    ImageViewCompat.setImageTintList(prevButton, SuntimesUtils.colorStateList(normalColor, disabledColor, pressedColor));
                 }
             }
             updateMediaPopupView(popupView);
