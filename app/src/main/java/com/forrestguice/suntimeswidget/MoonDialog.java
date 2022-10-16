@@ -403,15 +403,24 @@ public class MoonDialog extends BottomSheetDialogFragment
     {
         stopUpdateTask();
         Context context = getContext();
+        Calendar dateTime = getDialogCalendar();
         updateTimeText();
         moonriseset.updateViews(context);
-        currentphase.updateViews(context, data, getDialogCalendar());
+        currentphase.updateViews(context, data, dateTime);
         moonphases.updateViews(context);
         moonapsis.updateViews(context);
-        updateMoonApsis();
+        updateMoonApsis(dateTime);
 
         if (resetButton != null) {
-            resetButton.setEnabled(isOffset(getNow()));
+            boolean resetIsPossible = isOffset(arg_dateTime() != -1 ? arg_dateTime() : getNow());
+            resetButton.setEnabled(resetIsPossible);
+            resetButton.setVisibility(resetIsPossible ? View.VISIBLE : View.GONE);
+        }
+        if (playButton != null) {
+            playButton.setVisibility(isPlaying() ? View.GONE : View.VISIBLE);
+        }
+        if (pauseButton != null) {
+            pauseButton.setVisibility(isPlaying() ? View.VISIBLE : View.GONE);
         }
 
         final long datetime = arg_dateTime();
@@ -488,7 +497,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         return Math.abs(nowMillis - eventMillis) > 60 * 1000;
     }
 
-    private void updateMoonApsis()
+    private void updateMoonApsis(Calendar dateTime)
     {
         Context context = getContext();
         if (context != null && data != null && data.isCalculated())
@@ -496,7 +505,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(getDialogCalendar());
+            SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(dateTime);
             if (position != null)
             {
                 SuntimesUtils.TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
@@ -621,7 +630,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
-    protected void resetDialog()
+    public void centerDialog()
     {
         setData(moonriseset.getDataAtCenter());
         showPositionAt(null);
@@ -724,7 +733,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
         MenuItem resetItem = menu.findItem(R.id.action_reset);
         if (resetItem != null) {
-            resetItem.setEnabled(isOffset(getNow()));
+            resetItem.setEnabled(isOffset(arg_dateTime() != -1 ? arg_dateTime() : getNow()));
         }
     }
     private PopupMenu.OnMenuItemClickListener onMediaMenuClick = new PopupMenu.OnMenuItemClickListener()
@@ -821,7 +830,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             boolean isPlaying = isPlaying();
             ImageButton resetButton = (ImageButton) popupView.findViewById(R.id.media_reset);
             if (resetButton != null) {
-                resetButton.setEnabled(isOffset(getNow()));
+                resetButton.setEnabled(isOffset(arg_dateTime() != -1 ? arg_dateTime() : getNow()));
             }
             ImageButton playButton = (ImageButton) popupView.findViewById(R.id.media_play);
             if (playButton != null) {
@@ -1100,9 +1109,10 @@ public class MoonDialog extends BottomSheetDialogFragment
 
     public void playMap()
     {
+        stopUpdateTask();
         getArguments().putBoolean(ARG_PLAYING, true);
-        //updateViews();  // TODO: start update task
         updateMediaButtons();
+        startUpdateTask();    // TODO: 'play' update task
     }
 
     public void togglePlay()
@@ -1116,14 +1126,14 @@ public class MoonDialog extends BottomSheetDialogFragment
 
     public void stopMap(boolean reset)
     {
+        stopUpdateTask();
         getArguments().putBoolean(ARG_PLAYING, false);
-        updateMediaButtons();
-
-        // TODO: stop update task
         if (reset) {
             getArguments().putInt(ARG_PLAY_OFFSET, 0);
-            resetDialog();
         }
+        updateMediaButtons();
+        updateViews(false);
+        startUpdateTask();
     }
 
     private void startUpdateTask()
