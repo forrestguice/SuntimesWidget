@@ -503,6 +503,7 @@ public class MoonRiseSetView1 extends LinearLayout
             return d;
         }
 
+        @NonNull
         public SuntimesMoonData createData( Context context, int position )
         {
             SuntimesMoonData d = new SuntimesMoonData(context, 0, "moon");
@@ -518,8 +519,10 @@ public class MoonRiseSetView1 extends LinearLayout
                     date.setTimeInMillis(rising.getTimeInMillis());
                 } else if (setting != null) {
                     date.setTimeInMillis(setting.getTimeInMillis());
+                } else if (rising != null) {
+                    date.setTimeInMillis(rising.getTimeInMillis());
                 } else {
-                    return null;
+                    date.setTimeInMillis(d0.calendar().getTimeInMillis());
                 }
 
                 date.setTimeInMillis((long)(date.getTimeInMillis() + getOffsetMillis(position)));
