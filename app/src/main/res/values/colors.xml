@@ -28,6 +28,7 @@
     <color name="text_disabled">@color/text_disabled_light</color>
     <color name="text_accent">@color/text_accent_light</color>
     <color name="snackbar_text">@color/snackbar_text_light</color>
+    <color name="fab_ripple">@color/fab_ripple_light</color>
 
     <color name="alarm_enabled">@color/alarm_enabled_light</color>
     <color name="grid_selected">@color/grid_selected_light</color>

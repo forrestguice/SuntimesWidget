@@ -11,6 +11,7 @@
     <color name="text_disabled">@color/text_disabled_dark</color>
     <color name="text_accent">@color/text_accent_dark</color>
     <color name="snackbar_text">@color/snackbar_text_dark</color>
+    <color name="fab_ripple">@color/fab_ripple_dark</color>
 
     <color name="alarm_enabled">@color/alarm_enabled_dark</color>
     <color name="grid_selected">@color/grid_selected_dark</color>
