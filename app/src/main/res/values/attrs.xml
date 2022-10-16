@@ -145,10 +145,12 @@
 
     <declare-styleable name="MoonPhaseView">
         <attr name="illuminationAtLunarNoon" format="boolean" />
+        <attr name="illuminationRange" format="boolean" />
         <attr name="showPosition" format="boolean" />
     </declare-styleable>
     <declare-styleable name="MoonPhaseView1">
         <attr name="illuminationAtLunarNoon" />
+        <attr name="illuminationRange" />
         <attr name="showPosition" />
     </declare-styleable>
 

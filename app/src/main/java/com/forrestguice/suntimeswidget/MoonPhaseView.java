@@ -48,7 +48,7 @@ public class MoonPhaseView extends LinearLayout
     protected SuntimesUtils utils = new SuntimesUtils();
     protected boolean isRtl = false;
     protected boolean centered = false;
-    protected boolean illumAtNoon = false;
+    protected boolean illumAtNoon = false, illumRange = false;
     protected boolean showPosition = false;
     protected boolean northward = false;
 
@@ -75,6 +75,7 @@ public class MoonPhaseView extends LinearLayout
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MoonPhaseView, 0, 0);
         try {
             illumAtNoon = a.getBoolean(R.styleable.MoonPhaseView_illuminationAtLunarNoon, illumAtNoon);
+            illumRange = a.getBoolean(R.styleable.MoonPhaseView_illuminationRange, illumRange);
             showPosition = a.getBoolean(R.styleable.MoonPhaseView_showPosition, false);
         } finally {
             a.recycle();
@@ -284,22 +285,17 @@ public class MoonPhaseView extends LinearLayout
         {
             NumberFormat formatter = NumberFormat.getPercentInstance();
             formatter.setMinimumFractionDigits(0);
-            formatter.setMaximumFractionDigits((illumAtNoon ? 0 : 1));
+            formatter.setMaximumFractionDigits((illumAtNoon || illumRange ? 0 : 1));
 
-            String illum, illumNote;
-            if (!illumAtNoon)
+            if (illumAtNoon)
             {
-                illum = formatter.format(datetime != null ? data.getMoonIllumination(datetime) : data.getMoonIlluminationNow());
-                illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
-
-            } else {
                 Calendar noonToday = data.getLunarNoonToday();
                 long noonTodayMillis = ((noonToday != null) ? noonToday.getTimeInMillis() : 0);
                 Calendar noonTomorrow = data.getLunarNoonTomorrow();
                 long noonTomorrowMillis = ((noonTomorrow != null) ? noonTomorrow.getTimeInMillis() : 0);
                 boolean sharedNoon = (noonTodayMillis == noonTomorrowMillis);
 
-                String illumTime;
+                String illum, illumTime;
                 if (tomorrowMode)
                 {
                     illum = formatter.format(data.getMoonIlluminationTomorrow());
@@ -311,11 +307,38 @@ public class MoonPhaseView extends LinearLayout
                             ? utils.calendarDateTimeDisplayString(context, noonToday).toString()
                             : utils.calendarTimeShortDisplayString(context, noonToday).toString();
                 }
-                illumNote = (context == null ? illum : context.getString(sharedNoon ? R.string.moon_illumination : R.string.moon_illumination_at, illum, illumTime));
-            }
+                String illumNote = (context == null ? illum : context.getString(sharedNoon ? R.string.moon_illumination : R.string.moon_illumination_at, illum, illumTime));
+                illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor));
 
-            SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor);
-            illumText.setText(illumNoteSpan);
+            } else if (illumRange) {
+                datetime = data.calendar();
+                Calendar startDate = Calendar.getInstance(datetime.getTimeZone());
+                startDate.setTimeInMillis(datetime.getTimeInMillis());
+                startDate.set(Calendar.HOUR_OF_DAY, 0);
+                startDate.set(Calendar.MINUTE, 0);
+                startDate.set(Calendar.SECOND, 0);
+
+                Calendar endDate = Calendar.getInstance(datetime.getTimeZone());
+                endDate.setTimeInMillis(datetime.getTimeInMillis());
+                endDate.set(Calendar.HOUR_OF_DAY, 23);
+                endDate.set(Calendar.MINUTE, 59);
+                endDate.set(Calendar.SECOND, 59);
+
+                String illum1 = formatter.format(data.getMoonIllumination(startDate));
+                String illum2 = formatter.format(data.getMoonIllumination(endDate));
+                if (illum1.equals(illum2)) {
+                    String illumNote = (context != null ? context.getString(R.string.moon_illumination_short, illum1) : illum1);
+                    illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum1, noteColor));
+                } else {
+                    String illumNote = (context != null ? context.getString(R.string.moon_illumination_range, illum1, illum2) : illum1+" "+illum2);
+                    illumText.setText(SuntimesUtils.createColorSpan(SuntimesUtils.createColorSpan(null, illumNote, illum1, noteColor), illumNote, illum2, noteColor));
+                }
+
+            } else {
+                String illum = formatter.format(datetime != null ? data.getMoonIllumination(datetime) : data.getMoonIlluminationNow());
+                String illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
+                illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor));
+            }
 
         } else {
             illumText.setText("");

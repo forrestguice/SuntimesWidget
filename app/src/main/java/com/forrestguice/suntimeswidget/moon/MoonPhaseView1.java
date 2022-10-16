@@ -46,6 +46,7 @@ public class MoonPhaseView1 extends MoonPhaseView
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MoonPhaseView1, 0, 0);
         try {
             this.illumAtNoon = a.getBoolean(R.styleable.MoonPhaseView1_illuminationAtLunarNoon, illumAtNoon);
+            this.illumRange = a.getBoolean(R.styleable.MoonPhaseView1_illuminationRange, illumRange);
             this.showPosition = a.getBoolean(R.styleable.MoonPhaseView1_showPosition, false);
         } finally {
             a.recycle();
