@@ -29,6 +29,10 @@
         android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
         android:layout_marginTop="0dp" android:layout_marginBottom="4dp">
 
+        <View android:id="@+id/dialogTopRightAnchor"
+            android:layout_width="1dp" android:layout_height="1dp"
+            android:background="@color/transparent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent" />
+
         <LinearLayout
             android:orientation="vertical" android:layout_margin="0dp"
             android:layout_width="0dp" android:layout_height="wrap_content"
@@ -108,8 +112,10 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView android:id="@+id/info_time_offset" style="@style/SunsetTimeTextView2" android:visibility="visible"
-            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp"
-            android:textColor="?android:textColorSecondary"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="4dp"
+            android:paddingLeft="0dp" android:paddingRight="0dp"
+            android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+            android:textColor="?android:textColorSecondary" android:background="?attr/selectableItemBackground"
             app:layout_constraintStart_toStartOf="@+id/moonphase_view" app:layout_constraintEnd_toEndOf="@+id/moonphase_view"
             app:layout_constraintTop_toBottomOf="@+id/moonphase_view"
             tools:text="30m from now" android:gravity="center_horizontal" />

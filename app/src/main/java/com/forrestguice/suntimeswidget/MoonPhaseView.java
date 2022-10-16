@@ -211,7 +211,10 @@ public class MoonPhaseView extends LinearLayout
         MoonPhaseDisplay.initDisplayStrings(context);
     }
 
-    public void updateViews(Context context, SuntimesMoonData data)
+    public void updateViews(Context context, SuntimesMoonData data) {
+        updateViews(context, data, null);
+    }
+    public void updateViews(Context context, SuntimesMoonData data, @Nullable Calendar dateTime)
     {
         int positionVisibility = (showPosition ? View.VISIBLE : View.GONE);
         azimuthText.setVisibility(positionVisibility);
@@ -249,8 +252,8 @@ public class MoonPhaseView extends LinearLayout
                 }*/
             }
 
-            updateIllumination(context);
-            updatePosition();
+            updateIllumination(context, dateTime);
+            updatePosition(dateTime);
 
         } else {
             phaseText.setText("");
@@ -272,7 +275,10 @@ public class MoonPhaseView extends LinearLayout
         }
     }
 
-    public void updateIllumination(Context context)
+    public void updateIllumination(Context context) {
+        updateIllumination(context, null);
+    }
+    public void updateIllumination(Context context, @Nullable Calendar datetime)
     {
         if (data != null && data.isCalculated())
         {
@@ -283,7 +289,7 @@ public class MoonPhaseView extends LinearLayout
             String illum, illumNote;
             if (!illumAtNoon)
             {
-                illum = formatter.format(data.getMoonIlluminationNow());
+                illum = formatter.format(datetime != null ? data.getMoonIllumination(datetime) : data.getMoonIlluminationNow());
                 illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
 
             } else {
@@ -316,20 +322,23 @@ public class MoonPhaseView extends LinearLayout
         }
     }
 
-    public void updatePosition()
+    public void updatePosition() {
+        updatePosition((data != null && data.isCalculated()) ? data.nowThen(data.calendar()) : null);
+    }
+    public void updatePosition(@Nullable Calendar datetime)
     {
-        if (data != null && data.isCalculated())
+        if (datetime != null && data != null && data.isCalculated())
         {
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.Position position = calculator.getMoonPosition(data.nowThen(data.calendar()));
+            SuntimesCalculator.Position position = calculator.getMoonPosition(datetime);
             updatePosition(position);
 
         } else {
-            updatePosition(null);
+            updatePosition((SuntimesCalculator.Position) null);
         }
     }
 
-    public void updatePosition(SuntimesCalculator.Position position)
+    public void updatePosition(@Nullable SuntimesCalculator.Position position)
     {
         if (position == null)
         {

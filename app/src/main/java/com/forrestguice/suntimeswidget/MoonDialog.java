@@ -26,6 +26,8 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,6 +52,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -69,6 +72,8 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class MoonDialog extends BottomSheetDialogFragment
 {
@@ -121,6 +126,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     private MoonApsisView moonapsis;
     private TextView moondistance, moondistance_label, moondistance_note;
     private ImageButton playButton, pauseButton, nextButton, prevButton, resetButton, menuButton;
+    private View mediaAnchor = null;
 
     private int riseColor, setColor, timeColor, warningColor, pressedColor, disabledColor;
 
@@ -173,6 +179,14 @@ public class MoonDialog extends BottomSheetDialogFragment
                 bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         }
+    }
+    public boolean isCollapsed()
+    {
+        BottomSheetBehavior bottomSheet = initSheet(getDialog());
+        if (bottomSheet != null) {
+            return (bottomSheet.getState() == BottomSheetBehavior.STATE_COLLAPSED);
+        }
+        return false;
     }
 
     @Nullable
@@ -260,28 +274,26 @@ public class MoonDialog extends BottomSheetDialogFragment
         if (playButton != null) {
             playButton.setOnClickListener(onPlayClicked);
         }
-
         pauseButton = (ImageButton) dialogView.findViewById(R.id.media_pause);
         if (pauseButton != null) {
             pauseButton.setOnClickListener(onPauseClicked);
         }
-
         nextButton = (ImageButton) dialogView.findViewById(R.id.media_next);
         if (nextButton != null) {
             nextButton.setOnClickListener(onNextClicked);
         }
-
         prevButton = (ImageButton) dialogView.findViewById(R.id.media_prev);
         if (prevButton != null) {
             prevButton.setOnClickListener(onPrevClicked);
         }
-
         resetButton = (ImageButton) dialogView.findViewById(R.id.media_reset);
         if (resetButton != null)
         {
             resetButton.setEnabled(false);
             resetButton.setOnClickListener(onResetClicked);
         }
+
+        mediaAnchor = dialogView.findViewById(R.id.dialogTopRightAnchor);
 
         menuButton = (ImageButton) dialogView.findViewById(R.id.menu_button);
         if (menuButton != null) {
@@ -297,6 +309,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     protected void attachListeners()
     {
         moonriseset.setViewListener(moonriseset_listener);
+        text_dialogTimeOffset.setOnClickListener(currentphase_onClickListener);
         currentphase.setOnClickListener(currentphase_onClickListener);
         currentphase.setOnLongClickListener(currentphase_onLongClickListener);
         moonphases.setViewListener(moonphases_listener);
@@ -305,6 +318,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     protected void detachListeners()
     {
         moonriseset.setViewListener(null);
+        text_dialogTimeOffset.setOnClickListener(null);
         currentphase.setOnClickListener(null);
         currentphase.setOnLongClickListener(null);
         moonphases.setViewListener(null);
@@ -391,7 +405,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         Context context = getContext();
         updateTimeText();
         moonriseset.updateViews(context);
-        currentphase.updateViews(context, data);
+        currentphase.updateViews(context, data, getDialogCalendar());
         moonphases.updateViews(context);
         moonapsis.updateViews(context);
         updateMoonApsis();
@@ -461,6 +475,12 @@ public class MoonDialog extends BottomSheetDialogFragment
         long offsetMillis = getOffsetMinutes() * 60 * 1000;
         return (arg_dateTime() != -1 ? arg_dateTime() : getNow()) + offsetMillis;
     }
+    protected Calendar getDialogCalendar() {
+        Calendar c = Calendar.getInstance(data.timezone());
+        c.setTimeInMillis(getDialogTime());
+        return c;
+    }
+
     protected  boolean isOffset(long nowMillis) {
         return isOffset(nowMillis, getDialogTime());
     }
@@ -476,7 +496,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(data.nowThen(data.calendar()));
+            SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(getDialogCalendar());
             if (position != null)
             {
                 SuntimesUtils.TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
@@ -554,7 +574,8 @@ public class MoonDialog extends BottomSheetDialogFragment
     private final View.OnClickListener currentphase_onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showMediaMenu(getActivity(), v);
+            //showMediaMenu(getActivity(), v);
+            showMediaPopup(getActivity(), text_dialogTimeOffset);
         }
     };
     private final View.OnLongClickListener currentphase_onLongClickListener = new View.OnLongClickListener() {
@@ -730,6 +751,88 @@ public class MoonDialog extends BottomSheetDialogFragment
             }
         }
     };
+
+    /**
+     * MediaPopup
+     */
+    protected void showMediaPopup(@NonNull final Context context, @NonNull View v)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        if (inflater != null)
+        {
+            PopupWindow popupWindow = new PopupWindow(createMediaPopupView(context), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent)));
+            popupWindow.setOutsideTouchable(true);
+
+            //int gravity = (Gravity.TOP | Gravity.START);
+            //popupWindow.showAsDropDown((isCollapsed() ? v : text_dialogTitle), SuntimesUtils.dpToPixels(context, -8), SuntimesUtils.dpToPixels(context, 8), gravity);
+            //popupWindow.showAsDropDown(isCollapsed() && mediaAnchor != null ? mediaAnchor : text_dialogTimeOffset);
+            popupWindow.showAsDropDown(mediaAnchor != null ? mediaAnchor : text_dialogTimeOffset);
+        }
+    }
+
+    protected View createMediaPopupView(@NonNull final Context context)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        if (inflater != null)
+        {
+            final View popupView = inflater.inflate(R.layout.layout_popup_mediacontrol, null);
+            if (popupView != null)
+            {
+                ImageButton resetButton = (ImageButton) popupView.findViewById(R.id.media_reset);
+                if (resetButton != null) {
+                    resetButton.setOnClickListener(createMediaPopupListener(popupView, onResetClicked));
+                }
+                ImageButton playButton = (ImageButton) popupView.findViewById(R.id.media_play);
+                if (playButton != null) {
+                    playButton.setOnClickListener(createMediaPopupListener(popupView, onPlayClicked));
+                }
+                ImageButton pauseButton = (ImageButton) popupView.findViewById(R.id.media_pause);
+                if (pauseButton != null) {
+                    pauseButton.setOnClickListener(createMediaPopupListener(popupView, onPauseClicked));
+                }
+                ImageButton nextButton = (ImageButton) popupView.findViewById(R.id.media_next);
+                if (nextButton != null) {
+                    nextButton.setOnClickListener(createMediaPopupListener(popupView, onNextClicked));
+                }
+                ImageButton prevButton = (ImageButton) popupView.findViewById(R.id.media_prev);
+                if (prevButton != null) {
+                    prevButton.setOnClickListener(createMediaPopupListener(popupView, onPrevClicked));
+                }
+            }
+            updateMediaPopupView(popupView);
+            return popupView;
+        }
+        return null;
+    }
+    private View.OnClickListener createMediaPopupListener(final View popupView, final View.OnClickListener listener) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                listener.onClick(v);
+                updateMediaPopupView(popupView);
+            }
+        };
+    }
+    protected void updateMediaPopupView(View popupView)
+    {
+        if (popupView != null)
+        {
+            boolean isPlaying = isPlaying();
+            ImageButton resetButton = (ImageButton) popupView.findViewById(R.id.media_reset);
+            if (resetButton != null) {
+                resetButton.setEnabled(isOffset(getNow()));
+            }
+            ImageButton playButton = (ImageButton) popupView.findViewById(R.id.media_play);
+            if (playButton != null) {
+                playButton.setVisibility(isPlaying ? View.GONE : View.VISIBLE);
+            }
+            ImageButton pauseButton = (ImageButton) popupView.findViewById(R.id.media_pause);
+            if (pauseButton != null) {
+                pauseButton.setVisibility(isPlaying ? View.VISIBLE : View.GONE);
+            }
+        }
+    }
 
     /**
      * ContextMenu
@@ -1049,7 +1152,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             if (data != null && currentphase != null)
             {
                 updateTimeText();
-                currentphase.updatePosition();
+                currentphase.updatePosition(getDialogCalendar());
                 currentphase.postDelayed(this, UPDATE_RATE0);
             }
         }
@@ -1063,7 +1166,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         {
             if (data != null && currentphase != null)
             {
-                currentphase.updateIllumination(getContext());
+                currentphase.updateIllumination(getContext(), getDialogCalendar());
                 currentphase.postDelayed(this, UPDATE_RATE1);
             }
         }
