@@ -1019,7 +1019,7 @@
     <string name="appThemes_lightTheme">Světlé téma</string>
     <string name="appThemes_darkTheme">Tmavé téma</string>
     <string name="appThemes_nightMode">Světlé téma / Tmavé téma (Noční&#160;režim)</string>
-    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
+    <string name="appThemes_systemDefault">Výchozí systémové</string>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1104,7 +1104,7 @@
     <string name="timezone_sort_msg">Časová pásma seřazena (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Časový limit pro GPS</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="configLabel_getFix_maxElapse">Časový limit pro určení polohy</string>
     <string name="configLabel_getFix_maxElapse_summary">Vzdát to po <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekundách</item>
@@ -1115,7 +1115,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Maximální stáří polohy z GPS</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="configLabel_getFix_maxAge">Maximální stáří polohy</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> považováno za nedávné</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>žádné</item>
@@ -1371,7 +1371,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS je vypnuta. Chcete ji zapnout?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
+    <string name="gps_dialog_msg">Určení polohy je vypnutu. Chcete ho zapnout?</string>
     <string name="gps_dialog_ok">Ano</string>
     <string name="gps_dialog_cancel">Ne</string>
 
@@ -1379,8 +1379,8 @@
     <string name="gps_lastfix_title_set">Nastavit polohu</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Poslední poloha</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Získávaní polohy</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS selhala při získávaní polohy; vracím se k poslední známé poloze</string>  <!-- displayed briefly after gps has failed to get a location -->  <!-- TODO: removed "GPS" -->
-    <string name="gps_lastfix_toast_cancelled">Aktualizace GPS zrušena</string> <!-- displayed briefly when gps refresh cancelled -->   <!-- TODO: "gps update" to "location update" -->
+    <string name="gps_lastfix_toast_notfound">Získávaní polohy selhalo; vracím se k poslední známé poloze</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">Aktualizace polohy zrušena</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Nezaměřeno</string>
