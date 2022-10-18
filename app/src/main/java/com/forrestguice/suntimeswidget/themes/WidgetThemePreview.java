@@ -633,6 +633,7 @@ public class WidgetThemePreview
         // Position
         updatePreview_moonPosition(previewLayout, values);
         updatePreview_moonApogeePerigee(previewLayout, values);
+        updatePreview_moonDay(previewLayout, values);
 
         // Moon Labels
         updatePreview_moonPhaseLabel((TextView)previewLayout.findViewById(R.id.moonphase_new_label), values);
@@ -822,6 +823,27 @@ public class WidgetThemePreview
                 previewMoonDistanceLabel.setTextColor(textColor);
                 updateSize(previewMoonDistanceLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
             }
+        }
+    }
+
+    public void updatePreview_moonDay(View previewLayout, ContentValues values)
+    {
+        //Context context = previewLayout.getContext();
+        //int timeColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR);
+        int textColor = values.getAsInteger(SuntimesThemeContract.THEME_TEXTCOLOR);
+
+        TextView previewMoonDay = (TextView)previewLayout.findViewById(R.id.info_moon_day);
+        if (previewMoonDay != null)
+        {
+            previewMoonDay.setText("4");    // TODO
+            previewMoonDay.setTextColor(textColor);
+            updateSize(previewMoonDay, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+        }
+
+        TextView previewLabel = (TextView)previewLayout.findViewById(R.id.info_moon_day_label);
+        if (previewLabel != null) {
+            previewLabel.setTextColor(textColor);
+            updateSize(previewLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
         }
     }
 
