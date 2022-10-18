@@ -1051,18 +1051,8 @@
     <string name="appThemes_darkTheme">Dark Theme</string>
     <string name="appThemes_nightMode">Light Theme / Dark Theme (Night&#160;Mode)</string>  <!-- TODO -->
     <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>@string/appThemes_nightMode</item>
-        <item>@string/appThemes_systemDefault</item>
-    </string-array>
-    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
-        <item>light</item>
-        <item>dark</item>
-        <item>daynight</item>
-        <item>system</item>
-    </string-array>
+    <string name="appThemes_systemDefault1">Material You</string>  <!-- TODO -->
+    <!-- @see appthemes.xml for array values -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->

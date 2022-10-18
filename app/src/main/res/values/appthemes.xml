@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string-array name="appThemes_display" tools:ignore="InconsistentArrays"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
+        <item>@string/appThemes_nightMode</item>
+        <item>@string/appThemes_systemDefault</item>
+
+    </string-array>
+    <string-array name="appThemes_values" tools:ignore="InconsistentArrays"
+        translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
+        <item>light</item>
+        <item>dark</item>
+        <item>daynight</item>
+        <item>system</item>
+    </string-array>
+
+</resources>

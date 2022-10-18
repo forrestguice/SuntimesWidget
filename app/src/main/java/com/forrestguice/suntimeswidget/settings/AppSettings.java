@@ -57,7 +57,8 @@ public class AppSettings
     public static final String THEME_DARK = "dark";
     public static final String THEME_LIGHT = "light";
     public static final String THEME_DAYNIGHT = "daynight";
-    public static final String THEME_SYSTEM = "system";
+    public static final String THEME_SYSTEM = "system";          // system dark mode
+    public static final String THEME_SYSTEM1 = "system1";        // system mode w/ material you
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
@@ -496,7 +497,7 @@ public class AppSettings
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         } else if (appTheme.equals(THEME_DARK)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else if (appTheme.equals(THEME_SYSTEM)) {
+        } else if (appTheme.equals(THEME_SYSTEM) || appTheme.equals(THEME_SYSTEM1)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         } else if (appTheme.equals(THEME_DAYNIGHT)) {
             AppCompatDelegate.setDefaultNightMode((themeResID == R.style.AppTheme_Light) ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
@@ -533,6 +534,9 @@ public class AppSettings
 
             } else if (themeName.equals(THEME_SYSTEM)) {
                 styleID = R.style.AppTheme_System;
+
+            } else if (themeName.equals(THEME_SYSTEM1)) {
+                styleID = R.style.AppTheme_System;    // TODO
 
             } else if (themeName.equals(THEME_DAYNIGHT)) {
                 if (data == null)
