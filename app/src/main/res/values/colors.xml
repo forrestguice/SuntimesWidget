@@ -18,6 +18,7 @@
 
     <!-- "night" overridable -->
 
+    <color name="primaryColor">@color/primaryColor_light</color>
     <color name="dialog_frame">@color/dialog_frame_light</color>
     <color name="dialog_bg">@color/dialog_bg_light</color>
     <color name="dialog_bg_alt">@color/dialog_bg_light</color>
@@ -64,6 +65,7 @@
 
     <!-- general -->
 
+    <color name="primaryColor_dark">@color/grey_900</color>
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
     <color name="hr_dark">#33ffffff</color>
@@ -76,6 +78,7 @@
     <color name="fab_ripple_dark">@color/grey_900</color>
     <color name="snackbar_text_dark">@android:color/primary_text_dark</color>
 
+    <color name="primaryColor_light">@color/grey_100</color>
     <color name="text_disabled_light">#39000000</color>
     <color name="text_accent_light">@color/deep_teal_500</color>
     <color name="hr_light">#1f000000</color>
