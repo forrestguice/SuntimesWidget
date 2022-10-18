@@ -15,6 +15,7 @@
         <item name="semiTransparentBackground">@color/card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/hr</item>
+        <item name="colorAccent">@color/text_accent</item>
         <item name="text_accentColor">@color/text_accent</item>
         <item name="text_disabledColor">@color/text_disabled</item>
 
@@ -142,6 +143,7 @@
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/hr_light</item>
+        <item name="colorAccent">@color/text_accent_light</item>
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
@@ -271,6 +273,7 @@
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="hrColor">@color/hr_dark</item>
+        <item name="colorAccent">@color/text_accent_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
 
