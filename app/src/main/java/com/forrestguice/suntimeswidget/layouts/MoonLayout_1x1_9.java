@@ -31,6 +31,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import net.time4j.SystemClock;
+import net.time4j.calendar.HijriCalendar;
+
 import java.util.Calendar;
 
 /**
@@ -86,7 +89,7 @@ public class MoonLayout_1x1_9 extends MoonLayout
             {
                 int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
                 int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) / (showLabels ? 2 : 1))};
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "00", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);   // TODO: without suffix
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "00", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
                 if (adjustedSizeSp[0] > timeSizeSp)
                 {
                     float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
@@ -103,18 +106,17 @@ public class MoonLayout_1x1_9 extends MoonLayout
             }
         }
 
-        // TODO
-        //SuntimesCalculator calculator = data.calculator();
-        //SuntimesCalculator.MoonPosition moonPosition = calculator.getMoonPosition(data.now());
-        //WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
-        //views.setTextViewText(R.id.info_moon_distance_current, styleDistanceText(context, moonPosition, units, highlightColor, suffixColor, boldTime));
-        views.setTextViewText(R.id.info_moon_day, 4 + "");    // TODO
+        HijriCalendar today = SystemClock.inLocalView().today().transform(HijriCalendar.class, HijriCalendar.VARIANT_UMALQURA);
+        int dayNum = today.getDayOfMonth();
+        int dayOffset = WidgetSettings.loadDateOffsetPref(context, appWidgetId);
+        int moonDay = dayNum + dayOffset;
+        String moonDayDisplay = moonDay + "";
+        views.setTextViewText(R.id.info_moon_day, moonDayDisplay);
 
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.info_moon_day_label, visibility);
     }
 
-    protected int suffixColor = Color.GRAY;
     protected int highlightColor = Color.WHITE;
 
     @Override
@@ -123,7 +125,6 @@ public class MoonLayout_1x1_9 extends MoonLayout
         super.themeViews(context, views, theme);
 
         highlightColor = theme.getTimeColor();
-        suffixColor = theme.getTimeSuffixColor();
         int textColor = theme.getTextColor();
 
         views.setTextColor(R.id.info_moon_day_label, textColor);
