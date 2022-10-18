@@ -218,6 +218,9 @@ public class WidgetSettings
     public static final String PREF_KEY_DATE_DAY = "dateDay";
     public static final int PREF_DEF_DATE_DAY = -1;
 
+    public static final String PREF_KEY_DATE_OFFSET = "dateOffset";    // offset in days
+    public static final int PREF_DEF_DATE_OFFSET = 0;
+
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
 
@@ -1760,6 +1763,32 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void saveDateOffsetPref(Context context, int appWidgetId, int offset)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
+        prefs.putInt(prefs_prefix + PREF_KEY_DATE_OFFSET, offset);
+        prefs.apply();
+    }
+
+    public static int loadDateOffsetPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
+        return prefs.getInt(prefs_prefix + PREF_KEY_DATE_OFFSET, PREF_DEF_DATE_OFFSET);
+    }
+
+    public static void deleteDateOffsetPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
+        prefs.remove(prefs_prefix + PREF_KEY_DATE_OFFSET);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public static void saveThemePref(Context context, int appWidgetId, String themeName)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2923,6 +2952,7 @@ public class WidgetSettings
 
         deleteDateModePref(context, appWidgetId);
         deleteDatePref(context, appWidgetId);
+        deleteDateOffsetPref(context, appWidgetId);
 
         deleteTimeNoteRisePref(context, appWidgetId);
         deleteTimeNoteSetPref(context, appWidgetId);

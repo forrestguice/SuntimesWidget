@@ -276,6 +276,20 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("dates should match (" + WidgetSettings.PREF_DEF_DATE_YEAR + "." + WidgetSettings.PREF_DEF_DATE_MONTH + "." + WidgetSettings.PREF_DEF_DATE_DAY + " != " + info0.getYear() + "." + info0.getMonth() + "." + info0.getDay() + ")", info0.equals(date0) && !info0.isSet());
     }
 
+    @Test
+    public void test_dateOffsetPref()
+    {
+        WidgetSettings.saveDateOffsetPref(context, appWidgetId, 1);
+        assertEquals(1, WidgetSettings.loadDateOffsetPref(context, appWidgetId));
+
+        WidgetSettings.saveDateOffsetPref(context, appWidgetId, 20);
+        assertEquals(20, WidgetSettings.loadDateOffsetPref(context, appWidgetId));
+
+        WidgetSettings.deleteDateOffsetPref(context, appWidgetId);
+        assertEquals(WidgetSettings.PREF_DEF_DATE_OFFSET, WidgetSettings.loadDateOffsetPref(context, appWidgetId));
+        assertEquals(WidgetSettings.PREF_DEF_DATE_OFFSET, 0);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
