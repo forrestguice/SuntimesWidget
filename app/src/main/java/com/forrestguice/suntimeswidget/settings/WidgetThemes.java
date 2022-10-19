@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,6 +29,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -305,7 +307,7 @@ public class WidgetThemes
     {
         private final Context context;
         private final SuntimesTheme.ThemeDescriptor[] themes;
-        private int selectedResourceID = R.color.grid_selected_dark;    // TODO: themed
+        private int selectedResourceID = R.color.grid_selected_dark;
         private int nonselectedResourceID = R.color.transparent;
 
         public ThemeGridAdapter(Context context, SuntimesTheme.ThemeDescriptor[] themes)
@@ -326,6 +328,11 @@ public class WidgetThemes
             setTime.set(Calendar.MINUTE, 0);
 
             setRiseSet(riseTime, setTime, noonTime);
+
+            int[] attrs = { R.attr.gridItemSelected };
+            TypedArray typedArray = context.obtainStyledAttributes(attrs);
+            selectedResourceID = typedArray.getResourceId(0, selectedResourceID);
+            typedArray.recycle();
         }
 
         private SuntimesTheme.ThemeDescriptor selected;

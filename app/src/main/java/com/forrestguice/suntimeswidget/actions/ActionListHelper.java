@@ -476,6 +476,7 @@ public class ActionListHelper
         private int resourceID, dropDownResourceID;
         private ActionDisplay selectedItem;
         private ActionDisplay[] objects;
+        private int selectedColor;
 
         public ActionDisplayAdapter(@NonNull Context context, int resource) {
             super(context, resource);
@@ -494,6 +495,11 @@ public class ActionListHelper
 
         private void init(@NonNull Context context, int resource) {
             resourceID = dropDownResourceID = resource;
+
+            int[] attrs = { R.attr.gridItemSelected };
+            TypedArray typedArray = context.obtainStyledAttributes(attrs);
+            selectedColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
+            typedArray.recycle();
         }
 
         public void setSelected( ActionDisplay item ) {
@@ -545,7 +551,7 @@ public class ActionListHelper
             }
 
             if (selectedItem != null && item.id.equals(selectedItem.id)) {
-                view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.text_accent_dark));
+                view.setBackgroundColor(selectedColor);
             } else view.setBackgroundColor(Color.TRANSPARENT);
 
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
