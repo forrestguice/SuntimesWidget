@@ -70,6 +70,13 @@
     <color name="tagColor_error">@color/errorTag_light</color>
     <color name="tagColor_dst">@color/dstTag_light</color>
 
+    <color name="chip_bg1_disabled">@color/chip_bg_disabled_dark</color>
+    <color name="chip_bg1_disabled_stroke">@color/chip_bg_disabled_stroke_dark</color>
+    <color name="chip_bg1_enabled">@color/chip_bg_enabled_dark</color>
+    <color name="chip_bg1_enabled_stroke">@color/chip_bg_enabled_stroke_dark</color>
+    <color name="chip_bg1_pressed">@color/chip_bg_pressed_dark</color>
+    <color name="chip_bg1_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
+    <color name="chip_tray_bg1">@color/chip_tray_bg</color>
     <!-- general -->
 
     <color name="primaryColor_dark">@color/grey_900</color>
