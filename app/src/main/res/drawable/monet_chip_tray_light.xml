@@ -3,7 +3,7 @@
 <item>
     <shape android:shape="rectangle">
         <size android:width="22dp" android:height="22dp" />
-        <solid android:color="@color/chip_tray_bg1" />
+        <solid android:color="@color/monet_chip_tray_bg" />
         <corners android:radius="1dp" />
     </shape>
 </item>
