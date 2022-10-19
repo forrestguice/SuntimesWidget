@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <drawable name="widget_bg_ref1">@drawable/bg_widget</drawable>
+
+    <drawable name="chip_ref1">@drawable/monet_chip_light</drawable>
+    <drawable name="chip_tray_ref1">@drawable/monet_chip_tray_light</drawable>
+
+    <drawable name="card_alarmitem_enabled_ref1">@drawable/card_alarmitem_enabled_light0</drawable>
+    <drawable name="card_alarmitem_disabled_ref1">@drawable/card_alarmitem_disabled_light0</drawable>
+
+    <drawable name="selectable_item_ref1">@drawable/monet_selectable_item_light</drawable>
+    <drawable name="btn_txt_ref1">@drawable/btn_txt_light</drawable>
+    <drawable name="btn_datetxt_ref1">@drawable/btn_datetxt_light</drawable>
+
+    <drawable name="ic_sunrise_ref1">@drawable/ic_sunrise_light</drawable>
+    <drawable name="ic_sunrise_large_ref1">@drawable/ic_sunrise_large_light</drawable>
+    <drawable name="ic_sunset_ref1">@drawable/ic_sunset_light</drawable>
+    <drawable name="ic_sunset_large_ref1">@drawable/ic_sunset_large_light</drawable>
+    <drawable name="ic_noon_large_ref1">@drawable/ic_noon_large_light</drawable>
+
+    <drawable name="ic_moon_rise_ref1">@drawable/ic_moon_rise_light</drawable>
+    <drawable name="ic_moon_set_ref1">@drawable/ic_moon_set_light</drawable>
+
+    <drawable name="ic_action_location_found_ref1">@drawable/ic_action_location_found_light</drawable>
+    <drawable name="ic_action_location_off_ref1">@drawable/ic_action_location_off_light</drawable>
+    <drawable name="ic_action_location_searching_ref1">@drawable/ic_action_location_searching_light</drawable>
+
+    <drawable name="ic_action_place_ref1">@drawable/ic_action_place_light</drawable>
+    <drawable name="ic_action_map1_ref1">@drawable/ic_action_map1_light</drawable>
+    <drawable name="ic_action_map_ref1">@drawable/ic_action_map_light</drawable>
+    <drawable name="ic_action_time_ref1">@drawable/ic_action_time_light</drawable>
+    <drawable name="ic_weather_sunny_ref1">@drawable/ic_weather_sunny_light</drawable>
+    <drawable name="ic_action_alarms_ref1">@drawable/ic_action_alarms_light</drawable>
+    <drawable name="ic_calendar_ref1">@drawable/ic_calendar_light</drawable>
+    <drawable name="ic_action_notification_ref1">@drawable/ic_action_notification_light</drawable>
+    <drawable name="ic_action_vibration_ref1">@drawable/ic_action_vibration_light</drawable>
+    <drawable name="ic_action_soundenabled_ref1">@drawable/ic_action_soundenabled_light</drawable>
+    <drawable name="ic_action_sounddisabled_ref1">@drawable/ic_action_sounddisabled_light</drawable>
+    <drawable name="ic_action_about_ref1">@drawable/ic_action_about_light</drawable>
+    <drawable name="ic_action_warning_ref1">@drawable/ic_action_warning_light</drawable>
+    <drawable name="ic_action_error_ref1">@drawable/ic_action_error_light</drawable>
+    <drawable name="ic_action_widget_ref1">@drawable/ic_action_widget_light</drawable>
+    <drawable name="ic_palette_ref1">@drawable/ic_palette_light</drawable>
+    <drawable name="ic_action_extension_ref1">@drawable/ic_action_extension_light</drawable>
+    <drawable name="baseline_terrain_ref1_18">@drawable/baseline_terrain_black_18</drawable>
+    <drawable name="ic_action_shadow_ref1">@drawable/ic_action_shadow_light</drawable>
+    <drawable name="ic_action_locale_ref1">@drawable/ic_action_locale_light</drawable>
+    <drawable name="ic_action_settings_ref1">@drawable/ic_action_settings_light</drawable>
+    <drawable name="ic_action_help_ref1">@drawable/ic_action_help_light</drawable>
+    <drawable name="ic_action_accept_ref1">@drawable/ic_action_accept_light</drawable>
+    <drawable name="ic_action_close_ref1">@drawable/ic_action_close_light</drawable>
+    <drawable name="ic_action_back_ref1">@drawable/ic_action_back_light</drawable>
+    <drawable name="ic_action_search_ref1">@drawable/ic_action_search_light</drawable>
+    <drawable name="ic_action_new_ref1">@drawable/ic_action_new_light</drawable>
+    
+    <drawable name="ic_action_doneall_ref1">@drawable/ic_action_doneall_light</drawable>
+    <drawable name="ic_action_save_ref1">@drawable/ic_action_save_light</drawable>
+    <drawable name="ic_action_edit_ref1">@drawable/ic_action_edit_light</drawable>
+    <drawable name="ic_action_discard_ref1">@drawable/ic_action_discard_light</drawable>
+    <drawable name="ic_action_copy_ref1">@drawable/ic_action_copy_light</drawable>
+    <drawable name="ic_action_sort_ref1">@drawable/ic_action_sort_light</drawable>
+    <drawable name="ic_action_dismiss_ref1">@drawable/ic_action_cancel_light</drawable>
+    <drawable name="ic_action_cancel_ref1">@drawable/ic_action_cancel_light</drawable>
+    <drawable name="ic_action_share_ref1">@drawable/ic_action_share_light</drawable>
+    <drawable name="ic_action_snooze_ref1">@drawable/ic_action_snooze_light</drawable>
+
+    <drawable name="ic_action_play_ref1">@drawable/ic_action_play_light</drawable>
+    <drawable name="ic_action_pause_ref1">@drawable/ic_action_pause_light</drawable>
+    <drawable name="ic_action_record_ref1">@drawable/ic_action_record_light</drawable>
+    <drawable name="ic_action_timereset_ref1">@drawable/ic_action_timereset_light</drawable>
+
+    <drawable name="ic_action_expand_ref1">@drawable/ic_action_expand_light</drawable>
+    <drawable name="check_vibrate_ref1">@drawable/check_vibrate_light</drawable>
+
+    <drawable name="ic_action_next_item_ref1">@drawable/ic_action_next_item_light</drawable>
+    <drawable name="ic_action_previous_item_ref1">@drawable/ic_action_previous_item_light</drawable>
+
+</resources>

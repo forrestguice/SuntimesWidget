@@ -536,7 +536,7 @@ public class AppSettings
                 styleID = R.style.AppTheme_System;
 
             } else if (themeName.equals(THEME_SYSTEM1)) {
-                styleID = R.style.AppTheme_System;    // TODO
+                styleID = R.style.AppTheme_System1;
 
             } else if (themeName.equals(THEME_DAYNIGHT)) {
                 if (data == null)

@@ -70,15 +70,60 @@
     <color name="tagColor_error">@color/errorTag_light</color>
     <color name="tagColor_dst">@color/dstTag_light</color>
 
-    <color name="chip_bg1_disabled">@color/chip_bg_disabled_dark</color>
-    <color name="chip_bg1_disabled_stroke">@color/chip_bg_disabled_stroke_dark</color>
-    <color name="chip_bg1_enabled">@color/chip_bg_enabled_dark</color>
-    <color name="chip_bg1_enabled_stroke">@color/chip_bg_enabled_stroke_dark</color>
-    <color name="chip_bg1_pressed">@color/chip_bg_pressed_dark</color>
-    <color name="chip_bg1_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
-    <color name="chip_tray_bg1">@color/chip_tray_bg</color>
-    <color name="grid_selected1">@color/grid_selected</color>
-    <color name="btn_tint_pressed1">@color/btn_tint_pressed</color>
+    <!-- "material you" overridable -->
+
+    <color name="monet_primaryColor">@color/primaryColor</color>
+    <color name="monet_dialog_frame">@color/dialog_frame</color>
+    <color name="monet_dialog_bg">@color/dialog_bg</color>
+    <color name="monet_dialog_bg_alt">@color/dialog_bg_alt</color>
+    <color name="monet_card_bg">@color/card_bg</color>
+    <color name="monet_card_bg_trans">@color/card_bg_trans</color>
+    <color name="monet_chip_bg_disabled">@color/chip_bg_disabled_dark</color>
+    <color name="monet_chip_bg_disabled_stroke">@color/chip_bg_disabled_stroke_dark</color>
+    <color name="monet_chip_bg_enabled">@color/chip_bg_enabled_dark</color>
+    <color name="monet_chip_bg_enabled_stroke">@color/chip_bg_enabled_stroke_dark</color>
+    <color name="monet_chip_bg_pressed">@color/chip_bg_pressed_dark</color>
+    <color name="monet_chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
+    <color name="monet_chip_tray_bg">@color/chip_tray_bg</color>
+
+    <color name="monet_hr">@color/hr</color>
+    <color name="monet_text_disabled">@color/text_disabled</color>
+    <color name="monet_text_accent">@color/text_accent</color>
+    <color name="monet_snackbar_text">@color/snackbar_text</color>
+    <color name="monet_fab_ripple">@color/fab_ripple</color>
+
+    <color name="monet_alarm_enabled">@color/alarm_enabled</color>
+    <color name="monet_grid_selected">@color/grid_selected</color>
+    <color name="monet_btn_tint_pressed">@color/btn_tint_pressed</color>
+
+    <color name="monet_graphColor_bg">@color/graphColor_bg</color>
+    <color name="monet_graphColor_day">@color/graphColor_day</color>
+    <color name="monet_graphColor_night">@color/graphColor_night</color>
+    <color name="monet_graphColor_civil">@color/graphColor_civil</color>
+    <color name="monet_graphColor_nautical">@color/graphColor_nautical</color>
+    <color name="monet_graphColor_astronomical">@color/graphColor_astronomical</color>
+    <color name="monet_graphColor_pointFill">@color/graphColor_pointFill</color>
+    <color name="monet_graphColor_pointStroke">@color/graphColor_pointStroke</color>
+
+    <color name="monet_warningTag">@color/warningTag</color>
+    <color name="monet_errorTag">@color/errorTag</color>
+    <color name="monet_dstTag">@color/dstTag</color>
+
+    <color name="monet_sunIcon_color_rising">@color/sunIcon_color_rising</color>
+    <color name="monet_sunIcon_color_setting">@color/sunIcon_color_setting</color>
+
+    <color name="monet_moonIcon_color_rising">@color/moonIcon_color_rising</color>
+    <color name="monet_moonIcon_color_setting">@color/moonIcon_color_setting</color>
+
+    <color name="monet_springColor">@color/springColor</color>
+    <color name="monet_summerColor">@color/summerColor</color>
+    <color name="monet_fallColor">@color/fallColor</color>
+    <color name="monet_winterColor">@color/winterColor</color>
+
+    <color name="monet_tagColor_warning">@color/warningTag</color>
+    <color name="monet_tagColor_error">@color/errorTag</color>
+    <color name="monet_tagColor_dst">@color/dstTag</color>
+
     <!-- general -->
 
     <color name="primaryColor_dark">@color/grey_900</color>
@@ -139,8 +184,8 @@
     <color name="errorTag_dark">#FF5252</color>
     <color name="dstTag_dark">#ffd500</color>
 
-    <color name="warningTag_light">#ff9900</color>
-    <color name="errorTag_light">#FF5252</color>
+    <color name="warningTag_light">#CF4800</color>
+    <color name="errorTag_light">#CF4700</color>
     <color name="dstTag_light">#CF4800</color>
 
     <!-- moon icons (rising, setting) -->
