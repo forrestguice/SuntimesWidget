@@ -77,6 +77,8 @@
     <color name="chip_bg1_pressed">@color/chip_bg_pressed_dark</color>
     <color name="chip_bg1_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
     <color name="chip_tray_bg1">@color/chip_tray_bg</color>
+    <color name="grid_selected1">@color/grid_selected</color>
+    <color name="btn_tint_pressed1">@color/btn_tint_pressed</color>
     <!-- general -->
 
     <color name="primaryColor_dark">@color/grey_900</color>
