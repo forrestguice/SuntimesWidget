@@ -1494,7 +1494,7 @@
 
     <string name="help_calendar"><![CDATA[Proporcionar eventos a la aplicación de Calendario (fases lunares, solsticios y equinoccios).<br />
         <br />
-        <u><b><font color="#ff9900">Los permisos de Calenadrio se han eliminado.</font></b></u><br />
+        <u><b><font color="%1$s">Los permisos de Calenadrio se han eliminado.</font></b></u><br />
         <br />
         Esta característica está disponible en una <a href="moreInfoLink">aplicación separada</a>.
     ]]></string>  

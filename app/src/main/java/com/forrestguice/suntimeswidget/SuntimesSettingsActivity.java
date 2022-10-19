@@ -780,7 +780,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             Preference calendarReadme = findPreference("appwidget_0_calendars_readme");
             if (calendarReadme != null)
             {
-                calendarReadme.setSummary(SuntimesUtils.fromHtml(getString(R.string.help_calendar)));
+                int[] iconAttrs = { R.attr.tagColor_warning };
+                TypedArray typedArray = getActivity().obtainStyledAttributes(iconAttrs);
+                int warningColor = ContextCompat.getColor(getActivity(), typedArray.getResourceId(0, R.color.warningTag_dark));
+                typedArray.recycle();
+
+                calendarReadme.setSummary(SuntimesUtils.fromHtml(getString(R.string.help_calendar, warningColor + "")));   // #ff9900
                 calendarReadme.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
                 {
                     @Override

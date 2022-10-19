@@ -1592,7 +1592,7 @@
 
     <string name="help_calendar"><![CDATA[Calendário (fases da lua, solstícios e equinócios).<br />
         <br />
-        <u><b><font color="#ff9900">Integração com calendário foi removida.</font></b></u><br />
+        <u><b><font color="%1$s">Integração com calendário foi removida.</font></b></u><br />
         <br />
         Agora é uma função disponível como <a href="moreInfoLink">aplicativo separado</a>.
     ]]></string>

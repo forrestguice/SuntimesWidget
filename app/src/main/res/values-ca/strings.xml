@@ -1501,7 +1501,7 @@
 
     <string name="help_calendar"><![CDATA[Proporciona events a l\'aplicació Calendari (fases lunars, solsticis, i equinoccis).<br />
         <br />
-        <u><b><font color="#ff9900">Els permisos de Calendari s\'han eliminat.</font></b></u><br />
+        <u><b><font color="%1$s">Els permisos de Calendari s\'han eliminat.</font></b></u><br />
         <br />
         Aquesta caracteristica està disponible en una <a href="moreInfoLink">aplicació separada</a>.
     ]]></string>  

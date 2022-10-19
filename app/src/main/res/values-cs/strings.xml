@@ -1681,7 +1681,7 @@
 
     <string name="help_calendar"><![CDATA[Přidejte událost do kalendářní aplikace (fáze Měsíce, slunovraty a rovnodennosti).<br />
         <br />
-        <u><b><font color="#ff9900">Integrace s kalendářem byla odstaněna.</font></b></u><br />
+        <u><b><font color="%1$s">Integrace s kalendářem byla odstaněna.</font></b></u><br />
         <br />
         Tato funkce je nyní dostupná jako <a href="moreInfoLink">oddělená aplikace</a>.
     ]]></string>

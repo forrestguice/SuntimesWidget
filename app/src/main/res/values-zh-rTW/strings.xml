@@ -1531,7 +1531,7 @@
 
     <string name="help_calendar"><![CDATA[向 Calendar 應用程式提供事件（月相、至點和分點）。<br />
         <br />
-        <u><b><font color="#ff9900">日歷權限已被移除。</font></b></u><br />
+        <u><b><font color="%1$s">日歷權限已被移除。</font></b></u><br />
         <br />
         此功能現在作為<a href="moreInfoLink">單獨的應用程式</a>使用
     ]]></string>

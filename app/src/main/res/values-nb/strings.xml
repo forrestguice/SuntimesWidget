@@ -1551,7 +1551,7 @@
 
     <string name="help_calendar"><![CDATA[Lever hendelser til Kalender-appen (månefaser, solverv, jevndøgn).<br />
         <br />
-        <u><b><font color="#ff9900">Kalenderintegrasjon er fjernet.</font></b></u><br />
+        <u><b><font color="%1$s">Kalenderintegrasjon er fjernet.</font></b></u><br />
         <br />
         Denne funksjonen er nå tilgjengelig som en <a href="moreInfoLink">separat app</a>.
     ]]></string>

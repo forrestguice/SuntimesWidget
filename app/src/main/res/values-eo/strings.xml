@@ -1509,7 +1509,7 @@
 
     <string name="help_calendar"><![CDATA[Aldoni okazaĵojn (lunfazojn, sunekstremojn kaj tagnoktegalecojn) al la aplikaĵo de kalendaro.<br />
         <br />
-        <u><b><font color="#ff9900">Kalendaraj permesoj estis forigitaj.</font></b></u><br />
+        <u><b><font color="%1$s">Kalendaraj permesoj estis forigitaj.</font></b></u><br />
         <br />
         Tiu eblaĵo estas nun disponebla kiel <a href="moreInfoLink">aparta aplikaĵo</a>.
     ]]></string>

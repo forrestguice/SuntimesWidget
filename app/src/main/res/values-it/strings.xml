@@ -1533,7 +1533,7 @@
 
     <string name="help_calendar"><![CDATA[Fornisce eventi all\'applizazione Calendar (fasi lunari, solstizi, ed equinozi).<br />
         <br />
-        <u><b><font color="#ff9900">I permessi per il calendario sono stati rimossi.</font></b></u><br />
+        <u><b><font color="%1$s">I permessi per il calendario sono stati rimossi.</font></b></u><br />
         <br />
         Questa funzionalità è ora disponibile come <a href="moreInfoLink">app separata</a>.
     ]]></string>

@@ -1526,7 +1526,7 @@
 
     <string name="help_calendar"><![CDATA[Gertaeraz hornitu egutegiaren aplikazioa (ilargialdiak, solstizioak, eta ekinokzioak).<br />
         <br />
-        <u><b><font color="#ff9900">Egutegi baimenak kendu dira.</font></b></u><br />
+        <u><b><font color="%1$s">Egutegi baimenak kendu dira.</font></b></u><br />
         <br />
         Ezaugarri hau <a href="moreInfoLink">beste aplikazio</a> batean eskuragarri dago.
     ]]></string>

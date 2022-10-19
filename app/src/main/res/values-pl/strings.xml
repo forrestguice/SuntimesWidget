@@ -1530,7 +1530,7 @@
 
     <string name="help_calendar"><![CDATA[Dodaje wydarzenia do aplikacji kalendarza (fazy Księżyca, przesilenia i równonoce).<br />
         <br />
-        <u><b><font color="#ff9900">Uprawnienia kalendarza zostały usunięte.</font></b></u><br />
+        <u><b><font color="%1$s">Uprawnienia kalendarza zostały usunięte.</font></b></u><br />
         <br />
         Ta funkcja jest teraz dostępna jako <a href="moreInfoLink">osobna aplikacja</a>.
     ]]></string>

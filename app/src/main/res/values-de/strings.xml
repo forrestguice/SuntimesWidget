@@ -1497,7 +1497,7 @@
   <string
       name="help_calendar"><![CDATA[Ereignisse (Mondphasen, Sonnenwenden und Tagundnachtgleichen) an die Kalender-App übergeben.<br />
         <br />
-        <u><b><font color="#ff9900">Kalenderberechtigungen wurden entfernt.</font></b></u><br />
+        <u><b><font color="%1$s">Kalenderberechtigungen wurden entfernt.</font></b></u><br />
         <br />
         Diese Funktion ist jetzt als <a href="moreInfoLink">eigenständige App verfügbar</a>.
     ]]></string>
