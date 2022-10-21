@@ -227,7 +227,7 @@ public class AlarmSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     @NonNull
-    public static String getRingtoneName(Context context, Uri ringtoneUri)
+    public static String getRingtoneName(Context context, @Nullable Uri ringtoneUri)
     {
         String ringtoneName = "";
         Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);      // TODO: getRingtone takes up to 100ms!
@@ -290,9 +290,14 @@ public class AlarmSettings
     public static String getDefaultRingtoneName(Context context, AlarmClockItem.AlarmType type)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_NAME_ALARM : PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, context.getString(R.string.configLabel_tagDefault));
+        String name = prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_NAME_ALARM : PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, context.getString(R.string.configLabel_tagDefault));
+        return (name != null) ? name : context.getString(R.string.configLabel_tagDefault);
     }
 
+    /**
+     * Caches the default ringtone uri.
+     * @return the default uri (or VALUE_RINGTONE_DEFAULT if not set)
+     */
     public static Uri setDefaultRingtone(Context context, AlarmClockItem.AlarmType type)
     {
         Uri uri;
@@ -313,12 +318,11 @@ public class AlarmSettings
         }
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        prefs.putString(key_uri, uri.toString());
-        prefs.putString(key_name, getRingtoneName(context, uri));
+        prefs.putString(key_uri, (uri != null) ? uri.toString() : VALUE_RINGTONE_DEFAULT);
+        prefs.putString(key_name, (uri != null) ? getRingtoneName(context, uri) : null);
         prefs.apply();
-        return uri;
+        return (uri != null) ? uri : Uri.parse(VALUE_RINGTONE_DEFAULT);
     }
-
 
     public static void setDefaultRingtoneUris(Context context)
     {
