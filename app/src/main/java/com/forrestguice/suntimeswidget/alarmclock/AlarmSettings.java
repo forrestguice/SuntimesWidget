@@ -227,7 +227,7 @@ public class AlarmSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     @NonNull
-    public static String getRingtoneName(Context context, Uri ringtoneUri)
+    public static String getRingtoneName(Context context, @Nullable Uri ringtoneUri)
     {
         String ringtoneName = "";
         Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);      // TODO: getRingtone takes up to 100ms!
@@ -284,7 +284,7 @@ public class AlarmSettings
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String uriString = prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_URI_ALARM : PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, VALUE_RINGTONE_DEFAULT);
         if (resolveDefaults && VALUE_RINGTONE_DEFAULT.equals(uriString)) {
-            return setDefaultRingtone(context, type);
+            return new AlarmSettings().setDefaultRingtone(context, type);
         } else return (uriString != null ? Uri.parse(uriString) : Uri.parse(VALUE_RINGTONE_DEFAULT));
     }
     public static String getDefaultRingtoneName(Context context, AlarmClockItem.AlarmType type)
@@ -293,20 +293,29 @@ public class AlarmSettings
         return prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_NAME_ALARM : PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, context.getString(R.string.configLabel_tagDefault));
     }
 
-    public static Uri setDefaultRingtone(Context context, AlarmClockItem.AlarmType type)
+    @Nullable
+    public Uri getActualDefaultRingtoneUri(Context context, int type) {
+        return RingtoneManager.getActualDefaultRingtoneUri(context, type);
+    }
+
+    /**
+     * Caches the default ringtone uri.
+     * @return the default uri (or VALUE_RINGTONE_DEFAULT if not set)
+     */
+    public Uri setDefaultRingtone(Context context, AlarmClockItem.AlarmType type)
     {
         Uri uri;
         String key_uri, key_name;
         switch (type)
         {
             case ALARM:
-                uri = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
+                uri = getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
                 key_uri = PREF_KEY_ALARM_RINGTONE_URI_ALARM;
                 key_name = PREF_KEY_ALARM_RINGTONE_NAME_ALARM;
                 break;
             case NOTIFICATION:
             default:
-                uri = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
+                uri = getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
                 key_uri = PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION;
                 key_name = PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION;
                 break;
@@ -318,7 +327,6 @@ public class AlarmSettings
         prefs.apply();
         return uri;
     }
-
 
     public static void setDefaultRingtoneUris(Context context)
     {
@@ -340,9 +348,10 @@ public class AlarmSettings
         protected Boolean doInBackground(AlarmClockItem.AlarmType... types)
         {
             Context context = contextRef.get();
+            AlarmSettings settings = new AlarmSettings();
             if (context != null) {
                 for (AlarmClockItem.AlarmType type : types) {
-                    setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
+                    settings.setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
                 }
                 return true;
             } else return false;
