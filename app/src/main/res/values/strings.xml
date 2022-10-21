@@ -469,6 +469,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Do Nothing</string>           <!-- setting -->
     <string name="actionMode_update">Update Widget</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Reconfigure Widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Perform Action</string>      <!-- setting -->  <!-- TODO: update -->
     <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
