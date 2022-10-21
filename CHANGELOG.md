@@ -1,9 +1,10 @@
 ### ~
 
-### v0.14.9 (2022-10-17)
+### v0.14.9 (2022-10-20)
 * fixes wrong or missing colors when using system dark mode.
+* fixes "size of sun in 2x1 and 3x1 lightmap widgets" (#624).
 * fixes lightmap "long click" to be consistent with a normal click.
-* fixes notification "dismiss" button to help improve context (#628).
+* fixes alarm notification "dismiss" label to help improve context (#628).
 * updates translation to Norwegian (nb) (#632 by FTno).
 * updates translation to German (de) (#631 by CSTRSK).
 * updates translation to Czech (cs) (#630 by utaxiu).
