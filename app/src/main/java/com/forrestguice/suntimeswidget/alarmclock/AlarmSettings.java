@@ -322,10 +322,19 @@ public class AlarmSettings
         }
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        prefs.putString(key_uri, uri.toString());
-        prefs.putString(key_name, getRingtoneName(context, uri));
-        prefs.apply();
-        return uri;
+        if (uri != null)
+        {
+            prefs.putString(key_uri, uri.toString());
+            prefs.putString(key_name, getRingtoneName(context, uri));
+            prefs.apply();
+            return uri;
+
+        } else {
+            prefs.putString(key_uri, VALUE_RINGTONE_DEFAULT);
+            prefs.remove(key_name);
+            prefs.apply();
+            return Uri.parse(VALUE_RINGTONE_DEFAULT);
+        }
     }
 
     public static void setDefaultRingtoneUris(Context context)

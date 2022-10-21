@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -158,7 +159,16 @@ public class AlarmSettingsTest extends SuntimesActivityTestBase
         };
 
         settings.setDefaultRingtone(context, AlarmClockItem.AlarmType.ALARM);
+        assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, prefs.getString(AlarmSettings.PREF_KEY_ALARM_RINGTONE_URI_ALARM, "UNSET"));
+        assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, AlarmSettings.getDefaultRingtoneUri(context, AlarmClockItem.AlarmType.ALARM, false).toString());
+        assertNull(prefs.getString(AlarmSettings.PREF_KEY_ALARM_RINGTONE_NAME_ALARM, null));
+        assertEquals(context.getString(R.string.configLabel_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmClockItem.AlarmType.ALARM));
+
         settings.setDefaultRingtone(context, AlarmClockItem.AlarmType.NOTIFICATION);
+        assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, prefs.getString(AlarmSettings.PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, "UNSET"));
+        assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, AlarmSettings.getDefaultRingtoneUri(context, AlarmClockItem.AlarmType.NOTIFICATION, false).toString());
+        assertNull(prefs.getString(AlarmSettings.PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, null));
+        assertEquals(context.getString(R.string.configLabel_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmClockItem.AlarmType.NOTIFICATION));
     }
 
     private void clearDefaultRingtone()
