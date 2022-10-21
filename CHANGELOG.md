@@ -1,7 +1,8 @@
 ### ~
 
 ### v0.14.9 (2022-10-20)
-* fixes wrong or missing colors when using system dark mode.
+* fixes app crash when the default alarm ringtone is unavailable (#634).
+* fixes wrong/missing colors when using system dark mode.
 * fixes "size of sun in 2x1 and 3x1 lightmap widgets" (#624).
 * fixes lightmap "long click" to be consistent with a normal click.
 * fixes alarm notification "dismiss" label to help improve context (#628).
