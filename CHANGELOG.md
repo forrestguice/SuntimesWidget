@@ -1,6 +1,6 @@
 ### ~
 
-### v0.14.9 (2022-10-20)
+### v0.14.9 (2022-10-23)
 * adds "update all" to widget actions (#625).
 * fixes app crash when the default alarm ringtone is unavailable (#634).
 * fixes wrong/missing colors when using system dark mode.
