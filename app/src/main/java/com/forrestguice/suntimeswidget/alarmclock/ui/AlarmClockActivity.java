@@ -34,6 +34,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.AlarmClock;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -129,6 +130,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final int REQUEST_SETTINGS = 20;
 
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
+    public static final String WARNINGID_BATTERY_OPTIMIZATION = "BatteryOptimizationWarning";
 
     private AlarmListDialog list;
 
@@ -136,7 +138,8 @@ public class AlarmClockActivity extends AppCompatActivity
     private BottomSheetBehavior sheetBehavior;
 
     private SuntimesWarning notificationWarning;
-    private List<SuntimesWarning> warnings;
+    private SuntimesWarning batteryOptimizationWarning = null;   // remains null for api < 23
+    private List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
 
     private AppSettings.LocaleInfo localeInfo;
 
@@ -807,9 +810,16 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private void initWarnings(Context context, Bundle savedState)
     {
+        warnings.clear();
+
         notificationWarning = new SuntimesWarning(WARNINGID_NOTIFICATIONS);
-        warnings = new ArrayList<SuntimesWarning>();
         warnings.add(notificationWarning);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            batteryOptimizationWarning = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION);
+            warnings.add(batteryOptimizationWarning);
+        }
+
         restoreWarnings(savedState);
     }
     private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
@@ -848,12 +858,34 @@ public class AlarmClockActivity extends AppCompatActivity
             return;
         }
 
+        if (showWarnings && batteryOptimizationWarning != null
+                && batteryOptimizationWarning.shouldShow() && !batteryOptimizationWarning.wasDismissed())
+        {
+            batteryOptimizationWarning.initWarning(this, addButton, "[w] " + getString(R.string.configLabel_alarms_optWhiteList_unlisted));
+            batteryOptimizationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_optWhiteList), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+                    }
+                }
+            });
+            batteryOptimizationWarning.show();
+            return;
+        }
+
         // no warnings shown; clear previous (stale) messages
-        notificationWarning.dismiss();
+        for (SuntimesWarning warning : warnings) {
+            warning.dismiss();
+        }
     }
     private void checkWarnings()
     {
         notificationWarning.setShouldShow(!NotificationManagerCompat.from(this).areNotificationsEnabled());
+        if (batteryOptimizationWarning != null) {
+            batteryOptimizationWarning.setShouldShow(!AlarmSettings.isIgnoringBatteryOptimizations(this));
+        }
         showWarnings();
     }
 
