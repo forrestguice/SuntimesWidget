@@ -874,6 +874,7 @@
     <string name="configLabel_alarms_optWhiteList">Battery optimization</string>
     <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Notifications</string>
     <string name="configLabel_alarms_notifications_on">On</string>

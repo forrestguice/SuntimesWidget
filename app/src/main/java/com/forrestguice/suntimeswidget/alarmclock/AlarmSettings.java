@@ -382,4 +382,20 @@ public class AlarmSettings
         } else return true;
     }
 
+    /**
+     * https://dontkillmyapp.com/sony
+     * @return true device is sony and "stamina mode" is enabled, false device is not sony or "stamina mode" is disabled
+     */
+    public static boolean isSonyStaminaModeEnabled(Context context) {
+        try {
+            return (isSony() && android.provider.Settings.Secure.getInt(context.getContentResolver(), "somc.stamina_mode", 0) > 0);
+        } catch (Exception e) {
+            Log.w("AlarmSettings", "isSonyStaminaModeEnabled: " + e);
+            return false;
+        }
+    }
+    public static boolean isSony() {
+        return "sony".equalsIgnoreCase(Build.MANUFACTURER);
+    }
+
 }

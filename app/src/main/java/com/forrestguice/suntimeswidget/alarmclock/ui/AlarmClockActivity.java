@@ -131,6 +131,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION = "BatteryOptimizationWarning";
+    public static final String WARNINGID_BATTERY_OPTIMIZATION_SONY = "BatteryOptimizationWarning_sony";
 
     private AlarmListDialog list;
 
@@ -139,6 +140,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private SuntimesWarning notificationWarning;
     private SuntimesWarning batteryOptimizationWarning = null;   // remains null for api < 23
+    private SuntimesWarning batteryOptimizationWarning_sony = null;   // remains null for non-sony devices
     private List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
 
     private AppSettings.LocaleInfo localeInfo;
@@ -820,6 +822,12 @@ public class AlarmClockActivity extends AppCompatActivity
             warnings.add(batteryOptimizationWarning);
         }
 
+        if (AlarmSettings.isSony())
+        {
+            batteryOptimizationWarning_sony = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION_SONY);
+            warnings.add(batteryOptimizationWarning_sony);
+        }
+
         restoreWarnings(savedState);
     }
     private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
@@ -875,6 +883,14 @@ public class AlarmClockActivity extends AppCompatActivity
             return;
         }
 
+        if (showWarnings && batteryOptimizationWarning_sony != null
+                && batteryOptimizationWarning_sony.shouldShow() && !batteryOptimizationWarning_sony.wasDismissed())
+        {
+            batteryOptimizationWarning_sony.initWarning(this, addButton, getString(R.string.sonyStaminaModeWarning));
+            batteryOptimizationWarning_sony.show();
+            return;
+        }
+
         // no warnings shown; clear previous (stale) messages
         for (SuntimesWarning warning : warnings) {
             warning.dismiss();
@@ -885,6 +901,9 @@ public class AlarmClockActivity extends AppCompatActivity
         notificationWarning.setShouldShow(!NotificationManagerCompat.from(this).areNotificationsEnabled());
         if (batteryOptimizationWarning != null) {
             batteryOptimizationWarning.setShouldShow(!AlarmSettings.isIgnoringBatteryOptimizations(this));
+        }
+        if (batteryOptimizationWarning_sony != null) {
+            batteryOptimizationWarning_sony.setShouldShow(AlarmSettings.isSonyStaminaModeEnabled(this));
         }
         showWarnings();
     }
