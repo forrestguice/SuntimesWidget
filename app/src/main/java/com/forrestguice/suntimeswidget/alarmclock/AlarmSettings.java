@@ -27,6 +27,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
@@ -365,6 +366,20 @@ public class AlarmSettings
                 return true;
             } else return false;
         }
+    }
+
+    /**
+     * @return true optimization is disabled (recommended), false optimization is enabled (alarms may be delayed or fail to sound)
+     */
+    public static boolean isIgnoringBatteryOptimizations(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            if (powerManager != null)
+                return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
+            else return false;
+        } else return true;
     }
 
 }
