@@ -420,6 +420,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ikke gjør noe</string>           <!-- setting -->
     <string name="actionMode_update">Update Widget</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Reconfigure Widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Launch App</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
@@ -517,7 +518,8 @@
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-
+    <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_action_launch_package" />               <!-- edittext label -->
     <string name="configHint_action_launch_title">Handlingstittel</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">Kort beskrivelse</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->
@@ -747,6 +749,7 @@
     <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->  <!-- TODO -->
     <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->  <!-- TODO -->
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->  <!-- TODO -->
+    <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->    <!-- TODO -->
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
     <string name="alarmMode_notification">Varsel</string>                <!-- alarm type (setting) -->
@@ -991,7 +994,8 @@
     <string name="configActionDesc_actionList">Handlingsliste</string>
     <string name="configActionDesc_widgetList">Modulliste</string>
     <string name="configActionDesc_nextSunrise">Vis neste soloppgang</string>
-    <string name="configActionDesc_nextSunset">Vis neste solnedgang</string>    
+    <string name="configActionDesc_nextSunset">Vis neste solnedgang</string>
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">etter forskyvning</string>

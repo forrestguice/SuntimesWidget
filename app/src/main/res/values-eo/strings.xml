@@ -376,7 +376,7 @@
     <string name="widgetMode1x1_decright">Deklinacio kaj rektascensio</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Nuna distanco</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Sekva apogeo aŭ perigeo</string>     <!-- setting -->
-    
+
     <string name="widgetMode3x1_lightmap_large">Lum-mapo</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_medium">Lum-mapo (meza)</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_small">Lum-mapo (malgranda)</string>     <!-- setting -->
@@ -405,6 +405,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Fari nenion</string>           <!-- setting -->
     <string name="actionMode_update">Aktualigi fenestraĵon</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Reagordi fenestraĵon</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Ekigi aplikaĵon</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Baskuli vidon</string>      <!-- setting -->
@@ -940,8 +941,8 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
-    
-     <!-- App Setting: show map button -->
+
+    <!-- App Setting: show map button -->
     <string name="configLabel_ui_showmapbutton">Montri butonon de mapo</string>
     <string name="configLabel_ui_showmapbutton_summary">Sur la ag-strio montri butonon, kiu malfermas implicitan aplikaĵon de mapo.</string>
     
@@ -991,6 +992,7 @@
     <string name="configActionDesc_widgetList">Listo de fenestraĵoj</string>
     <string name="configActionDesc_nextSunrise">Montri sekvan sunleviĝon</string>
     <string name="configActionDesc_nextSunset">Montri sekvan sunsubiron</string>
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Tempolimo de pozici-determinado</string>

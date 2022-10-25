@@ -1,5 +1,16 @@
 ### ~
 
+### v0.14.9 (2022-10-23)
+* adds "update all" to widget actions (#625).
+* fixes app crash when the default alarm ringtone is unavailable (#634).
+* fixes wrong/missing colors when using system dark mode.
+* fixes "size of sun in 2x1 and 3x1 lightmap widgets" (#624).
+* fixes lightmap "long click" to be consistent with a normal click.
+* fixes alarm notification "dismiss" label to help improve context (#628).
+* updates translation to Norwegian (nb) (#632 by FTno).
+* updates translation to German (de) (#631 by CSTRSK).
+* updates translation to Czech (cs) (#630 by utaxiu).
+
 ### v0.14.8 (2022-09-26)
 * fixes crash when location is set to high latitudes (#623).
 * fixes appearance of location icons when using system dark mode.

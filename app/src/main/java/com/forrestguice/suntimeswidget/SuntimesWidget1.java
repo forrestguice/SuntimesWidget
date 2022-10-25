@@ -63,6 +63,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
     {
         return new String[] { WidgetSettings.ActionMode.ONTAP_DONOTHING.name(),
                               WidgetSettings.ActionMode.ONTAP_UPDATE.name(),
+                              WidgetSettings.ActionMode.ONTAP_UPDATE_ALL.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(),
                               WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM.name() };

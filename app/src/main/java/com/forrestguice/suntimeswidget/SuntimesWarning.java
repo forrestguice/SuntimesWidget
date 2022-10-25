@@ -39,6 +39,7 @@ public class SuntimesWarning
 {
     public static final int ANNOUNCE_DELAY_MS = 500;
     public static final String KEY_WASDISMISSED = "userDismissedWarning";
+    public static final String KEY_DURATION = "duration";
 
     public SuntimesWarning(String id)
     {
@@ -64,6 +65,14 @@ public class SuntimesWarning
         return wasDismissed;
     }
 
+    private int duration = Snackbar.LENGTH_INDEFINITE;
+    public int getDuration() {
+         return duration;
+    }
+    public void setDuration(int value) {
+        duration = value;
+    }
+
     protected String contentDescription = null;
     protected View parentView = null;
 
@@ -75,7 +84,7 @@ public class SuntimesWarning
         this.contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
 
         wasDismissed = false;
-        snackbar = Snackbar.make(parentView, message, Snackbar.LENGTH_INDEFINITE);
+        snackbar = Snackbar.make(parentView, message, duration);
         snackbar.addCallback(snackbarListener);
         setContentDescription(contentDescription);
         themeWarning(context, snackbar);
@@ -181,6 +190,7 @@ public class SuntimesWarning
         if (outState != null)
         {
             outState.putBoolean(KEY_WASDISMISSED + id, wasDismissed);
+            outState.putInt(KEY_DURATION + id, duration);
         }
     }
 
@@ -189,6 +199,7 @@ public class SuntimesWarning
         if (savedState != null)
         {
             wasDismissed = savedState.getBoolean(KEY_WASDISMISSED + id, false);
+            duration = savedState.getInt(KEY_DURATION + id, duration);
         }
     }
 
