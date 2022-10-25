@@ -5,7 +5,7 @@
     <color name="monet_dialog_frame">@android:color/system_neutral2_10</color>
     <color name="monet_dialog_bg">@android:color/system_neutral1_10</color>
     <color name="monet_dialog_bg_alt">@android:color/system_neutral2_100</color>
-    <color name="monet_card_bg">@android:color/system_neutral1_10</color>
+    <color name="monet_card_bg">@android:color/system_neutral2_10</color>
     <color name="monet_card_bg_trans">@color/card_bg_trans</color>
     <color name="monet_chip_bg_disabled">@color/chip_bg_disabled_light</color>
     <color name="monet_chip_bg_disabled_stroke">@color/chip_bg_disabled_stroke_light</color>
@@ -16,7 +16,7 @@
     <color name="monet_chip_tray_bg">@android:color/system_neutral1_50</color>
     <color name="monet_menu_bg">@android:color/system_neutral2_10</color>   <!-- TODO -->
 
-    <color name="monet_hr">@color/hr</color>
+    <color name="monet_hr">@android:color/system_neutral1_400</color>
     <color name="monet_text_disabled">@color/text_disabled</color>
     <color name="monet_text_accent">@android:color/system_accent1_400</color>
     <color name="monet_snackbar_text">@color/snackbar_text</color>
@@ -41,7 +41,7 @@
 
     <color name="monet_warningTag">@color/warningTag</color>
     <color name="monet_errorTag">@color/errorTag</color>
-    <color name="monet_dstTag">@color/dstTag</color>
+    <color name="monet_dstTag">@android:color/system_accent1_600</color>
 
     <color name="monet_sunIcon_color_rising">@color/sunIcon_color_rising</color>
     <color name="monet_sunIcon_color_setting">@color/sunIcon_color_setting</color>
