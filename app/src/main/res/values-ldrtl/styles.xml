@@ -9,8 +9,8 @@
 
     <!-- Theme: System1 (right-to-left) -->
     <style name="AppTheme.System1" parent="AppThemeBase.System1">
-        <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
-        <item name="icActionPrevious">@drawable/ic_action_previous_item_ref</item>
+        <item name="icActionNext">@drawable/ic_action_previous_item_ref</item>
+        <item name="icActionPrevious">@drawable/ic_action_next_item_ref</item>
     </style>
 
     <!-- Theme: Light (right-to-left) -->
