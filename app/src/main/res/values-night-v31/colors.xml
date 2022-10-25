@@ -17,6 +17,9 @@
     <color name="monet_menu_bg">@android:color/system_neutral2_800</color>   <!-- TODO -->
 
     <color name="monet_hr">@android:color/system_neutral1_600</color>
+    <color name="monet_text_primary">@color/text_primary_dark</color>
+    <color name="monet_text_secondary">@color/text_secondary_dark</color>
+    <color name="monet_text_tertiary">@color/text_tertiary_dark</color>
     <color name="monet_text_disabled">@color/text_disabled</color>
     <color name="monet_text_accent">@android:color/system_accent1_400</color>
     <color name="monet_snackbar_text">@color/snackbar_text</color>

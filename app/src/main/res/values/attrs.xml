@@ -10,6 +10,9 @@
     <attr name="timeCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />
     <attr name="hrColor" format="reference" />
+    <attr name="text_primaryColor" format="reference" />
+    <attr name="text_secondaryColor" format="reference" />
+    <attr name="text_tertiaryColor" format="reference" />
     <attr name="text_accentColor" format="reference" />
     <attr name="text_disabledColor" format="reference" />
 

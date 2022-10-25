@@ -17,6 +17,9 @@
     <color name="hr">@color/hr_dark</color>
     <color name="text_disabled">@color/text_disabled_dark</color>
     <color name="text_accent">@color/text_accent_dark</color>
+    <color name="text_primary">@color/text_primary_dark</color>
+    <color name="text_secondary">@color/text_secondary_dark</color>
+    <color name="text_tertiary">@color/text_tertiary_dark</color>
     <color name="snackbar_text">@color/snackbar_text_dark</color>
     <color name="fab_ripple">@color/fab_ripple_dark</color>
 
