@@ -1992,10 +1992,10 @@
 
     <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar integration has been removed.</font></b></u><br />
+        <u><b><font color="#ff9900">Calendar integration was removed in v0.10.0.</font></b></u><br />
         <br />
         This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in version' -->
 
     <string name="help_shadowlength" translatable="false">[Icon Shadow] %1$s</string>     <!-- e.g. [Icon] [configLabel_general_observerheight_summary] -->
 
