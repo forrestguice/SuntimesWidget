@@ -86,6 +86,7 @@
     <color name="monet_chip_bg_pressed">@color/chip_bg_pressed_dark</color>
     <color name="monet_chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
     <color name="monet_chip_tray_bg">@color/chip_tray_bg</color>
+    <color name="monet_menu_bg">@color/monet_primaryColor</color>
 
     <color name="monet_hr">@color/hr</color>
     <color name="monet_text_disabled">@color/text_disabled</color>

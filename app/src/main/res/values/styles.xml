@@ -144,6 +144,7 @@
         <item name="timeCardBackground">@color/monet_card_bg</item>
         <item name="semiTransparentBackground">@color/monet_card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="actionOverflowMenuStyle">@style/MonetOverflowMenu</item>
         <item name="hrColor">@color/monet_hr</item>
         <item name="colorAccent">@color/monet_text_accent</item>
         <item name="text_accentColor">@color/monet_text_accent</item>
@@ -255,6 +256,10 @@
     <style name="AppTheme.System1" parent="AppThemeBase.System1">
         <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_ref</item>
+    </style>
+
+    <style name="MonetOverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/monet_menu_bg</item>
     </style>
 
     <!-- Theme: Light (left-to-right) -->
