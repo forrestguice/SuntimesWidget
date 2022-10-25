@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="monet_window_bg">@android:color/system_neutral1_10</color>
     <color name="monet_primaryColor">@android:color/system_neutral2_50</color>
     <color name="monet_dialog_frame">@android:color/system_neutral2_10</color>
     <color name="monet_dialog_bg">@android:color/system_neutral1_10</color>
@@ -8,8 +9,8 @@
     <color name="monet_card_bg_trans">@color/card_bg_trans</color>
     <color name="monet_chip_bg_disabled">@color/chip_bg_disabled_light</color>
     <color name="monet_chip_bg_disabled_stroke">@color/chip_bg_disabled_stroke_light</color>
-    <color name="monet_chip_bg_enabled">@color/chip_bg_enabled_light</color>
-    <color name="monet_chip_bg_enabled_stroke">@color/chip_bg_enabled_stroke_light</color>
+    <color name="monet_chip_bg_enabled">@android:color/system_neutral2_10</color>
+    <color name="monet_chip_bg_enabled_stroke">@android:color/system_accent2_400</color>
     <color name="monet_chip_bg_pressed">@android:color/system_accent1_400</color>
     <color name="monet_chip_bg_pressed_stroke">@android:color/system_accent1_400</color>
     <color name="monet_chip_tray_bg">@android:color/system_neutral1_50</color>
@@ -28,7 +29,7 @@
     <color name="monet_grid_selected">@android:color/system_accent1_400</color>
     <color name="monet_btn_tint_pressed">@android:color/system_accent3_400</color>
 
-    <color name="monet_graphColor_bg">@color/graphColor_bg</color>
+    <color name="monet_graphColor_bg">@color/monet_dialog_bg</color>
     <color name="monet_graphColor_day">@color/graphColor_day</color>
     <color name="monet_graphColor_night">@color/graphColor_night</color>
     <color name="monet_graphColor_civil">@color/graphColor_civil</color>

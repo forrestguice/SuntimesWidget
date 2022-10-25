@@ -72,6 +72,7 @@
 
     <!-- "material you" overridable -->
 
+    <color name="monet_window_bg">#000000</color>
     <color name="monet_primaryColor">@color/primaryColor</color>
     <color name="monet_dialog_frame">@color/dialog_frame</color>
     <color name="monet_dialog_bg">@color/dialog_bg</color>

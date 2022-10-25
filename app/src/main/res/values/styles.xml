@@ -135,11 +135,12 @@
 
     <!-- Theme: Material You (left-to-right) -->
     <style name="AppThemeBase.System1" parent="AppThemeBase.System">
+        <item name="android:windowBackground">@color/monet_window_bg</item>
         <item name="colorPrimary">@color/monet_primaryColor</item>
         <item name="dialogFrame">@color/monet_dialog_frame</item>
         <item name="dialogBackground">@color/monet_dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/monet_dialog_bg_alt</item>
-        <item name="settingsCardBackground">@drawable/widget_bg_ref1</item>
+        <item name="settingsCardBackground">@color/monet_card_bg</item>
         <item name="timeCardBackground">@color/monet_card_bg</item>
         <item name="semiTransparentBackground">@color/monet_card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
