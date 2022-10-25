@@ -10,6 +10,7 @@
         <item name="dialogFrame">@color/dialog_frame</item>
         <item name="dialogBackground">@color/dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt</item>
+        <item name="widgetBackground">@drawable/widget_bg_ref</item>
         <item name="settingsCardBackground">@drawable/widget_bg_ref</item>
         <item name="timeCardBackground">@color/card_bg</item>
         <item name="semiTransparentBackground">@color/card_bg_trans</item>
@@ -143,6 +144,7 @@
         <item name="dialogFrame">@color/monet_dialog_frame</item>
         <item name="dialogBackground">@color/monet_dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/monet_dialog_bg_alt</item>
+        <item name="widgetBackground">@drawable/widget_bg_ref1</item>
         <item name="settingsCardBackground">@color/monet_card_bg</item>
         <item name="timeCardBackground">@color/monet_card_bg</item>
         <item name="semiTransparentBackground">@color/monet_card_bg_trans</item>
@@ -274,6 +276,7 @@
         <item name="dialogFrame">@color/dialog_frame_light</item>
         <item name="dialogBackground">@color/dialog_bg_light</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_light</item>
+        <item name="widgetBackground">@drawable/bg_widget</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
         <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
@@ -408,6 +411,7 @@
         <item name="dialogFrame">@color/dialog_frame_dark</item>
         <item name="dialogBackground">@color/dialog_bg_dark</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_dark</item>
+        <item name="widgetBackground">@drawable/bg_widget_dark</item>
         <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
         <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>

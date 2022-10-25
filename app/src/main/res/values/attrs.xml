@@ -6,6 +6,7 @@
     <attr name="dialogFrame" format="reference" />
     <attr name="dialogBackground" format="reference" />
     <attr name="dialogBackgroundAlt" format="reference" />
+    <attr name="widgetBackground" format="reference" />
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />

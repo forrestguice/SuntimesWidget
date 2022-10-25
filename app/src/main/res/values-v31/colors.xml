@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="monet_window_bg">@android:color/system_neutral1_10</color>
+    <color name="monet_widget_bg">@android:color/system_neutral2_50</color>
     <color name="monet_primaryColor">@android:color/system_neutral2_50</color>
     <color name="monet_dialog_frame">@android:color/system_neutral2_10</color>
     <color name="monet_dialog_bg">@android:color/system_neutral1_10</color>
@@ -20,6 +21,7 @@
     <color name="monet_text_primary">@color/text_primary_light</color>
     <color name="monet_text_secondary">@color/text_secondary_light</color>
     <color name="monet_text_tertiary">@color/text_tertiary_light</color>
+    <color name="monet_text_time">@android:color/system_accent1_600</color>
     <color name="monet_text_disabled">@color/text_disabled</color>
     <color name="monet_text_accent">@android:color/system_accent1_400</color>
     <color name="monet_snackbar_text">@color/snackbar_text</color>

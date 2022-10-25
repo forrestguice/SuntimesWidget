@@ -2,7 +2,7 @@
 <!-- "Material You" icon references -->
 <resources>
 
-    <drawable name="widget_bg_ref1">@drawable/bg_widget</drawable>
+    <drawable name="widget_bg_ref1">@color/monet_widget_bg</drawable>
 
     <drawable name="chip_ref1">@drawable/monet_chip_light</drawable>
     <drawable name="chip_tray_ref1">@drawable/monet_chip_tray_light</drawable>
