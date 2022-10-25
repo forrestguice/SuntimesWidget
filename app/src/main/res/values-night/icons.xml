@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- "System default" icon references (night mode) -->
 <resources>
 
     <drawable name="widget_bg_ref">@drawable/bg_widget_dark</drawable>

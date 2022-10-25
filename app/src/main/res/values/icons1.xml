@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- "Material You" icon references -->
 <resources>
 
     <drawable name="widget_bg_ref1">@drawable/bg_widget</drawable>
@@ -6,8 +7,8 @@
     <drawable name="chip_ref1">@drawable/monet_chip_light</drawable>
     <drawable name="chip_tray_ref1">@drawable/monet_chip_tray_light</drawable>
 
-    <drawable name="card_alarmitem_enabled_ref1">@drawable/card_alarmitem_enabled_light0</drawable>
-    <drawable name="card_alarmitem_disabled_ref1">@drawable/card_alarmitem_disabled_light0</drawable>
+    <drawable name="card_alarmitem_enabled_ref1">@drawable/monet_card_alarmitem_on_light</drawable>
+    <drawable name="card_alarmitem_disabled_ref1">@drawable/monet_card_alarmitem_off_light</drawable>
 
     <drawable name="selectable_item_ref1">@drawable/monet_selectable_item_light</drawable>
     <drawable name="btn_txt_ref1">@drawable/btn_txt_light</drawable>

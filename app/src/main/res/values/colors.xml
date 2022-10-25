@@ -92,7 +92,11 @@
     <color name="monet_snackbar_text">@color/snackbar_text</color>
     <color name="monet_fab_ripple">@color/fab_ripple</color>
 
+    <color name="monet_alarm_pressed">@color/alarm_pressed_light</color>
     <color name="monet_alarm_enabled">@color/alarm_enabled</color>
+    <color name="monet_alarm_enabled_bg">@color/alarm_enabled_bg_light</color>
+    <color name="monet_alarm_disabled_bg">@color/alarm_disabled_bg_light</color>
+
     <color name="monet_grid_selected">@color/grid_selected</color>
     <color name="monet_btn_tint_pressed">@color/btn_tint_pressed</color>
 

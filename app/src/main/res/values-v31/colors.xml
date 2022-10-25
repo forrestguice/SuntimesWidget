@@ -20,7 +20,11 @@
     <color name="monet_snackbar_text">@color/snackbar_text</color>
     <color name="monet_fab_ripple">@android:color/system_accent1_600</color>
 
+    <color name="monet_alarm_pressed">@android:color/system_accent1_400</color>   <!-- TODO -->
     <color name="monet_alarm_enabled">@android:color/system_accent1_400</color>
+    <color name="monet_alarm_enabled_bg">@android:color/system_neutral2_50</color>  <!-- TODO -->
+    <color name="monet_alarm_disabled_bg">@android:color/system_neutral1_10</color>  <!-- TODO -->
+
     <color name="monet_grid_selected">@android:color/system_accent1_400</color>
     <color name="monet_btn_tint_pressed">@android:color/system_accent3_400</color>
 
