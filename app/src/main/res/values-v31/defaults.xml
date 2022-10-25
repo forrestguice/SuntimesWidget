@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="def_app_appearance_theme" translatable="false">system1</string>  <!-- system1: material you -->
+</resources>

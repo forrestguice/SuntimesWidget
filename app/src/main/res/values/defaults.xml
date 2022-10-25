@@ -37,7 +37,7 @@
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
     <string name="def_app_ui_clocktapaction" translatable="false">RESET_NOTE</string>
-    <string name="def_app_appearance_theme" translatable="false">dark</string>
+    <string name="def_app_appearance_theme" translatable="false">system</string>
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
 
     <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
