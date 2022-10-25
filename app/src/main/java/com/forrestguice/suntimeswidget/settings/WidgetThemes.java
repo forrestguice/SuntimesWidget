@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
+import com.forrestguice.suntimeswidget.themes.defaults.MonetTheme;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -126,6 +127,16 @@ public class WidgetThemes
         {
             DarkThemeTranslucent theme = new DarkThemeTranslucent(context);
             theme.saveTheme(themePref);
+        }
+
+        if (Build.VERSION.SDK_INT >= 31)
+        {
+            MonetTheme theme = new MonetTheme(context);
+            ThemeDescriptor descriptor = theme.themeDescriptor();
+            added = addValue(descriptor) || added;         // add default (if missing)
+            if (!SuntimesTheme.isInstalled(themePref, descriptor)) {
+                theme.saveTheme(themePref);
+            }
         }
 
         if (added)

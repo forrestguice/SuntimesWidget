@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_1;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_2;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.MonetTheme;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -1771,6 +1772,9 @@ public class WidgetSettings
     public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
     {
         String themeName = loadThemeName(context, appWidgetId);
+        if (MonetTheme.THEMEDEF_NAME.equals(themeName)) {
+            return new MonetTheme(context);   // don't bother loading stored values (colors are dynamic)
+        }
         //noinspection UnnecessaryLocalVariable
         SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
         //Log.d("loadThemePref", "theme is " + theme.themeName());
