@@ -1,12 +1,14 @@
 ### ~
 
-### v0.14.9 (2022-10-23)
+### v0.14.9 (2022-10-26)
 * adds "update all" to widget actions (#625).
+* adds a warning to SuntimesAlarms when battery optimization is enabled (api23+), or STAMINA mode is enabled (sony devices only).
 * fixes app crash when the default alarm ringtone is unavailable (#634).
 * fixes wrong/missing colors when using system dark mode.
 * fixes "size of sun in 2x1 and 3x1 lightmap widgets" (#624).
 * fixes lightmap "long click" to be consistent with a normal click.
 * fixes alarm notification "dismiss" label to help improve context (#628).
+* updates build; gradle wrapper to `gradle-5.0`.
 * updates translation to Norwegian (nb) (#632 by FTno).
 * updates translation to German (de) (#631 by CSTRSK).
 * updates translation to Czech (cs) (#630 by utaxiu).
