@@ -420,6 +420,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Nic nie rób</string>           <!-- setting -->
     <string name="actionMode_update">Aktualizuj widżet</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Edytuj widżet</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Uruchom apkę</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Przełącz widok</string>      <!-- setting -->
@@ -735,6 +736,7 @@
     <string name="configAction_undo">Cofnij</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Wycisz</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
     <string name="alarmAction_snooze">Drzemka</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Wycisz</string>                  <!-- notification action button -->
 
@@ -1008,6 +1010,7 @@
     <string name="configActionDesc_widgetList">Lista widżetów</string>
     <string name="configActionDesc_nextSunrise">Wyświetl następny wschód Słońca</string>
     <string name="configActionDesc_nextSunset">Wyświetl następny zachód Słońca</string>
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">wg przesunięcia</string>

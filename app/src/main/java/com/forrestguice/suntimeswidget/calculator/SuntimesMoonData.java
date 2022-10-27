@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -230,7 +230,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
         riseSet[2] = calculator.getMoonTimesForDate(otherCalendar);
 
         ArrayList<Calendar> midnights = findMidnight();
-        if (midnights.size() >= 1)
+        if (midnights.size() > 0)
         {
             midnightToday = midnights.get(midnights.size() - 1);
             for (Calendar midnight : midnights)
@@ -252,7 +252,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
         }
 
         ArrayList<Calendar> noons = findNoon();
-        if (noons.size() >= 1)
+        if (noons.size() > 0)
         {
             noonToday = noons.get(noons.size() - 1);
             for (Calendar noon : noons)
@@ -273,12 +273,12 @@ public class SuntimesMoonData extends SuntimesMoonData0
             //Log.d("DEBUG", "using approximate lunar noon tomorrow");
         }
 
-        double moonIllumination = ((noonToday != null) ? calculator.getMoonIlluminationForDate(noonToday) : 0);
+        double moonIllumination = getMoonIllumination(noonToday, todaysCalendar);
         if (moonIllumination >= 0) {
             this.moonIlluminationToday = moonIllumination;
         }
 
-        double moonIllumination1 = ((noonTomorrow != null) ? calculator.getMoonIlluminationForDate(noonTomorrow) : 0);
+        double moonIllumination1 = getMoonIllumination(noonTomorrow, otherCalendar);
         if (moonIllumination1 >= 0) {
             this.moonIlluminationTomorrow = moonIllumination1;
         }
@@ -292,6 +292,21 @@ public class SuntimesMoonData extends SuntimesMoonData0
         Calendar midnight1 = (Calendar)after.clone();
         midnight1.add(Calendar.DAY_OF_MONTH, 1);
         moonPhaseTomorrow = findPhaseOf(midnight1);
+    }
+
+    private double getMoonIllumination(Calendar lunarNoon, Calendar today)
+    {
+        if (calculator != null)
+        {
+            if (lunarNoon != null) {
+                return calculator.getMoonIlluminationForDate(lunarNoon);
+            }
+            Calendar solarNoon = calculator.getSolarNoonCalendarForDate(today);
+            if (solarNoon != null) {
+                return calculator.getMoonIlluminationForDate(solarNoon);
+            }
+        }
+        return 0;
     }
 
     /**

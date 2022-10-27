@@ -863,7 +863,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         notificationTitle = context.getString(R.string.alarmAction_upcomingMsg);
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
-                        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss_early), pendingDismiss);
                         builder.setAutoCancel(false);
                         builder.setOngoing(true);
                     //} else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
