@@ -128,6 +128,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final int REQUEST_TAPACTION_NOTE = 70;
     public static final int REQUEST_MANAGE_EVENTS = 80;
 
+    public static final String RECREATE_ACTIVITY = "recreate_activity";
+
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
     private String appTheme = null;
@@ -147,7 +149,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @Override
     public void onCreate(Bundle icicle)
     {
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, getResultData());
         context = SuntimesSettingsActivity.this;
         appTheme = AppSettings.loadThemePref(this);
         AppSettings.setTheme(this, appTheme);
@@ -157,6 +159,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initLegacyPrefs();
 
         PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(onChangedNeedingRebuild);
+    }
+
+    public Intent getResultData() {
+        return new Intent().putExtra(RECREATE_ACTIVITY, getIntent().getBooleanExtra(RECREATE_ACTIVITY, false));
     }
 
     @Override
@@ -255,6 +261,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         if (adapterModified) {
+            setNeedsRecreateFlag();
             rebuildActivity();
         }
     }
@@ -464,11 +471,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
             {
                 //Log.d("SettingsActivity", "Locale change detected; restarting activity");
+                setNeedsRecreateFlag();
                 updateLocale();
                 rebuildActivity();
             }
         }
     };
+
+    public void setNeedsRecreateFlag() {
+        getIntent().putExtra(RECREATE_ACTIVITY, true);
+        setResult(RESULT_OK, getResultData());
+    }
 
     @SuppressWarnings("UnnecessaryReturnStatement")
     @Override
@@ -1403,12 +1416,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         PreferenceCategory category = (PreferenceCategory) fragment.findPreference("custom_events");
-        initPref_ui_customevents(activity, category);
+        initPref_ui_customevents((SuntimesSettingsActivity) activity, category);
 
         updatePref_ui_themeOverride(AppSettings.loadThemePref(activity), overrideTheme_dark, overrideTheme_light);
     }
 
-    private static void initPref_ui_customevents(final Context context, final PreferenceCategory category)
+    private static void initPref_ui_customevents(final SuntimesSettingsActivity context, final PreferenceCategory category)
     {
         ArrayList<Preference> eventPrefs = new ArrayList<>();
         for (final String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION))
@@ -1435,7 +1448,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
-    protected static Preference.OnPreferenceChangeListener customEventListener(final Context context, final String eventID, final PreferenceCategory category, final CheckBoxPreference pref)
+    protected static Preference.OnPreferenceChangeListener customEventListener(final SuntimesSettingsActivity context, final String eventID, final PreferenceCategory category, final CheckBoxPreference pref)
     {
         return new Preference.OnPreferenceChangeListener()
         {
@@ -1453,6 +1466,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                                 {
                                     EventSettings.setShown(context, eventID, false);
                                     category.removePreference(pref);
+                                    context.setNeedsRecreateFlag();
                                 }
                             })
                             .setNegativeButton(context.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
