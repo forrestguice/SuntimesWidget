@@ -28,11 +28,14 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Pair;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -713,28 +716,17 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
                     int margin = (int)context.getResources().getDimension(R.dimen.table_cell_spacing);
 
-                    TextView text_label = new TextView(context);
-                    text_label.setTextSize(context.getResources().getInteger(R.integer.tablerow_label_fontsize));
-                    text_label.setText(event.getLabel());
+                    TextView text_label = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                    text_label.setText(event.getLabel() + " " + j + " " + angle);
                     text_label.setTextColor(color_label);
-                    text_label.getPaint().setAntiAlias(true);
-                    text_label.setLayoutParams(layout[0]);
                     layout_labels[i].addView(text_label, j);
 
-                    TextView text_rising = new TextView(context);
-                    text_rising.setTextSize(context.getResources().getInteger(R.integer.tablerow_label_fontsize));
-                    text_rising.setText(context.getString(R.string.time_none));
+                    TextView text_rising = initTextView(context, initLayoutParams(0, 0, 0, margin));
                     text_rising.setTextColor(color_rising);
-                    text_rising.getPaint().setAntiAlias(true);
-                    text_rising.setLayoutParams(layout[1]);
                     layout_rising[i].addView(text_rising, j);
 
-                    TextView text_setting = new TextView(context);
-                    text_setting.setTextSize(context.getResources().getInteger(R.integer.tablerow_label_fontsize));
-                    text_setting.setText(context.getString(R.string.time_none));
+                    TextView text_setting = initTextView(context, initLayoutParams(0, 0, 0, margin));
                     text_setting.setTextColor(color_setting);
-                    text_setting.getPaint().setAntiAlias(true);
-                    text_setting.setLayoutParams(layout[2]);
                     layout_setting[i].addView(text_setting, j);
 
                     setVisibility(i, true);
@@ -774,6 +766,20 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             params.setMargins(marginLeft, marginTop, marginRight, marginBottom);
             params.gravity = Gravity.CENTER_VERTICAL;
             return params;
+        }
+
+        protected TextView initTextView(Context context, LinearLayout.LayoutParams layoutParams)
+        {
+            TextView view = new TextView(context, null, R.style.SunsetTimeTextView);
+            view.setTextAppearance(android.R.style.TextAppearance_Small);
+            view.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
+            view.setTextSize(context.getResources().getInteger(R.integer.tablerow_label_fontsize));
+            view.getPaint().setAntiAlias(true);
+            view.setLayoutParams(layoutParams);
+            view.setPadding(0, 0, 0, 0);
+            view.setLetterSpacing(0.01f);
+            view.setText(context.getString(R.string.time_none));
+            return view;
         }
 
         public int getPositionForAngle(ArrayList<Integer> angles, int angle) {
