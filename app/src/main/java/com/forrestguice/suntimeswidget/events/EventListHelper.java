@@ -90,6 +90,7 @@ public class EventListHelper
     protected ActionMode actionMode = null;
     protected EventAliasActionMode1 actionModeCallback = new EventAliasActionMode1();
 
+    protected View emptyView;
     protected ProgressBar progress;
     protected View progressLayout;
 
@@ -218,6 +219,11 @@ public class EventListHelper
         list = expanded ? (ListView) content.findViewById(R.id.explist_events) : (ListView) content.findViewById(R.id.list_events);
         list.setVisibility(View.VISIBLE);
 
+        emptyView = content.findViewById(android.R.id.empty);
+        if (emptyView != null) {
+            emptyView.setVisibility(View.GONE);
+        }
+
         progress = (ProgressBar) content.findViewById(R.id.progress);
         progressLayout = content.findViewById(R.id.progressLayout);
         showProgress(false);
@@ -287,6 +293,10 @@ public class EventListHelper
                 return o1.getLabel().compareTo(o2.getLabel());
             }
         });
+
+        if (emptyView != null) {
+            emptyView.setVisibility(events.isEmpty() ? View.VISIBLE : View.GONE);
+        }
 
         if (expanded)
         {

@@ -780,6 +780,7 @@
 
     <string name="configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
     <string name="configLabel_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
+    <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>    <!-- TODO -->
 
     <string name="configAction_manageEvents">Custom Events</string>   <!-- TODO -->
     <string name="configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
