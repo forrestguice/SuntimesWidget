@@ -121,6 +121,8 @@
     <attr name="icActionPrevious" format="reference" />
 
     <attr name="icActionExpand" format="reference" />
+    <attr name="icActionVisibilityOn" format="reference" />
+    <attr name="icActionVisibilityOff" format="reference" />
 
     <attr name="icActionGPS" format="reference" />
     <attr name="icActionGPS_off" format="reference" />
