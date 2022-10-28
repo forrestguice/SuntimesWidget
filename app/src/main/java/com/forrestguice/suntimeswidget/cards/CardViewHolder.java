@@ -28,13 +28,11 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Pair;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -783,12 +781,12 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
 
         public int getPositionForAngle(ArrayList<Integer> angles, int angle) {
-            for (int j=0; j<angles.size(); j++) {
-                if (angle < angles.get(j)) {
+            for (int j = 0; j < angles.size(); j++) {
+                if (angle <= angles.get(j)) {
                     return j;
                 }
             }
-            return 0;
+            return angles.size();
         }
 
         public int getLayoutForAngle(int angle) {
