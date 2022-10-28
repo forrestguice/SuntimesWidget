@@ -2049,8 +2049,10 @@
           To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
     ]]></string>
     <string name="help_eventlist"><![CDATA[
+          [Icon OK] Choose a custom event.\n
           [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
-          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.
+          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
+          [Icon View] Marked events are displayed by the app.
     ]]></string>    <!-- TODO -->
     <!--<string name="help_alarmclock" />-->
     <string name="help_themelist">

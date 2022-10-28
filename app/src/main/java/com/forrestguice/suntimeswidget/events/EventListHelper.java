@@ -711,17 +711,21 @@ public class EventListHelper
         if (context != null)
         {
             int iconSize = (int) context.getResources().getDimension(R.dimen.helpIcon_size);
-            int[] iconAttrs = { R.attr.icActionNew, R.attr.icActionEdit, R.attr.icActionDelete };
+            int[] iconAttrs = { R.attr.icActionNew, R.attr.icActionEdit, R.attr.icActionDelete, R.attr.icActionAccept, R.attr.icActionVisibilityOn };
             TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
             ImageSpan addIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0);
             ImageSpan editIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_edit), iconSize, iconSize, 0);
             ImageSpan deleteIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_discard), iconSize, iconSize, 0);
+            ImageSpan okIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_action_accept), iconSize, iconSize, 0);
+            ImageSpan viewIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_visibility), iconSize, iconSize, 0);
             typedArray.recycle();
 
             SuntimesUtils.ImageSpanTag[] helpTags = {
+                    new SuntimesUtils.ImageSpanTag("[Icon OK]", okIcon),
                     new SuntimesUtils.ImageSpanTag("[Icon Add]", addIcon),
                     new SuntimesUtils.ImageSpanTag("[Icon Edit]", editIcon),
                     new SuntimesUtils.ImageSpanTag("[Icon Delete]", deleteIcon),
+                    new SuntimesUtils.ImageSpanTag("[Icon View]", viewIcon),
             };
 
             String helpString = context.getString(R.string.help_eventlist);
