@@ -50,6 +50,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -1043,6 +1044,13 @@ public class EventListHelper
             if (icon != null) {
                 icon.setBackgroundColor(item.getColor());
             }
+
+            CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+            if (checkbox != null) {
+                checkbox.setChecked(EventSettings.isShown(getContext(), item.getID()));
+                checkbox.setVisibility(checkbox.isChecked() ? View.VISIBLE : View.INVISIBLE);
+            }
+
             return view;
         }
     }
