@@ -681,6 +681,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 TimeFieldRow row = addRow(context, EventSettings.loadEvent(context, eventID));
                 rows.put(eventID, row);
             }
+            adjustBottomMargin();
             return rows.values();
         }
 
@@ -710,14 +711,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                     int j = getPositionForAngle(angles, angle);
                     angles.add(j, angle);
 
-                    LinearLayout.LayoutParams[] layout = new LinearLayout.LayoutParams[3];
-                    boolean isLastItem = (j == angles.size() - 1);
-                    int margin = (isLastItem ? 0 : (int)context.getResources().getDimension(R.dimen.table_cell_spacing));
-                    for (int k=0; k<layout.length; k++)
-                    {
-                        layout[k] = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        layout[k].setMargins(0, 0, 0, margin);
-                    }
+                    int margin = (int)context.getResources().getDimension(R.dimen.table_cell_spacing);
 
                     TextView text_label = new TextView(context);
                     text_label.setTextSize(context.getResources().getInteger(R.integer.tablerow_label_fontsize));
@@ -749,6 +743,37 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 default:
                     return null;
             }
+        }
+
+        protected void adjustBottomMargin()
+        {
+            for (LinearLayout layout : layout_labels) {
+                adjustBottomMargin(layout);
+            }
+            for (LinearLayout layout : layout_rising) {
+                adjustBottomMargin(layout);
+            }
+            for (LinearLayout layout : layout_setting) {
+                adjustBottomMargin(layout);
+            }
+        }
+
+        protected void adjustBottomMargin(LinearLayout layout)
+        {
+            if (layout != null) {
+                View v = layout.getChildAt(layout.getChildCount()-1);
+                if (v != null) {
+                    v.setLayoutParams(initLayoutParams(0, 0, 0, 0));
+                }
+            }
+        }
+
+        protected LinearLayout.LayoutParams initLayoutParams(int marginLeft, int marginTop, int marginRight, int marginBottom)
+        {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);;
+            params.setMargins(marginLeft, marginTop, marginRight, marginBottom);
+            params.gravity = Gravity.CENTER_VERTICAL;
+            return params;
         }
 
         public int getPositionForAngle(ArrayList<Integer> angles, int angle) {
