@@ -1413,6 +1413,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         Preference manage_events = fragment.findPreference("manage_events");
         if (manage_events != null) {
             manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(fragment.getActivity()));
+            manage_events.setOrder(-91);
         }
 
         PreferenceCategory category = (PreferenceCategory) fragment.findPreference("custom_events");
@@ -1426,17 +1427,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         ArrayList<Preference> eventPrefs = new ArrayList<>();
         for (final String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION))
         {
-            EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID);
+            EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
+            AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+
             final CheckBoxPreference pref = new CheckBoxPreference(context);
             pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
-            pref.setTitle(event.getLabel());
-            pref.setSummary(event.getSummary(context));
+            pref.setOrder((event != null ? event.getAngle() : 0));
+            pref.setTitle(alias.getLabel());
+            pref.setSummary(alias.getSummary(context));
             pref.setPersistent(false);
             pref.setChecked(true);
             pref.setOnPreferenceChangeListener(customEventListener(context, eventID, category, pref));
             eventPrefs.add(pref);
         }
 
+        boolean sortByName = false;    // TODO: optional
         Collections.sort(eventPrefs, new Comparator<Preference>() {
             @Override
             public int compare(Preference o1, Preference o2) {
@@ -1444,7 +1449,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         });
         for (int i=0; i<eventPrefs.size(); i++) {
-            category.addPreference(eventPrefs.get(i));
+            Preference p = eventPrefs.get(i);
+            if (sortByName) {
+                p.setOrder(i+1);
+            }
+            category.addPreference(p);
         }
     }
 
