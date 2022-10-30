@@ -936,7 +936,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void test_showTimeDatePref()
     {
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, true);
-        boolean showTimeDate = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         assertTrue("showTimeDate should be true but was " + showTimeDate, showTimeDate);
 
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, false);
