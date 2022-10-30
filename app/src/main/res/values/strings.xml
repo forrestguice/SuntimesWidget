@@ -217,6 +217,7 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
     <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
     <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
