@@ -640,8 +640,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         public void setEmphasized(Context context, boolean value)
         {
             isEmphasized = value;
-            float textSizePx = context.getResources().getDimension(isEmphasized ? R.dimen.table_row_fontsize_emphasized : R.dimen.table_row_fontsize_normal);
-            //label.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
+            float textSizePx = label.getTextSize() + (isEmphasized ? context.getResources().getDimension(R.dimen.table_row_fontsize_emphasized) : 0);
             for (TextView field : fields) {
                 if (field != null) {
                     field.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
