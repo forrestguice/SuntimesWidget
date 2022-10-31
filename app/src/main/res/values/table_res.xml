@@ -22,6 +22,9 @@
 
     <dimen name="table_moon_startEndMargin">6dp</dimen>
 
+    <dimen name="table_row_fontsize_normal">12sp</dimen>
+    <dimen name="table_row_fontsize_emphasized">16sp</dimen>
+
     <!-- table heading: date field (col 0) -->
     <dimen name="table_heading_date_fontsize">14sp</dimen>
     <integer name="table_heading_date_maxems">7</integer>

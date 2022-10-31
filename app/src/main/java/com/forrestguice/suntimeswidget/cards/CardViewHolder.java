@@ -26,13 +26,16 @@ import android.graphics.Typeface;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,6 +173,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             TimeFieldRow row = timeFields0.get(eventID);
             timeFields.put(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING, row.getField(0));
             timeFields.put(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING, row.getField(1));
+        }
+
+        TimeFieldRow primaryRow = getRow(AppSettings.loadEmphasizeFieldPref(view.getContext()));
+        if (primaryRow != null) {
+            primaryRow.setEmphasized(view.getContext(), true);
         }
 
         lightmap = (LightMapView) view.findViewById(R.id.info_time_lightmap);
@@ -556,6 +564,36 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
     }
 
+    @Nullable
+    public TimeFieldRow getRow(String name)
+    {
+        WidgetSettings.TimeMode mode;
+        try {
+            mode = WidgetSettings.TimeMode.valueOf(name);
+        } catch (IllegalArgumentException e) {
+            Log.w(getClass().getSimpleName(), "getRow: unrecognized:" + e);
+            return null;
+        }
+        return getRow(mode);
+    }
+
+    @Nullable
+    public TimeFieldRow getRow(WidgetSettings.TimeMode mode)
+    {
+        switch (mode)
+        {
+            case GOLD: return row_gold;
+            case NOON: return row_solarnoon;
+            case OFFICIAL: return row_actual;
+            case CIVIL: return row_civil;
+            case NAUTICAL: return row_nautical;
+            case ASTRONOMICAL: return row_astro;
+            case BLUE4: return row_blue4;
+            case BLUE8: return row_blue8;
+            default: return null;
+        }
+    }
+
     /**
      * TimeFieldRow
      */
@@ -593,6 +631,22 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             if (i >= 0 && i < fields.length)
                 return fields[i];
             else return null;
+        }
+
+        private boolean isEmphasized = false;
+        public boolean isEmphasized() {
+            return isEmphasized;
+        }
+        public void setEmphasized(Context context, boolean value)
+        {
+            isEmphasized = value;
+            float textSizePx = context.getResources().getDimension(isEmphasized ? R.dimen.table_row_fontsize_emphasized : R.dimen.table_row_fontsize_normal);
+            //label.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
+            for (TextView field : fields) {
+                if (field != null) {
+                    field.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
+                }
+            }
         }
 
         public void resetHighlight()
