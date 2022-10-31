@@ -163,6 +163,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_SHOWTIMEDATE = "showtimedate";
     public static final boolean PREF_DEF_GENERAL_SHOWTIMEDATE = true;
 
+    public static final String PREF_KEY_GENERAL_SHOWABBRMONTH = "showabbrmonth";
+    public static final boolean PREF_DEF_GENERAL_SHOWABBRMONTH = true;
+
     public static final String PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE = "localize_hemisphere";
     public static final boolean PREF_DEF_GENERAL_LOCALIZE_HEMISPHERE = true;
 
@@ -2769,6 +2772,30 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void saveShowAbbrMonthPref(Context context, int appWidgetId, boolean abbreviate)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWABBRMONTH, abbreviate);
+        prefs.apply();
+    }
+    public static boolean loadShowAbbrMonthPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWABBRMONTH, PREF_DEF_GENERAL_SHOWABBRMONTH);
+    }
+    public static void deleteShowAbbrMonthPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWABBRMONTH);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public static void saveLocalizeHemispherePref(Context context, int appWidgetId, boolean value)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2939,6 +2966,7 @@ public class WidgetSettings
         deleteShowHoursPref(context, appWidgetId);
         deleteShowSecondsPref(context, appWidgetId);
         deleteShowTimeDatePref(context, appWidgetId);
+        deleteShowAbbrMonthPref(context, appWidgetId);
 
         deleteLocalizeHemispherePref(context, appWidgetId);
 

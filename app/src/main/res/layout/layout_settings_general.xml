@@ -236,6 +236,16 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_general_showAbbrMonth_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_showAbbrMonth"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showAbbrMonth" />
+
+        </LinearLayout>
 
         <LinearLayout android:id="@+id/appwidget_general_timeformatmode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"

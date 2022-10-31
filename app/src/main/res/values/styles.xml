@@ -5,7 +5,7 @@
     </style>
 
     <!-- Theme: System (left-to-right) -->
-    <style name="AppThemeBase.System" parent="AppThemeBase.Light">
+    <style name="AppThemeBase.System" parent="Theme.AppCompat.DayNight.NoActionBar">
 
         <item name="dialogFrame">@color/dialog_frame</item>
         <item name="dialogBackground">@color/dialog_bg</item>
@@ -137,7 +137,7 @@
     </style>
 
     <!-- Theme: Light (left-to-right) -->
-    <style name="AppThemeBase.Light" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="AppThemeBase.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="dialogFrame">@color/dialog_frame_light</item>
         <item name="dialogBackground">@color/dialog_bg_light</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_light</item>
