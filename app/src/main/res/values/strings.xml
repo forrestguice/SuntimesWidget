@@ -1113,7 +1113,7 @@
         <item>@string/timeMode_blue4</item>
     </string-array>
     <string-array name="emphasizefield_values" translatable="false">  <!-- one-to-one with headerText_display -->
-        <item>@null</item>
+        <item>NONE</item>
         <item>GOLD</item>
         <item>NOON</item>
         <item>OFFICIAL</item>   <!-- TimeMode enum names -->
