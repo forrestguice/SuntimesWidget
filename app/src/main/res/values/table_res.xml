@@ -22,8 +22,6 @@
 
     <dimen name="table_moon_startEndMargin">6dp</dimen>
 
-    <dimen name="table_row_fontsize_emphasized">4sp</dimen>   <!-- +4 sp over the normal size -->
-
     <!-- table heading: date field (col 0) -->
     <dimen name="table_heading_date_fontsize">14sp</dimen>
     <integer name="table_heading_date_maxems">7</integer>
@@ -54,6 +52,7 @@
     <dimen name="table_heading_iconsize">24dp</dimen>
 
     <integer name="tablerow_label_fontsize">12</integer>  <!-- sp -->
+    <dimen name="table_row_fontsize_emphasized">4sp</dimen>   <!-- +4 sp over the label size -->
 
     <style name="TableHeadImageView" parent="SunsetTimeImageView">      <!-- rise/set header icons-->
         <item name="android:layout_gravity">center</item>
