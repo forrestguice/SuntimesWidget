@@ -51,7 +51,7 @@
 
     <dimen name="table_heading_iconsize">24dp</dimen>
 
-    <integer name="tablerow_label_fontsize">12</integer>  <!-- sp -->
+    <dimen name="tablerow_label_fontsize">@dimen/text_size_small</dimen>  <!-- sp -->
     <dimen name="table_row_fontsize_emphasized">4sp</dimen>   <!-- +4 sp over the label size -->
 
     <style name="TableHeadImageView" parent="SunsetTimeImageView">      <!-- rise/set header icons-->
