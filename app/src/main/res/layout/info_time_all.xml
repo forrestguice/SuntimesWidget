@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_date"
             app:layout_constraintStart_toEndOf="@+id/header_gutter0"
             app:layout_constraintEnd_toStartOf="@+id/header_time_sunset"
-            android:orientation="vertical">
+            android:orientation="vertical" android:gravity="bottom">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -105,12 +105,12 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginStart="@dimen/table_set_leftMargin"
             android:layout_marginTop="8dp"
-            android:minWidth="46dp" android:minHeight="16dp"
+            android:minWidth="@dimen/table_cell_minwidth" android:minHeight="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/text_date"
             app:layout_constraintStart_toEndOf="@+id/header_time_sunrise"
             app:layout_constraintEnd_toStartOf="@+id/header_gutter1"
-            android:orientation="vertical">
+            android:orientation="vertical" android:gravity="bottom">
 
             <LinearLayout
                 android:layout_width="wrap_content"
