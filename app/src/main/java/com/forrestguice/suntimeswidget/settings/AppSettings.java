@@ -114,6 +114,8 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWHEADER_TEXT = "app_ui_showheader_text1";
     public static final int PREF_DEF_UI_SHOWHEADER_TEXT = HEADER_TEXT_LABEL;
 
+    public static final String PREF_KEY_UI_EMPHASIZEFIELD = "app_ui_emphasizefield";
+
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
     public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00111111;
     public static final int FIELD_ACTUAL = 0;  // bit positions
@@ -376,6 +378,12 @@ public class AppSettings
         } catch (NumberFormatException | ClassCastException e) {
             return PREF_DEF_UI_SHOWHEADER_TEXT;
         }
+    }
+
+    public static String loadEmphasizeFieldPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_UI_EMPHASIZEFIELD, context.getString(R.string.def_app_ui_emphasizefield));
     }
 
     public static boolean loadDatasourceUIPref( Context context )

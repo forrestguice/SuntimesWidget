@@ -384,6 +384,7 @@
     <string name="timeMode_blue8">Blue Hour (8\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_none">None</string>                 <!-- label -->  <!-- TODO -->
 
     <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
@@ -1092,6 +1093,32 @@
     <!-- App Setting: show map button -->
     <string name="configLabel_ui_showmapbutton">Show Map Button</string>
     <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>
+
+    <!-- App Setting: emphasize field -->
+    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string-array name="emphasizefield_display">                      <!-- one-to-one with headerText_values -->
+        <item>@string/timeMode_none</item>
+        <item>@string/timeMode_golden</item>
+        <item>@string/timeMode_noon</item>
+        <item>@string/timeMode_official</item>
+        <item>@string/timeMode_civil</item>
+        <item>@string/timeMode_nautical</item>
+        <item>@string/timeMode_astronomical</item>
+        <item>@string/timeMode_blue8</item>
+        <item>@string/timeMode_blue4</item>
+    </string-array>
+    <string-array name="emphasizefield_values" translatable="false">  <!-- one-to-one with headerText_display -->
+        <item>@null</item>
+        <item>GOLD</item>
+        <item>NOON</item>
+        <item>OFFICIAL</item>   <!-- TimeMode enum names -->
+        <item>CIVIL</item>
+        <item>NAUTICAL</item>
+        <item>ASTRONOMICAL</item>
+        <item>BLUE8</item>
+        <item>BLUE4</item>
+    </string-array>
 
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title -->
@@ -2145,6 +2172,7 @@
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showheader_icon" translatable="false">true</string>
     <string name="def_app_ui_showheader_text" translatable="false">1</string>  <!-- 1: labels -->
+    <string name="def_app_ui_emphasizefield" translatable="false">OFFICIAL</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_showmapbutton" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>

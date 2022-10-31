@@ -616,6 +616,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             rebuildActivity();
             return;
         }
+
+        if (key.endsWith(AppSettings.PREF_KEY_UI_EMPHASIZEFIELD))
+        {
+            setNeedsRecreateFlag();
+            return;
+        }
     }
 
     protected void updateLocale()
