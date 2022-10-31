@@ -113,7 +113,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="18dp"
                     android:gravity="center"
                     android:layout_marginTop="4dp" android:layout_marginBottom="-8dp"
-                    android:textSize="12sp" android:maxLines="1" android:ellipsize="end"
+                    android:textSize="@dimen/text_size_small" android:maxLines="1" android:ellipsize="end"
                     tools:text="1h 30m before" android:minEms="5" />
 
                 <TextView
@@ -132,7 +132,7 @@
                     android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
                     android:layout_marginTop="-8dp" android:layout_marginBottom="8dp"
                     android:ellipsize="end" android:gravity="start" android:maxLines="1"
-                    android:textSize="12sp" android:textStyle="bold"
+                    android:textSize="@dimen/text_size_small" android:textStyle="bold"
                     tools:text="June 21, 2019" />
 
             </LinearLayout>
@@ -155,7 +155,7 @@
                     <TextView android:id="@+id/text_repeat"
                         android:layout_width="wrap_content" android:layout_height="match_parent"
                         android:gravity="bottom|start"
-                        android:maxLines="1" android:textSize="12sp"
+                        android:maxLines="1" android:textSize="@dimen/text_size_small"
                         android:text="@string/alarmOption_repeat" tools:text="Sun, Mon, Tue, Wed, Thu, Fri" />
 
                 </LinearLayout>

@@ -2,6 +2,8 @@
 <!-- values\table_res.xml :: typical sized phone (width <= 320dp) -->
 <resources>
 
+    <dimen name="clock_fontsize">@dimen/text_size_enormous</dimen>
+    <dimen name="clock_suffix_fontsize">@dimen/text_size_xlarge</dimen>
     <integer name="clock_amppm_maxems">2</integer>
     <dimen name="clock_note_maxwidth">125dp</dimen>
 
@@ -22,7 +24,7 @@
     <dimen name="table_moon_startEndMargin">6dp</dimen>
 
     <!-- table heading: date field (col 0) -->
-    <dimen name="table_heading_date_fontsize">14sp</dimen>
+    <dimen name="table_heading_date_fontsize">@dimen/text_size_medium</dimen>
     <integer name="table_heading_date_maxems">7</integer>
     <integer name="table_heading_date_maxlength">32</integer>
     <integer name="table_heading_date_maxlines">2</integer>
@@ -43,7 +45,7 @@
     </style>
 
     <!-- table heading: rise/set field (col 1,2) -->
-    <dimen name="table_heading_label_fontsize">14sp</dimen>
+    <dimen name="table_heading_label_fontsize">@dimen/text_size_medium</dimen>
     <integer name="table_heading_label_maxlines">1</integer>
     <dimen name="table_heading_label_maxdim">84dp</dimen>
     <dimen name="table_heading_label_iconSpacing">2dp</dimen>

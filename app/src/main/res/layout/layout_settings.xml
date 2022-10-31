@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp" android:layout_alignBottom="@+id/activity_title"
                 android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                android:textStyle="bold" android:textSize="10sp"
+                android:textStyle="bold" android:textSize="@dimen/text_size_xsmall"
                 tools:text="1234" tools:ignore="RelativeOverlap,SmallSp" />
 
         </RelativeLayout>

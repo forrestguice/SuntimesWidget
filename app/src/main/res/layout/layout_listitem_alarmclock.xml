@@ -144,7 +144,7 @@
             android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:textColor="?attr/text_buttonSelector" android:gravity="center"
-            android:textSize="12sp" android:maxLines="1" android:ellipsize="end"
+            android:textSize="@dimen/text_size_small" android:maxLines="1" android:ellipsize="end"
             tools:text="1h 30m before" android:minEms="5"
 
             app:layout_constraintHorizontal_bias="1"
@@ -159,7 +159,7 @@
             tools:text="June 21, 2019"
             android:layout_marginTop="8dp"
             android:gravity="start"
-            android:textSize="12sp" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
+            android:textSize="@dimen/text_size_small" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/layout_options"
             app:layout_constraintStart_toStartOf="@+id/text_event"
             app:layout_constraintEnd_toEndOf="@+id/text_location"

@@ -33,7 +33,7 @@
     <TextView
         android:id="@+id/emptyView_text" style="@style/Base.TextAppearance.AppCompat.Headline"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/configLabel_widgetList_emptyMsg" android:textColor="#ff757575" android:textSize="36sp" android:textStyle="bold"
+        android:text="@string/configLabel_widgetList_emptyMsg" android:textColor="#ff757575" android:textSize="@dimen/text_size_huge" android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/guideline" />

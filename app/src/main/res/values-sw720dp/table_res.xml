@@ -6,9 +6,9 @@
     <integer name="table_weight0">1</integer>
     <integer name="table_weight1">9</integer>
 
-    <dimen name="table_heading_date_fontsize">18sp</dimen>
+    <dimen name="table_heading_date_fontsize">@dimen/text_size_xlarge</dimen>
     <integer name="table_heading_date_maxems">10</integer>
 
-    <dimen name="table_heading_label_fontsize">18sp</dimen>
+    <dimen name="table_heading_label_fontsize">@dimen/text_size_xlarge</dimen>
     <dimen name="table_heading_label_maxdim">225dp</dimen>
 </resources>

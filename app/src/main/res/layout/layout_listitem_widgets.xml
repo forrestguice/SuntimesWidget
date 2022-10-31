@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/text3"
-            android:textStyle="bold" android:textSize="10sp" android:maxEms="3"
+            android:textStyle="bold" android:textSize="@dimen/text_size_xsmall" android:maxEms="3"
             tools:text="123" tools:ignore="SmallSp"
             android:layout_width="wrap_content" android:layout_height="wrap_content" />
     </LinearLayout>
