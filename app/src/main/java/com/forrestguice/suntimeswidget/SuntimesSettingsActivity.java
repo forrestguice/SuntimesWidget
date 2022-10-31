@@ -1473,6 +1473,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 if (!checked)
                 {
                     AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                            .setCancelable(false)
                             .setMessage(context.getString(R.string.editevent_dialog_showevent_off))
                             .setIcon(android.R.drawable.ic_dialog_info)
                             .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
