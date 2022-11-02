@@ -1864,7 +1864,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    protected static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         SuntimesRiseSetData sunData = getData_sunEvent(context, event, location);
 
