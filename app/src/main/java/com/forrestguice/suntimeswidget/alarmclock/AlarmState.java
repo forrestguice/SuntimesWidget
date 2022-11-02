@@ -61,6 +61,8 @@ public class AlarmState implements Parcelable
     public static final int STATE_SNOOZING = 10;          // alarm is snoozed (will sound again soon)
     public static final int STATE_TIMEOUT = 20;           // alarm is dismissed by timeout (wasn't handled by user)
 
+    public static final int[] VALUES = new int[] { STATE_DISABLED, STATE_NONE, STATE_SCHEDULED_DISTANT, STATE_SCHEDULED_SOON, STATE_SOUNDING, STATE_DISMISSED, STATE_SNOOZING, STATE_TIMEOUT };
+
     private long rowID = -1L;
     private int state = STATE_NONE;
     private boolean modified = false;

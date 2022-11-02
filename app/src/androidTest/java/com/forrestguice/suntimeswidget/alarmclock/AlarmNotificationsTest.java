@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.app.ActivityManager;
-import android.app.AlarmManager;
 import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -28,22 +27,22 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.media.MediaPlayer;
+import android.database.DatabaseUtils;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.IBinder;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ServiceTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,6 +51,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -87,6 +87,70 @@ public class AlarmNotificationsTest
             Log.d("DEBUG", "onServiceDisconnected: " + name);
         }
     };
+
+    @Test
+    public void test_bootCompleted() throws TimeoutException
+    {
+        Calendar now = Calendar.getInstance();
+        ArrayList<Long> rowIDs = new ArrayList<>();
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(mockContext.getApplicationContext());
+        db.open();
+        db.clearAlarms();
+        for (int alarmState : AlarmState.VALUES)
+        {
+            AlarmClockItem alarm = new AlarmClockItem();
+            alarm.type = AlarmClockItem.AlarmType.NOTIFICATION;
+            alarm.timezone = TimeZone.getDefault().getID();
+            alarm.hour = ((now.get(Calendar.HOUR_OF_DAY) + 1 ) % 24);    // very soon; will display reminder notification
+            alarm.minute = now.get(Calendar.MINUTE);
+            alarm.alarmtime = 0;
+            alarm.setEvent(SolarEvents.SUNRISE.name());
+            alarm.location = new Location("TEST", "34", "-111", "0");
+            alarm.repeating = true;
+            alarm.setRepeatingDays("1,2,3,4,5,6,7");
+            alarm.enabled = true;
+            long rowID = addAlarmItemToDatabase(alarm);
+            assertTrue("failed to create alarm", hasAlarmId(rowID));
+
+            db.updateAlarmState(rowID,  AlarmDatabaseAdapterTest.getAlarmStateValues(rowID, alarmState));
+            rowIDs.add(rowID);
+        }
+        db.close();
+
+        // trigger BOOT_COMPLETE action
+        Intent intent = new Intent(AlarmNotifications.getServiceIntent(mockContext));
+        intent.setAction(Intent.ACTION_BOOT_COMPLETED);
+        test_startCommand_calledStop(intent, true, 5000);
+
+        // verify AlarmState is now "scheduled"
+        for (long rowID : rowIDs)
+        {
+            AlarmState state = getAlarmState(rowID);
+            assertTrue("expected 1 (SCHEDULED_DISTANT) or 2 (SCHEDULED_SOON), not " + state.getState(), state.getState() == AlarmState.STATE_SCHEDULED_SOON || state.getState() == AlarmState.STATE_SCHEDULED_DISTANT);
+        }
+    }
+
+    @Nullable
+    private AlarmState getAlarmState(long rowID)
+    {
+        AlarmState state = null;
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(mockContext.getApplicationContext());
+        db.open();
+        Cursor cursor = db.getAlarmState(rowID);
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            if (!cursor.isAfterLast())
+            {
+                ContentValues stateValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, stateValues);
+                state = new AlarmState(stateValues);
+            }
+            cursor.close();
+        }
+        db.close();
+        return state;
+    }
 
     @Test
     public void test_startCommand_nullData() throws TimeoutException
