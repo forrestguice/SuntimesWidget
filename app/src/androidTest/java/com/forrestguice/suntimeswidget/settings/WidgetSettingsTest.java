@@ -756,6 +756,18 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_3x2SunPosModePref()
+    {
+        WidgetSettings.saveSunPos3x2ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH);
+        WidgetSettings.WidgetModeSunPos3x2 pref2 = WidgetSettings.loadSunPos3x2ModePref(context, appWidgetId);
+        assertTrue("pref should be LINEGRAPH but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH));
+
+        WidgetSettings.deleteSunPos3x2ModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSunPos3x2 pref0 = WidgetSettings.loadSunPos3x2ModePref(context, appWidgetId);
+        assertTrue("pref should be default (WORLDMAP) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x2) && pref0.equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_WORLDMAP));
+    }
+
+    @Test
     public void test_sunPosMapModePref()
     {
         WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE, WorldMapWidgetSettings.MAPTAG_3x2);

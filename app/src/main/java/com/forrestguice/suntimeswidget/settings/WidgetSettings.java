@@ -49,6 +49,8 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_1;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_2;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -98,6 +100,9 @@ public class WidgetSettings
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1 = "widgetmode_sunpos3x1";
     public static final WidgetModeSunPos3x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1 = WidgetModeSunPos3x1.MODE3x1_LIGHTMAP;
+
+    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x2 = "widgetmode_sunpos3x2";
+    public static final WidgetModeSunPos3x2 PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x2 = WidgetModeSunPos3x2.MODE3x2_WORLDMAP;
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1 = "widgetmode_moon1x1";
     public static final WidgetModeMoon1x1 PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1 = WidgetModeMoon1x1.MODE1x1_RISESET;
@@ -540,6 +545,56 @@ public class WidgetSettings
             MODE3x1_LIGHTMAP.setDisplayString(context.getString(R.string.widgetMode3x1_lightmap_large));
             MODE3x1_LIGHTMAP_MEDIUM.setDisplayString(context.getString(R.string.widgetMode3x1_lightmap_medium));
             MODE3x1_LIGHTMAP_SMALL.setDisplayString(context.getString(R.string.widgetMode3x1_lightmap_small));
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    /**
+     * WidgetModeSunPos3x2
+     */
+    public static enum WidgetModeSunPos3x2 implements WidgetModeDisplay
+    {
+        MODE3x2_LINEGRAPH("Graph", R.layout.layout_widget_sunpos_3x2_1),
+        MODE3x2_WORLDMAP("World Map", R.layout.layout_widget_sunpos_3x2_0);
+
+        private final int layoutID;
+        private String displayString;
+
+        private WidgetModeSunPos3x2(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID() {
+            return layoutID;
+        }
+
+        public String toString() {
+            return displayString;
+        }
+
+        public String getDisplayString() {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString ) {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            MODE3x2_LINEGRAPH.setDisplayString(context.getString(R.string.widgetMode3x2_linegraph));
+            MODE3x2_WORLDMAP.setDisplayString(context.getString(R.string.widgetMode3x2_worldmap));
         }
 
         public static boolean supportsLayout(int layoutID)
@@ -1672,6 +1727,42 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1);
+        prefs.apply();
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveSunPos3x2ModePref(Context context, int appWidgetId, WidgetModeSunPos3x2 mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x2, mode.name());
+        prefs.apply();
+    }
+    public static WidgetModeSunPos3x2 loadSunPos3x2ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x2, PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x2.name());
+        try {
+            return WidgetModeSunPos3x2.valueOf(modeString);
+        } catch (IllegalArgumentException e) {
+            Log.w("loadSunPos3x2ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x2.name() + "'.");
+            return PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x2;
+        }
+    }
+    public static SunPosLayout loadSunPos3x2ModePref_asLayout(Context context, int appWidgetId)
+    {
+        WidgetModeSunPos3x2 mode = loadSunPos3x2ModePref(context, appWidgetId);
+        switch (mode) {
+            case MODE3x2_WORLDMAP: default: return new SunPosLayout_3X2_0();
+        }
+    }
+    public static void deleteSunPos3x2ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x2);
         prefs.apply();
     }
 
@@ -2901,6 +2992,7 @@ public class WidgetSettings
         deleteSun1x1ModePref(context, appWidgetId);
         deleteSunPos1x1ModePref(context, appWidgetId);
         deleteSunPos3x1ModePref(context, appWidgetId);
+        deleteSunPos3x2ModePref(context, appWidgetId);
         deleteMoon1x1ModePref(context, appWidgetId);
         deleteAllowResizePref(context, appWidgetId);
         deleteScaleTextPref(context, appWidgetId);
@@ -2972,6 +3064,7 @@ public class WidgetSettings
         WidgetModeSun2x1.initDisplayStrings(context);
         WidgetModeSunPos1x1.initDisplayStrings(context);
         WidgetModeSunPos3x1.initDisplayStrings(context);
+        WidgetModeSunPos3x2.initDisplayStrings(context);
         WidgetModeMoon1x1.initDisplayStrings(context);
         WidgetModeMoon2x1.initDisplayStrings(context);
         WidgetModeMoon3x1.initDisplayStrings(context);
