@@ -453,6 +453,7 @@
     <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->   <!-- TODO -->
     <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->   <!-- TODO -->
 
+    <string name="widgetMode_sunPosMap_simplerectangular">Basic Map</string>  <!-- setting -->  <!-- TODO: "Basic" to "Basic Map" -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
