@@ -1755,6 +1755,7 @@ public class WidgetSettings
     {
         WidgetModeSunPos3x2 mode = loadSunPos3x2ModePref(context, appWidgetId);
         switch (mode) {
+            case MODE3x2_LINEGRAPH: return new SunPosLayout_3X2_1();
             case MODE3x2_WORLDMAP: default: return new SunPosLayout_3X2_0();
         }
     }
