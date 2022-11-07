@@ -22,12 +22,21 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.util.Calendar;
 
 /**
  * A 3x2 line graph
@@ -87,6 +96,27 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
+        options = new LineGraphView.LineGraphOptions();
+        if (theme.getBackground() == SuntimesTheme.ThemeBackground.LIGHT)
+            options.initDefaultLight(context);
+        else options.initDefaultDark(context);
+
+        options.colorDay = theme.getDayColor();
+        options.colorCivil = theme.getCivilColor();
+        options.colorNautical = theme.getNauticalColor();
+        options.colorAstro = theme.getAstroColor();
+        options.colorNight = theme.getNightColor();
+        options.colorPointFill = theme.getGraphPointFillColor();
+        options.colorPointStroke = theme.getGraphPointStrokeColor();
+
+        themeViewsAzimuthElevationText(context, views, theme);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            float timeSize = theme.getTimeSizeSp();
+            views.setTextViewTextSize(R.id.info_sun_azimuth_rising, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.info_sun_elevation_atnoon, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.info_sun_azimuth_setting, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+        }
     }
 
 }
