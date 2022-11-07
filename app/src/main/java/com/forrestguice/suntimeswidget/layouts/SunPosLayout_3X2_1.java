@@ -81,8 +81,15 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
     {
         super.updateViews(context, appWidgetId, views, dataset);
 
-        /*WorldMapTask.WorldMapProjection projection = createProjectionForMode(context, mapMode, options);
-        Bitmap bitmap = projection.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId)) {
+                scaleLabels(context, views);
+            }
+        }
+        updateLabels(context, views, dataset);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        views.setViewVisibility(R.id.info_time_lightmap_labels, (showLabels ? View.VISIBLE : View.GONE));
+
         LineGraphView.LineGraphTask drawTask = new LineGraphView.LineGraphTask();
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
