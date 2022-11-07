@@ -20,11 +20,13 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 /**
@@ -41,11 +43,23 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
         this.layoutID = R.layout.layout_widget_sunpos_3x2_1;
     }
 
+    protected int chooseLayout(int position)
+    {
+        switch (position) {
+            case 0: return R.layout.layout_widget_sunpos_3x2_1_align_fill;                         // fill
+            case 1: case 2: case 3: return R.layout.layout_widget_sunpos_3x2_1_align_float_2;      // top
+            case 7: case 8: case 9: return R.layout.layout_widget_sunpos_3x2_1_align_float_8;      // bottom
+            case 4: case 6: case 5: default: return R.layout.layout_widget_sunpos_3x2_1;           // center
+        }
+    }
+
     @Override
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
 
+        int position = (scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId));
+        this.layoutID = chooseLayout(position);
         if (Build.VERSION.SDK_INT >= 16)
         {
             this.dpWidth = widgetSize[0];
