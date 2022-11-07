@@ -83,12 +83,16 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
 
         /*WorldMapTask.WorldMapProjection projection = createProjectionForMode(context, mapMode, options);
         Bitmap bitmap = projection.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
+        LineGraphView.LineGraphTask drawTask = new LineGraphView.LineGraphTask();
+        options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
+        Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         if (bitmap != null) {
-            views.setImageViewBitmap(R.id.info_time_worldmap, bitmap);
-            Log.d("DEBUG", "map is " + bitmap.getWidth() + " x " + bitmap.getHeight());
-        }*/
+            views.setImageViewBitmap(R.id.info_time_graph, bitmap);
+            //Log.d("DEBUG", "graph is " + bitmap.getWidth() + " x " + bitmap.getHeight());
+        }
     }
 
+    protected LineGraphView.LineGraphOptions options;
     protected int dpWidth = 512, dpHeight = 256;
 
     @SuppressLint("ResourceType")
