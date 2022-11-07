@@ -81,7 +81,7 @@ public class WorldMapWidgetSettings
     public static enum WorldMapWidgetMode implements WidgetSettings.WidgetModeDisplay
     {
         EQUIRECTANGULAR_SIMPLE("Simple", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_1, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_01, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
         EQUIAZIMUTHAL_SIMPLE("Polar [north]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
         EQUIAZIMUTHAL_SIMPLE1("Polar [south]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_1, false, -90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
         EQUIAZIMUTHAL_SIMPLE2("Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1);
