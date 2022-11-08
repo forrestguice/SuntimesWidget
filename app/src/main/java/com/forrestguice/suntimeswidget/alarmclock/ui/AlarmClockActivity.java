@@ -847,7 +847,6 @@ public class AlarmClockActivity extends AppCompatActivity
 
         if (Build.VERSION.SDK_INT >= 23) {
             batteryOptimizationWarning = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION);
-            batteryOptimizationWarning.setDuration(Snackbar.LENGTH_LONG);
             warnings.add(batteryOptimizationWarning);
         }
 
