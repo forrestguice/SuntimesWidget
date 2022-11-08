@@ -39,10 +39,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.AlarmClock;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationManagerCompat;
@@ -134,6 +136,8 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final int REQUEST_SETTINGS = 20;
 
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
+    public static final String WARNINGID_BATTERY_OPTIMIZATION = "BatteryOptimizationWarning";
+    public static final String WARNINGID_BATTERY_OPTIMIZATION_SONY = "BatteryOptimizationWarning_sony";
 
     private AlarmListDialog list;
 
@@ -141,7 +145,9 @@ public class AlarmClockActivity extends AppCompatActivity
     private BottomSheetBehavior sheetBehavior;
 
     private SuntimesWarning notificationWarning;
-    private List<SuntimesWarning> warnings;
+    private SuntimesWarning batteryOptimizationWarning = null;   // remains null for api < 23
+    private SuntimesWarning batteryOptimizationWarning_sony = null;   // remains null for non-sony devices
+    private List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
 
     private AppSettings.LocaleInfo localeInfo;
 
@@ -233,7 +239,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+        appThemeResID = AppSettings.setTheme(this, appTheme);
 
         String themeName = AppSettings.getThemeOverride(this, appThemeResID);
         if (themeName != null) {
@@ -835,9 +841,23 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private void initWarnings(Context context, Bundle savedState)
     {
+        warnings.clear();
+
         notificationWarning = new SuntimesWarning(WARNINGID_NOTIFICATIONS);
-        warnings = new ArrayList<SuntimesWarning>();
         warnings.add(notificationWarning);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            batteryOptimizationWarning = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION);
+            batteryOptimizationWarning.setDuration(Snackbar.LENGTH_LONG);
+            warnings.add(batteryOptimizationWarning);
+        }
+
+        if (AlarmSettings.isSony())
+        {
+            batteryOptimizationWarning_sony = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION_SONY);
+            warnings.add(batteryOptimizationWarning_sony);
+        }
+
         restoreWarnings(savedState);
     }
     private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
@@ -876,12 +896,45 @@ public class AlarmClockActivity extends AppCompatActivity
             return;
         }
 
+        if (showWarnings && batteryOptimizationWarning != null
+                && batteryOptimizationWarning.shouldShow() && !batteryOptimizationWarning.wasDismissed())
+        {
+            batteryOptimizationWarning.initWarning(this, addButton, "[w] " + getString(R.string.configLabel_alarms_optWhiteList_unlisted));
+            batteryOptimizationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_optWhiteList), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+                    }
+                }
+            });
+            batteryOptimizationWarning.show();
+            return;
+        }
+
+        if (showWarnings && batteryOptimizationWarning_sony != null
+                && batteryOptimizationWarning_sony.shouldShow() && !batteryOptimizationWarning_sony.wasDismissed())
+        {
+            batteryOptimizationWarning_sony.initWarning(this, addButton, getString(R.string.sonyStaminaModeWarning));
+            batteryOptimizationWarning_sony.show();
+            return;
+        }
+
         // no warnings shown; clear previous (stale) messages
-        notificationWarning.dismiss();
+        for (SuntimesWarning warning : warnings) {
+            warning.dismiss();
+        }
     }
     private void checkWarnings()
     {
         notificationWarning.setShouldShow(!NotificationManagerCompat.from(this).areNotificationsEnabled());
+        if (batteryOptimizationWarning != null) {
+            batteryOptimizationWarning.setShouldShow(!AlarmSettings.isIgnoringBatteryOptimizations(this));
+        }
+        if (batteryOptimizationWarning_sony != null) {
+            batteryOptimizationWarning_sony.setShouldShow(AlarmSettings.isSonyStaminaModeEnabled(this));
+        }
         showWarnings();
     }
 

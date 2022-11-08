@@ -52,6 +52,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionWeeks(true);
         showOptionHours(true);
         showOptionTimeDate(true);
+        showOptionAbbrvMonth(true);
         showOptionLabels(true);
         showOptionShowNoon(false);
         disableOptionAllowResize();

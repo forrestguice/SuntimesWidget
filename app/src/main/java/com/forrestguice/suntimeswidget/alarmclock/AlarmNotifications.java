@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.TargetApi;
-import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -76,12 +75,10 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.List;
 import java.util.TimeZone;
 
 public class AlarmNotifications extends BroadcastReceiver
@@ -873,7 +870,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         notificationTitle = context.getString(R.string.alarmAction_upcomingMsg);
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
-                        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss_early), pendingDismiss);
                         builder.setAutoCancel(false);
                         builder.setOngoing(true);
                     //} else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
@@ -1216,8 +1213,31 @@ public class AlarmNotifications extends BroadcastReceiver
                         });
                         alarmListTask.execute();
 
+                    } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
+                        Log.d(TAG, "TIMEZONE_CHANGED received");
+                        boolean rescheduling = false;
+                        TimeZone tz = TimeZone.getDefault();
+                        String tzID = tz.getID();
+                        String tzID_prev = AlarmSettings.loadSystemTimeZoneID(getApplicationContext());
+                        if (!tzID.equals(tzID_prev))
+                        {
+                            Log.i(TAG, "system tz ID changed from " + tzID_prev + " to " + tzID);
+                            long tzOffset = tz.getOffset(System.currentTimeMillis());
+                            long tzOffset_prev = AlarmSettings.loadSystemTimeZoneOffset(getApplicationContext());
+                            if (tzOffset != tzOffset_prev)
+                            {
+                                Log.i(TAG, "system tz offset changed from " + tzOffset_prev + " to " + tzOffset);
+                                findEnabledAlarms(getApplicationContext(), rescheduleTaskListener_clocktime(startId));
+                                rescheduling = true;
+                            }
+                            AlarmSettings.saveSystemTimeZoneInfo(getApplicationContext(), tzID, tzOffset);
+                        }
+                        if (!rescheduling) {
+                            notifications.stopSelf(startId);
+                        }
+
                     } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
-                        Log.d(TAG, "TIME_SET received");
+                        Log.d(TAG, "TIME_CHANGED received");
                         notifications.stopSelf(startId);
                         // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
 
@@ -1256,6 +1276,47 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             return START_STICKY;
+        }
+
+        private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener_clocktime(final int startId)
+        {
+            return new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
+            {
+                @Override
+                public void onItemsLoaded(Long[] ids) {
+                    final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener() {
+                        @Override
+                        public void onObservedAll() {
+                            Log.d(TAG, "Re-schedule completed (time zone changed)");
+                            notifications.stopSelf(startId);
+                        }
+                    });
+                    if (ids.length == 0) {
+                        observer.notify(null);
+                        return;
+                    }
+                    final AlarmDatabaseAdapter.AlarmItemTaskListener notifyObserver = new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+                        @Override
+                        public void onFinished(Boolean result, AlarmClockItem item) {
+                            observer.notify(item.rowID);
+                        }
+                    };
+                    for (long id : ids) {
+                        AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                        itemTask.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+                            @Override
+                            public void onFinished(Boolean result, final AlarmClockItem item)
+                            {
+                                int state = item.state.getState();
+                                if (item.getEvent() == null && state != AlarmState.STATE_SOUNDING && state != AlarmState.STATE_SNOOZING) {
+                                    createAlarmOnReceiveListener(getApplicationContext(), startId, AlarmNotifications.ACTION_RESCHEDULE, notifyObserver).onFinished(result, item);
+                                } else notifyObserver.onFinished(false, item);
+                            }
+                        });
+                        itemTask.execute(id);
+                    }
+                }
+            };
         }
 
         private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener clearTaskListener = new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
@@ -1874,7 +1935,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    protected static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         SuntimesRiseSetData sunData = getData_sunEvent(context, event, location);
 

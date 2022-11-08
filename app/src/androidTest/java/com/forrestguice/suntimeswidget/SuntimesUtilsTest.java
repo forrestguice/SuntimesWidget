@@ -253,7 +253,7 @@ public class SuntimesUtilsTest
 
     protected SuntimesUtils.TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showYear, boolean showTime, boolean showSeconds)
     {
-        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showYear, showTime, showSeconds);
+        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showYear, showTime, showSeconds, false);
         assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
         assertTrue(text.getRawValue() == date.getTimeInMillis());
         assertTrue(text.getSuffix().isEmpty());
