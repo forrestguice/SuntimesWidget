@@ -5,6 +5,7 @@
 * adds a help dialog to the alarm edit activity (#628); adds "day light saving" to main help dialog.
 * fixes bug "alarms do not compensate for time zone changes" (#643).
 * fixes bug "BOOT_COMPLETED fails to reschedule stale alarms" (#641).
+* fixes bug "alarm list doesn't update after repeating alarms are dismissed" (#640).
 * fixes bug where the "light theme" is only partially applied (when system dark mode is also enabled).
 * fixes 3x1 sun position widget "scale text and icons" option; changes labels to bold for better readability (#625).
 
