@@ -13,6 +13,10 @@
     <color name="snackbar_text">@color/snackbar_text_dark</color>
     <color name="fab_ripple">@color/fab_ripple_dark</color>
 
+    <color name="table_rising">@color/table_rising_dark</color>
+    <color name="table_setting">@color/table_setting_dark</color>
+    <color name="table_noon">@color/table_setting_dark</color>
+
     <color name="alarm_enabled">@color/alarm_enabled_dark</color>
     <color name="grid_selected">@color/grid_selected_dark</color>
     <color name="btn_tint_pressed">@color/btn_tint_pressed_dark</color>

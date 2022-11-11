@@ -37,6 +37,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 
 import java.lang.ref.WeakReference;
+import java.util.TimeZone;
 
 import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 
@@ -89,6 +90,9 @@ public class AlarmSettings
     public static final boolean PREF_DEF_ALARM_POWEROFFALARMS = false;
 
     public static final String PREF_KEY_ALARM_UPCOMING_ALARMID = "app_alarms_upcomingAlarmId";    // the alarm we expect to go off next (cached value)
+
+    public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID = "app_alarms_systemtz_id";
+    public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET = "app_alarms_systemtz_offset";
 
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
     public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
@@ -207,6 +211,26 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 11) {
             return prefs.getInt(PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
+    }
+
+    public static void saveSystemTimeZoneInfo(Context context) {
+        saveSystemTimeZoneInfo(context, TimeZone.getDefault().getID(), TimeZone.getDefault().getOffset(System.currentTimeMillis()));
+    }
+    public static void saveSystemTimeZoneInfo(Context context, String id, long offset)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, id);
+        prefs.putLong(PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET, offset);
+        prefs.apply();
+    }
+    @Nullable
+    public static String loadSystemTimeZoneID(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, null);
+    }
+    public static long loadSystemTimeZoneOffset(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getLong(PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET, TimeZone.getDefault().getOffset(System.currentTimeMillis()));
     }
 
     public static void saveUpcomingAlarmId(Context context, @Nullable Long alarmId)

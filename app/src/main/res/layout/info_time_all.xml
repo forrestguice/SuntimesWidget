@@ -202,7 +202,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_rise_rightMargin"
             android:layout_marginRight="@dimen/table_rise_rightMargin"
-            android:textColor="?attr/sunriseColor"
+            android:textColor="?attr/table_risingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_astro"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
             tools:text="00:00 AM"/>
@@ -212,7 +212,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunsetColor"
+            android:textColor="?attr/table_settingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_astro"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
@@ -269,7 +269,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_rise_rightMargin"
             android:layout_marginRight="@dimen/table_rise_rightMargin"
-            android:textColor="?attr/sunriseColor"
+            android:textColor="?attr/table_risingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_nautical"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
             tools:text="00:00 AM"/>
@@ -279,7 +279,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunsetColor"
+            android:textColor="?attr/table_settingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_nautical"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
@@ -336,7 +336,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunriseColor"
+            android:textColor="?attr/table_risingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_blue8"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
             tools:text="00:00 PM"/>
@@ -346,7 +346,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunsetColor"
+            android:textColor="?attr/table_settingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_blue8"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM" />
@@ -403,7 +403,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_rise_rightMargin"
             android:layout_marginRight="@dimen/table_rise_rightMargin"
-            android:textColor="?attr/sunriseColor"
+            android:textColor="?attr/table_risingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_civil"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
             tools:text="00:00 AM"/>
@@ -413,7 +413,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunsetColor"
+            android:textColor="?attr/table_settingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_civil"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
@@ -470,7 +470,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunsetColor"
+            android:textColor="?attr/table_settingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_blue4"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
             tools:text="00:00 PM"/>
@@ -480,7 +480,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunriseColor"
+            android:textColor="?attr/table_risingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_blue4"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM" />
@@ -536,7 +536,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_rise_rightMargin"
             android:layout_marginRight="@dimen/table_rise_rightMargin"
-            android:textColor="?attr/sunriseColor"
+            android:textColor="?attr/table_risingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_official"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
             tools:text="00:00 AM"/>
@@ -546,7 +546,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunsetColor"
+            android:textColor="?attr/table_settingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_official"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
@@ -618,7 +618,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunsetColor"
+            android:textColor="?attr/table_settingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_golden"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
             tools:text="00:00 PM"/>
@@ -628,7 +628,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunriseColor"
+            android:textColor="?attr/table_risingColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_golden"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM" />
@@ -685,7 +685,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunsetColor"
+            android:textColor="?attr/table_noonColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_noon"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
             tools:text="33°∠"/>
@@ -695,7 +695,7 @@
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"
             android:layout_marginRight="@dimen/table_set_rightMargin"
-            android:textColor="?attr/sunsetColor"
+            android:textColor="?attr/table_noonColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_noon"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>

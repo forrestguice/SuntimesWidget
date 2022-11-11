@@ -21,6 +21,9 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+
+import android.content.BroadcastReceiver;
+
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -177,6 +180,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public void onStart()
     {
         super.onStart();
+        registerReceiver(updateBroadcastReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter());
     }
 
     @Override
@@ -242,7 +246,30 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     }
 
+    private final BroadcastReceiver updateBroadcastReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            Uri data = intent.getData();
+            Log.d(TAG, "updateReceiver.onReceive: " + data + " :: " + action);
 
+            if (action != null)
+            {
+                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI))
+                {
+                    if (data != null)
+                    {
+                        long alarmID = ContentUris.parseId(data);
+                        list.reloadAdapter(alarmID);
+                        Log.d("DEBUG", "adapter reloaded: " + alarmID);
+
+                    } else Log.e(TAG, "updateReceiver.onReceive: null data!");
+                } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
+            } else Log.e(TAG, "updateReceiver.onReceive: null action!");
+        }
+    };
 
     @Override
     public void onNewIntent( Intent intent )
@@ -820,7 +847,6 @@ public class AlarmClockActivity extends AppCompatActivity
 
         if (Build.VERSION.SDK_INT >= 23) {
             batteryOptimizationWarning = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION);
-            batteryOptimizationWarning.setDuration(Snackbar.LENGTH_LONG);
             warnings.add(batteryOptimizationWarning);
         }
 

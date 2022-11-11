@@ -38,6 +38,7 @@ import org.junit.runner.RunWith;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TimeZone;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -190,6 +191,21 @@ public class AlarmSettingsTest extends SuntimesActivityTestBase
 
         AlarmSettings.saveUpcomingAlarmId(context, null);
         assertNull(AlarmSettings.loadUpcomingAlarmId(context));
+    }
+
+    @Test
+    public void test_systemTimeZoneInfo()
+    {
+        String tzID = TimeZone.getDefault().getID();
+        long offset = TimeZone.getDefault().getOffset(System.currentTimeMillis());
+
+        AlarmSettings.saveSystemTimeZoneInfo(context, "test", 0);
+        assertEquals("test", AlarmSettings.loadSystemTimeZoneID(context));
+        assertEquals(0, AlarmSettings.loadSystemTimeZoneOffset(context));
+
+        AlarmSettings.saveSystemTimeZoneInfo(context, tzID, offset);
+        assertEquals(tzID, AlarmSettings.loadSystemTimeZoneID(context));
+        assertEquals(offset, AlarmSettings.loadSystemTimeZoneOffset(context));
     }
 
     @Test

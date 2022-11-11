@@ -40,6 +40,10 @@
         <item name="graphColor_pointFill">@color/graphColor_pointFill</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke</item>
 
+        <item name="table_risingColor">@color/table_rising</item>
+        <item name="table_settingColor">@color/table_setting</item>
+        <item name="table_noonColor">@color/table_noon</item>
+
         <item name="sunriseIconSmall">@drawable/ic_sunrise_ref</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_ref</item>
         <item name="sunriseColor">@color/sunIcon_color_rising</item>
@@ -170,6 +174,10 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_light</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill_light</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke_light</item>
+
+        <item name="table_risingColor">@color/table_rising_light</item>
+        <item name="table_settingColor">@color/table_setting_light</item>
+        <item name="table_noonColor">@color/table_noon_light</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
@@ -303,6 +311,10 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill_dark</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke_dark</item>
+
+        <item name="table_risingColor">@color/table_rising_dark</item>
+        <item name="table_settingColor">@color/table_setting_dark</item>
+        <item name="table_noonColor">@color/table_noon_dark</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
