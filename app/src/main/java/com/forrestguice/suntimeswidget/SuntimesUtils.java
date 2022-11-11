@@ -49,6 +49,7 @@ import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
@@ -149,10 +150,13 @@ public class SuntimesUtils
     //private static int initCount = 0;
 
     protected static String strDateYearFormat = "yyyy";
+    protected static String strDateVeryShortFormat = "MMM d";
     protected static String strDateShortFormat = "MMMM d";
     protected static String strDateLongFormat = "MMMM d, yyyy";
+    protected static String strDateTimeVeryShortFormat = "MMM d, h:mm\u00A0a";
     protected static String strDateTimeShortFormat = "MMMM d, h:mm\u00A0a";
     protected static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm\u00A0a";
+    protected static String strDateTimeVeryShortFormatSec = "MMM d, h:mm:ss\u00A0a";
     protected static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss\u00A0a";
     protected static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss\u00A0a";
 
@@ -198,14 +202,17 @@ public class SuntimesUtils
         strTimeLoading = res.getString(R.string.time_loading);
 
         strDateYearFormat = res.getString(R.string.dateyear_format_short);
+        strDateVeryShortFormat = res.getString(R.string.date_format_veryshort);
         strDateShortFormat = res.getString(R.string.date_format_short);
         strDateLongFormat = res.getString(R.string.date_format_long);
 
         strTimeShortFormat12 = res.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
+        strDateTimeVeryShortFormat = dateTimeFormatVeryShort(res, is24, false);  //  context.getString(R.string.datetime_format_short, strDateVeryShortFormat, timeFormat);
         strDateTimeShortFormat = dateTimeFormatShort(res, is24, false);  //  context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
         strDateTimeLongFormat = dateTimeFormatLong(res, is24, false);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
 
         strTimeShortFormat12s = res.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strDateTimeVeryShortFormatSec = dateTimeFormatVeryShort(res, is24, true);  // context.getString(R.string.datetime_format_short, strDateVeryShortFormat, timeFormatSec);
         strDateTimeShortFormatSec = dateTimeFormatShort(res, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
         strDateTimeLongFormatSec = dateTimeFormatLong(res, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
@@ -217,6 +224,11 @@ public class SuntimesUtils
         //Log.d("DEBUG", "SuntimesUtils initialized: " + initCount + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
 
+    public static String dateTimeFormatVeryShort(Resources res, boolean is24, boolean showSeconds)
+    {
+        String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
+        return res.getString(R.string.datetime_format_short, strDateVeryShortFormat, timeFormat);
+    }
     public static String dateTimeFormatShort(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
@@ -744,11 +756,13 @@ public class SuntimesUtils
      * @param calendar  a Calendar representing some date
      * @return a time display string
      */
-    public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar)
-    {
+    public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar) {
         return calendarDateDisplayString(context, calendar, false);
     }
-    public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar, boolean showYear)
+    public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar, boolean showYear) {
+        return calendarDateDisplayString(context, calendar, false, false);
+    }
+    public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar, boolean showYear, boolean abbreviate)
     {
         if (calendar == null || context == null)
         {
@@ -760,7 +774,7 @@ public class SuntimesUtils
 
         if (showYear)
             dateFormat = new SimpleDateFormat(strDateLongFormat, locale);
-        else dateFormat = new SimpleDateFormat(strDateShortFormat, locale);
+        else dateFormat = new SimpleDateFormat((abbreviate ? strDateVeryShortFormat : strDateShortFormat), locale);
 
         Date time = calendar.getTime();
         applyTimeZone(time, calendar.getTimeZone());
@@ -778,7 +792,7 @@ public class SuntimesUtils
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
     {
         Calendar now = Calendar.getInstance();
-        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), true, false);
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), true, false, false);
     }
     public TimeDisplayText calendarDateTimeDisplayString(Context context, long timestamp)
     {
@@ -786,12 +800,14 @@ public class SuntimesUtils
         cal.setTimeInMillis(timestamp);
         return calendarDateTimeDisplayString(context, cal, true, true);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds)
-    {
-        Calendar now = Calendar.getInstance();
-        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showTime, showSeconds);
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds) {
+        return calendarDateTimeDisplayString(context, cal, showTime, showSeconds, false);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds)
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate) {
+        Calendar now = Calendar.getInstance();
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showTime, showSeconds, abbreviate);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate)
     {
         if (cal == null || context == null)
         {
@@ -802,9 +818,9 @@ public class SuntimesUtils
         SimpleDateFormat dateTimeFormat;
         if (showTime) {
             if (showSeconds)
-                dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormatSec : strDateTimeShortFormatSec), locale);
-            else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : strDateTimeShortFormat), locale);
-        } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : strDateShortFormat), locale);
+                dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormatSec : (abbreviate ? strDateTimeVeryShortFormatSec : strDateTimeShortFormatSec)), locale);
+            else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : (abbreviate ? strDateTimeVeryShortFormat : strDateTimeShortFormat)), locale);
+        } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : (abbreviate ? strDateVeryShortFormat : strDateShortFormat)), locale);
         //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
 
         Date time = cal.getTime();
@@ -832,9 +848,12 @@ public class SuntimesUtils
     }
 
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds, TimeFormatMode format) {
-        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, format);
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, false, format);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, TimeFormatMode format)
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format) {
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, abbreviate, format);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format)
     {
         if (cal == null || context == null) {
             return new TimeDisplayText(strTimeNone);
@@ -851,8 +870,14 @@ public class SuntimesUtils
         Locale locale = getLocale();
         SimpleDateFormat dateTimeFormat;
         if (showTime) {
-            dateTimeFormat = new SimpleDateFormat((showYear ? dateTimeFormatLong(context.getResources(), formatIs24, showSeconds) : dateTimeFormatShort(context.getResources(), formatIs24, showSeconds)), locale);
-        } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : strDateShortFormat), locale);
+            dateTimeFormat = new SimpleDateFormat((showYear ? dateTimeFormatLong(context.getResources(), formatIs24, showSeconds)
+                    : (abbreviate ? dateTimeFormatVeryShort(context.getResources(), formatIs24, showSeconds)
+                        : dateTimeFormatShort(context.getResources(), formatIs24, showSeconds))
+            ), locale);
+        } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat
+                : (abbreviate ? strDateVeryShortFormat
+                    : strDateShortFormat)
+        ), locale);
         //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
 
         Date time = cal.getTime();
@@ -1615,6 +1640,32 @@ public class SuntimesUtils
 
                 span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, alignment);
                 text = text.substring(0, tagPos) + tag.getBlank() + text.substring(tagEnd);
+            }
+        }
+        return span;
+    }
+
+    public static SpannableStringBuilder createSpan(Context context, CharSequence text, ImageSpanTag[] tags) {
+        return createSpan(context, text, tags, ImageSpan.ALIGN_BASELINE);
+    }
+    public static SpannableStringBuilder createSpan(Context context, CharSequence text, ImageSpanTag[] tags, int alignment)
+    {
+        SpannableStringBuilder span = new SpannableStringBuilder(text);
+        ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.transparent);
+
+        for (ImageSpanTag tag : tags)
+        {
+            String spanTag = tag.getTag();
+            ImageSpan imageSpan = (tag.getSpan() == null) ? blank : tag.getSpan();
+
+            int tagPos;
+            while ((tagPos = TextUtils.indexOf(text, spanTag )) >= 0)
+            {
+                int tagEnd = tagPos + spanTag.length();
+                //Log.d("DEBUG", "tag=" + spanTag + ", tagPos=" + tagPos + ", " + tagEnd + ", text=" + text);
+
+                span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, alignment);
+                text = text.subSequence(0, tagPos) + tag.getBlank() + text.subSequence(tagEnd, text.length());
             }
         }
         return span;

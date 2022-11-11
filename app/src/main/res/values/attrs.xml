@@ -35,6 +35,10 @@
     <attr name="graphColor_pointFill" format="reference" />
     <attr name="graphColor_pointStroke" format="reference" />
 
+    <attr name="table_risingColor" format="reference" />
+    <attr name="table_settingColor" format="reference" />
+    <attr name="table_noonColor" format="reference" />
+
     <attr name="sunriseIconSmall" format="reference" />
     <attr name="sunriseIconLarge" format="reference" />
     <attr name="sunriseColor" format="reference" />
@@ -72,6 +76,7 @@
     <attr name="toolbarTheme" format="reference" />
     <attr name="icActionPlace" format="reference" />
     <attr name="icActionMap" format="reference" />
+    <attr name="icActionWorldMap" format="reference" />
     <attr name="icActionTime" format="reference" />
     <attr name="icActionDst" format="reference" />
     <attr name="icActionAlarm" format="reference" />

@@ -399,6 +399,10 @@
     <string name="widgetMode1x1_distance">當前距離</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">下一個遠地點或近地點</string>     <!-- setting -->
 
+    <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
     <string name="widgetMode_sunPosMap_simplerectangular">預設</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">北半球視角</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">南半球視角</string>     <!-- setting -->
@@ -423,6 +427,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">什麼也不做</string>           <!-- setting -->
     <string name="actionMode_update">更新小工具</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">重新配置小工具</string>      <!-- setting -->
     <string name="actionMode_launchActivity">打開應用</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">翻轉顯示</string>      <!-- setting -->
@@ -520,7 +525,8 @@
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->
     <string name="configLabel_action_launch">類:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-
+    <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_action_launch_package" />               <!-- edittext label -->
     <string name="configHint_action_launch_title">動作標題</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">簡介</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">類型:</string>                 <!-- spinner label -->
@@ -740,6 +746,7 @@
     <string name="configAction_undo">撤銷</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">解除</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
     <string name="alarmAction_snooze">延時</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">超時</string>                  <!-- notification action button -->
 
@@ -748,6 +755,7 @@
     <string name="alarmAction_snoozeMsg">延時 <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">鬧鐘已超時。</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">即將到來的鬧鐘</string>     <!-- notification msg -->
+    <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->    <!-- TODO -->
 
     <string name="alarmMode_alarm">鬧鐘</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">通知</string>                <!-- alarm type (setting) -->
@@ -944,6 +952,10 @@
     <string name="configLabel_ui_showdatasource">顯示資料源</string>
     <string name="configLabel_ui_showdatasource_summary">為當前配置顯示一個標記。</string>
 
+    <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
+    <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
+
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">列標題</string>              <!-- group title -->
     <string name="configLabel_ui_showheader_icon">顯示列標題圖示</string> <!-- checkbox label -->
@@ -963,11 +975,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">亮色主題</string>
     <string name="appThemes_darkTheme">暗色主題</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>亮色主題/暗色主題（夜間模式）</item>
-    </string-array>
+    <string name="appThemes_nightMode">亮色主題/暗色主題（夜間模式）</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -999,6 +1008,15 @@
     <string name="configActionDesc_setLocation">設定位置</string>
     <string name="configActionDesc_swapCards">切換卡片（今天/明天）</string>
     <string name="configActionDesc_setAlarmForNote">為便簽設定鬧鐘</string>
+    <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
+    <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
+    <string name="configActionDesc_alarmList">Alarm List</string>  <!-- TODO -->
+    <string name="configActionDesc_themeList">Theme List</string>  <!-- TODO -->
+    <string name="configActionDesc_actionList">Action List</string>  <!-- TODO -->
+    <string name="configActionDesc_widgetList">Widget List</string>  <!-- TODO -->
+    <string name="configActionDesc_nextSunrise">Show next sunrise</string>   <!-- TODO -->
+    <string name="configActionDesc_nextSunset">Show next sunset</string>     <!-- TODO -->
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">根據補償</string>
@@ -1015,7 +1033,7 @@
     <string name="timezone_sort_msg">（%1$s）時區排序完成。</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPS時間限制</string>
+    <string name="configLabel_getFix_maxElapse">GPS時間限制</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxElapse_summary">最多等待 <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 秒</item>
@@ -1026,7 +1044,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPS最近位置有效期</string>
+    <string name="configLabel_getFix_maxAge">GPS最近位置有效期</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> 內算作最近位置</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>無</item>
@@ -1282,7 +1300,7 @@
 
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS已被禁用，要啟用嗎？</string>
+    <string name="gps_dialog_msg">GPS已被禁用，要啟用嗎？</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">是</string>
     <string name="gps_dialog_cancel">否</string>
 
@@ -1290,8 +1308,8 @@
     <string name="gps_lastfix_title_set">設定位置</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">上次獲取到的位置</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">獲取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS未能獲取到位置；嘗試用上次獲取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">GPS更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_notfound">GPS未能獲取到位置；嘗試用上次獲取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
+    <string name="gps_lastfix_toast_cancelled">GPS更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">沒有更新檔</string>
@@ -1556,6 +1574,7 @@
 
     <string name="dialog_ok">確認</string>
     <string name="dialog_cancel">取消</string>
+    <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

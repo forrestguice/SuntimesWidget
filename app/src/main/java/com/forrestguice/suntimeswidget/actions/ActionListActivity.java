@@ -67,7 +67,7 @@ public class ActionListActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(icicle);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);

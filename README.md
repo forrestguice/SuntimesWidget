@@ -165,7 +165,7 @@ Libraries used:
 
 ## Project Contributions
 
-German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, and <u>xnumad</u>.<br/>
+German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, <u>xnumad</u>, and <u>CSTRSK</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
 French translation by <u>Jej</u>, <u>Aloha</u> and <u>ldmpub</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>

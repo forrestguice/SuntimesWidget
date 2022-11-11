@@ -122,7 +122,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(icicle);
         initLocale();
         setResult(RESULT_CANCELED);

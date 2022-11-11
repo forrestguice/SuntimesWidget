@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -387,7 +388,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+        appThemeResID = AppSettings.setTheme(this, appTheme);
 
         String themeName = AppSettings.getThemeOverride(this, appThemeResID);
         if (themeName != null)
@@ -1049,6 +1050,17 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (actionBarMenu != null)
         {
+            if (Build.VERSION.SDK_INT >= 11)
+            {
+                MenuItem mapItem = actionBarMenu.findItem(R.id.action_location_show);
+                if (mapItem != null)
+                {
+                    boolean showMapButton = AppSettings.loadShowMapButtonPref(this);
+                    int showAsAction = (showMapButton ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER);
+                    mapItem.setShowAsAction(showAsAction);
+                }
+            }
+
             MenuItem refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
             if (refreshItem != null)
             {
@@ -1498,6 +1510,7 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Show the help dialog.
      */
+    @SuppressLint("ResourceType")
     protected void showHelp()
     {
         String actual = getString(R.string.help_general_actualTime);
@@ -1510,11 +1523,23 @@ public class SuntimesActivity extends AppCompatActivity
         String blueGoldText = getString(R.string.help_general2, blueHour, goldHour);
 
         String moonIllum = getString(R.string.help_general_moonillum);
+        String dstText = getString(R.string.help_general_dst);
 
-        String helpText = getString(R.string.help_general3, moonIllum, timeText, blueGoldText);
+        int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
+        int[] iconAttrs = { R.attr.tagColor_dst, R.attr.icActionDst };
+        TypedArray typedArray = obtainStyledAttributes(iconAttrs);
+        int dstIconColor = ContextCompat.getColor(this, typedArray.getResourceId(0, R.color.dstTag_dark));
+        ImageSpan dstIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_weather_sunny), iconSize, iconSize, dstIconColor);
+        typedArray.recycle();
+
+        SuntimesUtils.ImageSpanTag[] helpTags = {
+                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
+        };
+        CharSequence helpText = SuntimesUtils.fromHtml(getString(R.string.help_general4, moonIllum, timeText, blueGoldText, dstText));
+        CharSequence helpSpan = SuntimesUtils.createSpan(this, helpText, helpTags);
 
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(helpText);
+        helpDialog.setContent(helpSpan);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
@@ -1995,15 +2020,19 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onLightmapClick(CardAdapter adapter, int position) {
+            onLightmapAction(adapter, position);
+        }
+        @Override
+        public boolean onLightmapLongClick(CardAdapter adapter, int position) {
+            onLightmapAction(adapter, position);
+            return true;
+        }
+        protected void onLightmapAction(CardAdapter adapter, int position)
+        {
             Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = adapter.initData(SuntimesActivity.this, position);
             if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null) {
                 showSunPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
             } else showLightMapDialog();
-        }
-        @Override
-        public boolean onLightmapLongClick(CardAdapter adapter, int position) {
-            onLightmapClick(adapter, position);
-            return true;
         }
 
         @Override

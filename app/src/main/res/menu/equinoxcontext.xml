@@ -29,7 +29,7 @@
 
                 <item android:id="@+id/action_worldmap"
                     android:title="@string/configAction_worldMap"
-                    android:icon="?attr/icActionMap"
+                    android:icon="?attr/icActionWorldMap"
                     app:showAsAction="never" />
 
             </menu>
