@@ -758,9 +758,15 @@ public class AlarmListDialog extends DialogFragment
         @Override
         public void onLoadFinished(List<AlarmClockItem> data)
         {
-            Log.d("DEBUG", "onItemChanged: " + data.size());
-            if (data.size() > 0) {
-                adapter.setItem(data.get(0));
+            if (data.size() > 0)
+            {
+                AlarmClockItem item = data.get(0);
+                if (item != null)
+                {
+                    Log.d("DEBUG", "onItemChanged: " + item.rowID);
+                    AlarmNotifications.updateAlarmTime(getActivity(), item);
+                    adapter.setItem(item);
+                }
             }
             updateViews();
             scrollToSelectedItem();
@@ -927,7 +933,7 @@ public class AlarmListDialog extends DialogFragment
             notifyDataSetChanged();
         }
 
-        public void setItem(AlarmClockItem item)
+        public void setItem(@NonNull AlarmClockItem item)
         {
             int position = getIndex(item.rowID);
             if (position >= 0 && position < items.size())

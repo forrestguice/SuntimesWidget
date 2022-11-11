@@ -232,7 +232,7 @@ public class AlarmNotificationsTest
     {
         Intent intent0 = AlarmNotifications.getServiceIntent(mockContext);
         String[] test_actions0 = new String[] {
-                AlarmDismissActivity.ACTION_UPDATE, Intent.ACTION_TIME_CHANGED,
+                AlarmNotifications.ACTION_UPDATE_UI, Intent.ACTION_TIME_CHANGED,
                 AlarmNotifications.ACTION_SHOW, AlarmNotifications.ACTION_DISABLE, AlarmNotifications.ACTION_DISMISS,
                 AlarmNotifications.ACTION_SNOOZE,  AlarmNotifications.ACTION_SILENT, AlarmNotifications.ACTION_TIMEOUT,
                 AlarmNotifications.ACTION_DELETE, Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_TIMEZONE_CHANGED,    // DELETE should clear all (setup for BOOT_COMPLETED, SCHEDULE, and RESCHEDULE)
@@ -252,7 +252,7 @@ public class AlarmNotificationsTest
         AlarmClockItem[] alarms = AlarmDatabaseAdapterTest.createTestItems();
         Intent intent0 = AlarmNotifications.getServiceIntent(mockContext);
         String[] test_actions0 = new String[] {
-                AlarmDismissActivity.ACTION_UPDATE, Intent.ACTION_TIME_CHANGED, Intent.ACTION_TIMEZONE_CHANGED, Intent. ACTION_BOOT_COMPLETED,
+                AlarmNotifications.ACTION_UPDATE_UI, Intent.ACTION_TIME_CHANGED, Intent.ACTION_TIMEZONE_CHANGED, Intent. ACTION_BOOT_COMPLETED,
                 AlarmNotifications.ACTION_SCHEDULE, AlarmNotifications.ACTION_RESCHEDULE, AlarmNotifications.ACTION_RESCHEDULE1,
                 AlarmNotifications.ACTION_SHOW, AlarmNotifications.ACTION_DISABLE, AlarmNotifications.ACTION_DISMISS,
                 AlarmNotifications.ACTION_SNOOZE,  AlarmNotifications.ACTION_SILENT, AlarmNotifications.ACTION_TIMEOUT,
@@ -284,7 +284,7 @@ public class AlarmNotificationsTest
         Uri data1 = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmId1);
 
         // bad data (invalid action when combined with data)
-        String[] test_actions1 = new String[] { AlarmDismissActivity.ACTION_UPDATE, Intent.ACTION_TIME_CHANGED, Intent. ACTION_BOOT_COMPLETED };
+        String[] test_actions1 = new String[] { AlarmNotifications.ACTION_UPDATE_UI, Intent.ACTION_TIME_CHANGED, Intent. ACTION_BOOT_COMPLETED };
         test_startComand_withData_calledStop(intent0, test_actions1, data0);
 
         // good data, bad transition (TIMEOUT is only reachable from SOUNDING)
@@ -517,7 +517,7 @@ public class AlarmNotificationsTest
         Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmID);
         Intent intent = AlarmNotifications.getFullscreenBroadcast(data);
 
-        assertEquals(AlarmDismissActivity.ACTION_UPDATE, intent.getAction());
+        assertEquals(AlarmNotifications.ACTION_UPDATE_UI, intent.getAction());
         assertEquals(data.toString(), intent.getData().toString());
     }
 

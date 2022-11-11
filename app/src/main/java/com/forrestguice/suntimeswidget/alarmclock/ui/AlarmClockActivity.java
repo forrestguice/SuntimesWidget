@@ -21,10 +21,9 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 
-import android.content.BroadcastReceiver;
-
 import android.content.ActivityNotFoundException;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -265,6 +264,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     {
                         long alarmID = ContentUris.parseId(data);
                         list.reloadAdapter(alarmID);
+                        Log.d("DEBUG", "adapter reloaded: " + alarmID);
 
                     } else Log.e(TAG, "updateReceiver.onReceive: null data!");
                 } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
@@ -848,7 +848,6 @@ public class AlarmClockActivity extends AppCompatActivity
 
         if (Build.VERSION.SDK_INT >= 23) {
             batteryOptimizationWarning = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION);
-            batteryOptimizationWarning.setDuration(Snackbar.LENGTH_LONG);
             warnings.add(batteryOptimizationWarning);
         }
 
