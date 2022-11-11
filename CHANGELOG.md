@@ -1,5 +1,56 @@
 ### ~
 
+### v0.14.10 (2022-11-08)
+* adds "abbreviated month names" widget option (#625).
+* adds a help dialog to the alarm edit activity (#628); adds "day light saving" to main help dialog.
+* fixes bug "alarms do not compensate for time zone changes" (#643).
+* fixes bug "BOOT_COMPLETED fails to reschedule stale alarms" (#641).
+* fixes bug "alarm list doesn't update after repeating alarms are dismissed" (#640).
+* fixes bug where the "light theme" is only partially applied (when system dark mode is also enabled).
+* fixes 3x1 sun position widget "scale text and icons" option; changes labels to bold for better readability (#625).
+
+### v0.14.9 (2022-10-26)
+* adds "update all" to widget actions (#625).
+* adds a warning to SuntimesAlarms when battery optimization is enabled (api23+), or STAMINA mode is enabled (sony devices only).
+* fixes app crash when the default alarm ringtone is unavailable (#634).
+* fixes wrong/missing colors when using system dark mode.
+* fixes "size of sun in 2x1 and 3x1 lightmap widgets" (#624).
+* fixes lightmap "long click" to be consistent with a normal click.
+* fixes alarm notification "dismiss" label to help improve context (#628).
+* updates build; gradle wrapper to `gradle-5.0`.
+* updates translation to Norwegian (nb) (#632 by FTno).
+* updates translation to German (de) (#631 by CSTRSK).
+* updates translation to Czech (cs) (#630 by utaxiu).
+
+### v0.14.8 (2022-09-26)
+* fixes crash when location is set to high latitudes (#623).
+* fixes appearance of location icons when using system dark mode.
+* fixes bug where the "observer height" preference sometimes displays stale values.
+* adds link to online help for widget "title substitutions".
+* updates translation to Polish and Esperanto (eo, pl) (#619 by Verdulo).
+
+### v0.14.7 (2022-08-02)
+* adds support for system dark mode (night mode).
+* adds option to show/hide the map button; fixes map icon (#573).
+* fixes app crash when changing locales (#482).
+* fixes app crash when exporting alarms (#612).
+* fixes bug "alarm import/export does not retain sorted order" (#610).
+* fixes bug "alarm list is not sorted after adding items" (#609).
+
+### v0.14.6 (2022-06-04)
+* fixes crash when changing an alarm's time/event (#605).
+* fixes bug where units setting is ignored (altitude displayed in feet) (#604); [Android Go]
+* updates translation to Czech (cs) (#606 by utaxiu).
+
+### v0.14.5 (2022-05-14)
+* fixes bug "default alarm sound fails to play" (#593); adds fallback ringtones (rtttl).
+* fixes bug "sounding/snoozing notification is unexpectedly canceled" (#594).
+* fixes bugs in alarm dialog; dialog creates items of wrong type; dialog last selection not saved.
+* fixes bug where alarm import is unable to select previously exported files (#588).
+* adds export file selection (alarms/places/themes) using Storage Access Framework (api19+) (older devices still use `ACTION_SEND`).
+* adds import warning dialog; alarm sounds and actions may revert to defaults (not retained).
+* adds widget title %substitutions; %em (event time millis), %et (formatted event time), %eT (formatted event time w/ seconds), and %eA (event angle) (#599).
+
 ### v0.14.4 (2022-05-03)
 * adds import/export to SuntimesAlarms (#588); save and load alarms as JSON.
 * adds widget layouts (3x1 sun position); show the lightmap graph with reduced height (#589).

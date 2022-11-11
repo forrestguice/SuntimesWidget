@@ -162,6 +162,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_SHOWTIMEDATE = "showtimedate";
     public static final boolean PREF_DEF_GENERAL_SHOWTIMEDATE = true;
 
+    public static final String PREF_KEY_GENERAL_SHOWABBRMONTH = "showabbrmonth";
+    public static final boolean PREF_DEF_GENERAL_SHOWABBRMONTH = true;
+
     public static final String PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE = "localize_hemisphere";
     public static final boolean PREF_DEF_GENERAL_LOCALIZE_HEMISPHERE = true;
 
@@ -276,6 +279,7 @@ public class WidgetSettings
         ONTAP_UPDATE("Update Widget"),
         ONTAP_LAUNCH_CONFIG("Reconfigure Widget"),
         ONTAP_LAUNCH_ACTIVITY("Launch Activity"),
+        ONTAP_UPDATE_ALL("Update All Widgets"),
         ONTAP_FLIPTO_NEXTITEM("Flip Views");
 
         private String displayString;
@@ -304,6 +308,7 @@ public class WidgetSettings
         {
             ONTAP_DONOTHING.setDisplayString(context.getString(R.string.actionMode_doNothing));
             ONTAP_UPDATE.setDisplayString(context.getString(R.string.actionMode_update));
+            ONTAP_UPDATE_ALL.setDisplayString(context.getString(R.string.actionMode_update_all));
             ONTAP_LAUNCH_CONFIG.setDisplayString(context.getString(R.string.actionMode_config));
             ONTAP_LAUNCH_ACTIVITY.setDisplayString(context.getString(R.string.actionMode_launchActivity));
             ONTAP_FLIPTO_NEXTITEM.setDisplayString(context.getString(R.string.actionMode_flipToNextItem));
@@ -2366,6 +2371,12 @@ public class WidgetSettings
         location.setUseAltitude(prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, defaultUseAltitude));
         return location;
     }
+    public static Location loadLocationDefault()
+    {
+        Location location = new Location(PREF_DEF_LOCATION_LABEL, PREF_DEF_LOCATION_LATITUDE, PREF_DEF_LOCATION_LONGITUDE, PREF_DEF_LOCATION_ALTITUDE);
+        location.setUseAltitude(PREF_DEF_LOCATION_ALTITUDE_ENABLED);
+        return location;
+    }
     public static void deleteLocationPref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2705,6 +2716,30 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void saveShowAbbrMonthPref(Context context, int appWidgetId, boolean abbreviate)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWABBRMONTH, abbreviate);
+        prefs.apply();
+    }
+    public static boolean loadShowAbbrMonthPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWABBRMONTH, PREF_DEF_GENERAL_SHOWABBRMONTH);
+    }
+    public static void deleteShowAbbrMonthPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_SHOWABBRMONTH);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public static void saveLocalizeHemispherePref(Context context, int appWidgetId, boolean value)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2893,6 +2928,7 @@ public class WidgetSettings
         deleteShowHoursPref(context, appWidgetId);
         deleteShowSecondsPref(context, appWidgetId);
         deleteShowTimeDatePref(context, appWidgetId);
+        deleteShowAbbrMonthPref(context, appWidgetId);
 
         deleteLocalizeHemispherePref(context, appWidgetId);
 

@@ -57,7 +57,7 @@ public class PlacesActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(savedInstanceState);
         setResult(RESULT_CANCELED);
 

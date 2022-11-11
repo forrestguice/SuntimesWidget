@@ -46,6 +46,7 @@ import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_
 import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_2;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.NOTIFICATION;
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -214,7 +215,7 @@ public class AlarmDatabaseAdapterTest
         return alarmState;
     }
 
-    private ContentValues getAlarmStateValues(long rowID, int state)
+    public static ContentValues getAlarmStateValues(long rowID, int state)
     {
         ContentValues alarmState = new ContentValues();
         alarmState.put(AlarmDatabaseAdapter.KEY_STATE, state);
@@ -254,11 +255,17 @@ public class AlarmDatabaseAdapterTest
         // TODO: more columns
     }
 
-    protected void verifyAlarmState(Cursor cursor, long rowID, ContentValues values)
+    public static void verifyAlarmState(Cursor cursor, long rowID, ContentValues values)
     {
         assertTrue("alarmID should match", cursor.getInt(0) == rowID);
         assertTrue("alarmID should match", cursor.getInt(0) == values.getAsInteger(AlarmDatabaseAdapter.KEY_STATE_ALARMID));
         assertTrue("state should match", cursor.getInt(1) == values.getAsInteger(AlarmDatabaseAdapter.KEY_STATE));
+    }
+
+    public static void verifyAlarmState(Cursor cursor, long rowId, int state)
+    {
+        assertEquals("alarmID should match", rowId, cursor.getInt(0));
+        assertEquals("state should match", state, cursor.getInt(1));
     }
 
     @Test
@@ -268,6 +275,9 @@ public class AlarmDatabaseAdapterTest
         db.open();
         for (AlarmClockItem alarm : alarms)
         {
+            if (alarm.type == null) {
+                continue;
+            }
             long id = db.addAlarm(alarm.asContentValues(false));
             assertTrue("ID should be >= 0 (was " + id + ")", id != -1);
             count++;
@@ -341,13 +351,13 @@ public class AlarmDatabaseAdapterTest
         Location location0 = new Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
         Location location1 = new Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
 
-        String[] events = new String[] {"SUNRISE", "SUNSET", "CIVILRISE", null, "MOONRISE", "MOONSET"};
+        String[] events = new String[] {"SUNRISE", "SUNSET", "MORNING_CIVIL", null, "MOONRISE", "MOONSET"};
         boolean[] enabled = new boolean[] {true, false, false, true, true, false};
         boolean[] vibrate = new boolean[] {false, true, true, true, false, false};
         boolean[] repeating = new boolean[] {false, false, true, true, false, false};
         Location[] locations = new Location[] {location0, location0, location1, location1, location0, null};
         String[] timezones = new String[] {TESTTZID_0, TESTTZID_1, TESTTZID_2, TESTTZID_1, TESTTZID_2, null};
-        String[] repeatDays = new String[] {"", "0,1", "0,1,2,3", "1,2", null, "0,1,2,3,4,5,6"};
+        String[] repeatDays = new String[] {"", "1", "0,1,2,3", "1,2", null, "1,2,3,4,5,6"};   // 0 is invalid value
         AlarmClockItem.AlarmType[] types = new AlarmClockItem.AlarmType[] { ALARM, ALARM, NOTIFICATION, null, ALARM, ALARM };
         int[] hours = new int[] {6, 18, 5, 19, 12, 6};
         int[] minutes = new int[] {30, 10, 0, 1, 59, 6};

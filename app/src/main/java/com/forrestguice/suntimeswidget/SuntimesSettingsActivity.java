@@ -34,7 +34,6 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -146,7 +145,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         setResult(RESULT_OK);
         context = SuntimesSettingsActivity.this;
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(AppSettings.themePrefToStyleId(this, appTheme));
+        AppSettings.setTheme(this, appTheme);
 
         super.onCreate(icicle);
         initLocale(icicle);
@@ -435,7 +434,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
         {
             if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
-                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME) || key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
+                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
             {
                 //Log.d("SettingsActivity", "Locale change detected; restarting activity");
                 updateLocale();
@@ -574,6 +573,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveLengthUnitsPref(this, 0, WidgetSettings.getLengthUnit(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH.name())));
+            rebuildActivity();
             return;
         }
     }
@@ -764,18 +764,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             calendarIntent.setComponent(new ComponentName(calendarPackage, calendarActivity));
             calendarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            PackageManager packageManager = getActivity().getPackageManager();
-            if (calendarIntent.resolveActivity(packageManager) != null)
-            {
-                try {
-                    startActivity(calendarIntent);
-                    getActivity().finish();
-                    getActivity().overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
-                    return;
+            try {
+                startActivity(calendarIntent);
+                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+                return;
 
-                } catch (Exception e) {
-                    Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
-                }
+            } catch (Exception e) {
+                Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
             }
 
             AppSettings.initLocale(getActivity());
@@ -791,11 +787,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     {
                         Activity activity = getActivity();
                         if (activity != null) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AboutDialog.ADDONS_URL));
-                            if (intent.resolveActivity(activity.getPackageManager()) != null) {
-                                activity.startActivity(intent);
-                                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
-                            }
+                            AboutDialog.openLink(activity, AboutDialog.ADDONS_URL);
+                            activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                         }
                         return false;
                     }
@@ -1483,8 +1476,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void updatePref_ui_themeOverride(String mode, ListPreference darkPref, ListPreference lightPref)
     {
-        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
-        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
+        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
     }
 
     /**
@@ -1651,7 +1644,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             if (Build.VERSION.SDK_INT >= 23)
             {
                 batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
-                if (isIgnoringBatteryOptimizations(fragment.getContext()))
+                if (AlarmSettings.isIgnoringBatteryOptimizations(fragment.getContext()))
                 {
                     String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
                     batteryOptimization.setSummary(listed);
@@ -1847,15 +1840,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
        };
     }
 
-    @TargetApi(23)
-    protected static boolean isIgnoringBatteryOptimizations(Context context)
-    {
-        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        if (powerManager != null)
-            return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
-        else return false;
-    }
-
     protected static boolean isDeviceSecure(Context context)
     {
         KeyguardManager keyguard = (KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE);
@@ -1912,6 +1896,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        pref.setText((pref.isMetric() ? observerHeight : WidgetSettings.LengthUnit.metersToFeet(observerHeight)) + "");
         pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
     }
     private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)

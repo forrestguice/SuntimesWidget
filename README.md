@@ -6,7 +6,7 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
-![Android CI](https://github.com/forrestguice/SuntimesWidget/workflows/Android%20CI/badge.svg?branch=master)
+[![Android CI](https://github.com/forrestguice/SuntimesWidget/workflows/Android%20CI/badge.svg?branch=master)](https://github.com/forrestguice/SuntimesWidget/actions/workflows/android.yml)
 
 * [Privacy and Permissions](#privacy-and-permissions)
 * [Donations](#donations)
@@ -165,7 +165,7 @@ Libraries used:
 
 ## Project Contributions
 
-German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, and <u>xnumad</u>.<br/>
+German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, <u>xnumad</u>, and <u>CSTRSK</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
 French translation by <u>Jej</u>, <u>Aloha</u> and <u>ldmpub</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>

@@ -91,6 +91,12 @@
             android:summary="@string/configLabel_alarms_showlauncher_summary"
             android:defaultValue="@string/def_app_alarms_showlauncher" />
 
+        <CheckBoxPreference
+            android:key="dialog_importwarning_donotshowagain"
+            android:title="@string/importalarms_title_warning"
+            android:summary="@string/dialog_msg_donotshowagain"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

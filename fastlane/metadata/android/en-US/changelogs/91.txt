@@ -1,0 +1,5 @@
+- adds support for system dark mode (night mode).
+- fixes app crash when changing locales (#482).
+- fixes app crash when exporting alarms (#612).
+- fixes bug "alarm import/export does not retain sorted order" (#610).
+- fixes bug "alarm list is not sorted after adding items" (#609).

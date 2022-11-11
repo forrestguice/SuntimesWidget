@@ -80,7 +80,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void test_lengthUnitsPref()
     {
         Context context = activityRule.getActivity();
-        int appWidgetId = Integer.MAX_VALUE;
+        int appWidgetId = 0;
 
         WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.METRIC);
         WidgetSettings.LengthUnit units3 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
@@ -92,12 +92,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteLengthUnitsPref(context, appWidgetId);
         WidgetSettings.LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
-        assertTrue("units should be default (metric) but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
+        assertTrue("units should be default (" + WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH + ") but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
 
         double meters0 = Math.PI;
         double feet0 = WidgetSettings.LengthUnit.metersToFeet(meters0);
         double meters1 = WidgetSettings.LengthUnit.feetToMeters(feet0);
         assertTrue("conversion should make round trip", (meters1-meters0 < 0.1));
+
+        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.METRIC);
+        WidgetSettings.saveLengthUnitsPref(context, Integer.MAX_VALUE, WidgetSettings.LengthUnit.IMPERIAL);
+        assertEquals(WidgetSettings.LengthUnit.IMPERIAL, WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
+
+        WidgetSettings.deleteLengthUnitsPref(context, Integer.MAX_VALUE);
+        assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
+        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.IMPERIAL);
+        assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
     }
 
     @Test
@@ -927,7 +936,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void test_showTimeDatePref()
     {
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, true);
-        boolean showTimeDate = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         assertTrue("showTimeDate should be true but was " + showTimeDate, showTimeDate);
 
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, false);
@@ -937,6 +946,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteShowTimeDatePref(context, appWidgetId);
         showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         assertTrue("showTimeDate should be default (true) but was " + showTimeDate, showTimeDate && showTimeDate == WidgetSettings.PREF_DEF_GENERAL_SHOWTIMEDATE);
+    }
+
+    @Test
+    public void test_showAbbrMonthPref()
+    {
+        WidgetSettings.saveShowAbbrMonthPref(context, appWidgetId, true);
+        boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        assertTrue("abbreviate should be true but was " + abbreviate, abbreviate);
+
+        WidgetSettings.saveShowAbbrMonthPref(context, appWidgetId, false);
+        abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        assertTrue("abbreviate should be false but was " + abbreviate, !abbreviate);
+
+        WidgetSettings.deleteShowAbbrMonthPref(context, appWidgetId);
+        abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        assertTrue("abbreviate should be default (true) but was " + abbreviate, abbreviate && abbreviate == WidgetSettings.PREF_DEF_GENERAL_SHOWABBRMONTH);
     }
 
     @Test
