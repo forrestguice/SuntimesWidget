@@ -76,7 +76,6 @@ public class AlarmDismissActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverDismiss";
     public static final String EXTRA_MODE = "activityMode";
-    public static final String ACTION_UPDATE = "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockDismissActivity.UPDATE";
 
     private AlarmClockItem alarm = null;
     private String mode = null;
@@ -129,7 +128,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     private void initTheme(Context context)
     {
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+        appThemeResID = AppSettings.setTheme(this, appTheme);
 
         String themeName = AppSettings.getThemeOverride(this, appThemeResID);
         if (themeName != null) {
@@ -190,7 +189,7 @@ public class AlarmDismissActivity extends AppCompatActivity
             Log.d(TAG, "updateReceiver.onReceive: " + data + " :: " + action);
 
             if (action != null) {
-                if (action.equals(ACTION_UPDATE)) {
+                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
                     if (data != null) {
                         setAlarmID(AlarmDismissActivity.this, ContentUris.parseId(data));
                     } else Log.e(TAG, "updateReceiver.onReceive: null data!");
@@ -203,10 +202,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     protected void onStart()
     {
         super.onStart();
-        IntentFilter updateFilter = new IntentFilter();
-        updateFilter.addAction(ACTION_UPDATE);
-        updateFilter.addDataScheme("content");
-        registerReceiver(updateReceiver, updateFilter);
+        registerReceiver(updateReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter());
         clockText.post(updateClockTask);
     }
 
