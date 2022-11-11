@@ -58,6 +58,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
@@ -422,6 +423,12 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         Intent intent = new Intent(ACTION_UPDATE_UI);
         intent.setData(data);
+        return intent;
+    }
+
+    public static Intent getSuntimesIntent(Context context) {
+        Intent intent = new Intent(context, SuntimesActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 
