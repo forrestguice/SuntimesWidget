@@ -34,7 +34,6 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -146,7 +145,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         setResult(RESULT_OK);
         context = SuntimesSettingsActivity.this;
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(AppSettings.themePrefToStyleId(this, appTheme));
+        AppSettings.setTheme(this, appTheme);
 
         super.onCreate(icicle);
         initLocale(icicle);
@@ -1490,8 +1489,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private static void updatePref_ui_themeOverride(String mode, ListPreference darkPref, ListPreference lightPref)
     {
-        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
-        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
+        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
     }
 
     /**
@@ -1658,7 +1657,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             if (Build.VERSION.SDK_INT >= 23)
             {
                 batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
-                if (isIgnoringBatteryOptimizations(fragment.getContext()))
+                if (AlarmSettings.isIgnoringBatteryOptimizations(fragment.getContext()))
                 {
                     String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
                     batteryOptimization.setSummary(listed);
@@ -1854,15 +1853,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
        };
     }
 
-    @TargetApi(23)
-    protected static boolean isIgnoringBatteryOptimizations(Context context)
-    {
-        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        if (powerManager != null)
-            return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
-        else return false;
-    }
-
     protected static boolean isDeviceSecure(Context context)
     {
         KeyguardManager keyguard = (KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE);
@@ -1919,6 +1909,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        pref.setText((pref.isMetric() ? observerHeight : WidgetSettings.LengthUnit.metersToFeet(observerHeight)) + "");
         pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
     }
     private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)

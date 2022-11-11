@@ -530,8 +530,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 if (colors.option_drawNow > 0)
                 {
                     int pointRadius = (colors.option_drawNow_pointSizePx <= 0)
-                            ? Math.min( (int)Math.ceil(c.getWidth() / 96d),      // a circle that is 1/2 hr wide
-                                        (int)Math.ceil(c.getHeight() / 4d) )     // a circle that is 1/2 the height of the graph
+                            ? Math.max( (int)Math.ceil(c.getWidth() / (48d * 2d)),      // a circle that is 1/2 hr wide
+                                        (int)Math.ceil(c.getHeight() / (2.75d * 2d)) )     // a circle that is ~36% height of the graph
                             : colors.option_drawNow_pointSizePx;
                     int pointStroke = (int)Math.ceil(pointRadius / 3d);
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="dialog_frame">@color/dialog_frame_dark</color>
+    <color name="dialog_bg">@color/dialog_bg_dark</color>
+    <color name="dialog_bg_alt">@color/dialog_bg_alt_dark</color>
+    <color name="card_bg">@color/card_bg_dark</color>
+    <color name="card_bg_trans">@color/card_bg_darktrans</color>
+
+    <color name="hr">@color/hr_dark</color>
+    <color name="text_disabled">@color/text_disabled_dark</color>
+    <color name="text_accent">@color/text_accent_dark</color>
+    <color name="snackbar_text">@color/snackbar_text_dark</color>
+    <color name="fab_ripple">@color/fab_ripple_dark</color>
+
+    <color name="table_rising">@color/table_rising_dark</color>
+    <color name="table_setting">@color/table_setting_dark</color>
+    <color name="table_noon">@color/table_setting_dark</color>
+
+    <color name="alarm_enabled">@color/alarm_enabled_dark</color>
+    <color name="grid_selected">@color/grid_selected_dark</color>
+    <color name="btn_tint_pressed">@color/btn_tint_pressed_dark</color>
+
+    <color name="graphColor_bg">@color/graphColor_bg_dark</color>
+    <color name="graphColor_day">@color/graphColor_day_dark</color>
+    <color name="graphColor_night">@color/graphColor_night_dark</color>
+    <color name="graphColor_civil">@color/graphColor_civil_dark</color>
+    <color name="graphColor_nautical">@color/graphColor_nautical_dark</color>
+    <color name="graphColor_astronomical">@color/graphColor_astronomical_dark</color>
+    <color name="graphColor_pointFill">@color/graphColor_pointFill_dark</color>
+    <color name="graphColor_pointStroke">@color/graphColor_pointStroke_dark</color>
+
+    <color name="warningTag">@color/warningTag_dark</color>
+    <color name="errorTag">@color/errorTag_dark</color>
+    <color name="dstTag">@color/dstTag_dark</color>
+
+    <color name="sunIcon_color_rising">@color/sunIcon_color_rising_dark</color>
+    <color name="sunIcon_color_setting">@color/sunIcon_color_setting_dark</color>
+
+    <color name="moonIcon_color_rising">@color/moonIcon_color_rising_dark</color>
+    <color name="moonIcon_color_setting">@color/moonIcon_color_setting_dark</color>
+
+    <color name="springColor">@color/springColor_dark</color>
+    <color name="summerColor">@color/summerColor_dark</color>
+    <color name="fallColor">@color/fallColor_dark</color>
+    <color name="winterColor">@color/winterColor_dark</color>
+
+    <color name="tagColor_warning">@color/warningTag_dark</color>
+    <color name="tagColor_error">@color/errorTag_dark</color>
+    <color name="tagColor_dst">@color/dstTag_dark</color>
+
+</resources>

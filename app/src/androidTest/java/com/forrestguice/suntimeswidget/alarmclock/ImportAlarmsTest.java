@@ -174,13 +174,13 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         test_import("[" + json0 + ", " + json1, items[0], items[1]);          // invalid (array; missing end bracket .. should read objects anyway)
         test_import(json0 + ", " + json1 + "]", items[0]);                    // invalid (array; missing start bracket .. should read first object only)
 
-        test_import(json0.substring(0, json0.length()-1), null);                    // invalid (single obj; missing end-bracket)
-        test_import(json0.substring(1, json0.length()-1), null);               // invalid (single obj; missing brackets)
+        test_import(json0.substring(0, json0.length()-1), (AlarmClockItem)null);                    // invalid (single obj; missing end-bracket)
+        test_import(json0.substring(1, json0.length()-1), (AlarmClockItem)null);               // invalid (single obj; missing brackets)
         test_import(json0 + ", " + json1, items[0]);                          // invalid (multiple objs outside array .. should read first object only)
         test_import(json0 + json1, items[0]);                                 // invalid (multiple objs outside array, missing separator .. should read first object only)
-        test_import("[]", null);                                      // invalid (empty)
-        test_import("\n\n\n\t\n\n", false, null);
-        test_import("", false, null);
+        test_import("[]", (AlarmClockItem)null);                                      // invalid (empty)
+        test_import("\n\n\n\t\n\n", false, (AlarmClockItem)null);
+        test_import("", false, (AlarmClockItem)null);
     }
 
     @Test

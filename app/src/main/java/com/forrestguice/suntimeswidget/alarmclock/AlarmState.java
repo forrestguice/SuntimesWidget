@@ -61,6 +61,8 @@ public class AlarmState implements Parcelable
     public static final int STATE_SNOOZING = 10;          // alarm is snoozed (will sound again soon)
     public static final int STATE_TIMEOUT = 20;           // alarm is dismissed by timeout (wasn't handled by user)
 
+    public static final int[] VALUES = new int[] { STATE_DISABLED, STATE_NONE, STATE_SCHEDULED_DISTANT, STATE_SCHEDULED_SOON, STATE_SOUNDING, STATE_DISMISSED, STATE_SNOOZING, STATE_TIMEOUT };
+
     private long rowID = -1L;
     private int state = STATE_NONE;
     private boolean modified = false;
@@ -141,10 +143,10 @@ public class AlarmState implements Parcelable
                 return (nextState == STATE_NONE || nextState == STATE_SOUNDING || nextState == STATE_DISMISSED || nextState == STATE_DISABLED || nextState == STATE_SCHEDULED_SOON);
 
             case STATE_SOUNDING:
-                return (nextState == STATE_DISMISSED || nextState == STATE_SNOOZING || nextState == STATE_TIMEOUT || nextState == STATE_DISABLED);
+                return (nextState == STATE_NONE || nextState == STATE_DISMISSED || nextState == STATE_SNOOZING || nextState == STATE_TIMEOUT || nextState == STATE_DISABLED);
 
             case STATE_SNOOZING:
-                return (nextState == STATE_DISMISSED || nextState == STATE_DISABLED || nextState == STATE_SOUNDING);
+                return (nextState == STATE_NONE || nextState == STATE_DISMISSED || nextState == STATE_DISABLED || nextState == STATE_SOUNDING);
 
             case STATE_TIMEOUT:
                 return (nextState == STATE_NONE || nextState == STATE_DISABLED || nextState == STATE_DISMISSED);
