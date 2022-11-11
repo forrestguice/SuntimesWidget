@@ -1337,7 +1337,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.type.getDisplayString());
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.setDefaultRingtone(this, item.type));   // setDefaultRingtone may block (potential ANR)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, new AlarmSettings().setDefaultRingtone(this, item.type));   // setDefaultRingtone may block (potential ANR)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);

@@ -34,7 +34,6 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -1645,7 +1644,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             if (Build.VERSION.SDK_INT >= 23)
             {
                 batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
-                if (isIgnoringBatteryOptimizations(fragment.getContext()))
+                if (AlarmSettings.isIgnoringBatteryOptimizations(fragment.getContext()))
                 {
                     String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
                     batteryOptimization.setSummary(listed);
@@ -1839,15 +1838,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                return false;
            }
        };
-    }
-
-    @TargetApi(23)
-    protected static boolean isIgnoringBatteryOptimizations(Context context)
-    {
-        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        if (powerManager != null)
-            return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
-        else return false;
     }
 
     protected static boolean isDeviceSecure(Context context)

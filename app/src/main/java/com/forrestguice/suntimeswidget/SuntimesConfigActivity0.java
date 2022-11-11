@@ -121,6 +121,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showCompare;
     protected CheckBox checkbox_showSeconds;
     protected CheckBox checkbox_showTimeDate;
+    protected CheckBox checkbox_showAbbrMonth;
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
     protected CheckBox checkbox_useAltitude;
@@ -824,6 +825,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showOptionTimeDate(false);
 
         //
+        // widget: showAbbrMonth
+        //
+        checkbox_showAbbrMonth = (CheckBox)findViewById(R.id.appwidget_general_showAbbrMonth);
+        showOptionAbbrvMonth(false);
+
+        //
         // widget: showWeeks
         //
         checkbox_showWeeks = (CheckBox)findViewById(R.id.appwidget_general_showWeeks);
@@ -1456,6 +1463,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showTimeDate = checkbox_showTimeDate.isChecked();
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, showTimeDate);
 
+        // save: showAbbrMonth
+        boolean showAbbrMonth = checkbox_showAbbrMonth.isChecked();
+        WidgetSettings.saveShowAbbrMonthPref(context, appWidgetId, showAbbrMonth);
+
         // save: showWeeks
         boolean showWeeks = checkbox_showWeeks.isChecked();
         WidgetSettings.saveShowWeeksPref(context, appWidgetId, showWeeks);
@@ -1523,6 +1534,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load showTimeDate
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         checkbox_showTimeDate.setChecked(showTimeDate);
+
+        // load showAbbrMonth
+        boolean showAbbrMonth = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        checkbox_showAbbrMonth.setChecked(showAbbrMonth);
 
         // load: showWeeks
         boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
@@ -1849,6 +1864,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         View optionLayout = findViewById(R.id.appwidget_general_showTimeDate_layout);
         if (optionLayout != null)
         {
+            optionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    protected void showOptionAbbrvMonth( boolean showOption )
+    {
+        View optionLayout = findViewById(R.id.appwidget_general_showAbbrMonth_layout);
+        if (optionLayout != null) {
             optionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
         }
     }

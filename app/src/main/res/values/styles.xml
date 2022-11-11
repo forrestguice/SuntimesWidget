@@ -5,7 +5,7 @@
     </style>
 
     <!-- Theme: System (left-to-right) -->
-    <style name="AppThemeBase.System" parent="AppThemeBase.Light">
+    <style name="AppThemeBase.System" parent="Theme.AppCompat.DayNight.NoActionBar">
 
         <item name="dialogFrame">@color/dialog_frame</item>
         <item name="dialogBackground">@color/dialog_bg</item>
@@ -40,6 +40,10 @@
         <item name="graphColor_pointFill">@color/graphColor_pointFill</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke</item>
 
+        <item name="table_risingColor">@color/table_rising</item>
+        <item name="table_settingColor">@color/table_setting</item>
+        <item name="table_noonColor">@color/table_noon</item>
+
         <item name="sunriseIconSmall">@drawable/ic_sunrise_ref</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_ref</item>
         <item name="sunriseColor">@color/sunIcon_color_rising</item>
@@ -72,6 +76,9 @@
         <item name="snackbar_textColor">@color/snackbar_text</item>
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+
+        <item name="fab_backgroundColor">@color/text_accent</item>
+        <item name="fab_rippleColor">@color/fab_ripple</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found_ref</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_ref</item>
@@ -132,7 +139,7 @@
     </style>
 
     <!-- Theme: Light (left-to-right) -->
-    <style name="AppThemeBase.Light" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="AppThemeBase.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="dialogFrame">@color/dialog_frame_light</item>
         <item name="dialogBackground">@color/dialog_bg_light</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_light</item>
@@ -165,6 +172,10 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_light</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill_light</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke_light</item>
+
+        <item name="table_risingColor">@color/table_rising_light</item>
+        <item name="table_settingColor">@color/table_setting_light</item>
+        <item name="table_noonColor">@color/table_noon_light</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
@@ -296,6 +307,10 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill_dark</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke_dark</item>
+
+        <item name="table_risingColor">@color/table_rising_dark</item>
+        <item name="table_settingColor">@color/table_setting_dark</item>
+        <item name="table_noonColor">@color/table_noon_dark</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>

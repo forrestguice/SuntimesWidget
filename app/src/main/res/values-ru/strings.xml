@@ -451,6 +451,10 @@
     <string name="widgetMode1x1_distance">Текущее расстояние</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Следующий апогей или перигей</string>     <!-- setting -->
 
+    <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
     <string name="widgetMode_sunPosMap_simplerectangular">Карта-схема</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Полярная [Сев. п.]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Полярная [Южн. п.]</string>     <!-- setting -->
@@ -475,6 +479,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ничего не делать</string>           <!-- setting -->
     <string name="actionMode_update">Обновить содержимое</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Настроить виджет</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Действие из списка...</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Перекл. на след. событие</string>      <!-- setting -->
@@ -570,6 +575,8 @@
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->
     <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_action_launch_package" />               <!-- edittext label -->
     <string name="configHint_action_launch_title">Название действия</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">Короткое описание</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">Тип:</string>                 <!-- spinner label -->
@@ -799,6 +806,7 @@
     <string name="alarmAction_snoozeMsg">Отложено на <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">Время будильника истекло.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Предстоящий сигнал</string>     <!-- notification msg -->
+    <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->    <!-- TODO -->
 
     <string name="alarmMode_alarm">Будильник</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Уведомление</string>                <!-- alarm type (setting) -->
@@ -1010,6 +1018,10 @@
     <string name="configLabel_ui_showdatasource">Источник расчетов</string>
     <string name="configLabel_ui_showdatasource_summary">Показывать текущий алгоритм и коррекцию по высоте (если доступно).</string>
 
+    <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
+    <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
+
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
@@ -1098,6 +1110,9 @@
     <string name="configActionDesc_themeList">Список тем</string>
     <string name="configActionDesc_actionList">Список действий</string>
     <string name="configActionDesc_widgetList">Список виджетов</string>
+    <string name="configActionDesc_nextSunrise">Show next sunrise</string>   <!-- TODO -->
+    <string name="configActionDesc_nextSunset">Show next sunset</string>     <!-- TODO -->
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- must be in same order as enum TapActions -->
     <!-- uncomment to override:
@@ -1783,6 +1798,7 @@
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
     <string name="dialog_cancel">Отменить</string>
+    <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

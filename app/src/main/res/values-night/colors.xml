@@ -7,10 +7,15 @@
     <color name="card_bg">@color/card_bg_dark</color>
     <color name="card_bg_trans">@color/card_bg_darktrans</color>
 
-    <color name="hr">@color/hr_light</color>
+    <color name="hr">@color/hr_dark</color>
     <color name="text_disabled">@color/text_disabled_dark</color>
     <color name="text_accent">@color/text_accent_dark</color>
     <color name="snackbar_text">@color/snackbar_text_dark</color>
+    <color name="fab_ripple">@color/fab_ripple_dark</color>
+
+    <color name="table_rising">@color/table_rising_dark</color>
+    <color name="table_setting">@color/table_setting_dark</color>
+    <color name="table_noon">@color/table_setting_dark</color>
 
     <color name="alarm_enabled">@color/alarm_enabled_dark</color>
     <color name="grid_selected">@color/grid_selected_dark</color>

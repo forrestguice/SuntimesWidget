@@ -391,6 +391,10 @@
     <string name="widgetMode1x1_decright">Deklinasjon &amp; Rektasensjon</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Gjeldende avstand</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Neste apogeum eller perigeum</string>     <!-- setting -->
+    
+    <string name="widgetMode3x1_lightmap_large">Lysgraf</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_medium">Lysgraf (medium)</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_small">Lysgraf (liten)</string>     <!-- setting -->    
 
     <string name="widgetMode_sunPosMap_simplerectangular">Enkelt</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [nord]</string>     <!-- setting -->
@@ -416,6 +420,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ikke gjør noe</string>           <!-- setting -->
     <string name="actionMode_update">Update Widget</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Reconfigure Widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Launch App</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
@@ -513,7 +518,8 @@
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-
+    <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_action_launch_package" />               <!-- edittext label -->
     <string name="configHint_action_launch_title">Handlingstittel</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">Kort beskrivelse</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->
@@ -743,6 +749,7 @@
     <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->  <!-- TODO -->
     <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->  <!-- TODO -->
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->  <!-- TODO -->
+    <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->    <!-- TODO -->
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
     <string name="alarmMode_notification">Varsel</string>                <!-- alarm type (setting) -->
@@ -868,8 +875,8 @@
     <string name="configLabel_alarms_showlauncher">App-ikon</string>
     <string name="configLabel_alarms_showlauncher_summary">Vis alarmklokkeikon i app-skuffen.</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
-    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms">Avslåttalarm</string>
+    <string name="configLabel_alarms_poweroffalarms_summary">Vekk enheten fra avslått-tilstand.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
          APP SETTINGS
@@ -939,6 +946,10 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Vis datakilde</string>
     <string name="configLabel_ui_showdatasource_summary">Vis en påskrift som angir den gjeldende innstillingen.</string>
+    
+    <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Vis kartknapp</string>
+    <string name="configLabel_ui_showmapbutton_summary">Vis en handlingslinjeknapp som åpner standardappen for kart.</string>
 
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Overskrifter</string>              <!-- group title -->
@@ -960,7 +971,7 @@
     <string name="appThemes_lightTheme">Lyst tema</string>
     <string name="appThemes_darkTheme">Mørkt tema</string>
     <string name="appThemes_nightMode">Lyst tema / Mørkt tema (nattmodus)</string>
-    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
+    <string name="appThemes_systemDefault">Systemstandard</string>
 
     <string name="configActionDesc_doNothing">Ikke gjør noe</string>
     <string name="configActionDesc_nextNote">Vis neste notis</string>
@@ -982,6 +993,9 @@
     <string name="configActionDesc_themeList">Temaliste</string>
     <string name="configActionDesc_actionList">Handlingsliste</string>
     <string name="configActionDesc_widgetList">Modulliste</string>
+    <string name="configActionDesc_nextSunrise">Vis neste soloppgang</string>
+    <string name="configActionDesc_nextSunset">Vis neste solnedgang</string>
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">etter forskyvning</string>
@@ -998,7 +1012,7 @@
     <string name="timezone_sort_msg">Tidssoner sortert (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPS - tidsbegrensning</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="configLabel_getFix_maxElapse">Posisjonsbestemmelse - tidsbegrensning</string>
     <string name="configLabel_getFix_maxElapse_summary">Gi opp etter <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekunder</item>
@@ -1009,7 +1023,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Maks tid for siste GPS</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="configLabel_getFix_maxAge">Maks tid for siste posisjonsbestemmelse</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> betraktet som siste</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>ingen</item>
@@ -1264,7 +1278,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS er deaktivert. Aktivere nå?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
+    <string name="gps_dialog_msg">Posisjonsbestemmelse er deaktivert. Aktivere nå?</string>
     <string name="gps_dialog_ok">Ja</string>
     <string name="gps_dialog_cancel">Nei</string>
 
@@ -1272,8 +1286,8 @@
     <string name="gps_lastfix_title_set">Bestem posisjon</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Siste posisjon</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Henter posisjon</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
-    <string name="gps_lastfix_toast_cancelled">GPS-oppdatering avbrutt.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
+    <string name="gps_lastfix_toast_notfound">Mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">Posisjonsoppdatering avbrutt.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Ingen posisjonsfastsettelse</string>
@@ -1564,6 +1578,7 @@
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Avbryt</string>
+    <string name="dialog_msg_donotshowagain">Ikke vis denne meldingen igjen</string>  <!-- checkbox text -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
