@@ -301,7 +301,7 @@
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Wygląd</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_theme">Skórka:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_theme">Motyw:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Przełączaj układy, aby wypełnić dostępną przestrzeń</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleText">Skaluj tekst i ikony</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleBase">Wypełnij całą komórkę</string>  <!-- checkbox label -->
@@ -391,6 +391,10 @@
     <string name="widgetMode1x1_decright">Deklinacja i rektascensja</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Obecna odległość</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Następne apogeum lub perygeum</string>     <!-- setting -->
+    
+    <string name="widgetMode3x1_lightmap_large">Mapa światła</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_medium">Mapa światła (średnia)</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_small">Mapa światła (mała)</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Zwykła</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Biegunowa (północ)</string>     <!-- setting -->
@@ -416,6 +420,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Nic nie rób</string>           <!-- setting -->
     <string name="actionMode_update">Aktualizuj widżet</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Edytuj widżet</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Uruchom apkę</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Przełącz widok</string>      <!-- setting -->
@@ -513,7 +518,7 @@
     <string name="configLabel_action_id">Identyfikator:</string>                 <!-- edittext label -->
     <string name="configLabel_action_launch">Klasa:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-
+    <string name="configLabel_action_launch_package">Pakiet:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_title">Nazwa czynności</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">Krótki opis</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">Typ:</string>                 <!-- spinner label -->
@@ -731,6 +736,7 @@
     <string name="configAction_undo">Cofnij</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Wycisz</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
     <string name="alarmAction_snooze">Drzemka</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Wycisz</string>                  <!-- notification action button -->
 
@@ -739,6 +745,7 @@
     <string name="alarmAction_snoozeMsg">Drzemka do <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">Przegapiono alarm.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Nadchodzący alarm</string>     <!-- notification msg -->
+    <string name="alarmAction_alertFailedMsg">Nie udało się odtworzyć dźwięku!</string>         <!-- error toast -->
 
     <string name="alarmMode_alarm">alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">powiadomienie</string>                <!-- alarm type (setting) -->
@@ -776,7 +783,15 @@
     <string name="clearalarms_dialog_cancel">Anuluj</string>    <!-- button -->
     <string name="clearalarms_toast_success">Usunięto wszystkie alarmy.</string> <!-- toast msg -->
 
-    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+    <string name="importalarms_title_warning">Błąd podczas importu</string> <!-- toast msg -->
+    <string name="importalarms_msg_warning">Zaimportowane alarmy mogą przywrócić niektóre ustawienia do wartości domyślnych.\n\nByć może trzeba będzie ponownie ustawić dźwięki i czynności.</string> <!-- toast msg -->
+    <string name="importalarms_toast_success">Zaimportowano <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <plurals name="alarmPlural">
+        <item quantity="one">%d alarm</item>
+        <item quantity="few">%d alarmy</item>
+        <item quantity="many">%d alarmów</item>
+        <item quantity="other">%d alarmów</item>
+    </plurals>
 
     <string name="alarmlabel_dialog_title">Etykieta</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Zastosuj</string>        <!-- button -->
@@ -944,6 +959,10 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Wyświetl źródło danych</string>
     <string name="configLabel_ui_showdatasource_summary">Pokaż etykietę wyświetlającą obecną konfigurację.</string>
+    
+    <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Wyświetl przycisk mapy</string>
+    <string name="configLabel_ui_showmapbutton_summary">Na pasku akcji wyświetl przycisk umożliwiający otwarcie aplikacji mapy.</string>
 
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Nagłówki</string>              <!-- group title -->
@@ -962,13 +981,10 @@
     <string name="configLabel_ui_showbluehour">Błękitna godzina</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Jasna skórka</string>
-    <string name="appThemes_darkTheme">Ciemna skórka</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Jasna skórka (dzień) / Ciemna skórka (noc)</item>
-    </string-array>
+    <string name="appThemes_lightTheme">Jasny motyw</string>
+    <string name="appThemes_darkTheme">Ciemny motyw</string>
+    <string name="appThemes_nightMode">Jasny / Ciemny (w nocy)</string>
+    <string name="appThemes_systemDefault">Domyślny systemowy</string>
 
     <string name="configActionDesc_doNothing">Nie rób nic</string>
     <string name="configActionDesc_nextNote">Pokaż następną notatkę</string>
@@ -992,6 +1008,9 @@
     <string name="configActionDesc_themeList">Lista skórek</string>
     <string name="configActionDesc_actionList">Lista akcji</string>
     <string name="configActionDesc_widgetList">Lista widżetów</string>
+    <string name="configActionDesc_nextSunrise">Wyświetl następny wschód Słońca</string>
+    <string name="configActionDesc_nextSunset">Wyświetl następny zachód Słońca</string>
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">wg przesunięcia</string>
@@ -1001,7 +1020,7 @@
     <string name="timezone_sort_msg">Strefy czasowe posortowane (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Limit czasu GPS</string>
+    <string name="configLabel_getFix_maxElapse">Limit czasu ustalania lokalizacji</string>
     <string name="configLabel_getFix_maxElapse_summary">Zrezygnuj po <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekundach</item>
@@ -1012,8 +1031,8 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Czas aktualności GPS</string>
-    <string name="configLabel_getFix_maxAge_summary">Aktualny przez <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxAge">Czas aktualności lokalizacji</string>
+    <string name="configLabel_getFix_maxAge_summary">Aktualna przez <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>nigdy</item>
         <item>1 minutę</item>
@@ -1278,7 +1297,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS jest wyłączony. Czy włączyć go?</string>
+    <string name="gps_dialog_msg">Usługa lokalizacji jest wyłączona. Czy włączyć ją?</string>
     <string name="gps_dialog_ok">Tak</string>
     <string name="gps_dialog_cancel">Nie</string>
 
@@ -1286,8 +1305,8 @@
     <string name="gps_lastfix_title_set">Ustaw lokalizację</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Ostatnia lokalizacja</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Ustalanie lokalizacji</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS nie mógł ustalić lokalizacji, powrót do ostatniej znanej lokalizacji.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Anulowano odświeżanie GPS.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_notfound">Nie udało się określić Twojej lokalizacji, powrót do ostatniej znanej lokalizacji.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">Anulowano odświeżanie lokalizacji.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Pozycja nieznana</string>
@@ -1548,6 +1567,7 @@
 
     <string name="dialog_ok">Potwierdź</string>
     <string name="dialog_cancel">Anuluj</string>
+    <string name="dialog_msg_donotshowagain">Nie pytaj ponownie</string>  <!-- checkbox text -->
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

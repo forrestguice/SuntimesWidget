@@ -392,6 +392,10 @@
     <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
 
+    <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
     <string name="widgetMode_sunPosMap_simplerectangular">Oinarrizkoa</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polarra</string>     <!-- setting -->  <!-- TODO (north) -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
@@ -416,6 +420,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ez egin ezer</string>           <!-- setting -->
     <string name="actionMode_update">Widgeta eguneratu</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Widgeta birkonfiguratu</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Aplikazioa ireki</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Ikuspegiak aldatu</string>      <!-- setting -->
@@ -513,7 +518,8 @@
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-
+    <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_action_launch_package" />               <!-- edittext label -->
     <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->  <!-- TODO -->
     <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->  <!-- TODO -->
     <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->  <!-- TODO -->
@@ -733,6 +739,7 @@
     <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
 
     <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->  <!-- TODO -->
+    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->  <!-- TODO -->
     <string name="alarmAction_timeout">Timeout</string>                  <!-- notification action button -->  <!-- TODO -->
 
@@ -741,6 +748,7 @@
     <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->  <!-- TODO -->
     <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->  <!-- TODO -->
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->  <!-- TODO -->
+    <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->    <!-- TODO -->
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
@@ -938,6 +946,10 @@
     <string name="configLabel_ui_showdatasource">Datuen iturria erakutsi</string>
     <string name="configLabel_ui_showdatasource_summary">Oraingo konfigurazioa erakusten duen etiketa bat erakutsi.</string>
 
+    <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
+    <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
+
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
@@ -957,11 +969,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Argia</string>
     <string name="appThemes_darkTheme">Iluna</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Argia / iluna (Gau&#160;modua)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Argia / iluna (Gau&#160;modua)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -993,6 +1002,15 @@
     <string name="configActionDesc_setLocation">Set location</string>  <!-- TODO -->
     <string name="configActionDesc_swapCards">Fitxak alderantzikatu (gaur/bihar)</string>
     <string name="configActionDesc_setAlarmForNote">Alarma ezarri oharrarentzako</string>
+    <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
+    <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
+    <string name="configActionDesc_alarmList">Alarm List</string>  <!-- TODO -->
+    <string name="configActionDesc_themeList">Theme List</string>  <!-- TODO -->
+    <string name="configActionDesc_actionList">Action List</string>  <!-- TODO -->
+    <string name="configActionDesc_widgetList">Widget List</string>  <!-- TODO -->
+    <string name="configActionDesc_nextSunrise">Show next sunrise</string>   <!-- TODO -->
+    <string name="configActionDesc_nextSunset">Show next sunset</string>     <!-- TODO -->
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">konpentsazioaren arabera</string>
@@ -1009,7 +1027,7 @@
     <string name="timezone_sort_msg">Ordu eremuak ordenatu dira (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPSaren denbora muga</string>
+    <string name="configLabel_getFix_maxElapse">GPSaren denbora muga</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxElapse_summary"><xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g> pasa ondoren bertan behera utzi</string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 segundu</item>
@@ -1020,7 +1038,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPSaren berritasunaren gehienezko adina</string>
+    <string name="configLabel_getFix_maxAge">GPSaren berritasunaren gehienezko adina</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> berritzat hartzen da</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>none</item>  <!-- TODO -->
@@ -1287,7 +1305,7 @@
     </string-array>    <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPSa ezgaituta dago. Gaitu?</string>
+    <string name="gps_dialog_msg">GPSa ezgaituta dago. Gaitu?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">Bai</string>
     <string name="gps_dialog_cancel">Ez</string>
 
@@ -1295,8 +1313,8 @@
     <string name="gps_lastfix_title_set">Kokapena ezarri</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Azken kokapena</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Kokapena eskuratzen</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Kokapenik ez</string>
@@ -1563,6 +1581,7 @@
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
     <string name="dialog_cancel">Utzi</string>
+    <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

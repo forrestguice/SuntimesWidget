@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.appwidget.AppWidgetManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -121,7 +122,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(icicle);
         initLocale();
         setResult(RESULT_CANCELED);
@@ -370,14 +371,18 @@ public class WidgetThemeListActivity extends AppCompatActivity
             {
                 String filename = exportTarget + ExportThemesTask.FILEEXT;
                 Intent intent = ExportTask.getCreateFileIntent(filename, ExportThemesTask.MIMETYPE);
-                startActivityForResult(intent, EXPORT_REQUEST);
+                try {
+                    startActivityForResult(intent, EXPORT_REQUEST);
+                    return true;
 
-            } else {
-                exportTask = new ExportThemesTask(context, exportTarget, true, true);    // export to external cache
-                exportTask.setDescriptors(WidgetThemes.values());
-                exportTask.setTaskListener(exportThemesListener);
-                exportTask.execute();
+                } catch (ActivityNotFoundException e) {
+                    Log.e("exportThemes", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+                }
             }
+            exportTask = new ExportThemesTask(context, exportTarget, true, true);    // export to external cache
+            exportTask.setDescriptors(WidgetThemes.values());
+            exportTask.setTaskListener(exportThemesListener);
+            exportTask.execute();
             return true;
         } else return false;
     }

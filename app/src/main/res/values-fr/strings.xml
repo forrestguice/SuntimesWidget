@@ -380,6 +380,10 @@
     <string name="widgetMode1x1_distance">Distance actuelle</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
 
+    <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->  <!-- TODO -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
@@ -404,6 +408,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ne rien faire</string>           <!-- setting -->
     <string name="actionMode_update">Mettre à jour le widget</string>           <!-- setting -->
+    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Reconfigurer le widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Lancer l\'application</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Basculer l\'affichage</string>      <!-- setting -->
@@ -501,7 +506,8 @@
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-
+    <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_action_launch_package" />               <!-- edittext label -->
     <string name="configHint_action_launch_title">Titre de l\'action</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">Description courte</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">Type :</string>                 <!-- spinner label -->
@@ -718,6 +724,7 @@
     <string name="configAction_undo">Annuler</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Ignorer</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->  <!-- TODO -->
     <string name="alarmAction_timeout">Délai d\'attente</string>                  <!-- notification action button -->
 
@@ -726,6 +733,7 @@
     <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->  <!-- TODO -->
     <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->  <!-- TODO -->
     <string name="alarmAction_upcomingMsg">Alarme à venir</string>     <!-- notification msg -->
+    <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->    <!-- TODO -->
 
     <string name="alarmMode_alarm">Alarme</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->
@@ -922,6 +930,10 @@
     <string name="configLabel_ui_showdatasource">Afficher la source de données</string>  
     <string name="configLabel_ui_showdatasource_summary">Affiche une étiquette contenant le nom de la source de données actuelle.</string>
 
+    <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
+    <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
+
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
@@ -941,11 +953,8 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Thème clair</string>
     <string name="appThemes_darkTheme">Thème sombre</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>Automatique (jour/nuit)</item>
-    </string-array>
+    <string name="appThemes_nightMode">Automatique (jour/nuit)</string>
+    <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
 
     <string name="configActionDesc_doNothing">Ne rien faire</string>
     <string name="configActionDesc_nextNote">Affichage suivant</string>
@@ -963,6 +972,15 @@
     <string name="configActionDesc_setLocation">Définir l\'emplacement</string>
     <string name="configActionDesc_swapCards">Inverser (aujourd\'hui/demain)</string>
     <string name="configActionDesc_setAlarmForNote">Régler l\'alarme</string>
+    <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
+    <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
+    <string name="configActionDesc_alarmList">Alarm List</string>  <!-- TODO -->
+    <string name="configActionDesc_themeList">Theme List</string>  <!-- TODO -->
+    <string name="configActionDesc_actionList">Action List</string>  <!-- TODO -->
+    <string name="configActionDesc_widgetList">Widget List</string>  <!-- TODO -->
+    <string name="configActionDesc_nextSunrise">Show next sunrise</string>   <!-- TODO -->
+    <string name="configActionDesc_nextSunset">Show next sunset</string>     <!-- TODO -->
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">par décalage</string>
@@ -979,7 +997,7 @@
     <string name="timezone_sort_msg">Trié par fuseaux horaires (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">En attente des signaux GPS</string>
+    <string name="configLabel_getFix_maxElapse">En attente des signaux GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxElapse_summary">Abandonner après <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 secondes</item>
@@ -990,7 +1008,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Tolérance d\'ancienneté GPS</string>
+    <string name="configLabel_getFix_maxAge">Tolérance d\'ancienneté GPS</string>    <!-- TODO: "GPS" to "Location" -->
     <string name="configLabel_getFix_maxAge_summary"><xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g> considéré comme récent</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>aucun</item>
@@ -1256,7 +1274,7 @@
     </string-array>  <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">Activer le GPS ?</string>
+    <string name="gps_dialog_msg">Activer le GPS ?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
     <string name="gps_dialog_ok">Oui</string>
     <string name="gps_dialog_cancel">Non</string>
 
@@ -1264,8 +1282,8 @@
     <string name="gps_lastfix_title_set">Sélectionner l\'emplacement</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Dernier emplacement</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Obtenir l\'emplacement</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">Impossible d\'obtenir l\'emplacement par GPS. Repli sur la dernière position connue.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Recherche GPS annulée</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_notfound">Impossible d\'obtenir l\'emplacement par GPS. Repli sur la dernière position connue.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
+    <string name="gps_lastfix_toast_cancelled">Recherche GPS annulée</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Aucun signal</string>
@@ -1509,6 +1527,7 @@
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
     <string name="dialog_cancel">Annuler</string>
+    <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.SuntimesActionsContract;
@@ -618,7 +619,8 @@ public class WidgetActions
         SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT}, true),
         SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true),
         SNOOZE_ALARM("Suntimes Alarms", "Snooze", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
-        DISMISS_ALARM("Suntimes Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true);
+        DISMISS_ALARM("Suntimes Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        UPDATE_WIDGETS("Suntimes", "Update widgets", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true);
 
         private String title, desc;
         private String[] tags;
@@ -726,6 +728,12 @@ public class WidgetActions
 
                         case OPEN_ALARM_LIST: launchString = AlarmClockActivity.class.getName(); break;
                         case OPEN_WIDGET_LIST: launchString = SuntimesWidgetListActivity.class.getName(); break;
+
+                        case UPDATE_WIDGETS:
+                            launchString = null;
+                            launchAction = SuntimesWidget0.SUNTIMES_ALARM_UPDATE;
+                            launchType = LaunchType.BROADCAST;
+                            break;
 
                         case CONFIG_DATE: launchAction = SuntimesActivity.ACTION_CONFIG_DATE; break;
                         case CONFIG_LOCATION: launchAction = SuntimesActivity.ACTION_CONFIG_LOCATION; break;

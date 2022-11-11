@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -516,14 +517,18 @@ public class AlarmListDialog extends DialogFragment
                 {
                     String filename = exportTarget + AlarmClockItemExportTask.FILEEXT;
                     Intent intent = ExportTask.getCreateFileIntent(filename, AlarmClockItemExportTask.MIMETYPE);
-                    startActivityForResult(intent, REQUEST_EXPORT_URI);
+                    try {
+                        startActivityForResult(intent, REQUEST_EXPORT_URI);
+                        return true;
 
-                } else {
-                    exportTask = new AlarmClockItemExportTask(context, exportTarget, true, true);    // export to external cache
-                    exportTask.setItems(items);
-                    exportTask.setTaskListener(exportListener);
-                    exportTask.execute();
+                    } catch (ActivityNotFoundException e) {
+                        Log.e("ExportAlarms", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+                    }
                 }
+                exportTask = new AlarmClockItemExportTask(context, exportTarget, true, true);    // export to external cache
+                exportTask.setItems(items);
+                exportTask.setTaskListener(exportListener);
+                exportTask.execute();
                 return true;
             } else return false;
         }
@@ -748,8 +753,16 @@ public class AlarmListDialog extends DialogFragment
         @Override
         public void onLoadFinished(List<AlarmClockItem> data)
         {
-            Log.d("DEBUG", "onItemChanged: " + data.size());
-            adapter.setItem(data.get(0));
+            if (data.size() > 0)
+            {
+                AlarmClockItem item = data.get(0);
+                if (item != null)
+                {
+                    Log.d("DEBUG", "onItemChanged: " + item.rowID);
+                    AlarmNotifications.updateAlarmTime(getActivity(), item);
+                    adapter.setItem(item);
+                }
+            }
             updateViews();
             scrollToSelectedItem();
         }
@@ -893,7 +906,7 @@ public class AlarmListDialog extends DialogFragment
             notifyDataSetChanged();
         }
 
-        public void setItem(AlarmClockItem item)
+        public void setItem(@NonNull AlarmClockItem item)
         {
             int position = getIndex(item.rowID);
             if (position >= 0 && position < items.size())

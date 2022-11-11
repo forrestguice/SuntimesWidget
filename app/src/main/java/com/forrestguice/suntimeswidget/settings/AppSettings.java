@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -34,6 +35,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +57,7 @@ public class AppSettings
     public static final String THEME_DARK = "dark";
     public static final String THEME_LIGHT = "light";
     public static final String THEME_DAYNIGHT = "daynight";
+    public static final String THEME_SYSTEM = "system";
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
@@ -97,6 +100,9 @@ public class AppSettings
 
     public static final String PREF_KEY_UI_SHOWMOON = "app_ui_showmoon";
     public static final boolean PREF_DEF_UI_SHOWMOON = true;
+
+    public static final String PREF_KEY_UI_SHOWMAPBUTTON = "app_ui_showmapbutton";
+    public static final boolean PREF_DEF_UI_SHOWMAPBUTTON = true;
 
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
@@ -393,6 +399,12 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_UI_SHOWDATASOURCE, PREF_DEF_UI_SHOWDATASOURCE);
     }
 
+    public static boolean loadShowMapButtonPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWMAPBUTTON, PREF_DEF_UI_SHOWMAPBUTTON);
+    }
+
     public static boolean[] loadShowFieldsPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -490,6 +502,24 @@ public class AppSettings
         return pref.getString(PREF_KEY_APPEARANCE_THEME_DARK, PREF_DEF_APPEARANCE_THEME_DARK);
     }
 
+    public static int setTheme(Activity activity, String appTheme)
+    {
+        int themeResID = AppSettings.themePrefToStyleId(activity, appTheme, null);
+        activity.setTheme(themeResID);
+
+        if (appTheme.equals(THEME_LIGHT)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else if (appTheme.equals(THEME_DARK)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if (appTheme.equals(THEME_SYSTEM)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        } else if (appTheme.equals(THEME_DAYNIGHT)) {
+            AppCompatDelegate.setDefaultNightMode((themeResID == R.style.AppTheme_Light) ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
+        }
+
+        return themeResID;
+    }
+
     public static int loadTheme(Context context)
     {
         return themePrefToStyleId(context, loadThemePref(context), null);
@@ -515,6 +545,9 @@ public class AppSettings
 
             } else if (themeName.equals(THEME_DARK)) {
                 styleID = R.style.AppTheme_Dark;
+
+            } else if (themeName.equals(THEME_SYSTEM)) {
+                styleID = R.style.AppTheme_System;
 
             } else if (themeName.equals(THEME_DAYNIGHT)) {
                 if (data == null)
