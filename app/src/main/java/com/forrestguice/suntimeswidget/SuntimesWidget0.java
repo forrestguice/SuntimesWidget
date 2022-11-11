@@ -186,6 +186,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         return new String[] { WidgetSettings.ActionMode.ONTAP_DONOTHING.name(),
                               WidgetSettings.ActionMode.ONTAP_UPDATE.name(),
+                              WidgetSettings.ActionMode.ONTAP_UPDATE_ALL.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name() };
     }
@@ -216,6 +217,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE.name()))
         {
             updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId);
+            return true;
+        }
+
+        // OnTap: Update All
+        if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE_ALL.name()))
+        {
+            updateAllWidgets(context);
             return true;
         }
 
@@ -333,6 +341,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
+    }
+
+    public static void updateAllWidgets(Context context)
+    {
+        Intent intent = new Intent();
+        intent.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+        context.sendBroadcast(intent);
     }
 
     public void initLocale(Context context)

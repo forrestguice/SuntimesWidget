@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -99,6 +100,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
 
+    protected static final String HELPTAG_SUBSTITUTIONS = "help_substitutions";
+
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
     protected ContentValues themeValues;
@@ -118,6 +121,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showCompare;
     protected CheckBox checkbox_showSeconds;
     protected CheckBox checkbox_showTimeDate;
+    protected CheckBox checkbox_showAbbrMonth;
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
     protected CheckBox checkbox_useAltitude;
@@ -184,7 +188,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         GetFixUI.themeIcons(this);
 
         super.onCreate(icicle);
@@ -726,6 +730,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     HelpDialog helpDialog = new HelpDialog();
                     helpDialog.setContent(getString(R.string.help_appearance_title));
+                    helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+                    helpDialog.setNeutralButtonListener(helpDialogListener_substitutions, HELPTAG_SUBSTITUTIONS);
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
@@ -817,6 +823,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         checkbox_showTimeDate = (CheckBox)findViewById(R.id.appwidget_general_showTimeDate);
         showOptionTimeDate(false);
+
+        //
+        // widget: showAbbrMonth
+        //
+        checkbox_showAbbrMonth = (CheckBox)findViewById(R.id.appwidget_general_showAbbrMonth);
+        showOptionAbbrvMonth(false);
 
         //
         // widget: showWeeks
@@ -1451,6 +1463,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showTimeDate = checkbox_showTimeDate.isChecked();
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, showTimeDate);
 
+        // save: showAbbrMonth
+        boolean showAbbrMonth = checkbox_showAbbrMonth.isChecked();
+        WidgetSettings.saveShowAbbrMonthPref(context, appWidgetId, showAbbrMonth);
+
         // save: showWeeks
         boolean showWeeks = checkbox_showWeeks.isChecked();
         WidgetSettings.saveShowWeeksPref(context, appWidgetId, showWeeks);
@@ -1518,6 +1534,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load showTimeDate
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         checkbox_showTimeDate.setChecked(showTimeDate);
+
+        // load showAbbrMonth
+        boolean showAbbrMonth = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        checkbox_showAbbrMonth.setChecked(showAbbrMonth);
 
         // load: showWeeks
         boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
@@ -1844,6 +1864,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         View optionLayout = findViewById(R.id.appwidget_general_showTimeDate_layout);
         if (optionLayout != null)
         {
+            optionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    protected void showOptionAbbrvMonth( boolean showOption )
+    {
+        View optionLayout = findViewById(R.id.appwidget_general_showAbbrMonth_layout);
+        if (optionLayout != null) {
             optionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
         }
     }
@@ -2265,6 +2293,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onBackPressed();
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
+
+    /**
+     * HelpDialog (title substitutions)
+     */
+    private final View.OnClickListener helpDialogListener_substitutions = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.help_substitutions_url))));
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 

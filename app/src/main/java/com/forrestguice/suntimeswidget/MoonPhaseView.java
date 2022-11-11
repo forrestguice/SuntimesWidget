@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.NumberFormat;
+import java.util.Calendar;
 
 @SuppressWarnings("Convert2Diamond")
 public class MoonPhaseView extends LinearLayout
@@ -282,18 +283,23 @@ public class MoonPhaseView extends LinearLayout
                 illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
 
             } else {
-                boolean sharedNoon = (data.getLunarNoonToday().getTimeInMillis() == data.getLunarNoonTomorrow().getTimeInMillis());
+                Calendar noonToday = data.getLunarNoonToday();
+                long noonTodayMillis = ((noonToday != null) ? noonToday.getTimeInMillis() : 0);
+                Calendar noonTomorrow = data.getLunarNoonTomorrow();
+                long noonTomorrowMillis = ((noonTomorrow != null) ? noonTomorrow.getTimeInMillis() : 0);
+                boolean sharedNoon = (noonTodayMillis == noonTomorrowMillis);
+
                 String illumTime;
                 if (tomorrowMode)
                 {
                     illum = formatter.format(data.getMoonIlluminationTomorrow());
-                    illumTime = utils.calendarTimeShortDisplayString(context, data.getLunarNoonTomorrow()).toString();
+                    illumTime = utils.calendarTimeShortDisplayString(context, noonTomorrow).toString();
 
                 } else {
                     illum = formatter.format(data.getMoonIlluminationToday());
                     illumTime = (sharedNoon)
-                            ? utils.calendarDateTimeDisplayString(context, data.getLunarNoonToday()).toString()
-                            : utils.calendarTimeShortDisplayString(context, data.getLunarNoonToday()).toString();
+                            ? utils.calendarDateTimeDisplayString(context, noonToday).toString()
+                            : utils.calendarTimeShortDisplayString(context, noonToday).toString();
                 }
                 illumNote = (context == null ? illum : context.getString(sharedNoon ? R.string.moon_illumination : R.string.moon_illumination_at, illum, illumTime));
             }

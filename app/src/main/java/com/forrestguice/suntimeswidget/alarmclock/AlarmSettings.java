@@ -27,6 +27,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
@@ -36,6 +37,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 
 import java.lang.ref.WeakReference;
+import java.util.TimeZone;
 
 import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 
@@ -91,6 +93,9 @@ public class AlarmSettings
     public static final boolean PREF_DEF_ALARM_POWEROFFALARMS = false;
 
     public static final String PREF_KEY_ALARM_UPCOMING_ALARMID = "app_alarms_upcomingAlarmId";    // the alarm we expect to go off next (cached value)
+
+    public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID = "app_alarms_systemtz_id";
+    public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET = "app_alarms_systemtz_offset";
 
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
     public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
@@ -219,6 +224,26 @@ public class AlarmSettings
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
     }
 
+    public static void saveSystemTimeZoneInfo(Context context) {
+        saveSystemTimeZoneInfo(context, TimeZone.getDefault().getID(), TimeZone.getDefault().getOffset(System.currentTimeMillis()));
+    }
+    public static void saveSystemTimeZoneInfo(Context context, String id, long offset)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, id);
+        prefs.putLong(PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET, offset);
+        prefs.apply();
+    }
+    @Nullable
+    public static String loadSystemTimeZoneID(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, null);
+    }
+    public static long loadSystemTimeZoneOffset(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getLong(PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET, TimeZone.getDefault().getOffset(System.currentTimeMillis()));
+    }
+
     public static void saveUpcomingAlarmId(Context context, @Nullable Long alarmId)
     {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -238,7 +263,7 @@ public class AlarmSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     @NonNull
-    public static String getRingtoneName(Context context, Uri ringtoneUri)
+    public static String getRingtoneName(Context context, @Nullable Uri ringtoneUri)
     {
         String ringtoneName = "";
         Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);      // TODO: getRingtone takes up to 100ms!
@@ -295,7 +320,7 @@ public class AlarmSettings
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String uriString = prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_URI_ALARM : PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, VALUE_RINGTONE_DEFAULT);
         if (resolveDefaults && VALUE_RINGTONE_DEFAULT.equals(uriString)) {
-            return setDefaultRingtone(context, type);
+            return new AlarmSettings().setDefaultRingtone(context, type);
         } else return (uriString != null ? Uri.parse(uriString) : Uri.parse(VALUE_RINGTONE_DEFAULT));
     }
     public static String getDefaultRingtoneName(Context context, AlarmClockItem.AlarmType type)
@@ -304,32 +329,49 @@ public class AlarmSettings
         return prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_NAME_ALARM : PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, context.getString(R.string.configLabel_tagDefault));
     }
 
-    public static Uri setDefaultRingtone(Context context, AlarmClockItem.AlarmType type)
+    @Nullable
+    public Uri getActualDefaultRingtoneUri(Context context, int type) {
+        return RingtoneManager.getActualDefaultRingtoneUri(context, type);
+    }
+
+    /**
+     * Caches the default ringtone uri.
+     * @return the default uri (or VALUE_RINGTONE_DEFAULT if not set)
+     */
+    public Uri setDefaultRingtone(Context context, AlarmClockItem.AlarmType type)
     {
         Uri uri;
         String key_uri, key_name;
         switch (type)
         {
             case ALARM:
-                uri = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
+                uri = getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
                 key_uri = PREF_KEY_ALARM_RINGTONE_URI_ALARM;
                 key_name = PREF_KEY_ALARM_RINGTONE_NAME_ALARM;
                 break;
             case NOTIFICATION: case NOTIFICATION1: case NOTIFICATION2:
             default:
-                uri = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
+                uri = getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
                 key_uri = PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION;
                 key_name = PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION;
                 break;
         }
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        prefs.putString(key_uri, uri.toString());
-        prefs.putString(key_name, getRingtoneName(context, uri));
-        prefs.apply();
-        return uri;
-    }
+        if (uri != null)
+        {
+            prefs.putString(key_uri, uri.toString());
+            prefs.putString(key_name, getRingtoneName(context, uri));
+            prefs.apply();
+            return uri;
 
+        } else {
+            prefs.putString(key_uri, VALUE_RINGTONE_DEFAULT);
+            prefs.remove(key_name);
+            prefs.apply();
+            return Uri.parse(VALUE_RINGTONE_DEFAULT);
+        }
+    }
 
     public static void setDefaultRingtoneUris(Context context)
     {
@@ -351,13 +393,44 @@ public class AlarmSettings
         protected Boolean doInBackground(AlarmClockItem.AlarmType... types)
         {
             Context context = contextRef.get();
+            AlarmSettings settings = new AlarmSettings();
             if (context != null) {
                 for (AlarmClockItem.AlarmType type : types) {
-                    setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
+                    settings.setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
                 }
                 return true;
             } else return false;
         }
+    }
+
+    /**
+     * @return true optimization is disabled (recommended), false optimization is enabled (alarms may be delayed or fail to sound)
+     */
+    public static boolean isIgnoringBatteryOptimizations(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            if (powerManager != null)
+                return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
+            else return false;
+        } else return true;
+    }
+
+    /**
+     * https://dontkillmyapp.com/sony
+     * @return true device is sony and "stamina mode" is enabled, false device is not sony or "stamina mode" is disabled
+     */
+    public static boolean isSonyStaminaModeEnabled(Context context) {
+        try {
+            return (isSony() && android.provider.Settings.Secure.getInt(context.getContentResolver(), "somc.stamina_mode", 0) > 0);
+        } catch (Exception e) {
+            Log.w("AlarmSettings", "isSonyStaminaModeEnabled: " + e);
+            return false;
+        }
+    }
+    public static boolean isSony() {
+        return "sony".equalsIgnoreCase(Build.MANUFACTURER);
     }
 
 }

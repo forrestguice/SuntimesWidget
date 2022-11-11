@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.app.ActivityManager;
-import android.app.AlarmManager;
 import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -28,22 +27,22 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.media.MediaPlayer;
+import android.database.DatabaseUtils;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.IBinder;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ServiceTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,7 +51,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeoutException;
@@ -89,14 +90,152 @@ public class AlarmNotificationsTest
     };
 
     @Test
+    public void test_bootCompleted() throws TimeoutException
+    {
+        Calendar now = Calendar.getInstance();
+        ArrayList<Long> rowIDs = new ArrayList<>();
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(mockContext.getApplicationContext());
+        db.open();
+        db.clearAlarms();
+        for (int alarmState : AlarmState.VALUES)
+        {
+            AlarmClockItem alarm = new AlarmClockItem();
+            alarm.type = AlarmClockItem.AlarmType.NOTIFICATION;
+            alarm.timezone = TimeZone.getDefault().getID();
+            alarm.hour = ((now.get(Calendar.HOUR_OF_DAY) + 1 ) % 24);    // very soon; will display reminder notification
+            alarm.minute = now.get(Calendar.MINUTE);
+            alarm.alarmtime = 0;
+            alarm.setEvent(SolarEvents.SUNRISE.name());
+            alarm.location = new Location("TEST", "34", "-111", "0");
+            alarm.repeating = true;
+            alarm.setRepeatingDays("1,2,3,4,5,6,7");
+            alarm.enabled = true;
+            long rowID = addAlarmItemToDatabase(alarm);
+            assertTrue("failed to create alarm", hasAlarmId(rowID));
+
+            db.updateAlarmState(rowID,  AlarmDatabaseAdapterTest.getAlarmStateValues(rowID, alarmState));
+            rowIDs.add(rowID);
+        }
+        db.close();
+
+        // trigger BOOT_COMPLETE action
+        Intent intent = new Intent(AlarmNotifications.getServiceIntent(mockContext));
+        intent.setAction(Intent.ACTION_BOOT_COMPLETED);
+        test_startCommand_calledStop(intent, true, 5000);
+
+        // verify AlarmState is now "scheduled"
+        for (long rowID : rowIDs)
+        {
+            AlarmState state = getAlarmState(rowID);
+            assertTrue("expected 1 (SCHEDULED_DISTANT) or 2 (SCHEDULED_SOON), not " + state.getState(), state.getState() == AlarmState.STATE_SCHEDULED_SOON || state.getState() == AlarmState.STATE_SCHEDULED_DISTANT);
+        }
+    }
+
+    @Test
+    public void test_timeZoneChanged() throws TimeoutException
+    {
+        Calendar now = Calendar.getInstance();
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(mockContext.getApplicationContext());
+        db.open();
+        db.clearAlarms();
+
+        int i = 0;
+        HashMap<Long, AlarmClockItem> alarms = new HashMap<>();    // create enabled items (should be rescheduled)
+        for (int alarmState : AlarmState.VALUES)
+        {
+            AlarmClockItem alarm = createTestItem_clockTime((i % 24), ((now.get(Calendar.MINUTE) + i) % 60));
+            long rowID = addAlarmItemToDatabase(alarm, alarmState);
+            assertTrue("failed to create alarm", hasAlarmId(rowID));
+            alarms.put(rowID, alarm);
+        }
+
+        AlarmClockItem alarm0 = createTestItem_clockTime(7, 30);    // create disabled items (should remain untouched)
+        alarm0.enabled = false;
+        long alarm0_id = addAlarmItemToDatabase(alarm0, AlarmState.STATE_DISABLED);
+        assertTrue("failed to create alarm", hasAlarmId(alarm0_id));
+        alarms.put(alarm0_id, alarm0);
+
+        db.close();
+
+        // trigger TIMEZONE_CHANGED action
+        AlarmSettings.saveSystemTimeZoneInfo(mockContext, "test", 0);
+        assertEquals("test", AlarmSettings.loadSystemTimeZoneID(mockContext));
+        assertEquals(0, AlarmSettings.loadSystemTimeZoneOffset(mockContext));
+
+        Intent intent = new Intent(AlarmNotifications.getServiceIntent(mockContext));
+        intent.setAction(Intent.ACTION_TIMEZONE_CHANGED);
+        test_startCommand_calledStop(intent, true, 5000);
+        assertEquals(TimeZone.getDefault().getID(), AlarmSettings.loadSystemTimeZoneID(mockContext));
+        assertEquals(TimeZone.getDefault().getOffset(System.currentTimeMillis()), AlarmSettings.loadSystemTimeZoneOffset(mockContext));
+
+        // verify AlarmState is now "scheduled", "sounding", or "snoozing"
+        for (long rowID : alarms.keySet())
+        {
+            AlarmState state = getAlarmState(rowID);
+            AlarmState state0 = alarms.get(rowID).state;
+            if (alarms.get(rowID).enabled)
+            {
+                if (state0.getState() == AlarmState.STATE_SOUNDING || state0.getState() == AlarmState.STATE_SNOOZING) {
+                    assertEquals("state should be unchanged; expected 3 (SOUNDING), or 10 (SNOOZING), not " + state.getState(), state.getState(), state0.getState());
+
+                } else {
+                    assertTrue("state should be scheduled; expected 1 (SCHEDULED_DISTANT) or 2 (SCHEDULED_SOON), not " + state.getState(),
+                            state.getState() == AlarmState.STATE_SCHEDULED_SOON || state.getState() == AlarmState.STATE_SCHEDULED_DISTANT);
+                }
+            } else {
+                assertEquals("state should be unchanged for disabled items", state.getState(), state0.getState());
+            }
+        }
+    }
+
+    private AlarmClockItem createTestItem_clockTime(int hour, int minute)
+    {
+        AlarmClockItem alarm = new AlarmClockItem();
+        alarm.type = AlarmClockItem.AlarmType.ALARM;
+        alarm.location = new Location("TEST", "34", "-111", "0");
+        alarm.timezone = null;
+        alarm.setEvent(null);
+        alarm.hour = hour;
+        alarm.minute = minute;
+        alarm.offset = 0;
+        alarm.alarmtime = 0;
+        alarm.repeating = true;
+        alarm.setRepeatingDays("1,2,3,4,5,6,7");
+        alarm.enabled = true;
+        return alarm;
+    }
+
+    @Nullable
+    private AlarmState getAlarmState(long rowID)
+    {
+        AlarmState state = null;
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(mockContext.getApplicationContext());
+        db.open();
+        Cursor cursor = db.getAlarmState(rowID);
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            if (!cursor.isAfterLast())
+            {
+                ContentValues stateValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, stateValues);
+                state = new AlarmState(stateValues);
+            }
+            cursor.close();
+        }
+        db.close();
+        return state;
+    }
+
+    @Test
     public void test_startCommand_nullData() throws TimeoutException
     {
         Intent intent0 = AlarmNotifications.getServiceIntent(mockContext);
         String[] test_actions0 = new String[] {
-                AlarmDismissActivity.ACTION_UPDATE, Intent.ACTION_TIME_CHANGED,
+                AlarmNotifications.ACTION_UPDATE_UI, Intent.ACTION_TIME_CHANGED,
                 AlarmNotifications.ACTION_SHOW, AlarmNotifications.ACTION_DISABLE, AlarmNotifications.ACTION_DISMISS,
                 AlarmNotifications.ACTION_SNOOZE,  AlarmNotifications.ACTION_SILENT, AlarmNotifications.ACTION_TIMEOUT,
-                AlarmNotifications.ACTION_DELETE, Intent.ACTION_BOOT_COMPLETED,    // DELETE should clear all (setup for BOOT_COMPLETED, SCHEDULE, and RESCHEDULE)
+                AlarmNotifications.ACTION_DELETE, Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_TIMEZONE_CHANGED,    // DELETE should clear all (setup for BOOT_COMPLETED, SCHEDULE, and RESCHEDULE)
                 AlarmNotifications.ACTION_SCHEDULE, AlarmNotifications.ACTION_RESCHEDULE, AlarmNotifications.ACTION_RESCHEDULE1,};
 
         for (String action : test_actions0)
@@ -113,7 +252,7 @@ public class AlarmNotificationsTest
         AlarmClockItem[] alarms = AlarmDatabaseAdapterTest.createTestItems();
         Intent intent0 = AlarmNotifications.getServiceIntent(mockContext);
         String[] test_actions0 = new String[] {
-                AlarmDismissActivity.ACTION_UPDATE, Intent.ACTION_TIME_CHANGED, Intent. ACTION_BOOT_COMPLETED,
+                AlarmNotifications.ACTION_UPDATE_UI, Intent.ACTION_TIME_CHANGED, Intent.ACTION_TIMEZONE_CHANGED, Intent. ACTION_BOOT_COMPLETED,
                 AlarmNotifications.ACTION_SCHEDULE, AlarmNotifications.ACTION_RESCHEDULE, AlarmNotifications.ACTION_RESCHEDULE1,
                 AlarmNotifications.ACTION_SHOW, AlarmNotifications.ACTION_DISABLE, AlarmNotifications.ACTION_DISMISS,
                 AlarmNotifications.ACTION_SNOOZE,  AlarmNotifications.ACTION_SILENT, AlarmNotifications.ACTION_TIMEOUT,
@@ -145,7 +284,7 @@ public class AlarmNotificationsTest
         Uri data1 = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmId1);
 
         // bad data (invalid action when combined with data)
-        String[] test_actions1 = new String[] { AlarmDismissActivity.ACTION_UPDATE, Intent.ACTION_TIME_CHANGED, Intent. ACTION_BOOT_COMPLETED };
+        String[] test_actions1 = new String[] { AlarmNotifications.ACTION_UPDATE_UI, Intent.ACTION_TIME_CHANGED, Intent. ACTION_BOOT_COMPLETED };
         test_startComand_withData_calledStop(intent0, test_actions1, data0);
 
         // good data, bad transition (TIMEOUT is only reachable from SOUNDING)
@@ -239,7 +378,7 @@ public class AlarmNotificationsTest
     }
 
     protected void test_startComand_withData_calledStop(Intent intent0, String[] actions, Uri data) throws TimeoutException {
-        test_startComand_withData_calledStop(intent0, actions, data, true, 1000);
+        test_startComand_withData_calledStop(intent0, actions, data, true, 1500);
     }
     protected void test_startComand_withData_calledStop(Intent intent0, String[] actions, Uri data, boolean shouldStop, int withinMs) throws TimeoutException
     {
@@ -250,6 +389,18 @@ public class AlarmNotificationsTest
             intent.setData(data);
             test_startCommand_calledStop(intent, shouldStop, withinMs);
         }
+    }
+
+    protected long addAlarmItemToDatabase(AlarmClockItem item, int state)
+    {
+        long rowID = addAlarmItemToDatabase(item);
+        assertTrue("failed to create alarm", hasAlarmId(rowID));
+
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(mockContext.getApplicationContext());
+        db.open();
+        db.updateAlarmState(rowID,  AlarmDatabaseAdapterTest.getAlarmStateValues(rowID, state));
+        item.state = new AlarmState(rowID, state);
+        return rowID;
     }
 
     protected long addAlarmItemToDatabase(AlarmClockItem item)
@@ -366,7 +517,7 @@ public class AlarmNotificationsTest
         Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmID);
         Intent intent = AlarmNotifications.getFullscreenBroadcast(data);
 
-        assertEquals(AlarmDismissActivity.ACTION_UPDATE, intent.getAction());
+        assertEquals(AlarmNotifications.ACTION_UPDATE_UI, intent.getAction());
         assertEquals(data.toString(), intent.getData().toString());
     }
 

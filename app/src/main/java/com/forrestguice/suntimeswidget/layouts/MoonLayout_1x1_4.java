@@ -68,6 +68,7 @@ public class MoonLayout_1x1_4 extends MoonLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
 
         for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
         {
@@ -80,7 +81,7 @@ public class MoonLayout_1x1_4 extends MoonLayout
             MoonPhaseDisplay nextPhase = SuntimesMoonData.toPhase(majorPhase);
             views.setViewVisibility(nextPhase.getView(), View.VISIBLE);
 
-            SuntimesUtils.TimeDisplayText phaseString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(majorPhase), showTimeDate, showSeconds);
+            SuntimesUtils.TimeDisplayText phaseString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(majorPhase), showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonphase_major_date, phaseString.getValue());
             views.setTextViewText(R.id.moonphase_major_label, data.getMoonPhaseLabel(context, majorPhase));
             views.setViewVisibility(R.id.moonphase_major_label, (showLabels ? View.VISIBLE : View.GONE));

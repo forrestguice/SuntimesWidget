@@ -157,11 +157,12 @@ public class MoonLayout_1x1_8 extends MoonLayout
         boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
         WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
 
         if (apogee != null)
         {
-            SuntimesUtils.TimeDisplayText apogeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds);
+            SuntimesUtils.TimeDisplayText apogeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_apogee_date, apogeeString.getValue());
             views.setTextViewText(R.id.moonapsis_apogee_note, noteSpan(context, now, apogee.first, showWeeks, showHours, timeColor, boldTime));
             if (apogee.second != null) {
@@ -173,7 +174,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
 
         if (perigee != null)
         {
-            SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds);
+            SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_perigee_date, perigeeString.getValue());
             views.setTextViewText(R.id.moonapsis_perigee_note, noteSpan(context, now, perigee.first, showWeeks, showHours, timeColor, boldTime));
             if (perigee.second != null) {
