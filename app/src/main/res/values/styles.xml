@@ -707,6 +707,9 @@
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">6dp</item>
     </style>
+    <style name="ChipTrayLabel">
+        <item name="android:textSize">?attr/text_size_small</item>
+    </style>
 
     <style name="ChipArea">
         <item name="android:maxWidth">250dp</item>
@@ -723,6 +726,7 @@
 
     <style name="ChipTextBase" parent="android:TextAppearance.Small">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
     <style name="ChipText0" parent="ChipTextBase">
         <item name="android:maxWidth">250dp</item>

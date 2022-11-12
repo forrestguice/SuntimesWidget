@@ -52,7 +52,7 @@
         <TextView
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:ellipsize="end" android:gravity="center" android:maxLines="1"
-            android:textColor="?attr/text_buttonSelector" android:textSize="52dp" android:textStyle="bold"
+            android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_enormous" android:textStyle="bold"
             tools:ignore="SpUsage" tools:text="11:22 am" />
 
         <TextView

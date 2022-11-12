@@ -62,7 +62,7 @@
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
-                    android:textStyle="bold" android:maxLines="1"
+                    android:textSize="?attr/text_size_small" android:textStyle="bold" android:maxLines="1"
                     tools:text="label" />
 
                 <include layout="@layout/layout_listitem_alarmclock_switch" />
@@ -85,7 +85,7 @@
                     android:layout_gravity="center_vertical" android:gravity="center_vertical"
                     android:textStyle="bold"
                     android:maxLines="2" android:ellipsize="end"
-
+                    android:textSize="?attr/text_size_small"
                     android:paddingRight="8dp" android:paddingEnd="8dp"
                     tools:text="Sunset\nline two" />
 
@@ -95,7 +95,7 @@
                     android:layout_marginTop="0dp" android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
                     android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
                     android:gravity="center_vertical"
-                    tools:text="Location"
+                    tools:text="Location" android:textSize="?attr/text_size_small"
                     android:maxLines="2" android:ellipsize="end" />
 
             </LinearLayout>
@@ -122,7 +122,7 @@
                     android:layout_marginLeft="12dp" android:layout_marginStart="12dp"
                     android:layout_marginBottom="4dp"
                     android:ellipsize="end" android:gravity="center" android:maxLines="1"
-                    android:textSize="52dp" android:textStyle="bold"
+                    android:textSize="?attr/text_size_enormous" android:textStyle="bold"
                     tools:ignore="SpUsage" tools:text="11:22 am" />
 
                 <TextView
@@ -165,7 +165,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
                     android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-                    android:gravity="center_vertical|end"
+                    android:gravity="center_vertical|end" android:textSize="?attr/text_size_small"
                     tools:text="action" android:maxLines="2" android:ellipsize="end"
                     android:textStyle="bold" />
                 <TextView
@@ -173,7 +173,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
                     android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-                    android:gravity="center_vertical|end"
+                    android:gravity="center_vertical|end" android:textSize="?attr/text_size_small"
                     tools:text="action" android:maxLines="2" android:ellipsize="end"
                     android:textStyle="bold" />
 
@@ -183,7 +183,7 @@
                     android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
                     android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                     android:gravity="center_vertical|end"
-                    tools:text="vibrate"
+                    tools:text="vibrate" android:textSize="?attr/text_size_small"
                     android:maxLines="2" android:ellipsize="end"
                     android:textStyle="bold" />
 
@@ -193,7 +193,7 @@
                     android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
                     android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                     android:gravity="center_vertical|end"
-                    tools:text="ringtone"
+                    tools:text="ringtone" android:textSize="?attr/text_size_small"
                     android:maxLines="2" android:ellipsize="end"
                     android:textStyle="bold" />
 
@@ -210,7 +210,7 @@
             <TextView android:id="@+id/text_note" android:background="?attr/selectableItemBackground"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
                 android:paddingLeft="8dp" android:paddingRight="8dp"
-                android:gravity="center_vertical|start"
+                android:gravity="center_vertical|start" android:textSize="?attr/text_size_small"
                 tools:text="15m from now" />
 
             <View android:background="@null" android:layout_height="1dp" android:layout_width="0dp" android:layout_weight="1" />
