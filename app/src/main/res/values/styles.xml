@@ -539,7 +539,7 @@
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:antialias">true</item>
     </style>
     <style name="SunsetTimeTextView" parent="SunsetTimeTextViewBase">
@@ -551,17 +551,17 @@
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:antialias">true</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
     <style name="SunsetTimeTextView2" parent="SunsetTimeTextView">
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textSize">?attr/text_size_xsmall</item>
     </style>
 
     <!-- A TextView for displaying the widget title -->
     <style name="SunsetTimeTextTitleView" parent="SunsetTimeTextView">
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textSize">?attr/text_size_xsmall</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
@@ -575,7 +575,7 @@
 
     <!-- A TextView for displaying some suffix after time/text -->
     <style name="SunsetTimeTextSuffixView" parent="SunsetTimeTextView">
-        <item name="android:textSize">@dimen/text_size_tiny</item>
+        <item name="android:textSize">?attr/text_size_tiny</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
@@ -594,7 +594,7 @@
         <item name="android:layout_width">85dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textNoSuggestions</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="ColorEditLabel">
