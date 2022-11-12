@@ -40,7 +40,7 @@
                       android:text=""
                       tools:text="12h 15m"
                       android:gravity="center"
-                      android:textSize="@dimen/text_size_xlarge"
+                      android:textSize="?attr/text_size_xlarge"
                       android:singleLine="true"
                       android:ellipsize="marquee"/>
 
@@ -52,7 +52,7 @@
                   android:text=""
                   tools:text="until"
                   android:layout_gravity="center_horizontal"
-                  android:textSize="@dimen/text_size_small"
+                  android:textSize="?attr/text_size_small"
                   android:singleLine="true"
                   android:gravity="center"/>
 
@@ -61,7 +61,7 @@
                   android:text=""
                   tools:text="astronomical twilight"
                   android:layout_gravity="center_horizontal"
-                  android:textSize="@dimen/text_size_large"
+                  android:textSize="?attr/text_size_large"
                   android:gravity="center" android:maxWidth="@dimen/clock_note_maxwidth"
                   android:layout_margin="0dp"/>
 
