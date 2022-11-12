@@ -7,6 +7,21 @@
     <integer name="clock_amppm_maxems">2</integer>
     <dimen name="clock_note_maxwidth">125dp</dimen>
 
+    <style name="ClockTextView0" parent="SunsetTimeTextView">    <!-- clock text (base) -->
+        <item name="android:textSize">@dimen/clock_fontsize</item>
+    </style>
+    <style name="ClockSuffixTextView0" parent="SunsetTimeTextSuffixView">  <!-- clock suffix (base) -->
+        <item name="android:textSize">@dimen/clock_suffix_fontsize</item>
+        <item name="android:maxEms">@integer/clock_amppm_maxems</item>
+    </style>
+
+    <style name="ClockTextView" parent="ClockTextView0">         <!-- clock text -->
+        <item name="android:textSize">?attr/text_size_enormous</item>
+    </style>
+    <style name="ClockSuffixTextView" parent="ClockSuffixTextView0">   <!-- clock suffix -->
+        <item name="android:textSize">?attr/text_size_xlarge</item>
+    </style>
+
     <dimen name="solsticetable_column0_width">130dp</dimen>
     <dimen name="moonphase_column0_width">75dp</dimen>
 
@@ -29,7 +44,7 @@
     <integer name="table_heading_date_maxlength">32</integer>
     <integer name="table_heading_date_maxlines">2</integer>
 
-    <style name="TableHeadDateView">                                     <!-- date header text -->
+    <style name="TableHeadDateView0">                                     <!-- date header text (base) -->
         <item name="android:textColor">?attr/date_buttonSelector</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/table_heading_date_fontsize</item>
@@ -42,6 +57,9 @@
         <item name="android:layout_margin">0dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="TableHeadDateView" parent="TableHeadDateView0">                                     <!-- date header text -->
+        <item name="android:textSize">?attr/text_size_large</item>
     </style>
 
     <!-- table heading: rise/set field (col 1,2) -->
@@ -57,7 +75,7 @@
         <item name="android:layout_margin">5dp</item>
     </style>
 
-    <style name="TableHeadTextView" parent="SunsetTimeTextView">        <!-- rise/set header text -->
+    <style name="TableHeadTextView0" parent="SunsetTimeTextView">        <!-- rise/set header text (base) -->
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/table_heading_label_fontsize</item>
         <item name="android:ellipsize">end</item>
@@ -65,6 +83,9 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/table_heading_label_iconSpacing</item>
+    </style>
+    <style name="TableHeadTextView" parent="TableHeadTextView0">        <!-- rise/set header text -->
+        <item name="android:textSize">?attr/text_size_large</item>
     </style>
 
     <!-- lightmap -->
