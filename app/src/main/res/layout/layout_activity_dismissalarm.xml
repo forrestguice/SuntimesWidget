@@ -25,7 +25,7 @@
 		android:orientation="vertical" android:padding="16dp" android:animateLayoutChanges="true">
 
 		<TextView
-			style="@style/TextAppearance.AppCompat.Large" android:textSize="@dimen/text_size_huge"
+			style="@style/TextAppearance.AppCompat.Large" android:textSize="?attr/text_size_huge"
 			android:id="@+id/txt_alarm_label"
 			android:layout_width="match_parent" android:layout_height="wrap_content"
 			android:gravity="center"
@@ -44,7 +44,7 @@
 
 			<TextView
 				style="@style/TextAppearance.AppCompat.Small"
-				android:id="@+id/txt_alarm_offset" android:textSize="@dimen/text_size_small"
+				android:id="@+id/txt_alarm_offset" android:textSize="?attr/text_size_small"
 				android:layout_width="match_parent" android:layout_height="wrap_content"
 				android:gravity="bottom|center_horizontal" tools:text="30m before" />
 
@@ -95,7 +95,7 @@
         </ViewFlipper>
 
 		<TextView android:id="@+id/txt_clock_time"
-			style="@style/SunsetTimeTextView" android:textSize="@dimen/text_size_enormous" android:textStyle="bold"
+			style="@style/SunsetTimeTextView" android:textSize="?attr/text_size_enormous" android:textStyle="bold"
 			android:layout_width="match_parent" android:layout_height="wrap_content"
 			android:gravity="center"
 			app:layout_constraintVertical_bias="0.65"

@@ -77,7 +77,7 @@
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/text_date_equinox_vernal"
-                android:textSize="@dimen/text_size_small" android:antialias="true"
+                android:textSize="?attr/text_size_small" android:antialias="true"
                 android:textColor="@drawable/txt_equinox_vernal"
                 android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
                 android:singleLine="true" android:ellipsize="marquee"
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/text_date_equinox_vernal_note"
                 tools:text="21d 6h 5m  from now"
-                android:textSize="@dimen/text_size_small" android:antialias="true"
+                android:textSize="?attr/text_size_small" android:antialias="true"
                 android:layout_marginBottom="8dp" />
 
         </LinearLayout>
@@ -111,7 +111,7 @@
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/text_date_solstice_summer"
-                android:textSize="@dimen/text_size_small" android:antialias="true"
+                android:textSize="?attr/text_size_small" android:antialias="true"
                 android:textColor="@drawable/txt_solstice_summer"
                 android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
                 android:singleLine="true" android:ellipsize="marquee"
@@ -120,7 +120,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/text_date_solstice_summer_note"
                 tools:text="21d 6h 5m  from now"
-                android:textSize="@dimen/text_size_small" android:antialias="true"
+                android:textSize="?attr/text_size_small" android:antialias="true"
                 android:layout_marginBottom="8dp" />
 
         </LinearLayout>
@@ -145,7 +145,7 @@
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/text_date_equinox_autumnal"
-                android:textSize="@dimen/text_size_small" android:antialias="true"
+                android:textSize="?attr/text_size_small" android:antialias="true"
                 android:textColor="@drawable/txt_equinox_autumnal"
                 android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
                 android:singleLine="true" android:ellipsize="marquee"
@@ -155,7 +155,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/text_date_equinox_autumnal_note"
                 tools:text="21d 6h 5m  from now"
-                android:textSize="@dimen/text_size_small" android:antialias="true"
+                android:textSize="?attr/text_size_small" android:antialias="true"
                 android:layout_marginBottom="8dp" />
         </LinearLayout>
 
@@ -178,7 +178,7 @@
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/text_date_solstice_winter"
-                android:textSize="@dimen/text_size_small" android:antialias="true"
+                android:textSize="?attr/text_size_small" android:antialias="true"
                 android:textColor="@drawable/txt_solstice_winter"
                 android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
                 android:singleLine="true" android:ellipsize="marquee"
@@ -188,7 +188,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/text_date_solstice_winter_note"
                 tools:text="21d 6h 5m  from now"
-                android:textSize="@dimen/text_size_small" android:antialias="true"
+                android:textSize="?attr/text_size_small" android:antialias="true"
                 android:layout_marginBottom="8dp" />
         </LinearLayout>
 

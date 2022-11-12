@@ -36,13 +36,13 @@
                       android:id="@+id/text_time"
                       android:layout_gravity="end"
                       android:text=""
-                      android:textSize="@dimen/clock_fontsize"
+                      android:textSize="?attr/text_size_enormous"
                       tools:text="12:00" />
 
             <TextView android:id="@+id/text_time_suffix"
                       style="@style/SunsetTimeTextSuffixView"
                       android:layout_gravity="center_vertical|bottom|end"
-                      android:textSize="@dimen/clock_suffix_fontsize"
+                      android:textSize="?attr/text_size_xlarge"
                       android:text="" android:maxEms="@integer/clock_amppm_maxems"
                       tools:text="p.m." />
         </LinearLayout>
