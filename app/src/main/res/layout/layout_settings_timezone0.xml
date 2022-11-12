@@ -27,7 +27,8 @@
 
             <TextView android:labelFor="@+id/appwidget_timezone_mode"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_timezone_mode" />
+                android:layout_height="wrap_content" android:text="@string/configLabel_timezone_mode"
+                android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_timezone_mode" android:layout_width="match_parent"
                 android:dropDownVerticalOffset="16sp"
@@ -44,7 +45,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_timezone_custom"
-                android:textColor="@drawable/btn_labeltxt"
+                android:textColor="@drawable/btn_labeltxt" android:textSize="?attr/text_size_small"
                 android:clickable="true" android:focusable="true"
                 android:enabled="false" android:labelFor="@+id/appwidget_timezone_custom" />
 
@@ -83,7 +84,8 @@
                       android:labelFor="@+id/appwidget_solartime"
                       android:layout_gravity="center_vertical"
                       android:layout_width="wrap_content"
-                      android:layout_height="wrap_content" android:text="@string/configLabel_timezone_standard" />
+                      android:layout_height="wrap_content" android:text="@string/configLabel_timezone_standard"
+                      android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_solartime"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_gravity="center"

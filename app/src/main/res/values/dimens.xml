@@ -27,7 +27,7 @@
     <dimen name="largetext_size_small">16sp</dimen>
     <dimen name="largetext_size_medium">18sp</dimen>
     <dimen name="largetext_size_large">20sp</dimen>
-    <dimen name="largetext_size_xlarge">22sp</dimen>
+    <dimen name="largetext_size_xlarge">24sp</dimen>
     <dimen name="largetext_size_huge">38sp</dimen>
     <dimen name="largetext_size_enormous">58sp</dimen>
 

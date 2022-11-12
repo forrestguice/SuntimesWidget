@@ -642,6 +642,7 @@
 
     <style name="SunsetTimeSettingsGroupTitle">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="SunsetTimeHorizontalRule">
@@ -744,5 +745,13 @@
     </style>
 
     <style name="ActionButton" parent="@android:style/Widget.Button.Small" />
+
+    <style name="TimePickerStyle">
+        <item name="android:textSize">?attr/text_size_medium</item>
+    </style>
+    <style name="DatePickerStyle">
+        <item name="android:textSize">?attr/text_size_medium</item>
+    </style>
+
 
 </resources>

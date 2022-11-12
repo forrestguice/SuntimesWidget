@@ -40,7 +40,7 @@
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
             android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-            android:gravity="start"
+            android:gravity="start" android:textSize="?attr/text_size_small"
             android:text="@string/app_shortdesc" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_gravity="start"
-            android:text="@string/app_version"
+            android:text="@string/app_version" android:textSize="?attr/text_size_small"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_marginBottom="2dp"
             android:id="@+id/txt_about_support"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
             android:text="@string/app_support_url" />
 
         <View
@@ -74,7 +74,7 @@
             android:layout_marginBottom="2dp"
             android:layout_marginTop="0dp"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
             android:text="@string/app_url"
             android:autoLink="web" />
 

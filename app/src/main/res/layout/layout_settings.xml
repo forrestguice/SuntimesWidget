@@ -135,7 +135,7 @@
                         <CheckBox
                             android:id="@+id/appwidget_location_fromapp"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/configLabel_location_fromapp" />
+                            android:textSize="?attr/text_size_small" android:text="@string/configLabel_location_fromapp" />
 
                     </LinearLayout>
 
