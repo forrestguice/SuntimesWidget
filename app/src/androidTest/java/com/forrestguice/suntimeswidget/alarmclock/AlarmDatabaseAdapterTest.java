@@ -215,7 +215,7 @@ public class AlarmDatabaseAdapterTest
         return alarmState;
     }
 
-    private ContentValues getAlarmStateValues(long rowID, int state)
+    public static ContentValues getAlarmStateValues(long rowID, int state)
     {
         ContentValues alarmState = new ContentValues();
         alarmState.put(AlarmDatabaseAdapter.KEY_STATE, state);

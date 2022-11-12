@@ -49,6 +49,7 @@ import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
@@ -812,7 +813,7 @@ public class SuntimesUtils
         if (showTime) {
             if (showSeconds)
                 dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormatSec : (abbreviate ? strDateTimeVeryShortFormatSec : strDateTimeShortFormatSec)), locale);
-            else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : (abbreviate ? strDateVeryShortFormat : strDateTimeShortFormat)), locale);
+            else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : (abbreviate ? strDateTimeVeryShortFormat : strDateTimeShortFormat)), locale);
         } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : (abbreviate ? strDateVeryShortFormat : strDateShortFormat)), locale);
         //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
 
@@ -1613,6 +1614,32 @@ public class SuntimesUtils
 
                 span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, alignment);
                 text = text.substring(0, tagPos) + tag.getBlank() + text.substring(tagEnd);
+            }
+        }
+        return span;
+    }
+
+    public static SpannableStringBuilder createSpan(Context context, CharSequence text, ImageSpanTag[] tags) {
+        return createSpan(context, text, tags, ImageSpan.ALIGN_BASELINE);
+    }
+    public static SpannableStringBuilder createSpan(Context context, CharSequence text, ImageSpanTag[] tags, int alignment)
+    {
+        SpannableStringBuilder span = new SpannableStringBuilder(text);
+        ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.transparent);
+
+        for (ImageSpanTag tag : tags)
+        {
+            String spanTag = tag.getTag();
+            ImageSpan imageSpan = (tag.getSpan() == null) ? blank : tag.getSpan();
+
+            int tagPos;
+            while ((tagPos = TextUtils.indexOf(text, spanTag )) >= 0)
+            {
+                int tagEnd = tagPos + spanTag.length();
+                //Log.d("DEBUG", "tag=" + spanTag + ", tagPos=" + tagPos + ", " + tagEnd + ", text=" + text);
+
+                span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, alignment);
+                text = text.subSequence(0, tagPos) + tag.getBlank() + text.subSequence(tagEnd, text.length());
             }
         }
         return span;
