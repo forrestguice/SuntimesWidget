@@ -68,6 +68,9 @@ public class AppSettings
     public static final String PREF_KEY_APPEARANCE_THEME_DARK = "app_appearance_theme_dark";
     public static final String PREF_DEF_APPEARANCE_THEME_DARK = "default";
 
+    public static final String PREF_KEY_APPEARANCE_TEXTSIZE = "app_appearance_textsize";
+    public static final TextSize PREF_DEF_APPEARANCE_TEXTSIZE = TextSize.NORMAL;
+
     public static final String PREF_KEY_LOCALE_MODE = "app_locale_mode";
     public static final LocaleMode PREF_DEF_LOCALE_MODE = LocaleMode.SYSTEM_LOCALE;
 
@@ -143,6 +146,42 @@ public class AppSettings
 
     public static final String PREF_KEY_DIALOG = "dialog";
     public static final String PREF_KEY_DIALOG_DONOTSHOWAGAIN = "donotshowagain";
+
+    /**
+     * Text sizes
+     */
+    public static enum TextSize
+    {
+        SMALL("Small"), NORMAL("Normal"), LARGE("Large");
+
+        private TextSize( String displayString ) {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString() {
+            return displayString;
+        }
+        public void setDisplayString( String displayString ) {
+            this.displayString = displayString;
+        }
+        private String displayString;
+
+        public static void initDisplayStrings( Context context )
+        {
+            SMALL.setDisplayString(context.getString(R.string.textSize_small));
+            NORMAL.setDisplayString(context.getString(R.string.textSize_normal));
+            LARGE.setDisplayString(context.getString(R.string.textSize_large));
+        }
+
+        public static TextSize valueOf(String value, TextSize defaultValue)
+        {
+            try {
+                return TextSize.valueOf(value);
+            } catch (IllegalArgumentException e) {
+                return defaultValue;
+            }
+        }
+    }
 
     /**
      * Language modes (system, user defined)
@@ -472,7 +511,13 @@ public class AppSettings
     public static String loadThemePref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
+        return pref.getString(PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME) + "_" + loadTextSizePref(context);
+    }
+
+    public static String loadTextSizePref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_APPEARANCE_TEXTSIZE, PREF_DEF_APPEARANCE_TEXTSIZE.name());
     }
 
     public static String loadThemeLightPref(Context context)
@@ -520,30 +565,43 @@ public class AppSettings
     }
     public static int themePrefToStyleId( Context context, String themeName, SuntimesRiseSetData data )
     {
-        int styleID = R.style.AppTheme_Dark;
         if (themeName != null)
         {
-            //noinspection IfCanBeSwitch
-            if (themeName.equals(THEME_LIGHT))
-            {
-                styleID = R.style.AppTheme_Light;
+            String[] parts = themeName.split("_");
+            TextSize size = TextSize.valueOf((parts.length > 0 ? parts[1] : TextSize.NORMAL.name()), TextSize.NORMAL);
 
-            } else if (themeName.equals(THEME_DARK)) {
-                styleID = R.style.AppTheme_Dark;
-
-            } else if (themeName.equals(THEME_SYSTEM)) {
-                styleID = R.style.AppTheme_System;
-
-            } else if (themeName.equals(THEME_DAYNIGHT)) {
+            if (themeName.startsWith(THEME_LIGHT)) {
+                switch (size) {
+                    case SMALL: return R.style.AppTheme_Light_Small;
+                    case LARGE: return R.style.AppTheme_Light_Large;
+                    case NORMAL: default: return R.style.AppTheme_Light;
+                }
+            } else if (themeName.startsWith(THEME_DARK)) {
+                switch (size) {
+                    case SMALL: return R.style.AppTheme_Dark_Small;
+                    case LARGE: return R.style.AppTheme_Dark_Large;
+                    case NORMAL: default: return R.style.AppTheme_Dark;
+                }
+            } else if (themeName.startsWith(THEME_SYSTEM)) {
+                switch (size) {
+                    case SMALL: return R.style.AppTheme_System_Small;
+                    case LARGE: return R.style.AppTheme_System_Large;
+                    case NORMAL: default: return R.style.AppTheme_System;
+                }
+            } else if (themeName.startsWith(THEME_DAYNIGHT)) {
                 if (data == null)
                 {
                     data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
                     data.initCalculator(context);
                 }
-                styleID = (data.isDay() ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
+                switch (size) {
+                    case SMALL: return (data.isDay() ? R.style.AppTheme_Light_Small : R.style.AppTheme_Dark_Small);
+                    case LARGE: return (data.isDay() ? R.style.AppTheme_Light_Large : R.style.AppTheme_Dark_Large);
+                    case NORMAL: default: return (data.isDay() ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
+                }
             }
         }
-        return styleID;
+        return R.style.AppTheme;
     }
 
     public static String getThemeOverride(Context context, int appThemeResID)
