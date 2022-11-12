@@ -131,6 +131,15 @@
 
     <attr name="checkVibrate" format="reference" />
 
+    <attr name="text_size_tiny" format="dimension" />
+    <attr name="text_size_xsmall" format="dimension" />
+    <attr name="text_size_small" format="dimension" />
+    <attr name="text_size_medium" format="dimension" />
+    <attr name="text_size_large" format="dimension" />
+    <attr name="text_size_xlarge" format="dimension" />
+    <attr name="text_size_huge" format="dimension" />
+    <attr name="text_size_enormous" format="dimension" />
+
     <declare-styleable name="EditActionView">
         <attr name="startExpanded" format="boolean" />
         <attr name="allowCollapse" format="boolean" />
