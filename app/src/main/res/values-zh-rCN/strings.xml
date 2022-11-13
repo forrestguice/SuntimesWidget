@@ -792,7 +792,7 @@
     <string name="clearalarms_dialog_cancel">取消</string>    <!-- button -->
     <string name="clearalarms_toast_success">闹钟已被清空。</string> <!-- toast msg -->
 
-    <string name="importalarms_toast_success">导入了 %s 个闹钟？</string> <!-- toast msg -->    
+    <string name="importalarms_toast_success">导入了 %s 个闹钟。</string> <!-- toast msg -->    
 
     <string name="alarmlabel_dialog_title">标签</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">应用</string>        <!-- button -->
