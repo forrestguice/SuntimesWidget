@@ -493,6 +493,23 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <!-- Alternate System Theme -->
+    <style name="AppTheme.System1" parent="AppTheme.System">
+        <item name="table_risingColor">?android:attr/textColorPrimary</item>
+        <item name="table_settingColor">?android:attr/textColorSecondary</item>
+        <item name="table_noonColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="AppTheme.System1.Small" parent="AppTheme.System.Small">
+        <item name="table_risingColor">?android:attr/textColorPrimary</item>
+        <item name="table_settingColor">?android:attr/textColorSecondary</item>
+        <item name="table_noonColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="AppTheme.System1.Large" parent="AppTheme.System.Large">
+        <item name="table_risingColor">?android:attr/textColorPrimary</item>
+        <item name="table_settingColor">?android:attr/textColorSecondary</item>
+        <item name="table_noonColor">?android:attr/textColorSecondary</item>
+    </style>
+
     <!-- view styles -->
 
     <!-- main activity card items -->

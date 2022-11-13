@@ -819,7 +819,10 @@ public class AppSettings
         } else if (extendedThemeName.startsWith(THEME_DAYNIGHT)) {
             return info_dayNightTheme;
 
-        } // else if (appTheme.startsWith(SOME_THEME_NAME)) { /* TODO: additional themes here */ }
+        } else if (extendedThemeName.startsWith(System1ThemeInfo.THEMENAME)) {
+            return info_system1Theme;
+
+        } // else if (extendedThemeName.startsWith(SOME_THEME_NAME)) { /* TODO: additional themes here */ }
         else {
             return info_systemTheme;
         }
@@ -828,6 +831,7 @@ public class AppSettings
     private static final AppThemeInfo info_lightTheme = new LightThemeInfo();
     private static final AppThemeInfo info_dayNightTheme = new DayNightThemeInfo();
     private static final AppThemeInfo info_systemTheme = new SystemThemeInfo();
+    private static final AppThemeInfo info_system1Theme = new System1ThemeInfo();
 
     /**
      * AppThemeInfo
@@ -946,4 +950,28 @@ public class AppSettings
             isDay = value;
         }
     }
+
+    public static class System1ThemeInfo extends AppThemeInfo
+    {
+        public static String THEMENAME = "sysalt";
+
+        @Override
+        public String getThemeName() {
+            return THEMENAME;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_System1_Small;
+                case LARGE: return R.style.AppTheme_System1_Large;
+                case NORMAL: default: return R.style.AppTheme_System1;
+            }
+        }
+    }
+
+
 }
