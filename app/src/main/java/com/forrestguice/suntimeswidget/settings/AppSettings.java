@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.app.Activity;
+import android.app.UiModeManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -58,15 +59,16 @@ public class AppSettings
     public static final String THEME_LIGHT = "light";
     public static final String THEME_DAYNIGHT = "daynight";
     public static final String THEME_SYSTEM = "system";
+    public static final String THEME_DEFAULT = "default";
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
 
     public static final String PREF_KEY_APPEARANCE_THEME_LIGHT = "app_appearance_theme_light";
-    public static final String PREF_DEF_APPEARANCE_THEME_LIGHT = "default";
+    public static final String PREF_DEF_APPEARANCE_THEME_LIGHT = THEME_DEFAULT;
 
     public static final String PREF_KEY_APPEARANCE_THEME_DARK = "app_appearance_theme_dark";
-    public static final String PREF_DEF_APPEARANCE_THEME_DARK = "default";
+    public static final String PREF_DEF_APPEARANCE_THEME_DARK = THEME_DEFAULT;
 
     public static final String PREF_KEY_APPEARANCE_TEXTSIZE = "app_appearance_textsize";
     public static final TextSize PREF_DEF_APPEARANCE_TEXTSIZE = TextSize.NORMAL;
@@ -556,14 +558,35 @@ public class AppSettings
     public static int themePrefToStyleId( Context context, String themeName, SuntimesRiseSetData data )
     {
         if (themeName != null) {
-            return loadThemeInfo(themeName).getStyleId(context, AppThemeInfo.getTextSize(themeName), data);
+            AppThemeInfo themeInfo = loadThemeInfo(themeName);
+            TextSize textSize = AppThemeInfo.getTextSize(themeName);
+
+            String themeName1 = getThemeOverride(context, themeInfo);
+            if (themeName1 != null) {
+                AppThemeInfo themeInfo1 = loadThemeInfo(themeName1);
+                return themeInfo1.getStyleId(context, textSize, data);
+
+            } else return themeInfo.getStyleId(context, textSize, data);
         } else return R.style.AppTheme;
     }
 
-    public static String getThemeOverride(Context context, int appThemeResID)
+    public static boolean systemInNightMode(Context context) {
+        UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+        if (uiModeManager != null) {
+            return (uiModeManager.getNightMode() == UiModeManager.MODE_NIGHT_YES);
+        } else return false;
+    }
+
+    public static String getThemeOverride(Context context, String appTheme) {
+        return getThemeOverride(context, loadThemeInfo(appTheme));
+    }
+    public static String getThemeOverride(Context context, AppThemeInfo themeInfo)
     {
-        String themeOverride = ((appThemeResID == R.style.AppTheme_Light) ? AppSettings.loadThemeLightPref(context) : AppSettings.loadThemeDarkPref(context));
-        return ((themeOverride != null && !themeOverride.equals("default")) ? themeOverride : null);
+        int nightMode = themeInfo.getDefaultNightMode();
+        String override = (nightMode == AppCompatDelegate.MODE_NIGHT_NO) ? AppSettings.loadThemeLightPref(context)
+                : (nightMode == AppCompatDelegate.MODE_NIGHT_YES) ? AppSettings.loadThemeDarkPref(context)
+                : (systemInNightMode(context) ? AppSettings.loadThemeDarkPref(context) : AppSettings.loadThemeLightPref(context));
+        return ((override != null && !override.equals(THEME_DEFAULT)) ? override : null);
     }
 
     /**
@@ -777,25 +800,34 @@ public class AppSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     @NonNull
+    public static AppThemeInfo loadThemeInfo(Context context) {
+        return AppSettings.loadThemeInfo(AppSettings.loadThemePref(context));
+    }
+
+    @NonNull
     public static AppThemeInfo loadThemeInfo(String extendedThemeName)
     {
         if (extendedThemeName.startsWith(THEME_LIGHT)) {
-            return new LightThemeInfo();
+            return info_lightTheme;
 
         } else if (extendedThemeName.startsWith(THEME_DARK)) {
-            return new DarkThemeInfo();
+            return info_darkTheme;
 
         } else if (extendedThemeName.startsWith(THEME_SYSTEM)) {
-            return new SystemThemeInfo();
+            return info_systemTheme;
 
         } else if (extendedThemeName.startsWith(THEME_DAYNIGHT)) {
-            return new DayNightThemeInfo();
+            return info_dayNightTheme;
 
         } // else if (appTheme.startsWith(SOME_THEME_NAME)) { /* TODO: additional themes here */ }
         else {
-            return new SystemThemeInfo();
+            return info_systemTheme;
         }
     }
+    private static final AppThemeInfo info_darkTheme = new DarkThemeInfo();
+    private static final AppThemeInfo info_lightTheme = new LightThemeInfo();
+    private static final AppThemeInfo info_dayNightTheme = new DayNightThemeInfo();
+    private static final AppThemeInfo info_systemTheme = new SystemThemeInfo();
 
     /**
      * AppThemeInfo
@@ -804,6 +836,10 @@ public class AppSettings
     {
         public abstract int getStyleId(Context context, TextSize textSize, SuntimesRiseSetData data);
         public abstract String getThemeName();
+
+        /**
+         * @return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM, AppCompatDelegate.MODE_NIGHT_NO, AppCompatDelegate.MODE_NIGHT_NO;
+         */
         public abstract int getDefaultNightMode();
 
         public String getExtendedThemeName(TextSize textSize) {
@@ -888,7 +924,8 @@ public class AppSettings
         }
         @Override
         public int getDefaultNightMode() {
-            return (isDay ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
+            return (isDay == null) ? AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                    : (isDay ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
         }
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
@@ -904,6 +941,9 @@ public class AppSettings
                 case NORMAL: default: return (isDay ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
             }
         }
-        private boolean isDay = false;
+        private Boolean isDay = null;
+        public void setIsDay(boolean value) {
+            isDay = value;
+        }
     }
 }

@@ -1070,6 +1070,20 @@
         <item>system</item>
     </string-array>
 
+    <string-array name="appThemes_light_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
+        <item>@string/configLabel_tagDefault</item>
+    </string-array>
+    <string-array name="appThemes_light_values" translatable="false">  <!-- config values (one-to-one with appThemes_dark_display) -->
+        <item>default</item>
+    </string-array>
+
+    <string-array name="appThemes_dark_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
+        <item>@string/configLabel_tagDefault</item>
+    </string-array>
+    <string-array name="appThemes_dark_values" translatable="false">  <!-- config values (one-to-one with appThemes_dark_display) -->
+        <item>default</item>
+    </string-array>
+
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
         <item>@string/timeFormatMode_system</item>
