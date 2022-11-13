@@ -31,6 +31,7 @@
     <color name="text_primary">@color/text_primary_light</color>
     <color name="text_secondary">@color/text_secondary_light</color>
     <color name="text_tertiary">@color/text_tertiary_light</color>
+    <color name="text_time">@color/text_time_light</color>
     <color name="snackbar_text">@color/snackbar_text_light</color>
     <color name="fab_ripple">@color/fab_ripple_light</color>
 
@@ -76,6 +77,7 @@
     <color name="text_primary_dark">@android:color/primary_text_dark</color>
     <color name="text_secondary_dark">@android:color/secondary_text_dark</color>
     <color name="text_tertiary_dark">@android:color/tertiary_text_dark</color>
+    <color name="text_time_dark">@android:color/primary_text_dark</color>
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
     <color name="hr_dark">#33ffffff</color>
@@ -95,6 +97,7 @@
     <color name="text_primary_light">@android:color/primary_text_light</color>
     <color name="text_secondary_light">@android:color/secondary_text_light</color>
     <color name="text_tertiary_light">@android:color/tertiary_text_light</color>
+    <color name="text_time_light">@android:color/primary_text_light</color>
     <color name="text_disabled_light">#39000000</color>
     <color name="text_accent_light">@color/deep_teal_500</color>
     <color name="hr_light">#1f000000</color>
