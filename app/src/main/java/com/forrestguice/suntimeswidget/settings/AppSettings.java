@@ -62,7 +62,7 @@ public class AppSettings
     public static final String THEME_DEFAULT = "default";
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
-    public static final String PREF_DEF_APPEARANCE_THEME = THEME_DARK;
+    // public static final String PREF_DEF_APPEARANCE_THEME = THEME_SYSTEM;    // @see R.string.def_app_appearance_theme
 
     public static final String PREF_KEY_APPEARANCE_THEME_LIGHT = "app_appearance_theme_light";
     public static final String PREF_DEF_APPEARANCE_THEME_LIGHT = THEME_DEFAULT;
@@ -513,7 +513,7 @@ public class AppSettings
     public static String loadThemePref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return AppThemeInfo.getExtendedThemeName(pref.getString(PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME), loadTextSizePref(context));
+        return AppThemeInfo.getExtendedThemeName(pref.getString(PREF_KEY_APPEARANCE_THEME, context.getString(R.string.def_app_appearance_theme)), loadTextSizePref(context));
     }
 
     public static String loadTextSizePref(Context context)
