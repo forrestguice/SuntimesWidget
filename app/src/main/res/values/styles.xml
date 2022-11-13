@@ -15,6 +15,9 @@
         <item name="semiTransparentBackground">@color/card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/hr</item>
+        <item name="text_primaryColor">@color/text_primary</item>
+        <item name="text_secondaryColor">@color/text_secondary</item>
+        <item name="text_tertiaryColor">@color/text_tertiary</item>
         <item name="text_accentColor">@color/text_accent</item>
         <item name="text_disabledColor">@color/text_disabled</item>
 
@@ -175,6 +178,9 @@
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/hr_light</item>
+        <item name="text_primaryColor">@color/text_primary_light</item>
+        <item name="text_secondaryColor">@color/text_secondary_light</item>
+        <item name="text_tertiaryColor">@color/text_tertiary_light</item>
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
@@ -337,6 +343,9 @@
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="hrColor">@color/hr_dark</item>
+        <item name="text_primaryColor">@color/text_primary_dark</item>
+        <item name="text_secondaryColor">@color/text_secondary_dark</item>
+        <item name="text_tertiaryColor">@color/text_tertiary_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
 
