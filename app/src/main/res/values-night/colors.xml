@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="primaryColor">@color/primaryColor_dark</color>
     <color name="dialog_frame">@color/dialog_frame_dark</color>
     <color name="dialog_bg">@color/dialog_bg_dark</color>
     <color name="dialog_bg_alt">@color/dialog_bg_alt_dark</color>

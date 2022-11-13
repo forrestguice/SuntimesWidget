@@ -18,6 +18,7 @@
 
     <!-- "night" overridable -->
 
+    <color name="primaryColor">@color/primaryColor_light</color>
     <color name="dialog_frame">@color/dialog_frame_light</color>
     <color name="dialog_bg">@color/dialog_bg_light</color>
     <color name="dialog_bg_alt">@color/dialog_bg_light</color>
@@ -71,6 +72,7 @@
 
     <!-- general -->
 
+    <color name="primaryColor_dark">@color/grey_900</color>
     <color name="text_primary_dark">@android:color/primary_text_dark</color>
     <color name="text_secondary_dark">@android:color/secondary_text_dark</color>
     <color name="text_tertiary_dark">@android:color/tertiary_text_dark</color>
@@ -89,6 +91,7 @@
     <color name="table_setting_dark">@color/sunIcon_color_setting_dark</color>
     <color name="table_noon_dark">@color/sunIcon_color_setting_dark</color>
 
+    <color name="primaryColor_light">@color/grey_100</color>
     <color name="text_primary_light">@android:color/primary_text_light</color>
     <color name="text_secondary_light">@android:color/secondary_text_light</color>
     <color name="text_tertiary_light">@android:color/tertiary_text_light</color>
