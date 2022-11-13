@@ -258,7 +258,7 @@
     <color name="winterColor_dark">#37BBF0</color>
 
     <color name="springColor_light">#45807A</color>
-    <color name="summerColor_light">#FFC107</color>
+    <color name="summerColor_light">#FF4800</color>  <!-- #FFC107 -->
     <color name="fallColor_light">#CF461D</color>
     <color name="winterColor_light">#3277C7</color>
 
