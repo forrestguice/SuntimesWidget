@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="@+id/editSpin_background"
             app:layout_constraintBottom_toBottomOf="@+id/editSpin_background"
             android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="0dp" android:paddingRight="0dp"
-            android:text="@string/configLabel_themeBackgroundId"
+            android:text="@string/configLabel_themeBackgroundId" android:textSize="?attr/text_size_small"
             tools:layout_editor_absoluteX="0dp"/>
 
         <Spinner
@@ -55,10 +55,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBaseline_toBaselineOf="@+id/edit_padding"
             android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-            android:text="@string/configLabel_themePadding" />
+            android:text="@string/configLabel_themePadding" android:textSize="?attr/text_size_small" />
 
         <EditText
-            android:id="@+id/edit_padding"  style="@style/TextAppearance.AppCompat.Small"
+            android:id="@+id/edit_padding"  style="@style/TextAppearance.AppCompat.Small" android:textSize="?attr/text_size_small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textNoSuggestions"

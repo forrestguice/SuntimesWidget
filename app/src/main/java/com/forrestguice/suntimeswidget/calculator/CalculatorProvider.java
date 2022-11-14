@@ -386,8 +386,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_CONFIG_APP_THEME_OVERRIDE:
-                            int resID = AppSettings.themePrefToStyleId(context, AppSettings.loadThemePref(context), null);
-                            row[i] = AppSettings.getThemeOverride(context, resID);
+                            row[i] = AppSettings.getThemeOverride(context, AppSettings.loadThemePref(context));
                             break;
 
                         case COLUMN_CONFIG_LOCATION:

@@ -30,7 +30,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <NumberPicker
+        <NumberPicker android:theme="@style/TimePickerStyle"
             android:id="@+id/alarmOption_offset_day"
             android:layout_width="0dp" android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:descendantFocusability="blocksDescendants"
             android:fadingEdge="vertical" />
 
-        <NumberPicker
+        <NumberPicker android:theme="@style/TimePickerStyle"
             android:id="@+id/alarmOption_offset_hour"
             android:layout_width="0dp" android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             android:descendantFocusability="blocksDescendants"
             android:fadingEdge="vertical" />
 
-        <NumberPicker
+        <NumberPicker android:theme="@style/TimePickerStyle"
             android:id="@+id/alarmOption_offset_minute"
             android:layout_width="0dp" android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:descendantFocusability="blocksDescendants"
             android:fadingEdge="vertical" />
 
-        <NumberPicker
+        <NumberPicker android:theme="@style/TimePickerStyle"
             android:id="@+id/alarmOption_offset_direction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

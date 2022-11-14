@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.TargetApi;
-import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -32,6 +31,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.icu.text.MessageFormat;
 import android.media.AudioManager;
@@ -75,12 +75,10 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.List;
 import java.util.TimeZone;
 
 public class AlarmNotifications extends BroadcastReceiver
@@ -97,6 +95,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_DISABLE = "suntimeswidget.alarm.disable";          // disable an alarm
     public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
     public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
+    public static final String ACTION_UPDATE_UI = "suntimeswidget.alarm.ui.update";
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
@@ -421,9 +420,17 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Intent getFullscreenBroadcast(Uri data)
     {
-        Intent intent = new Intent(AlarmDismissActivity.ACTION_UPDATE);
+        Intent intent = new Intent(ACTION_UPDATE_UI);
         intent.setData(data);
         return intent;
+    }
+
+    public static IntentFilter getUpdateBroadcastIntentFilter()
+    {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_UPDATE_UI);
+        filter.addDataScheme("content");
+        return filter;
     }
 
     public static Intent getAlarmListIntent(Context context, Long selectedAlarmId)
@@ -1206,8 +1213,31 @@ public class AlarmNotifications extends BroadcastReceiver
                         });
                         alarmListTask.execute();
 
+                    } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
+                        Log.d(TAG, "TIMEZONE_CHANGED received");
+                        boolean rescheduling = false;
+                        TimeZone tz = TimeZone.getDefault();
+                        String tzID = tz.getID();
+                        String tzID_prev = AlarmSettings.loadSystemTimeZoneID(getApplicationContext());
+                        if (!tzID.equals(tzID_prev))
+                        {
+                            Log.i(TAG, "system tz ID changed from " + tzID_prev + " to " + tzID);
+                            long tzOffset = tz.getOffset(System.currentTimeMillis());
+                            long tzOffset_prev = AlarmSettings.loadSystemTimeZoneOffset(getApplicationContext());
+                            if (tzOffset != tzOffset_prev)
+                            {
+                                Log.i(TAG, "system tz offset changed from " + tzOffset_prev + " to " + tzOffset);
+                                findEnabledAlarms(getApplicationContext(), rescheduleTaskListener_clocktime(startId));
+                                rescheduling = true;
+                            }
+                            AlarmSettings.saveSystemTimeZoneInfo(getApplicationContext(), tzID, tzOffset);
+                        }
+                        if (!rescheduling) {
+                            notifications.stopSelf(startId);
+                        }
+
                     } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
-                        Log.d(TAG, "TIME_SET received");
+                        Log.d(TAG, "TIME_CHANGED received");
                         notifications.stopSelf(startId);
                         // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
 
@@ -1246,6 +1276,47 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             return START_STICKY;
+        }
+
+        private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener_clocktime(final int startId)
+        {
+            return new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
+            {
+                @Override
+                public void onItemsLoaded(Long[] ids) {
+                    final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener() {
+                        @Override
+                        public void onObservedAll() {
+                            Log.d(TAG, "Re-schedule completed (time zone changed)");
+                            notifications.stopSelf(startId);
+                        }
+                    });
+                    if (ids.length == 0) {
+                        observer.notify(null);
+                        return;
+                    }
+                    final AlarmDatabaseAdapter.AlarmItemTaskListener notifyObserver = new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+                        @Override
+                        public void onFinished(Boolean result, AlarmClockItem item) {
+                            observer.notify(item.rowID);
+                        }
+                    };
+                    for (long id : ids) {
+                        AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                        itemTask.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+                            @Override
+                            public void onFinished(Boolean result, final AlarmClockItem item)
+                            {
+                                int state = item.state.getState();
+                                if (item.getEvent() == null && state != AlarmState.STATE_SOUNDING && state != AlarmState.STATE_SNOOZING) {
+                                    createAlarmOnReceiveListener(getApplicationContext(), startId, AlarmNotifications.ACTION_RESCHEDULE, notifyObserver).onFinished(result, item);
+                                } else notifyObserver.onFinished(false, item);
+                            }
+                        });
+                        itemTask.execute(id);
+                    }
+                }
+            };
         }
 
         private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener clearTaskListener = new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
