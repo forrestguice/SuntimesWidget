@@ -38,13 +38,13 @@
             android:orientation="horizontal" android:layout_gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/text_time_rise" style="@style/SunsetTimeTextView"
+                android:id="@+id/text_time_rise" style="@style/WidgetTimeTextView"
                 android:layout_marginTop="0dp" android:gravity="top"
                 android:textColor="@color/sunIcon_color_rising_dark"
                 tools:text="7:00"/>
 
             <TextView
-                android:id="@+id/text_time_rise_suffix" style="@style/SunsetTimeTextSuffixView"
+                android:id="@+id/text_time_rise_suffix" style="@style/WidgetSuffixTextView"
                 android:layout_height="match_parent" android:layout_marginTop="0dp"
                 android:layout_gravity="bottom"
                 tools:text="AM"/>

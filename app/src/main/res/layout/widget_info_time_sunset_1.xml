@@ -24,13 +24,13 @@
             android:orientation="horizontal" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
 
             <TextView
-                style="@style/SunsetTimeTextView"
+                style="@style/WidgetTimeTextView"
                 android:id="@+id/text_time_set"
                 android:textColor="@color/sunIcon_color_setting_dark"
                 tools:text="6:20" />
 
             <TextView
-                style="@style/SunsetTimeTextSuffixView"
+                style="@style/WidgetSuffixTextView"
                 android:id="@+id/text_time_set_suffix"
                 android:layout_gravity="bottom"
                 android:layout_height="match_parent"

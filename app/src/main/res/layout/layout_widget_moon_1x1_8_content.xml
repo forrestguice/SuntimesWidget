@@ -18,7 +18,7 @@
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView style="@style/SunsetTimeTextTitleView"
+    <TextView style="@style/WidgetTitleTextView"
               android:id="@+id/text_title" android:visibility="gone"
               android:layout_width="match_parent" android:layout_height="wrap_content"
               android:gravity="start"
@@ -36,22 +36,22 @@
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
 
             <TextView android:id="@+id/moonapsis_perigee_label"
-                style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+                style="@style/WidgetTimeTextView2" android:layout_margin="0dp"
                 android:text="@string/timeMode_moon_perigee"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             <TextView android:id="@+id/moonapsis_perigee_distance"
-                style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+                style="@style/WidgetTimeTextView2" android:layout_margin="0dp"
                 tools:text="xxx,xxx km" android:textColor="@color/moonIcon_color_rising_dark"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             <TextView android:id="@+id/moonapsis_perigee_date"
-                style="@style/SunsetTimeTextView" android:layout_margin="0dp"
+                style="@style/WidgetTimeTextView" android:layout_margin="0dp"
                 tools:text="April 19, 2019, 3:30 PM" android:gravity="start"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             <TextView android:id="@+id/moonapsis_perigee_note"
-                style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+                style="@style/WidgetTimeTextView2" android:layout_margin="0dp"
                 tools:text="xd xm from now" android:gravity="start"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
@@ -65,22 +65,22 @@
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
 
             <TextView android:id="@+id/moonapsis_apogee_label"
-                style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+                style="@style/WidgetTimeTextView2" android:layout_margin="0dp"
                 android:text="@string/timeMode_moon_apogee"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             <TextView android:id="@+id/moonapsis_apogee_distance"
-                style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+                style="@style/WidgetTimeTextView2" android:layout_margin="0dp"
                 tools:text="xxx,xxx km" android:textColor="@color/moonIcon_color_rising_dark"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             <TextView android:id="@+id/moonapsis_apogee_date"
-                style="@style/SunsetTimeTextView" android:layout_margin="0dp"
+                style="@style/WidgetTimeTextView" android:layout_margin="0dp"
                 tools:text="April 19, 2019, 3:30 PM" android:gravity="start"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             <TextView android:id="@+id/moonapsis_apogee_note"
-                style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+                style="@style/WidgetTimeTextView2" android:layout_margin="0dp"
                 tools:text="xd xm ago" android:gravity="start"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2014 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,26 +23,25 @@
 
         <ImageView
             style="@style/SunsetTimeImageView"
-            android:id="@+id/icon_time_moonrise" android:layout_width="18dp" android:layout_height="8dp"
-            android:scaleType="fitStart"
+            android:id="@+id/icon_time_sunset"
+            android:scaleType="fitEnd"
             android:layout_marginLeft="2dp" android:layout_marginRight="1dp" android:layout_marginTop="1dp"
             android:layout_marginStart="2dp" android:layout_marginEnd="1dp"
-            android:contentDescription="@string/moonrise" />
+            android:contentDescription="@string/sunset_short"/>
 
         <TextView
-            style="@style/SunsetTimeTextView"
-            android:id="@+id/text_time_moonrise"
-            android:textColor="@color/moonIcon_color_rising_dark"
-            tools:text="11:00" />
+            style="@style/WidgetTimeTextView"
+            android:id="@+id/text_time_set"
+            android:textColor="@color/sunIcon_color_setting_dark"
+            tools:text="4:20" />
 
         <TextView
-            style="@style/SunsetTimeTextSuffixView"
-            android:id="@+id/text_time_moonrise_suffix"
+            style="@style/WidgetSuffixTextView"
+            android:id="@+id/text_time_set_suffix"
             android:layout_gravity="bottom"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             tools:text="PM" />
 
     </LinearLayout>
-
 </merge>
