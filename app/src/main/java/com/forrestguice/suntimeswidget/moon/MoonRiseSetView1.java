@@ -871,7 +871,7 @@ public class MoonRiseSetView1 extends LinearLayout
         {
             super(context, centerPosition, itemsPerDay);
             paintText.setAntiAlias(true);
-            paintText.setTextSize(14);
+            paintText.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.text_size_tiny));
             paintText.setTypeface(Typeface.DEFAULT_BOLD);
             text_offset[0] = SuntimesUtils.dpToPixels(getContext(), 8);   // 8dp (from left side)
             text_offset[1] = SuntimesUtils.dpToPixels(getContext(), 2);   // 2dp (from bottom)
