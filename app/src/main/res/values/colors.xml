@@ -42,6 +42,10 @@
     <color name="snackbar_text">@color/snackbar_text_light</color>
     <color name="fab_ripple">@color/fab_ripple_light</color>
 
+    <color name="table_rising">@color/table_rising_light</color>
+    <color name="table_setting">@color/table_setting_light</color>
+    <color name="table_noon">@color/table_setting_light</color>
+
     <color name="alarm_enabled">@color/alarm_enabled_light</color>
     <color name="grid_selected">@color/grid_selected_light</color>
     <color name="btn_tint_pressed">@color/btn_tint_pressed_light</color>
@@ -164,6 +168,9 @@
     <color name="widget_bg_dark">#82212121</color>
     <color name="fab_ripple_dark">@color/grey_900</color>
     <color name="snackbar_text_dark">@android:color/primary_text_dark</color>
+    <color name="table_rising_dark">@color/sunIcon_color_rising_dark</color>
+    <color name="table_setting_dark">@color/sunIcon_color_setting_dark</color>
+    <color name="table_noon_dark">@color/sunIcon_color_setting_dark</color>
 
     <color name="primaryColor_light">@color/grey_100</color>
     <color name="text_primary_light">@android:color/primary_text_light</color>
@@ -188,6 +195,9 @@
     <color name="widget_bg_light">@color/card_bg_lighttrans</color>
     <color name="fab_ripple_light">@color/grey_50</color>
     <color name="snackbar_text_light">@android:color/primary_text_light</color>
+    <color name="table_rising_light">@color/sunIcon_color_rising_light</color>
+    <color name="table_setting_light">@color/sunIcon_color_setting_light</color>
+    <color name="table_noon_light">@color/sunIcon_color_setting_light</color>
 
     <!-- alarm cards -->
     <color name="grid_selected_light">@color/text_accent_light</color>
@@ -337,7 +347,7 @@
     <color name="winterColor_dark">#37BBF0</color>
 
     <color name="springColor_light">#45807A</color>
-    <color name="summerColor_light">#FF4800</color>
+    <color name="summerColor_light">#FF4800</color>  <!-- #FFC107 -->
     <color name="fallColor_light">#CF461D</color>
     <color name="winterColor_light">#3277C7</color>
 

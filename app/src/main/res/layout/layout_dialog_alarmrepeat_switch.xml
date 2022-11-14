@@ -26,7 +26,7 @@
         <CheckBox
             android:id="@+id/alarmOption_repeat"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:textOn="" android:textOff=""
+            android:textOn="" android:textOff="" android:textSize="?attr/text_size_small"
             tools:text="Repeat" />
 
     </LinearLayout>

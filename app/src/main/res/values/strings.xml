@@ -217,6 +217,7 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
     <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
     <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
@@ -316,6 +317,9 @@
 
     <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
 
     <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>    <!-- checkbox label -->
@@ -1056,6 +1060,24 @@
     <string name="appThemes_systemDefault1">Material You</string>  <!-- TODO -->
     <!-- @see appthemes.xml for array values -->
 
+    <string-array name="appThemes_light_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
+        <item>@string/configLabel_tagDefault</item>
+        <item>@string/appThemes_systemDefault1</item>
+    </string-array>
+    <string-array name="appThemes_light_values" translatable="false">  <!-- config values (one-to-one with appThemes_dark_display) -->
+        <item>default</item>
+        <item>sysalt</item>
+    </string-array>
+
+    <string-array name="appThemes_dark_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
+        <item>@string/configLabel_tagDefault</item>
+        <item>@string/appThemes_systemDefault1</item>
+    </string-array>
+    <string-array name="appThemes_dark_values" translatable="false">  <!-- config values (one-to-one with appThemes_dark_display) -->
+        <item>default</item>
+        <item>sysalt</item>
+    </string-array>
+
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
         <item>@string/timeFormatMode_system</item>
@@ -1066,6 +1088,25 @@
         <item>MODE_SYSTEM</item>
         <item>MODE_12HR</item>
         <item>MODE_24HR</item>
+    </string-array>
+
+    <!-- App Setting: text size -->
+
+    <string name="configLabel_ui_textsize">Text Size</string>     <!-- TODO -->
+    <string name="configLabel_ui_textsize_summary">%s</string>     <!-- TODO -->
+
+    <string name="textSize_small">Small</string>   <!-- TODO -->
+    <string name="textSize_normal">Normal</string>   <!-- TODO -->
+    <string name="textSize_large">Large</string>   <!-- TODO -->
+    <string-array name="textSize_display">                      <!-- one-to-one with textSize_values -->
+        <item>@string/textSize_small</item>
+        <item>@string/textSize_normal</item>
+        <item>@string/textSize_large</item>
+    </string-array>
+    <string-array name="textSize_values" translatable="false">  <!-- one-to-one with textSize_display -->
+        <item>SMALL</item>
+        <item>NORMAL</item>
+        <item>LARGE</item>
     </string-array>
 
     <!-- App Setting: solstice tracking mode -->
@@ -1887,9 +1928,21 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] to cancel without making changes.<br/>
+          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
+          [Icon Cancel] to save and disable.<br/>
+          [Icon Delete] to cancel and delete.<br/>
+          <br/>
+          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_actualTime"><![CDATA[
-          <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/><br/>
-    ]]></string>
+          <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/>
+    ]]></string>  <!-- TODO: should end in one <br/> not two -->
     <string name="help_general_twilight"><![CDATA[
           <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
@@ -1982,10 +2035,10 @@
 
     <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
         <br />
-        <u><b><font color="%1$s">Calendar integration has been removed.</font></b></u><br />
+        <u><b><font color="%1$s">Calendar integration was removed in v0.10.0.</font></b></u><br />
         <br />
         This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in version' -->
 
     <string name="help_shadowlength" translatable="false">[Icon Shadow] %1$s</string>     <!-- e.g. [Icon] [configLabel_general_observerheight_summary] -->
 

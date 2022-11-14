@@ -936,7 +936,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void test_showTimeDatePref()
     {
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, true);
-        boolean showTimeDate = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         assertTrue("showTimeDate should be true but was " + showTimeDate, showTimeDate);
 
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, false);
@@ -946,6 +946,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteShowTimeDatePref(context, appWidgetId);
         showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         assertTrue("showTimeDate should be default (true) but was " + showTimeDate, showTimeDate && showTimeDate == WidgetSettings.PREF_DEF_GENERAL_SHOWTIMEDATE);
+    }
+
+    @Test
+    public void test_showAbbrMonthPref()
+    {
+        WidgetSettings.saveShowAbbrMonthPref(context, appWidgetId, true);
+        boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        assertTrue("abbreviate should be true but was " + abbreviate, abbreviate);
+
+        WidgetSettings.saveShowAbbrMonthPref(context, appWidgetId, false);
+        abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        assertTrue("abbreviate should be false but was " + abbreviate, !abbreviate);
+
+        WidgetSettings.deleteShowAbbrMonthPref(context, appWidgetId);
+        abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        assertTrue("abbreviate should be default (true) but was " + abbreviate, abbreviate && abbreviate == WidgetSettings.PREF_DEF_GENERAL_SHOWABBRMONTH);
     }
 
     @Test

@@ -16,6 +16,7 @@
 
     <string name="def_app_plugins_enabled" translatable="false">false</string>
 
+    <string name="def_app_appearance_textsize" translatable="false">NORMAL</string>
     <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
     <string name="def_app_locale" translatable="false">en</string>
 

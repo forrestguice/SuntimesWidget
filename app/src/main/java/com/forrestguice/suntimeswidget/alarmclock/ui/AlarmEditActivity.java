@@ -43,6 +43,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,6 +53,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
+import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -89,6 +91,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private static final String DIALOGTAG_TIME = "alarmtime";
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
+    private static final String DIALOGTAG_HELP = "alarmhelp";
 
     private AlarmEditDialog editor;
     private AppSettings.LocaleInfo localeInfo;
@@ -183,8 +186,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         appTheme = AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
 
-        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
-        if (themeName != null) {
+        String themeName = AppSettings.getThemeOverride(this, appTheme);
+        if (themeName != null && WidgetThemes.hasValue(themeName)) {
             Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
             appThemeOverride = WidgetThemes.loadTheme(this, themeName);
         }
@@ -402,6 +405,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 editor.itemView.chip_ringtone.performClick();
                 return true;
 
+            case R.id.action_help:
+                showHelp();
+                return true;
+
             case R.id.action_about:
                 showAbout();
                 return true;
@@ -449,6 +456,38 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         }
 
         return super.onPrepareOptionsPanel(view, menu);
+    }
+
+    @SuppressLint("ResourceType")
+    protected void showHelp()
+    {
+        int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
+        int[] iconAttrs = { R.attr.text_accentColor, R.attr.icActionBack, R.attr.icActionEnableAlarm, R.attr.icActionSave, R.attr.icActionCancel, R.attr.icActionDelete, R.attr.icActionTimeReset };
+        TypedArray typedArray = obtainStyledAttributes(iconAttrs);
+        int accentColor = ContextCompat.getColor(this, typedArray.getResourceId(0, R.color.text_accent_dark));
+        ImageSpan iconBack = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_action_discard), iconSize, iconSize, 0);
+        ImageSpan iconDone = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(2, R.drawable.ic_action_doneall), iconSize, iconSize, accentColor);
+        ImageSpan iconSave = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(3, R.drawable.ic_action_save), iconSize, iconSize, 0);
+        ImageSpan iconCancel = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(4, R.drawable.ic_action_cancel), iconSize, iconSize, 0);
+        ImageSpan iconDelete = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(5, R.drawable.ic_action_discard), iconSize, iconSize, 0);
+        ImageSpan iconOffset = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(6, R.drawable.ic_action_timereset), iconSize, iconSize, 0);
+        typedArray.recycle();
+
+        SuntimesUtils.ImageSpanTag[] helpTags = {
+                new SuntimesUtils.ImageSpanTag("[Icon Back]", iconBack),
+                new SuntimesUtils.ImageSpanTag("[Icon Done]", iconDone),
+                new SuntimesUtils.ImageSpanTag("[Icon Save]", iconSave),
+                new SuntimesUtils.ImageSpanTag("[Icon Cancel]", iconCancel),
+                new SuntimesUtils.ImageSpanTag("[Icon Delete]", iconDelete),
+                new SuntimesUtils.ImageSpanTag("[Icon Offset]", iconOffset),
+        };
+
+        CharSequence helpText = SuntimesUtils.fromHtml(getString(R.string.help_alarms_edit));
+        CharSequence helpSpan = SuntimesUtils.createSpan(this, helpText, helpTags);
+
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(helpSpan);
+        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
     protected void showAbout()
