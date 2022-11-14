@@ -969,8 +969,8 @@ public class AppSettings
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
             switch (size) {
-                //case SMALL: return R.style.AppTheme_System1_Small;   // TODO
-                //case LARGE: return R.style.AppTheme_System1_Large;   // TODO
+                case SMALL: return R.style.AppTheme_Monet_Small;
+                case LARGE: return R.style.AppTheme_Monet_Large;
                 case NORMAL: default: return R.style.AppTheme_Monet;
             }
         }
