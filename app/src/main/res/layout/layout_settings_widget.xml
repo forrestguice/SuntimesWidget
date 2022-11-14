@@ -37,7 +37,7 @@
             <TextView android:labelFor="@+id/appwidget_appearance_1x1mode"
                 android:id="@+id/appwidget_appearance_1x1mode_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" android:text="@string/configLabel_appearance_1x1mode" />
+                android:layout_gravity="center_vertical" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_1x1mode" />
 
             <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="0dp"
                 android:dropDownVerticalOffset="16sp" android:layout_weight="1" android:layout_gravity="center_vertical"
@@ -55,7 +55,7 @@
             <TextView android:labelFor="@+id/appwidget_appearance_2x1mode"
                 android:id="@+id/appwidget_appearance_2x1mode_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_2x1mode" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_2x1mode" />
 
             <Spinner android:id="@+id/appwidget_appearance_2x1mode" android:layout_width="0dp"
                 android:dropDownVerticalOffset="16sp" android:layout_weight="1"
@@ -73,7 +73,7 @@
             <TextView android:labelFor="@+id/appwidget_appearance_2x1mode"
                 android:id="@+id/appwidget_appearance_3x1mode_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_3x1mode" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_3x1mode" />
 
             <Spinner android:id="@+id/appwidget_appearance_3x1mode" android:layout_width="0dp"
                 android:dropDownVerticalOffset="16sp" android:layout_weight="1"
@@ -91,7 +91,7 @@
             <TextView android:labelFor="@+id/appwidget_appearance_3x2mode"
                 android:id="@+id/appwidget_appearance_3x2mode_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_3x2mode" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_3x2mode" />
 
             <Spinner android:id="@+id/appwidget_appearance_3x2mode" android:layout_width="0dp"
                 android:dropDownVerticalOffset="16sp" android:layout_weight="1"
@@ -109,7 +109,7 @@
             <TextView android:labelFor="@+id/appwidget_appearance_3x3mode"
                 android:id="@+id/appwidget_appearance_3x3mode_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_3x3mode" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_3x3mode" />
 
             <Spinner android:id="@+id/appwidget_appearance_3x3mode" android:layout_width="match_parent"
                 android:dropDownVerticalOffset="16sp"
@@ -126,7 +126,7 @@
 
             <CheckBox android:id="@+id/appwidget_appearance_allowResize" android:layout_width="0dp"
                 android:layout_weight="1" android:layout_marginLeft="0dp" android:layout_marginRight="8dp"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_allowResize" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_allowResize" />
 
             <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_appearance_allowResize_helpButton"
                 style="@style/Widget.AppCompat.ActionButton"

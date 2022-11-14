@@ -37,7 +37,7 @@
         android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingBottom="4dp"
 
         android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
-        tools:text="Location" />
+        android:textSize="?attr/text_size_small" tools:text="Location" />
 
     <TextView
         android:id="@+id/datePicker" android:background="?attr/selectableItemBackground"
@@ -46,9 +46,9 @@
         android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
         android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingTop="4dp" android:paddingBottom="4dp"
         android:drawableLeft="?attr/icActionCalendar" android:drawableStart="?attr/icActionCalendar"
-        tools:text="" />
+        android:textSize="?attr/text_size_small" tools:text="" />
 
-    <TimePicker
+    <TimePicker android:theme="@style/TimePickerStyle"
         android:id="@+id/timepicker"
         android:timePickerMode="spinner"
         android:layout_width="wrap_content"

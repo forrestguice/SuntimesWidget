@@ -17,7 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             style="@style/SunsetTimeWidgetFrame">
+    android:theme="@style/AppTheme" style="@style/SunsetTimeWidgetFrame">
 
     <LinearLayout android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget">
         <include layout="@layout/layout_widget_solstice_1x1_0_content" />

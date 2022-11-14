@@ -390,8 +390,8 @@ public class SuntimesActivity extends AppCompatActivity
         appTheme = AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
 
-        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
-        if (themeName != null)
+        String themeName = AppSettings.getThemeOverride(this, appTheme);
+        if (themeName != null && WidgetThemes.hasValue(themeName))
         {
             Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
             appThemeOverride = WidgetThemes.loadTheme(this, themeName);
@@ -782,7 +782,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
             boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))                           // theme mode changed
-                    || (appThemeOverride != null && !appThemeOverride.themeName().equals(AppSettings.getThemeOverride(this, appThemeResID))) // or theme override changed
+            //        || (appThemeOverride != null && !appThemeOverride.themeName().equals(AppSettings.getThemeOverride(this, appThemeResID))) // or theme override changed   // TODO
                     || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))                             // or localeMode changed
                     || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                                              // or customLocale changed
                     && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));

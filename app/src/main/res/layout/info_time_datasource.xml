@@ -46,7 +46,7 @@
                 android:gravity="start|center_vertical"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
-                android:textSize="10sp"
+                android:textSize="?attr/text_size_xsmall"
                 android:textStyle="bold"
                 app:buttonTint="?colorControlActivated"
                 tools:ignore="SmallSp" />
@@ -73,7 +73,7 @@
                 android:paddingTop="2dp"
                 android:gravity="center_vertical|start"
                 android:textColor="?android:textColorPrimary"
-                android:textSize="10sp"
+                android:textSize="?attr/text_size_xsmall"
                 android:textStyle="bold"
                 tools:ignore="SmallSp"
                 tools:text="36000 ft" />
@@ -89,7 +89,7 @@
             android:layout_marginLeft="0dp" android:paddingLeft="8dp"
             android:layout_marginRight="0dp" android:paddingRight="8dp"
             android:layout_width="0dp" android:layout_height="0dp" android:gravity="center_vertical|end"
-            android:textColor="?attr/date_buttonSelector" android:textSize="10sp" android:textStyle="bold"
+            android:textColor="?attr/date_buttonSelector" android:textSize="?attr/text_size_xsmall" android:textStyle="bold"
             tools:text="sunrisesunsetlib" tools:ignore="SmallSp"
             android:background="?attr/selectableItemBackground"
             android:ellipsize="start" android:maxLines="2"
