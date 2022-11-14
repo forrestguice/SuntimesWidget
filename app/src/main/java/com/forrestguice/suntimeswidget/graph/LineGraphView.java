@@ -34,21 +34,17 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -785,7 +781,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         protected void drawAxisXLabels(Canvas c, Paint p, LineGraphOptions options)
         {
             int h = c.getHeight();
-            float textSize = (float)(Math.sqrt(c.getWidth() * h) / 18f);
+            float textSize = (float)(Math.sqrt(c.getWidth() * h) / options.axisX_labels_textsize_ratio);
             int i = (int) options.axisX_labels_interval;
             while (i <= (options.graph_width - options.axisX_labels_interval))
             {
@@ -802,7 +798,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
         protected void drawAxisYLabels(Canvas c, Paint p, LineGraphOptions options)
         {
-            float textSize = (float)(Math.sqrt(c.getWidth() * c.getHeight()) / 18f);
+            float textSize = (float)(Math.sqrt(c.getWidth() * c.getHeight()) / options.axisY_labels_textsize_ratio);
             int i = -1 * (int) options.axisY_labels_interval;
             while (i < 90)
             {
@@ -930,12 +926,12 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         public boolean axisX_labels_show = true;
         public int axisX_labels_color = Color.WHITE;
-        public float axisX_labels_textsize = 16;  // sp
+        public float axisX_labels_textsize_ratio = 18;
         public float axisX_labels_interval = 60 * 3;  // minutes
 
         public boolean axisY_labels_show = true;
         public int axisY_labels_color = Color.LTGRAY;
-        public float axisY_labels_textsize = 16;  // sp
+        public float axisY_labels_textsize_ratio = 18;
         public float axisY_labels_interval = 45;  // degrees
 
         public boolean axisX_show = true;
@@ -1007,8 +1003,8 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
             axisY_width = SuntimesUtils.dpToPixels(context, axisY_width);
             sunPath_width = SuntimesUtils.dpToPixels(context, sunPath_width);
-            axisX_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisX_labels_textsize, context.getResources().getDisplayMetrics());
-            axisY_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisY_labels_textsize, context.getResources().getDisplayMetrics());
+            //axisX_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisX_labels_textsize, context.getResources().getDisplayMetrics());
+            //axisY_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisY_labels_textsize, context.getResources().getDisplayMetrics());
 
             typedArray.recycle();
         }
