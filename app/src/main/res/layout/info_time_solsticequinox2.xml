@@ -14,7 +14,7 @@
         android:id="@+id/item_layout">
 
         <TextView android:id="@+id/text_label"
-            style="@style/SunsetTimeTextView"
+            style="@style/SunsetTimeTextView" android:textSize="?attr/text_size_small"
             android:text="@string/timeMode_equinox_vernal" android:labelFor="@+id/text_datetime"
             android:layout_width="@dimen/solsticetable_column0_width"
             android:gravity="start|top" android:layout_gravity="top"
@@ -33,7 +33,7 @@
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:id="@+id/text_datetime"
-                    android:textSize="12sp" android:antialias="true"
+                    android:textSize="?attr/text_size_small" android:antialias="true"
                     android:textColor="@drawable/txt_equinox_vernal"
                     android:singleLine="true" android:ellipsize="marquee"
                     tools:text="March 20, 2016; 9:00 PM" />
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:id="@+id/text_note"
                     tools:text="21d 6h 5m  from now"
-                    android:textSize="12sp" android:antialias="true"
+                    android:textSize="?attr/text_size_small" android:antialias="true"
                     android:layout_marginBottom="8dp" />
             </LinearLayout>
 

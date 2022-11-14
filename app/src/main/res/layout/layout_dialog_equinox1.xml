@@ -69,7 +69,7 @@
 
                 <TextView android:id="@+id/info_time_year_length_label"
                     android:layout_width="@dimen/solsticetable_column0_width" android:layout_height="wrap_content"
-                    style="@style/SunsetTimeTextView" android:textSize="12sp" android:gravity="start"
+                    style="@style/SunsetTimeTextView" android:textSize="?attr/text_size_small" android:gravity="start"
                     android:labelFor="@+id/info_time_year_length"
                     android:layout_marginLeft="14dp" android:layout_marginStart="14dp"
                     android:layout_marginRight="0dp" android:layout_marginEnd="0dp"
@@ -78,7 +78,7 @@
                 <TextView android:id="@+id/info_time_year_length"
                     android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100dp"
                     android:layout_margin="0dp" android:padding="0dp" android:gravity="start|center_vertical"
-                    style="@style/SunsetTextView" android:textSize="12sp"
+                    style="@style/SunsetTextView" android:textSize="?attr/text_size_small"
                     android:text="365d 5h 41m\n365.24 days" />
 
             </LinearLayout>
@@ -100,7 +100,7 @@
         android:gravity="center" android:layout_gravity="center"
         android:visibility="gone"
         android:layout_margin="16dp"
-        android:textSize="12sp"
+        android:textSize="?attr/text_size_small"
         android:text="@string/feature_not_supported_by_source" />
 
 </FrameLayout>
