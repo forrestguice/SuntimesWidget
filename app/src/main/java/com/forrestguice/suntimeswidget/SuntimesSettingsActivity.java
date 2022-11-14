@@ -49,6 +49,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -83,6 +84,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -96,6 +98,7 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_C
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION1;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_NOTETAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.THEME_DEFAULT;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
 
 /**
@@ -1425,10 +1428,22 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         if (listPref != null)
         {
+            AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(activity);
+
+            boolean isLightThemePref = key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT);
+            String[] defaultEntries = activity.getResources().getStringArray(isLightThemePref ? R.array.appThemes_light_display : R.array.appThemes_dark_display);
+            String[] defaultValues = activity.getResources().getStringArray(isLightThemePref ? R.array.appThemes_light_values : R.array.appThemes_dark_values);
+            HashMap<String,String> defaults = new HashMap<>();
+            for (int i=0; i<defaultEntries.length; i++)
+            {
+                if (defaultValues[i].equals(AppSettings.THEME_DEFAULT) || themeInfo.getDefaultNightMode() == AppSettings.loadThemeInfo(defaultValues[i]).getDefaultNightMode()) {
+                    defaults.put(defaultValues[i], defaultEntries[i]);
+                }
+            }
+
             WidgetThemes.initThemes(activity);
             List<SuntimesTheme.ThemeDescriptor> themes0 = WidgetThemes.getSortedValues(true);
             ArrayList<SuntimesTheme.ThemeDescriptor> themes = new ArrayList<>();
-
             for (SuntimesTheme.ThemeDescriptor theme : themes0)
             {
                 if (!theme.isDefault() || theme.name().equals(mustIncludeTheme)) {
@@ -1436,15 +1451,24 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 }                            // this is a workaround - the defaults have tiny (unreadable) font sizes, so we won't advertise their use
             }
 
-            String[] themeEntries = new String[themes.size() + 1];
-            String[] themeValues = new String[themes.size() + 1];
+            String[] themeEntries = new String[themes.size() + defaults.size()];
+            String[] themeValues = new String[themes.size() + defaults.size()];
 
-            themeValues[0] = "default";
-            themeEntries[0] = activity.getString(R.string.configLabel_tagDefault);
-            for (int i=0; i<themes.size(); i++)                // i:0 is reserved for "default"
-            {
-                themeValues[i + 1] = themes.get(i).name();
-                themeEntries[i + 1] = themes.get(i).displayString();
+            Set<String> keyset = defaults.keySet();
+            themeValues[0] = THEME_DEFAULT;
+            themeEntries[0] = defaults.get(THEME_DEFAULT);
+            keyset.remove(THEME_DEFAULT);
+
+            int j = 1;
+            for (String k : keyset) {
+                themeValues[j] = k;
+                themeEntries[j] = defaults.get(k);
+                j++;
+            }
+            for (SuntimesTheme.ThemeDescriptor theme : themes) {
+                themeValues[j] = theme.name();
+                themeEntries[j] = theme.displayString();
+                j++;
             }
 
             listPref.setEntries(themeEntries);
@@ -1482,10 +1506,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
-    private static void updatePref_ui_themeOverride(String mode, ListPreference darkPref, ListPreference lightPref)
+    private static void updatePref_ui_themeOverride(@NonNull String mode, ListPreference darkPref, ListPreference lightPref)
     {
-        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
-        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode) || AppSettings.THEME_SYSTEM.equals(mode));
+        AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(mode);
+        String themeName = themeInfo.getThemeName();
+        int themeNightMode = themeInfo.getDefaultNightMode();
+        darkPref.setEnabled(themeNightMode == AppCompatDelegate.MODE_NIGHT_YES || themeNightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
+        lightPref.setEnabled(themeNightMode == AppCompatDelegate.MODE_NIGHT_NO || themeNightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
     }
 
     /**

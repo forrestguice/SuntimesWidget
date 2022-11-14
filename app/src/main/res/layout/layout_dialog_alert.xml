@@ -5,11 +5,11 @@
 
     <TextView android:id="@android:id/message"
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        tools:text="a line \n another line \n and another" />
+        android:textSize="?attr/text_size_small" tools:text="a line \n another line \n and another" />
 
     <CheckBox android:id="@+id/check_donotshowagain"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginLeft="16dp" android:layout_marginRight="8dp"
-        android:text="@string/dialog_msg_donotshowagain" />
+        android:textSize="?attr/text_size_small" android:text="@string/dialog_msg_donotshowagain" />
 
 </LinearLayout>

@@ -26,6 +26,13 @@
             android:widgetLayout="@layout/layout_pref_themewidget"
             android:summary="%s" />
 
+        <com.forrestguice.suntimeswidget.settings.TextSizePreference
+            android:key="app_appearance_textsize"
+            android:title="@string/configLabel_ui_textsize"
+            android:summary="@string/configLabel_ui_textsize_summary"
+            android:entries="@array/textSize_display" android:entryValues="@array/textSize_values"
+            android:defaultValue="@string/def_app_appearance_textsize" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
