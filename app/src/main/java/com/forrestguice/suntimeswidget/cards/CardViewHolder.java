@@ -821,10 +821,15 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
         protected TextView initTextView(Context context, LinearLayout.LayoutParams layoutParams)
         {
+            int[] attr = { R.attr.text_size_small };
+            TypedArray typedArray = context.obtainStyledAttributes(attr);
+            float textSizePx = context.getResources().getDimension(typedArray.getResourceId(0, R.dimen.tablerow_label_fontsize));
+            typedArray.recycle();
+
             TextView view = new TextView(context, null, R.style.SunsetTimeTextView);
             view.setTextAppearance(android.R.style.TextAppearance_Small);
             view.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
-            view.setTextSize(TypedValue.COMPLEX_UNIT_PX,  context.getResources().getDimension(R.dimen.tablerow_label_fontsize));
+            view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
             view.getPaint().setAntiAlias(true);
             view.setLayoutParams(layoutParams);
             view.setPadding(0, 0, 0, 0);

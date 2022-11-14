@@ -23,7 +23,7 @@
 
         <TextView android:id="@android:id/text1" style="?android:attr/dropDownItemStyle"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+            android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:textSize="?attr/text_size_medium"
             android:singleLine="true" android:duplicateParentState="true"
             tools:text="title" />
 

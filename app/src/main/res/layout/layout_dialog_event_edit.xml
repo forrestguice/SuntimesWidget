@@ -47,7 +47,7 @@
 
             <TextView android:id="@+id/text_event_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="64dp"
-                android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+                android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:textSize="?attr/text_size_medium"
                 android:text="@string/editevent_dialog_title"
                 android:gravity="center" android:padding="0dp"
                 android:layout_marginLeft="0dp" android:layout_marginStart="0dp"
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
-                <TextView android:labelFor="@+id/edit_event_angle"
+                <TextView android:labelFor="@+id/edit_event_angle" android:textSize="?attr/text_size_small"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
                     android:text="@string/editevent_dialog_angle" />
@@ -100,7 +100,7 @@
 
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/editevent_dialog_angle_suffix" />
+                    android:textSize="?attr/text_size_small" android:text="@string/editevent_dialog_angle_suffix" />
 
                 <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
                     android:id="@+id/chooser_eventColor"
@@ -125,7 +125,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:gravity="center_vertical" android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
 
-            <TextView android:labelFor="@+id/edit_event_id"
+            <TextView android:labelFor="@+id/edit_event_id" android:textSize="?attr/text_size_small"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
                 android:text="@string/editevent_dialog_id_label" />
