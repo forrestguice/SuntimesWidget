@@ -7,6 +7,12 @@
     <color name="dialog_bg_alt">@color/dialog_bg_alt_dark</color>
     <color name="card_bg">@color/card_bg_dark</color>
     <color name="card_bg_trans">@color/card_bg_darktrans</color>
+    <color name="chip_bg_disabled">@color/chip_bg_disabled_dark</color>
+    <color name="chip_bg_disabled_stroke">@color/chip_bg_disabled_stroke_dark</color>
+    <color name="chip_bg_enabled">@color/chip_bg_enabled_dark</color>
+    <color name="chip_bg_enabled_stroke">@color/chip_bg_enabled_stroke_dark</color>
+    <color name="chip_bg_pressed">@color/chip_bg_pressed_dark</color>
+    <color name="chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
 
     <color name="hr">@color/hr_dark</color>
     <color name="text_disabled">@color/text_disabled_dark</color>
