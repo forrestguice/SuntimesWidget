@@ -653,9 +653,9 @@
         <item name="android:textSize">?attr/text_size_xsmall</item>
     </style>
 
-    <!-- A TextView for displaying the widget title -->
-    <style name="SunsetTimeTextTitleView" parent="SunsetTimeTextView">
-        <item name="android:textSize">?attr/text_size_xsmall</item>
+    <!-- A TextView for displaying the widget title; widget styles must not contain ?attr dimen references -->
+    <style name="WidgetTitleTextView" parent="SunsetTimeTextView">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
