@@ -44,6 +44,9 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke</item>
+        <item name="graphColor_axis">@color/graphColor_axis</item>
+        <item name="graphColor_grid">@color/graphColor_grid</item>
+        <item name="graphColor_labels">@color/graphColor_labels</item>
 
         <item name="table_risingColor">@color/table_rising</item>
         <item name="table_settingColor">@color/table_setting</item>
@@ -210,6 +213,9 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_light</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill_light</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke_light</item>
+        <item name="graphColor_axis">@color/graphColor_axis_light</item>
+        <item name="graphColor_grid">@color/graphColor_grid_light</item>
+        <item name="graphColor_labels">@color/graphColor_labels_light</item>
 
         <item name="table_risingColor">@color/table_rising_light</item>
         <item name="table_settingColor">@color/table_setting_light</item>
@@ -378,6 +384,9 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill_dark</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke_dark</item>
+        <item name="graphColor_axis">@color/graphColor_axis_dark</item>
+        <item name="graphColor_grid">@color/graphColor_grid_dark</item>
+        <item name="graphColor_labels">@color/graphColor_labels_dark</item>
 
         <item name="table_risingColor">@color/table_rising_dark</item>
         <item name="table_settingColor">@color/table_setting_dark</item>
