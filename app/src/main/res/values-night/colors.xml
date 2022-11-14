@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="primaryColor">@color/primaryColor_dark</color>
     <color name="dialog_frame">@color/dialog_frame_dark</color>
     <color name="dialog_bg">@color/dialog_bg_dark</color>
     <color name="dialog_bg_alt">@color/dialog_bg_alt_dark</color>
     <color name="card_bg">@color/card_bg_dark</color>
     <color name="card_bg_trans">@color/card_bg_darktrans</color>
+    <color name="chip_bg_disabled">@color/chip_bg_disabled_dark</color>
+    <color name="chip_bg_disabled_stroke">@color/chip_bg_disabled_stroke_dark</color>
+    <color name="chip_bg_enabled">@color/chip_bg_enabled_dark</color>
+    <color name="chip_bg_enabled_stroke">@color/chip_bg_enabled_stroke_dark</color>
+    <color name="chip_bg_pressed">@color/chip_bg_pressed_dark</color>
+    <color name="chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
 
     <color name="hr">@color/hr_dark</color>
     <color name="text_disabled">@color/text_disabled_dark</color>
     <color name="text_accent">@color/text_accent_dark</color>
+    <color name="text_primary">@color/text_primary_dark</color>
+    <color name="text_secondary">@color/text_secondary_dark</color>
+    <color name="text_tertiary">@color/text_tertiary_dark</color>
+    <color name="text_time">@color/text_time_dark</color>
     <color name="snackbar_text">@color/snackbar_text_dark</color>
     <color name="fab_ripple">@color/fab_ripple_dark</color>
 

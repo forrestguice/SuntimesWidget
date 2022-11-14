@@ -335,7 +335,7 @@
             android:ellipsize="end" android:singleLine="true" android:maxLines="1"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-            android:text="@string/timeMode_night" />
+            android:textSize="?attr/text_size_small" android:text="@string/timeMode_night" />
 
         <TextView
             android:id="@+id/info_time_lightmap_key_night_duration"
@@ -370,7 +370,7 @@
             android:ellipsize="end" android:singleLine="true" android:maxLines="1"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-            android:text="@string/timeMode_astronomical" />
+            android:textSize="?attr/text_size_small" android:text="@string/timeMode_astronomical" />
 
         <TextView
             android:id="@+id/info_time_lightmap_key_astro_duration"
@@ -405,7 +405,7 @@
             android:ellipsize="end" android:singleLine="true" android:maxLines="1"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-            android:text="@string/timeMode_nautical" />
+            android:textSize="?attr/text_size_small" android:text="@string/timeMode_nautical" />
 
         <TextView
             android:id="@+id/info_time_lightmap_key_nautical_duration"
@@ -440,7 +440,7 @@
             android:ellipsize="end" android:singleLine="true" android:maxLines="1"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-            android:text="@string/timeMode_civil" />
+            android:textSize="?attr/text_size_small" android:text="@string/timeMode_civil" />
 
         <TextView
             android:id="@+id/info_time_lightmap_key_civil_duration"
@@ -475,7 +475,7 @@
             android:ellipsize="end" android:singleLine="true" android:maxLines="1"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-            android:text="@string/timeMode_day" />
+            android:textSize="?attr/text_size_small" android:text="@string/timeMode_day" />
 
         <TextView
             android:id="@+id/info_time_lightmap_key_day_duration"

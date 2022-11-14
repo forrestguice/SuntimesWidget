@@ -46,7 +46,7 @@
                 android:id="@+id/edit_label"
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
-                android:textColor="?attr/text_buttonSelector"
+                android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_large"
                 android:textStyle="bold" android:maxLines="1"
                 android:inputType="text"
                 android:hint="@string/alarmlabel_hint" tools:text="label" />
@@ -61,7 +61,7 @@
 
         <include layout="@layout/layout_listitem_alarmtime" />
 
-        <TextView
+        <TextView style="@style/ChipTrayLabel"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:text="@string/configLabel_alarmEdit_scheduleTray" />
@@ -137,7 +137,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
+                <TextView style="@style/ChipTrayLabel"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
                     android:text="@string/configLabel_alarmEdit_onAlertTray" />
@@ -208,7 +208,7 @@
 
                 </LinearLayout>
 
-                <TextView
+                <TextView style="@style/ChipTrayLabel"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
                     android:text="@string/configLabel_alarmEdit_onDismissTray"/>

@@ -35,7 +35,7 @@
 
         <TextView android:id="@android:id/text1"
             style="?android:attr/dropDownItemStyle"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="?attr/text_size_small"
             android:singleLine="true" android:textStyle="bold" android:duplicateParentState="true"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             tools:text="text" />
