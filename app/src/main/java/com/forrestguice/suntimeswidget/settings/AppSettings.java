@@ -59,7 +59,7 @@ public class AppSettings
     public static final String THEME_LIGHT = "light";
     public static final String THEME_DAYNIGHT = "daynight";
     public static final String THEME_SYSTEM = "system";
-    public static final String THEME_SYSTEM1 = "system1";        // system mode w/ material you
+    public static final String THEME_MONET = "myou";        // system mode w/ material you
     public static final String THEME_DEFAULT = "default";
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
@@ -820,8 +820,8 @@ public class AppSettings
         } else if (extendedThemeName.startsWith(THEME_DAYNIGHT)) {
             return info_dayNightTheme;
 
-        } else if (extendedThemeName.startsWith(THEME_SYSTEM1)) {
-            return info_system1Theme;
+        } else if (extendedThemeName.startsWith(THEME_MONET)) {
+            return info_monetTheme;
 
         } else if (extendedThemeName.startsWith(System2ThemeInfo.THEMENAME)) {
             return info_system2Theme;
@@ -835,7 +835,7 @@ public class AppSettings
     private static final AppThemeInfo info_lightTheme = new LightThemeInfo();
     private static final AppThemeInfo info_dayNightTheme = new DayNightThemeInfo();
     private static final AppThemeInfo info_systemTheme = new SystemThemeInfo();
-    private static final AppThemeInfo info_system1Theme = new System1ThemeInfo();
+    private static final AppThemeInfo info_monetTheme = new MonetThemeInfo();
     private static final AppThemeInfo info_system2Theme = new System2ThemeInfo();
 
     /**
@@ -956,11 +956,11 @@ public class AppSettings
         }
     }
 
-    public static class System1ThemeInfo extends AppThemeInfo
+    public static class MonetThemeInfo extends AppThemeInfo
     {
         @Override
         public String getThemeName() {
-            return THEME_SYSTEM1;
+            return THEME_MONET;
         }
         @Override
         public int getDefaultNightMode() {
@@ -971,7 +971,7 @@ public class AppSettings
             switch (size) {
                 //case SMALL: return R.style.AppTheme_System1_Small;   // TODO
                 //case LARGE: return R.style.AppTheme_System1_Large;   // TODO
-                case NORMAL: default: return R.style.AppTheme_System1;
+                case NORMAL: default: return R.style.AppTheme_Monet;
             }
         }
     }
@@ -991,9 +991,9 @@ public class AppSettings
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
             switch (size) {
-                case SMALL: return R.style.AppTheme_System2_Small;
-                case LARGE: return R.style.AppTheme_System2_Large;
-                case NORMAL: default: return R.style.AppTheme_System2;
+                case SMALL: return R.style.AppTheme_System1_Small;
+                case LARGE: return R.style.AppTheme_System1_Large;
+                case NORMAL: default: return R.style.AppTheme_System1;
             }
         }
     }

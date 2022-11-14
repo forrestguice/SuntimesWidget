@@ -6,7 +6,6 @@
         <item>@string/appThemes_darkTheme</item>
         <item>@string/appThemes_nightMode</item>
         <item>@string/appThemes_systemDefault</item>
-        <item>@string/appThemes_systemDefault1</item>       <!-- adds Material You; api 31+ -->
 
     </string-array>
     <string-array name="appThemes_values" tools:ignore="InconsistentArrays"
@@ -15,7 +14,6 @@
         <item>dark</item>
         <item>daynight</item>
         <item>system</item>
-        <item>system1</item>    <!-- adds Material You; api 31+ -->
     </string-array>
 
 </resources>
