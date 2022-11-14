@@ -31,7 +31,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="4dp">
 
-        <include layout="@layout/info_time_sunrise_1" />
+        <include layout="@layout/widget_info_time_sunrise_1" />
 
     </LinearLayout>
 

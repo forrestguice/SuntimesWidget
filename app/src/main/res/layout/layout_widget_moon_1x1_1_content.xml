@@ -28,7 +28,7 @@
         android:orientation="horizontal" android:layout_gravity="center" android:gravity="center"
         android:layout_marginBottom="2dp">
 
-        <include layout="@layout/info_moonphase" />
+        <include layout="@layout/widget_info_moonphase" />
 
     </LinearLayout>
 

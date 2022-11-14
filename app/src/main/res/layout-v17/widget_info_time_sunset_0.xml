@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,27 +22,26 @@
         android:orientation="horizontal" android:layoutDirection="rtl">  <!-- TODO: fix layout direction for rtl locales (reverse layout with layoutDirection="ltr") -->
 
         <TextView
-            style="@style/SunsetTimeTextSuffixView"
-            android:id="@+id/text_time_moonrise_suffix"
+            style="@style/WidgetSuffixTextView"
+            android:id="@+id/text_time_set_suffix"
             android:layout_gravity="bottom"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             tools:text="PM" />
 
         <TextView
-            style="@style/SunsetTimeTextView"
-            android:id="@+id/text_time_moonrise"
-            android:textColor="@color/moonIcon_color_rising_dark"
-            tools:text="11:00" />
+            style="@style/WidgetTimeTextView"
+            android:id="@+id/text_time_set"
+            android:textColor="@color/sunIcon_color_setting_dark"
+            tools:text="4:20" />
 
         <ImageView
             style="@style/SunsetTimeImageView"
-            android:id="@+id/icon_time_moonrise" android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
+            android:id="@+id/icon_time_sunset"
+            android:scaleType="fitCenter" android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="2dp" android:layout_marginRight="1dp" android:layout_marginTop="1dp"
-            android:layout_marginStart="2dp" android:layout_marginEnd="1dp"
-            android:contentDescription="@string/moonrise" />
+            android:layout_marginStart="2dp" android:layout_marginEnd="1dp" android:src="@drawable/svg_sunset1"
+            android:contentDescription="@string/sunset_short"/>
 
     </LinearLayout>
-
 </merge>

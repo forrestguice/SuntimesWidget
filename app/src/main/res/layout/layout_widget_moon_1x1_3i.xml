@@ -33,7 +33,7 @@
         <include layout="@layout/icons_moon_phases" />
 
         <TextView
-            android:id="@+id/text_info_moonillum" style="@style/SunsetTimeTextView2"
+            android:id="@+id/text_info_moonillum" style="@style/WidgetTimeTextView2"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="start" tools:text="90%" />
 

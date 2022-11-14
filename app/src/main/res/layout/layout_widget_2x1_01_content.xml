@@ -31,14 +31,14 @@
         android:divider="@drawable/ic_spacer"
         tools:ignore="UnusedAttribute">
 
-        <include layout="@layout/info_time_sunset_0" />
+        <include layout="@layout/widget_info_time_sunset_0" />
 
-        <include layout="@layout/info_time_sunrise_0" />
+        <include layout="@layout/widget_info_time_sunrise_0" />
 
     </LinearLayout>
 
-    <include layout="@layout/info_time_noon_2" />
+    <include layout="@layout/widget_info_time_noon_2" />
 
-    <include layout="@layout/info_time_daydelta" />
+    <include layout="@layout/widget_info_time_daydelta" />
 
 </merge>

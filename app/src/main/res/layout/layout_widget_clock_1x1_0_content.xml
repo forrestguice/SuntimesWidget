@@ -18,7 +18,7 @@
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView android:textAppearance="@style/WidgetTitleTextView"
+    <TextView style="@style/WidgetTitleTextView"
               android:id="@+id/text_title" android:visibility="gone"
               android:layout_width="match_parent" android:layout_height="wrap_content"
               android:gravity="start"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center" android:layout_gravity="center">
 
-            <TextView android:textAppearance="@style/SunsetTimeTextView" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            <TextView style="@style/WidgetTimeTextView" android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/text_time"
                 android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
                 android:paddingTop="0dp" android:paddingBottom="0dp"
@@ -43,7 +43,7 @@
                 tools:text="12:00" />
 
             <TextView android:id="@+id/text_time_suffix" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textAppearance="@style/SunsetTimeTextSuffixView"
+                style="@style/WidgetSuffixTextView"
                 android:layout_gravity="center_vertical|bottom|end"
                 android:layout_toEndOf="@+id/text_time" android:layout_toRightOf="@+id/text_time"
                 android:layout_alignBottom="@+id/text_time" android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
@@ -51,7 +51,7 @@
                 tools:text="p.m." />
 
             <TextView android:id="@+id/text_time_extras" android:visibility="visible"
-                android:textAppearance="@style/SunsetTimeTextSuffixView"
+                style="@style/WidgetSuffixTextView"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_below="@+id/text_time_suffix" android:layout_alignRight="@+id/text_time_suffix" android:layout_alignEnd="@+id/text_time_suffix"
                 android:layout_marginTop="0dp" android:layout_marginBottom="4dp"

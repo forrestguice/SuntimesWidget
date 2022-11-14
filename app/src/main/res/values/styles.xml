@@ -653,8 +653,23 @@
         <item name="android:textSize">?attr/text_size_xsmall</item>
     </style>
 
-    <!-- A TextView for displaying the widget title; widget styles must not contain ?attr dimen references -->
-    <style name="WidgetTitleTextView" parent="SunsetTimeTextView">
+    <!-- A TextView for displaying the widget title;
+         "Widget" styles must not contain ?attr dimen references -->
+
+    <style name="WidgetTimeTextView" parent="SunsetTimeTextViewBase">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:antialias">true</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+    <style name="WidgetTitleTextView" parent="WidgetTimeTextView">
         <item name="android:textSize">@dimen/text_size_xsmall</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
@@ -665,6 +680,14 @@
         <item name="android:focusableInTouchMode">true</item>
         <!--<item name="android:textStyle">bold</item>-->
         <item name="android:layout_gravity">bottom</item>
+    </style>
+    <style name="WidgetTimeTextView2" parent="WidgetTimeTextView">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
+    </style>
+    <style name="WidgetSuffixTextView" parent="WidgetTimeTextView">
+        <item name="android:textSize">@dimen/text_size_tiny</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
     <!-- A TextView for displaying some suffix after time/text -->

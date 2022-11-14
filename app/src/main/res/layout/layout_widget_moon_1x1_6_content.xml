@@ -33,7 +33,7 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView style="@style/SunsetTimeTextView" android:visibility="visible"
+            <TextView style="@style/WidgetTimeTextView" android:visibility="visible"
                 android:id="@+id/info_moon_declination_current_label"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
                 android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
@@ -41,7 +41,7 @@
                 android:text="@string/widgetLabel_declination" android:labelFor="@+id/info_moon_declination_current"
                 android:gravity="start" />
 
-            <TextView style="@style/SunsetTimeTextView"
+            <TextView style="@style/WidgetTimeTextView"
                 android:id="@+id/info_moon_declination_current"
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
@@ -53,7 +53,7 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView style="@style/SunsetTimeTextView" android:visibility="visible"
+            <TextView style="@style/WidgetTimeTextView" android:visibility="visible"
                 android:id="@+id/info_moon_rightascension_current_label"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
                 android:layout_marginBottom="0dp"
@@ -61,7 +61,7 @@
                 android:text="@string/widgetLabel_rightAscension" android:labelFor="@+id/info_moon_rightascension_current"
                 android:gravity="start" />
 
-            <TextView style="@style/SunsetTimeTextView"
+            <TextView style="@style/WidgetTimeTextView"
                 android:id="@+id/info_moon_rightascension_current"
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"

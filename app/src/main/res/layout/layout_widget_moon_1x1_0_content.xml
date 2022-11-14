@@ -24,8 +24,8 @@
         android:gravity="start"
         tools:text="title" />
 
-    <include layout="@layout/info_time_moonrise" />
+    <include layout="@layout/widget_info_time_moonrise" />
 
-    <include layout="@layout/info_time_moonset" />
+    <include layout="@layout/widget_info_time_moonset" />
 
 </merge>

@@ -28,7 +28,7 @@
         android:showDividers="middle" android:divider="@drawable/ic_spacer"
         android:orientation="horizontal">
 
-        <include layout="@layout/info_moonphase" />
+        <include layout="@layout/widget_info_moonphase" />
 
     </LinearLayout>
 
@@ -37,8 +37,8 @@
         android:orientation="horizontal"
         tools:ignore="UnusedAttribute">
 
-        <include layout="@layout/info_time_moonset" />
-        <include layout="@layout/info_time_moonrise" />
+        <include layout="@layout/widget_info_time_moonset" />
+        <include layout="@layout/widget_info_time_moonrise" />
 
     </LinearLayout>
 

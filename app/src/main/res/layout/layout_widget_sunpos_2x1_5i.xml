@@ -36,14 +36,14 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="right|end|center_vertical">
 
-            <TextView style="@style/SunsetTimeTextView" android:visibility="visible"
+            <TextView style="@style/WidgetTimeTextView" android:visibility="visible"
                 android:id="@+id/info_sun_elevation_current_label"
                 android:layout_width="0dp" android:layout_weight="1"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
                 android:text="@string/widgetLabel_altitude" android:labelFor="@+id/info_sun_azimuth_current"
                 android:gravity="start" />
 
-            <TextView style="@style/SunsetTimeTextView" android:gravity="end|right"
+            <TextView style="@style/WidgetTimeTextView" android:gravity="end|right"
                 android:id="@+id/info_sun_elevation_current"
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
@@ -54,14 +54,14 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="right|end|center_vertical">
 
-            <TextView style="@style/SunsetTimeTextView" android:visibility="visible"
+            <TextView style="@style/WidgetTimeTextView" android:visibility="visible"
                 android:id="@+id/info_sun_azimuth_current_label"
                 android:layout_width="0dp" android:layout_weight="1"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
                 android:text="@string/widgetLabel_azimuth" android:labelFor="@+id/info_sun_azimuth_current"
                 android:gravity="start" />
 
-            <TextView style="@style/SunsetTimeTextView"  android:gravity="end|right"
+            <TextView style="@style/WidgetTimeTextView"  android:gravity="end|right"
                 android:id="@+id/info_sun_azimuth_current"
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"

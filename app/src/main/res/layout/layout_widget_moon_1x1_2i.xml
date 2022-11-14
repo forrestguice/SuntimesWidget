@@ -32,7 +32,7 @@
         <include layout="@layout/icons_moon_phases" />
 
         <TextView
-            android:id="@+id/text_info_moonphase" style="@style/SunsetTimeTextView2"
+            android:id="@+id/text_info_moonphase" style="@style/WidgetTimeTextView2"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="start|center_vertical" android:maxLines="2" android:ellipsize="end"
             tools:text="Waning\nCrescent" />
