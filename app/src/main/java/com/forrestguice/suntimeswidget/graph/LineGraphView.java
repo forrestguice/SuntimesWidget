@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -456,7 +457,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             b.setDensity(options.densityDpi);
             Canvas c = new Canvas(b);
-            Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+            initPaint();
 
             drawBackground(c, p, options);
             if (data != null)
@@ -471,6 +472,22 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             Log.d("BENCH", "make line graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
             return b;
         }
+        protected void initPaint()
+        {
+            if (p == null) {
+                p = new Paint(Paint.ANTI_ALIAS_FLAG);
+            }
+
+            if (paintText == null)
+            {
+                paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
+                paintText.setAntiAlias(true);
+                paintText.setTextAlign(Paint.Align.CENTER);
+                paintText.setStyle(Paint.Style.FILL);
+                paintText.setTypeface(Typeface.DEFAULT_BOLD);
+            }
+        }
+        private Paint p, paintText;
 
         protected Calendar graphTime(@Nullable SuntimesRiseSetDataset data, @NonNull LineGraphOptions options)
         {
@@ -768,6 +785,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         protected void drawAxisXLabels(Canvas c, Paint p, LineGraphOptions options)
         {
             int h = c.getHeight();
+            float textSize = (float)(Math.sqrt(c.getWidth() * h) / 18f);
             int i = (int) options.axisX_labels_interval;
             while (i <= (options.graph_width - options.axisX_labels_interval))
             {
@@ -776,28 +794,22 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 if (!options.is24 && hour == 0) {
                     hour = 12;
                 }
-                p.setAntiAlias(true);
-                p.setTextAlign(Paint.Align.CENTER);
-                p.setColor(options.axisX_labels_color);
-                p.setTextSize(options.axisX_labels_textsize);
-                p.setLinearText(true);
-                p.setFakeBoldText(false);
-                c.drawText("" + hour, x, h - options.axisX_labels_textsize/4, p);
+                paintText.setColor(options.axisX_labels_color);
+                paintText.setTextSize((float)textSize);
+                c.drawText("" + hour, x - textSize/2, h - textSize/4, paintText);
                 i += options.axisX_labels_interval;
             }
         }
         protected void drawAxisYLabels(Canvas c, Paint p, LineGraphOptions options)
         {
+            float textSize = (float)(Math.sqrt(c.getWidth() * c.getHeight()) / 18f);
             int i = -1 * (int) options.axisY_labels_interval;
             while (i < 90)
             {
                 float y = (float) degreesToBitmapCoords(c, i, options);
-                p.setAntiAlias(true);
-                p.setTextAlign(Paint.Align.CENTER);
-                p.setColor(options.axisY_labels_color);
-                p.setTextSize(options.axisY_labels_textsize);
-                p.setFakeBoldText(false);
-                c.drawText("" + i, 0 + options.axisY_labels_textsize, y + options.axisY_labels_textsize/3 , p);
+                paintText.setColor(options.axisY_labels_color);
+                paintText.setTextSize((float)textSize);
+                c.drawText("" + i + "°", 0 + textSize, y + textSize/3 , paintText);
                 i += options.axisY_labels_interval;
             }
         }
@@ -916,12 +928,12 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public double graph_width = MINUTES_IN_DAY;    // minutes
         public double graph_height = 80;               // +- 80 degrees
 
-        public boolean axisX_labels_show = false;
+        public boolean axisX_labels_show = true;
         public int axisX_labels_color = Color.WHITE;
         public float axisX_labels_textsize = 16;  // sp
         public float axisX_labels_interval = 60 * 3;  // minutes
 
-        public boolean axisY_labels_show = false;
+        public boolean axisY_labels_show = true;
         public int axisY_labels_color = Color.LTGRAY;
         public float axisY_labels_textsize = 16;  // sp
         public float axisY_labels_interval = 45;  // degrees
@@ -938,7 +950,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public boolean gridX_show = true;
         public int gridX_color = Color.GRAY;
         public int gridX_width = 2;        // dp
-        public int gridX_interval = 10;    // degrees
+        public int gridX_interval = 5;    // degrees
 
         public boolean gridY_show = true;
         public int gridY_color = Color.GRAY;
@@ -950,7 +962,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public int sunPath_color_night = Color.BLUE;
         public int sunPath_width = 8;       // dp
         public int sunPath_interval = 2;   // minutes
-        public boolean sunPath_closed = true;
+        public boolean sunPath_closed = false;
 
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorPointFill, colorPointStroke;
