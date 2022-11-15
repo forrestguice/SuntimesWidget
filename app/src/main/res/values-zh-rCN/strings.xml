@@ -400,8 +400,8 @@
     <string name="widgetMode1x1_apsis">下一个远地点或近地点</string>     <!-- setting -->
 
     <string name="widgetMode3x1_lightmap_large">光照图</string>     <!-- setting -->    
-    <string name="widgetMode3x1_lightmap_medium">光照图 （中等）</string>     <!-- setting -->    
-    <string name="widgetMode3x1_lightmap_small">光照图 （小）</string>     <!-- setting -->    
+    <string name="widgetMode3x1_lightmap_medium">光照图（中等）</string>     <!-- setting -->    
+    <string name="widgetMode3x1_lightmap_small">光照图（小）</string>     <!-- setting -->    
 
     <string name="widgetMode_sunPosMap_simplerectangular">默认</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">北半球视角</string>     <!-- setting -->
