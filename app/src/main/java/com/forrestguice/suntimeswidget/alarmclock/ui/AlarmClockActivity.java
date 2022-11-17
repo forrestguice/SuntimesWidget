@@ -902,9 +902,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 @Override
                 public void onClick(View view) {
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
-                    }
+                    SuntimesSettingsActivity.openBatteryOptimizationSettings(AlarmClockActivity.this);
                 }
             });
             batteryOptimizationWarning.show();

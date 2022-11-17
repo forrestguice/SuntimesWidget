@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -1832,12 +1833,42 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
        return new Preference.OnPreferenceClickListener() {
            @Override
            public boolean onPreferenceClick(Preference preference) {
-               if (Build.VERSION.SDK_INT >= 23) {
-                   context.startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
-               }
+               openBatteryOptimizationSettings(context);
                return false;
            }
        };
+    }
+
+    public static void openBatteryOptimizationSettings(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            try {
+                //context.startActivity(getRequestIgnoreBatteryOptimizationSettingsIntent(context));
+                context.startActivity(getRequestIgnoreBatteryOptimizationIntent(context));
+
+            } catch (ActivityNotFoundException e) {
+                Log.e(LOG_TAG, "Failed to launch battery optimization Intent: " + e);
+            }
+        }
+    }
+
+    /**
+     * Recommended; this Intent shows the optimization list (and the user must find and select the app)
+     */
+    @TargetApi(23)
+    public static Intent getRequestIgnoreBatteryOptimizationSettingsIntent(Context context) {
+        return new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+    }
+
+    /**
+     * Discouraged; this Intent goes directly to the app's optimization settings.
+     * Requires permission `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`
+     */
+    @TargetApi(23)
+    @Deprecated
+    public static Intent getRequestIgnoreBatteryOptimizationIntent(Context context) {
+        return new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + context.getPackageName()));
     }
 
     protected static boolean isDeviceSecure(Context context)
