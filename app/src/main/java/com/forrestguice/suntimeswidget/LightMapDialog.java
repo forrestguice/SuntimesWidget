@@ -449,6 +449,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_showgraph:
+                    // TODO
+                    return true;
+
                 case R.id.action_observerheight:
                     showShadowObjHeightPopup(context, sunShadowObj);
                     return true;

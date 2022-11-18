@@ -29,6 +29,7 @@
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
+    <string name="configAction_elevationGraph">Elevation Graph</string>   <!-- TODO -->
     <string name="configAction_lineGraph">Line Graph</string>
     <string name="configAction_moon">Moon</string>
     <string name="configAction_help">Help</string>

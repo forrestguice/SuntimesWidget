@@ -24,6 +24,12 @@
             </menu>
         </item>
 
+        <item android:id="@+id/action_showgraph"
+            android:icon="?attr/icActionGraph"
+            android:title="@string/configAction_elevationGraph"
+            android:checkable="true"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_observerheight"
             android:icon="?attr/icActionShadow"
             android:title="@string/configLabel_general_observerheight"
