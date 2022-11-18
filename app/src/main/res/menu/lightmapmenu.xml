@@ -26,8 +26,13 @@
 
         <item android:id="@+id/action_showgraph"
             android:icon="?attr/icActionGraph"
-            android:title="@string/configAction_elevationGraph"
+            android:title="@string/configAction_lineGraph"
             android:checkable="true"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_seekaltitude"
+            android:icon="?attr/icActionSearch"
+            android:title="@string/configAction_seekAltitude"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_observerheight"

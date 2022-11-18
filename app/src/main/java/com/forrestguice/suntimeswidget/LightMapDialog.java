@@ -44,12 +44,16 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -57,10 +61,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -97,6 +103,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private ImageButton playButton, pauseButton, resetButton, nextButton, prevButton, menuButton;
     private TextView speedButton;
     private int color_normal, color_disabled, color_pressed, color_warning, color_accent;
+
+    private LineGraphView graphView;
 
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
@@ -263,6 +271,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         dialogTitle = (TextView)dialogView.findViewById(R.id.sundialog_title);
         lightmap = (LightMapView)dialogView.findViewById(R.id.info_time_lightmap);
+        graphView = (LineGraphView)dialogView.findViewById(R.id.info_time_graph);
         sunTime = (TextView)dialogView.findViewById(R.id.info_time_solar);
         if (sunTime != null) {
             sunTime.setOnClickListener(new View.OnClickListener() {
@@ -284,6 +293,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
         sunAzimuthAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_atnoon);
         sunAzimuthSetting = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_setting);
         sunAzimuthLabel = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_current_label);
+
+        View altitudeLayout = dialogView.findViewById(R.id.info_altitude_layout);
+        if (altitudeLayout != null) {
+            altitudeLayout.setOnClickListener(onAltitudeLayoutClick);
+        }
 
         View shadowLayout = dialogView.findViewById(R.id.info_shadow_layout);
         if (shadowLayout != null) {
@@ -341,6 +355,19 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         mediaGroup = dialogView.findViewById(R.id.media_actions);
 
+        if (graphView != null)
+        {
+            graphView.setVisibility(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH) ? View.VISIBLE : View.GONE);
+            graphView.setMapTaskListener(new LineGraphView.LineGraphTaskListener() {
+                @Override
+                public void onDataModified(SuntimesRiseSetDataset data) {
+                }
+                @Override
+                public void onFrame(Bitmap frame, long offsetMinutes) {
+                }
+            });
+        }
+
         if (lightmap != null)
         {
             lightmap.setMapTaskListener(new LightMapView.LightMapTaskListener()
@@ -348,6 +375,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onDataModified( SuntimesRiseSetDataset data ) {
                     LightMapDialog.this.data = data;
+                    if (graphView != null) {
+                        graphView.setData(data);
+                    }
                 }
 
                 @Override
@@ -364,6 +394,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
     }
 
     public static final String MAPTAG_LIGHTMAP = "_lightmap";
+    public static final String PREF_KEY_LIGHTMAP_SHOWGRAPH = "showgraph";
+    public static final boolean DEF_KEY_LIGHTMAP_SHOWGRAPH = false;
+    public static final String PREF_KEY_LIGHTMAP_SEEKALTITUDE = "seekaltitude";
+    public static final String DEF_KEY_LIGHTMAP_SEEKALTITUDE = "";
 
     private View.OnClickListener playClickListener = new View.OnClickListener()
     {
@@ -435,6 +469,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 return false;
             }
 
+            boolean toggledValue;
             switch (item.getItemId())
             {
                 case R.id.action_date:
@@ -450,7 +485,15 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.action_showgraph:
-                    // TODO
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, toggledValue);
+                    item.setChecked(toggledValue);
+                    graphView.setVisibility(item.isChecked() ? View.VISIBLE : View.GONE);
+                    updateViews();
+                    return true;
+
+                case R.id.action_seekaltitude:
+                    showSeekAltitudePopup(context, sunElevation);
                     return true;
 
                 case R.id.action_observerheight:
@@ -474,6 +517,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private void updateContextMenu(Context context, PopupMenu popupMenu)
     {
         Menu menu = popupMenu.getMenu();
+
+        MenuItem showGraphItem = menu.findItem(R.id.action_showgraph);
+        if (showGraphItem != null) {
+            showGraphItem.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH));
+        }
+
         MenuItem submenuItem = menu.findItem(R.id.addonSubMenu);
         if (submenuItem != null) {
             List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
@@ -651,6 +700,89 @@ public class LightMapDialog extends BottomSheetDialogFragment
         lightmap.loadSettings(getContext(), bundle);
     }
 
+    private View.OnClickListener onAltitudeLayoutClick =  new View.OnClickListener()
+    {
+        @Override
+        public void onClick(@NonNull View v)
+        {
+            Context context = getContext();
+            if (context != null) {
+                showSeekAltitudePopup(context, v);
+            }
+        }
+    };
+    protected void showSeekAltitudePopup(@NonNull final Context context, @NonNull View v)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        if (inflater != null)
+        {
+            PopupWindow popupWindow = new PopupWindow(createSeekAltitudePopupView(context), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent)));
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.showAsDropDown(v);
+        }
+    }
+    protected View createSeekAltitudePopupView(@NonNull final Context context)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        if (inflater != null)
+        {
+            View popupView = inflater.inflate(R.layout.layout_dialog_seekaltitude, null);
+            if (popupView != null)
+            {
+                String lastInput = WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKALTITUDE, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SEEKALTITUDE);
+                final EditText editText = (EditText) popupView.findViewById(R.id.edit_altitude);
+                if (editText != null)
+                {
+                    editText.setOnEditorActionListener(new TextView.OnEditorActionListener()
+                    {
+                        private final View.OnClickListener onEditorDone = onSeekAltitudeClicked(context, editText);
+                        @Override
+                        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                                onEditorDone.onClick(v);
+                            }
+                            return false;
+                        }
+                    });
+                    editText.setText(lastInput);
+                    editText.selectAll();
+                    editText.requestFocus();
+                }
+
+                final Button okButton = (Button) popupView.findViewById(R.id.button_ok);
+                if (okButton != null) {
+                    okButton.setOnClickListener(onSeekAltitudeClicked(context, editText));
+                }
+            }
+            return popupView;
+        }
+        return null;
+    }
+
+    protected View.OnClickListener onSeekAltitudeClicked(final Context context, final EditText input)
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (input != null) {
+                    try {
+                        seekAltitude(context, Double.parseDouble(input.getText().toString()));
+                    } catch (NumberFormatException e) {
+                        Log.w(getClass().getSimpleName(), "onSeekAltitudeClicked: Failed to parse input; " + e);
+                    }
+                }
+            }
+        };
+    }
+
+    public void seekAltitude( Context context, @Nullable Double degrees )
+    {
+        WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKALTITUDE, MAPTAG_LIGHTMAP, (degrees != null ? degrees + "" : ""));
+        lightmap.seekAltitude(context, degrees);
+    }
+
+
     private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
     {
         @Override
@@ -662,7 +794,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
         }
     };
-
     protected void showShadowObjHeightPopup(@NonNull final Context context, @NonNull View v)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);

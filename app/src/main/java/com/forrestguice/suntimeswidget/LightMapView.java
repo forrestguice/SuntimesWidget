@@ -33,10 +33,13 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.LineGraphView;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
@@ -316,13 +319,30 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     @Override
-    public void onVisibilityAggregated(boolean isVisible)    // TODO: only called for api 24+ ?
+    public void onVisibilityAggregated(boolean isVisible)
     {
         super.onVisibilityAggregated(isVisible);
         //Log.d("DEBUG", "onVisibilityAggregated: " + isVisible);
         if (!isVisible && drawTask != null) {
             drawTask.cancel(true);
         }
+    }
+
+    public void seekDateTime( Context context, Calendar calendar )
+    {
+        colors.offsetMinutes = (Math.abs(colors.now - calendar.getTimeInMillis()) / 1000 / 60);
+        updateViews(true);
+    }
+
+    public void seekAltitude( Context context, @Nullable Double degrees )
+    {
+        SuntimesCalculator calculator = data.calculator();
+
+        Calendar lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, data.location()));
+        lmt.setTimeInMillis(colors.now + colors.offsetMinutes);
+        lmt.set(Calendar.HOUR_OF_DAY, 12);
+        lmt.set(Calendar.MINUTE, 0);
+        seekDateTime(context, lmt);
     }
 
     public void setOffsetMinutes( long value ) {
