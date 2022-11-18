@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
@@ -1313,25 +1314,63 @@ public class WidgetSettings
     /**
      * TimeMode
      */
-    public static enum TimeMode
+
+    public interface RiseSetDataMode
     {
-        OFFICIAL("Actual", "Actual Time"),
-        CIVIL("Civil", "Civil Twilight"),
-        NAUTICAL("Nautical", "Nautical Twilight"),
-        ASTRONOMICAL("Astronomical", "Astronomical Twilight"),
-        NOON("Noon", "Solar Noon"),
-        GOLD("Golden", "Golden Hour"),
-        BLUE8("Blue", "Blue Hour"),      // 8 deg; morning start, evening end
-        BLUE4("Blue", "Blue Hour");      // 4 deg; morning end, evening start
+        @Nullable
+        TimeMode getTimeMode();
+        String name();
+        String toString();
+    }
+
+    public static class EventAliasTimeMode implements RiseSetDataMode
+    {
+        private EventSettings.EventAlias event;
+        public EventAliasTimeMode(EventSettings.EventAlias event) {
+            this.event = event;
+        }
+
+        @Nullable
+        @Override
+        public TimeMode getTimeMode() {
+            return null;
+        }
+
+        public EventSettings.EventAlias getEvent() {
+            return event;
+        }
+
+        @Override
+        public String name() {
+            return event.getID();
+        }
+
+        @Override
+        public String toString() {
+            return event.getLabel();
+        }
+    }
+
+    public static enum TimeMode implements RiseSetDataMode
+    {
+        OFFICIAL("Actual", "Actual Time", null),
+        CIVIL("Civil", "Civil Twilight", -6d),
+        NAUTICAL("Nautical", "Nautical Twilight", -12d),
+        ASTRONOMICAL("Astronomical", "Astronomical Twilight", -18d),
+        NOON("Noon", "Solar Noon", null),
+        GOLD("Golden", "Golden Hour", 6d),
+        BLUE8("Blue", "Blue Hour", -8d),      // 8 deg; morning start, evening end
+        BLUE4("Blue", "Blue Hour", -4d);      // 4 deg; morning end, evening start
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
         private String shortDisplayString;
 
-        private TimeMode(String shortDisplayString, String longDisplayString)
+        private TimeMode(String shortDisplayString, String longDisplayString, Double angle)
         {
             this.shortDisplayString = shortDisplayString;
             this.longDisplayString = longDisplayString;
+            this.angle = angle;
         }
 
         public String toString()
@@ -1386,6 +1425,18 @@ public class WidgetSettings
 
             BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
                     context.getString(R.string.timeMode_blue4) );
+        }
+
+
+        private Double angle;
+        @Nullable
+        public Double angle() {
+            return angle;
+        }
+
+        @Nullable @Override
+        public TimeMode getTimeMode() {
+            return this;
         }
     }
 
@@ -2052,28 +2103,33 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimeModePref(Context context, int appWidgetId, WidgetSettings.TimeMode mode)
+    public static void saveTimeModePref(Context context, int appWidgetId, RiseSetDataMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE, mode.name());
+        Log.d("DEBUG", "save time mode: " + mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.TimeMode loadTimeModePref(Context context, int appWidgetId)
+    public static RiseSetDataMode loadTimeModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE, PREF_DEF_GENERAL_TIMEMODE.name());
 
-        TimeMode timeMode;
-        try
-        {
-            timeMode = WidgetSettings.TimeMode.valueOf(modeString);
+        RiseSetDataMode mode;
+        try {
+            mode = WidgetSettings.TimeMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            timeMode = PREF_DEF_GENERAL_TIMEMODE;
+            if (EventSettings.hasEvent(context, modeString)) {
+                mode = new EventAliasTimeMode(EventSettings.loadEvent(context, modeString));
+            } else {
+                mode = PREF_DEF_GENERAL_TIMEMODE;
+            }
         }
-        return timeMode;
+        Log.d("DEBUG", "load time mode: " + mode.name());
+        return mode;
     }
     public static void deleteTimeModePref(Context context, int appWidgetId)
     {
@@ -2919,27 +2975,18 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
+    public static void saveTimeNoteRisePref(Context context, int appWidgetId, String riseChoice)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, riseChoice.name());
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, riseChoice);
         prefs.apply();
     }
-    public static SolarEvents loadTimeNoteRisePref(Context context, int appWidgetId)
+    public static String loadTimeNoteRisePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
-
-        SolarEvents riseMode;
-        try {
-            riseMode = SolarEvents.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            riseMode = PREF_DEF_GENERAL_TIMENOTE_RISE;
-        }
-        return riseMode;
+        return prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
     }
     public static void deleteTimeNoteRisePref(Context context, int appWidgetId)
     {
@@ -2952,27 +2999,18 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimeNoteSetPref(Context context, int appWidgetId, SolarEvents setChoice)
+    public static void saveTimeNoteSetPref(Context context, int appWidgetId, String setChoice)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, setChoice.name());
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, setChoice);
         prefs.apply();
     }
-    public static SolarEvents loadTimeNoteSetPref(Context context, int appWidgetId)
+    public static String loadTimeNoteSetPref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
-
-        SolarEvents setMode;
-        try {
-            setMode = SolarEvents.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            setMode = PREF_DEF_GENERAL_TIMENOTE_SET;
-        }
-        return setMode;
+        return prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
     }
     public static void deleteTimeNoteSetPref(Context context, int appWidgetId)
     {

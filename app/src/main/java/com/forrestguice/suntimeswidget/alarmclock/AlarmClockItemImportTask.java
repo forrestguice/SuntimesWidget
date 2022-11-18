@@ -28,6 +28,8 @@ import android.support.annotation.Nullable;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.ExportTask;
+
 import org.json.JSONObject;
 
 import java.io.EOFException;
@@ -268,7 +270,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             {
                 try {
                     AlarmClockItem item = new AlarmClockItem();
-                    item.fromContentValues(context, toContentValues(map));
+                    item.fromContentValues(context, ExportTask.toContentValues(map));
                     AlarmNotifications.updateAlarmTime(context, item);
                     return item;
 
@@ -277,43 +279,6 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                     return null;
                 }
             } else return null;
-        }
-
-        /* https://stackoverflow.com/a/59211956 */
-        public static ContentValues toContentValues(Map<String, Object> map)
-        {
-            ContentValues values = new ContentValues();
-            for (Map.Entry<String, Object> entry : map.entrySet())
-            {
-                String key = entry.getKey();
-                Object obj = entry.getValue();
-
-                if (obj instanceof Integer) {
-                    values.put(key, (Integer) obj);
-
-                } else if (obj instanceof Long) {
-                    values.put(key, (Long) obj);
-
-                } else if (obj instanceof Short) {
-                    values.put(key, (Short) obj);
-
-                } else if (obj instanceof Float) {
-                    values.put(key, (Float) obj);
-
-                } else if (obj instanceof Double) {
-                    values.put(key, (Double) obj);
-
-                } else if (obj instanceof Byte) {
-                    values.put(key, (Byte) obj);
-
-                } else if (obj instanceof Boolean) {
-                    values.put(key, (Boolean) obj);
-
-                } else if (obj instanceof String) {
-                    values.put(key, (String) obj);
-                }
-            }
-            return values;
         }
 
         @Nullable
@@ -370,26 +335,9 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             reader.endArray();
         }
 
-        public static HashMap<String,String> toMap(ContentValues values)
-        {
-            HashMap<String,String> map = new HashMap<>();
-            if (Build.VERSION.SDK_INT >= 11)
-            {
-                for (String key : values.keySet()) {
-                    map.put(key, values.getAsString(key));
-                }
-            } else {
-                for (Map.Entry<String,Object> entry : values.valueSet()) {
-                    Object value = entry.getValue();
-                    map.put(entry.getKey(), ((value != null) ? value.toString() : null));
-                }
-            }
-            return map;
-        }
-
         public static String toJson(AlarmClockItem item)
         {
-            HashMap<String,String> map = toMap(item.asContentValues(true));
+            HashMap<String,String> map = ExportTask.toMap(item.asContentValues(true));
             return new JSONObject(map).toString();
         }
     }

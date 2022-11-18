@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2021 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,7 +21,9 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -29,7 +31,9 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 public class SuntimesRiseSetDataset
@@ -42,7 +46,20 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetData dataGold;
     public SuntimesRiseSetData dataBlue8;
     public SuntimesRiseSetData dataBlue4;
-    private ArrayList<SuntimesRiseSetData> dataset = new ArrayList<>();
+
+    private HashMap<String, SuntimesRiseSetData> dataset = new HashMap<>();
+    public SuntimesRiseSetData getData(String id) {
+        return dataset.get(id);
+    }
+    public void putData(String id, SuntimesRiseSetData data) {
+        dataset.put(id, data);
+    }
+    public Collection<String> getDataModes() {
+        return dataset.keySet();
+    }
+    public int size() {
+        return dataset.size();
+    }
 
     public SuntimesRiseSetDataset(Context context)
     {
@@ -56,14 +73,14 @@ public class SuntimesRiseSetDataset
 
     public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other)
     {
-        dataset.add(this.dataActual = new SuntimesRiseSetData(other.dataActual));
-        dataset.add(this.dataCivil = new SuntimesRiseSetData(other.dataCivil));
-        dataset.add(this.dataNautical = new SuntimesRiseSetData(other.dataNautical));
-        dataset.add(this.dataAstro = new SuntimesRiseSetData(other.dataAstro));
-        dataset.add(this.dataNoon = new SuntimesRiseSetData(other.dataNoon));
-        dataset.add(this.dataGold = new SuntimesRiseSetData(other.dataGold));
-        dataset.add(this.dataBlue8 = new SuntimesRiseSetData(other.dataBlue8));
-        dataset.add(this.dataBlue4 = new SuntimesRiseSetData(other.dataBlue4));
+        dataset.put(WidgetSettings.TimeMode.OFFICIAL.name(), this.dataActual = new SuntimesRiseSetData(other.dataActual));
+        dataset.put(WidgetSettings.TimeMode.CIVIL.name(), this.dataCivil = new SuntimesRiseSetData(other.dataCivil));
+        dataset.put(WidgetSettings.TimeMode.NAUTICAL.name(), this.dataNautical = new SuntimesRiseSetData(other.dataNautical));
+        dataset.put(WidgetSettings.TimeMode.ASTRONOMICAL.name(), this.dataAstro = new SuntimesRiseSetData(other.dataAstro));
+        dataset.put(WidgetSettings.TimeMode.NOON.name(), this.dataNoon = new SuntimesRiseSetData(other.dataNoon));
+        dataset.put(WidgetSettings.TimeMode.GOLD.name(), this.dataGold = new SuntimesRiseSetData(other.dataGold));
+        dataset.put(WidgetSettings.TimeMode.BLUE8.name(), this.dataBlue8 = new SuntimesRiseSetData(other.dataBlue8));
+        dataset.put(WidgetSettings.TimeMode.BLUE4.name(), this.dataBlue4 = new SuntimesRiseSetData(other.dataBlue4));
     }
 
     private void init(Context context, int appWidgetID)
@@ -71,35 +88,35 @@ public class SuntimesRiseSetDataset
         dataActual = new SuntimesRiseSetData(context, appWidgetID);
         dataActual.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         dataActual.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
-        dataset.add(dataActual);
+        dataset.put(WidgetSettings.TimeMode.OFFICIAL.name(), dataActual);
 
         dataCivil = new SuntimesRiseSetData(dataActual);
         dataCivil.setTimeMode(WidgetSettings.TimeMode.CIVIL);
-        dataset.add(dataCivil);
+        dataset.put(WidgetSettings.TimeMode.CIVIL.name(), dataCivil);
 
         dataNautical = new SuntimesRiseSetData(dataActual);
         dataNautical.setTimeMode(WidgetSettings.TimeMode.NAUTICAL);
-        dataset.add(dataNautical);
+        dataset.put(WidgetSettings.TimeMode.NAUTICAL.name(), dataNautical);
 
         dataAstro = new SuntimesRiseSetData(dataActual);
         dataAstro.setTimeMode(WidgetSettings.TimeMode.ASTRONOMICAL);
-        dataset.add(dataAstro);
+        dataset.put(WidgetSettings.TimeMode.ASTRONOMICAL.name(), dataAstro);
 
         dataNoon = new SuntimesRiseSetData(dataActual);
         dataNoon.setTimeMode(WidgetSettings.TimeMode.NOON);
-        dataset.add(dataNoon);
+        dataset.put(WidgetSettings.TimeMode.NOON.name(), dataNoon);
 
         dataGold = new SuntimesRiseSetData(dataActual);
         dataGold.setTimeMode(WidgetSettings.TimeMode.GOLD);
-        dataset.add(dataGold);
+        dataset.put(WidgetSettings.TimeMode.GOLD.name(), dataGold);
 
         dataBlue8 = new SuntimesRiseSetData(dataActual);
         dataBlue8.setTimeMode(WidgetSettings.TimeMode.BLUE8);
-        dataset.add(dataBlue8);
+        dataset.put(WidgetSettings.TimeMode.BLUE8.name(), dataBlue8);
 
         dataBlue4 = new SuntimesRiseSetData(dataActual);
         dataBlue4.setTimeMode(WidgetSettings.TimeMode.BLUE4);
-        dataset.add(dataBlue4);
+        dataset.put(WidgetSettings.TimeMode.BLUE4.name(), dataBlue4);
     }
 
     public void calculateData()
@@ -111,7 +128,7 @@ public class SuntimesRiseSetDataset
         ArrayList<WidgetSettings.TimeMode> events0 = new ArrayList<WidgetSettings.TimeMode>();
         ArrayList<WidgetSettings.TimeMode> events1 = new ArrayList<WidgetSettings.TimeMode>();
 
-        for (SuntimesRiseSetData data : dataset )
+        for (SuntimesRiseSetData data : dataset.values())
         {
             if (first)
             {
@@ -184,7 +201,7 @@ public class SuntimesRiseSetDataset
 
     public void invalidateCalculation()
     {
-        for (SuntimesRiseSetData data : dataset )
+        for (SuntimesRiseSetData data : dataset.values() )
         {
             data.invalidateCalculation();
         }
@@ -195,8 +212,9 @@ public class SuntimesRiseSetDataset
         Calendar now = now();
         long nearestTime = -1;
 
-        Calendar nearest = dataset.get(0).sunriseCalendarToday();
-        for (SuntimesRiseSetData data : dataset)
+        Collection<SuntimesRiseSetData> values = dataset.values();
+        Calendar nearest = values.toArray(new SuntimesRiseSetData[0])[0].sunriseCalendarToday();
+        for (SuntimesRiseSetData data : values)
         {
             Calendar[] events = new Calendar[] { data.sunriseCalendarToday(), data.sunriseCalendarOther(),
                                                  data.sunsetCalendarToday(), data.sunsetCalendarOther() };
@@ -276,14 +294,14 @@ public class SuntimesRiseSetDataset
     }
     public void setLocation(Location location)
     {
-        for (SuntimesRiseSetData data : dataset ) {
+        for (SuntimesRiseSetData data : dataset.values() ) {
             data.setLocation(location);
         }
     }
 
     public void setTodayIs(Calendar date)
     {
-        for (SuntimesRiseSetData data : dataset ) {
+        for (SuntimesRiseSetData data : dataset.values() ) {
             data.setTodayIs(date);
         }
     }
@@ -292,7 +310,7 @@ public class SuntimesRiseSetDataset
         return dataActual.timezone();
     }
     public void setTimeZone(Context context, TimeZone value) {
-        for (SuntimesRiseSetData data : dataset) {
+        for (SuntimesRiseSetData data : dataset.values()) {
             data.setTimeZoneMode(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
             data.setTimezone(value);
             data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone
@@ -318,7 +336,7 @@ public class SuntimesRiseSetDataset
         return dataActual.timezoneMode();
     }
     public void setTimeZoneMode(WidgetSettings.TimezoneMode value) {
-        for (SuntimesRiseSetData data : dataset) {
+        for (SuntimesRiseSetData data : dataset.values()) {
             data.setTimeZoneMode(value);
             data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone
         }
@@ -487,27 +505,34 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public Calendar[] getRiseSetEvents(SolarEvents event)
+    public Calendar[] getRiseSetEvents(String eventID)
     {
-        switch (event) {
-            case NOON:
-                return dataNoon.getEvents(event);
-            case SUNRISE: case SUNSET:
-                return dataActual.getEvents(event);
-            case MORNING_CIVIL: case EVENING_CIVIL:
-                return dataCivil.getEvents(event);
-            case MORNING_NAUTICAL: case EVENING_NAUTICAL:
-                return dataNautical.getEvents(event);
-            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL:
-                return dataAstro.getEvents(event);
-            case MORNING_GOLDEN: case EVENING_GOLDEN:
-                return dataGold.getEvents(event);
-            case MORNING_BLUE4: case EVENING_BLUE4:
-                return dataBlue4.getEvents(event);
-            case MORNING_BLUE8: case EVENING_BLUE8:
-                return dataBlue8.getEvents(event);
+        //Log.d("DEBUG", "getRiseSetEvents: " + eventID);
+        SuntimesRiseSetData d;
+        if (SolarEvents.hasValue(eventID))
+        {
+            try {
+                SolarEvents event = SolarEvents.valueOf(eventID);
+                d = getData(SolarEvents.toTimeMode(eventID).name());
+                if (d != null) {
+                    return d.getEvents(event.isRising());
+                } else return new Calendar[] { null, null };
+
+            } catch (IllegalArgumentException | NullPointerException e) {
+                Log.w(getClass().getSimpleName(), "getRisSetEvents: " + e);
+            }
         }
-        return new Calendar[] { null, null };
+
+        //Log.d("DEBUG", "getRiseSetEvents: EventAlias: " + eventID);
+        boolean isRising = eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
+        if (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) || eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf("_"));
+        }
+        d = getData(eventID);
+
+        if (d != null) {
+            return d.getEvents(isRising);
+        } else return new Calendar[] { null, null };
     }
 
     @Override
@@ -517,5 +542,3 @@ public class SuntimesRiseSetDataset
     }
 
 }
-
-

@@ -46,7 +46,7 @@ import java.util.TimeZone;
 
 public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 {
-    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION };
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION, FEATURE_RISESET1 };
 
     public abstract StdSolarCalculator getCalculator();
 
@@ -168,6 +168,36 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         PlainDate localDate = calendarToPlainDate(date);
         ChronoFunction<CalendarDate, Moment> astroSet = this.solarTime.sunset(Twilight.ASTRONOMICAL);
         return momentToCalendar(localDate.get(astroSet));
+    }
+
+    @Override
+    public Calendar getSunriseCalendarForDate( Calendar date, int angle )
+    {
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double eventAngle = 90 + geodeticAngle + (-1 * angle);
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment moment = calculator.sunrise(localDate, latitude, longitude, eventAngle);
+        return momentToCalendar(moment);
+    }
+
+    @Override
+    public Calendar getSunsetCalendarForDate( Calendar date, int angle )
+    {
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double eventAngle = 90 + geodeticAngle + (-1 * angle);
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment moment = calculator.sunset(localDate, latitude, longitude, eventAngle);
+        return momentToCalendar(moment);
     }
 
     @Override

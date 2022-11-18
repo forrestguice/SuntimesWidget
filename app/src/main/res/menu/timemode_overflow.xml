@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="none">
+
+        <item android:id="@+id/action_manage_events"
+            android:icon="?attr/icActionEvents"
+            android:title="@string/configAction_manageEvents"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_help"
+            android:icon="?attr/icActionHelp"
+            android:title="@string/configAction_help"
+            app:showAsAction="never" />
+
+    </group>
+</menu>
