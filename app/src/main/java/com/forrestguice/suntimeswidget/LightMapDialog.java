@@ -358,14 +358,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (graphView != null)
         {
             graphView.setVisibility(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH) ? View.VISIBLE : View.GONE);
-            graphView.setMapTaskListener(new LineGraphView.LineGraphTaskListener() {
+            /*graphView.setMapTaskListener(new LineGraphView.LineGraphTaskListener() {
                 @Override
-                public void onDataModified(SuntimesRiseSetDataset data) {
-                }
+                public void onDataModified(SuntimesRiseSetDataset data) {}
                 @Override
-                public void onFrame(Bitmap frame, long offsetMinutes) {
-                }
-            });
+                public void onFrame(Bitmap frame, long offsetMinutes) {}
+            });*/
         }
 
         if (lightmap != null)
@@ -375,8 +373,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onDataModified( SuntimesRiseSetDataset data ) {
                     LightMapDialog.this.data = data;
-                    if (graphView != null) {
-                        graphView.setData(data);
+                    if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
+                        graphView.updateViews(data);
                     }
                 }
 
@@ -387,6 +385,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     updateTimeText(data);
                     updateSunPositionViews(data);
                     resetButton.setEnabled(offsetMinutes != 0);
+
+                    if (graphView != null && graphView.getVisibility() == View.VISIBLE)
+                    {
+                        Log.d("DEBUG", "offset is " + offsetMinutes);
+                        graphView.getOptions().offsetMinutes = offsetMinutes;
+                        graphView.updateViews(true);
+                    }
                 }
             });
         }
@@ -672,6 +677,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
                     ? 24 * 60 : 1;
+
+            if (graphView != null && graphView.getVisibility() == View.VISIBLE)
+            {
+                LineGraphView.LineGraphOptions options1 = graphView.getOptions();
+                options1.now = options.now;
+                options1.offsetMinutes = options.offsetMinutes;
+                options1.anim_frameOffsetMinutes = options.anim_frameOffsetMinutes;
+                options1.graph_width = LineGraphView.MINUTES_IN_DAY;
+                options1.graph_height = 180;
+                options1.graph_x_offset = 0;
+                options1.graph_y_offset = 0;
+                options1.gridX_minor_show = false;
+                options1.gridY_minor_show = false;
+            }
         }
     }
 
@@ -694,10 +713,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
     @Override
     public void onSaveInstanceState( Bundle state ) {
         lightmap.saveSettings(state);
+        if (graphView != null) {
+            graphView.saveSettings(state);
+        }
     }
     protected void loadSettings(Bundle bundle)
     {
         lightmap.loadSettings(getContext(), bundle);
+        if (graphView != null) {
+            graphView.loadSettings(getContext(), bundle);
+        }
     }
 
     private View.OnClickListener onAltitudeLayoutClick =  new View.OnClickListener()
@@ -961,6 +986,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
             sunAzimuthLabel.setTextSize(suffixSizeSp);
 
             lightmap.themeViews(context, themeOverride);
+            if (graphView != null) {
+                graphView.themeViews(context, themeOverride);
+            }
+
             colorNight = themeOverride.getNightColor();
             colorDay = themeOverride.getDayColor();
             colorAstro = themeOverride.getAstroColor();
@@ -1050,9 +1079,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     protected void updateLightmapViews(@NonNull SuntimesRiseSetDataset data)
     {
+        Context context = getContext();
         if (lightmap != null)
         {
-            Context context = getContext();
             field_civil.updateInfo(context, createInfoArray(data.civilTwilightLength()));
             field_civil.highlight(false);
 
@@ -1071,6 +1100,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
             lightmap.updateViews(data);
             //Log.d("DEBUG", "LightMapDialog updated");
+        }
+        if (graphView != null) {
+            graphView.updateViews(graphView.getVisibility() == View.VISIBLE ? data : null);
         }
     }
 

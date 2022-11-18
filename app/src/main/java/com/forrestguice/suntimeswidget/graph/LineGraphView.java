@@ -236,7 +236,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
     /**
      * @param context a context used to access shared prefs
      */
-    protected void loadSettings(Context context)
+    public void loadSettings(Context context)
     {
         //Log.d("DEBUG", "LineGraphView loadSettings (prefs)");
         if (isInEditMode())
@@ -246,7 +246,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    protected void loadSettings(Context context, @NonNull Bundle bundle )
+    public void loadSettings(Context context, @NonNull Bundle bundle )
     {
         //Log.d(LineGraphView.class.getSimpleName(), "loadSettings (bundle)");
         animated = bundle.getBoolean("animated", animated);
@@ -254,7 +254,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         options.now = bundle.getLong("now", options.now);
     }
 
-    protected boolean saveSettings(Bundle bundle)
+    public boolean saveSettings(Bundle bundle)
     {
         //Log.d(LineGraphView.class.getSimpleName(), "saveSettings (bundle)");
         bundle.putBoolean("animated", animated);
@@ -472,9 +472,9 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 drawAxisUnder(now, data.dataActual, c, p, options);
                 drawSunPath(now, data.calculator(), c, paintPath, options);
                 drawSunPathPoints(now, data.calculator(), c, p, options);
-                drawNow(now, data.calculator(), c, p, options);
                 drawAxisOver(now, data.dataActual, c, p, options);
                 drawLabels(now, data.dataActual, c, paintText, options);
+                drawNow(now, data.calculator(), c, p, options);
             }
 
             long bench_end = System.nanoTime();
