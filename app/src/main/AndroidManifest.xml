@@ -152,6 +152,15 @@
             android:exported="true">
         </activity>
 
+        <!-- Event List Activity -->
+        <activity
+            android:name=".events.EventListActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
+        </activity>
+
         <!-- Action List Activity -->
         <activity
             android:name=".actions.ActionListActivity"

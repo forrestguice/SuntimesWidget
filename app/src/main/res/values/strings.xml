@@ -388,6 +388,7 @@
     <string name="timeMode_blue8">Blue Hour (8\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_none">None</string>                 <!-- label -->  <!-- TODO -->
 
     <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
@@ -765,6 +766,72 @@
     <string name="widgetLabel_distance">Distance</string>           <!-- label -->
 
     <!--
+         CUSTOM EVENTS
+    -->
+    <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
+    <string name="eventlist_dialog_title">Custom Events</string>   <!-- TODO -->
+
+    <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="configLabel_event_alarmitem_desc">%1$s</string>
+
+    <string name="eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
+    <string name="eventalias_title_tag_rising" >↑</string>
+    <string name="eventalias_title_tag_setting">↓</string>
+
+    <string name="sunevent_title">Sun</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
+    <string name="sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
+    <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> at <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
+    <string name="sunevent_phrase_gender">other</string>
+
+    <string name="configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
+    <string name="configLabel_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
+    <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>    <!-- TODO -->
+
+    <string name="configAction_manageEvents">Custom Events</string>   <!-- TODO -->
+    <string name="configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+
+    <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
+    <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
+    <plurals name="eventPlural">
+        <item quantity="one">%d event</item>
+        <item quantity="other">%d events</item>
+    </plurals>   <!-- TODO -->
+
+    <string name="editevent_dialog_id_label">ID</string>    <!-- TODO -->
+    <string name="editevent_dialog_id_hint">Event ID</string>    <!-- TODO -->
+    <string name="editevent_dialog_id_error">@string/addaction_error_id</string>    <!-- TODO -->
+    <string name="editevent_dialog_uri_hint">Event Uri</string>    <!-- TODO -->
+    <string name="editevent_dialog_showevent">Display this event within the app.</string>
+    <string name="editevent_dialog_showevent_off">This event will no longer be displayed.</string>    <!-- TODO -->
+
+    <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title --> <!-- TODO -->
+    <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title --> <!-- TODO -->
+    <string name="editevent_dialog_label_label">Label</string>    <!-- TODO -->
+    <string name="editevent_dialog_label_hint">Event Label</string>    <!-- TODO -->
+    <string name="editevent_dialog_label_error">@string/addaction_error_title</string>    <!-- TODO -->
+    <string name="editevent_dialog_label_suggested">Custom Angle</string>    <!-- TODO -->
+
+    <string name="editevent_dialog_angle">Angle</string>    <!-- TODO -->
+    <string name="editevent_dialog_angle_hint">-6</string>    <!-- TODO -->
+    <string name="editevent_dialog_angle_suffix">°</string>    <!-- TODO -->
+    <string name="editevent_dialog_angle_error">Angle is required!</string>    <!-- TODO -->
+
+    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may cease to work and should be reassigned.</string>    <!-- TODO -->
+    <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
+    <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
+
+    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAlarms, notifications, or widgets using these events may cease to work and should be reassigned.</string>   <!-- TODO -->
+    <string name="clearevents_dialog_ok">Clear</string>   <!-- TODO -->
+    <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
+    <string name="clearevents_toast">Custom events cleared.</string>   <!-- TODO -->
+
+    <!--
          ALARM CLOCK
     -->
     <string name="configLabel_alarmClock">Alarms</string>            <!-- group title -->
@@ -996,6 +1063,7 @@
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="configLabel_ui_fields1">Custom Events</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->  <!-- TODO -->
     <string name="configLabel_ui_misc">Miscellaneous</string>
 
     <!-- App Setting: Verbose Accessibility -->
@@ -1029,6 +1097,32 @@
     <!-- App Setting: show map button -->
     <string name="configLabel_ui_showmapbutton">Show Map Button</string>
     <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>
+
+    <!-- App Setting: emphasize field -->
+    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string-array name="emphasizefield_display">                      <!-- one-to-one with headerText_values -->
+        <item>@string/timeMode_none</item>
+        <item>@string/timeMode_golden</item>
+        <item>@string/timeMode_noon</item>
+        <item>@string/timeMode_official</item>
+        <item>@string/timeMode_civil</item>
+        <item>@string/timeMode_nautical</item>
+        <item>@string/timeMode_astronomical</item>
+        <item>@string/timeMode_blue8</item>
+        <item>@string/timeMode_blue4</item>
+    </string-array>
+    <string-array name="emphasizefield_values" translatable="false">  <!-- one-to-one with headerText_display -->
+        <item>NONE</item>
+        <item>GOLD</item>
+        <item>NOON</item>
+        <item>OFFICIAL</item>   <!-- TimeMode enum names -->
+        <item>CIVIL</item>
+        <item>NAUTICAL</item>
+        <item>ASTRONOMICAL</item>
+        <item>BLUE8</item>
+        <item>BLUE4</item>
+    </string-array>
 
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title -->
@@ -2036,6 +2130,12 @@
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
           To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
     ]]></string>
+    <string name="help_eventlist"><![CDATA[
+          [Icon OK] Choose a custom event.\n
+          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
+          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
+          [Icon View] Marked events are displayed by the app.
+    ]]></string>    <!-- TODO -->
     <!--<string name="help_alarmclock" />-->
     <string name="help_themelist">
           [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
@@ -2127,6 +2227,7 @@
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showheader_icon" translatable="false">true</string>
     <string name="def_app_ui_showheader_text" translatable="false">1</string>  <!-- 1: labels -->
+    <string name="def_app_ui_emphasizefield" translatable="false">OFFICIAL</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_showmapbutton" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>

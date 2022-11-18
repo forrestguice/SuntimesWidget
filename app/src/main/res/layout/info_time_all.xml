@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_date"
             app:layout_constraintStart_toEndOf="@+id/header_gutter0"
             app:layout_constraintEnd_toStartOf="@+id/header_time_sunset"
-            android:orientation="vertical">
+            android:orientation="vertical" android:gravity="bottom">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -105,12 +105,12 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginStart="@dimen/table_set_leftMargin"
             android:layout_marginTop="8dp"
-            android:minWidth="46dp" android:minHeight="16dp"
+            android:minWidth="@dimen/table_cell_minwidth" android:minHeight="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/text_date"
             app:layout_constraintStart_toEndOf="@+id/header_time_sunrise"
             app:layout_constraintEnd_toStartOf="@+id/header_gutter1"
-            android:orientation="vertical">
+            android:orientation="vertical" android:gravity="bottom">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -150,6 +150,42 @@
             android:orientation="vertical">
         </LinearLayout>
 
+        <!-- Bucket 1 -->
+        <LinearLayout android:id="@+id/bucket1_labels"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_date"
+            android:layout_marginBottom="@dimen/table_cell_spacing"
+            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:layout_marginLeft="2dp" android:layout_marginRight="2dp"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:padding="0dp"
+                android:text="Custom 1" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket1_rising"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket1_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket1_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunriseColor"
+                android:text="11:00 AM" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket1_setting"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket1_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket1_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunsetColor" android:text="1:00 PM" />
+        </LinearLayout>
+
         <!-- Astronomical -->
         <TextView
             android:id="@+id/text_time_label_astro"
@@ -157,7 +193,7 @@
             android:layout_marginTop="@dimen/table_cell_spacing"
             android:layout_marginBottom="@dimen/table_cell_spacing"
             android:text="@string/timeMode_astronomical_short"
-            app:layout_constraintTop_toBottomOf="@+id/text_date"
+            app:layout_constraintTop_toBottomOf="@+id/bucket1_labels"
 
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -181,6 +217,42 @@
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
 
+        <!-- Bucket 2 -->
+        <LinearLayout android:id="@+id/bucket2_labels"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_astro"
+            android:layout_marginBottom="@dimen/table_cell_spacing"
+            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:layout_marginLeft="2dp" android:layout_marginRight="2dp"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:padding="0dp"
+                android:text="Custom 2" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket2_rising"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket2_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket2_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunriseColor"
+                android:text="11:00 AM" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket2_setting"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket2_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket2_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunsetColor" android:text="1:00 PM" />
+        </LinearLayout>
+
         <!-- Nautical -->
         <TextView
             android:id="@+id/text_time_label_nautical"
@@ -188,7 +260,7 @@
             android:layout_marginBottom="@dimen/table_cell_spacing"
             android:layout_marginTop="@dimen/table_cell_spacing"
             android:text="@string/timeMode_nautical_short"
-            app:layout_constraintTop_toBottomOf="@+id/text_time_label_astro"
+            app:layout_constraintTop_toBottomOf="@+id/bucket2_labels"
 
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -212,6 +284,42 @@
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
 
+        <!-- Bucket 3 -->
+        <LinearLayout android:id="@+id/bucket3_labels"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_nautical"
+            android:layout_marginBottom="@dimen/table_cell_spacing"
+            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:layout_marginLeft="2dp" android:layout_marginRight="2dp"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:padding="0dp"
+                android:text="Custom 3" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket3_rising"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket3_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket3_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunriseColor"
+                android:text="11:00 AM" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket3_setting"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket3_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket3_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunsetColor" android:text="1:00 PM" />
+        </LinearLayout>
+
         <!--Blue Hour (8 deg) -->
         <TextView
             android:id="@+id/text_time_label_blue8"
@@ -220,7 +328,7 @@
             android:layout_marginTop="@dimen/table_cell_spacing"
             android:text="@string/timeMode_blue8_short"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_time_label_nautical"
+            app:layout_constraintTop_toBottomOf="@+id/bucket3_labels"
              />
 
         <TextView
@@ -243,6 +351,42 @@
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM" />
 
+        <!-- Bucket 4 -->
+        <LinearLayout android:id="@+id/bucket4_labels"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_blue8"
+            android:layout_marginBottom="@dimen/table_cell_spacing"
+            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:layout_marginLeft="2dp" android:layout_marginRight="2dp"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:padding="0dp"
+                android:text="Custom 4" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket4_rising"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket4_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket4_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunriseColor"
+                android:text="11:00 AM" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket4_setting"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket4_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket4_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunsetColor" android:text="1:00 PM" />
+        </LinearLayout>
+
         <!-- Civil -->
         <TextView
             android:id="@+id/text_time_label_civil"
@@ -250,7 +394,7 @@
             android:layout_marginBottom="@dimen/table_cell_spacing"
             android:layout_marginTop="@dimen/table_cell_spacing"
             android:text="@string/timeMode_civil_short"
-            app:layout_constraintTop_toBottomOf="@+id/text_time_label_blue8"
+            app:layout_constraintTop_toBottomOf="@+id/bucket4_labels"
 
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -274,6 +418,42 @@
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
 
+        <!-- Bucket 5 -->
+        <LinearLayout android:id="@+id/bucket5_labels"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_civil"
+            android:layout_marginBottom="@dimen/table_cell_spacing"
+            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:layout_marginLeft="2dp" android:layout_marginRight="2dp"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:padding="0dp"
+                android:text="Custom 5" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket5_rising"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket5_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket5_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunriseColor"
+                android:text="11:00 AM" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket5_setting"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket5_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket5_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunsetColor" android:text="1:00 PM" />
+        </LinearLayout>
+
         <!--Blue Hour (4 deg) -->
         <TextView
             android:id="@+id/text_time_label_blue4"
@@ -282,7 +462,7 @@
             android:layout_marginTop="@dimen/table_cell_spacing"
             android:text="@string/timeMode_blue4_short"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_time_label_civil"
+            app:layout_constraintTop_toBottomOf="@+id/bucket5_labels"
             />
 
         <TextView
@@ -305,6 +485,42 @@
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM" />
 
+        <!-- Bucket 6 -->
+        <LinearLayout android:id="@+id/bucket6_labels"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_blue4"
+            android:layout_marginBottom="@dimen/table_cell_spacing"
+            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:layout_marginLeft="2dp" android:layout_marginRight="2dp"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:padding="0dp"
+                android:text="Custom 6" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket6_rising"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket6_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket6_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunriseColor"
+                android:text="11:00 AM" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket6_setting"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket6_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket6_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunsetColor" android:text="1:00 PM" />
+        </LinearLayout>
+
         <!-- Official -->
         <TextView
             android:id="@+id/text_time_label_official"
@@ -312,8 +528,7 @@
             android:layout_marginBottom="@dimen/table_cell_spacing"
             android:layout_marginTop="@dimen/table_cell_spacing"
             android:text="@string/timeMode_official_short"
-            app:layout_constraintTop_toBottomOf="@+id/text_time_label_blue4"
-
+            app:layout_constraintTop_toBottomOf="@+id/bucket6_labels"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -354,19 +569,49 @@
             app:layout_constraintEnd_toEndOf="@+id/table_rule"
             app:layout_constraintTop_toBottomOf="@+id/table_rule" />
 
-
+        <!-- Bucket 7 -->
+        <LinearLayout android:id="@+id/bucket7_labels"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/table_rule1"
+            android:layout_marginLeft="2dp" android:layout_marginRight="2dp"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:padding="0dp"
+                android:text="Custom 7" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket7_rising"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket7_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket7_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunriseColor"
+                android:text="11:00 AM" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket7_setting"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket7_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket7_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunsetColor" android:text="1:00 PM" />
+        </LinearLayout>
 
         <!-- Golden Hour -->
         <TextView
             android:id="@+id/text_time_label_golden"
             style="@style/SunsetTimeTextView"
-
-            android:layout_marginTop="0dp" android:paddingTop="@dimen/table_cell_spacing_half"
-            android:layout_marginBottom="0dp" android:paddingBottom="@dimen/table_cell_spacing_half"
+            android:layout_marginBottom="@dimen/table_cell_spacing"
+            android:layout_marginTop="@dimen/table_cell_spacing"
             android:text="@string/timeMode_golden_short"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/table_rule1"
-             />
+            app:layout_constraintTop_toBottomOf="@+id/bucket7_labels" />
 
         <TextView
             android:id="@+id/text_time_golden_morning"
@@ -387,7 +632,43 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_golden"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM" />
-        
+
+        <!-- Bucket 8 -->
+        <LinearLayout android:id="@+id/bucket8_labels"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_golden"
+            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:layout_marginBottom="@dimen/table_cell_spacing"
+            android:layout_marginLeft="2dp" android:layout_marginRight="2dp"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:padding="0dp"
+                android:text="Custom 8" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket8_rising"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket8_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket8_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunriseColor"
+                android:text="11:00 AM" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/bucket8_setting"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bucket8_labels"
+            app:layout_constraintBottom_toBottomOf="@+id/bucket8_labels"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            android:orientation="vertical">
+            <TextView style="@style/SunsetTimeTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="?attr/sunsetColor" android:text="1:00 PM" />
+        </LinearLayout>
+
         <!-- Solar Noon -->
         <TextView
             android:id="@+id/text_time_label_noon"
@@ -396,7 +677,7 @@
             android:layout_marginBottom="0dp" android:paddingBottom="@dimen/table_cell_spacing_half"
             android:text="@string/timeMode_noon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_time_label_golden"
+            app:layout_constraintTop_toBottomOf="@+id/bucket8_labels"
              />
 
         <TextView

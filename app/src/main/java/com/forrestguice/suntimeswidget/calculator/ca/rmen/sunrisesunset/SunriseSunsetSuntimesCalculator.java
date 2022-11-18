@@ -310,5 +310,15 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return timezone;
     }
 
+    @Override
+    public Calendar getSunriseCalendarForDate( Calendar date, int angle ) {
+        return null;   // TODO: supported by this lib?
+    }
+
+    @Override
+    public Calendar getSunsetCalendarForDate( Calendar date, int angle ) {
+        return null;   // TODO: supported by this lib?
+    }
+
 }
 

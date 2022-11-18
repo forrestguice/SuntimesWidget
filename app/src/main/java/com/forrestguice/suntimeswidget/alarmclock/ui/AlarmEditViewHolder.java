@@ -26,7 +26,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -41,7 +40,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
-import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
+import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -186,21 +185,19 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             text_location.setText(item.location.getLabel());
             text_repeat.setText( displayRepeating(context, item, selected));
-
             text_event.setText(displayEvent(context, item));
-            Log.d("DEBUG", "set event text: " + text_event.getText());
 
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             if (event != null)
             {
                 boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location.getLatitudeAsDouble() < 0);
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
-                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
+                Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
+                text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
 
             } else {
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.timezone, (int)iconSize, (int)iconSize);
-                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.timezone));
+                Drawable eventIcon = EventIcons.getIconDrawable(context, EventIcons.getIconTag(context, item), (int)iconSize, (int)iconSize);
+                text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, item.timezone));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
             }
 
@@ -414,9 +411,26 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public static CharSequence displayEvent(Context context, AlarmClockItem item)
     {
         String eventString = item.getEvent();
-        if (eventString != null) {
+        if (eventString != null)
+        {
             AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
-            return eventItem.getTitle();
+            String summary = eventItem.getSummary();
+            if (summary != null)
+            {
+                int[] attrs = { R.attr.text_disabledColor };
+                TypedArray a = context.obtainStyledAttributes(attrs);
+                int color = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_disabled_dark));
+                a.recycle();
+
+                summary = context.getString(R.string.configLabel_event_alarmitem_desc, summary);
+                String displayString = context.getString(R.string.configLabel_event_alarmitem, eventItem.getTitle(), summary);
+                SpannableString s = SuntimesUtils.createRelativeSpan(null, displayString, summary, 0.75f);
+                s = SuntimesUtils.createColorSpan(s, displayString, summary, color);
+                return s;
+
+            } else {
+                return eventItem.getTitle();
+            }
 
         } else if (item.timezone != null) {
             Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));

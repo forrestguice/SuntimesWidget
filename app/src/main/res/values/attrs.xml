@@ -93,6 +93,7 @@
     <attr name="icActionWarning" format="reference" />
     <attr name="icActionError" format="reference" />
     <attr name="icActionWidgets" format="reference" />
+    <attr name="icActionEvents" format="reference" />
     <attr name="icActionAppearance" format="reference" />
     <attr name="icActionExtension" format="reference" />
     <attr name="icActionAltitude" format="reference" />
@@ -128,12 +129,15 @@
     <attr name="icActionPrevious" format="reference" />
 
     <attr name="icActionExpand" format="reference" />
+    <attr name="icActionVisibilityOn" format="reference" />
+    <attr name="icActionVisibilityOff" format="reference" />
 
     <attr name="icActionGPS" format="reference" />
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
 
     <attr name="checkVibrate" format="reference" />
+    <attr name="checkVisibility" format="reference" />
 
     <attr name="text_size_tiny" format="dimension" />
     <attr name="text_size_xsmall" format="dimension" />
