@@ -231,11 +231,14 @@ public class WorldMapWidgetSettings
         prefs.putBoolean(prefs_prefix + key + mapTag, value);
         prefs.apply();
     }
-    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag)
+    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag) {
+        return loadWorldMapPref(context, appWidgetId, key, mapTag, null);
+    }
+    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag, Boolean defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
-        return prefs.getBoolean(prefs_prefix + key + mapTag, defaultWorldMapFlag(key));
+        return prefs.getBoolean(prefs_prefix + key + mapTag, (defaultValue != null ? defaultValue : defaultWorldMapFlag(key)));
     }
     public static void deleteWorldMapPref(Context context, int appWidgetId, String key, String mapTag)
     {
