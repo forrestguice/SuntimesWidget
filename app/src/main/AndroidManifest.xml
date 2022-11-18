@@ -25,7 +25,7 @@
        * https://developer.android.com/reference/android/provider/Settings.html#ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
        * https://stackoverflow.com/questions/44862176/request-ignore-battery-optimizations-how-to-do-it-right
        -->
-    <uses-permission android:name="android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
