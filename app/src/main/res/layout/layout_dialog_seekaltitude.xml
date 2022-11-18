@@ -15,17 +15,23 @@
 
     <TextView android:id="@+id/suffix_altitude"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
         android:text="°∠" />
 
     <Button
-        android:id="@+id/button_ok"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground" android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
-        android:paddingTop="8dp" android:paddingBottom="8dp"
-        android:paddingLeft="8dp" android:paddingStart="8dp"
-        android:paddingRight="4dp" android:paddingEnd="4dp"
-        android:text="@string/configAction_search" android:textColor="?attr/text_accentColor"
+        android:id="@+id/button_rising"
+        android:layout_width="48dp" android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground" android:layout_margin="8dp"
+        android:text="@string/eventalias_title_tag_rising" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/sunrise"
         android:src="?attr/icActionSearch" />
 
+    <Button
+        android:id="@+id/button_setting"
+        android:layout_width="48dp" android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground" android:layout_margin="8dp"
+        android:text="@string/eventalias_title_tag_setting" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/sunset"
+        android:src="?attr/icActionSearch" />
 
 </LinearLayout>

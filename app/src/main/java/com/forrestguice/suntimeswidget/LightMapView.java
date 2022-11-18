@@ -328,21 +328,30 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    public void seekDateTime( Context context, Calendar calendar )
+    public void seekDateTime( Context context, @Nullable Calendar calendar )
     {
-        colors.offsetMinutes = (Math.abs(colors.now - calendar.getTimeInMillis()) / 1000 / 60);
+        if (calendar != null) {
+            seekDateTime(context, calendar.getTimeInMillis());
+        }
+    }
+    public void seekDateTime( Context context, long datetime )
+    {
+        long offsetMillis = datetime - colors.now;
+        colors.offsetMinutes = (offsetMillis / 1000 / 60);
         updateViews(true);
     }
-
-    public void seekAltitude( Context context, @Nullable Double degrees )
+    public Long seekAltitude( Context context, @Nullable Integer degrees, boolean rising )
     {
-        SuntimesCalculator calculator = data.calculator();
-
-        Calendar lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, data.location()));
-        lmt.setTimeInMillis(colors.now + colors.offsetMinutes);
-        lmt.set(Calendar.HOUR_OF_DAY, 12);
-        lmt.set(Calendar.MINUTE, 0);
-        seekDateTime(context, lmt);
+        if (data != null && degrees != null)
+        {
+            Log.d("DEBUG", "useAltitude: " + data.location().useAltitude());
+            Calendar calendar = Calendar.getInstance(data.timezone());
+            calendar.setTimeInMillis(colors.now + colors.offsetMinutes);
+            Calendar event = rising ? data.calculator().getSunriseCalendarForDate(calendar, degrees)
+                                    : data.calculator().getSunsetCalendarForDate(calendar, degrees);
+            seekDateTime(context, event);
+            return ((event != null) ? event.getTimeInMillis() : null);
+        } else return null;
     }
 
     public void setOffsetMinutes( long value ) {

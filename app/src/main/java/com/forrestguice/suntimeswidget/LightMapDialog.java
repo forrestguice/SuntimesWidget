@@ -711,6 +711,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
         }
     };
+
+    private PopupWindow seekAltitudePopup = null;
     protected void showSeekAltitudePopup(@NonNull final Context context, @NonNull View v)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -719,7 +721,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
             PopupWindow popupWindow = new PopupWindow(createSeekAltitudePopupView(context), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent)));
             popupWindow.setOutsideTouchable(true);
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    seekAltitudePopup = null;
+                }
+            });
+            seekAltitudePopup = popupWindow;
             popupWindow.showAsDropDown(v);
+        }
+    }
+    protected void dismissSeekAltitudePopup()
+    {
+        if (seekAltitudePopup != null) {
+            seekAltitudePopup.dismiss();
         }
     }
     protected View createSeekAltitudePopupView(@NonNull final Context context)
@@ -734,9 +749,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 final EditText editText = (EditText) popupView.findViewById(R.id.edit_altitude);
                 if (editText != null)
                 {
-                    editText.setOnEditorActionListener(new TextView.OnEditorActionListener()
+                    /*editText.setOnEditorActionListener(new TextView.OnEditorActionListener()
                     {
-                        private final View.OnClickListener onEditorDone = onSeekAltitudeClicked(context, editText);
+                        private final View.OnClickListener onEditorDone = onSeekAltitudeClicked(context, editText, true);
                         @Override
                         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -744,15 +759,18 @@ public class LightMapDialog extends BottomSheetDialogFragment
                             }
                             return false;
                         }
-                    });
+                    });*/
                     editText.setText(lastInput);
                     editText.selectAll();
                     editText.requestFocus();
                 }
-
-                final Button okButton = (Button) popupView.findViewById(R.id.button_ok);
-                if (okButton != null) {
-                    okButton.setOnClickListener(onSeekAltitudeClicked(context, editText));
+                final Button risingButton = (Button) popupView.findViewById(R.id.button_rising);
+                if (risingButton != null) {
+                    risingButton.setOnClickListener(onSeekAltitudeClicked(context, editText, true));
+                }
+                final Button settingButton = (Button) popupView.findViewById(R.id.button_setting);
+                if (settingButton != null) {
+                    settingButton.setOnClickListener(onSeekAltitudeClicked(context, editText, false));
                 }
             }
             return popupView;
@@ -760,14 +778,19 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return null;
     }
 
-    protected View.OnClickListener onSeekAltitudeClicked(final Context context, final EditText input)
+    protected View.OnClickListener onSeekAltitudeClicked(final Context context, final EditText edit, final boolean rising)
     {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (input != null) {
+                if (edit != null) {
                     try {
-                        seekAltitude(context, Double.parseDouble(input.getText().toString()));
+                        double input = Double.parseDouble(edit.getText().toString());
+                        if (seekAltitude(context, input, rising) != null) {
+                            dismissSeekAltitudePopup();
+                        } else {
+                            Toast.makeText(context, context.getString(R.string.schedalarm_dialog_note2, utils.formatAsElevation(input, 0)), Toast.LENGTH_SHORT).show();
+                        }
                     } catch (NumberFormatException e) {
                         Log.w(getClass().getSimpleName(), "onSeekAltitudeClicked: Failed to parse input; " + e);
                     }
@@ -776,10 +799,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
         };
     }
 
-    public void seekAltitude( Context context, @Nullable Double degrees )
+    public Long seekAltitude( Context context, @Nullable Double degrees, boolean rising )
     {
         WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKALTITUDE, MAPTAG_LIGHTMAP, (degrees != null ? degrees + "" : ""));
-        lightmap.seekAltitude(context, degrees);
+        if (degrees != null) {
+            return lightmap.seekAltitude(context, (int)((double)degrees), rising);
+        } else return null;
     }
 
 
