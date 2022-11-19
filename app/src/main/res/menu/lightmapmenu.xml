@@ -24,6 +24,35 @@
             </menu>
         </item>
 
+        <item android:id="@+id/optionsSubMenu"
+            android:icon="?attr/icActionGraph"
+            android:title="@string/configAction_options"
+            app:showAsAction="never">
+            <menu>
+
+                <item android:id="@+id/graphOption_showGrid"
+                    android:title="Grid"
+                    android:checkable="true"
+                    app:showAsAction="never" />   <!-- TODO -->
+
+                <item android:id="@+id/graphOption_showLabels"
+                    android:title="Labels"
+                    android:checkable="true"
+                    app:showAsAction="never" />   <!-- TODO -->
+
+                <item android:id="@+id/graphOption_showAxis"
+                    android:title="Axis"
+                    android:checkable="true"
+                    app:showAsAction="never" />   <!-- TODO -->
+
+                <item android:id="@+id/graphOption_fillPath"
+                    android:title="Filled Path"
+                    android:checkable="true"
+                    app:showAsAction="never" />   <!-- TODO -->
+
+            </menu>
+        </item>
+
         <item android:id="@+id/action_showgraph"
             android:icon="?attr/icActionGraph"
             android:title="@string/configAction_lineGraph"

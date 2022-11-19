@@ -404,6 +404,17 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public static final String PREF_KEY_LIGHTMAP_SEEKALTITUDE = "seekaltitude";
     public static final String DEF_KEY_LIGHTMAP_SEEKALTITUDE = "";
 
+    public static final String PREF_KEY_GRAPH_SHOWLABELS = "showlabels";
+    public static final boolean DEF_KEY_GRAPH_SHOWLABELS = true;
+
+    public static final String PREF_KEY_GRAPH_SHOWAXIS = "showaxis";
+    public static final boolean DEF_KEY_GRAPH_SHOWAXIS = true;
+
+    public static final String PREF_KEY_GRAPH_FILLPATH = "fillpath";
+    public static final boolean DEF_KEY_GRAPH_FILLPATH = true;
+
+    public static final boolean DEF_KEY_WORLDMAP_MINORGRID = false;
+
     private View.OnClickListener playClickListener = new View.OnClickListener()
     {
         @Override
@@ -464,6 +475,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     };
 
+
+
     private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
@@ -477,6 +490,48 @@ public class LightMapDialog extends BottomSheetDialogFragment
             boolean toggledValue;
             switch (item.getItemId())
             {
+                case R.id.action_showgraph:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, toggledValue);
+                    item.setChecked(toggledValue);
+                    graphView.setVisibility(item.isChecked() ? View.VISIBLE : View.GONE);
+                    graphView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            initPeekHeight(getDialog());
+                        }
+                    });
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_showGrid:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_showLabels:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWLABELS);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_showAxis:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWAXIS);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_fillPath:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
                 case R.id.action_date:
                     if (dialogListener != null) {
                         dialogListener.onShowDate(getMapTime(System.currentTimeMillis()));
@@ -487,14 +542,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     if (dialogListener != null) {
                         dialogListener.onShowMap(getMapTime(System.currentTimeMillis()));
                     }
-                    return true;
-
-                case R.id.action_showgraph:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, toggledValue);
-                    item.setChecked(toggledValue);
-                    graphView.setVisibility(item.isChecked() ? View.VISIBLE : View.GONE);
-                    updateViews();
                     return true;
 
                 case R.id.action_seekaltitude:
@@ -526,6 +573,22 @@ public class LightMapDialog extends BottomSheetDialogFragment
         MenuItem showGraphItem = menu.findItem(R.id.action_showgraph);
         if (showGraphItem != null) {
             showGraphItem.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH));
+        }
+        MenuItem graphOption_showGrid = menu.findItem(R.id.graphOption_showGrid);
+        if (graphOption_showGrid != null) {
+            graphOption_showGrid.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID));
+        }
+        MenuItem graphOption_showLabels = menu.findItem(R.id.graphOption_showLabels);
+        if (graphOption_showLabels != null) {
+            graphOption_showLabels.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWLABELS));
+        }
+        MenuItem graphOption_showAxis = menu.findItem(R.id.graphOption_showAxis);
+        if (graphOption_showAxis != null) {
+            graphOption_showAxis.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWAXIS));
+        }
+        MenuItem graphOption_fillPath = menu.findItem(R.id.graphOption_fillPath);
+        if (graphOption_fillPath != null) {
+            graphOption_fillPath.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH));
         }
 
         MenuItem submenuItem = menu.findItem(R.id.addonSubMenu);
@@ -686,10 +749,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 options1.anim_frameOffsetMinutes = options.anim_frameOffsetMinutes;
                 options1.graph_width = LineGraphView.MINUTES_IN_DAY;
                 options1.graph_height = 180;
-                options1.graph_x_offset = 0;
-                options1.graph_y_offset = 0;
-                options1.gridX_minor_show = false;
-                options1.gridY_minor_show = false;
+                options1.graph_x_offset = options1.graph_y_offset = 0;
+                options1.gridX_minor_show = options1.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
+                options1.axisX_labels_show = options1.axisY_labels_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWLABELS);
+                options1.axisX_show = options1.axisY_show = options1.gridY_major_show = options1.gridX_major_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWAXIS);
+                options1.sunPath_show_fill = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
             }
         }
     }

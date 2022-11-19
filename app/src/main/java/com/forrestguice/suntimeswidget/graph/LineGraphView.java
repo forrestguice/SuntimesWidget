@@ -654,17 +654,21 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 double pointSize = Math.sqrt(c.getWidth() * c.getHeight()) / options.sunPath_points_width;
                 for (double degrees : options.sunPath_points_elevations)
                 {
-                    Integer[] minutes = findMinutes(degrees, calculator);
-                    for (Integer m : minutes ) {
-                        drawPoint(m, degrees, (int)pointSize, 0, c, p, options.sunPath_points_color, options.sunPath_points_color, null);
+                    Integer[] minutes = findMinutes(now, degrees, calculator);
+                    if (minutes != null) {
+                        for (Integer m : minutes) {
+                            drawPoint(m, degrees, (int)pointSize, 0, c, p, options.sunPath_points_color, options.sunPath_points_color, null);
+                        }
                     }
                 }
             }
         }
 
-        protected Integer[] findMinutes(double degrees, SuntimesCalculator calculator)
+        @Nullable
+        protected Integer[] findMinutes(Calendar now, double degrees, SuntimesCalculator calculator)
         {
             Calendar lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, calculator.getLocation()));
+            lmt.setTimeInMillis(now.getTimeInMillis());
             lmt = toStartOfDay(lmt);
             long startMillis = lmt.getTimeInMillis();
             lmt = toNoon(lmt);
@@ -847,10 +851,10 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void drawLabels(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
         {
-            if (options.axisX_show && options.axisX_labels_show) {
+            if (options.axisX_labels_show) {
                 drawAxisXLabels(c, p, options);
             }
-            if (options.axisY_show && options.axisY_labels_show) {
+            if (options.axisY_labels_show) {
                 drawAxisYLabels(c, p, options);
             }
         }
