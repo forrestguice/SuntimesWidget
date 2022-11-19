@@ -121,7 +121,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         return contentDescription;        // time, elevation, azimuth
     }
 
-    public static final int HEIGHT_TINY   = 16;
+    public static final int HEIGHT_TINY   = 12;
     public static final int HEIGHT_SMALL  = 16;
     public static final int HEIGHT_MEDIUM = 28;
     public static final int HEIGHT_LARGE  = 40;

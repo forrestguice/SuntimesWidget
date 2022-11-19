@@ -65,6 +65,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -368,7 +369,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         if (graphView != null)
         {
-            graphView.setVisibility(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH) ? View.VISIBLE : View.GONE);
+            boolean showGraph = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
+            resizeLightMapView(context, showGraph);
+            graphView.setVisibility(showGraph ? View.VISIBLE : View.GONE);
             /*graphView.setMapTaskListener(new LineGraphView.LineGraphTaskListener() {
                 @Override
                 public void onDataModified(SuntimesRiseSetDataset data) {}
@@ -407,6 +410,15 @@ public class LightMapDialog extends BottomSheetDialogFragment
             });
         }
         updateOptions(getContext());
+    }
+
+    protected void resizeLightMapView(Context context, boolean showGraph)
+    {
+        if (lightmap != null) {
+            ViewGroup.LayoutParams params = lightmap.getLayoutParams();
+            params.height = SuntimesUtils.dpToPixels(context, (showGraph ? 14 : 32));
+            lightmap.setLayoutParams(params);
+        }
     }
 
     public static final String MAPTAG_LIGHTMAP = "_lightmap";
@@ -514,7 +526,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, toggledValue);
                     item.setChecked(toggledValue);
-                    graphView.setVisibility(item.isChecked() ? View.VISIBLE : View.GONE);
+                    resizeLightMapView(context, toggledValue);
+                    graphView.setVisibility(toggledValue ? View.VISIBLE : View.GONE);
                     graphView.post(new Runnable() {
                         @Override
                         public void run() {
