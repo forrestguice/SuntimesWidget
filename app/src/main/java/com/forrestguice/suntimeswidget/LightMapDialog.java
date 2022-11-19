@@ -294,9 +294,22 @@ public class LightMapDialog extends BottomSheetDialogFragment
         sunAzimuthSetting = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_setting);
         sunAzimuthLabel = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_current_label);
 
-        View altitudeLayout = dialogView.findViewById(R.id.info_altitude_layout);
-        if (altitudeLayout != null) {
-            altitudeLayout.setOnClickListener(onAltitudeLayoutClick);
+        View clickArea_altitude = dialogView.findViewById(R.id.clickArea_altitude);
+        if (clickArea_altitude != null) {
+            clickArea_altitude.setOnClickListener(onAltitudeLayoutClick);
+        }
+
+        View clickArea_rising = dialogView.findViewById(R.id.clickArea_rising);
+        if (clickArea_rising != null) {
+            clickArea_rising.setOnClickListener(onSunriseLayoutClick);
+        }
+        View clickArea_noon = dialogView.findViewById(R.id.clickArea_noon);
+        if (clickArea_noon != null) {
+            clickArea_noon.setOnClickListener(onNoonLayoutClick);
+        }
+        View clickArea_setting = dialogView.findViewById(R.id.clickArea_setting);
+        if (clickArea_setting != null) {
+            clickArea_setting.setOnClickListener(onSunsetLayoutClick);
         }
 
         View shadowLayout = dialogView.findViewById(R.id.info_shadow_layout);
@@ -789,6 +802,40 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     }
 
+    private View.OnClickListener onSunriseLayoutClick =  new View.OnClickListener()
+    {
+        @Override
+        public void onClick(@NonNull View v)
+        {
+            Context context = getContext();
+            if (context != null) {
+                seekSunrise(context);
+            }
+        }
+    };
+    private View.OnClickListener onSunsetLayoutClick =  new View.OnClickListener()
+    {
+        @Override
+        public void onClick(@NonNull View v)
+        {
+            Context context = getContext();
+            if (context != null) {
+                seekSunset(context);
+            }
+        }
+    };
+    private View.OnClickListener onNoonLayoutClick =  new View.OnClickListener()
+    {
+        @Override
+        public void onClick(@NonNull View v)
+        {
+            Context context = getContext();
+            if (context != null) {
+                seekNoon(context);
+            }
+        }
+    };
+
     private View.OnClickListener onAltitudeLayoutClick =  new View.OnClickListener()
     {
         @Override
@@ -892,10 +939,27 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKALTITUDE, MAPTAG_LIGHTMAP, (degrees != null ? degrees + "" : ""));
         if (degrees != null) {
-            return lightmap.seekAltitude(context, (int)((double)degrees), rising);
+            return seekDateTime(context, lightmap.findAltitude(context, (int)((double)degrees), rising));
         } else return null;
     }
-
+    public Long seekNoon(Context context) {
+        return seekDateTime(context, data.dataNoon.sunriseCalendarToday().getTimeInMillis());
+    }
+    public Long seekSunrise(Context context) {
+        return seekDateTime(context, data.dataActual.sunriseCalendarToday().getTimeInMillis());
+    }
+    public Long seekSunset(Context context) {
+        return seekDateTime(context, data.dataActual.sunsetCalendarToday().getTimeInMillis());
+    }
+    public Long seekDateTime( Context context, Long datetime )
+    {
+        if (datetime != null)
+        {
+            stopMap(false);
+            lightmap.seekDateTime(context, datetime);
+        }
+        return datetime;
+    }
 
     private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
     {

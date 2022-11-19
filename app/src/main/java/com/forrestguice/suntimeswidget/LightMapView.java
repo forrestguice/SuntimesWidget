@@ -344,12 +344,22 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     {
         if (data != null && degrees != null)
         {
-            Log.d("DEBUG", "useAltitude: " + data.location().useAltitude());
+            Long event = findAltitude(context, degrees, rising);
+            if (event != null) {
+                seekDateTime(context, event);
+                return event;
+            }
+        }
+        return null;
+    }
+    public Long findAltitude( Context context, @Nullable Integer degrees, boolean rising )
+    {
+        if (data != null && degrees != null)
+        {
             Calendar calendar = Calendar.getInstance(data.timezone());
             calendar.setTimeInMillis(colors.now + colors.offsetMinutes);
             Calendar event = rising ? data.calculator().getSunriseCalendarForDate(calendar, degrees)
-                                    : data.calculator().getSunsetCalendarForDate(calendar, degrees);
-            seekDateTime(context, event);
+                    : data.calculator().getSunsetCalendarForDate(calendar, degrees);
             return ((event != null) ? event.getTimeInMillis() : null);
         } else return null;
     }
