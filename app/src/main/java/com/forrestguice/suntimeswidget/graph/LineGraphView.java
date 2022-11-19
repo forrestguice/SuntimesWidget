@@ -125,7 +125,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         super.onSizeChanged(w, h, oldw, oldh);
         if (resizable)
         {
-            //Log.d(LineGraphView.class.getSimpleName(), "onSizeChanged: " + oldw + "," + oldh + " -> " + w + "," + h);
+            Log.d(LineGraphView.class.getSimpleName(), "onSizeChanged: " + oldw + "," + oldh + " -> " + w + "," + h);
             updateViews(true);
         }
     }
@@ -177,9 +177,9 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
-            //Log.w(LineGraphView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(LineGraphView.this.hashCode())  +  ") .. restarting task.");
+            Log.w(LineGraphView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(LineGraphView.this.hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
-        } //else Log.d(LineGraphView.class.getSimpleName(), "updateViews: starting task " + data);
+        } else Log.d(LineGraphView.class.getSimpleName(), "updateViews: starting task " + data);
 
         if (getWidth() == 0 || getHeight() == 0) {
             //Log.d(LineGraphView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
@@ -188,13 +188,13 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         drawTask = new LineGraphTask();
         drawTask.setListener(drawTaskListener);
-        drawTask.execute(data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetMinutes);
+        drawTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetMinutes);
     }
 
     private LineGraphTaskListener drawTaskListener = new LineGraphTaskListener() {
         @Override
         public void onStarted() {
-            //Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onStarted: " + Integer.toHexString(LineGraphView.this.hashCode()));
+            Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onStarted: " + Integer.toHexString(LineGraphView.this.hashCode()));
             if (graphListener != null) {
                 graphListener.onStarted();
             }
@@ -211,7 +211,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         @Override
         public void onFrame(Bitmap frame, long offsetMinutes) {
-            //Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onFrame: " + Integer.toHexString(LineGraphView.this.hashCode()));
+            Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onFrame: " + Integer.toHexString(LineGraphView.this.hashCode()));
             setImageBitmap(frame);
             if (graphListener != null) {
                 graphListener.onFrame(frame, offsetMinutes);
@@ -333,6 +333,13 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
+    public void seekDateTime( Context context, long datetime )
+    {
+        long offsetMillis = datetime - options.now;
+        options.offsetMinutes = (offsetMillis / 1000 / 60);
+        updateViews(true);
+    }
+
     public void setOffsetMinutes( long value ) {
         options.offsetMinutes = value;
         updateViews(true);
@@ -396,7 +403,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             int i = 0;
             while (i < numFrames || numFrames <= 0)
             {
-                //Log.d(LightMapTask.class.getSimpleName(), "generating frame " + i + " | " + w + "," + h);
+                Log.d(getClass().getSimpleName(), "generating frame " + i + " | " + w + "," + h + " :: " + numFrames);
                 if (isCancelled()) {
                     break;
                 }
@@ -456,7 +463,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             Canvas c = new Canvas(b);
             initPaint();
 
-            drawBackground(c, p, options);
+            drawBackground(c, paintBackground, options);
             if (data != null)
             {
                 options.location = data.location();
@@ -470,8 +477,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
                 drawGrid(now, data.dataActual, c, p, options);
                 drawAxisUnder(now, data.dataActual, c, p, options);
-                drawSunPath(now, data.calculator(), c, paintPath, options);
-                drawSunPathPoints(now, data.calculator(), c, p, options);
+                drawPaths(now, data.calculator(), c, p, options);
                 drawAxisOver(now, data.dataActual, c, p, options);
                 drawLabels(now, data.dataActual, c, paintText, options);
                 drawNow(now, data.calculator(), c, p, options);
@@ -485,6 +491,12 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         {
             if (p == null) {
                 p = new Paint(Paint.ANTI_ALIAS_FLAG);
+            }
+
+            if (paintBackground == null)
+            {
+                paintBackground = new Paint();
+                paintBackground.setStyle(Paint.Style.FILL);
             }
 
             if (paintText == null)
@@ -502,7 +514,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 paintPath.setAntiAlias(true);
             }
         }
-        private Paint p, paintText, paintPath;
+        private Paint p, paintBackground, paintText, paintPath;
 
         protected Calendar graphTime(@Nullable SuntimesRiseSetDataset data, @NonNull LineGraphOptions options)
         {
@@ -584,7 +596,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         protected double minutesToBitmapCoords(Canvas c, double minute, LineGraphOptions options) {
             return Math.round((minute / options.graph_width) * c.getWidth() - (options.graph_x_offset / options.graph_width) * c.getWidth());
         }
-        protected double timeToBitmapCoords(Canvas c, long timestamp, LineGraphOptions options)
+        /*protected double timeToBitmapCoords(Canvas c, long timestamp, LineGraphOptions options)
         {
             if (tz_lmt == null) {
                 tz_lmt = WidgetTimezones.localMeanTime(null, options.location);
@@ -593,14 +605,14 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             lmt.setTimeInMillis(timestamp);
             int minute = lmt.get(Calendar.HOUR_OF_DAY) * 60 + lmt.get(Calendar.MINUTE);
             return minutesToBitmapCoords(c, minute, options);
-        }
-        private TimeZone tz_lmt = null;
+        }*/
+        /*private TimeZone tz_lmt = null;
         public TimeZone tzLmt(Location location) {
             if (tz_lmt == null) {
                 tz_lmt = WidgetTimezones.localMeanTime(null, location);
             }
             return tz_lmt;
-        }
+        }*/
 
         /**
          * @param c canvas (bitmap dimensions)
@@ -667,7 +679,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         @Nullable
         protected Integer[] findMinutes(Calendar now, double degrees, SuntimesCalculator calculator)
         {
-            Calendar lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, calculator.getLocation()));
+            Calendar lmt = lmt(calculator.getLocation());
             lmt.setTimeInMillis(now.getTimeInMillis());
             lmt = toStartOfDay(lmt);
             long startMillis = lmt.getTimeInMillis();
@@ -737,12 +749,130 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             return calendar;
         }
 
+        protected void drawPaths(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
+        {
+            if (options.moonPath_show_line) {
+                drawMoonPath(now, calculator, c, paintPath, options);
+            }
+            if (options.sunPath_show_line)
+            {
+                drawSunPath(now, calculator, c, paintPath, options);
+                drawSunPathPoints(now, calculator, c, p, options);
+            }
+        }
+
+        private ArrayList<Path> sun_paths = new ArrayList<>(), moon_paths = new ArrayList<>();
+        private HashMap<Path, Double> sun_elevations = new HashMap<>(), moon_elevations = new HashMap<>();
+
+        protected void drawMoonPath(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
+        {
+            if (options.moonPath_show_fill)
+            {
+                HashMap<Path, Double> moonFill = createMoonPath(now, calculator, c, options, true, moon_paths, moon_elevations);
+                p.setStyle(Paint.Style.FILL);
+                for (Path path : moonFill.keySet())
+                {
+                    boolean isDay = (moonFill.get(path) >= 0);
+                    p.setColor(isDay ? options.moonPath_color_day_closed : options.moonPath_color_night_closed);
+                    p.setAlpha(isDay ? options.moonPath_color_day_closed_alpha : options.moonPath_color_night_closed_alpha);
+                    c.drawPath(path, p);
+                }
+            }
+
+            if (options.moonPath_show_line)
+            {
+                double r = Math.sqrt(c.getWidth() * c.getHeight());
+                HashMap<Path, Double> moonPath = createMoonPath(now, calculator, c, options, false, moon_paths, moon_elevations);
+                p.setStrokeWidth((float)(r / (float)options.moonPath_width));
+                p.setStyle(Paint.Style.STROKE);
+                for (Path path : moonPath.keySet())
+                {
+                    boolean isDay = (moonPath.get(path) >= 0);
+                    p.setColor(isDay ? options.moonPath_color_day : options.moonPath_color_night);
+                    p.setAlpha(255);
+                    c.drawPath(path, p);
+                }
+            }
+        }
+        protected HashMap<Path, Double> createMoonPath(Calendar now, SuntimesCalculator calculator, Canvas c, LineGraphOptions options, boolean closed, ArrayList<Path> paths, HashMap<Path,Double> elevations)
+        {
+            int path_width = 2 * MINUTES_IN_DAY ; // options.graph_width;
+
+            paths.clear();
+            elevations.clear();
+
+            Calendar lmt = lmt(calculator.getLocation());
+            lmt.setTimeInMillis(now.getTimeInMillis());
+            toStartOfDay(lmt);
+
+            SuntimesCalculator.MoonPosition position;
+            double elevation_prev = -90;   // sun elevation (previous iteration)
+            elevation_min = elevation_max = 0;
+            float x = 0, y = 0;
+
+            Path path = null;
+            int minute = 0;
+            while (minute < path_width)
+            {
+                position = calculator.getMoonPosition(lmt);
+                if (position.elevation < elevation_min) {
+                    elevation_min = position.elevation;
+                } else if (position.elevation > elevation_max) {
+                    elevation_max = position.elevation;
+                }
+
+                int d = (int)(minute / MINUTES_IN_DAY);
+                double m = (d * MINUTES_IN_DAY) + (lmt.get(Calendar.HOUR_OF_DAY) * 60) + lmt.get(Calendar.MINUTE);
+                x = (float) minutesToBitmapCoords(c, m, options);
+                y = (float) degreesToBitmapCoords(c, position.elevation, options);
+
+                if (path != null
+                        && ((elevation_prev < 0 && position.elevation >= 0)
+                        || (elevation_prev >= 0 && position.elevation < 0))) {
+                    path.lineTo(x, y);
+                    if (closed) {
+                        path.close();
+                    }
+                    path = null;
+                }
+
+                if (path == null)
+                {
+                    path = new Path();
+                    paths.add(path);
+                    elevations.put(path, position.elevation);
+
+                    if (closed) {
+                        path.moveTo(x, (float)degreesToBitmapCoords(c, 0, options));
+                        path.lineTo(x, y);
+                    } else {
+                        path.moveTo(x, y);
+                    }
+
+                } else {
+                    path.lineTo(x, y);
+                }
+
+                elevation_prev = position.elevation;
+                lmt.add(Calendar.MINUTE, options.moonPath_interval);
+                minute += options.moonPath_interval;
+            }
+
+            if (closed)
+            {
+                path = paths.get(paths.size()-1);
+                path.lineTo(x, (float)degreesToBitmapCoords(c, 0, options));
+                path.close();
+            }
+            return elevations;
+        }
+
 
         protected void drawSunPath(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
         {
             if (options.sunPath_show_fill)
             {
-                HashMap<Path, Double> sunFill = createSunPath(now, calculator, c, options, true);
+                HashMap<Path, Double> sunFill = createSunPath(now, calculator, c, options, true, sun_paths, sun_elevations);
                 p.setStyle(Paint.Style.FILL);
                 for (Path path : sunFill.keySet())
                 {
@@ -756,7 +886,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             if (options.sunPath_show_line)
             {
                 double r = Math.sqrt(c.getWidth() * c.getHeight());
-                HashMap<Path, Double> sunPath = createSunPath(now, calculator, c, options, false);
+                HashMap<Path, Double> sunPath = createSunPath(now, calculator, c, options, false, sun_paths, sun_elevations);
                 p.setStrokeWidth((float)(r / (float)options.sunPath_width));
                 p.setStyle(Paint.Style.STROKE);
                 for (Path path : sunPath.keySet())
@@ -770,14 +900,14 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
 
         private double elevation_min = -90, elevation_max = 90;
-        protected HashMap<Path, Double> createSunPath(Calendar now, SuntimesCalculator calculator, Canvas c, LineGraphOptions options, boolean closed)
+        protected HashMap<Path, Double> createSunPath(Calendar now, SuntimesCalculator calculator, Canvas c, LineGraphOptions options, boolean closed, ArrayList<Path> paths, HashMap<Path,Double> elevations)
         {
             int path_width = 2 * MINUTES_IN_DAY ; // options.graph_width;
 
-            ArrayList<Path> paths = new ArrayList<>();
-            HashMap<Path, Double> elevations = new HashMap<>();
+            paths.clear();
+            elevations.clear();
 
-            Calendar lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, calculator.getLocation()));
+            Calendar lmt = lmt(calculator.getLocation());
             lmt.setTimeInMillis(now.getTimeInMillis());
             toStartOfDay(lmt);
 
@@ -930,7 +1060,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             calendar.set(Calendar.MINUTE, (options.axisY_interval % 60));
             calendar.set(Calendar.SECOND, 0);
 
-            Calendar lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, data.location()));
+            Calendar lmt = lmt(data.location());
             lmt.setTimeInMillis(calendar.getTimeInMillis());
 
             int n = 2 * MINUTES_IN_DAY;
@@ -992,12 +1122,21 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
+        private Calendar lmt = null;
+        private Calendar lmt(Location location)
+        {
+            if (lmt == null) {
+                lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, location));
+            }
+            return lmt;
+        }
+
         protected void drawGridY(Calendar now, SuntimesData data, Canvas c, Paint p, float interval, LineGraphOptions options)
         {
             Calendar calendar = Calendar.getInstance(now.getTimeZone());
             toStartOfDay(calendar);
 
-            Calendar lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, data.location()));
+            Calendar lmt = lmt(data.location());
             lmt.setTimeInMillis(calendar.getTimeInMillis());
 
             int n = 2 * MINUTES_IN_DAY;
@@ -1028,7 +1167,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void drawPoint(long time, SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
         {
-            Calendar lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, calculator.getLocation()));
+            Calendar lmt = lmt(calculator.getLocation());
             lmt.setTimeInMillis(time);
             double minute = lmt.get(Calendar.HOUR_OF_DAY) * 60 + lmt.get(Calendar.MINUTE);
             double degrees = calculator.getSunPosition(lmt).elevation;
@@ -1145,20 +1284,30 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         public boolean sunPath_show_line = true;
         public boolean sunPath_show_fill = true;
-        public boolean sunPath_show_points = true;
+        public boolean sunPath_show_points = false;
         public int sunPath_color_day = Color.YELLOW;
         public int sunPath_color_day_closed = Color.YELLOW;
         public int sunPath_color_day_closed_alpha = 200;
         public int sunPath_color_night = Color.BLUE;
         public int sunPath_color_night_closed = Color.BLUE;
         public int sunPath_color_night_closed_alpha = 200;
+        public double sunPath_width = 140;       // (1440 min/day) / 140 = 10 min wide
+        public int sunPath_interval = 5;   // minutes
 
         public double[] sunPath_points_elevations = new double[] { 30, -50 };  // TODO
         public int sunPath_points_color = Color.MAGENTA;    // TODO
         public float sunPath_points_width = 150;
 
-        public double sunPath_width = 140;       // (1440 min/day) / 140 = 10 min wide
-        public int sunPath_interval = 2;   // minutes
+        public boolean moonPath_show_line = true;
+        public boolean moonPath_show_fill = true;
+        public int moonPath_color_day = Color.LTGRAY;
+        public int moonPath_color_day_closed = Color.LTGRAY;
+        public int moonPath_color_day_closed_alpha = 200;
+        public int moonPath_color_night = Color.CYAN;
+        public int moonPath_color_night_closed = Color.CYAN;
+        public int moonPath_color_night_closed_alpha = 200;
+        public double moonPath_width = 140;       // (1440 min/day) / 140 = 10 min wide
+        public int moonPath_interval = 5;   // minutes
 
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorBackground;
@@ -1194,7 +1343,9 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                     R.attr.graphColor_pointStroke,          // 6
                     R.attr.graphColor_axis,                 // 7
                     R.attr.graphColor_grid,                 // 8
-                    R.attr.graphColor_labels,                // 9
+                    R.attr.graphColor_labels,               // 9
+                    R.attr.moonsetColor,                   // 10
+                    R.attr.moonsetColor                     // 11
             };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             colorDay = sunPath_color_day = sunPath_color_day_closed = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
@@ -1207,6 +1358,8 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, typedArray.getResourceId(7, R.color.graphColor_axis_dark));
             gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, typedArray.getResourceId(8, R.color.graphColor_grid_dark));
             axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, typedArray.getResourceId(9, R.color.graphColor_labels_dark));
+            moonPath_color_day = moonPath_color_day_closed = ContextCompat.getColor(context, typedArray.getResourceId(10, R.color.moonIcon_color_rising_dark));
+            moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, typedArray.getResourceId(11, R.color.moonIcon_color_setting_dark));
             typedArray.recycle();
             init(context);
         }
@@ -1237,6 +1390,8 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, R.color.graphColor_axis_dark);
             gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, R.color.graphColor_grid_dark);
             axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, R.color.graphColor_labels_dark);
+            moonPath_color_day = moonPath_color_day_closed = ContextCompat.getColor(context, R.color.moonIcon_color_rising_dark);
+            moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, R.color.moonIcon_color_setting_dark);
             init(context);
         }
 
@@ -1252,6 +1407,8 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, R.color.graphColor_axis_light);
             gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, R.color.graphColor_grid_light);
             axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, R.color.graphColor_labels_light);
+            moonPath_color_day = moonPath_color_day_closed = ContextCompat.getColor(context, R.color.moonIcon_color_rising_light);
+            moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, R.color.moonIcon_color_setting_light);
             init(context);
         }
     }
