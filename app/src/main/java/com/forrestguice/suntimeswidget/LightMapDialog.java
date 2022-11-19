@@ -44,14 +44,12 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -386,9 +384,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onDataModified( SuntimesRiseSetDataset data ) {
                     LightMapDialog.this.data = data;
-                    if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
-                        graphView.updateViews(data);
-                    }
+                    //if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
+                    //    graphView.updateViews(data);
+                    //}
                 }
 
                 @Override
@@ -399,12 +397,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     updateSunPositionViews(data);
                     resetButton.setEnabled(offsetMinutes != 0);
 
-                    if (graphView != null && graphView.getVisibility() == View.VISIBLE)
-                    {
-                        Log.d("DEBUG", "offset is " + offsetMinutes);
-                        graphView.getOptions().offsetMinutes = offsetMinutes;
-                        graphView.updateViews(true);
-                    }
+                    //if (graphView != null && graphView.getVisibility() == View.VISIBLE)
+                    //{
+                    //    Log.d("DEBUG", "offset is " + offsetMinutes);
+                    //    graphView.getOptions().offsetMinutes = offsetMinutes;
+                    //    graphView.updateViews(true);
+                    //}
                 }
             });
         }
@@ -416,6 +414,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public static final boolean DEF_KEY_LIGHTMAP_SHOWGRAPH = false;
     public static final String PREF_KEY_LIGHTMAP_SEEKALTITUDE = "seekaltitude";
     public static final String DEF_KEY_LIGHTMAP_SEEKALTITUDE = "";
+
+    public static final String PREF_KEY_GRAPH_SHOWMOON = "showmoon";
+    public static final boolean DEF_KEY_GRAPH_SHOWMOON = false;
 
     public static final String PREF_KEY_GRAPH_SHOWLABELS = "showlabels";
     public static final boolean DEF_KEY_GRAPH_SHOWLABELS = true;
@@ -472,6 +473,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
             if (context != null) {
                 boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
                 lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() + (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
+                if (graphView != null) {
+                    graphView.setOffsetMinutes(graphView.getOffsetMinutes() + (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
+                }
             }
         }
     };
@@ -484,6 +488,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
             if (context != null) {
                 boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
                 lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() - (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
+                if (graphView != null) {
+                    graphView.setOffsetMinutes(graphView.getOffsetMinutes() - (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
+                }
             }
         }
     };
@@ -545,6 +552,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     updateViews();
                     return true;
 
+                case R.id.graphOption_showMoon:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
                 case R.id.action_date:
                     if (dialogListener != null) {
                         dialogListener.onShowDate(getMapTime(System.currentTimeMillis()));
@@ -602,6 +616,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
         MenuItem graphOption_fillPath = menu.findItem(R.id.graphOption_fillPath);
         if (graphOption_fillPath != null) {
             graphOption_fillPath.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH));
+        }
+        MenuItem graphOption_showMoon = menu.findItem(R.id.graphOption_showMoon);
+        if (graphOption_showMoon != null) {
+            graphOption_showMoon.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON));
         }
 
         MenuItem submenuItem = menu.findItem(R.id.addonSubMenu);
@@ -766,7 +784,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 options1.gridX_minor_show = options1.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
                 options1.axisX_labels_show = options1.axisY_labels_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWLABELS);
                 options1.axisX_show = options1.axisY_show = options1.gridY_major_show = options1.gridX_major_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWAXIS);
+                options1.sunPath_show_line = true;
                 options1.sunPath_show_fill = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
+                options1.moonPath_show_line = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON);
+                options1.moonPath_show_fill = options1.sunPath_show_fill;
             }
         }
     }
@@ -774,6 +795,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private void playMap()
     {
         lightmap.startAnimation();
+        if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
+            graphView.startAnimation();
+        }
         updateMediaButtons();
     }
 
@@ -781,8 +805,14 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         if (reset) {
             lightmap.resetAnimation(true);
+            if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
+                graphView.resetAnimation(true);
+            }
         } else {
             lightmap.stopAnimation();
+            if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
+                graphView.stopAnimation();
+            }
         }
         updateMediaButtons();
     }
@@ -956,6 +986,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (datetime != null)
         {
             stopMap(false);
+            if (graphView != null) {
+                graphView.seekDateTime(context, datetime);
+            }
             lightmap.seekDateTime(context, datetime);
         }
         return datetime;
