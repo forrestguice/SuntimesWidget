@@ -44,6 +44,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -406,7 +407,11 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static Intent getServiceIntent(Context context) {
-        return new Intent(context, NotificationService.class);
+        Intent intent = new Intent(context, NotificationService.class);
+        if (Build.VERSION.SDK_INT >= 16) {
+            intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        }
+        return intent;
     }
 
     public static Intent getFullscreenIntent(Context context, Uri data)
@@ -1174,7 +1179,10 @@ public class AlarmNotifications extends BroadcastReceiver
                 } else {
                     if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action))
                     {
-                        Log.d(TAG, action + ": schedule all");
+                        Log.d(TAG, action + ": schedule all (prevCompleted=" + AlarmSettings.bootCompletedWasRun(getApplicationContext()) + ")");
+                        final long startTime = SystemClock.elapsedRealtime();
+                        AlarmSettings.savePrefLastBootCompleted_started(getApplicationContext(), startTime);
+
                         AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
                         alarmListTask.setParam_enabledOnly(true);
                         alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
@@ -1185,7 +1193,11 @@ public class AlarmNotifications extends BroadcastReceiver
                                 {
                                     @Override
                                     public void onObservedAll() {
-                                        Log.d(TAG, "schedule all completed");
+                                        final long endTime = SystemClock.elapsedRealtime();
+                                        final long duration = endTime - startTime;
+                                        AlarmSettings.savePrefLastBootCompleted_finished(getApplicationContext(), System.currentTimeMillis(), duration);
+                                        Log.d(TAG, "schedule all completed (took " + duration + "ms); " + AlarmSettings.bootCompletedWasRun(getApplicationContext()));
+                                        sendBroadcast(getFullscreenBroadcast(Uri.parse("content:")));  // trigger ui update
                                         notifications.stopSelf(startId);
                                     }
                                 });
