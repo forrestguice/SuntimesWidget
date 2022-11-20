@@ -1213,7 +1213,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         alarmListTask.setParam_enabledOnly(true);
                         alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
-                            public void onItemsLoaded(Long[] ids)
+                            public void onItemsLoaded(final Long[] ids)
                             {
                                 final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener()
                                 {
@@ -1230,7 +1230,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                                 notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
                                                 notifications.stopSelf(startId);
                                             }
-                                        }, NOTIFICATION_SCHEDULE_ALL_DURATION);
+                                        }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));
                                     }
                                 });
 
@@ -1329,7 +1329,7 @@ public class AlarmNotifications extends BroadcastReceiver
             return new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
             {
                 @Override
-                public void onItemsLoaded(Long[] ids)
+                public void onItemsLoaded(final Long[] ids)
                 {
                     final long startedAt = System.currentTimeMillis();
                     final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener() {
@@ -1345,7 +1345,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                     notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
                                     notifications.stopSelf(startId);
                                 }
-                            }, NOTIFICATION_SCHEDULE_ALL_DURATION);
+                            }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));
                         }
                     });
                     if (ids.length == 0) {
