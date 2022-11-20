@@ -1197,7 +1197,6 @@ public class AlarmNotifications extends BroadcastReceiver
                                         final long duration = endTime - startTime;
                                         AlarmSettings.savePrefLastBootCompleted_finished(getApplicationContext(), System.currentTimeMillis(), duration);
                                         Log.d(TAG, "schedule all completed (took " + duration + "ms); " + AlarmSettings.bootCompletedWasRun(getApplicationContext()));
-                                        sendBroadcast(getFullscreenBroadcast(Uri.parse("content:")));  // trigger ui update
                                         notifications.stopSelf(startId);
                                     }
                                 });
@@ -1802,6 +1801,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         Log.d(TAG, "State Saved (onScheduledNotification)");
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
                     }
                     if (chained != null) {
                         chained.onFinished(true, item);
@@ -1825,6 +1825,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                         notifications.dismissNotification(context, (int)item.rowID);
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
 
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
@@ -1859,6 +1860,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
                             notifications.showNotification(context, item, true);             // show upcoming reminder
                         }
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
 
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
