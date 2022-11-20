@@ -30,12 +30,9 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
-
-import java.util.Calendar;
 
 public class SunLayout_2x1_0 extends SunLayout
 {
@@ -45,7 +42,7 @@ public class SunLayout_2x1_0 extends SunLayout
         this.layoutID = R.layout.layout_widget_2x1_0;
     }
 
-    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+    protected WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
 
     @Override
     public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)
@@ -76,6 +73,20 @@ public class SunLayout_2x1_0 extends SunLayout
         }
     }
 
+    protected float[] findAdjustedSize(Context context, int appWidgetId)
+    {
+        boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
+        int numRows = 1, numCols = 2;
+        numRows += showSolarNoon ? 1 : 0;
+        numRows += showDayDelta ? 1 : 0;
+        int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2] + 32)) / numCols,
+                ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
+        float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
+        return adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
+    }
+
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
@@ -90,14 +101,7 @@ public class SunLayout_2x1_0 extends SunLayout
         {
             if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
             {
-                int numRows = 1;
-                numRows += showSolarNoon ? 1 : 0;
-                numRows += showDayDelta ? 1 : 0;
-
-                int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2] + 32)) / 2,
-                                         ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
-                float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
+                float[] adjustedSizeSp = findAdjustedSize(context, appWidgetId);
                 if (adjustedSizeSp[0] > timeSizeSp)
                 {
                     float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);

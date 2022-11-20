@@ -363,6 +363,32 @@
         </activity>
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget 0_3x1: Resizable (falls back to static 3x1 for api less than 14) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".SuntimesWidget0_3x1"
+            android:label="@string/app_name_widget0"
+            android:icon="@mipmap/ic_launcher">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_WIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_sun0_3x1" />
+        </receiver>
+
+        <activity
+            android:name=".SuntimesConfigActivity0_3x1" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 1: Flippable widget (uses RemoteView collections [requires api 14+]) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver
