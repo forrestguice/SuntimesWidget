@@ -262,7 +262,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     if (data != null)
                     {
                         long alarmID = ContentUris.parseId(data);
-                        list.reloadAdapter(alarmID);
+                        list.reloadAdapter((alarmID != -1 ? alarmID : null));
                         Log.d("DEBUG", "adapter reloaded: " + alarmID);
 
                     } else Log.e(TAG, "updateReceiver.onReceive: null data!");
@@ -926,6 +926,12 @@ public class AlarmClockActivity extends AppCompatActivity
     }
     private void checkWarnings()
     {
+        if (!AlarmSettings.bootCompletedWasRun(this))
+        {
+            Log.w(TAG, "checkWarnings: BOOT_COMPLETED hasn't run yet! triggering it now..");
+            sendBroadcast(new Intent(AlarmNotifications.getAlarmIntent(this, AlarmNotifications.ACTION_SCHEDULE, null)));
+        }
+
         notificationWarning.setShouldShow(!NotificationManagerCompat.from(this).areNotificationsEnabled());
         if (batteryOptimizationWarning != null) {
             batteryOptimizationWarning.setShouldShow(!AlarmSettings.isIgnoringBatteryOptimizations(this));
