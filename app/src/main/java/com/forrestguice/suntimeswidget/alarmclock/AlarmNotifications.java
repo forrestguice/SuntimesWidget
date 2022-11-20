@@ -1203,7 +1203,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     itemTask.execute(ContentUris.parseId(data));
 
                 } else {
-                    if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action))
+                    if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action))
                     {
                         Log.d(TAG, action + ": schedule all (prevCompleted=" + AlarmSettings.bootCompletedWasRun(getApplicationContext()) + ")");
                         final long startTime = SystemClock.elapsedRealtime();
