@@ -435,11 +435,16 @@ public class AlarmNotifications extends BroadcastReceiver
         return intent;
     }
 
-    public static IntentFilter getUpdateBroadcastIntentFilter()
+    public static IntentFilter getUpdateBroadcastIntentFilter() {
+        return getUpdateBroadcastIntentFilter(true);
+    }
+    public static IntentFilter getUpdateBroadcastIntentFilter(boolean withData)
     {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_UPDATE_UI);
-        filter.addDataScheme("content");
+        if (withData) {
+            filter.addDataScheme("content");
+        }
         return filter;
     }
 
@@ -1228,6 +1233,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                             @Override
                                             public void run() {
                                                 notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
+                                                sendBroadcast(getFullscreenBroadcast(null));
                                                 notifications.stopSelf(startId);
                                             }
                                         }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));

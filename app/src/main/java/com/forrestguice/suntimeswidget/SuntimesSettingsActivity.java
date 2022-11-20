@@ -1613,17 +1613,15 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
                 if (action != null)
                 {
-                    if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
-                        if (data != null)
-                        {
-                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AlarmPrefsFragment.this.setBootCompletedPrefEnabled(true);
-                                    initPref_alarms_bootCompleted(AlarmPrefsFragment.this);
-                                }
-                            }, 500);
-                        } else Log.e(LOG_TAG, "updateAlarmPrefsReceiver.onReceive: null data!");
+                    if (action.equals(AlarmNotifications.ACTION_UPDATE_UI))
+                    {
+                        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                AlarmPrefsFragment.this.setBootCompletedPrefEnabled(true);
+                                initPref_alarms_bootCompleted(AlarmPrefsFragment.this);
+                            }
+                        }, 500);
                     } else Log.e(LOG_TAG, "updateAlarmPrefsReceiver.onReceive: unrecognized action: " + action);
                 } else Log.e(LOG_TAG, "updateAlarmPrefsReceiver.onReceive: null action!");
             }
@@ -1633,7 +1631,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onResume()
         {
             super.onResume();
-            getActivity().registerReceiver(updateAlarmPrefsReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter());
+            getActivity().registerReceiver(updateAlarmPrefsReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter(false));
             initPref_alarms(AlarmPrefsFragment.this);
         }
 
