@@ -44,6 +44,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.provider.Settings;
@@ -59,6 +60,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
@@ -100,6 +102,9 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
+
+    public static final int NOTIFICATION_SCHEDULE_ALL_ID = -10;
+    public static final int NOTIFICATION_SCHEDULE_ALL_DURATION = 4000;
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -940,6 +945,27 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+    public static Notification createProgressNotification(Context context, String title, String message)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setDefaults(Notification.DEFAULT_LIGHTS);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setCategory(NotificationCompat.CATEGORY_PROGRESS);
+        builder.setProgress(0,0,true);
+        builder.setAutoCancel(false);
+        builder.setOngoing(true);
+        builder.setContentTitle(title);
+        builder.setContentText(message);
+        builder.setSmallIcon(R.drawable.ic_action_alarms_light);
+        //builder.setColor(ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark))
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.setOnlyAlertOnce(false);
+
+        PendingIntent pendingView = PendingIntent.getActivity(context, title.hashCode(), getAlarmListIntent(context, null), PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.addAction(R.drawable.ic_action_settings, context.getString(R.string.app_name_alarmclock), pendingView);
+        return builder.build();
+    }
+
     public static String formatOffsetMessage(Context context, long offset, long timestamp, @NonNull AlarmEvent.AlarmEventItem event)
     {
         String eventString = event.getEventID();
@@ -1197,7 +1223,14 @@ public class AlarmNotifications extends BroadcastReceiver
                                         final long duration = endTime - startTime;
                                         AlarmSettings.savePrefLastBootCompleted_finished(getApplicationContext(), System.currentTimeMillis(), duration);
                                         Log.d(TAG, "schedule all completed (took " + duration + "ms); " + AlarmSettings.bootCompletedWasRun(getApplicationContext()));
-                                        notifications.stopSelf(startId);
+                                        new Handler(Looper.getMainLooper()).postDelayed(new Runnable()
+                                        {
+                                            @Override
+                                            public void run() {
+                                                notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
+                                                notifications.stopSelf(startId);
+                                            }
+                                        }, NOTIFICATION_SCHEDULE_ALL_DURATION);
                                     }
                                 });
 
@@ -1222,6 +1255,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 }
                             }
                         });
+                        notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
                         alarmListTask.execute();
 
                     } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
@@ -1238,6 +1272,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (tzOffset != tzOffset_prev)
                             {
                                 Log.i(TAG, "system tz offset changed from " + tzOffset_prev + " to " + tzOffset);
+                                notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
                                 findEnabledAlarms(getApplicationContext(), rescheduleTaskListener_clocktime(startId));
                                 rescheduling = true;
                             }
@@ -1294,12 +1329,23 @@ public class AlarmNotifications extends BroadcastReceiver
             return new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
             {
                 @Override
-                public void onItemsLoaded(Long[] ids) {
+                public void onItemsLoaded(Long[] ids)
+                {
+                    final long startedAt = System.currentTimeMillis();
                     final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener() {
                         @Override
-                        public void onObservedAll() {
-                            Log.d(TAG, "Re-schedule completed (time zone changed)");
-                            notifications.stopSelf(startId);
+                        public void onObservedAll()
+                        {
+                            long duration = System.currentTimeMillis() - startedAt;
+                            Log.d(TAG, "Re-schedule completed (time zone changed); took " + duration + "ms");
+                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable()
+                            {
+                                @Override
+                                public void run() {
+                                    notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
+                                    notifications.stopSelf(startId);
+                                }
+                            }, NOTIFICATION_SCHEDULE_ALL_DURATION);
                         }
                     });
                     if (ids.length == 0) {
