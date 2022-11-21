@@ -25,13 +25,10 @@
         android:id="@+id/layout_noon">
 
         <ImageView
-            android:id="@+id/icon_time_noon"
-            style="@style/SunsetTimeImageView2"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-
-            android:background="@drawable/ic_noon_large"
-            android:scaleType="centerInside"
+            android:id="@+id/icon_time_noon" style="@style/SunsetTimeImageView2"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:src="@drawable/ic_noon_large1"
+            android:scaleType="fitCenter"
             android:contentDescription="@string/timeMode_noon_short"/>
 
         <LinearLayout style="@style/SunsetTimeLayout"
