@@ -356,6 +356,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
+    protected WidgetModeAdapter createAdapter_widgetModeSun3x1()
+    {
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun3x1.values());
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
+        return adapter;
+    }
+
     protected ArrayAdapter<WidgetSettings.ActionMode> createAdapter_actionMode()
     {
         ArrayAdapter<WidgetSettings.ActionMode> adapter = new ArrayAdapter<WidgetSettings.ActionMode>(this, R.layout.layout_listitem_oneline, supportedActionModes());
@@ -971,7 +979,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void initWidgetMode3x1(Context context)
     {
-        // EMPTY
+        if (spinner_3x1mode != null) {
+            spinner_3x1mode.setAdapter(createAdapter_widgetModeSun3x1());
+        }
     }
     protected void loadWidgetMode3x1(Context context)
     {
@@ -2243,6 +2253,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         updateWidgetModeAdapter(spinner_1x1mode, themeValues);    // refresh widget previews
         updateWidgetModeAdapter(spinner_2x1mode, themeValues);
+        updateWidgetModeAdapter(spinner_3x1mode, themeValues);
         updateWidgetModeAdapter(spinner_3x1mode, themeValues);
         updateWidgetModeAdapter(spinner_3x2mode, themeValues);
         updateWidgetModeAdapter(spinner_3x3mode, themeValues);

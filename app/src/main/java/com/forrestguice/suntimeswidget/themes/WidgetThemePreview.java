@@ -170,7 +170,7 @@ public class WidgetThemePreview
             updatePreview_position2(previewLayout, values);
             //updatePreview_solstice(previewLayout);  // TODO
 
-        } else if (WidgetSettings.WidgetModeSun1x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeSun2x1.supportsLayout(layoutID)) {
+        } else if (WidgetSettings.WidgetModeSun1x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeSun2x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeSun3x1.supportsLayout(layoutID)) {
             updatePreview_sun(previewLayout, values);
 
         } else if (WidgetSettings.WidgetModeMoon1x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeMoon2x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeMoon3x1.supportsLayout(layoutID)) {

@@ -450,6 +450,49 @@ public class WidgetSettings
     }
 
     /**
+     * WidgetModeSun3x1
+     */
+    public static enum WidgetModeSun3x1 implements WidgetModeDisplay
+    {
+        WIDGETMODE3x1_BOTH_1("Sunrise, Noon, and Sunset", R.layout.layout_widget_3x1_0);
+
+        private WidgetModeSun3x1(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        private final int layoutID;
+        public int getLayoutID() {
+            return layoutID;
+        }
+
+        private String displayString;
+        public String getDisplayString() {
+            return displayString;
+        }
+        public void setDisplayString( String displayString ) {
+            this.displayString = displayString;
+        }
+        public static void initDisplayStrings( Context context ) {
+            WIDGETMODE3x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode3x1_sunrise_sunset_noon));
+        }
+        public String toString() {
+            return displayString;
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    /**
      * WidgetModeSunPos1x1
      */
     public static enum WidgetModeSunPos1x1 implements WidgetModeDisplay
@@ -3101,6 +3144,7 @@ public class WidgetSettings
         ActionMode.initDisplayStrings(context);
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSun2x1.initDisplayStrings(context);
+        WidgetModeSun3x1.initDisplayStrings(context);
         WidgetModeSunPos1x1.initDisplayStrings(context);
         WidgetModeSunPos3x1.initDisplayStrings(context);
         WidgetModeSunPos3x2.initDisplayStrings(context);
