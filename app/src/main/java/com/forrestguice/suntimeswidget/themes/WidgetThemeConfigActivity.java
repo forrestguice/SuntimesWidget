@@ -171,6 +171,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public static final int PREVIEWID_SUNPOS_3x1 = 3;
     public static final int PREVIEWID_SUNPOS_3x2 = 4;
     public static final int PREVIEWID_CLOCK_1x1 = 5;
+    public static final int PREVIEWID_SUNPOS_1x3 = 6;
 
     public static final int ADD_THEME_REQUEST = 0;
     public static final int EDIT_THEME_REQUEST = 1;

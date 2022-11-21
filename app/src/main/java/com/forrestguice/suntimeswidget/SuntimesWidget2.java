@@ -26,6 +26,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X3_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X3_0;
@@ -123,7 +124,11 @@ public class SuntimesWidget2 extends SuntimesWidget0
                     layout = WidgetSettings.loadSunPos3x1ModePref_asLayout(context, appWidgetId);  // new SunPosLayout_3X1_0();
                 }
             } else {
-                layout = WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
+                if (mustFitWithinDp[1] >= minDimen_x3) {
+                    layout = new SunPosLayout_1X3_0();
+                } else {
+                    layout = WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
+                }
             }
         } else {
             layout = defLayout;
