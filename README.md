@@ -179,7 +179,7 @@ Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>Ne
 Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
 Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
-Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
+Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>, and <u><a href=https://github.com/sr093906>sr093906</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 
