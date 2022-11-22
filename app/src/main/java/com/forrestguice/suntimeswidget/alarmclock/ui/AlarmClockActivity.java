@@ -897,7 +897,8 @@ public class AlarmClockActivity extends AppCompatActivity
         if (showWarnings && batteryOptimizationWarning != null
                 && batteryOptimizationWarning.shouldShow() && !batteryOptimizationWarning.wasDismissed())
         {
-            batteryOptimizationWarning.initWarning(this, addButton, "[w] " + getString(R.string.configLabel_alarms_optWhiteList_unlisted));
+            String message = getString(AlarmSettings.aggressiveBatteryOptimizations(this) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
+            batteryOptimizationWarning.initWarning(this, addButton, "[w] " + message);
             batteryOptimizationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_optWhiteList), new View.OnClickListener()
             {
                 @Override
