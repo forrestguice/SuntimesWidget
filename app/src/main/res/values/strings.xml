@@ -880,6 +880,24 @@
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>
     <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
 
+    <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
+        <item>Samsung</item>
+        <item>OnePlus</item>
+        <item>Huawei</item>
+        <item>Xiaomi</item>
+        <item>Meizu</item>
+        <item>Asus</item>
+        <item>WIKO</item>
+        <item>LENOVO</item>
+        <item>OPPO</item>
+        <item>Vivo</item>
+        <item>realme</item>
+        <item>Blackview</item>
+        <item>Sony</item>
+        <item>Unihertz</item>
+        <!--<item>Google</item>--> <!-- uncomment to test with emulator -->
+    </string-array>
+
     <string name="configLabel_alarms_notifications">Notifications</string>
     <string name="configLabel_alarms_notifications_on">On</string>
     <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>
