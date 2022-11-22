@@ -17,15 +17,7 @@
 
     <uses-permission android:name="org.codeaurora.permission.POWER_OFF_ALARM" />  <!-- needed for hardware dependent 'power off' alarms -->
 
-    <!--
-       REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-       This permission is discouraged (and prohibited by Play Store policies). We are declaring it
-       here anyway to see if it helps improve alarm reliability on problematic devices.
-
-       * https://developer.android.com/reference/android/provider/Settings.html#ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-       * https://stackoverflow.com/questions/44862176/request-ignore-battery-optimizations-how-to-do-it-right
-       -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />  <!-- needed for reliable delivery of alarms and notifications -->
 
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
