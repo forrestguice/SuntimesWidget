@@ -216,6 +216,7 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
     <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
     <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
@@ -768,7 +769,7 @@
     <string name="configAction_sortAlarms_by_creation">Data de Criação</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Limpar</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Limpar</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Definir Offset</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Definir Offset</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Definir Tipo</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Definir Rótulo</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Definir Local</string>         <!-- button (contentDescription) -->
@@ -1614,7 +1615,7 @@
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         O nome qualificado da classe de Activity a ser lançado.<br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
           Pra <b>adicionar</b> ou <b>apagar</b> um widget, você deve fazer isso na tela inicial do sistema.<br/><br/>
           Pra <b>reconfigurar</b> um widget existente, você pode fazer isso selecionando da seguinte lista.<br/>
@@ -1631,7 +1632,7 @@
         <u><b><font color="#ff9900">Integração com calendário foi removida.</font></b></u><br />
         <br />
         Agora é uma função disponível como <a href="moreInfoLink">aplicativo separado</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Privacidade:</b><br/>Suntimes não coleta, armazena ou distribui dados do usuário. Não contém <b>propagandas</b>, <b>ferramentas de análise</b>, <b>rastreadores</b>, e <b>nem permissões desnecessárias</b>. <br/><br/>Os dados são armazenados localmente e não saem do aparelho.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes usa a permissão de <b>localização</b> para determinar sua atual localização.<br/><br/>Permissão opcional, você pode definir seu local manualmente.]]></string>

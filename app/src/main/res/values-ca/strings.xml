@@ -182,7 +182,7 @@
     <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
-
+    <string name="date_format_veryshort"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMM</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
     <string name="date_format_short"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g></string> <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
@@ -720,7 +720,7 @@
     <string name="configAction_sortAlarms_by_creation">Per data de creació</string>                <!-- action button / menu item -->  
     <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->    <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Tipus</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Etiqueta</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLocation">Ubicació</string>         <!-- button (contentDescription) -->  
@@ -1523,7 +1523,7 @@
     ]]></string>
     <string name="help_action_launch"><![CDATA[
     El nom qualificat de la classe de l\'activitat a ser llençada.<br/>
-]]></string>
+]]></string> <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
       Per <b>afegir un giny</b> has d\'anar a l\'escriptori.<br/><br/>
       Per <b>reconfigurar un giny existent</b> pots sel·leccionar un de la següent llista.<br/>
@@ -1540,7 +1540,7 @@
         <u><b><font color="#ff9900">Els permisos de Calendari s\'han eliminat.</font></b></u><br />
         <br />
         Aquesta caracteristica està disponible en una <a href="moreInfoLink">aplicació separada</a>.
-    ]]></string>  
+    ]]></string>    <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades d\'ubicació. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís d\'<b>ubicació</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; l\'ubicació es configura manualment per defecte.]]></string>

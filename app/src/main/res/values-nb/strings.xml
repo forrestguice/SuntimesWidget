@@ -729,7 +729,7 @@
     <string name="configAction_sortAlarms_by_creation">Opprettelsesdato</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Fjern</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Fjern</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Sett forskyvning</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Sett forskyvning</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Sett type</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Sett påskrift</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Sett sted</string>         <!-- button (contentDescription) -->
@@ -1565,9 +1565,9 @@
     <string name="help_general_bluehour"><![CDATA[
         <b>Blåtimen:</b> Solen er mellom 8 grader og 4 grader under horisonten. Starten og slutten på blåtimen faller mellom nautisk og alminnelig tussmørke.<br/>
     ]]></string>
-    <string name="help_action_launch"><![CDATA[
+    <!--<string name="help_action_launch"><![CDATA[
         The fully qualified class name of the Activity to be launched.<br/>
-    ]]></string>
+    ]]></string>-->  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
           For å <b>legge til</b> eller <b>fjerne</b> en modul må du navigere til startskjermen.<br/><br/>
           For å <b>stille inn en eksisterende modul på nytt</b> kan du velge fra den følgende listen.<br/>

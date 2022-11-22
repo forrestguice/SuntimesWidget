@@ -716,7 +716,7 @@
     <string name="configAction_sortAlarms_by_creation">Tempo de kreo</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Forviŝi</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Forviŝi</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Agordi deŝovon</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Agordi deŝovon</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Agordi tipon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Agordi etikedon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Agordi pozicion</string>         <!-- button (contentDescription) -->
@@ -1514,7 +1514,7 @@
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         La plene unusignifa nomo de klaso de ago por lanĉi.<br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
           Por <b>aldoni novan fenestraĵon</b>, iru al la ĉefekrano.<br/><br/>
           Por <b>reagordi ekzistan fenestraĵon</b>, elektu ĝin el la jena listo.<br/>
@@ -1531,7 +1531,7 @@
         <u><b><font color="#ff9900">Kalendaraj permesoj estis forigitaj.</font></b></u><br />
         <br />
         Tiu eblaĵo estas nun disponebla kiel <a href="moreInfoLink">aparta aplikaĵo</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniun reklamon</b>, <b>neniun analizilon</b>, <b>neniun spurilon</b> kaj <b>neniun malnecesan permeson</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>

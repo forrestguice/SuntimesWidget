@@ -183,8 +183,8 @@
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  
     <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  
-    <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  
-
+    <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="preposition">"'de'"</xliff:g> <xliff:g id="patternMonth">MMM</xliff:g> </string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
     <string name="date_format_short"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="preposition">"'de'"</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g></string>                                           
     <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="preposition">"'de'"</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           
@@ -718,7 +718,7 @@
     <string name="configAction_sortAlarms_by_creation">Por fecha de creación</string>                <!-- action button / menu item -->  
     <string name="configAction_clearOffset">Eliminar</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_setAlarmOffset">Retardo</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmOffset">Retardo</string>         <!-- button (contentDescription) -->    <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Tipo</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Etiqueta</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLocation">Ubicación</string>         <!-- button (contentDescription) -->  
@@ -1515,7 +1515,7 @@
 ]]></string>
     <string name="help_action_launch"><![CDATA[
     El nombre calificado de la clase de la Actividad a ser tirada. <br/>
-]]></string>
+]]></string>  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
     Para <b>añadir un widget</b> tienes que ir al escritorio. <br/><br/>
     Para <b>reconfigurar un widget existente</b> puedes seleccionar uno de la siguiente lista. <br/>
@@ -1532,7 +1532,7 @@
         <u><b><font color="#ff9900">Los permisos de Calenadrio se han eliminado.</font></b></u><br />
         <br />
         Esta característica está disponible en una <a href="moreInfoLink">aplicación separada</a>.
-    ]]></string>  
+    ]]></string>    <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Privacidad:</b> <br /> Suntimes no colectivo, almacena, o transmite datos personales. <b>No contiene anuncios</b>, <b>cálculos estadísticos</b>, <b>rastreadores</b>, y <b>no utiliza permisos innecesarios</b>. <br/><br/> La aplicación se configura con datos de ubicación. Esta información (y cualquier otro dato configurada empleada por la aplicación) se almacena localmente y no sale del dispositivo. <br/><br/> <xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utiliza el permiso de <b>ubicación</b> para determinar tu longitud y latitud. <br /> Este permiso es opcional; la ubicación se configura manualmente por defecto.]]></string>

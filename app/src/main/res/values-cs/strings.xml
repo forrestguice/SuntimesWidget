@@ -220,6 +220,7 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
     <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
     <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
@@ -778,7 +779,7 @@
     <string name="configAction_sortAlarms_by_creation">Datum vytvoření</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Vyčistit</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Vyčistit</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Nastavit posun</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Nastavit posun</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Nastavit typ</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Nastavit popisek</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Nastavit polohu</string>         <!-- button (contentDescription) -->
@@ -1697,7 +1698,7 @@
         <br/>
         <br/>
         <b>Extra:</b> Řetězec oddělený <em>&amp;</em> obsahující extra parametry. Podporuje <em>%s</em>ubstitutions.<br/><br/>Hodnoty mohou být <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> nebo String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
-    ]]></string>
+    ]]></string> <!-- TODO: added Package: -->
     <string name="help_widgetlist"><![CDATA[
           Pro <b>přidání</b> nebo <b>odebrání</b> widgetu musíte být na domovské obrazovce.<br/><br/>
           Pro <b>přenastavení</b> existujícího widgetu ho můžete vybrat z následujícího seznamu.<br/>
@@ -1715,7 +1716,7 @@
         <u><b><font color="#ff9900">Integrace s kalendářem byla odstaněna.</font></b></u><br />
         <br />
         Tato funkce je nyní dostupná jako <a href="moreInfoLink">oddělená aplikace</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Soukromí:</b><br/>Suntimes neshromažďuje, neukládá ani nepřenáší osobní uživatelská data. Neobsahuje <b>žádnou reklamu</b>, <b>žádnou analýzu</b>, <b>žádné sledovače</b> a <b>žádná zbytečná oprávnění</b>. <br/><br/>Aplikace je nakonfigurována na základě údajů o poloze. Tyto informace (a další konfigurační data používaná aplikací) jsou uloženy lokálně a neopouštějí zařízení.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes používá oprávnění k <b>poloze</b> k určení vaší aktuální zeměpisné délky a šířky.<br/><br/>Toto oprávnění je volitelné; umístění je ve výchozím nastavení nakonfigurováno ručně.]]></string>

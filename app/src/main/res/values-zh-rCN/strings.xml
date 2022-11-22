@@ -187,6 +187,7 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
     <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
     <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
@@ -733,7 +734,7 @@
     <string name="configAction_sortAlarms_by_creation">创建时间</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">清空</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">清空</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">设置补偿</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">设置补偿</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">设置类型</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">设置标签</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">设置位置</string>         <!-- button (contentDescription) -->
@@ -1552,7 +1553,7 @@
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         启动活动所需的完整类名。<br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
           如果要<b>新增一个小部件</b>，您需要去手机的主页。<br/><br/>
           如果要<b>配置一个已存在的小部件</b>，您可以从下面的列表中选择。<br/>
@@ -1569,7 +1570,7 @@
         <u><b><font color="#ff9900">日历权限已被移除。</font></b></u><br />
         <br />
         此功能现在作为<a href="moreInfoLink">单独的应用程序</a>使用
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>隐私:</b><br/>Suntimes 不会收集、储存、传输个人用户数据。它<b>没有广告</b>，<b>没有用户分析</b>，<b>没有跟踪器</b>，并且<b>不使用不必要的权限</b>。<br/><br/>本应用使用位置信息来配置。位置信息（和其他用来配置本应用的数据）保存在本机并且不会离开本机。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes 使用<b>位置</b>权限以确认您当前的经纬度。<br/><br/>此权限是可选的；位置默认可被手动配置。]]></string>

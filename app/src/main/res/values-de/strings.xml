@@ -727,7 +727,7 @@
   <string name="configAction_sortAlarms_by_creation">Erzeugungsdatum</string>                <!-- action  button / menu item -->
   <string name="configAction_clearOffset">Versatz löschen</string>                <!-- action  button / menu  item -->
   <string name="configAction_clearDate">Löschen</string>                <!-- action button / menu item -->
-  <string name="configAction_setAlarmOffset">Versatz setzen</string>         <!-- button  (contentDescription) -->
+  <string name="configAction_setAlarmOffset">Versatz setzen</string>         <!-- button  (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
   <string name="configAction_setAlarmType">Typ setzen</string>         <!-- button  (contentDescription) -->
   <string name="configAction_setAlarmLabel">Bezeichnung setzen</string>         <!-- button  (contentDescription) -->
   <string name="configAction_setAlarmLocation">Ort setzen</string>         <!-- button  (contentDescription) -->
@@ -1518,7 +1518,7 @@
     ]]></string>
   <string name="help_action_launch"><![CDATA[
       Der "fully qualified class name" der Android-Activity, die gestartet werden soll.
-  ]]></string>
+  ]]></string>  <!-- TODO: update from strings.xml -->
   <string name="help_widgetlist"><![CDATA[
         Benutze deinen Startbildschirm, um <b>ein neues Widget hinzuzufügen</b>. (Meist antippen und halten, bis ein Menü erscheint.)<br/><br/>
         Um <b>ein bestehendes Widget zu konfigurieren</b>, wähle es aus der folgenden Liste aus.<br/>
@@ -1536,7 +1536,7 @@
         <u><b><font color="#ff9900">Kalenderberechtigungen wurden entfernt.</font></b></u><br />
         <br />
         Diese Funktion ist jetzt als <a href="moreInfoLink">eigenständige App verfügbar</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
   <string
       name="privacy_policy"><![CDATA[<b>Datenschutzerklärung:</b><br/>Suntimes erfasst, speichert oder übermittelt keine persönlichen Benutzerdaten. Die App enthält <b>keine Werbung</b>, <b>keine Analytik</b>, <b>keine Tracker</b> und verlangt <b>keine unnötigen Berechtigungen</b>. <br/><br/>Die App wird über Ortsinformationen konfiguriert. Diese Informationen (und andere von der App verwendete Konfigurationsdaten) werden lokal gespeichert und verlassen das Gerät nicht.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>

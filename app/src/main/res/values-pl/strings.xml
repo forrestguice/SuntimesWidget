@@ -723,7 +723,7 @@
     <string name="configAction_sortAlarms_by_creation">Data utworzenia</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Usuń</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Wyczyść</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Ustaw przesunięcie</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Ustaw przesunięcie</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Ustaw typ</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Ustaw etykietę</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Ustaw lokalizację</string>         <!-- button (contentDescription) -->
@@ -1535,7 +1535,7 @@
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         W pełni jednoznaczna nazwa klasy czynności do wywołania.<br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
           Przejdź do ekranu głównego, aby <b>dodać nowy widżet</b>.<br/><br/>
           Aby <b>edytować istniejący widżet</b>, wybierz go z poniższej listy.<br/>
@@ -1552,7 +1552,7 @@
         <u><b><font color="#ff9900">Uprawnienia kalendarza zostały usunięte.</font></b></u><br />
         <br />
         Ta funkcja jest teraz dostępna jako <a href="moreInfoLink">osobna aplikacja</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Czasy Słońca nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>

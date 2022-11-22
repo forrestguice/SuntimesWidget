@@ -709,7 +709,7 @@
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmOffset">Set Before / After Offset</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLocation">Set Location</string>         <!-- button (contentDescription) -->  <!-- TODO -->
@@ -1497,9 +1497,9 @@
     <string name="help_general_bluehour"><![CDATA[
         <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
     ]]></string>  <!-- TODO -->
-    <string name="help_action_launch"><![CDATA[
+    <!--<string name="help_action_launch"><![CDATA[
         The fully qualified class name of the Activity to be launched.<br/>
-    ]]></string>
+    ]]></string>-->  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
           To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
           To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
@@ -1513,7 +1513,7 @@
 
     <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <u><b><font color="#ff9900">Calendar integration was removed in v0.10.0.</font></b></u><br />
         <br />
         This feature is now available as a <a href="moreInfoLink">separate app</a>.
     ]]></string>  <!-- TODO -->
