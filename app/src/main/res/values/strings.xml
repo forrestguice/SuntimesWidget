@@ -881,6 +881,10 @@
     <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
 
     <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
+
+    <string name="help_battery_optimization_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#alarms</string>  <!-- TODO -->
     <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
         <item>Samsung</item>
         <item>OnePlus</item>
@@ -898,7 +902,7 @@
         <item>Unihertz</item>
         <!--<item>Google</item>--> <!-- uncomment to test with emulator -->
     </string-array>
-
+    
     <string name="configLabel_alarms_notifications">Notifications</string>
     <string name="configLabel_alarms_notifications_on">On</string>
     <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>

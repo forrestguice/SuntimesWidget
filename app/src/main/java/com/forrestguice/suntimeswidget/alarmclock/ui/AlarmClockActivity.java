@@ -903,7 +903,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 @Override
                 public void onClick(View view) {
-                    SuntimesSettingsActivity.openBatteryOptimizationSettings(AlarmClockActivity.this);
+                    SuntimesSettingsActivity.createBatteryOptimizationAlertDialog(AlarmClockActivity.this).show();
                 }
             });
             batteryOptimizationWarning.show();
