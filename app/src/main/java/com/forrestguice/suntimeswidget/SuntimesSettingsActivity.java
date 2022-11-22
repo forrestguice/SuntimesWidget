@@ -1781,6 +1781,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_alarms_bootCompleted(final AlarmPrefsFragment fragment)
     {
         final Context context = fragment.getActivity();
