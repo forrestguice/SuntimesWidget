@@ -262,7 +262,10 @@
     <string name="configLabel_general_showSeconds_summary">Incluir segundos cuando se muestra la hora.</string>        
 
     <string name="configLabel_general_showTimeDate">Muestra la hora (con fechas)</string>        
-    <string name="configLabel_general_showTimeDate_summary">Incluir la hora cuando se muestran las fechas.</string>        
+    <string name="configLabel_general_showTimeDate_summary">Incluir la hora cuando se muestran las fechas.</string>
+
+    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
 
     <string name="configLabel_general_showWeeks">Mostrar semanas</string>
     <string name="configLabel_general_showWeeks_summary">Divide intervalos de tiempo mayores a 7 días en semanas (p. Ej. 15d se transforma en 2se 1d).</string>
@@ -1462,8 +1465,21 @@
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>    <!-- TODO -->
 
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] to cancel without making changes.<br/>
+          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
+          [Icon Cancel] to save and disable.<br/>
+          [Icon Delete] to cancel and delete.<br/>
+          <br/>
+          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+    ]]></string>   <!-- TODO -->
+
     <string name="help_general_actualTime"><![CDATA[
-    <b>Tiempo natural:</b> El Sol está en el horizonte: esto es el tiempo aproximado de la salida y puesta de sol. <br/><br/>
+    <b>Tiempo natural:</b> El Sol está en el horizonte: esto es el tiempo aproximado de la salida y puesta de sol. <br/>
 ]]></string>
     <string name="help_general_twilight"><![CDATA[
     <b>Crepúsculo civil:</b> El Sol está 6 grados por debajo del horizonte; las estrellas más brillantes son visibles. Hay suficiente luz para la mayoría de las actividades al aire libre sin necesidad de linterna. <br/><br/>
