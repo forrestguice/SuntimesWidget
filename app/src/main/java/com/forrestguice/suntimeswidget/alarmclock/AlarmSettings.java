@@ -413,6 +413,22 @@ public class AlarmSettings
         } else return true;
     }
 
+    /***
+     * Some device manufacturers are worse than others; https://dontkillmyapp.com/
+     * This method checks the device manufacturer against a list of known offenders.
+     * @return true this device is likely to have aggressive (alarm breaking) battery optimizations
+     */
+    public static boolean aggressiveBatteryOptimizations(Context context)
+    {
+        String[] manufacturers = context.getResources().getStringArray(R.array.aggressive_battery_known_offenders);
+        for (String manufacturer : manufacturers) {
+            if (manufacturer != null && manufacturer.equalsIgnoreCase(Build.MANUFACTURER)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * https://dontkillmyapp.com/sony
      * @return true device is sony and "stamina mode" is enabled, false device is not sony or "stamina mode" is disabled

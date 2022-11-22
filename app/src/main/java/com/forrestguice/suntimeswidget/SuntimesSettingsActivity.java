@@ -18,13 +18,16 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
@@ -1696,7 +1699,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
                     batteryOptimization.setSummary(listed);
                 } else {
-                    String unlisted = context.getString(R.string.configLabel_alarms_optWhiteList_unlisted);
+                    String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
                     batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning));
                 }
                 
@@ -1924,12 +1927,121 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
        return new Preference.OnPreferenceClickListener() {
            @Override
            public boolean onPreferenceClick(Preference preference) {
-               if (Build.VERSION.SDK_INT >= 23) {
-                   context.startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
-               }
+               createBatteryOptimizationAlertDialog(context).show();
                return false;
            }
        };
+    }
+
+    /**
+     * This alert dialog explains the importance of disabling battery optimization for alarm functionality
+     * to work correctly and requests that the user take action. An extra warning is displayed
+     * for device's whose manufacturer has been known to break alarm functionality anyway, and directs
+     * those users to the online help.
+     *
+     * If this build of the app includes the `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` permission, a
+     * request to whitelist the app is made directly. Otherwise the battery optimization list is
+     * shown instead (and the user must find and select the app).
+     */
+    @SuppressLint("ResourceType")
+    public static AlertDialog.Builder createBatteryOptimizationAlertDialog(final Context context)
+    {
+        final boolean isIgnoringOptimizations = AlarmSettings.isIgnoringBatteryOptimizations(context);
+        final boolean isAggressive = AlarmSettings.aggressiveBatteryOptimizations(context);
+
+        String message =
+                isIgnoringOptimizations ? "[i] " + context.getString(R.string.configLabel_alarms_optWhiteList_listed)
+                        : (isAggressive ? "[w] " + context.getString(R.string.configLabel_alarms_optWhiteList_unlisted_aggressive)
+                                        : "[w] " + context.getString(R.string.configLabel_alarms_optWhiteList_unlisted));
+        if (!isIgnoringOptimizations) {
+            message += "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
+        }
+        if (isAggressive) {
+            message += "\n\n[w] " + context.getString(R.string.help_battery_optimization_aggressive, Build.MANUFACTURER);
+        }
+
+        int iconSize = (int) context.getResources().getDimension(R.dimen.helpIcon_size);
+        int[] iconAttrs = { R.attr.tagColor_warning, R.attr.icActionAbout, R.attr.icActionWarning };
+        TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
+        int warningColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
+        ImageSpan iconInfo = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_about), iconSize, iconSize, 0);
+        ImageSpan iconWarn = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_warning), iconSize, iconSize, warningColor);
+        typedArray.recycle();
+
+        SuntimesUtils.ImageSpanTag[] tags = {
+                new SuntimesUtils.ImageSpanTag("[i]", iconInfo),
+                new SuntimesUtils.ImageSpanTag("[w]", iconWarn)
+        };
+        CharSequence messageSpan = SuntimesUtils.createSpan(context, message, tags);
+
+        return new AlertDialog.Builder(context)
+                .setMessage(messageSpan)
+                .setPositiveButton(context.getString(R.string.configLabel_alarms_optWhiteList),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                dialog.dismiss();
+                                if (isIgnoringOptimizations) {
+                                    openBatteryOptimizationSettings(context);
+                                } else {
+                                    if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
+                                        requestIgnoreBatteryOptimization(context);
+                                    } else openBatteryOptimizationSettings(context);
+                                }
+                            }
+                        })
+                .setNeutralButton(context.getString(R.string.configAction_onlineHelp),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                String url = context.getString(R.string.help_battery_optimization_url);
+                                /*if (isAggressive) {
+                                    url += "-" + Build.MANUFACTURER;
+                                }*/
+                                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                            }
+                        });
+                //.setNegativeButton(context.getString(R.string.dialog_cancel), null);
+    }
+
+    public static void openBatteryOptimizationSettings(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                context.startActivity(getRequestIgnoreBatteryOptimizationSettingsIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e(LOG_TAG, "Failed to launch battery optimization settings Intent: " + e);
+            }
+        }
+    }
+    public static void requestIgnoreBatteryOptimization(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                context.startActivity( getRequestIgnoreBatteryOptimizationIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e(LOG_TAG, "Failed to launch battery optimization request Intent: " + e);
+            }
+        }
+    }
+
+    /**
+     * Recommended; this Intent shows the optimization list (and the user must find and select the app)
+     */
+    @TargetApi(23)
+    public static Intent getRequestIgnoreBatteryOptimizationSettingsIntent(Context context) {
+        return new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+    }
+
+    /**
+     * This Intent goes directly to the app's optimization settings.
+     * Requires permission `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`
+     */
+    @TargetApi(23)
+    public static Intent getRequestIgnoreBatteryOptimizationIntent(Context context) {
+        return new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + context.getPackageName()));
     }
 
     protected static boolean isDeviceSecure(Context context)
