@@ -884,7 +884,7 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
-    <string name="help_battery_optimization_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#alarms</string>  <!-- TODO -->
+    <string name="help_battery_optimization_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#battery-optimization</string>  <!-- TODO -->
     <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
         <item>Samsung</item>
         <item>OnePlus</item>
