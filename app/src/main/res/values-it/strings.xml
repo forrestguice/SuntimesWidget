@@ -253,7 +253,7 @@
                      <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Impostazioni generali</string>                <!-- group title -->
+    <string name="configLabel_general">Impostazioni generali</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Sorgente dei dati:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Sorgente dei dati solari</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Sorgente dei dati lunari</string>         <!-- preference label -->
@@ -288,8 +288,8 @@
     <string name="configLabel_general_observerheight_summary">Mostra la lunghezza dell\'ombra creata da un oggetto di altezza <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Impostazioni avanzate</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Impostazioni sperimentali</string>                <!-- group title -->
+    <string name="configLabel_advanced">Impostazioni avanzate</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Impostazioni sperimentali</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Plugin dei fornitori di dati</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Cerca e carica plugin di terze parti.</string>   <!-- pref summary -->
 
@@ -485,7 +485,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona" >%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7" >%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time" >%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Fuso orario</string>             <!-- group title -->
+    <string name="configLabel_timezone">Fuso orario</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Modalità:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Fuso orario:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Tempo solare:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->

@@ -305,7 +305,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Общие настройки</string>                <!-- group title -->
+    <string name="configLabel_general">Общие настройки</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Источник данных:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Алгоритм положения солнца</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Алгоритм положения луны</string>         <!-- preference label -->
@@ -340,8 +340,8 @@
     <string name="configLabel_general_observerheight_summary">Показывать длину тени, отбрасываемой объектом высотой <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Расширенные настройки</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Экспериментальные настройки</string>                <!-- group title -->
+    <string name="configLabel_advanced">Расширенные настройки</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Экспериментальные настройки</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Плагины источников данных</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Сканировать и загрузить сторонние плагины.</string>   <!-- pref summary -->
 
@@ -361,7 +361,7 @@
     </string-array>  <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Настройки внешнего вида</string>           <!-- group title -->
+    <string name="configLabel_appearance">Настройки внешнего вида</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Тема оформления</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Тема:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Заполнять все доступное пространство (изменяемый размер)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
@@ -494,7 +494,7 @@
     <string name="expandMore">Больше</string>  <!-- contentDescription -->
     <string name="expandLess">Меньше</string>  <!-- contentDescription -->
 
-    <string name="configLabel_action">Настройки действий</string>                  <!-- group title -->
+    <string name="configLabel_action">Настройки действий</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
     <string name="configLabel_action_onTap">При нажатии:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">При нажатии на часы</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">При нажатии на заметку</string>           <!-- spinner label -->
@@ -505,7 +505,7 @@
     <string name="locationMode_current">Текущее (последнее известное)</string>  <!-- setting -->
     <string name="locationMode_custom">Пользовательское</string>           <!-- setting -->
 
-    <string name="configLabel_location">Настройки местоположения</string>               <!-- group title -->
+    <string name="configLabel_location">Настройки местоположения</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Режим:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Широта:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">градусы (десятичн.)</string>      <!-- edittext hint -->
@@ -535,7 +535,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->
+    <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Режим:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Часовой пояс:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
@@ -1235,7 +1235,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Использовать данные местоположения от сотовой сети и WiFi.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Настройки языка</string>   <!-- group title -->
+    <string name="configLabel_locale">Настройки языка</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
     <string name="configLabel_localeMode">Язык приложения</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>

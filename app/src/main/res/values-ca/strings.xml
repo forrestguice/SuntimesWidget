@@ -242,7 +242,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Opcions generals</string>                <!-- group title -->
+    <string name="configLabel_general">Opcions generals</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Font de dades:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Font de dades del Sol</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Font de dades de la Lluna</string>         <!-- preference label -->
@@ -277,8 +277,8 @@
     <string name="configLabel_general_observerheight_summary">Mostra la longitud de les ombres projectades per un objecte amb una altura de <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Configuració avançada</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Configuració experimental</string>                <!-- group title -->
+    <string name="configLabel_advanced">Configuració avançada</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Configuració experimental</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Complements de fonts de dades</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Cerca i carrega complements de tercers.</string>   <!-- pref summary -->
 
@@ -298,7 +298,7 @@
     </string-array>  <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Opcions d\'aparença</string>           <!-- group title -->
+    <string name="configLabel_appearance">Opcions d\'aparença</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Aparença</string>                  <!-- spinner label -->  
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Creix amb l\'espai disponible (reescalable)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
@@ -433,7 +433,7 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Opcions de pulsació</string>                  <!-- group title -->
+    <string name="configLabel_action">Opcions de pulsació</string>                  <!-- group title --><!-- TODO: shortened "Action Settings" to "Action" -->
     <string name="configLabel_action_onTap">Al prèmer:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Al prèmer el rellotge</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Al prèmer una nota</string>           <!-- spinner label -->
@@ -444,7 +444,7 @@
     <string name="locationMode_current">Actual (última coneguda)</string>  <!-- setting -->
     <string name="locationMode_custom">Definida per usuari</string>           <!-- setting -->
 
-    <string name="configLabel_location">Opcions d\'ubicació</string>               <!-- group title -->
+    <string name="configLabel_location">Opcions d\'ubicació</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitud:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">graus decimals</string>      <!-- edittext hint -->
@@ -474,7 +474,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Opcions de zona horària</string>             <!-- group title -->
+    <string name="configLabel_timezone">Opcions de zona horària</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Zona horària:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Temps solar:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
@@ -1060,7 +1060,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Utilitza el proveïdor d\'ubicació passiva.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Opcions d\'idioma</string>   <!-- group title -->
+    <string name="configLabel_locale">Opcions d\'idioma</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
     <string name="configLabel_localeMode">Mode</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>

@@ -296,7 +296,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Základní nastavení</string>                <!-- group title -->
+    <string name="configLabel_general">Základní nastavení</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Zdroj dat:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Zdroj slunečních dat</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Zdroj lunárních dat</string>         <!-- preference label -->
@@ -331,8 +331,8 @@
     <string name="configLabel_general_observerheight_summary">Zobraz délku stínu vrženého objektem o výšce <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Pokročilá nastavení</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Experimentální nastavení</string>                <!-- group title -->
+    <string name="configLabel_advanced">Pokročilá nastavení</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Experimentální nastavení</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Pluginy zdrojů dat</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Naskenuj pro načtení pluginů třetích stran.</string>   <!-- pref summary -->
 
@@ -352,7 +352,7 @@
     </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Nastavení vzhledu</string>           <!-- group title -->
+    <string name="configLabel_appearance">Nastavení vzhledu</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Vzhled</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Téma:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Automaticky měnit rozvržení pro vyplnění dostupného prostoru</string>  <!-- checkbox label -->
@@ -487,7 +487,7 @@
     <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->
     <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Nastavení akce</string>                  <!-- group title -->
+    <string name="configLabel_action">Nastavení akce</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
     <string name="configLabel_action_onTap">Při doteku:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Při dotknutí hodin</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Při dotknutí poznámky</string>           <!-- spinner label -->
@@ -498,7 +498,7 @@
     <string name="locationMode_current">Aktuální (poslední známa)</string>  <!-- setting -->
     <string name="locationMode_custom">Uživatelem definovaná</string>           <!-- setting -->
 
-    <string name="configLabel_location">Nastavení polohy</string>               <!-- group title -->
+    <string name="configLabel_location">Nastavení polohy</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Režim:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Zeměpisná šířka:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">desetinné stupně</string>      <!-- edittext hint -->
@@ -529,7 +529,7 @@
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
 
-    <string name="configLabel_timezone">Nastavení časového pásma</string>             <!-- group title -->
+    <string name="configLabel_timezone">Nastavení časového pásma</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Režim:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Časové pásmo:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
@@ -1160,7 +1160,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Použít pasivního poskytovatele polohy.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Nastavení jazyka</string>   <!-- group title -->
+    <string name="configLabel_locale">Nastavení jazyka</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
     <string name="configLabel_localeMode">Režim</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>

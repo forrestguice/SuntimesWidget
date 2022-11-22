@@ -309,7 +309,7 @@
     </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">外观设置</string>           <!-- group title -->
+    <string name="configLabel_appearance">外观设置</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">外观</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">主题:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">交换布局以填充可用空间</string>  <!-- checkbox label -->
@@ -1073,7 +1073,7 @@
     <string name="configLabel_getFix_passiveMode_summary">使用被动接收到的位置。</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">语言设置</string>   <!-- group title -->
+    <string name="configLabel_locale">语言设置</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" (also confirm other "group title" values are also shortened) -->
 
     <string name="configLabel_localeMode">模式</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>

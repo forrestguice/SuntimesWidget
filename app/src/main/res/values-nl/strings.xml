@@ -288,7 +288,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Algemene Instellingen</string>                <!-- group title -->
+    <string name="configLabel_general">Algemene Instellingen</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Databron:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Databron Zon</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Databron Maan</string>         <!-- preference label -->
@@ -323,8 +323,8 @@
     <string name="configLabel_general_observerheight_summary">Geef de lengte weer van de schaduwen die worden geworpen door een object met een hoogte van <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Geavanceerde Instellingen</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Experimentele Instellingen</string>                <!-- group title -->
+    <string name="configLabel_advanced">Geavanceerde Instellingen</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Experimentele Instellingen</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Databron Plugins</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Scan naar plug-ins van derden en laad deze.</string>   <!-- pref summary -->
 
@@ -479,7 +479,7 @@
     <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->
     <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Actie-instellingen</string>                  <!-- group title -->
+    <string name="configLabel_action">Actie-instellingen</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
     <string name="configLabel_action_onTap">Bij aantikken:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Bij klok aantikken</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Bij notitie aantikken</string>           <!-- spinner label -->
@@ -490,7 +490,7 @@
     <string name="locationMode_current">Huidige (laatst bekende)</string>  <!-- setting -->
     <string name="locationMode_custom">Gebruiker gedefinieerd</string>           <!-- setting -->
 
-    <string name="configLabel_location">Locatie-instellingen</string>               <!-- group title -->
+    <string name="configLabel_location">Locatie-instellingen</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Modus:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Breedtegraad:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">decimale graden</string>      <!-- edittext hint -->
@@ -521,7 +521,7 @@
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
 
-    <string name="configLabel_timezone">Tijdzone instellingen</string>             <!-- group title -->
+    <string name="configLabel_timezone">Tijdzone instellingen</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Tijdzone:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Standaard:</string>                   <!-- spinner label -->
@@ -1146,7 +1146,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Language Settings</string>   <!-- group title -->
+    <string name="configLabel_locale">Language Settings</string>   <!-- group title -->    <!-- TODO -->
 
     <string name="configLabel_localeMode">Mode</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>

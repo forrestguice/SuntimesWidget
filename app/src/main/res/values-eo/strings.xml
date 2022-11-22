@@ -231,7 +231,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->
+    <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Fonto de lunaj datumoj</string>         <!-- preference label -->
@@ -266,8 +266,8 @@
     <string name="configLabel_general_observerheight_summary">Montri longon de ombro kaŭzata de objekto kun alto <xliff:g id="value" example="1 metro">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Agordoj altnivelaj</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Agordoj eksperimentaj</string>                <!-- group title -->
+    <string name="configLabel_advanced">Agordoj altnivelaj</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Agordoj eksperimentaj</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Kromprogramoj de datum-fontoj</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Skani kaj enlegi eksterajn kromprogramojn.</string>   <!-- pref summary -->
 
@@ -440,7 +440,7 @@
     <string name="locationMode_current">Aktuala (laste konata)</string>  <!-- setting -->
     <string name="locationMode_custom">Propra</string>           <!-- setting -->
 
-    <string name="configLabel_location">Agordoj pri loko</string>              <!-- group title -->
+    <string name="configLabel_location">Agordoj pri loko</string>              <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_location_lat">Latitudo:</string>                  <!-- edittext label -->
     <string name="configHint_location_lat">53.1324</string>                       <!-- edittext hint -->
@@ -470,7 +470,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
+    <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Normo:</string>                   <!-- spinner label -->
@@ -1182,7 +1182,7 @@
     </string-array>
     
   <!-- App Setting: locale mode -->
-  <string name="configLabel_locale">Agordoj pri lingvo</string>   <!-- group title -->
+  <string name="configLabel_locale">Agordoj pri lingvo</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
   <string name="configLabel_localeMode">Reĝimo</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>

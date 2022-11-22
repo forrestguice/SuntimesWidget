@@ -246,7 +246,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Ustawienia ogólne</string>                <!-- group title -->
+    <string name="configLabel_general">Ustawienia ogólne</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Źródło danych:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Źródło danych słonecznych</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Źródło danych księżycowych</string>         <!-- preference label -->
@@ -281,8 +281,8 @@
     <string name="configLabel_general_observerheight_summary">Wyświetl długość cienia rzucanego przez obiekt o wysokości <xliff:g id="value" example="1 metra">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Zaawansowane ustawienia</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Eksperymentalne ustawienia</string>                <!-- group title -->
+    <string name="configLabel_advanced">Zaawansowane ustawienia</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Eksperymentalne ustawienia</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Wtyczki źródeł danych</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Skanuj i załaduj zewnętrzne wtyczki.</string>   <!-- pref summary -->
 
@@ -302,7 +302,7 @@
     </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
+    <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Wygląd</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Motyw:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Przełączaj układy, aby wypełnić dostępną przestrzeń</string>  <!-- checkbox label -->
@@ -437,7 +437,7 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Ustawienia akcji</string>                  <!-- group title -->
+    <string name="configLabel_action">Ustawienia akcji</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
     <string name="configLabel_action_onTap">Przy kliknięciu:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Przy kliknięciu zegara</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Przy kliknięciu notatki</string>           <!-- spinner label -->
@@ -448,7 +448,7 @@
     <string name="locationMode_current">Obecna (ostatnia znana)</string>  <!-- setting -->
     <string name="locationMode_custom">Użytkownika</string>           <!-- setting -->
 
-    <string name="configLabel_location">Ustawienia lokalizacji</string>              <!-- group title -->
+    <string name="configLabel_location">Ustawienia lokalizacji</string>              <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_location_lat">Szerokość:</string>                  <!-- edittext label -->
     <string name="configHint_location_lat">52.2319</string>                       <!-- edittext hint -->
@@ -478,7 +478,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->
+    <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
@@ -1060,7 +1060,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Użyj pasywnej usługi określania lokalizacji.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Ustawienia języka</string>   <!-- group title -->
+    <string name="configLabel_locale">Ustawienia języka</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
     <string name="configLabel_localeMode">Tryb</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>

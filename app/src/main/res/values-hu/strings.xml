@@ -232,7 +232,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->
+    <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->  <!-- TODO -->
     <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label --> <!-- TODO -->
@@ -267,8 +267,8 @@
     <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
+    <string name="configLabel_advanced">Advanced</string>                        <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_experimental">Experimental</string>                <!-- group title --> <!-- TODO -->
     <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
 
@@ -288,7 +288,7 @@
     </string-array>  <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Megjelenés beállításai</string>           <!-- group title -->
+    <string name="configLabel_appearance">Megjelenés beállításai</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Téma:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Kitölti a rendelkezésre álló helyet (átméretezhető)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
@@ -434,7 +434,7 @@
     <string name="locationMode_current">Jelenlegi (utolsó ismert)</string>  <!-- setting -->
     <string name="locationMode_custom">Felhasználó által megadott</string>           <!-- setting -->
 
-    <string name="configLabel_location">Hely beállításai</string>               <!-- group title -->
+    <string name="configLabel_location">Hely beállításai</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Mód:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Szélesség:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">decimális fok</string>      <!-- edittext hint -->
@@ -464,7 +464,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Időzóna beállítások:</string>             <!-- group title -->
+    <string name="configLabel_timezone">Időzóna beállítások:</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Mód:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Időzóna:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Szoláris idő:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->

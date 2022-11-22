@@ -234,7 +234,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Paramètres généraux</string>                <!-- group title -->
+    <string name="configLabel_general">Paramètres généraux</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Source de données</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Source de données pour le soleil</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Source de données pour la lune</string>         <!-- preference label -->
@@ -269,8 +269,8 @@
     <string name="configLabel_general_observerheight_summary">Afficher l\'ombre d\'un objet d\'une hauteur de<xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Paramètres avancés</string>                        <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_experimental">Paramètres expérimentaux</string>                <!-- group title --> <!-- TODO -->
+    <string name="configLabel_advanced">Paramètres avancés</string>                        <!-- group title -->  <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Paramètres expérimentaux</string>                <!-- group title -->     <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
 
@@ -436,7 +436,7 @@
     <string name="locationMode_current">Actuel (dernier connu)</string>  <!-- setting -->
     <string name="locationMode_custom">Défini par l\'utilisateur</string>           <!-- setting -->
 
-    <string name="configLabel_location">Paramètres de localisation</string>               <!-- group title -->
+    <string name="configLabel_location">Paramètres de localisation</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Mode :</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitude :</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">Degrés décimaux</string>      <!-- edittext hint -->
@@ -466,7 +466,7 @@
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Fuseau horaire</string>             <!-- group title -->
+    <string name="configLabel_timezone">Fuseau horaire</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Mode :</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Fuseau horaire :</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Temps solaire :</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->

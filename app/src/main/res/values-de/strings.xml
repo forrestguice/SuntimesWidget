@@ -232,7 +232,7 @@
   <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
   <!-- Widget Setting: general -->
-  <string name="configLabel_general">Allgemeine Einstellungen</string>                <!-- group title -->
+  <string name="configLabel_general">Allgemeine Einstellungen</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
   <string name="configLabel_general_calculator">Datenquelle:</string>         <!-- spinner label -->
   <string name="configLabel_general_calculator_sun">Sonnendatenquelle</string>         <!-- preference label -->
   <string name="configLabel_general_calculator_moon">Monddatenquelle</string>         <!-- preference label -->
@@ -267,8 +267,8 @@
   <string name="configLabel_general_observerheight_summary">Zeigt die Länge des Schattens an, der von einem Objekt der Höhe <xliff:g id="value" example="1 Meter">%1$s</xliff:g> geworfen wird.</string>        <!-- checkbox label -->  
 
   <!-- Widget Setting: advanced / experimental -->
-  <string name="configLabel_advanced">Fortgeschrittene Einstellungen</string>                        <!-- group title -->  
-  <string name="configLabel_experimental">Experimentelle Einstellungen</string>                <!-- group title --> 
+  <string name="configLabel_advanced">Fortgeschrittene Einstellungen</string>                        <!-- group title -->      <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+  <string name="configLabel_experimental">Experimentelle Einstellungen</string>                <!-- group title -->     <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
   <string name="configLabel_general_scanPlugins">Datenquellenplugins</string>                                <!-- checkbox label --> 
   <string name="configLabel_general_scanPlugins_summary">Suche nach Plugins von Drittanbietern.</string>   <!-- pref summary -->
 
@@ -1052,7 +1052,7 @@
   <string name="configLabel_getFix_passiveMode_summary">Passiven Standortanbieter verwenden.</string>
 
   <!-- App Setting: locale mode -->
-  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->
+  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
   <string name="configLabel_localeMode">Modus:</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="Systemsprache">%s</xliff:g></string>
