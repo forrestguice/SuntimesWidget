@@ -187,6 +187,7 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
     <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternDay">d</xliff:g>. <xliff:g id="patternMonth">MMM</xliff:g></string>
     <string name="date_format_short"><xliff:g id="patternDay">d</xliff:g>. <xliff:g id="patternMonth">MMMM</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g>. <xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
@@ -236,12 +237,13 @@
     <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
-    <string name="configAction_reconfigWidget_short">Reconfigure</string>       <!-- Button: Reconfigure -->
-    <string name="configAction_reconfigWidget">Reconfigure Widget</string>      <!-- used as title when reconfiguring -->
+    <string name="configAction_addWidget">Legg til modul</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">Ominnstill</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">Still inn modul på nytt</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
-    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title1">Vendbar modul</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+    <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
@@ -267,6 +269,9 @@
 
     <string name="configLabel_general_showTimeDate">Vis tid (med datoer)</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Inkluder tiden ved visning av datoer.</string>        <!-- checkbox label -->
+    
+    <string name="configLabel_general_showAbbrMonth">Forkortede månedsnavn</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showAbbrMonth_summary">Vis forkortede månedsnavn ved visning av datoer.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Vis uker</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Del opp lengre tidsrom enn 7 dager i uker (f.eks. 15d blir 2u 1d).</string>    <!-- checkbox label -->
@@ -280,41 +285,41 @@
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Avansert</string>                        <!-- group title -->
     <string name="configLabel_experimental">Eksperimentelt</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
+    <string name="configLabel_general_scanPlugins">Datakildetillegg</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">Skann for og last tredjeparts programtillegg.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->
     <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
-        <item>Top-Left</item>
-        <item>Top</item>
-        <item>Top-Right</item>
-        <item>Left</item>
-        <item>Center</item>
-        <item>Right</item>
-        <item>Bottom-Left</item>
-        <item>Bottom</item>
-        <item>Bottom-Right</item>
-    </string-array>  <!-- TODO -->
+        <item>Topp venstre</item>
+        <item>Topp</item>
+        <item>Topp høyre</item>
+        <item>Venstre</item>
+        <item>Senter</item>
+        <item>Høyre</item>
+        <item>Bunn venstre</item>
+        <item>Bunn</item>
+        <item>Bunn høyre</item>
+    </string-array>
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Utseende</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Utseende</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Bytt layouter for å fylle ledig plass</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleText">Skaler tekst og ikoner</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleBase">Fyll hele cellen</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_gravity">Juster base:</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">Vis påskrifter</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Vis tittel</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tittel:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO -->
-    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO -->
-    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO -->
+    <string name="configLabel_general_riseSetOrder">Rekkefølge:</string>     <!-- label -->
+    <string name="risesetorder_today">I dag</string>                    <!-- setting -->
+    <string name="risesetorder_lastnext">Siste / Neste</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Middag</string>                    <!-- setting -->
@@ -394,7 +399,7 @@
     
     <string name="widgetMode3x1_lightmap_large">Lysgraf</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_medium">Lysgraf (medium)</string>     <!-- setting -->
-    <string name="widgetMode3x1_lightmap_small">Lysgraf (liten)</string>     <!-- setting -->    
+    <string name="widgetMode3x1_lightmap_small">Lysgraf (liten)</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Enkelt</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [nord]</string>     <!-- setting -->
@@ -419,11 +424,11 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ikke gjør noe</string>           <!-- setting -->
-    <string name="actionMode_update">Update Widget</string>           <!-- setting -->
-    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
-    <string name="actionMode_config">Reconfigure Widget</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Launch App</string>      <!-- setting -->
-    <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
+    <string name="actionMode_update">Oppdater modul</string>           <!-- setting -->
+    <string name="actionMode_update_all">Oppdater alle moduler</string>           <!-- setting -->
+    <string name="actionMode_config">Still inn modul på nytt</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Utfør handling</string>      <!-- setting -->
+    <string name="actionMode_flipToNextItem">Vend visninger</string>      <!-- setting -->
 
     <string name="launchType_activity">Aktivitet</string>           <!-- setting -->
     <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
@@ -456,7 +461,7 @@
     <string name="configLabel_location_name">Navn:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(valgfri)</string>                  <!-- edittext hint -->
     <string name="configHint_location_name0">Stedsnavn</string>                  <!-- edittext hint -->
-    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
+    <string name="configLabel_location_fromapp">Bruk sted fra app</string>                  <!-- checkbox text -->
 
     <string name="configAction_getFix">Hent posisjon</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Rediger</string>         <!-- button (contentDescription) -->
@@ -529,7 +534,7 @@
     <string name="configHint_action_launch_data">&lt;ingen&gt;</string> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_launch_extras">Ekstra:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
     <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
@@ -538,8 +543,8 @@
 
     <string name="addaction_custname">egendefinert<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
     <string name="addaction_custtitle">Egendefinert handling <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
-    <string name="addaction_error_title">Display string must not be empty.</string>  <!-- TODO -->
+    <string name="addaction_error_id">ID må ikke være tom (eller inneholde mellomrom).</string>
+    <string name="addaction_error_title">Visningsstreng må ikke være tom.</string>
     <string name="addaction_error_exists">ID er tatt allerede. Denne handlingen blir overskrevet.</string>
 
     <string name="delaction_dialog_msg">Er du sikker på at du vil slette %1$s (%2$s)?</string>
@@ -582,7 +587,7 @@
     <string name="configAction_editTheme">Rediger</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Slett</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopier</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
@@ -597,8 +602,8 @@
     <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->
     <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">Size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
-    <string name="edittheme_error_textsize_max">Size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_error_textsize_min">Size must be &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->  <!-- TODO: drop "an integer" from translations -->
+    <string name="edittheme_error_textsize_max">Size must be &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->    <!-- TODO: drop "an integer" from translations -->
     <string name="edittheme_flag_default">default</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Slett tema</string>        <!-- dialog title -->
@@ -616,7 +621,7 @@
     <string name="configLabel_themeBackground_dark">Mørk</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Gjennomsiktig</string>  <!-- transparent background -->
     <string name="configLabel_themeBackground_color">Farge</string>      <!-- custom background -->
-    <string name="configLabel_themeColorBackground">Farge:</string>      <!-- color label -->
+    <string name="configLabel_themeColorBackground">Farge</string>      <!-- color label -->
 
     <string name="configLabel_themeColorTitle">Tittelfarge</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
@@ -713,100 +718,108 @@
          ALARM CLOCK
     -->
     <string name="configLabel_alarmClock">Alarmer</string>            <!-- group title -->
-    <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
-    <string name="configAction_addAlarm">Set Alarm</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_addNotification">Set Notification</string> <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configLabel_alarmClock_emptyMsg">Ingen alarmer</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="configAction_addAlarm">Sett alarm</string>               <!-- button (contentDescription) -->
+    <string name="configAction_addNotification">Sett varsel</string> <!-- button (contentDescription) -->
     <string name="configAction_editAlarm">Rediger</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Slett</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Fjern</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmLocation">Set Location</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmRepeat">Set Repeating</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmEvent">Set Event</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmTime">Override Time</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmSound">Set Sound</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_alarmMenu">Alarm Menu</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_sortAlarms">Sorter</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_by_time">Alarmtid</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_by_creation">Opprettelsesdato</string>                <!-- action button / menu item -->
+    <string name="configAction_clearOffset">Fjern</string>                <!-- action button / menu item -->
+    <string name="configAction_clearDate">Fjern</string>                <!-- action button / menu item -->
+    <string name="configAction_setAlarmOffset">Sett forskyvning</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmType">Sett type</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLabel">Sett påskrift</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLocation">Sett sted</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmRepeat">Sett gjentagelse</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmEvent">Sett hendelse</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmTime">Overstyr tid</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmAction">Sett handling</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmSound">Sett lyd</string>         <!-- button (contentDescription) -->
+    <string name="configAction_alarmMenu">Alarmmeny</string>         <!-- button (contentDescription) -->
     <string name="configAction_saveAlarm">Lagre</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_enableAlarm">Lagre &amp; Aktiver</string>               <!-- button (contentDescription) -->
+    <string name="configAction_disableAlarm">Lagre &amp; Deaktiver</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">Angre</string>               <!-- button (contentDescription) -->
 
-    <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->  <!-- TODO -->
-    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
-    <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->  <!-- TODO -->
-    <string name="alarmAction_timeout">Timeout</string>                  <!-- notification action button -->  <!-- TODO -->
+    <string name="alarmAction_dismiss">Slå av</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">Slå av alarm</string>                <!-- notification action button; context specific "Dismiss Early", same as "Dismiss Alarm Early", or "Dismiss Alarm" -->
+    <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->
+    <string name="alarmAction_timeout">Tidsavbrudd</string>                  <!-- notification action button -->
 
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->  <!-- TODO -->
-    <string name="alarmAction_silencedMsg">Alarm silenced</string>          <!-- toast message -->  <!-- TODO -->
-    <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->  <!-- TODO -->
-    <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->  <!-- TODO -->
-    <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->  <!-- TODO -->
-    <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->    <!-- TODO -->
+    <string name="alarmAction_silencedMsg">Alarm stilnet</string>          <!-- toast message -->
+    <string name="alarmAction_snoozeMsg">Snooze (slumre) for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
+    <string name="alarmAction_timeoutMsg">Alarmen ble tidsavbrutt.</string>     <!-- notification msg -->
+    <string name="alarmAction_upcomingMsg">Kommende alarm</string>     <!-- notification msg -->
+    <string name="alarmAction_alertFailedMsg">Feilet i å spille av lyd!</string>         <!-- error toast -->
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
     <string name="alarmMode_notification">Varsel</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_alarmEdit_onDismissTray">On Dismiss:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_scheduleTray">Planlegg:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_onAlertTray">På varsel:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_onDismissTray">På avslåing:</string>               <!-- group title -->
 
-    <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->  <!-- TODO -->
-    <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->  <!-- TODO -->
-    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
-    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
+    <string name="alarmOption_vibrate">Vibrer</string>                <!-- checkbox text -->
+    <string name="alarmOption_ringtone_none">Ingen lyd</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringetone</string>          <!-- menu item; Select a "Ringtone" -->
+    <string name="alarmOption_ringtone_file">Lydfil</string>          <!-- menu item; Select an "Audio File" -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->  <!-- TODO -->
-    <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->  <!-- TODO -->
+    <string name="alarmOption_solarevent_none">Klokketid</string>          <!-- ringtone label (none) -->
 
-    <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text; an alarm that repeats -->  <!-- TODO -->
-    <string name="alarmOption_repeat_none">No Repeat</string>         <!-- label text; an alarm that does not repeat (occurs once) -->  <!-- TODO -->
-    <string name="alarmOption_repeat_all">Every Day</string>         <!-- label text; an alarm that repeats every day -->  <!-- TODO -->
+    <string name="alarmOption_repeat">Gjentagelse</string>                <!-- checkbox text; an alarm that repeats -->
+    <string name="alarmOption_repeat_none">Ingen gjentagelse</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
+    <string name="alarmOption_repeat_all">Hver dag</string>         <!-- label text; an alarm that repeats every day -->
 
     <string name="deletealarm_dialog_title">Slett</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> <!-- TODO -->
+    <string name="deletealarm_dialog_message">Er du sikker på at du vil slette <xliff:g id="type">%1$s</xliff:g> kl. <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
     <string name="deletealarm_dialog_ok">Slett</string>        <!-- button -->
     <string name="deletealarm_dialog_cancel">Avbryt</string>    <!-- button -->
-    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg --> <!-- TODO -->
+    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> kl. <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) ble slettet.</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> ble slettet.</string> <!-- toast msg -->
 
-    <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
-    <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_message">Det er ulagrede endringer.</string>      <!-- dialog message -->
+    <string name="discardchanges_dialog_ok">Forkast</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">Avbryt</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Lagre</string>                            <!-- button -->
 
-    <string name="clearalarms_dialog_title">Clear Alarms</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="clearalarms_dialog_message">Are you sure you want to delete all alarms?</string>   <!-- dialog msg --> <!-- TODO -->
-    <string name="clearalarms_dialog_ok">Clear</string>        <!-- button --> <!-- TODO -->
+    <string name="clearalarms_dialog_title">Fjern alarmer</string>        <!-- dialog title -->
+    <string name="clearalarms_dialog_message">Er du sikker på at du vil slette alle alarmer?</string>   <!-- dialog msg -->
+    <string name="clearalarms_dialog_ok">Fjern</string>        <!-- button -->
     <string name="clearalarms_dialog_cancel">Avbryt</string>    <!-- button -->
-    <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg --> <!-- TODO -->
+    <string name="clearalarms_toast_success">Alarmer fjernet.</string> <!-- toast msg -->
 
-    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+    <string name="importalarms_title_warning">Importadvarsel</string> <!-- toast msg -->
+    <string name="importalarms_msg_warning">Importerte alarmer kan tilbakestille noen innstillinger til standardinnstillingene.\n\nDu må kanskje velge lyder og handlinger på nytt.</string> <!-- toast msg -->
+    <string name="importalarms_toast_success">Importert <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <plurals name="alarmPlural">
+        <item quantity="one">%d alarm</item>
+        <item quantity="other">%d alarmer</item>
+    </plurals>
 
-    <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmlabel_dialog_title">Påskrift</string>        <!-- dialog title -->
+    <string name="alarmlabel_dialog_ok">Bruk</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Avbryt</string>    <!-- button -->
-    <string name="alarmlabel_hint">Label</string>        <!-- EditText hint -->  <!-- TODO -->
+    <string name="alarmlabel_hint">Påskrift</string>        <!-- EditText hint -->
 
-    <string name="alarmrepeat_dialog_title">Repeat Alarm</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="alarmrepeat_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmrepeat_dialog_title">Gjenta alarm</string>        <!-- dialog title -->
+    <string name="alarmrepeat_dialog_ok">Bruk</string>        <!-- button -->
     <string name="alarmrepeat_dialog_cancel">Avbryt</string>    <!-- button -->
 
-    <string name="alarmtime_dialog_title">Alarm Time</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="alarmtime_dialog_ok">Override</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmtime_dialog_title">Alarmtid</string>        <!-- dialog title -->
+    <string name="alarmtime_dialog_ok">Overstyr</string>        <!-- button -->
     <string name="alarmtime_dialog_cancel">Avbryt</string>    <!-- button -->
-    <string name="alarmtime_dialog_message">Override the alarm time?\n\nThis alarm will no longer be scheduled by event.</string>   <!-- dialog msg --> <!-- TODO -->
+    <string name="alarmtime_dialog_message">Overstyre alarmtiden?\n\nDenne alarmen vil ikke lenger være planlagt etter hendelse.</string>   <!-- dialog msg -->
 
-    <string name="alarmoffset_dialog_title">Alarm Offset</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="alarmoffset_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmoffset_dialog_title">Alarmforskyvning</string>        <!-- dialog title -->
+    <string name="alarmoffset_dialog_ok">Bruk</string>        <!-- button -->
     <string name="alarmoffset_dialog_cancel">Avbryt</string>    <!-- button -->
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
+    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> satt for <xliff:g id="duration" example="8h">%2$s</xliff:g> fra nå.</string> <!-- toast msg -->
+    <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> om <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
 
     <string name="configLabel_alarms_optWhiteList">Batterioptimalisering</string>
     <string name="configLabel_alarms_optWhiteList_listed">Ikke optimalisert (anbefalt)</string>
@@ -816,10 +829,10 @@
     <string name="configLabel_alarms_notifications_on">På</string>
     <string name="configLabel_alarms_notifications_off">Av.\nAlarmer kan mislykkes i å vises korrekt.</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_summary1">På låseskjerm: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Varsler er av. Alarmer kan mislykkes i å vises korrekt.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_silenceAfter">Go silent after</string>  <!-- TODO -->
+    <string name="configLabel_alarms_silenceAfter">Bli stille etter</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
     <string name="configLabel_alarms_timeoutAfter">Tidsavbrudd etter</string>
@@ -835,13 +848,13 @@
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
     <string name="configLabel_alarms_fadein_disabled">Av</string>
 
-    <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>  <!-- TODO -->
+    <string name="configLabel_alarms_hardwarebuttons">Maskinvareknapper</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
-    <string-array name="alarm_hardwarebutton_actions_display">     <!-- one-to-one with alarm_hardwarebutton_actions_values -->  <!-- TODO -->
-        <item>Dismiss</item>
-        <item>Silence</item>
+    <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
+        <item>Slå av</item>
+        <item>Stilne</item>
         <item>Snooze</item>
-        <item>Do Nothing</item>
+        <item>Gjør ingenting</item>
     </string-array>
 
     <string name="configLabel_alarmSounds">Lyder</string>            <!-- group title -->
@@ -1181,7 +1194,7 @@
     <string name="schedalarm_dialog_title">Still inn alarm</string>
     <string name="schedalarm_dialog_tab_event">Hendelse</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">Tid</string>                        <!-- tab text -->
-    <string name="schedalarm_dialog_ok">OK</string>
+    <string name="schedalarm_dialog_ok">Planlegg</string>
     <string name="schedalarm_dialog_cancel">Avbryt</string>
     <string name="schedalarm_dialog_error">Alarm ble ikke stilt inn…</string>
     <string name="schedalarm_dialog_error2">Alarm kan ikke stilles inn…</string>
@@ -1353,7 +1366,7 @@
     <string name="themesexport_dialog_message">Eksporterer temaer til fil.</string>
 
     <!-- Dialog: Export -->
-    <string name="msg_export_success">Midlertidig kopi: <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_success">Lagret til <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Eksport til <xliff:g id="filepath">%s</xliff:g> mislyktes!</string>
     <string name="msg_export_to">Eksporter med</string>  <!-- title displayed over "share action" chooser -->
 
@@ -1372,7 +1385,7 @@
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Velg farge</string>
-    <string name="color_dialog_ok">OK</string>
+    <string name="color_dialog_ok">Velg</string>
     <string name="color_dialog_cancel">Avbryt</string>
     <string name="color_dialog_tab1">1</string>
     <string name="color_dialog_tab2">2</string>
@@ -1413,10 +1426,10 @@
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> av <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> og <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">Krediteringer</string>
+    <string name="creditsTab">Bidrag</string>
     
     <string name="app_legal3"><![CDATA[ <b>Biblioteker:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
+    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Hjelp</string>
@@ -1480,8 +1493,21 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] å avbryte uten å gjøre endringer.<br/>
+          [Icon Save] å lagre, og [Icon Done] å lagre og aktivere.<br/>
+          [Icon Cancel] å lagre og deaktivere.<br/>
+          [Icon Delete] å avbryte og slette.<br/>
+          <br/>
+          [Icon Offset] vises når den planlagte tiden er forskjøvet før eller etter hendelsestidspunktet.
+    ]]></string>
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Sommertid:</b> [Icon DST] vises når gjeldende tid bruker <b>sommertid</b>, eller har blitt justert av en lignende regel.<br/><br/>
+    ]]></string>
+
     <string name="help_general_actualTime"><![CDATA[
-          <b>Faktisk tid:</b> Den omtrentlige tiden for soloppgang og solnedgang.<br/><br/>
+          <b>Faktisk tid:</b> Den omtrentlige tiden for soloppgang og solnedgang.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
           <b>Alminnelig tussmørke:</b> Solen er 6 grader under horisonten; de lyseste stjernene er synlige. Det er nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
@@ -1555,7 +1581,7 @@
 
     <string name="help_calendar"><![CDATA[Lever hendelser til Kalender-appen (månefaser, solverv, jevndøgn).<br />
         <br />
-        <u><b><font color="#ff9900">Kalenderintegrasjon er fjernet.</font></b></u><br />
+        <u><b><font color="#ff9900">Kalenderintegrasjon ble fjernet i v0.10.0.</font></b></u><br />
         <br />
         Denne funksjonen er nå tilgjengelig som en <a href="moreInfoLink">separat app</a>.
     ]]></string>
