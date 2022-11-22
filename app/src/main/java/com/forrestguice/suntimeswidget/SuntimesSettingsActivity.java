@@ -1905,9 +1905,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                             public void onClick(DialogInterface dialog, int which)
                             {
                                 String url = context.getString(R.string.help_battery_optimization_url);
-                                if (isAggressive) {
+                                /*if (isAggressive) {
                                     url += "-" + Build.MANUFACTURER;
-                                }
+                                }*/
                                 context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                             }
                         });
