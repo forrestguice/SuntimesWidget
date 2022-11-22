@@ -724,6 +724,7 @@
     <string name="configAction_editAlarm">Rediger</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Slett</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Fjern</string>                <!-- action button / menu item -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms">Sorter</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Alarmtid</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Opprettelsesdato</string>                <!-- action button / menu item -->
@@ -824,6 +825,10 @@
     <string name="configLabel_alarms_optWhiteList">Batterioptimalisering</string>
     <string name="configLabel_alarms_optWhiteList_listed">Ikke optimalisert (anbefalt)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimaliserer batteribruk.\nAlarmer kan bli forsinket opptil 15 minutter.</string>
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Varsler</string>
     <string name="configLabel_alarms_notifications_on">På</string>
@@ -831,6 +836,13 @@
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">På låseskjerm: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Varsler er av. Alarmer kan mislykkes i å vises korrekt.</string>  <!-- snackbar message -->
+
+    <string name="configLabel_alarms_bootcompleted">Boot Completed</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info_never">Never</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Bli stille etter</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->

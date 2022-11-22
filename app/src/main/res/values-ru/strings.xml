@@ -780,6 +780,7 @@
     <string name="configAction_editAlarm">Изменить</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Удалить</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Очистить</string>                <!-- action button / menu item -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms">Сортировка</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Время срабатывания</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Время создания</string>                <!-- action button / menu item -->
@@ -849,7 +850,15 @@
     <string name="clearalarms_dialog_cancel">Отмена</string>    <!-- button -->
     <string name="clearalarms_toast_success">Все будильники удалены.</string> <!-- toast msg -->
 
+    <string name="importalarms_title_warning">Import Warning</string> <!-- dialog title -->   <!-- TODO -->
+    <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->  <!-- TODO -->
     <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+    <plurals name="alarmPlural">
+        <item quantity="one">%d alarm</item>
+        <item quantity="other">%d alarms</item>
+        <item quantity="few">%d alarms</item>
+        <item quantity="many">%d alarms</item>
+    </plurals>   <!-- TODO -->
 
     <string name="alarmlabel_dialog_title">Название</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Применить</string>        <!-- button -->
@@ -875,6 +884,10 @@
     <string name="configLabel_alarms_optWhiteList">Оптимизация энергопотребления</string>
     <string name="configLabel_alarms_optWhiteList_listed">Не оптимизировано (рекомендовано)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Используется оптимизация.\nСрабатывание сигнала может задерживаться до 15 минут.</string>
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Уведомления от приложения</string>
     <string name="configLabel_alarms_notifications_on">Разрешены</string>
@@ -882,6 +895,13 @@
     <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">На экране блокировки: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Уведомления запрещены. Сигналы могут работать некорректно.</string>  <!-- snackbar message -->
+
+    <string name="configLabel_alarms_bootcompleted">Boot Completed</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info_never">Never</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Воспроизводить сигнал в течение</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 hours">%s</xliff:g></string>
