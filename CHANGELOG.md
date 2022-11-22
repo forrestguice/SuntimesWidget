@@ -1,5 +1,18 @@
 ### ~
 
+### v0.14.11 (2022-11-23)
+* adds permission REQUEST_IGNORE_BATTERY_OPTIMIZATIONS (#651) [PERMISSION]; SuntimesAlarms now makes a direct request to be added to the whitelist.
+* adds a help dialog that explains battery optimization warnings; adds online help; a revised message is shown for devices that are likely to break alarms.
+* adds data substitutions `eot` (formatted equation of time), and `eot_m` (equation of time millis) (#649).
+* adds "Boot Completed" to the Alarm Settings; shows reboot information and manually triggers "reschedule all" (#653).
+* adds a foreground service notification that is shown while rescheduling all alarms (#653).
+* changes SuntimesAlarms to reschedule all alarms after an app upgrade (ACTION_MY_PACKAGE_REPLACED), or if it detects that boot_completed has failed to run.
+* fixes bug 'alarm list shows stale values when opened immediately after reboot' (#647).
+* fixes bug 'unable to disable alarm reminder notification' (#650).
+* updates translation to Norwegian (nb) (#648 by FTno).
+* updates translation to Traditional Chinese (zh_TW) (#646 by James Liu).
+* updates translation to Simplified Chinese (zh_CN) (#645 by sr093906, #646 by James Liu).
+
 ### v0.14.10 (2022-11-08)
 * adds "abbreviated month names" widget option (#625).
 * adds a help dialog to the alarm edit activity (#628); adds "day light saving" to main help dialog.
