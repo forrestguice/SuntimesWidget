@@ -399,15 +399,15 @@
     <string name="widgetMode1x1_distance">当前距离</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">下一个远地点或近地点</string>     <!-- setting -->
 
-    <string name="widgetMode3x1_lightmap_large">光照图</string>     <!-- setting -->    
-    <string name="widgetMode3x1_lightmap_medium">光照图（中等）</string>     <!-- setting -->    
-    <string name="widgetMode3x1_lightmap_small">光照图（小）</string>     <!-- setting -->    
+    <string name="widgetMode3x1_lightmap_large">光照图</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_medium">光照图（中等）</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_small">光照图（小）</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">默认</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">北半球视角</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">南半球视角</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">卫星</string>    <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_location">方位角等距</string>     <!-- setting --> 
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">方位角等距</string>     <!-- setting -->
 
     <string name="worldmap_projection_equirectangular">等距矩形</string>
     <string name="worldmap_projection_equiazimuthal">等距方位角</string>
@@ -427,7 +427,7 @@
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">什么也不做</string>           <!-- setting -->
     <string name="actionMode_update">更新小部件</string>           <!-- setting -->
-    <string name="actionMode_update_all">更新所有小部件</string>           <!-- setting -->  
+    <string name="actionMode_update_all">更新所有小部件</string>           <!-- setting -->
     <string name="actionMode_config">重新配置小部件</string>      <!-- setting -->
     <string name="actionMode_launchActivity">打开应用</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">翻转显示</string>      <!-- setting -->
@@ -525,7 +525,7 @@
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->
     <string name="configLabel_action_launch">类:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_package">包:</string>                 <!-- edittext label -->   
+    <string name="configLabel_action_launch_package">包:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_package" />               <!-- edittext label -->
     <string name="configHint_action_launch_title">动作标题</string>                 <!-- edittext hint -->
     <string name="configHint_action_launch_desc">简介</string>                 <!-- edittext hint -->
@@ -746,7 +746,7 @@
     <string name="configAction_undo">撤销</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">解除</string>                <!-- notification action button -->
-    <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->
+    <string name="alarmAction_dismiss_early">提前解除</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">延时</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">超时</string>                  <!-- notification action button -->
 
@@ -755,7 +755,7 @@
     <string name="alarmAction_snoozeMsg">延时 <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">闹钟已超时。</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">即将到来的闹钟</string>     <!-- notification msg -->
-    <string name="alarmAction_alertFailedMsg">播放声音失败！</string>         <!-- error toast -->   
+    <string name="alarmAction_alertFailedMsg">播放声音失败！</string>         <!-- error toast -->
 
     <string name="alarmMode_alarm">闹钟</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">通知</string>                <!-- alarm type (setting) -->
@@ -792,7 +792,7 @@
     <string name="clearalarms_dialog_cancel">取消</string>    <!-- button -->
     <string name="clearalarms_toast_success">闹钟已被清空。</string> <!-- toast msg -->
 
-    <string name="importalarms_toast_success">导入了 %s 个闹钟。</string> <!-- toast msg -->    
+    <string name="importalarms_toast_success">导入了 %s 个闹钟。</string> <!-- toast msg -->
 
     <string name="alarmlabel_dialog_title">标签</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">应用</string>        <!-- button -->
@@ -953,8 +953,8 @@
     <string name="configLabel_ui_showdatasource_summary">为当前配置显示一个标签。</string>
 
     <!-- App Setting: show map button -->
-    <string name="configLabel_ui_showmapbutton">显示地图按钮</string>   
-    <string name="configLabel_ui_showmapbutton_summary">显示一个打开默认地图应用的操作栏按钮。</string>     
+    <string name="configLabel_ui_showmapbutton">显示地图按钮</string>
+    <string name="configLabel_ui_showmapbutton_summary">显示一个打开默认地图应用的操作栏按钮。</string>
 
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">列标题</string>              <!-- group title -->
@@ -976,7 +976,7 @@
     <string name="appThemes_lightTheme">亮色主题</string>
     <string name="appThemes_darkTheme">暗色主题</string>
     <string name="appThemes_nightMode">亮色主题/暗色主题（夜间模式）</string>
-    <string name="appThemes_systemDefault">系统默认</string>  
+    <string name="appThemes_systemDefault">系统默认</string>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1010,12 +1010,12 @@
     <string name="configActionDesc_setAlarmForNote">为便签设置闹钟</string>
     <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
     <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
-    <string name="configActionDesc_alarmList">闹钟列表</string>  
-    <string name="configActionDesc_themeList">主题列表</string>  
-    <string name="configActionDesc_actionList">操作列表</string>  
-    <string name="configActionDesc_widgetList">小部件列表</string>  
-    <string name="configActionDesc_nextSunrise">显示下一个日出</string>   
-    <string name="configActionDesc_nextSunset">显示下一个日落</string>     
+    <string name="configActionDesc_alarmList">闹钟列表</string>
+    <string name="configActionDesc_themeList">主题列表</string>
+    <string name="configActionDesc_actionList">操作列表</string>
+    <string name="configActionDesc_widgetList">小部件列表</string>
+    <string name="configActionDesc_nextSunrise">显示下一个日出</string>
+    <string name="configActionDesc_nextSunset">显示下一个日落</string>
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort modes -->
@@ -1033,7 +1033,7 @@
     <string name="timezone_sort_msg">（%1$s）时区排序完成。</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPS时间限制</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="configLabel_getFix_maxElapse">位置时间限制</string>
     <string name="configLabel_getFix_maxElapse_summary">最多等待 <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 秒</item>
@@ -1044,7 +1044,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPS最近位置有效期</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="configLabel_getFix_maxAge">最近位置有效期</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> 内算作最近位置</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>无</item>
@@ -1299,7 +1299,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS已被禁用，要启用吗？</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
+    <string name="gps_dialog_msg">位置已被禁用，要启用吗？</string>
     <string name="gps_dialog_ok">是</string>
     <string name="gps_dialog_cancel">否</string>
 
@@ -1307,8 +1307,8 @@
     <string name="gps_lastfix_title_set">设置位置</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">上次获取到的位置</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">获取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS未能获取到位置；尝试用上次获取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
-    <string name="gps_lastfix_toast_cancelled">GPS更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
+    <string name="gps_lastfix_toast_notfound">未能获取到位置；尝试用上次获取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">位置更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">没有补丁</string>
@@ -1573,7 +1573,7 @@
 
     <string name="dialog_ok">确认</string>
     <string name="dialog_cancel">取消</string>
-    <string name="dialog_msg_donotshowagain">不再显示这条消息</string>  <!-- checkbox text -->     
+    <string name="dialog_msg_donotshowagain">不再显示这条消息</string>  <!-- checkbox text -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

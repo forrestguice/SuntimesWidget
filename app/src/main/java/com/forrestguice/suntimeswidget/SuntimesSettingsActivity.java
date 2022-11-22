@@ -1916,14 +1916,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     public static void openBatteryOptimizationSettings(final Context context)
     {
-        if (Build.VERSION.SDK_INT >= 23)
-        {
+        if (Build.VERSION.SDK_INT >= 23) {
             try {
-                //context.startActivity(getRequestIgnoreBatteryOptimizationSettingsIntent(context));
-                context.startActivity(getRequestIgnoreBatteryOptimizationIntent(context));
-
+                context.startActivity(getRequestIgnoreBatteryOptimizationSettingsIntent(context));
             } catch (ActivityNotFoundException e) {
-                Log.e(LOG_TAG, "Failed to launch battery optimization Intent: " + e);
+                Log.e(LOG_TAG, "Failed to launch battery optimization settings Intent: " + e);
+            }
+        }
+    }
+    public static void requestIgnoreBatteryOptimization(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                context.startActivity( getRequestIgnoreBatteryOptimizationIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e(LOG_TAG, "Failed to launch battery optimization request Intent: " + e);
             }
         }
     }
@@ -1937,11 +1944,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     /**
-     * Discouraged; this Intent goes directly to the app's optimization settings.
+     * This Intent goes directly to the app's optimization settings.
      * Requires permission `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`
      */
     @TargetApi(23)
-    @Deprecated
     public static Intent getRequestIgnoreBatteryOptimizationIntent(Context context) {
         return new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + context.getPackageName()));
     }
