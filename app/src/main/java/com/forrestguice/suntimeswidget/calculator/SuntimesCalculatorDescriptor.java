@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -79,7 +80,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
     public static final String LOGTAG = "CalculatorDescriptor";
 
     protected static boolean initialized = false;
-    public static void initCalculators(Context context)
+    public static void initCalculators(@Nullable Context context)
     {
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
@@ -88,7 +89,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
 
-        boolean scanForPlugins = AppSettings.loadScanForPluginsPref(context);
+        boolean scanForPlugins = (context != null && AppSettings.loadScanForPluginsPref(context));
         if (scanForPlugins)
         {
             PackageManager packageManager = context.getPackageManager();
