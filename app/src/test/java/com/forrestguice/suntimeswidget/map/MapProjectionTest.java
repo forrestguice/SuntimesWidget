@@ -18,34 +18,17 @@
 
 package com.forrestguice.suntimeswidget.map;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
-import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
-@LargeTest
-@RunWith(AndroidJUnit4.class)
-public class MapProjectionTest extends SuntimesActivityTestBase
+public class MapProjectionTest
 {
-    private Context mockContext;
-
-    @Before
-    public void setup() {
-        mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
-    }
-
     @Test
     public void test_gha()
     {
