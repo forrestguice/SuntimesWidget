@@ -18,60 +18,14 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
-import android.test.RenamingDelegatingContext;
-
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)
-public class AlarmClockItemTest
+public class AlarmClockItemTest0
 {
-    private Context context;
-
-    @Before
-    public void setup() {
-        context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
-    }
-
-    @Test
-    public void test_AlarmClockItem_parcelable()
-    {
-        int i = 0;
-        int[] states = AlarmState.VALUES;
-        for (AlarmClockItem item0 : AlarmDatabaseAdapterTest.createTestItems()) {
-            if (item0 != null)
-            {
-                item0.state = new AlarmState(item0.rowID, states[i % states.length]);
-                test_AlarmClockItem_parcelable(item0);
-                i++;
-            }
-        }
-    }
-    public void test_AlarmClockItem_parcelable(AlarmClockItem item0)
-    {
-        Parcel parcel0 = Parcel.obtain();
-        item0.writeToParcel(parcel0, 0);
-        parcel0.setDataPosition(0);
-
-        AlarmClockItem item = (AlarmClockItem) AlarmClockItem.CREATOR.createFromParcel(parcel0);
-        test_equals(item0, item);
-
-        assertEquals(item0.type, item.type);
-        assertEquals(item0.timestamp, item.timestamp);
-        assertEquals(item0.modified, item.modified);
-        assertEquals(item0.getUri(), item.getUri());
-    }
-
     @Test
     public void test_alarmClockItem_new()
     {
@@ -93,23 +47,16 @@ public class AlarmClockItemTest
 
         AlarmClockItem item2 = new AlarmClockItem();
         item0.type = null;
-        test_alarmClockItem_new(item2);
+
+        AlarmClockItem item3 = new AlarmClockItem(item2);
+        test_equals(item2, item3, false, true);
+        assertEquals((item2.type != null ? item2.type : ALARM), item3.type);
     }
+
     public void test_alarmClockItem_new(AlarmClockItem item0)
     {
         AlarmClockItem item1 = new AlarmClockItem(item0);
         test_equals(item0, item1);
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("test_parcelable", item1);
-        AlarmClockItem item2 = bundle.getParcelable("test_parcelable");
-        assertNotNull(item2);
-        test_equals(item1, item2);
-
-        ContentValues values = item2.asContentValues(true);
-        AlarmClockItem item3 = new AlarmClockItem();
-        item3.fromContentValues(context, values);
-        test_equals(item2, item3);
     }
 
     public static void test_equals(AlarmClockItem item0, AlarmClockItem item) {

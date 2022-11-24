@@ -22,8 +22,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Parcel;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -273,46 +271,6 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         assertNotNull(item);
         AlarmClockItemTest.test_equals(item0, item, false, false);
         assertEquals((item0.type != null ? item0.type : ALARM), item.type);
-    }
-
-    @Test
-    public void test_alarmClockItem_new()
-    {
-        AlarmClockItem item0 = new AlarmClockItem();
-        item0.type = AlarmClockItem.AlarmType.NOTIFICATION;
-        item0.rowID = 0;
-        item0.hour = 4;
-        item0.minute = 2;
-        item0.offset = 18 * 60;
-        item0.enabled = true;
-        item0.repeating = true;
-        item0.vibrate = true;
-        item0.modified = true;
-        test_alarmClockItem_new(item0);
-
-        AlarmClockItem item1 = new AlarmClockItem();
-        item0.type = AlarmClockItem.AlarmType.NOTIFICATION;
-        test_alarmClockItem_new(item1);
-
-        AlarmClockItem item2 = new AlarmClockItem();
-        item0.type = null;
-        test_alarmClockItem_new(item2);
-    }
-
-    public void test_alarmClockItem_new(AlarmClockItem item0)
-    {
-        AlarmClockItem item1 = new AlarmClockItem(item0);
-        test_equals(item0, item1);
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("test_parcelable", item1);
-        AlarmClockItem item2 = bundle.getParcelable("test_parcelable");
-        test_equals(item1, item2);
-
-        ContentValues values = item2.asContentValues(true);
-        AlarmClockItem item3 = new AlarmClockItem();
-        item3.fromContentValues(mockContext, values);
-        test_equals(item2, item3);
     }
 
 }
