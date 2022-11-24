@@ -109,7 +109,7 @@ public class AlarmClockItem implements Parcelable
     private AlarmClockItem(Parcel in)
     {
         rowID = in.readLong();
-        type = AlarmType.valueOf(in.readString());
+        type = AlarmType.valueOf(in.readString(), null);
         enabled = (in.readInt() == 1);
         label = in.readString();
 
@@ -151,7 +151,7 @@ public class AlarmClockItem implements Parcelable
     public void writeToParcel(Parcel out, int flags)
     {
         out.writeLong(rowID);
-        out.writeString(type.name());
+        out.writeString(type != null ? type.name() : null);
         out.writeInt(enabled ? 1 : 0);
         out.writeString(label);
 
@@ -164,11 +164,11 @@ public class AlarmClockItem implements Parcelable
         out.writeInt(minute);
         out.writeLong(offset);
 
-        out.writeString(location.getLatitude());
-        out.writeString(location.getLongitude());
-        out.writeString(location.getLabel());
-        out.writeString(location.getAltitude());
-        out.writeInt(location.useAltitude() ? 1 : 0);
+        out.writeString(location != null ? location.getLatitude() : null);
+        out.writeString(location != null ? location.getLongitude() : null);
+        out.writeString(location != null ? location.getLabel() : null);
+        out.writeString(location != null ? location.getAltitude() : null);
+        out.writeInt(location != null ? location.useAltitude() ? 1 : 0 : 0);
 
         //out.writeString(event != null ? event.name() : null);
         out.writeString(event);
