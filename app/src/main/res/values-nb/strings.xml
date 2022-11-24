@@ -243,7 +243,7 @@
     <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
     <string name="configLabel_title1">Vendbar modul</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
-    <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>
+    <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
@@ -269,7 +269,7 @@
 
     <string name="configLabel_general_showTimeDate">Vis tid (med datoer)</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Inkluder tiden ved visning av datoer.</string>        <!-- checkbox label -->
-    
+
     <string name="configLabel_general_showAbbrMonth">Forkortede månedsnavn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showAbbrMonth_summary">Vis forkortede månedsnavn ved visning av datoer.</string>        <!-- checkbox label -->
 
@@ -602,8 +602,8 @@
     <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->
     <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">Size must be &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->  <!-- TODO: drop "an integer" from translations -->
-    <string name="edittheme_error_textsize_max">Size must be &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->    <!-- TODO: drop "an integer" from translations -->
+    <string name="edittheme_error_textsize_min">Størrelse må være &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">Størrelse må være &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
     <string name="edittheme_flag_default">default</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Slett tema</string>        <!-- dialog title -->
@@ -730,7 +730,7 @@
     <string name="configAction_sortAlarms_by_creation">Opprettelsesdato</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Fjern</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Fjern</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Sett forskyvning</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
+    <string name="configAction_setAlarmOffset">Sett forskyvning før/etter</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Sett type</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Sett påskrift</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Sett sted</string>         <!-- button (contentDescription) -->
@@ -793,7 +793,7 @@
     <string name="clearalarms_dialog_cancel">Avbryt</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarmer fjernet.</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">Importadvarsel</string> <!-- toast msg -->
+    <string name="importalarms_title_warning">Importadvarsel</string> <!-- dialog title -->
     <string name="importalarms_msg_warning">Importerte alarmer kan tilbakestille noen innstillinger til standardinnstillingene.\n\nDu må kanskje velge lyder og handlinger på nytt.</string> <!-- toast msg -->
     <string name="importalarms_toast_success">Importert <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="alarmPlural">
@@ -825,10 +825,10 @@
     <string name="configLabel_alarms_optWhiteList">Batterioptimalisering</string>
     <string name="configLabel_alarms_optWhiteList_listed">Ikke optimalisert (anbefalt)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimaliserer batteribruk.\nAlarmer kan bli forsinket opptil 15 minutter.</string>
-    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
-    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
-    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
-    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA-modus er aktivert.\nAlarmer kan feile i å virke pålitelig.</string>  <!-- snackbar message (sony devices only) -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimaliserer batteribruk.\nAlarmer kan feile i å virke pålitelig.</string>
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> må være \"ikke optimalisert\" for beste resultater.</string>
+    <string name="help_battery_optimization_aggressive">Dette er en <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> enhet, som kan kreve ekstra innstilling for å virke korrekt.</string>
 
     <string name="configLabel_alarms_notifications">Varsler</string>
     <string name="configLabel_alarms_notifications_on">På</string>
@@ -837,12 +837,12 @@
     <string name="configLabel_alarms_notifications_summary1">På låseskjerm: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Varsler er av. Alarmer kan mislykkes i å vises korrekt.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_bootcompleted">Boot Completed</string>   <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_info_never">Never</string>   <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted">Omstart fullført</string>
+    <string name="configLabel_alarms_bootcompleted_summary">Alarmer er automatisk planlagt på nytt noen få minutter etter omstart.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="configLabel_alarms_bootcompleted_info">Siste kjøring <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> etter omstart (tok <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="configLabel_alarms_bootcompleted_info_never">Aldri</string>
+    <string name="configLabel_alarms_bootcompleted_action_confirm">Planlegge alle alarmer og varsler på nytt?</string>
+    <string name="configLabel_alarms_bootcompleted_action_message">Planlegger alarmer og varsler på nytt.</string>
 
     <string name="configLabel_alarms_silenceAfter">Bli stille etter</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
@@ -971,7 +971,7 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Vis datakilde</string>
     <string name="configLabel_ui_showdatasource_summary">Vis en påskrift som angir den gjeldende innstillingen.</string>
-    
+
     <!-- App Setting: show map button -->
     <string name="configLabel_ui_showmapbutton">Vis kartknapp</string>
     <string name="configLabel_ui_showmapbutton_summary">Vis en handlingslinjeknapp som åpner standardappen for kart.</string>
@@ -1302,7 +1302,7 @@
         <item>månens nedre kulminasjon</item>
     </string-array>
 
-    <!-- Dialog: Enable GPS? -->
+    <!-- Dialog: Enable Location? -->
     <string name="gps_dialog_msg">Posisjonsbestemmelse er deaktivert. Aktivere nå?</string>
     <string name="gps_dialog_ok">Ja</string>
     <string name="gps_dialog_cancel">Nei</string>
@@ -1314,7 +1314,7 @@
     <string name="gps_lastfix_toast_notfound">Mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">Posisjonsoppdatering avbrutt.</string> <!-- displayed briefly when gps refresh cancelled -->
 
-    <!-- Dialog: KeepTrying GPS? -->
+    <!-- Dialog: KeepTrying Location? -->
     <string name="gps_keeptrying_title">Ingen posisjonsfastsettelse</string>
     <string name="gps_keeptrying_msg">Ikke i stand til å oppnå en posisjonsfastsettelse.</string>
     <string name="gps_keeptrying_ok">Fortsett å prøve</string>
@@ -1577,9 +1577,27 @@
     <string name="help_general_bluehour"><![CDATA[
         <b>Blåtimen:</b> Solen er mellom 8 grader og 4 grader under horisonten. Starten og slutten på blåtimen faller mellom nautisk og alminnelig tussmørke.<br/>
     ]]></string>
-    <!--<string name="help_action_launch"><![CDATA[
-        The fully qualified class name of the Activity to be launched.<br/>
-    ]]></string>-->  <!-- TODO: update from strings.xml -->
+    <string name="help_action_launch"><![CDATA[
+        Alle felt er valgfrie (verdier kan stå tomme for en <em>implisitt intent</em>).
+        <br/>
+        <br/>
+        <b>Handling:</b> En handlingsstreng.<br/><small>f.eks. <em>android.intent.action.VIEW</em></small>
+        <br/>
+        <br/>
+        <b>Package:</b> A package name.<br/><small>e.g. <em>app.package.name</em></small>
+        <br/>
+        <br/>
+        <b>Class:</b> A fully qualified class name.<br/><small>e.g. <em>app.package.name.MainActivity</em></small>
+        <br/>
+        <br/>
+        <b>Data:</b> A Uri that contains or points to attached data. Supports <em>%s</em>ubstitutions. <small>e.g. <em>geo:%lat,%lon</em></small>
+        <br/>
+        <br/>
+        <b>Mime:</b> The mime type of attached data.
+        <br/>
+        <br/>
+        <b>Ekstra:</b> An <em>&amp;</em> delimited string containing extra values. Supports <em>%s</em>ubstitutions.<br/><br/>Values may be <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> or String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
+    ]]></string>
     <string name="help_widgetlist"><![CDATA[
           For å <b>legge til</b> eller <b>fjerne</b> en modul må du navigere til startskjermen.<br/><br/>
           For å <b>stille inn en eksisterende modul på nytt</b> kan du velge fra den følgende listen.<br/>
@@ -1598,7 +1616,7 @@
         Denne funksjonen er nå tilgjengelig som en <a href="moreInfoLink">separat app</a>.
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
+    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes samler ikke inn, lagrer eller overfører personlige data. Inneholder <b>ingen reklame</b>, <b>ingen analyser</b>, <b>ingen sporere</b> og <b>ingen unødvendige tillatelser</b>. <br/><br/>Appen stilles inn med posisjonsdata. Denne informasjonen (og andre innstilte data brukt av appen) lagres lokalt og forlater ikke enheten.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes bruker <b>plasseringstillatelsen</b> til å bestemme gjeldende lengde- og breddegrad.<br/><br/>Denne tillatelsen er valgfri; plasseringen er manuelt innstilt som standard.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
