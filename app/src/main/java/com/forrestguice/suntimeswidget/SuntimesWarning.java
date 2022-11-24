@@ -60,7 +60,7 @@ public class SuntimesWarning
         shouldShow = value;
     }
 
-    private boolean wasDismissed = false;
+    protected boolean wasDismissed = false;
     public boolean wasDismissed() {
         return wasDismissed;
     }
@@ -127,7 +127,7 @@ public class SuntimesWarning
         }
     };
 
-    private void showNextWarning()
+    protected void showNextWarning()
     {
         if (warningListener != null) {
             warningListener.onShowNextWarning();
