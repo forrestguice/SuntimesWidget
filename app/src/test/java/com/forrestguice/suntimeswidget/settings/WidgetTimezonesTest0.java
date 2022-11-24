@@ -33,9 +33,12 @@ import net.time4j.calendar.astro.StdSolarCalculator;
 import org.junit.Test;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * non-instrumented tests moved from androidTest/settings/WidgetTimezonesTest
@@ -47,12 +50,33 @@ public class WidgetTimezonesTest0
     public void test_timezone_apparentSolarTime()
     {
         TimeZone timezone1 = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time (Test)");
-        for (int i=0; i<10000; i++) {
+        //for (int i=0; i<10000; i++) {
             test_timezone(timezone1, 16, 20, 0);
-        }
+        //}
+        assertTrue(timezone1.useDaylightTime());
+        assertTrue(timezone1.inDaylightTime(new Date()));
+
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory((Context)null, Time4A4JSuntimesCalculator.getDescriptor());
+        SuntimesCalculator calculator = factory.createCalculator(new Location("test","35", "-112"), TimeZone.getDefault());
+
+        Calendar calendar = Calendar.getInstance();
+        WidgetTimezones.ApparentSolarTime apparentSolar = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time", calculator);
+        int offset0 = apparentSolar.getOffset(calendar.getTimeInMillis());
+        //for (int i=0; i<90000; i++) {
+            test_isApproximate(apparentSolar.getOffset(calendar.getTimeInMillis()), offset0);
+        //}
+        int offset1 = apparentSolar.getOffset(1, 2020, 1, 1, 1, 0);
+        //for (int i=0; i<90000; i++) {
+            test_isApproximate(apparentSolar.getOffset(1, 2020, 1, 1, 1, 0), offset1);
+        //}
+
+        int rawOffset = apparentSolar.getRawOffset();
+        //for (int i=0; i<90000; i++) {
+            test_isApproximate(apparentSolar.getRawOffset(), rawOffset);
+        //}
     }
 
-    /**@Test
+    /*@Test
     public void test_timezone_apparentSolarTime1()
     {
         SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory((Context)null, Time4ASimpleSuntimesCalculator.getDescriptor());
@@ -69,36 +93,26 @@ public class WidgetTimezonesTest0
         Calendar calendar = Calendar.getInstance();
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(calendar.getTime());
         double eot0 = SolarTime.equationOfTime(moment, StdSolarCalculator.TIME4J.name());
-        for (int i=0; i<10000; i++) {
+        //for (int i=0; i<90000; i++) {
             assertEquals(SolarTime.equationOfTime(moment, StdSolarCalculator.TIME4J.name()), eot0);
-        }
+        //}
 
         SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory((Context)null, Time4A4JSuntimesCalculator.getDescriptor());
         SuntimesCalculator calculator = factory.createCalculator(new Location("test","35", "-112"), TimeZone.getDefault());
         double eot1 = calculator.equationOfTime(calendar);
-        for (int i=0; i<10000; i++) {
+        //for (int i=0; i<90000; i++) {
             assertEquals(calculator.equationOfTime(calendar), eot1);
-        }
+        //}
 
         int eot2 = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(calendar.getTimeInMillis(), calculator);
-        for (int i=0; i<10000; i++) {
-            assertEquals(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(calendar.getTimeInMillis(), calculator), eot2);
-        }
+        //for (int i=0; i<90000; i++) {
+            test_isApproximate(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(calendar.getTimeInMillis(), calculator), eot2);
+        //}
 
-        WidgetTimezones.ApparentSolarTime apparentSolar = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time", calculator);
-        int offset0 = apparentSolar.getOffset(calendar.getTimeInMillis());
-        for (int i=0; i<10000; i++) {
-            assertEquals(apparentSolar.getOffset(calendar.getTimeInMillis()), offset0);
-        }
-        int offset1 = apparentSolar.getOffset(1, 2020, 1, 1, 1, 0);
-        for (int i=0; i<10000; i++) {
-            assertEquals(apparentSolar.getOffset(1, 2020, 1, 1, 1, 0), offset1);
-        }
+    }
 
-        int rawOffset = apparentSolar.getRawOffset();
-        for (int i=0; i<10000; i++) {
-            assertEquals(apparentSolar.getRawOffset(), rawOffset);
-        }
+    protected void test_isApproximate(int value, int value1) {
+        assertTrue(Math.abs(value1 - value) <= 1);
     }
 
     @Test
@@ -106,6 +120,8 @@ public class WidgetTimezonesTest0
     {
         TimeZone timezone = new WidgetTimezones.LocalMeanTime(-112, "Local Mean Time (Test)");
         test_timezone(timezone, 16, 20, 0);
+        assertFalse(timezone.useDaylightTime());
+        assertFalse(timezone.inDaylightTime(new Date()));
     }
 
     protected void test_timezone(TimeZone timezone, int hour, int minute, int second)
@@ -114,6 +130,7 @@ public class WidgetTimezonesTest0
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, second);
+        calendar.set(Calendar.MILLISECOND, 0);
 
         assertEquals(calendar.get(Calendar.HOUR_OF_DAY), hour);
         assertEquals(calendar.get(Calendar.MINUTE), minute);
