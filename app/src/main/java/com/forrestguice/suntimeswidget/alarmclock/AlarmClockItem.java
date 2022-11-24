@@ -42,9 +42,6 @@ import java.util.TimeZone;
  */
 public class AlarmClockItem implements Parcelable
 {
-    public static final String AUTHORITY = "com.forrestguice.suntimeswidget.alarmclock";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/alarms");
-
     public static final int ICON_ALARM = R.drawable.ic_action_alarms;
     public static final int ICON_NOTIFICATION = R.drawable.ic_action_notification;
 
@@ -411,7 +408,7 @@ public class AlarmClockItem implements Parcelable
      */
     public Uri getUri()
     {
-        return ContentUris.withAppendedId(CONTENT_URI, rowID);
+        return ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, rowID);
     }
 
     /**

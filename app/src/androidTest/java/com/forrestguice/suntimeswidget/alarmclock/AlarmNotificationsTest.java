@@ -259,7 +259,7 @@ public class AlarmNotificationsTest
                 AlarmNotifications.ACTION_DELETE };
 
         // bad data (invalid alarmId)
-        Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, -1);
+        Uri data = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, -1);
         test_startComand_withData_calledStop(intent0, test_actions0, data);
 
         // add non-repeating alarm for +1hr (create valid data)
@@ -273,7 +273,7 @@ public class AlarmNotificationsTest
         alarms[0].repeating = false;
         long alarmId0 = addAlarmItemToDatabase(alarms[0]);
         assertTrue("failed to create alarm", hasAlarmId(alarmId0));
-        Uri data0 = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmId0);
+        Uri data0 = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId0);
 
         // add non-repeating notification (create valid data)
         alarms[1].enabled = true;
@@ -281,7 +281,7 @@ public class AlarmNotificationsTest
         alarms[1].type = AlarmClockItem.AlarmType.NOTIFICATION;
         long alarmId1 = addAlarmItemToDatabase(alarms[1]);
         assertTrue("failed to create alarm", hasAlarmId(alarmId1));
-        Uri data1 = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmId1);
+        Uri data1 = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId1);
 
         // bad data (invalid action when combined with data)
         String[] test_actions1 = new String[] { AlarmNotifications.ACTION_UPDATE_UI, Intent.ACTION_TIME_CHANGED, Intent. ACTION_BOOT_COMPLETED };
@@ -348,7 +348,7 @@ public class AlarmNotificationsTest
         // good data (schedule -> show -> dismiss alarm)
         long alarmId2 = addAlarmItemToDatabase(alarms[0]);
         assertTrue("failed to create alarm", hasAlarmId(alarmId2));
-        Uri data2 = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmId2);
+        Uri data2 = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId2);
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, 1500);
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SCHEDULED_SOON);
@@ -500,7 +500,7 @@ public class AlarmNotificationsTest
     {
         long alarmID = 10;
         int flags = Intent.FLAG_ACTIVITY_NEW_TASK;
-        Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmID);
+        Uri data = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmID);
         Intent intent = AlarmNotifications.getFullscreenIntent(mockContext, data);
 
         assertEquals(AlarmDismissActivity.class.getName(), intent.getComponent().getClassName());
@@ -514,7 +514,7 @@ public class AlarmNotificationsTest
     public void test_getFullscreenBroadcast()
     {
         long alarmID = 20;
-        Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmID);
+        Uri data = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmID);
         Intent intent = AlarmNotifications.getFullscreenBroadcast(data);
 
         assertEquals(AlarmNotifications.ACTION_UPDATE_UI, intent.getAction());
@@ -526,7 +526,7 @@ public class AlarmNotificationsTest
     {
         long alarmID = 30;
         int flags = Intent.FLAG_ACTIVITY_NEW_TASK;
-        Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmID);
+        Uri data = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmID);
         Intent intent = AlarmNotifications.getAlarmListIntent(mockContext, alarmID);
 
         assertEquals(AlarmClockActivity.class.getName(), intent.getComponent().getClassName());
@@ -541,7 +541,7 @@ public class AlarmNotificationsTest
     {
         long alarmID = 40;
         String action = AlarmNotifications.ACTION_SHOW;
-        Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmID);
+        Uri data = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmID);
         int flags = Intent.FLAG_RECEIVER_FOREGROUND;
         Intent intent = AlarmNotifications.getAlarmIntent(mockContext, action, data);
 
