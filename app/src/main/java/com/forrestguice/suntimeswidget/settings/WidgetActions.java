@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
@@ -615,6 +616,7 @@ public class WidgetActions
         OPEN_THEME_LIST("Suntimes", "Theme List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         OPEN_ACTION_LIST("Suntimes", "Action List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         OPEN_WIDGET_LIST("Suntimes", "Widget List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        OPEN_SETTINGS("Suntimes", "Settings", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
         SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT}, true),
         SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true),
@@ -728,6 +730,7 @@ public class WidgetActions
 
                         case OPEN_ALARM_LIST: launchString = AlarmClockActivity.class.getName(); break;
                         case OPEN_WIDGET_LIST: launchString = SuntimesWidgetListActivity.class.getName(); break;
+                        case OPEN_SETTINGS: launchString = SuntimesSettingsActivity.class.getName(); break;
 
                         case UPDATE_WIDGETS:
                             launchString = null;
