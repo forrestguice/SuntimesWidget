@@ -114,7 +114,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String ACTION_ADD_ALARM = "suntimes.action.alarmclock.ADD_ALARM";
     public static final String ACTION_ADD_NOTIFICATION = "suntimes.action.alarmclock.ADD_NOTIFICATION";
 
-    private static final String[] SUNTIMES_ALARMS_ACTIONS = new String[] {ACTION_ADD_ALARM, ACTION_ADD_NOTIFICATION};    // legacy action map
+    public static final String[] SUNTIMES_ALARMS_ACTIONS = new String[] { ACTION_SHOW_ALARMS, ACTION_ADD_ALARM, ACTION_ADD_NOTIFICATION, ACTION_SET_ALARM, ACTION_SNOOZE_ALARM, ACTION_DISMISS_ALARM };    // legacy action map
     private static final HashMap<String, String> SUNTIMES_ALARMS_ACTION_MAP = SuntimesActivity.createLegacyActionMap(SUNTIMES_ALARMS_ACTIONS);
 
     public static final String EXTRA_SHOWBACK = "showBack";

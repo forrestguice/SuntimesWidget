@@ -775,4 +775,36 @@ public class WidgetActions
             }
         }
     }
+
+    public static String[] ANDROID_ACTION_SUGGESTIONS = new String[] {
+            Intent.ACTION_VIEW, Intent.ACTION_SEARCH, Intent.ACTION_PICK, Intent.ACTION_GET_CONTENT,
+            Intent.ACTION_SEND,  Intent.ACTION_SENDTO, Intent.ACTION_SEND_MULTIPLE, "android.intent.action.PASTE",
+            Intent.ACTION_EDIT, Intent.ACTION_INSERT, Intent.ACTION_INSERT_OR_EDIT, Intent.ACTION_DELETE,
+            Intent.ACTION_RUN,  Intent.ACTION_SYNC, Intent.ACTION_CHOOSER,  Intent.ACTION_ATTACH_DATA,
+            Intent.ACTION_WEB_SEARCH, Intent.ACTION_SYNC,  Intent.ACTION_VOICE_COMMAND, Intent.ACTION_MAIN,
+            "android.intent.action.OPEN_DOCUMENT", "android.intent.action.CREATE_DOCUMENT", "android.intent.action.ASSIST", "android.intent.action.SHOW_APP_INFO",
+            "android.intent.action.MUSIC_PLAYER", "com.android.music.PLAYBACK_VIEWER", "android.intent.action.MEDIA_SEARCH",
+            "android.media.action.MEDIA_PLAY_FROM_SEARCH", "android.media.action.VIDEO_PLAY_FROM_SEARCH", "android.media.action.TEXT_OPEN_FROM_SEARCH",
+            Intent.ACTION_SET_WALLPAPER, "com.android.camera.action.REVIEW",
+            "android.intent.action.SHOW_ALARMS", "android.intent.action.SHOW_TIMERS", "android.intent.action.SET_ALARM", "android.intent.action.SET_TIMER"
+    };
+
+    public static String[] getSuggestedActions(String launchString)
+    {
+        if (SuntimesActivity.class.getName().equals(launchString)) {
+            return addAll(SuntimesActivity.SUNTIMES_ACTIONS, ANDROID_ACTION_SUGGESTIONS);
+
+        } else if (AlarmClockActivity.class.getName().equals(launchString)) {
+            return addAll(AlarmClockActivity.SUNTIMES_ALARMS_ACTIONS, ANDROID_ACTION_SUGGESTIONS);
+
+        } else {
+            return ANDROID_ACTION_SUGGESTIONS;
+        }
+    }
+    private static String[] addAll(String[] a, String[] b)
+    {
+        String[] result = Arrays.copyOf(a, a.length + b.length);
+        System.arraycopy(b, 0, result, a.length, b.length);
+        return result;
+    }
 }
