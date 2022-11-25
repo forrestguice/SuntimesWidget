@@ -168,7 +168,7 @@ public class CalculatorProvider extends ContentProvider
     private static UriMatcher uriMatcher()
     {
         if (CalculatorProvider.uriMatcher != null) {
-            return uriMatcher();
+            return CalculatorProvider.uriMatcher;
         }
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
