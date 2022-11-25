@@ -164,9 +164,14 @@ public class CalculatorProvider extends ContentProvider
     private static final int URIMATCH_SEASONS_FOR_YEAR = 150;
     private static final int URIMATCH_SEASONS_FOR_RANGE = 160;
 
-    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    static
+    private static UriMatcher uriMatcher;
+    private static UriMatcher uriMatcher()
     {
+        if (CalculatorProvider.uriMatcher != null) {
+            return uriMatcher();
+        }
+        uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
         uriMatcher.addURI(AUTHORITY, QUERY_CONFIG, URIMATCH_CONFIG);
 
         uriMatcher.addURI(AUTHORITY, QUERY_SUN, URIMATCH_SUN);
@@ -190,6 +195,7 @@ public class CalculatorProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY, QUERY_SEASONS, URIMATCH_SEASONS);
         uriMatcher.addURI(AUTHORITY, QUERY_SEASONS + "/#", URIMATCH_SEASONS_FOR_YEAR);
         uriMatcher.addURI(AUTHORITY, QUERY_SEASONS + "/*", URIMATCH_SEASONS_FOR_RANGE);
+        return uriMatcher;
     }
 
     @Override
@@ -237,7 +243,7 @@ public class CalculatorProvider extends ContentProvider
         long[] range;
         Cursor retValue = null;
 
-        int uriMatch = uriMatcher.match(uri);
+        int uriMatch = uriMatcher().match(uri);
         switch (uriMatch)
         {
             case URIMATCH_CONFIG:
