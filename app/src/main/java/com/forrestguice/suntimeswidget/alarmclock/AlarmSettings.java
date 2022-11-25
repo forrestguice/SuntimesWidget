@@ -448,7 +448,7 @@ public class AlarmSettings
     /**
      * BootCompletedInfo
      */
-    public static class BootCompletedInfo extends  Object
+    public static class BootCompletedInfo
     {
         private final boolean result;
         private final long timeMillis, atElapsedMillis, durationMillis;
