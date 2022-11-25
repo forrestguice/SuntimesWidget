@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -79,7 +80,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
     public static final String LOGTAG = "CalculatorDescriptor";
 
     protected static boolean initialized = false;
-    public static void initCalculators(Context context)
+    public static void initCalculators(@Nullable Context context)
     {
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
@@ -88,7 +89,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor());
         SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
 
-        boolean scanForPlugins = AppSettings.loadScanForPluginsPref(context);
+        boolean scanForPlugins = (context != null && AppSettings.loadScanForPluginsPref(context));
         if (scanForPlugins)
         {
             PackageManager packageManager = context.getPackageManager();
@@ -119,7 +120,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         //Log.d("CalculatorFactory", "Initialized suntimes calculator list.");
     }
 
-    public static void reinitCalculators(Context context)
+    public static void reinitCalculators(@Nullable Context context)
     {
         calculators.clear();
         initCalculators(context);
@@ -159,7 +160,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         calculators.remove(calculator);
     }
 
-    public static SuntimesCalculatorDescriptor[] values(Context context)
+    public static SuntimesCalculatorDescriptor[] values(@Nullable Context context)
     {
         if (!initialized)
         {
@@ -174,7 +175,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         return array;
     }
 
-    public static SuntimesCalculatorDescriptor[] values(Context context, int[] requestedFeatures )
+    public static SuntimesCalculatorDescriptor[] values(@Nullable Context context, int[] requestedFeatures )
     {
         if (!initialized)
         {
@@ -194,7 +195,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         return matchingCalculators.toArray(retValues);
     }
 
-    public static SuntimesCalculatorDescriptor valueOf(Context context, String value)
+    public static SuntimesCalculatorDescriptor valueOf(@Nullable Context context, String value)
     {
         if (!initialized)
         {
