@@ -19,9 +19,12 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -34,7 +37,9 @@ import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -534,6 +539,25 @@ public class AlarmSettings
     }
     public static long timeOfLastBoot() {
         return System.currentTimeMillis() - SystemClock.elapsedRealtime();
+    }
+
+    public static boolean loadPrefShowLauncher(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, PREF_DEF_ALARM_SHOWLAUNCHER);
+    }
+    public static void savePrefShowLauncher(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, value);
+        prefs.apply();
+        setShowLauncherIcon(context, value);
+    }
+    public static void setShowLauncherIcon(Context context, boolean value)
+    {
+        ComponentName componentName = new ComponentName(context, "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivityLauncher");
+        int state = (value ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
+        PackageManager packageManager = context.getPackageManager();
+        packageManager.setComponentEnabledSetting(componentName, state, PackageManager.DONT_KILL_APP);
     }
 
 }

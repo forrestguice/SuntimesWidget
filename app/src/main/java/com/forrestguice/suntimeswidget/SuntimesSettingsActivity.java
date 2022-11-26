@@ -1954,10 +1954,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 {
                     if (context != null)
                     {
-                        ComponentName componentName = new ComponentName(context, "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivityLauncher");
-                        int state = (Boolean)newValue ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-                        PackageManager packageManager = context.getPackageManager();
-                        packageManager.setComponentEnabledSetting(componentName, state, PackageManager.DONT_KILL_APP);
+                        AlarmSettings.setShowLauncherIcon(context, (Boolean)newValue);
                         Toast.makeText(context, context.getString(R.string.reboot_required_message), Toast.LENGTH_LONG).show();
                         return true;
                     }
