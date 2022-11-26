@@ -26,6 +26,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceCategory;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,11 +46,14 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -285,16 +289,18 @@ public class WelcomeActivity extends AppCompatActivity
         {
             switch (position)
             {
-                case 3: return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
-                case 2: return WelcomeTimeZoneFragment.newInstance(WelcomeActivity.this);
-                case 1: return WelcomeLocationFragment.newInstance();
-                case 0: default: return WelcomeAppearanceFragment.newInstance();
+                case 5: return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
+                case 4: return WelcomeAlarmsFragment.newInstance();
+                case 3: return WelcomeTimeZoneFragment.newInstance(WelcomeActivity.this);
+                case 2: return WelcomeLocationFragment.newInstance();
+                case 1: return WelcomeAppearanceFragment.newInstance();
+                case 0: default: return WelcomeFirstPageFragment.newInstance();
             }
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 6;
         }
     }
 
@@ -383,6 +389,33 @@ public class WelcomeActivity extends AppCompatActivity
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /**
+     * WelcomeFirstPageFragment
+     */
+    public static class WelcomeFirstPageFragment extends WelcomeFragment
+    {
+        public WelcomeFirstPageFragment() {}
+
+        public static WelcomeFirstPageFragment newInstance()
+        {
+            WelcomeFirstPageFragment fragment = new WelcomeFirstPageFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_app);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public void initViews(Context context, View view) {
+            super.initViews(context, view);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
 
     /**
      * WelcomeLocationFragment
@@ -727,6 +760,8 @@ public class WelcomeActivity extends AppCompatActivity
     {
         public WelcomeAlarmsFragment() {}
 
+        protected TextView batteryOptimizationText;
+
         public static WelcomeAlarmsFragment newInstance()
         {
             WelcomeAlarmsFragment fragment = new WelcomeAlarmsFragment();
@@ -735,6 +770,47 @@ public class WelcomeActivity extends AppCompatActivity
             fragment.setArguments(args);
             return fragment;
         }
+
+        @Override
+        public void initViews(final Context context, View view)
+        {
+            CheckBox launcherIconCheck = (CheckBox) view.findViewById(R.id.check_alarms_showlauncher);
+            if (launcherIconCheck != null)
+            {
+                launcherIconCheck.setChecked(AlarmSettings.loadPrefShowLauncher(context));
+                launcherIconCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        AlarmSettings.savePrefShowLauncher(context, isChecked);
+                    }
+                });
+            }
+
+            batteryOptimizationText = (TextView) view.findViewById(R.id.text_optWhiteList);
+
+            Button batteryOptimizationButton = (Button) view.findViewById(R.id.button_optWhiteList);
+            if (batteryOptimizationButton != null)
+            {
+                batteryOptimizationButton.setVisibility((Build.VERSION.SDK_INT >= 23) ? View.VISIBLE : View.GONE);
+                batteryOptimizationButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SuntimesSettingsActivity.createBatteryOptimizationAlertDialog(context).show();
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void updateViews(Context context)
+        {
+            if (batteryOptimizationText != null)
+            {
+                batteryOptimizationText.setVisibility((Build.VERSION.SDK_INT >= 23) ? View.VISIBLE : View.GONE);
+                batteryOptimizationText.setText(AlarmSettings.batteryOptimizationMessage(context));
+            }
+        }
+
     }
 
     /**
@@ -748,7 +824,7 @@ public class WelcomeActivity extends AppCompatActivity
         {
             WelcomeAppearanceFragment fragment = new WelcomeAppearanceFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_app);
+            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_appearance);
             fragment.setArguments(args);
             return fragment;
         }

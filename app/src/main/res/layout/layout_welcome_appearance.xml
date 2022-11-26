@@ -8,9 +8,11 @@
     <LinearLayout android:id="@+id/icon_layout"
         android:layout_width="0dp" android:layout_height="0dp"
         android:gravity="center" android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_weight="8">
+        app:layout_constraintBottom_toTopOf="@+id/text_layout"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintVertical_weight="2">
 
         <ImageView
             android:id="@+id/icon"
@@ -32,6 +34,35 @@
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             android:gravity="start" android:layout_margin="8dp"
             android:text="@string/welcome_message" />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/text_layout"
+        android:orientation="vertical" android:gravity="center"
+        android:layout_width="0dp" android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="96dp">
+            
+            <Button android:id="@+id/button_theme_dark" android:theme="@style/DarkThemeButton"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
+
+            <Button android:id="@+id/button_theme_light" android:theme="@style/LightThemeButton"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
+            
+        </LinearLayout>
+
+        <TextView
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:gravity="start" android:layout_margin="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/configLabel_appearance" />
 
     </LinearLayout>
 
