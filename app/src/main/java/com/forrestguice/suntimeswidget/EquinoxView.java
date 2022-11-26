@@ -56,6 +56,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 @SuppressWarnings("Convert2Diamond")
+@Deprecated
 public class EquinoxView extends LinearLayout
 {
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedEquinoxCard";
@@ -1018,37 +1019,10 @@ public class EquinoxView extends LinearLayout
             btn_flipperNext = (ImageButton)view.findViewById(R.id.info_time_nextbtn);
             btn_flipperPrev = (ImageButton)view.findViewById(R.id.info_time_prevbtn);
 
-            TextView txt_equinox_vernal_label = (TextView)view.findViewById(R.id.text_date_equinox_vernal_label);
-            TextView txt_equinox_vernal = (TextView)view.findViewById(R.id.text_date_equinox_vernal);
-            TextView txt_equinox_vernal_note = (TextView)view.findViewById(R.id.text_date_equinox_vernal_note);
-            ImageButton menu_spring = (ImageButton) view.findViewById(R.id.menu_equinox_vernal);
-            View focus_spring = view.findViewById(R.id.focus_equinox_vernal);
-            View layout_spring = view.findViewById(R.id.text_date_equinox_vernal_layout);
-            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, menu_spring, focus_spring, layout_spring, 0, options.seasonColors[0], options);
-
-            TextView txt_solstice_summer_label = (TextView)view.findViewById(R.id.text_date_solstice_summer_label);
-            TextView txt_solstice_summer = (TextView)view.findViewById(R.id.text_date_solstice_summer);
-            TextView txt_solstice_summer_note = (TextView)view.findViewById(R.id.text_date_solstice_summer_note);
-            ImageButton menu_summer = (ImageButton) view.findViewById(R.id.menu_solstice_summer);
-            View focus_summer = view.findViewById(R.id.focus_solstice_summer);
-            View layout_summer = view.findViewById(R.id.text_date_solstice_summer_layout);
-            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, menu_summer, focus_summer, layout_summer, 0, options.seasonColors[1], options);
-
-            TextView txt_equinox_autumnal_label = (TextView)view.findViewById(R.id.text_date_equinox_autumnal_label);
-            TextView txt_equinox_autumnal = (TextView)view.findViewById(R.id.text_date_equinox_autumnal);
-            TextView txt_equinox_autumnal_note = (TextView)view.findViewById(R.id.text_date_equinox_autumnal_note);
-            ImageButton menu_autumn = (ImageButton) view.findViewById(R.id.menu_equinox_autumnal);
-            View focus_autumn = view.findViewById(R.id.focus_equinox_autumnal);
-            View layout_autumn = view.findViewById(R.id.text_date_equinox_autumnal_layout);
-            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, menu_autumn, focus_autumn, layout_autumn, 0, options.seasonColors[2], options);
-
-            TextView txt_solstice_winter_label = (TextView)view.findViewById(R.id.text_date_solstice_winter_label);
-            TextView txt_solstice_winter = (TextView)view.findViewById(R.id.text_date_solstice_winter);
-            TextView txt_solstice_winter_note = (TextView)view.findViewById(R.id.text_date_solstice_winter_note);
-            ImageButton menu_winter = (ImageButton) view.findViewById(R.id.menu_solstice_winter);
-            View focus_winter = view.findViewById(R.id.focus_solstice_winter);
-            View layout_winter = view.findViewById(R.id.text_date_solstice_winter_layout);
-            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, menu_winter, focus_winter, layout_winter, 0, options.seasonColors[3], options);
+            note_equinox_vernal = addNote(view, R.id.text_date_equinox_vernal_label, R.id.text_date_equinox_vernal, R.id.text_date_equinox_vernal_note, R.id.menu_equinox_vernal, R.id.focus_equinox_vernal, R.id.text_date_equinox_vernal_layout, 0, options.seasonColors[0], options);
+            note_solstice_summer = addNote(view, R.id.text_date_solstice_summer_label, R.id.text_date_solstice_summer, R.id.text_date_solstice_summer_note, R.id.menu_solstice_summer, R.id.focus_solstice_summer, R.id.text_date_solstice_summer_layout, 0, options.seasonColors[1], options);
+            note_equinox_autumnal = addNote(view, R.id.text_date_equinox_autumnal_label, R.id.text_date_equinox_autumnal, R.id.text_date_equinox_autumnal_note, R.id.menu_equinox_autumnal, R.id.focus_equinox_autumnal, R.id.text_date_equinox_autumnal_layout, 0, options.seasonColors[2], options);
+            note_solstice_winter = addNote(view, R.id.text_date_solstice_winter_label, R.id.text_date_solstice_winter, R.id.text_date_solstice_winter_note, R.id.menu_solstice_winter, R.id.focus_solstice_winter, R.id.text_date_solstice_winter_layout, 0, options.seasonColors[3], options);
 
             if (options.columnWidthPx >= 0) {
                 adjustColumnWidth(options.columnWidthPx);
@@ -1085,6 +1059,17 @@ public class EquinoxView extends LinearLayout
                     menuButton.setVisibility(visibility);
                 }
             }
+        }
+
+        private EquinoxNote addNote(View view, int labelViewResID, int timeViewResID, int noteViewResID, int menuButtonResID, int focusViewResID, int noteLayoutResID, int pageIndex, Integer timeColor, EquinoxViewOptions options)
+        {
+            TextView txt_label = (TextView)view.findViewById(labelViewResID);
+            TextView txt_time = (TextView)view.findViewById(timeViewResID);
+            TextView txt_note = (TextView)view.findViewById(noteViewResID);
+            ImageButton menu = (ImageButton) view.findViewById(menuButtonResID);
+            View focus = view.findViewById(focusViewResID);
+            View layout = view.findViewById(noteLayoutResID);
+            return addNote(txt_label, txt_time, txt_note, menu, focus, layout, pageIndex, timeColor, options);
         }
 
         private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, ImageButton menuButton, View focusView, View noteLayout, int pageIndex, Integer timeColor, EquinoxViewOptions options)

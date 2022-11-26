@@ -1238,7 +1238,11 @@
         <item>Equinoccio de otoño</item>
         <item>Solsticio de invierno</item>
         <item>Mediodía lunar</item>    
-        <item>Medianoche lunar</item>    
+        <item>Medianoche lunar</item>
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
     <string-array name="solarevents_long">      <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>Amanecer astronómico</item>
@@ -1267,7 +1271,11 @@
         <item>Equinoccio de otoño</item>
         <item>Solsticio de invierno</item>
         <item>Mediodía lunar</item>    
-        <item>Medianoche lunar</item>    
+        <item>Medianoche lunar</item>
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
     <string-array name="solarevents_long1">      <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>Amanecer astronómico</item>
@@ -1297,6 +1305,10 @@
         <item>Solsticio de invierno</item>
         <item>Mediodía lunar</item>
         <item>Medianoche lunar</item>
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>    <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->

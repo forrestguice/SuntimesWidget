@@ -47,8 +47,8 @@
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:layout_marginBottom="12dp">
 
             <TextView android:id="@+id/appwidget_schedalarm_mode_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_schedalarm_mode" />
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small" android:text="@string/configLabel_schedalarm_mode" />
 
             <LinearLayout android:orientation="horizontal"
                 android:layout_width="match_parent" android:layout_height="match_parent"
@@ -61,7 +61,7 @@
                     android:layout_weight="1" />
 
                 <ImageButton android:id="@+id/appwidget_schedalarm_more"
-                    style="@style/ActionButton" android:src="?attr/icActionSearch"
+                    style="?attr/actionOverflowButtonStyle"
                     android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             </LinearLayout>
@@ -72,7 +72,7 @@
                 android:gravity="center_vertical" android:drawablePadding="8dp"
                 android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:paddingLeft="8dp" android:paddingRight="8dp"
                 android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
-                tools:text="Location" />
+                android:textSize="?attr/text_size_small" tools:text="Location" />
 
             <LinearLayout  android:id="@+id/appwidget_schedalarm_note_layout"
                 android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="4dp" android:paddingRight="4dp"
-                    android:text="@string/schedalarm_dialog_note" />
+                    android:textSize="?attr/text_size_small" android:text="@string/schedalarm_dialog_note" />
 
             </LinearLayout>
 

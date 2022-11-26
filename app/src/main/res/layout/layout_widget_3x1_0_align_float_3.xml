@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:theme="@style/AppTheme" style="@style/SunsetTimeWidgetFrame1">
+    <LinearLayout android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget_float_3">
+        <include layout="@layout/layout_widget_3x1_0_content" />
+    </LinearLayout>
+</FrameLayout>

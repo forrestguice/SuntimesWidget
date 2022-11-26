@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clickArea"
+    android:background="?attr/selectableItemBackground"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout android:orientation="vertical"
+        android:background="?attr/dialogBackground"
+        android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/dialog_header" android:orientation="horizontal"
+            android:layout_gravity="center" android:layout_marginTop="4dp"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center" android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageButton
+                    android:id="@+id/info_time_prevbtn1"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="?attr/icActionPrevious" android:contentDescription="@string/prevYear"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="center" android:gravity="center"
+                    android:id="@+id/text_title1" android:text="2022"
+                    style="@style/TableHeadDateView" android:visibility="visible"
+                    android:paddingTop="8dp" android:paddingBottom="8dp"
+                    android:paddingLeft="32dp" android:paddingRight="32dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/info_time_nextbtn1"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="?attr/icActionNext" android:contentDescription="@string/nextYear"
+                    android:background="?attr/selectableItemBackground" />
+
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/info_equinoxsolstice_flipper1"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            tools:listitem="@layout/info_time_solsticequinox2"
+            android:elevation="5dp" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/year_info_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:paddingTop="8dp" android:paddingBottom="8dp" android:layout_marginTop="4dp"
+            android:background="?attr/dialogBackgroundAlt"
+            android:orientation="horizontal">
+
+            <LinearLayout android:orientation="horizontal" android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView android:id="@+id/info_time_year_length_label"
+                    android:layout_width="@dimen/solsticetable_column0_width" android:layout_height="wrap_content"
+                    style="@style/SunsetTimeTextView" android:textSize="?attr/text_size_small" android:gravity="start"
+                    android:labelFor="@+id/info_time_year_length"
+                    android:layout_marginLeft="14dp" android:layout_marginStart="14dp"
+                    android:layout_marginRight="0dp" android:layout_marginEnd="0dp"
+                    android:text="@string/timeMode_tropical_year" />
+
+                <TextView android:id="@+id/info_time_year_length"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100dp"
+                    android:layout_margin="0dp" android:padding="0dp" android:gravity="start|center_vertical"
+                    style="@style/SunsetTextView" android:textSize="?attr/text_size_small"
+                    android:text="365d 5h 41m\n365.24 days" />
+
+            </LinearLayout>
+
+            <ImageButton android:id="@+id/menu_button"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                style="?attr/actionOverflowButtonStyle" android:background="?attr/selectableItemBackground"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/configAction_overflow" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+    <TextView android:id="@+id/txt_empty"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:gravity="center" android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_margin="16dp"
+        android:textSize="?attr/text_size_small"
+        android:text="@string/feature_not_supported_by_source" />
+
+</FrameLayout>

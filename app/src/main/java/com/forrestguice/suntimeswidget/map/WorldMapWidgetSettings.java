@@ -81,7 +81,7 @@ public class WorldMapWidgetSettings
     public static enum WorldMapWidgetMode implements WidgetSettings.WidgetModeDisplay
     {
         EQUIRECTANGULAR_SIMPLE("Simple", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_1, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_01, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
         EQUIAZIMUTHAL_SIMPLE("Polar [north]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
         EQUIAZIMUTHAL_SIMPLE1("Polar [south]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_1, false, -90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
         EQUIAZIMUTHAL_SIMPLE2("Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1);
@@ -231,11 +231,14 @@ public class WorldMapWidgetSettings
         prefs.putBoolean(prefs_prefix + key + mapTag, value);
         prefs.apply();
     }
-    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag)
+    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag) {
+        return loadWorldMapPref(context, appWidgetId, key, mapTag, null);
+    }
+    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag, Boolean defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
-        return prefs.getBoolean(prefs_prefix + key + mapTag, defaultWorldMapFlag(key));
+        return prefs.getBoolean(prefs_prefix + key + mapTag, (defaultValue != null ? defaultValue : defaultWorldMapFlag(key)));
     }
     public static void deleteWorldMapPref(Context context, int appWidgetId, String key, String mapTag)
     {

@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_1;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X3_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -114,12 +115,12 @@ public class SuntimesWidget2 extends SuntimesWidget0
             int minDimen_x2 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
             if (mustFitWithinDp[0] >= minDimen_x3)
             {
-                if (mustFitWithinDp[1] >= minDimen_x3)
+                if (mustFitWithinDp[1] >= minDimen_x3) {
                     layout = ((mustFitWithinDp[0] / (float)mustFitWithinDp[1]) < 1.1) ? new SunPosLayout_3X3_0()
-                                                                                      : new SunPosLayout_3X2_0();
-                else if (mustFitWithinDp[1] >= minDimen_x2)
-                    layout = new SunPosLayout_3X2_0();
-                else {
+                                                                                      : WidgetSettings.loadSunPos3x2ModePref_asLayout(context, appWidgetId);
+                } else if (mustFitWithinDp[1] >= minDimen_x2) {
+                    layout = WidgetSettings.loadSunPos3x2ModePref_asLayout(context, appWidgetId);  // new SunPosLayout_3X2_0();
+                } else {
                     layout = WidgetSettings.loadSunPos3x1ModePref_asLayout(context, appWidgetId);  // new SunPosLayout_3X1_0();
                 }
             } else {

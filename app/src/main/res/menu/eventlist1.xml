@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="none">
+
+        <item android:id="@+id/selectEvent"
+            android:title="@string/configAction_selectEvent"
+            android:icon="?attr/icActionAccept"
+            app:showAsAction="always" />
+
+        <item android:id="@+id/editEvent"
+            android:title="@string/configAction_editEvent"
+            android:icon="?attr/icActionEdit"
+            app:showAsAction="ifRoom" />
+
+        <item android:id="@+id/deleteEvent"
+            android:title="@string/configAction_deleteEvent"
+            android:icon="?attr/icActionDelete"
+            app:showAsAction="ifRoom" />
+
+    </group>
+</menu>

@@ -140,6 +140,14 @@ public class WidgetThemes
     {
         return themes.containsValue(theme);
     }
+    public static boolean hasValue( String theme )
+    {
+        for (String name : themes.keySet()) {
+            if (name.equals(theme))
+                return true;
+        }
+        return false;
+    }
 
     public static boolean addValue( ThemeDescriptor theme )
     {

@@ -46,7 +46,7 @@ import java.util.TimeZone;
 
 public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 {
-    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION };
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION, FEATURE_RISESET1 };
 
     public abstract StdSolarCalculator getCalculator();
 
@@ -171,6 +171,36 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getSunriseCalendarForDate( Calendar date, int angle )
+    {
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double eventAngle = 90 + geodeticAngle + (-1 * angle);
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment moment = calculator.sunrise(localDate, latitude, longitude, eventAngle);
+        return momentToCalendar(moment);
+    }
+
+    @Override
+    public Calendar getSunsetCalendarForDate( Calendar date, int angle )
+    {
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double eventAngle = 90 + geodeticAngle + (-1 * angle);
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment moment = calculator.sunset(localDate, latitude, longitude, eventAngle);
+        return momentToCalendar(moment);
+    }
+
+    @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
         SolarTime.Calculator calculator = solarTime.getCalculator();
@@ -282,6 +312,16 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         AstronomicalSeason winterSolstice = adjustSeasonToHemisphere(AstronomicalSeason.WINTER_SOLSTICE);
         Moment moment = winterSolstice.inYear(date.get(Calendar.YEAR));
         return momentToCalendar(moment);
+    }
+
+    @Override
+    public long getTropicalYearLength(Calendar date)
+    {
+        int year = date.get(Calendar.YEAR);
+        AstronomicalSeason vernalEquinox = AstronomicalSeason.VERNAL_EQUINOX.onNorthernHemisphere();
+        long t0 = TemporalType.MILLIS_SINCE_UNIX.from(vernalEquinox.inYear(year));
+        long t1 = TemporalType.MILLIS_SINCE_UNIX.from(vernalEquinox.inYear(year + 1));
+        return t1 - t0;
     }
 
     @Override

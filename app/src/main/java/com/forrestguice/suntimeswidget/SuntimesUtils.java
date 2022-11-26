@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -78,6 +78,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
@@ -87,7 +88,6 @@ import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -95,7 +95,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.IllegalFormatConversionException;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -1255,10 +1254,21 @@ public class SuntimesUtils
         }
 
         WidgetSettings.TimeMode timeMode = data.timeMode();
-        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+        String modeDisplayShort = timeMode.getShortDisplayString();
+        String modeDisplayLong = timeMode.getLongDisplayString();
 
-        displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
-        displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        WidgetSettings.RiseSetDataMode timeModeItem = data.dataMode();
+        if (timeModeItem instanceof WidgetSettings.EventAliasTimeMode) {
+            String label = EventSettings.loadEventValue(context, timeModeItem.name(), EventSettings.PREF_KEY_EVENT_LABEL);
+            if (label != null) {
+                modeDisplayLong = modeDisplayShort = label;
+            }
+        }
+
+        displayString = displayString.replaceAll(modePatternShort, modeDisplayShort);
+        displayString = displayString.replaceAll(modePattern, modeDisplayLong);
+
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
         displayString = displayString.replaceAll(orderPattern, order.toString());
 
         for (SolarEvents event : events)
@@ -1272,7 +1282,13 @@ public class SuntimesUtils
             }
 
             SuntimesRiseSetData d = (event == SolarEvents.NOON && data.getLinked() != null ? data.getLinked() : data);
-            Calendar eventTime = d.getEvents(event)[0];
+            if (event == SolarEvents.SUNRISE) {
+                event = SolarEvents.valueOf(timeMode, true);
+            } else if (event == SolarEvents.SUNSET) {
+                event = SolarEvents.valueOf(timeMode, false);
+            }
+
+            Calendar eventTime = d.getEvents(event.isRising())[0];
             if (eventTime != null)
             {
                 if (displayString.contains(pattern_em)) {
@@ -1285,7 +1301,7 @@ public class SuntimesUtils
                     displayString = displayString.replaceAll(pattern_eT, calendarTimeShortDisplayString(context, eventTime, true).toString());
                 }
                 if (displayString.contains(pattern_eA)) {
-                    Double angle = getDegreesForEvent(event, d);
+                    Double angle = (d.angle() != null ? Double.valueOf(d.angle()) : getDegreesForEvent(event, d));
                     displayString = displayString.replaceAll(pattern_eA, (angle != null ? formatAsDegrees(angle, 1) : ""));
                 }
 
@@ -1352,12 +1368,12 @@ public class SuntimesUtils
     {
         switch (event)
         {
-            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL: return -18d;
-            case MORNING_NAUTICAL: case EVENING_NAUTICAL: return -12d;
-            case MORNING_BLUE8: case EVENING_BLUE8: return -8d;
-            case MORNING_CIVIL: case EVENING_CIVIL: return -6d;
-            case MORNING_BLUE4: case EVENING_BLUE4: return -4d;
-            case MORNING_GOLDEN: case EVENING_GOLDEN: return 6d;
+            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL: return  WidgetSettings.TimeMode.ASTRONOMICAL.angle();
+            case MORNING_NAUTICAL: case EVENING_NAUTICAL: return  WidgetSettings.TimeMode.NAUTICAL.angle();
+            case MORNING_BLUE8: case EVENING_BLUE8: return WidgetSettings.TimeMode.BLUE8.angle();
+            case MORNING_CIVIL: case EVENING_CIVIL: return WidgetSettings.TimeMode.CIVIL.angle();
+            case MORNING_BLUE4: case EVENING_BLUE4: return WidgetSettings.TimeMode.BLUE4.angle();
+            case MORNING_GOLDEN: case EVENING_GOLDEN: return WidgetSettings.TimeMode.GOLD.angle();
             case SUNRISE: case SUNSET: return 0d;
             case NOON:
                 SuntimesCalculator calculator = data.calculator();
@@ -1482,7 +1498,7 @@ public class SuntimesUtils
                     continue;
                 }
 
-                Calendar[] eventTimes = (pattern_em != null ? dataset.getRiseSetEvents(event) : null);
+                Calendar[] eventTimes = (pattern_em != null ? dataset.getRiseSetEvents(event.name()) : null);
                 Calendar eventTime = (eventTimes != null && eventTimes[0] != null ? eventTimes[0] : null);
 
                 if (eventTime != null)

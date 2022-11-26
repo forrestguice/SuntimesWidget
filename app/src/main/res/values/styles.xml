@@ -6,15 +6,20 @@
 
     <!-- Theme: System (left-to-right) -->
     <style name="AppThemeBase.System" parent="Theme.AppCompat.DayNight.NoActionBar">
-
+        <item name="colorPrimary">@color/primaryColor</item>
         <item name="dialogFrame">@color/dialog_frame</item>
         <item name="dialogBackground">@color/dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt</item>
+        <item name="widgetBackground">@drawable/widget_bg_ref</item>
         <item name="settingsCardBackground">@drawable/widget_bg_ref</item>
         <item name="timeCardBackground">@color/card_bg</item>
         <item name="semiTransparentBackground">@color/card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/hr</item>
+        <item name="colorAccent">@color/text_accent</item>
+        <item name="text_primaryColor">@color/text_primary</item>
+        <item name="text_secondaryColor">@color/text_secondary</item>
+        <item name="text_tertiaryColor">@color/text_tertiary</item>
         <item name="text_accentColor">@color/text_accent</item>
         <item name="text_disabledColor">@color/text_disabled</item>
 
@@ -39,6 +44,9 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke</item>
+        <item name="graphColor_axis">@color/graphColor_axis</item>
+        <item name="graphColor_grid">@color/graphColor_grid</item>
+        <item name="graphColor_labels">@color/graphColor_labels</item>
 
         <item name="table_risingColor">@color/table_rising</item>
         <item name="table_settingColor">@color/table_setting</item>
@@ -56,6 +64,8 @@
         <item name="moonriseColor">@color/moonIcon_color_rising</item>
         <item name="moonsetIcon">@drawable/ic_moon_set_ref</item>
         <item name="moonsetColor">@color/moonIcon_color_setting</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon_ref</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night_ref</item>
 
         <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
@@ -85,6 +95,7 @@
         <item name="icActionPlace">@drawable/ic_action_place_ref</item>
         <item name="icActionMap">@drawable/ic_action_map1_ref</item>
         <item name="icActionWorldMap">@drawable/ic_action_map_ref</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline</item>
         <item name="icActionTime">@drawable/ic_action_time_ref</item>
         <item name="icActionDst">@drawable/ic_weather_sunny_ref</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_ref</item>
@@ -97,6 +108,7 @@
         <item name="icActionWarning">@drawable/ic_action_warning_ref</item>
         <item name="icActionError">@drawable/ic_action_error_ref</item>
         <item name="icActionWidgets">@drawable/ic_action_widget_ref</item>
+        <item name="icActionEvents">@drawable/ic_action_events_ref</item>
         <item name="icActionAppearance">@drawable/ic_palette_ref</item>
         <item name="icActionExtension">@drawable/ic_action_extension_ref</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_ref_18</item>
@@ -128,24 +140,62 @@
         <item name="icActionTimeReset">@drawable/ic_action_timereset_ref</item>
 
         <item name="icActionExpand">@drawable/ic_action_expand_ref</item>
+        <item name="icActionVisibilityOn">@drawable/ic_action_visibility_on_ref</item>
+        <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off_ref</item>
         <item name="checkVibrate">@drawable/check_vibrate_ref</item>
+        <item name="checkVisibility">@drawable/check_visible_ref</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
 
     </style>
     <style name="AppTheme.System" parent="AppThemeBase.System">
         <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_ref</item>
     </style>
+    <style name="AppTheme.System.Small" parent="AppTheme.System">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+    </style>
+    <style name="AppTheme.System.Large" parent="AppTheme.System">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+    </style>
 
     <!-- Theme: Light (left-to-right) -->
     <style name="AppThemeBase.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor_light</item>
         <item name="dialogFrame">@color/dialog_frame_light</item>
         <item name="dialogBackground">@color/dialog_bg_light</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_light</item>
+        <item name="widgetBackground">@drawable/bg_widget</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
         <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/hr_light</item>
+        <item name="colorAccent">@color/text_accent_light</item>
+        <item name="text_primaryColor">@color/text_primary_light</item>
+        <item name="text_secondaryColor">@color/text_secondary_light</item>
+        <item name="text_tertiaryColor">@color/text_tertiary_light</item>
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
@@ -170,6 +220,9 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_light</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill_light</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke_light</item>
+        <item name="graphColor_axis">@color/graphColor_axis_light</item>
+        <item name="graphColor_grid">@color/graphColor_grid_light</item>
+        <item name="graphColor_labels">@color/graphColor_labels_light</item>
 
         <item name="table_risingColor">@color/table_rising_light</item>
         <item name="table_settingColor">@color/table_setting_light</item>
@@ -187,6 +240,8 @@
         <item name="moonriseColor">@color/moonIcon_color_rising_light</item>
         <item name="moonsetIcon">@drawable/ic_moon_set_light</item>
         <item name="moonsetColor">@color/moonIcon_color_setting_light</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon_light</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night_light</item>
 
         <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
@@ -216,6 +271,7 @@
         <item name="icActionPlace">@drawable/ic_action_place_light</item>
         <item name="icActionMap">@drawable/ic_action_map1_light</item>
         <item name="icActionWorldMap">@drawable/ic_action_map_light</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline_light</item>
         <item name="icActionTime">@drawable/ic_action_time_light</item>
         <item name="icActionDst">@drawable/ic_weather_sunny_light</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
@@ -228,6 +284,7 @@
         <item name="icActionWarning">@drawable/ic_action_warning_light</item>
         <item name="icActionError">@drawable/ic_action_error_light</item>
         <item name="icActionWidgets">@drawable/ic_action_widget_light</item>
+        <item name="icActionEvents">@drawable/ic_action_widget_light</item>    <!-- TODO -->
         <item name="icActionAppearance">@drawable/ic_palette_light</item>
         <item name="icActionExtension">@drawable/ic_action_extension_light</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
@@ -259,7 +316,19 @@
         <item name="icActionTimeReset">@drawable/ic_action_timereset_light</item>
 
         <item name="icActionExpand">@drawable/ic_action_expand_light</item>
+        <item name="icActionVisibilityOn">@drawable/ic_action_visibility_light</item>
+        <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off_light</item>
         <item name="checkVibrate">@drawable/check_vibrate_light</item>
+        <item name="checkVisibility">@drawable/check_visible_light</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
@@ -268,17 +337,43 @@
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_light</item>
     </style>
+    <style name="AppTheme.Light.Small" parent="AppTheme.Light">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+    </style>
+    <style name="AppTheme.Light.Large" parent="AppTheme.Light">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+    </style>
 
     <!-- Theme: Dark (left-to-right) -->
     <style name="AppThemeBase.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor_dark</item>
         <item name="dialogFrame">@color/dialog_frame_dark</item>
         <item name="dialogBackground">@color/dialog_bg_dark</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_dark</item>
+        <item name="widgetBackground">@drawable/bg_widget_dark</item>
         <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
         <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="hrColor">@color/hr_dark</item>
+        <item name="colorAccent">@color/text_accent_dark</item>
+        <item name="text_primaryColor">@color/text_primary_dark</item>
+        <item name="text_secondaryColor">@color/text_secondary_dark</item>
+        <item name="text_tertiaryColor">@color/text_tertiary_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
 
@@ -303,6 +398,9 @@
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/graphColor_pointFill_dark</item>
         <item name="graphColor_pointStroke">@color/graphColor_pointStroke_dark</item>
+        <item name="graphColor_axis">@color/graphColor_axis_dark</item>
+        <item name="graphColor_grid">@color/graphColor_grid_dark</item>
+        <item name="graphColor_labels">@color/graphColor_labels_dark</item>
 
         <item name="table_risingColor">@color/table_rising_dark</item>
         <item name="table_settingColor">@color/table_setting_dark</item>
@@ -320,6 +418,8 @@
         <item name="moonriseColor">@color/moonIcon_color_rising_dark</item>
         <item name="moonsetIcon">@drawable/ic_moon_set</item>
         <item name="moonsetColor">@color/moonIcon_color_setting_dark</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night</item>
 
         <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
@@ -349,6 +449,7 @@
         <item name="icActionPlace">@drawable/ic_action_place</item>
         <item name="icActionMap">@drawable/ic_action_map1</item>
         <item name="icActionWorldMap">@drawable/ic_action_map</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline</item>
         <item name="icActionTime">@drawable/ic_action_time</item>
         <item name="icActionDst">@drawable/ic_weather_sunny</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms</item>
@@ -361,6 +462,7 @@
         <item name="icActionWarning">@drawable/ic_action_warning</item>
         <item name="icActionError">@drawable/ic_action_error</item>
         <item name="icActionWidgets">@drawable/ic_action_widget</item>
+        <item name="icActionEvents">@drawable/ic_action_widget</item>    <!-- TODO -->
         <item name="icActionAppearance">@drawable/ic_palette</item>
         <item name="icActionExtension">@drawable/ic_action_extension</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
@@ -392,7 +494,19 @@
         <item name="icActionTimeReset">@drawable/ic_action_timereset</item>
 
         <item name="icActionExpand">@drawable/ic_action_expand</item>
+        <item name="icActionVisibilityOn">@drawable/ic_action_visibility</item>
+        <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off</item>
         <item name="checkVibrate">@drawable/check_vibrate_dark</item>
+        <item name="checkVisibility">@drawable/check_visible_dark</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
@@ -401,9 +515,46 @@
         <item name="icActionNext">@drawable/ic_action_next_item</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
     </style>
+    <style name="AppTheme.Dark.Small" parent="AppTheme.Dark">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+    </style>
+    <style name="AppTheme.Dark.Large" parent="AppTheme.Dark">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+    </style>
 
     <style name="ThemeOverlay.Suntimes.BottomSheetDialog" parent="ThemeOverlay.AppCompat.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <!-- Alternate System Theme -->
+    <style name="AppTheme.System1" parent="AppTheme.System">
+        <item name="table_risingColor">?android:attr/textColorPrimary</item>
+        <item name="table_settingColor">?android:attr/textColorSecondary</item>
+        <item name="table_noonColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="AppTheme.System1.Small" parent="AppTheme.System.Small">
+        <item name="table_risingColor">?android:attr/textColorPrimary</item>
+        <item name="table_settingColor">?android:attr/textColorSecondary</item>
+        <item name="table_noonColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="AppTheme.System1.Large" parent="AppTheme.System.Large">
+        <item name="table_risingColor">?android:attr/textColorPrimary</item>
+        <item name="table_settingColor">?android:attr/textColorSecondary</item>
+        <item name="table_noonColor">?android:attr/textColorSecondary</item>
     </style>
 
     <!-- view styles -->
@@ -512,7 +663,7 @@
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:antialias">true</item>
     </style>
     <style name="SunsetTimeTextView" parent="SunsetTimeTextViewBase">
@@ -524,17 +675,32 @@
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:antialias">true</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
     <style name="SunsetTimeTextView2" parent="SunsetTimeTextView">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">?attr/text_size_xsmall</item>
     </style>
 
-    <!-- A TextView for displaying the widget title -->
-    <style name="SunsetTimeTextTitleView" parent="SunsetTimeTextView">
-        <item name="android:textSize">10sp</item>
+    <!-- A TextView for displaying the widget title;
+         "Widget" styles must not contain ?attr dimen references -->
+
+    <style name="WidgetTimeTextView" parent="SunsetTimeTextViewBase">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:antialias">true</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+    <style name="WidgetTitleTextView" parent="WidgetTimeTextView">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
@@ -545,16 +711,25 @@
         <!--<item name="android:textStyle">bold</item>-->
         <item name="android:layout_gravity">bottom</item>
     </style>
+    <style name="WidgetTimeTextView2" parent="WidgetTimeTextView">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
+    </style>
+    <style name="WidgetSuffixTextView" parent="WidgetTimeTextView">
+        <item name="android:textSize">@dimen/text_size_tiny</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
 
     <!-- A TextView for displaying some suffix after time/text -->
     <style name="SunsetTimeTextSuffixView" parent="SunsetTimeTextView">
-        <item name="android:textSize">6sp</item>
+        <item name="android:textSize">?attr/text_size_tiny</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
     <style name="SunsetTimeSettingsGroupTitle">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="SunsetTimeHorizontalRule">
@@ -567,7 +742,7 @@
         <item name="android:layout_width">85dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textNoSuggestions</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="ColorEditLabel">
@@ -576,6 +751,7 @@
         <item name="android:gravity">end</item>
         <item name="android:maxLines">2</item>
         <item name="android:textColor">@drawable/btn_labeltxt</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:paddingLeft">8dp</item>
@@ -598,6 +774,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minEms">2</item>
         <item name="android:inputType">numberDecimal</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="SizeEditLabel">
@@ -605,6 +782,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:maxWidth">200dp</item>
         <item name="android:gravity">end</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:paddingLeft">8dp</item>
@@ -615,6 +793,9 @@
         <item name="android:background">?attr/chipTrayBackground</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">6dp</item>
+    </style>
+    <style name="ChipTrayLabel">
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="ChipArea">
@@ -632,6 +813,7 @@
 
     <style name="ChipTextBase" parent="android:TextAppearance.Small">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
     <style name="ChipText0" parent="ChipTextBase">
         <item name="android:maxWidth">250dp</item>
@@ -667,4 +849,12 @@
         <item name="android:textColor">@color/grey_850</item>
     </style>
 
+    <style name="TimePickerStyle">
+        <item name="android:textSize">?attr/text_size_medium</item>
+    </style>
+    <style name="DatePickerStyle">
+        <item name="android:textSize">?attr/text_size_medium</item>
+    </style>
+
+    
 </resources>

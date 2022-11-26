@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp" android:layout_alignBottom="@+id/activity_title"
                 android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                android:textStyle="bold" android:textSize="10sp"
+                android:textStyle="bold" android:textSize="?attr/text_size_xsmall"
                 tools:text="1234" tools:ignore="RelativeOverlap,SmallSp" />
 
         </RelativeLayout>
@@ -112,7 +112,22 @@
                     android:layout_marginBottom="@dimen/settingsGroup_margin"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:background="?attr/settingsCardBackground">
+
                     <include layout="@layout/layout_settings_timezone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingRight="12dp" android:paddingLeft="12dp" android:paddingTop="@dimen/settingsGroup_padding"
+                        android:paddingBottom="5dp">
+
+                        <CheckBox
+                            android:id="@+id/appwidget_timezone_fromapp"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/configLabel_timezone_fromapp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_location_layout"
@@ -135,7 +150,7 @@
                         <CheckBox
                             android:id="@+id/appwidget_location_fromapp"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/configLabel_location_fromapp" />
+                            android:textSize="?attr/text_size_small" android:text="@string/configLabel_location_fromapp" />
 
                     </LinearLayout>
 
