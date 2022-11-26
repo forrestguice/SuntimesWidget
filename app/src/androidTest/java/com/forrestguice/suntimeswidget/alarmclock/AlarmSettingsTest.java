@@ -36,14 +36,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.TimeZone;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.fail;
 
 @SuppressWarnings("ConstantConditions")
 @RunWith(AndroidJUnit4.class)
@@ -57,43 +54,6 @@ public class AlarmSettingsTest extends SuntimesActivityTestBase
     @Before
     public void init() {
         context = activityRule.getActivity();
-    }
-
-    @Test
-    public void test_allPrefKeysUnique()
-    {
-        Context context = activityRule.getActivity();
-
-        String[] testKeys = new String[] {
-                AlarmSettings.PREF_KEY_ALARM_CATEGORY,
-                AlarmSettings.PREF_KEY_ALARM_BATTERYOPT,
-                AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS,
-                AlarmSettings.PREF_KEY_ALARM_VOLUMES,
-                AlarmSettings.PREF_KEY_ALARM_HARDAREBUTTON_ACTION,
-                AlarmSettings.PREF_KEY_ALARM_SILENCEAFTER,
-                AlarmSettings.PREF_KEY_ALARM_TIMEOUT,
-                AlarmSettings.PREF_KEY_ALARM_SNOOZE,
-                AlarmSettings.PREF_KEY_ALARM_UPCOMING,
-                AlarmSettings.PREF_KEY_ALARM_AUTOENABLE,
-                AlarmSettings.PREF_KEY_ALARM_AUTOVIBRATE,
-                AlarmSettings.PREF_KEY_ALARM_RINGTONE_URI_ALARM,
-                AlarmSettings.PREF_KEY_ALARM_RINGTONE_NAME_ALARM,
-                AlarmSettings.PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION,
-                AlarmSettings.PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION,
-                AlarmSettings.PREF_KEY_ALARM_ALLRINGTONES,
-                AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER,
-                AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS,
-                AlarmSettings.PREF_KEY_ALARM_UPCOMING_ALARMID,
-                AlarmSettings.PREF_KEY_ALARM_FADEIN,
-                AlarmSettings.PREF_KEY_ALARM_SORT
-        };
-
-        Set<String> set = new HashSet<>();
-        for (String key : testKeys) {
-            if (set.contains(key)) {
-                fail("AlarmSettings key is not unique! " + key);
-            } else set.add(key);
-        }
     }
 
     @Test

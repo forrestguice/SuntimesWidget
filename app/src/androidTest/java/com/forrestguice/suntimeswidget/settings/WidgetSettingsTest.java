@@ -381,37 +381,6 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
     ///////////////////////////////////////////////////////////////////////////
 
-    @Test public void test_location()
-    {
-        Location loc0 = new Location("0", "0");
-        assertEquals(0d, loc0.getLatitudeAsDouble());
-        assertEquals(0d, loc0.getLongitudeAsDouble());
-
-        Location loc1 = new Location("90", "180");
-        assertEquals(90d, loc1.getLatitudeAsDouble());
-        assertEquals(-180d, loc1.getLongitudeAsDouble());
-
-        Location loc2 = new Location("-90", "-180");
-        assertEquals(-90d, loc2.getLatitudeAsDouble());
-        assertEquals(-180d, loc2.getLongitudeAsDouble());
-
-        Location loc3 = new Location("91", "181");
-        assertEquals(89d, loc3.getLatitudeAsDouble());
-        assertEquals(-179d, loc3.getLongitudeAsDouble());
-
-        Location loc4 = new Location("181", "359");
-        assertEquals(89d, loc4.getLatitudeAsDouble());
-        assertEquals(-1d, loc4.getLongitudeAsDouble());
-
-        Location loc5 = new Location("-91", "-181");
-        assertEquals(-89d, loc5.getLatitudeAsDouble());
-        assertEquals(179d, loc5.getLongitudeAsDouble());
-
-        Location loc6 = new Location("-179", "-359");
-        assertEquals(-1d, loc6.getLatitudeAsDouble());
-        assertEquals(1d, loc6.getLongitudeAsDouble());
-    }
-
     @Test
     public void test_locationModePref()
     {

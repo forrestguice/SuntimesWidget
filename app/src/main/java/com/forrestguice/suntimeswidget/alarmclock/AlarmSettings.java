@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.PowerManager;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
@@ -90,6 +92,11 @@ public class AlarmSettings
     public static final boolean PREF_DEF_ALARM_POWEROFFALARMS = false;
 
     public static final String PREF_KEY_ALARM_UPCOMING_ALARMID = "app_alarms_upcomingAlarmId";    // the alarm we expect to go off next (cached value)
+
+    public static final String PREF_KEY_ALARM_BOOTCOMPLETED = "app_alarms_bootcompleted";                       // timestamp of boot_completed event
+    public static final String PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED = "app_alarms_bootcompleted_elapsed";     // elapsed time of boot_completed event (and delay time before running)
+    public static final String PREF_KEY_ALARM_BOOTCOMPLETED_DURATION = "app_alarms_bootcompleted_duration";     // boot_completed run time (milliseconds)
+    public static final String PREF_KEY_ALARM_BOOTCOMPLETED_RESULT = "app_alarms_bootcompleted_result";         // bool; true boot_completed finished, false it either never ran or failed to complete (cleared on ACTION_SHUTDOWN)
 
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID = "app_alarms_systemtz_id";
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET = "app_alarms_systemtz_offset";
@@ -406,6 +413,22 @@ public class AlarmSettings
         } else return true;
     }
 
+    /***
+     * Some device manufacturers are worse than others; https://dontkillmyapp.com/
+     * This method checks the device manufacturer against a list of known offenders.
+     * @return true this device is likely to have aggressive (alarm breaking) battery optimizations
+     */
+    public static boolean aggressiveBatteryOptimizations(Context context)
+    {
+        String[] manufacturers = context.getResources().getStringArray(R.array.aggressive_battery_known_offenders);
+        for (String manufacturer : manufacturers) {
+            if (manufacturer != null && manufacturer.equalsIgnoreCase(Build.MANUFACTURER)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * https://dontkillmyapp.com/sony
      * @return true device is sony and "stamina mode" is enabled, false device is not sony or "stamina mode" is disabled
@@ -420,6 +443,77 @@ public class AlarmSettings
     }
     public static boolean isSony() {
         return "sony".equalsIgnoreCase(Build.MANUFACTURER);
+    }
+
+    /**
+     * BootCompletedInfo
+     */
+    public static class BootCompletedInfo
+    {
+        private final boolean result;
+        private final long timeMillis, atElapsedMillis, durationMillis;
+        public BootCompletedInfo(long timeMillis, long atElapsedMillis, long durationMillis, boolean result) {
+            this.timeMillis = timeMillis;
+            this.atElapsedMillis = atElapsedMillis;
+            this.durationMillis = durationMillis;
+            this.result = result;
+        }
+        public long getTimeMillis() {
+            return timeMillis;
+        }
+        public long getAtElapsedMillis() {
+            return atElapsedMillis;
+        }
+        public long getDurationMillis() {
+            return durationMillis;
+        }
+        public boolean getResult() {
+            return result;
+        }
+    }
+
+    public static BootCompletedInfo loadPrefLastBootCompleted(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return new BootCompletedInfo(prefs.getLong(PREF_KEY_ALARM_BOOTCOMPLETED, -1),
+                prefs.getLong(PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, -1),
+                prefs.getLong(PREF_KEY_ALARM_BOOTCOMPLETED_DURATION, -1),
+                prefs.getBoolean(PREF_KEY_ALARM_BOOTCOMPLETED_RESULT, false));
+    }
+    public static void savePrefLastBootCompleted(Context context, BootCompletedInfo info) {
+        savePrefLastBootCompleted(context, new BootCompletedInfo(info.getTimeMillis(), info.getAtElapsedMillis(), info.getDurationMillis(), info.getResult()));
+    }
+    public static void savePrefLastBootCompleted(Context context, long timeMillis, long atElapsedMillis, long durationMillis) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putLong(PREF_KEY_ALARM_BOOTCOMPLETED, timeMillis);
+        prefs.putLong(PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, atElapsedMillis);
+        prefs.putLong(PREF_KEY_ALARM_BOOTCOMPLETED_DURATION, durationMillis);
+        prefs.putBoolean(PREF_KEY_ALARM_BOOTCOMPLETED_RESULT, true);
+        prefs.apply();
+    }
+    public static void savePrefLastBootCompleted_started(Context context, long atElapsedMillis)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putLong(PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, atElapsedMillis);
+        prefs.putBoolean(PREF_KEY_ALARM_BOOTCOMPLETED_RESULT, false);
+        prefs.apply();
+    }
+    public static void savePrefLastBootCompleted_finished(Context context, long timeMillis, long durationMillis)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putLong(PREF_KEY_ALARM_BOOTCOMPLETED, timeMillis);
+        prefs.putLong(PREF_KEY_ALARM_BOOTCOMPLETED_DURATION, durationMillis);
+        prefs.putBoolean(PREF_KEY_ALARM_BOOTCOMPLETED_RESULT, true);
+        prefs.apply();
+    }
+
+    public static boolean bootCompletedWasRun(Context context)
+    {
+        BootCompletedInfo info = loadPrefLastBootCompleted(context);
+        return (info.getTimeMillis() >= timeOfLastBoot());
+    }
+    public static long timeOfLastBoot() {
+        return System.currentTimeMillis() - SystemClock.elapsedRealtime();
     }
 
 }
