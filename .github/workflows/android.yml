@@ -1,6 +1,7 @@
 name: Android CI
 
 on: 
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -10,7 +11,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -19,17 +19,29 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    
     - name: Gradle Wrapper Validation
       uses: gradle/wrapper-validation-action@v1.0.4
     - name: Make gradlew executable
       run: chmod +x ./gradlew
+    
+    - uses: actions/cache@v2
+      with:
+        path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+            ${{ runner.os }}-gradle-
+    
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew testRelease
+    
     - name: Upload artifacts (apk)
       uses: actions/upload-artifact@v3.0.0
       with:
         name: app
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug.apk    
     - name: Upload artifacts (lint results)
       uses: actions/upload-artifact@v3.0.0
       with:
