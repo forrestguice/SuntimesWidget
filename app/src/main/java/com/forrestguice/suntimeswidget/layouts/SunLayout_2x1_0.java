@@ -144,9 +144,11 @@ public class SunLayout_2x1_0 extends SunLayout
                     Drawable d2 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetColor);
                     views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d2, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-                    //Drawable d3 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
-                    //SuntimesUtils.tintDrawable(d3, sunriseColor);
-                    //views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d3, (int)(iconSizeDp * textScale), (int)(iconSizeDp * textScale)/2, false));
+                    int noonIconSizeDp = (int)(adjustedSizeSp[2] * 0.85);
+                    if (noonIconSizeDp > 24) {
+                        Drawable d3 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+                        views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d3, noonIconSizeDp, noonIconSizeDp, false));
+                    }
                 }
             }
         }
@@ -227,8 +229,9 @@ public class SunLayout_2x1_0 extends SunLayout
         Bitmap sunriseIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
 
-        Bitmap noonIcon = SuntimesUtils.gradientDrawableToBitmap(context, R.drawable.ic_noon_large0, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));
-        views.setImageViewBitmap(R.id.icon_time_noon, noonIcon);
+        Bitmap noonIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_noon_large1, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));   // doesn't call mutate (themes other Drawable instances)
+        Drawable noonDrawable = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);    // specify 24x24 icon (intrinsic height used by layerDrawableToBitmap is wrong)
+        views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, noonDrawable, 24, 24, false));
 
         Bitmap sunsetIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);

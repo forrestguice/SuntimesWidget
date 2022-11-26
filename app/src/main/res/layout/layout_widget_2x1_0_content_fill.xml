@@ -31,7 +31,7 @@
             <include layout="@layout/info_time_sunset_0" />
         </LinearLayout>
 
-        <include layout="@layout/info_time_noon_2" />
+        <include layout="@layout/widget_info_time_noon_2" />
 
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal">
             <include layout="@layout/info_time_daydelta" />
