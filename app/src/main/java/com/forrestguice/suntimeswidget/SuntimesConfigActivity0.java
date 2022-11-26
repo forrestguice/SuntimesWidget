@@ -1025,6 +1025,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void initWidgetModeLayout(Context context)
     {
         showOption2x1LayoutMode(true);
+        showOption3x1LayoutMode(true);
         if (checkbox_allowResize != null)
         {
             checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
