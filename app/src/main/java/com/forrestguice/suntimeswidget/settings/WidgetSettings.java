@@ -208,6 +208,9 @@ public class WidgetSettings
     public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
     public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CURRENT_TIMEZONE;
 
+    public static final String PREF_KEY_TIMEZONE_FROMAPP = "fromapp";
+    public static final boolean PREF_DEF_TIMEZONE_FROMAPP = false;
+
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "MST";    // TODO: candidate for initDefaults?
     public static final String[][] PREF_DEF_TIMEZONES = new String[][] { new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
@@ -2667,6 +2670,31 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void saveTimeZoneFromAppPref(Context context, int appWidgetId, boolean enabled)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_TIMEZONE_FROMAPP, enabled);
+        prefs.apply();
+    }
+    public static boolean loadTimeZoneFromAppPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
+        boolean enabled = prefs.getBoolean(prefs_prefix + PREF_KEY_TIMEZONE_FROMAPP, PREF_DEF_TIMEZONE_FROMAPP);
+        return enabled;
+    }
+    public static void deleteTimeZoneFromAppPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
+        prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_FROMAPP);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public static void saveTimezonePref(Context context, int appWidgetId, String timezone) {
         saveTimezonePref(context, appWidgetId, timezone, "");
     }
@@ -3148,6 +3176,7 @@ public class WidgetSettings
         deleteLocationModePref(context, appWidgetId);
         deleteLocationAltitudeEnabledPref(context, appWidgetId);
         deleteLocationFromAppPref(context, appWidgetId);
+        deleteTimeZoneFromAppPref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);

@@ -59,6 +59,7 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
@@ -132,6 +133,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showHours;
     protected CheckBox checkbox_useAltitude;
     protected CheckBox checkbox_locationFromApp;
+    protected CheckBox checkbox_tzFromApp;
     protected CheckBox checkbox_localizeHemisphere;
 
     protected Spinner spinner_timeMode;
@@ -162,6 +164,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected LocationConfigView locationConfig;
 
+    protected TextView label_timezoneMode;
     protected Spinner spinner_timezoneMode;
 
     protected LinearLayout layout_timezone;
@@ -498,6 +501,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: timezone mode
         //
+        label_timezoneMode = (TextView) findViewById(R.id.appwidget_timezone_mode_label);
         spinner_timezoneMode = (Spinner) findViewById(R.id.appwidget_timezone_mode);
         if (spinner_timezoneMode != null)
         {
@@ -877,6 +881,25 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     } else {
                         locationConfig.updateViews();
                     }
+                }
+            });
+        }
+
+        // widget: timezoneFromApp
+        checkbox_tzFromApp = (CheckBox)findViewById(R.id.appwidget_timezone_fromapp);
+        if (checkbox_tzFromApp != null)
+        {
+            checkbox_tzFromApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    if (label_timezoneMode != null) {
+                        label_timezoneMode.setEnabled(!isChecked);
+                    }
+                    if (spinner_timezoneMode != null) {
+                        spinner_timezoneMode.setEnabled(!isChecked);
+                    }
+                    loadTimezoneSettings(context, isChecked ? 0 : appWidgetId);
                 }
             });
         }
@@ -1299,8 +1322,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void setUseSolarTime(boolean value)
     {
-        label_solartime.setEnabled(value);
-        spinner_solartime.setEnabled(value);
+        boolean useAppTz = (checkbox_tzFromApp != null && checkbox_tzFromApp.isChecked());
+        label_solartime.setEnabled(value && !useAppTz);
+        spinner_solartime.setEnabled(value && !useAppTz);
         layout_solartime.setVisibility((value ? View.VISIBLE : View.GONE));
         layout_timezone.setVisibility((value ? View.GONE : View.VISIBLE));
     }
@@ -1314,8 +1338,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_timezone.setSelection(spinner_timezone_adapter.ordinal(timezoneID), true);
         }
 
-        label_timezone.setEnabled(value);
-        spinner_timezone.setEnabled(value);
+        boolean useAppTz = (checkbox_tzFromApp != null && checkbox_tzFromApp.isChecked());
+        label_timezone.setEnabled(value && !useAppTz);
+        spinner_timezone.setEnabled(value && !useAppTz);
     }
 
     private boolean triggerTimeZoneActionMode(View view)
@@ -1588,6 +1613,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean locationFromApp = checkbox_locationFromApp.isChecked();
         WidgetSettings.saveLocationFromAppPref(context, appWidgetId, locationFromApp);
 
+        // save: tzFromApp
+        boolean tzFromApp = checkbox_tzFromApp.isChecked();
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, tzFromApp);
+
         // save: localize hemisphere
         WidgetSettings.saveLocalizeHemispherePref(context, appWidgetId, checkbox_localizeHemisphere.isChecked());
 
@@ -1660,6 +1689,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean locationFromApp = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
         checkbox_locationFromApp.setChecked(locationFromApp);
 
+        // load: tzFromApp
+        boolean tzFromApp = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        checkbox_tzFromApp.setChecked(tzFromApp);
+
         // load: localize hemisphere
         checkbox_localizeHemisphere.setChecked(WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId));
 
@@ -1706,16 +1739,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void loadTimezoneSettings(Context context)
     {
-        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId, getDefaultTimezoneMode());
+        int widgetId = (WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId) ? 0 : appWidgetId);
+        loadTimezoneSettings(context, widgetId);
+    }
+    protected void loadTimezoneSettings(Context context, int widgetId)
+    {
+        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, widgetId, getDefaultTimezoneMode());
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
+        WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, widgetId);
         spinner_solartime.setSelection(solartimeMode.ordinal());
 
         setCustomTimezoneEnabled(timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
         setUseSolarTime(timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
 
-        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId);
+        customTimezoneID = WidgetSettings.loadTimezonePref(context, widgetId);
         WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
     }
 
