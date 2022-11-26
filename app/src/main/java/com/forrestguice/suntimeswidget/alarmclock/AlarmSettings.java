@@ -37,6 +37,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.TimeZone;
@@ -443,6 +444,25 @@ public class AlarmSettings
     }
     public static boolean isSony() {
         return "sony".equalsIgnoreCase(Build.MANUFACTURER);
+    }
+
+    public static CharSequence batteryOptimizationMessage(Context context)
+    {
+        int[] colorAttrs = { R.attr.tagColor_warning };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
+        typedArray.recycle();
+
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            if (AlarmSettings.isIgnoringBatteryOptimizations(context)) {
+                return context.getString(R.string.configLabel_alarms_optWhiteList_listed);
+
+            } else {
+                String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
+                return SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning);
+            }
+        } else return "";
     }
 
     /**

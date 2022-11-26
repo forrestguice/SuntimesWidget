@@ -1887,14 +1887,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             if (Build.VERSION.SDK_INT >= 23)
             {
                 batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
-                if (AlarmSettings.isIgnoringBatteryOptimizations(fragment.getContext()))
-                {
-                    String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
-                    batteryOptimization.setSummary(listed);
-                } else {
-                    String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
-                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning));
-                }
+                batteryOptimization.setSummary(AlarmSettings.batteryOptimizationMessage(context));
                 
             } else {
                 PreferenceCategory alarmsCategory = (PreferenceCategory)fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
