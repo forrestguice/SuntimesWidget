@@ -2582,8 +2582,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     public static class TimeModeAdapter extends ModeAdapterBase<WidgetSettings.RiseSetDataMode>
     {
-        private int resourceID, dropDownResourceID;
-        private ContentValues themeValues = null;
         private final SuntimesUtils utils = new SuntimesUtils();
         private WeakReference<Context> contextRef;
 
@@ -2739,40 +2737,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             return Color.WHITE;
         }
 
-        /*private String getSummaryForMode(Context context, WidgetSettings.RiseSetDataMode item)
-        {
-            WidgetSettings.TimeMode timeMode = item.getTimeMode();
-            if (timeMode != null)
-            {
-                Double angle = timeMode.angle();
-                return angle != null ? utils.formatAsDegrees(angle, 1) : null;
-
-            } else if (EventSettings.hasEvent(context, item.name())) {
-                String eventID = EventSettings.getEventUriLastPathSegment(context, item.name());
-                AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(eventID);
-                return utils.formatAsDegrees(event.getAngle(), 1);
-
-            } else return null;
-        }
-
-        private int getColorForMode(Context context, WidgetSettings.RiseSetDataMode item)
-        {
-            if (themeValues == null || item == null) {
-                return Color.TRANSPARENT;
-            }
-            if (item.getTimeMode() == null) {
-                return EventSettings.getColor(context, item.name());
-            }
-            switch (item.getTimeMode())
-            {
-                case ASTRONOMICAL: return themeValues.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);
-                case NAUTICAL: case BLUE8: return themeValues.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
-                case CIVIL: case BLUE4: return themeValues.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR);
-                case GOLD: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNRISECOLOR);
-                case NOON: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNSETCOLOR);
-                case OFFICIAL: default: return themeValues.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR);
-            }
-        }*/
     }
 
 }
