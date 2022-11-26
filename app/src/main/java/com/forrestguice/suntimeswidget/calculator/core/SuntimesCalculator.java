@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ public interface SuntimesCalculator
     int FEATURE_GOLDBLUE = 30;    // feature: gold, blue hour times (1.3.0)
     int FEATURE_MOON = 40;        // feature: moonrise, moonset, phase, illumination (1.3.0)
     int FEATURE_POSITION = 50;    // feature: sun, moon position (elevation, azimuth, etc) (1.4.0)
+    int FEATURE_RISESET1 = 60;    // feature: rise/set @angle times (1.7.0)
 
     //
     // 1.0.0 sunrise, sunset, noon, twilight times
@@ -279,7 +280,6 @@ public interface SuntimesCalculator
         private MoonPhase() {}
     }
 
-
     //
     // 1.4.0+ sun, moon position (FEATURE_POSITION)
     //
@@ -357,6 +357,7 @@ public interface SuntimesCalculator
      */
     TimeZone getTimeZone();
 
+
     /**
      * Get the length of the tropical year.
      * @param date a Calendar representing a given date
@@ -364,4 +365,27 @@ public interface SuntimesCalculator
      * @since 1.7.0 (FEATURE_SOLSTICE)
      */
     long getTropicalYearLength( Calendar date );
+
+    //
+    // 1.7.0, (FEATURE_RISESET1)
+    //
+
+    /**
+     * SunriseCalendarForDate
+     * @param date a Calendar representing a given date
+     * @param angle -deg below the horizon, or +deg above the horizon
+     * @return time for sunrise at give angle
+     * @since 1.7.0 FEATURE_RISESET1
+     */
+    Calendar getSunriseCalendarForDate( Calendar date, int angle );
+
+    /**
+     * SunsetCalendarForDate
+     * @param date a Calendar representing a given date
+     * @param angle -deg below the horizon, or +deg above the horizon
+     * @return time for sunset at give angle
+     * @since 1.7.0 FEATURE_RISESET1
+     */
+    Calendar getSunsetCalendarForDate( Calendar date, int angle );
+
 }

@@ -19,7 +19,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     style="@style/SunsetTimeWidgetFrame" android:layout_width="match_parent">
 
-        <TextView android:id="@+id/text_title" style="@style/SunsetTimeTextTitleView"
+        <TextView android:id="@+id/text_title" style="@style/WidgetTitleTextView"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:gravity="start" tools:text="title" />
 
@@ -27,10 +27,10 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="2dp" android:layout_marginBottom="2dp" android:weightSum="4">
             
-            <include layout="@layout/info_time_moonphase_full" />
-            <include layout="@layout/info_time_moonphase_third" />
-            <include layout="@layout/info_time_moonphase_new" />
-            <include layout="@layout/info_time_moonphase_first" />
+            <include layout="@layout/widget_info_time_moonphase_full" />
+            <include layout="@layout/widget_info_time_moonphase_third" />
+            <include layout="@layout/widget_info_time_moonphase_new" />
+            <include layout="@layout/widget_info_time_moonphase_first" />
             
         </LinearLayout>
 

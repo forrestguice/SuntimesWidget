@@ -60,7 +60,7 @@ public enum SolarEvents
     EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge, 0, false),  // 14
 
     MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                                 // 15
-    MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false),                                                   // 16
+    MOONSET("moonset", "moonset", R.attr.moonsetIcon, 1, false),                                                   // 16
 
     NEWMOON("new moon", "new moon", R.attr.moonPhaseIcon0, 2, true),                                             // 17
     FIRSTQUARTER("first quarter", "first quarter", R.attr.moonPhaseIcon1, 2, true),                              // 18
@@ -72,8 +72,8 @@ public enum SolarEvents
     EQUINOX_AUTUMNAL("equinox", "autumnal equinox", R.attr.fallColor, 3, false),                                      // 23
     SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 3, true),                                      // 24
 
-    MOONNOON("lunar noon", "lunar noon", R.attr.moonriseIcon, 1, true),                                            // 25
-    MOONNIGHT("lunar midnight", "lunar midnight", R.attr.moonsetIcon, 1, false),                                  // 26
+    MOONNOON("lunar noon", "lunar noon", R.attr.moonnoonIcon, 1, true),                                            // 25
+    MOONNIGHT("lunar midnight", "lunar midnight", R.attr.moonnightIcon, 1, false),                                  // 26
 
     CROSS_SPRING("cross-quarter", "spring cross-quarter", R.attr.springColor, 3, false),                          // 27
     CROSS_SUMMER("cross-quarter", "summer cross-quarter", R.attr.summerColor, 3, false),                         // 28
@@ -180,6 +180,17 @@ public enum SolarEvents
                 return e;
         }
         return defaultType;
+    }
+
+    public static boolean hasValue(String eventID)
+    {
+        SolarEvents[] values = values();
+        for (int i=0; i<values.length; i++) {
+            if (values[i].name().equals(eventID)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static SolarEventsAdapter createAdapter(Context context, boolean northward)
@@ -372,34 +383,45 @@ public enum SolarEvents
      * @param event SolarEvents enum
      * @return a TimeMode (or null if not applicable)
      */
-    public static WidgetSettings.TimeMode toTimeMode( SolarEvents event )
+    public static WidgetSettings.TimeMode toTimeMode( SolarEvents event ) {
+        return toTimeMode(event.name());
+    }
+    public static WidgetSettings.TimeMode toTimeMode( String eventID )
     {
-        switch (event)
-        {
-            case MORNING_ASTRONOMICAL:
-            case EVENING_ASTRONOMICAL: return WidgetSettings.TimeMode.ASTRONOMICAL;
-
-            case MORNING_NAUTICAL:
-            case EVENING_NAUTICAL: return WidgetSettings.TimeMode.NAUTICAL;
-
-            case MORNING_BLUE8:
-            case EVENING_BLUE8: return WidgetSettings.TimeMode.BLUE8;
-
-            case MORNING_BLUE4:
-            case EVENING_BLUE4: return WidgetSettings.TimeMode.BLUE4;
-
-            case MORNING_CIVIL:
-            case EVENING_CIVIL: return WidgetSettings.TimeMode.CIVIL;
-
-            case MORNING_GOLDEN:
-            case EVENING_GOLDEN: return WidgetSettings.TimeMode.GOLD;
-
-            case NOON: return WidgetSettings.TimeMode.NOON;
-
-            case SUNSET:
-            case SUNRISE: return WidgetSettings.TimeMode.OFFICIAL;
+        if (MORNING_ASTRONOMICAL.name().equals(eventID) || EVENING_ASTRONOMICAL.name().equals(eventID))
+            return WidgetSettings.TimeMode.ASTRONOMICAL;
+        else if (MORNING_NAUTICAL.name().equals(eventID) || EVENING_NAUTICAL.name().equals(eventID))
+            return WidgetSettings.TimeMode.NAUTICAL;
+        else if (MORNING_BLUE8.name().equals(eventID) || EVENING_BLUE8.name().equals(eventID))
+            return WidgetSettings.TimeMode.BLUE8;
+        else if (MORNING_BLUE4.name().equals(eventID) || EVENING_BLUE4.name().equals(eventID))
+            return WidgetSettings.TimeMode.BLUE4;
+        else if (MORNING_CIVIL.name().equals(eventID) || EVENING_CIVIL.name().equals(eventID))
+            return WidgetSettings.TimeMode.CIVIL;
+        else if (MORNING_GOLDEN.name().equals(eventID) || EVENING_GOLDEN.name().equals(eventID))
+            return WidgetSettings.TimeMode.GOLD;
+        else if (NOON.name().equals(eventID))
+            return WidgetSettings.TimeMode.NOON;
+        else if (SUNSET.name().equals(eventID) || SUNRISE.name().equals(eventID))
+            return WidgetSettings.TimeMode.OFFICIAL;
+        else return null;
+    }
+    public static SolarEvents valueOf(@Nullable WidgetSettings.TimeMode mode, boolean rising)
+    {
+        if (mode == null) {
+            return null;
         }
-        return null;
+        switch (mode) {
+            case NOON: return SolarEvents.NOON;
+            case OFFICIAL: return (rising ? SolarEvents.SUNRISE : SolarEvents.SUNSET);
+            case CIVIL: return (rising ? SolarEvents.MORNING_CIVIL : SolarEvents.EVENING_CIVIL);
+            case NAUTICAL: return (rising ? SolarEvents.MORNING_NAUTICAL : SolarEvents.EVENING_NAUTICAL);
+            case ASTRONOMICAL: return (rising ? SolarEvents.MORNING_ASTRONOMICAL : SolarEvents.EVENING_ASTRONOMICAL);
+            case BLUE4: return (rising ? SolarEvents.MORNING_BLUE4 : SolarEvents.EVENING_BLUE4);
+            case BLUE8: return (rising ? SolarEvents.MORNING_BLUE8 : SolarEvents.EVENING_BLUE8);
+            case GOLD: return (rising ? SolarEvents.MORNING_GOLDEN : SolarEvents.EVENING_GOLDEN);
+            default: return null;
+        }
     }
 
     /**
@@ -417,6 +439,19 @@ public enum SolarEvents
             case THIRDQUARTER: return SuntimesCalculator.MoonPhase.THIRD_QUARTER;
         }
         return null;
+    }
+    public static SolarEvents valueOf(@Nullable SuntimesCalculator.MoonPhase phase)
+    {
+        if (phase == null) {
+            return null;
+        }
+        switch (phase) {
+            case NEW: return SolarEvents.NEWMOON;
+            case FULL: return SolarEvents.FULLMOON;
+            case FIRST_QUARTER: return SolarEvents.FIRSTQUARTER;
+            case THIRD_QUARTER: return SolarEvents.THIRDQUARTER;
+            default: return null;
+        }
     }
 
     /**

@@ -38,6 +38,9 @@
     <attr name="graphColor_astronomical" format="reference" />
     <attr name="graphColor_pointFill" format="reference" />
     <attr name="graphColor_pointStroke" format="reference" />
+    <attr name="graphColor_axis" format="reference" />
+    <attr name="graphColor_grid" format="reference" />
+    <attr name="graphColor_labels" format="reference" />
 
     <attr name="table_risingColor" format="reference" />
     <attr name="table_settingColor" format="reference" />
@@ -55,6 +58,8 @@
     <attr name="moonriseColor" format="reference" />
     <attr name="moonsetIcon" format="reference" />
     <attr name="moonsetColor" format="reference" />
+    <attr name="moonnoonIcon" format="reference" />
+    <attr name="moonnightIcon" format="reference" />
 
     <attr name="moonPhaseIcon0" format="reference" />
     <attr name="moonPhaseIcon1" format="reference" />
@@ -81,6 +86,7 @@
     <attr name="icActionPlace" format="reference" />
     <attr name="icActionMap" format="reference" />
     <attr name="icActionWorldMap" format="reference" />
+    <attr name="icActionGraph" format="reference" />
     <attr name="icActionTime" format="reference" />
     <attr name="icActionDst" format="reference" />
     <attr name="icActionAlarm" format="reference" />
@@ -93,6 +99,7 @@
     <attr name="icActionWarning" format="reference" />
     <attr name="icActionError" format="reference" />
     <attr name="icActionWidgets" format="reference" />
+    <attr name="icActionEvents" format="reference" />
     <attr name="icActionAppearance" format="reference" />
     <attr name="icActionExtension" format="reference" />
     <attr name="icActionAltitude" format="reference" />
@@ -128,12 +135,15 @@
     <attr name="icActionPrevious" format="reference" />
 
     <attr name="icActionExpand" format="reference" />
+    <attr name="icActionVisibilityOn" format="reference" />
+    <attr name="icActionVisibilityOff" format="reference" />
 
     <attr name="icActionGPS" format="reference" />
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
 
     <attr name="checkVibrate" format="reference" />
+    <attr name="checkVisibility" format="reference" />
 
     <attr name="text_size_tiny" format="dimension" />
     <attr name="text_size_xsmall" format="dimension" />
@@ -160,10 +170,19 @@
 
     <declare-styleable name="MoonPhaseView">
         <attr name="illuminationAtLunarNoon" format="boolean" />
+        <attr name="illuminationRange" format="boolean" />
         <attr name="showPosition" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="MoonPhaseView1">
+        <attr name="illuminationAtLunarNoon" />
+        <attr name="illuminationRange" />
+        <attr name="showPosition" />
     </declare-styleable>
 
     <declare-styleable name="MoonRiseSetView">
+        <attr name="showPosition" />
+    </declare-styleable>
+    <declare-styleable name="MoonRiseSetView1">
         <attr name="showPosition" />
     </declare-styleable>
 

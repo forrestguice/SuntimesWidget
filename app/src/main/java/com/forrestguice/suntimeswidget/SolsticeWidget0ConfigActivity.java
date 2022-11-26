@@ -110,6 +110,11 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
+            button_timeModeHelp.setVisibility(View.VISIBLE);
+        }
+
+        if (button_timeModeMenu != null) {
+            button_timeModeMenu.setVisibility(View.GONE);
         }
 
         if (checkbox_timeModeOverride != null)

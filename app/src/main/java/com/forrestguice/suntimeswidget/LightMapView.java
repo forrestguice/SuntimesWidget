@@ -33,10 +33,13 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.LineGraphView;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
@@ -316,13 +319,49 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     @Override
-    public void onVisibilityAggregated(boolean isVisible)    // TODO: only called for api 24+ ?
+    public void onVisibilityAggregated(boolean isVisible)
     {
         super.onVisibilityAggregated(isVisible);
         //Log.d("DEBUG", "onVisibilityAggregated: " + isVisible);
         if (!isVisible && drawTask != null) {
             drawTask.cancel(true);
         }
+    }
+
+    public void seekDateTime( Context context, @Nullable Calendar calendar )
+    {
+        if (calendar != null) {
+            seekDateTime(context, calendar.getTimeInMillis());
+        }
+    }
+    public void seekDateTime( Context context, long datetime )
+    {
+        long offsetMillis = datetime - colors.now;
+        colors.offsetMinutes = (offsetMillis / 1000 / 60);
+        updateViews(true);
+    }
+    public Long seekAltitude( Context context, @Nullable Integer degrees, boolean rising )
+    {
+        if (data != null && degrees != null)
+        {
+            Long event = findAltitude(context, degrees, rising);
+            if (event != null) {
+                seekDateTime(context, event);
+                return event;
+            }
+        }
+        return null;
+    }
+    public Long findAltitude( Context context, @Nullable Integer degrees, boolean rising )
+    {
+        if (data != null && degrees != null)
+        {
+            Calendar calendar = Calendar.getInstance(data.timezone());
+            calendar.setTimeInMillis(colors.now + colors.offsetMinutes);
+            Calendar event = rising ? data.calculator().getSunriseCalendarForDate(calendar, degrees)
+                    : data.calculator().getSunsetCalendarForDate(calendar, degrees);
+            return ((event != null) ? event.getTimeInMillis() : null);
+        } else return null;
     }
 
     public void setOffsetMinutes( long value ) {

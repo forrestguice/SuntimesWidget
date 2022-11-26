@@ -36,6 +36,19 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="custom_events"
+        android:title="@string/configLabel_ui_fields1">
+
+        <Preference
+            android:key="manage_events"
+            android:title="@string/configLabel_manageEvents"
+            android:icon="?attr/icActionEvents"
+            android:summary="@string/configLabel_manageEvents_summary"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/configLabel_ui_fields">
 
         <CheckBoxPreference
@@ -82,6 +95,13 @@
     <PreferenceCategory
         android:title="@string/configLabel_ui">
 
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_ui_emphasizefield"
+            android:title="@string/configLabel_ui_emphasizefield_text"
+            android:summary="@string/configLabel_ui_emphasizefield_summary"
+            android:entries="@array/emphasizefield_display" android:entryValues="@array/emphasizefield_values"
+            android:defaultValue="@string/def_app_ui_emphasizefield" />
+
         <CheckBoxPreference
             android:key="app_ui_showheader_icon"
             android:title="@string/configLabel_ui_showheader_icon"
@@ -117,6 +137,11 @@
             android:title="@string/configLabel_ui_showmoon"
             android:summary="@string/configLabel_ui_showmoon_summary"
             android:defaultValue="@string/def_app_ui_showmoon" />
+        <CheckBoxPreference
+            android:key="app_ui_showmoon_noon"
+            android:title="@string/configLabel_ui_showmoon_noon"
+            android:summary="@string/configLabel_ui_showmoon_noon_summary"
+            android:defaultValue="@string/def_app_ui_showmoon_noon" />
 
         <CheckBoxPreference
             android:key="app_ui_showequinox"

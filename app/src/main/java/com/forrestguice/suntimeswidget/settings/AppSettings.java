@@ -106,6 +106,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWMOON = "app_ui_showmoon";
     public static final boolean PREF_DEF_UI_SHOWMOON = true;
 
+    public static final String PREF_KEY_UI_SHOWLUNARNOON = "app_ui_showmoon_noon";
+    public static final boolean PREF_DEF_UI_SHOWLUNARNOON = false;
+
     public static final String PREF_KEY_UI_SHOWMAPBUTTON = "app_ui_showmapbutton";
     public static final boolean PREF_DEF_UI_SHOWMAPBUTTON = true;
 
@@ -121,6 +124,8 @@ public class AppSettings
 
     public static final String PREF_KEY_UI_SHOWHEADER_TEXT = "app_ui_showheader_text1";
     public static final int PREF_DEF_UI_SHOWHEADER_TEXT = HEADER_TEXT_LABEL;
+
+    public static final String PREF_KEY_UI_EMPHASIZEFIELD = "app_ui_emphasizefield";
 
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
     public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00111111;
@@ -418,6 +423,18 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_UI_SHOWMOON, PREF_DEF_UI_SHOWMOON);
     }
 
+    public static boolean loadShowLunarNoonPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWLUNARNOON, PREF_DEF_UI_SHOWLUNARNOON);
+    }
+    public static void saveShowLunarNoonPref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_SHOWLUNARNOON, value);
+        pref.apply();
+    }
+
     public static boolean loadShowHeaderIconPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -432,6 +449,12 @@ public class AppSettings
         } catch (NumberFormatException | ClassCastException e) {
             return PREF_DEF_UI_SHOWHEADER_TEXT;
         }
+    }
+
+    public static String loadEmphasizeFieldPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_UI_EMPHASIZEFIELD, context.getString(R.string.def_app_ui_emphasizefield));
     }
 
     public static boolean loadDatasourceUIPref( Context context )

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,13 +19,12 @@
 package com.forrestguice.suntimeswidget.notes;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.Date;
 
 public class NoteData
 {
-    public SolarEvents noteMode;
+    public String noteMode;
     public SuntimesUtils.TimeDisplayText timeText;
     public String prefixText;
     public String noteText;
@@ -35,7 +34,7 @@ public class NoteData
     public Date time;
     public boolean tomorrow = false;
 
-    public NoteData(SolarEvents noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor, int noteColor2, int noteIconStroke)
+    public NoteData(String noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor, int noteColor2, int noteIconStroke)
     {
         this.noteMode = noteMode;
         this.timeText = timeText;
@@ -66,7 +65,7 @@ public class NoteData
             return false;
 
         final NoteData other = (NoteData) obj;
-        if (other.noteMode != noteMode)
+        if (!other.noteMode.equals(noteMode))
             return false;
 
         if (!other.timeText.getValue().equals(timeText.getValue()))

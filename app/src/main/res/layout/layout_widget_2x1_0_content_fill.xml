@@ -18,7 +18,7 @@
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView android:id="@+id/text_title" style="@style/SunsetTimeTextTitleView" tools:text="title"
+    <TextView android:id="@+id/text_title" style="@style/WidgetTitleTextView" tools:text="title"
         android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="start" />
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center">
@@ -27,14 +27,14 @@
             android:layout_gravity="center" android:orientation="horizontal"
             android:showDividers="middle" android:divider="@drawable/ic_spacer"
             tools:ignore="UnusedAttribute">
-            <include layout="@layout/info_time_sunrise_0" />
-            <include layout="@layout/info_time_sunset_0" />
+            <include layout="@layout/widget_info_time_sunrise_0" />
+            <include layout="@layout/widget_info_time_sunset_0" />
         </LinearLayout>
 
         <include layout="@layout/widget_info_time_noon_2" />
 
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal">
-            <include layout="@layout/info_time_daydelta" />
+            <include layout="@layout/widget_info_time_daydelta" />
         </LinearLayout>
     </LinearLayout>
 

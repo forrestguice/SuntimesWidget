@@ -136,8 +136,9 @@ public class AlarmAddon
         public Intent getIntent(@Nullable Location location)
         {
             Intent intent = new Intent(AlarmAddon.ACTION_SUNTIMES_PICK_EVENT);
-            intent.setClassName(info.packageName, info.name);
-
+            if (info != null) {
+                intent.setClassName(info.packageName, info.name);
+            }
             if (location != null)
             {
                 intent.putExtra(AlarmEventContract.EXTRA_LOCATION_LABEL, location.getLabel());

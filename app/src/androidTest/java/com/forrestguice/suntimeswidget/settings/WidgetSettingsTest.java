@@ -276,6 +276,20 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("dates should match (" + WidgetSettings.PREF_DEF_DATE_YEAR + "." + WidgetSettings.PREF_DEF_DATE_MONTH + "." + WidgetSettings.PREF_DEF_DATE_DAY + " != " + info0.getYear() + "." + info0.getMonth() + "." + info0.getDay() + ")", info0.equals(date0) && !info0.isSet());
     }
 
+    @Test
+    public void test_dateOffsetPref()
+    {
+        WidgetSettings.saveDateOffsetPref(context, appWidgetId, 1);
+        assertEquals(1, WidgetSettings.loadDateOffsetPref(context, appWidgetId));
+
+        WidgetSettings.saveDateOffsetPref(context, appWidgetId, 20);
+        assertEquals(20, WidgetSettings.loadDateOffsetPref(context, appWidgetId));
+
+        WidgetSettings.deleteDateOffsetPref(context, appWidgetId);
+        assertEquals(WidgetSettings.PREF_DEF_DATE_OFFSET, WidgetSettings.loadDateOffsetPref(context, appWidgetId));
+        assertEquals(WidgetSettings.PREF_DEF_DATE_OFFSET, 0);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
@@ -401,6 +415,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteLocationFromAppPref(context, appWidgetId);
         boolean isEnabled2 = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
         assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATION_FROMAPP);
+    }
+
+    @Test
+    public void test_tzFromAppPref()
+    {
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, true);
+        boolean isEnabled0 = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        assertTrue("value does not match! " + isEnabled0, isEnabled0);
+
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, false);
+        boolean isEnabled1 = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        assertFalse("value does not match! " + isEnabled1, isEnabled1);
+
+        WidgetSettings.deleteTimeZoneFromAppPref(context, appWidgetId);
+        boolean isEnabled2 = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        assertEquals("value does not match! " + isEnabled2, isEnabled2, WidgetSettings.PREF_DEF_TIMEZONE_FROMAPP);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -722,6 +752,18 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteSunPos3x1ModePref(context, appWidgetId);
         WidgetSettings.WidgetModeSunPos3x1 pref0 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
         assertTrue("pref should be default (LIGHTMAP) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1) && pref0.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP));
+    }
+
+    @Test
+    public void test_3x2SunPosModePref()
+    {
+        WidgetSettings.saveSunPos3x2ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH);
+        WidgetSettings.WidgetModeSunPos3x2 pref2 = WidgetSettings.loadSunPos3x2ModePref(context, appWidgetId);
+        assertTrue("pref should be LINEGRAPH but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH));
+
+        WidgetSettings.deleteSunPos3x2ModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSunPos3x2 pref0 = WidgetSettings.loadSunPos3x2ModePref(context, appWidgetId);
+        assertTrue("pref should be default (WORLDMAP) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x2) && pref0.equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_WORLDMAP));
     }
 
     @Test

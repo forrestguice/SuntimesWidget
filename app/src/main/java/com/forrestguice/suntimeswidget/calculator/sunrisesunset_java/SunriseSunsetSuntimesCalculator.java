@@ -301,5 +301,16 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public long getTropicalYearLength(Calendar date) {
         return (long)Math.floor(365.24 * 24 * 60 * 60 * 1000);
     }
+
+    @Override
+    public Calendar getSunriseCalendarForDate( Calendar date, int angle ) {
+        return null;   // TODO: supported by this lib?
+    }
+
+    @Override
+    public Calendar getSunsetCalendarForDate( Calendar date, int angle ) {
+        return null;   // TODO: supported by this lib?
+    }
+
 }
 

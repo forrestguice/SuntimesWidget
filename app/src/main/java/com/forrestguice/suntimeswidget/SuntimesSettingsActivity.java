@@ -66,12 +66,15 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.events.EventListActivity;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
@@ -90,6 +93,7 @@ import java.io.File;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -132,6 +136,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final int REQUEST_TAPACTION_DATE0 = 50;
     public static final int REQUEST_TAPACTION_DATE1 = 60;
     public static final int REQUEST_TAPACTION_NOTE = 70;
+    public static final int REQUEST_MANAGE_EVENTS = 80;
+
+    public static final String RECREATE_ACTIVITY = "recreate_activity";
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -153,7 +160,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @Override
     public void onCreate(Bundle icicle)
     {
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, getResultData());
         context = SuntimesSettingsActivity.this;
         appTheme = AppSettings.loadThemePref(this);
         AppSettings.setTheme(this, appTheme);
@@ -163,6 +170,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initLegacyPrefs();
 
         PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(onChangedNeedingRebuild);
+    }
+
+    public Intent getResultData() {
+        return new Intent().putExtra(RECREATE_ACTIVITY, getIntent().getBooleanExtra(RECREATE_ACTIVITY, false));
     }
 
     @Override
@@ -181,6 +192,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             case REQUEST_TAPACTION_DATE1:
             case REQUEST_TAPACTION_NOTE:
                 onPickAction(requestCode, resultCode, data);
+                break;
+
+            case REQUEST_MANAGE_EVENTS:
+                onManageEvents(requestCode, resultCode, data);
                 break;
         }
     }
@@ -240,6 +255,25 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             } else if (adapterModified) {
                 rebuildActivity();
             }
+        }
+    }
+
+    private void onManageEvents(int requestCode, int resultCode, Intent data)
+    {
+        boolean adapterModified = data.getBooleanExtra(ActionListActivity.ADAPTER_MODIFIED, false);
+
+        if (resultCode == RESULT_OK)
+        {
+            String eventID = data.getStringExtra(EventListActivity.SELECTED_EVENTID);
+            if (eventID != null) {
+                EventSettings.setShown(context, eventID, true);
+                adapterModified = true;
+            }
+        }
+
+        if (adapterModified) {
+            setNeedsRecreateFlag();
+            rebuildActivity();
         }
     }
 
@@ -449,11 +483,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
             {
                 //Log.d("SettingsActivity", "Locale change detected; restarting activity");
+                setNeedsRecreateFlag();
                 updateLocale();
                 rebuildActivity();
             }
         }
     };
+
+    public void setNeedsRecreateFlag() {
+        getIntent().putExtra(RECREATE_ACTIVITY, true);
+        setResult(RESULT_OK, getResultData());
+    }
 
     @SuppressWarnings("UnnecessaryReturnStatement")
     @Override
@@ -594,6 +634,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // adjust 'tracking level' widget pref whenever 'show cross-quarter days' app pref is toggled
             boolean value = sharedPreferences.getBoolean(key, AppSettings.PREF_DEF_UI_SHOWCROSSQUARTER);
             WidgetSettings.saveTrackingLevelPref(this, 0, (value ? WidgetSettings.TRACKINGLEVEL_MAX : WidgetSettings.TRACKINGLEVEL_MIN));
+            return;
+        }
+
+        if (key.endsWith(AppSettings.PREF_KEY_UI_EMPHASIZEFIELD))
+        {
+            setNeedsRecreateFlag();
             return;
         }
     }
@@ -1342,6 +1388,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         loadPref_ui_themeOverride(this, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
 
         updatePref_ui_themeOverride(AppSettings.loadThemePref(this), overrideTheme_dark, overrideTheme_light);
+
+        Preference manage_events = findPreference("manage_events");
+        if (manage_events != null) {
+            manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(SuntimesSettingsActivity.this));
+        }
+
+        PreferenceCategory category = (PreferenceCategory) findPreference("custom_events");
+        initPref_ui_customevents(this, category);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -1382,7 +1436,86 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         loadPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
 
+        Preference manage_events = fragment.findPreference("manage_events");
+        if (manage_events != null) {
+            manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(fragment.getActivity()));
+            manage_events.setOrder(-91);
+        }
+
+        PreferenceCategory category = (PreferenceCategory) fragment.findPreference("custom_events");
+        initPref_ui_customevents((SuntimesSettingsActivity) activity, category);
+
         updatePref_ui_themeOverride(AppSettings.loadThemePref(activity), overrideTheme_dark, overrideTheme_light);
+    }
+
+    private static void initPref_ui_customevents(final SuntimesSettingsActivity context, final PreferenceCategory category)
+    {
+        ArrayList<Preference> eventPrefs = new ArrayList<>();
+        for (final String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION))
+        {
+            EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
+            AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+
+            final CheckBoxPreference pref = new CheckBoxPreference(context);
+            pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
+            pref.setOrder((event != null ? event.getAngle() : 0));
+            pref.setTitle(alias.getLabel());
+            pref.setSummary(alias.getSummary(context));
+            pref.setPersistent(false);
+            pref.setChecked(true);
+            pref.setOnPreferenceChangeListener(customEventListener(context, eventID, category, pref));
+            eventPrefs.add(pref);
+        }
+
+        boolean sortByName = false;    // TODO: optional
+        Collections.sort(eventPrefs, new Comparator<Preference>() {
+            @Override
+            public int compare(Preference o1, Preference o2) {
+                return o1.getTitle().toString().compareTo(o2.getTitle().toString());
+            }
+        });
+        for (int i=0; i<eventPrefs.size(); i++) {
+            Preference p = eventPrefs.get(i);
+            if (sortByName) {
+                p.setOrder(i+1);
+            }
+            category.addPreference(p);
+        }
+    }
+
+    protected static Preference.OnPreferenceChangeListener customEventListener(final SuntimesSettingsActivity context, final String eventID, final PreferenceCategory category, final CheckBoxPreference pref)
+    {
+        return new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Boolean checked = (Boolean) newValue;
+                if (!checked)
+                {
+                    AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                            .setCancelable(false)
+                            .setMessage(context.getString(R.string.editevent_dialog_showevent_off))
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int whichButton)
+                                {
+                                    EventSettings.setShown(context, eventID, false);
+                                    category.removePreference(pref);
+                                    context.setNeedsRecreateFlag();
+                                }
+                            })
+                            .setNegativeButton(context.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    pref.setChecked(true);
+                                }
+                            });
+                    confirm.show();
+                }
+                return true;
+            }
+        };
     }
 
     private static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
@@ -1399,6 +1532,18 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 } else return false;
             }
         });
+    }
+
+    public static Preference.OnPreferenceClickListener getOnManageEventsClickedListener(final Activity activity)
+    {
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                activity.startActivityForResult(new Intent(activity, EventListActivity.class), REQUEST_MANAGE_EVENTS);
+                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+                return false;
+            }
+        };
     }
 
     private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ActionButtonPreference overridePref, final int requestCode)

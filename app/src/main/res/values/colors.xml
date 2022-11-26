@@ -58,6 +58,9 @@
     <color name="graphColor_astronomical">@color/graphColor_astronomical_light</color>
     <color name="graphColor_pointFill">@color/graphColor_pointFill_light</color>
     <color name="graphColor_pointStroke">@color/graphColor_pointStroke_light</color>
+    <color name="graphColor_axis">@color/graphColor_axis_light</color>
+    <color name="graphColor_grid">@color/graphColor_grid_light</color>
+    <color name="graphColor_labels">@color/graphColor_labels_light</color>
 
     <color name="warningTag">@color/warningTag_light</color>
     <color name="errorTag">@color/errorTag_light</color>
@@ -219,6 +222,9 @@
     <color name="graphColor_night_dark">#ff424242</color>
     <color name="graphColor_pointFill_dark">@color/sunIcon_color_setting_dark</color>
     <color name="graphColor_pointStroke_dark">@color/sunIcon_color_noon_light</color>
+    <color name="graphColor_axis_dark">@color/grey_900</color>  <!-- TODO -->
+    <color name="graphColor_grid_dark">@color/grey_500</color>  <!-- TODO -->
+    <color name="graphColor_labels_dark">@color/grey_300</color>  <!-- TODO -->
 
     <color name="graphColor_bg_light">@color/material_grey_50</color>
     <color name="graphColor_day_light">#ffffcc00</color>
@@ -228,6 +234,9 @@
     <color name="graphColor_night_light">#ff757575</color>
     <color name="graphColor_pointFill_light">@color/sunIcon_color_noon_light</color>
     <color name="graphColor_pointStroke_light">@color/sunIcon_color_noonBorder_light</color>
+    <color name="graphColor_axis_light">@color/grey_500</color>  <!-- TODO -->
+    <color name="graphColor_grid_light">@color/grey_500</color>  <!-- TODO -->
+    <color name="graphColor_labels_light">@color/grey_600</color>  <!-- TODO -->
 
     <!-- Dingy Yellows
     <color name="graphColor_bg_light">@color/material_grey_50</color>

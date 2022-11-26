@@ -40,6 +40,9 @@
     <color name="graphColor_astronomical">@color/graphColor_astronomical_dark</color>
     <color name="graphColor_pointFill">@color/graphColor_pointFill_dark</color>
     <color name="graphColor_pointStroke">@color/graphColor_pointStroke_dark</color>
+    <color name="graphColor_axis">@color/graphColor_axis_dark</color>
+    <color name="graphColor_grid">@color/graphColor_grid_dark</color>
+    <color name="graphColor_labels">@color/graphColor_labels_dark</color>
 
     <color name="warningTag">@color/warningTag_dark</color>
     <color name="errorTag">@color/errorTag_dark</color>

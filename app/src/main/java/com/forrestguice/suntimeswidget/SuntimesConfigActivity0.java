@@ -35,6 +35,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,7 +59,9 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -66,6 +69,8 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
+import com.forrestguice.suntimeswidget.events.EventListActivity;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
@@ -82,11 +87,14 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
+import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.forrestguice.suntimeswidget.events.EventListActivity.PICK_EVENT_REQUEST;
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 /**
@@ -126,9 +134,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showHours;
     protected CheckBox checkbox_useAltitude;
     protected CheckBox checkbox_locationFromApp;
+    protected CheckBox checkbox_tzFromApp;
     protected CheckBox checkbox_localizeHemisphere;
 
     protected Spinner spinner_timeMode;
+    protected ImageButton button_timeModeMenu;
 
     protected Spinner spinner_riseSetOrder;
     protected ImageButton button_riseSetOrderHelp;
@@ -154,6 +164,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected LocationConfigView locationConfig;
 
+    protected TextView label_timezoneMode;
     protected Spinner spinner_timezoneMode;
 
     protected LinearLayout layout_timezone;
@@ -348,6 +359,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
+    protected WidgetModeAdapter createAdapter_widgetModeSun3x1()
+    {
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun3x1.values());
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
+        return adapter;
+    }
+
     protected ArrayAdapter<WidgetSettings.ActionMode> createAdapter_actionMode()
     {
         ArrayAdapter<WidgetSettings.ActionMode> adapter = new ArrayAdapter<WidgetSettings.ActionMode>(this, R.layout.layout_listitem_oneline, supportedActionModes());
@@ -476,11 +495,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_timeMode = (Spinner) findViewById(R.id.appwidget_general_timeMode);
         checkbox_timeModeOverride = (CheckBox) findViewById(R.id.appwidget_general_timeMode_override);
         button_timeModeHelp = (ImageButton) findViewById(R.id.appwidget_general_timeMode_helpButton);
+        button_timeModeMenu = (ImageButton) findViewById(R.id.appwidget_general_timeMode_moreButton);
         initTimeMode(context);
 
         //
         // widget: timezone mode
         //
+        label_timezoneMode = (TextView) findViewById(R.id.appwidget_timezone_mode_label);
         spinner_timezoneMode = (Spinner) findViewById(R.id.appwidget_timezone_mode);
         if (spinner_timezoneMode != null)
         {
@@ -864,6 +885,25 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             });
         }
 
+        // widget: timezoneFromApp
+        checkbox_tzFromApp = (CheckBox)findViewById(R.id.appwidget_timezone_fromapp);
+        if (checkbox_tzFromApp != null)
+        {
+            checkbox_tzFromApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    if (label_timezoneMode != null) {
+                        label_timezoneMode.setEnabled(!isChecked);
+                    }
+                    if (spinner_timezoneMode != null) {
+                        spinner_timezoneMode.setEnabled(!isChecked);
+                    }
+                    loadTimezoneSettings(context, isChecked ? 0 : appWidgetId);
+                }
+            });
+        }
+
         checkbox_localizeHemisphere = (CheckBox)findViewById(R.id.appwidget_general_localize_hemisphere);
 
         //
@@ -962,7 +1002,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void initWidgetMode3x1(Context context)
     {
-        // EMPTY
+        if (spinner_3x1mode != null) {
+            spinner_3x1mode.setAdapter(createAdapter_widgetModeSun3x1());
+        }
     }
     protected void loadWidgetMode3x1(Context context)
     {
@@ -1006,6 +1048,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void initWidgetModeLayout(Context context)
     {
         showOption2x1LayoutMode(true);
+        showOption3x1LayoutMode(true);
         if (checkbox_allowResize != null)
         {
             checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
@@ -1093,7 +1136,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeMode != null)
         {
-            final TimeModeAdapter adapter = new TimeModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
+            ArrayList<WidgetSettings.RiseSetDataMode> items = new ArrayList<WidgetSettings.RiseSetDataMode>(Arrays.asList(WidgetSettings.TimeMode.values()));
+            final TimeModeAdapter adapter = new TimeModeAdapter(this, R.layout.layout_listitem_events, items);
             adapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
             adapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(adapter);
@@ -1129,14 +1173,101 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
+            button_timeModeHelp.setVisibility(View.GONE);
+        }
+
+        if (button_timeModeMenu != null) {
+            button_timeModeMenu.setOnClickListener(onTimeModeMenuButtonClicked);
+            button_timeModeMenu.setVisibility(View.VISIBLE);
         }
 
         showOptionTimeModeOverride(false);
         showOptionTrackingMode(false);
     }
 
+    private View.OnClickListener onTimeModeMenuButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showTimeModeMenu(SuntimesConfigActivity0.this, v);
+        }
+    };
 
+    protected void showTimeModeMenu(Context context, View v)
+    {
+        PopupMenu menu = new PopupMenu(context, v);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.timemode_overflow, menu.getMenu());
+        menu.setOnMenuItemClickListener(onTimeModeMenuClicked);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        prepareTimeModeMenu(context, menu.getMenu());
+        menu.show();
+    }
 
+    protected void prepareTimeModeMenu(Context context, Menu menu) {
+    }
+
+    protected PopupMenu.OnMenuItemClickListener onTimeModeMenuClicked = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem)
+        {
+            switch (menuItem.getItemId())
+            {
+                case R.id.action_manage_events:
+                    launchEventEditor(SuntimesConfigActivity0.this);
+                    return true;
+
+                case R.id.action_help:
+                    button_timeModeHelp.callOnClick();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
+    protected Intent eventEditorIntent(Context context)
+    {
+        Intent intent = new Intent(context, EventListActivity.class);
+        WidgetSettings.RiseSetDataMode item = (WidgetSettings.RiseSetDataMode) spinner_timeMode.getSelectedItem();
+        intent.putExtra(EventListActivity.EXTRA_SELECTED, item.name());
+        return intent;
+    }
+
+    protected void launchEventEditor(Context context)
+    {
+        Intent configEventsIntent = eventEditorIntent(context);
+        startActivityForResult(configEventsIntent, PICK_EVENT_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
+
+    protected int insertEventAliasIntoTimeModeAdapter(Context context, String eventID)
+    {
+        TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
+        if (adapter != null)
+        {
+            for (int i=0; i<adapter.getCount(); i++) {
+                if (adapter.getItem(i).name().equals(eventID)) {
+                    return i;
+                }
+            }
+
+            if (EventSettings.hasEvent(context, eventID))
+            {
+                EventSettings.EventAlias event = EventSettings.loadEvent(SuntimesConfigActivity0.this, eventID);
+                if (event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION)
+                {
+                    WidgetSettings.EventAliasTimeMode item = new WidgetSettings.EventAliasTimeMode(event);
+                    adapter.insert(item, 0);
+                    return 0;
+                } else {
+                    Log.w("onPickEvent", "event has wrong type! expected " + AlarmEventProvider.EventType.SUN_ELEVATION + ", found " + event.getType());
+                }
+            }
+        }
+        return -1;
+    }
 
     /**
      * @param context a context used to access shared prefs
@@ -1146,8 +1277,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_timeMode != null) {
             TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
             if (adapter != null) {
-                WidgetSettings.TimeMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
-                spinner_timeMode.setSelection(adapter.getPosition(timeMode));
+                WidgetSettings.RiseSetDataMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
+                int position = adapter.getPosition(timeMode);
+                if (position < 0) {
+                    position = insertEventAliasIntoTimeModeAdapter(context, timeMode.name());
+                }
+                spinner_timeMode.setSelection(position);
             }
         }
     }
@@ -1160,8 +1295,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_timeMode != null) {
             TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
             if (adapter != null) {
-                WidgetSettings.TimeMode timeMode = adapter.getItem(spinner_timeMode.getSelectedItemPosition());
-                WidgetSettings.saveTimeModePref(context, appWidgetId, ((timeMode != null) ? timeMode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE));
+                WidgetSettings.RiseSetDataMode item = adapter.getItem(spinner_timeMode.getSelectedItemPosition());
+                WidgetSettings.saveTimeModePref(context, appWidgetId, ((item!= null) ? item : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE));
             }
         }
     }
@@ -1201,8 +1336,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void setUseSolarTime(boolean value)
     {
-        label_solartime.setEnabled(value);
-        spinner_solartime.setEnabled(value);
+        boolean useAppTz = (checkbox_tzFromApp != null && checkbox_tzFromApp.isChecked());
+        label_solartime.setEnabled(value && !useAppTz);
+        spinner_solartime.setEnabled(value && !useAppTz);
         layout_solartime.setVisibility((value ? View.VISIBLE : View.GONE));
         layout_timezone.setVisibility((value ? View.GONE : View.VISIBLE));
     }
@@ -1216,8 +1352,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_timezone.setSelection(spinner_timezone_adapter.ordinal(timezoneID), true);
         }
 
-        label_timezone.setEnabled(value);
-        spinner_timezone.setEnabled(value);
+        boolean useAppTz = (checkbox_tzFromApp != null && checkbox_tzFromApp.isChecked());
+        label_timezone.setEnabled(value && !useAppTz);
+        spinner_timezone.setEnabled(value && !useAppTz);
     }
 
     private boolean triggerTimeZoneActionMode(View view)
@@ -1490,6 +1627,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean locationFromApp = checkbox_locationFromApp.isChecked();
         WidgetSettings.saveLocationFromAppPref(context, appWidgetId, locationFromApp);
 
+        // save: tzFromApp
+        boolean tzFromApp = checkbox_tzFromApp.isChecked();
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, tzFromApp);
+
         // save: localize hemisphere
         WidgetSettings.saveLocalizeHemispherePref(context, appWidgetId, checkbox_localizeHemisphere.isChecked());
 
@@ -1562,6 +1703,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean locationFromApp = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
         checkbox_locationFromApp.setChecked(locationFromApp);
 
+        // load: tzFromApp
+        boolean tzFromApp = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        checkbox_tzFromApp.setChecked(tzFromApp);
+
         // load: localize hemisphere
         checkbox_localizeHemisphere.setChecked(WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId));
 
@@ -1608,16 +1753,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void loadTimezoneSettings(Context context)
     {
-        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId, getDefaultTimezoneMode());
+        int widgetId = (WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId) ? 0 : appWidgetId);
+        loadTimezoneSettings(context, widgetId);
+    }
+    protected void loadTimezoneSettings(Context context, int widgetId)
+    {
+        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, widgetId, getDefaultTimezoneMode());
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
+        WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, widgetId);
         spinner_solartime.setSelection(solartimeMode.ordinal());
 
         setCustomTimezoneEnabled(timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
         setUseSolarTime(timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
 
-        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId);
+        customTimezoneID = WidgetSettings.loadTimezonePref(context, widgetId);
         WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
     }
 
@@ -2087,6 +2237,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 onLocationResult(resultCode, data);
                 break;
 
+            case PICK_EVENT_REQUEST:
+                onPickEventResult(resultCode, data);
+                break;
+
             case PICK_THEME_REQUEST:
                 onPickThemeResult(resultCode, data);
                 break;
@@ -2100,6 +2254,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
                 locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(location.getUri(), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            }
+        }
+    }
+
+    protected void onPickEventResult(int resultCode, Intent data)
+    {
+        Context context = SuntimesConfigActivity0.this;
+        if (resultCode == Activity.RESULT_OK && data != null)
+        {
+            String eventID = data.getStringExtra(EventListActivity.SELECTED_EVENTID);
+            if (eventID != null) {
+                int position = insertEventAliasIntoTimeModeAdapter(context, eventID);
+                spinner_timeMode.setSelection(position);
             }
         }
     }
@@ -2139,6 +2306,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         updateWidgetModeAdapter(spinner_1x1mode, themeValues);    // refresh widget previews
         updateWidgetModeAdapter(spinner_2x1mode, themeValues);
+        updateWidgetModeAdapter(spinner_3x1mode, themeValues);
         updateWidgetModeAdapter(spinner_3x1mode, themeValues);
         updateWidgetModeAdapter(spinner_3x2mode, themeValues);
         updateWidgetModeAdapter(spinner_3x3mode, themeValues);
@@ -2188,7 +2356,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
             if (adapter != null)
             {
-                WidgetSettings.TimeMode selected = (WidgetSettings.TimeMode) spinner_timeMode.getSelectedItem();
+                WidgetSettings.RiseSetDataMode selected = (WidgetSettings.RiseSetDataMode) spinner_timeMode.getSelectedItem();
                 adapter.setThemeValues(themeValues);
                 spinner_timeMode.setAdapter(adapter);
                 spinner_timeMode.setSelection(adapter.getPosition(selected));
@@ -2412,30 +2580,58 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * TimeModeAdapter
      */
-    public static class TimeModeAdapter extends ModeAdapterBase<WidgetSettings.TimeMode>
+    public static class TimeModeAdapter extends ModeAdapterBase<WidgetSettings.RiseSetDataMode>
     {
+        private int resourceID, dropDownResourceID;
+        private ContentValues themeValues = null;
+        private final SuntimesUtils utils = new SuntimesUtils();
+        private WeakReference<Context> contextRef;
+
         public TimeModeAdapter(@NonNull Context context, int resource) {
             super(context, resource);
+            contextRef = new WeakReference<>(context);
         }
-        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.TimeMode[] objects) {
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.RiseSetDataMode[] objects) {
             super(context, resource, objects);
+            contextRef = new WeakReference<>(context);
         }
-        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.TimeMode> objects) {
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.RiseSetDataMode> objects) {
             super(context, resource, objects);
+            contextRef = new WeakReference<>(context);
         }
 
         @Override
-        protected String getNameForMode(WidgetSettings.TimeMode mode) {
+        protected String getNameForMode(WidgetSettings.RiseSetDataMode mode) {
             return mode.name();
         }
 
         @Override
-        protected int getColorForMode(WidgetSettings.TimeMode mode)
+        protected String getSummaryForMode(WidgetSettings.RiseSetDataMode item)
         {
-            if (themeValues == null) {
+            WidgetSettings.TimeMode timeMode = item.getTimeMode();
+            if (timeMode != null)
+            {
+                Double angle = timeMode.angle();
+                return angle != null ? utils.formatAsDegrees(angle, 1) : null;
+
+            } else if (EventSettings.hasEvent(contextRef.get(), item.name())) {
+                String eventID = EventSettings.getEventUriLastPathSegment(contextRef.get(), item.name());
+                AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(eventID);
+                return utils.formatAsDegrees(event.getAngle(), 1);
+
+            } else return null;
+        }
+
+        @Override
+        protected int getColorForMode(WidgetSettings.RiseSetDataMode item)
+        {
+            if (themeValues == null || item == null) {
                 return Color.TRANSPARENT;
             }
-            switch (mode)
+            if (item.getTimeMode() == null) {
+                return EventSettings.getColor(contextRef.get(), item.name());
+            }
+            switch (item.getTimeMode())
             {
                 case ASTRONOMICAL: return themeValues.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);
                 case NAUTICAL: case BLUE8: return themeValues.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
@@ -2509,7 +2705,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
                 primaryText.setText(getLabelForMode(item));
 
-                View colorTab = view.findViewById(R.id.icon1);
+                TextView text2 = (TextView)view.findViewById(android.R.id.text2);
+                if (text2 != null)
+                {
+                    String summary = getSummaryForMode(item);
+                    text2.setText(summary);
+                    text2.setVisibility(summary != null ? View.VISIBLE : View.GONE);
+                }
+
+                View colorTab = view.findViewById(android.R.id.icon1);
+                colorTab = (colorTab != null ? colorTab : view.findViewById(R.id.icon1));
                 if (colorTab != null && themeValues != null) {
                     colorTab.setBackgroundColor(getColorForMode(item));
                 }
@@ -2522,6 +2727,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             return null;
         }
 
+        protected String getSummaryForMode(T mode) {
+            return null;
+        }
+
         protected String getLabelForMode(T mode) {
             return mode.toString();
         }
@@ -2529,6 +2738,41 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         protected int getColorForMode(T mode) {
             return Color.WHITE;
         }
+
+        /*private String getSummaryForMode(Context context, WidgetSettings.RiseSetDataMode item)
+        {
+            WidgetSettings.TimeMode timeMode = item.getTimeMode();
+            if (timeMode != null)
+            {
+                Double angle = timeMode.angle();
+                return angle != null ? utils.formatAsDegrees(angle, 1) : null;
+
+            } else if (EventSettings.hasEvent(context, item.name())) {
+                String eventID = EventSettings.getEventUriLastPathSegment(context, item.name());
+                AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(eventID);
+                return utils.formatAsDegrees(event.getAngle(), 1);
+
+            } else return null;
+        }
+
+        private int getColorForMode(Context context, WidgetSettings.RiseSetDataMode item)
+        {
+            if (themeValues == null || item == null) {
+                return Color.TRANSPARENT;
+            }
+            if (item.getTimeMode() == null) {
+                return EventSettings.getColor(context, item.name());
+            }
+            switch (item.getTimeMode())
+            {
+                case ASTRONOMICAL: return themeValues.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);
+                case NAUTICAL: case BLUE8: return themeValues.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
+                case CIVIL: case BLUE4: return themeValues.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR);
+                case GOLD: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNRISECOLOR);
+                case NOON: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNSETCOLOR);
+                case OFFICIAL: default: return themeValues.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR);
+            }
+        }*/
     }
 
 }
