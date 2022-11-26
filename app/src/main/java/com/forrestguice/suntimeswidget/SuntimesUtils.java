@@ -1538,6 +1538,8 @@ public class SuntimesUtils
         String latPattern = "%lat";
         String lonPattern = "%lon";
         String altPattern = "%lel";
+        String eotPattern = "%eot";
+        String eotMillisPattern = "%eot_m";
         String timezoneIDPattern = "%t";
         String datasourcePattern = "%s";
         String widgetIDPattern = "%id";
@@ -1578,6 +1580,13 @@ public class SuntimesUtils
                                    ? (int)WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble()) + ""
                                    : location.getAltitudeAsInteger() + "";
             displayString = displayString.replaceAll(altPattern, altitudeDisplay);
+        }
+
+        if (displayString.contains(eotPattern) || displayString.contains(eotMillisPattern))
+        {
+            long eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(data.calendar().getTimeInMillis(), data.calculator());
+            displayString = displayString.replaceAll(eotMillisPattern, eot+"");
+            displayString = displayString.replaceAll(eotPattern, ((eot < 0) ? "-" : "+") + timeDeltaLongDisplayString(eot, true).getValue());
         }
 
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);

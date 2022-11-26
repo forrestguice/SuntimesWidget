@@ -140,12 +140,15 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String ACTION_CONFIG_TIMEZONE = "suntimes.action.TIMEZONE";
     public static final String ACTION_CONFIG_DATE = "suntimes.action.CONFIG_DATE";
 
+    public static final String ACTION_WIDGETS_UPDATE_ALL = "suntimes.action.widgets.UPDATE_ALL";
+
     public static final String SUNTIMES_ACTION_PREFIX = "suntimes.action";
-    private static final String[] SUNTIMES_ACTIONS = new String[] {
+    public static final String[] SUNTIMES_ACTIONS = new String[] {
             ACTION_ADD_ALARM, ACTION_VIEW_SUN, ACTION_VIEW_MOON, ACTION_VIEW_SOLSTICE, ACTION_VIEW_WORLDMAP,
             ACTION_CARD_NEXT, ACTION_CARD_PREV, ACTION_CARD_RESET, ACTION_CARD_SHOW,
             ACTION_NOTE_NEXT, ACTION_NOTE_PREV, ACTION_NOTE_RESET, ACTION_NOTE_SEEK,
-            ACTION_CONFIG_LOCATION, ACTION_CONFIG_TIMEZONE, ACTION_CONFIG_DATE
+            ACTION_CONFIG_LOCATION, ACTION_CONFIG_TIMEZONE, ACTION_CONFIG_DATE,
+            ACTION_WIDGETS_UPDATE_ALL
     };
     private static final HashMap<String, String> SUNTIMES_ACTION_MAP = createLegacyActionMap();
 
@@ -371,6 +374,9 @@ public class SuntimesActivity extends AppCompatActivity
 
             } else if (action.equals(ACTION_CONFIG_LOCATION)) {
                 configLocation();
+
+            } else if (action.equals(ACTION_WIDGETS_UPDATE_ALL)) {
+                SuntimesWidget0.updateAllWidgets(SuntimesActivity.this);
 
             } else {
                 if (data != null && LocationConfigView.SCHEME_GEO.equals(data.getScheme())) {

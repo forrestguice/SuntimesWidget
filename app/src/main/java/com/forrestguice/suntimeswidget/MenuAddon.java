@@ -128,14 +128,17 @@ public class MenuAddon
      */
     public static final class ActivityItemInfo
     {
-        public ActivityItemInfo(Context context, @NonNull String title, ActivityInfo info)
+        public ActivityItemInfo(@Nullable Context context, @NonNull String title, ActivityInfo info)
         {
             this.title = title;
             this.info = info;
 
-            TypedArray typedArray = context.obtainStyledAttributes(new int[] { R.attr.icActionExtension });
-            this.icon = typedArray.getResourceId(0, R.drawable.ic_action_extension);
-            typedArray.recycle();
+            if (context != null)
+            {
+                TypedArray typedArray = context.obtainStyledAttributes(new int[]{R.attr.icActionExtension});
+                this.icon = typedArray.getResourceId(0, R.drawable.ic_action_extension);
+                typedArray.recycle();
+            }
         }
 
         public ActivityItemInfo(@NonNull String title, int iconResId, ActivityInfo info)

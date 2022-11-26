@@ -220,7 +220,7 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
     <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
-    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
+    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->
     <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
@@ -299,7 +299,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">General</string>                <!-- group title -->    <!-- TODO: shortened "General Settings" to "General" -->
+    <string name="configLabel_general">General</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
@@ -321,8 +321,8 @@
     <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
-    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>    <!-- checkbox label -->
@@ -334,8 +334,8 @@
     <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
-    <string name="configLabel_experimental">Experimental</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
+    <string name="configLabel_advanced">Advanced</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Experimental</string>                <!-- group title -->
     <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
 
@@ -355,7 +355,7 @@
     </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Appearance</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
+    <string name="configLabel_appearance">Appearance</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Swap layouts to fill available space</string>  <!-- checkbox label -->
@@ -495,7 +495,7 @@
     <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->
     <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Action</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
+    <string name="configLabel_action">Action</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">On Tap:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">On Clock Tap</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">On Note Tap</string>           <!-- spinner label -->
@@ -506,7 +506,7 @@
     <string name="locationMode_current">Current (last known)</string>  <!-- setting -->
     <string name="locationMode_custom">User Defined</string>           <!-- setting -->
 
-    <string name="configLabel_location">Location</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
+    <string name="configLabel_location">Location</string>               <!-- group title -->
     <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitude:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">decimal degrees</string>      <!-- edittext hint -->
@@ -537,7 +537,7 @@
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
 
-    <string name="configLabel_timezone">Time Zone</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
+    <string name="configLabel_timezone">Time Zone</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
@@ -660,8 +660,8 @@
     <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->
     <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">Size must be &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->  <!-- TODO: drop "an integer" from translations -->
-    <string name="edittheme_error_textsize_max">Size must be &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->    <!-- TODO: drop "an integer" from translations -->
+    <string name="edittheme_error_textsize_min">Size must be &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->  <!-- TODO: drop "an integer"  -->
+    <string name="edittheme_error_textsize_max">Size must be &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->    <!-- TODO: drop "an integer" -->
     <string name="edittheme_flag_default">default</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title -->
@@ -848,7 +848,7 @@
     <string name="configAction_editAlarm">Edit</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->
-    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
     <string name="configAction_exportAlarms">@string/configAction_export</string>                <!-- action button / menu item -->
     <string name="configAction_importAlarms">@string/configAction_import</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->
@@ -856,7 +856,7 @@
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Set Offset (Before/After)</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
+    <string name="configAction_setAlarmOffset">Set Offset (Before/After)</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Set Location</string>         <!-- button (contentDescription) -->
@@ -920,13 +920,13 @@
     <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">Import Warning</string> <!-- toast msg -->
-    <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->  <!-- TODO -->
+    <string name="importalarms_title_warning">Import Warning</string> <!-- dialog title -->
+    <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->
     <string name="importalarms_toast_success">Imported <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="alarmPlural">
         <item quantity="one">%d alarm</item>
         <item quantity="other">%d alarms</item>
-    </plurals>   <!-- TODO -->
+    </plurals>
 
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
@@ -952,14 +952,43 @@
     <string name="configLabel_alarms_optWhiteList">Battery optimization</string>
     <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>
-    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>
 
+    <string name="help_battery_optimization_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#battery-optimization</string>
+    <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
+        <item>Samsung</item>
+        <item>OnePlus</item>
+        <item>Huawei</item>
+        <item>Xiaomi</item>
+        <item>Meizu</item>
+        <item>Asus</item>
+        <item>WIKO</item>
+        <item>LENOVO</item>
+        <item>OPPO</item>
+        <item>Vivo</item>
+        <item>realme</item>
+        <item>Blackview</item>
+        <item>Sony</item>
+        <item>Unihertz</item>
+        <!--<item>Google</item>--> <!-- uncomment to test with emulator -->
+    </string-array>
+    
     <string name="configLabel_alarms_notifications">Notifications</string>
     <string name="configLabel_alarms_notifications_on">On</string>
     <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>
     <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->
+
+    <string name="configLabel_alarms_bootcompleted">Boot Completed</string>
+    <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="configLabel_alarms_bootcompleted_info_never">Never</string>
+    <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>
+    <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>
 
     <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>
@@ -1315,6 +1344,7 @@
     <string name="configActionDesc_nextSunrise">Show next sunrise</string>
     <string name="configActionDesc_nextSunset">Show next sunset</string>
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="configActionDesc_settings">@string/configAction_settings</string>
 
     <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1341,6 +1371,7 @@
         <item>@string/app_name</item>
 
         <item>@string/app_name_alarmclock</item>
+        <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
@@ -1379,6 +1410,7 @@
         <item>@string/configActionDesc_themeList</item>
         <item>@string/configActionDesc_actionList</item>
         <item>@string/configActionDesc_widgetList</item>
+        <item>@string/configActionDesc_settings</item>
 
         <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configActionDesc_mapLocation</item>
@@ -1465,7 +1497,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Language</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
+    <string name="configLabel_locale">Language</string>   <!-- group title -->
 
     <string name="configLabel_localeMode">Mode</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -1555,7 +1587,7 @@
         <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Joppla>Joppla</a>]]></item>
         <item><![CDATA[<a href=https://github.com/utaxiu>utaxiu</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/jamesliu96>James Liu</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/jamesliu96>James Liu</a>|<a href=https://github.com/sr093906>sr093906</a>]]></item>
     </string-array>
 
     <!-- position formats -->
@@ -2021,7 +2053,7 @@
                 * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
-    ]]></string>  <!-- TODO: add "%em, %et, %eT, %eA" (#599) to online-help -->
+    ]]></string>
     <string name="help_substitutions_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#data-substitutions</string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
@@ -2047,14 +2079,14 @@
           [Icon Delete] to cancel and delete.<br/>
           <br/>
           [Icon Offset] is shown when the scheduled time is offset before or after the event time.
-    ]]></string>   <!-- TODO -->
+    ]]></string>
 
     <string name="help_general_dst"><![CDATA[
           <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
-    ]]></string>   <!-- TODO -->
+    ]]></string>
     <string name="help_general_actualTime"><![CDATA[
           <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/>
-    ]]></string>  <!-- TODO: should end in one <br/> not two -->
+    ]]></string>
     <string name="help_general_twilight"><![CDATA[
           <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
@@ -2131,7 +2163,7 @@
         <br/>
         <br/>
         <b>Extras:</b> An <em>&amp;</em> delimited string containing extra values. Supports <em>%s</em>ubstitutions.<br/><br/>Values may be <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> or String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
-    ]]></string> <!-- TODO: added Package: -->
+    ]]></string>
     <string name="help_action_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#actions</string>
     <string name="help_widgetlist"><![CDATA[
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
@@ -2156,7 +2188,7 @@
         <u><b><font color="#ff9900">Calendar integration was removed in v0.10.0.</font></b></u><br />
         <br />
         This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in version' -->
+    ]]></string>
 
     <string name="help_shadowlength" translatable="false">[Icon Shadow] %1$s</string>     <!-- e.g. [Icon] [configLabel_general_observerheight_summary] -->
 
