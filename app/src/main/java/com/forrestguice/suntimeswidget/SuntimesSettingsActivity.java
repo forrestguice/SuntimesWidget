@@ -18,13 +18,18 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +39,8 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -126,6 +133,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
     private String appTheme = null;
+    private static SuntimesUtils utils = new SuntimesUtils();
 
     public SuntimesSettingsActivity()
     {
@@ -323,6 +331,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     private void initLocale(Bundle icicle)
     {
+        SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.initDefaults(context);
 
         AppSettings.initDisplayStrings(context);
@@ -1596,11 +1605,43 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         }
 
+        private final BroadcastReceiver updateAlarmPrefsReceiver = new BroadcastReceiver()
+        {
+            @Override
+            public void onReceive(Context context, Intent intent)
+            {
+                String action = intent.getAction();
+                Uri data = intent.getData();
+                Log.d(LOG_TAG, "updateAlarmPrefsReceiver.onReceive: " + data + " :: " + action);
+
+                if (action != null)
+                {
+                    if (action.equals(AlarmNotifications.ACTION_UPDATE_UI))
+                    {
+                        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                AlarmPrefsFragment.this.setBootCompletedPrefEnabled(true);
+                                initPref_alarms_bootCompleted(AlarmPrefsFragment.this);
+                            }
+                        }, 500);
+                    } else Log.e(LOG_TAG, "updateAlarmPrefsReceiver.onReceive: unrecognized action: " + action);
+                } else Log.e(LOG_TAG, "updateAlarmPrefsReceiver.onReceive: null action!");
+            }
+        };
+
         @Override
         public void onResume()
         {
             super.onResume();
+            getActivity().registerReceiver(updateAlarmPrefsReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter(false));
             initPref_alarms(AlarmPrefsFragment.this);
+        }
+
+        @Override
+        public void onPause() {
+            getActivity().unregisterReceiver(updateAlarmPrefsReceiver);
+            super.onPause();
         }
 
         public static final int REQUEST_PERMISSION_POWEROFFALARMS = 100;
@@ -1615,6 +1656,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
         @Override
         public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {}
+
+        protected void setBootCompletedPrefEnabled(boolean value)
+        {
+            final Preference pref = findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
+            if (pref != null) {
+                pref.setEnabled(value);
+            }
+        }
     }
 
     private void initPref_alarms()
@@ -1633,9 +1682,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             return;
         }
 
-        int[] colorAttrs = { R.attr.tagColor_warning };
+        int[] colorAttrs = { R.attr.tagColor_warning, R.attr.text_accentColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
+        int accentColor = ContextCompat.getColor(context, typedArray.getResourceId(1,  R.color.text_accent_dark));
         typedArray.recycle();
 
         Preference batteryOptimization = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
@@ -1649,7 +1699,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
                     batteryOptimization.setSummary(listed);
                 } else {
-                    String unlisted = context.getString(R.string.configLabel_alarms_optWhiteList_unlisted);
+                    String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
                     batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning));
                 }
                 
@@ -1706,6 +1756,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, AlarmNotifications.PERMISSION_POWEROFFALARM)));
         }
 
+        initPref_alarms_bootCompleted(fragment);
+
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
         if (showLauncher != null)
         {
@@ -1726,6 +1778,50 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     return false;
                 }
             });
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private static void initPref_alarms_bootCompleted(final AlarmPrefsFragment fragment)
+    {
+        final Context context = fragment.getActivity();
+        if (context == null) {
+            return;
+        }
+
+        final Preference bootCompletedPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
+        if (bootCompletedPref != null)
+        {
+            bootCompletedPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            {
+                @Override
+                public boolean onPreferenceClick(Preference preference)
+                {
+                    AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                            .setMessage(context.getString(R.string.configLabel_alarms_bootcompleted_action_confirm))
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int whichButton)
+                                {
+                                    bootCompletedPref.setEnabled(false);
+                                    context.sendBroadcast(new Intent(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, null)));
+                                }
+                            })
+                            .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+                    confirm.show();
+                    return true;
+                }
+            });
+
+            AlarmSettings.BootCompletedInfo bootCompletedInfo = AlarmSettings.loadPrefLastBootCompleted(context);
+            long lastRunMillis = bootCompletedInfo.getTimeMillis();
+            String lastBootCompleted = utils.calendarDateTimeDisplayString(context, lastRunMillis).toString();
+            String afterDelay = (lastRunMillis >= 0 ? utils.timeDeltaLongDisplayString(0, bootCompletedInfo.getAtElapsedMillis(), true).getValue() : "");
+            String took = (lastRunMillis >= 0 ? bootCompletedInfo.getDurationMillis() + "ms": "");
+            CharSequence infoSpan = (lastRunMillis >= 0 ? context.getString(R.string.configLabel_alarms_bootcompleted_info, lastBootCompleted, afterDelay, took)
+                    : context.getString(R.string.configLabel_alarms_bootcompleted_info_never));
+            bootCompletedPref.setSummary(context.getString(R.string.configLabel_alarms_bootcompleted_summary, infoSpan));
         }
     }
 
@@ -1832,12 +1928,121 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
        return new Preference.OnPreferenceClickListener() {
            @Override
            public boolean onPreferenceClick(Preference preference) {
-               if (Build.VERSION.SDK_INT >= 23) {
-                   context.startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
-               }
+               createBatteryOptimizationAlertDialog(context).show();
                return false;
            }
        };
+    }
+
+    /**
+     * This alert dialog explains the importance of disabling battery optimization for alarm functionality
+     * to work correctly and requests that the user take action. An extra warning is displayed
+     * for device's whose manufacturer has been known to break alarm functionality anyway, and directs
+     * those users to the online help.
+     *
+     * If this build of the app includes the `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` permission, a
+     * request to whitelist the app is made directly. Otherwise the battery optimization list is
+     * shown instead (and the user must find and select the app).
+     */
+    @SuppressLint("ResourceType")
+    public static AlertDialog.Builder createBatteryOptimizationAlertDialog(final Context context)
+    {
+        final boolean isIgnoringOptimizations = AlarmSettings.isIgnoringBatteryOptimizations(context);
+        final boolean isAggressive = AlarmSettings.aggressiveBatteryOptimizations(context);
+
+        String message =
+                isIgnoringOptimizations ? "[i] " + context.getString(R.string.configLabel_alarms_optWhiteList_listed)
+                        : (isAggressive ? "[w] " + context.getString(R.string.configLabel_alarms_optWhiteList_unlisted_aggressive)
+                                        : "[w] " + context.getString(R.string.configLabel_alarms_optWhiteList_unlisted));
+        if (!isIgnoringOptimizations) {
+            message += "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
+        }
+        if (isAggressive) {
+            message += "\n\n[w] " + context.getString(R.string.help_battery_optimization_aggressive, Build.MANUFACTURER);
+        }
+
+        int iconSize = (int) context.getResources().getDimension(R.dimen.helpIcon_size);
+        int[] iconAttrs = { R.attr.tagColor_warning, R.attr.icActionAbout, R.attr.icActionWarning };
+        TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
+        int warningColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
+        ImageSpan iconInfo = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_about), iconSize, iconSize, 0);
+        ImageSpan iconWarn = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_warning), iconSize, iconSize, warningColor);
+        typedArray.recycle();
+
+        SuntimesUtils.ImageSpanTag[] tags = {
+                new SuntimesUtils.ImageSpanTag("[i]", iconInfo),
+                new SuntimesUtils.ImageSpanTag("[w]", iconWarn)
+        };
+        CharSequence messageSpan = SuntimesUtils.createSpan(context, message, tags);
+
+        return new AlertDialog.Builder(context)
+                .setMessage(messageSpan)
+                .setPositiveButton(context.getString(R.string.configLabel_alarms_optWhiteList),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                dialog.dismiss();
+                                if (isIgnoringOptimizations) {
+                                    openBatteryOptimizationSettings(context);
+                                } else {
+                                    if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
+                                        requestIgnoreBatteryOptimization(context);
+                                    } else openBatteryOptimizationSettings(context);
+                                }
+                            }
+                        })
+                .setNeutralButton(context.getString(R.string.configAction_onlineHelp),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                String url = context.getString(R.string.help_battery_optimization_url);
+                                /*if (isAggressive) {
+                                    url += "-" + Build.MANUFACTURER;
+                                }*/
+                                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                            }
+                        });
+                //.setNegativeButton(context.getString(R.string.dialog_cancel), null);
+    }
+
+    public static void openBatteryOptimizationSettings(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                context.startActivity(getRequestIgnoreBatteryOptimizationSettingsIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e(LOG_TAG, "Failed to launch battery optimization settings Intent: " + e);
+            }
+        }
+    }
+    public static void requestIgnoreBatteryOptimization(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                context.startActivity( getRequestIgnoreBatteryOptimizationIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e(LOG_TAG, "Failed to launch battery optimization request Intent: " + e);
+            }
+        }
+    }
+
+    /**
+     * Recommended; this Intent shows the optimization list (and the user must find and select the app)
+     */
+    @TargetApi(23)
+    public static Intent getRequestIgnoreBatteryOptimizationSettingsIntent(Context context) {
+        return new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+    }
+
+    /**
+     * This Intent goes directly to the app's optimization settings.
+     * Requires permission `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`
+     */
+    @TargetApi(23)
+    public static Intent getRequestIgnoreBatteryOptimizationIntent(Context context) {
+        return new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + context.getPackageName()));
     }
 
     protected static boolean isDeviceSecure(Context context)

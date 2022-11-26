@@ -113,6 +113,7 @@ The app benefits from the following permissions...
 |POWER_OFF_ALARM|To wake the device from the power off state.|v0.14.0|
 |READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5, v0.13.8 (api&le;18)|
 |SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
+|REQUEST_IGNORE_BATTERY_OPTIMIZATIONS|To help ensure reliable delivery of alarms.|v0.14.11|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api&le;18)|
 
 Version `v0.13.8` removed READ_EXTERNAL_STORAGE for api&ge;19 (replaced with persistent URI permissions). 
@@ -178,7 +179,7 @@ Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>Ne
 Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
 Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
-Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
+Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>, and <u><a href=https://github.com/sr093906>sr093906</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

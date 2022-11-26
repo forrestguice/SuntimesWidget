@@ -44,6 +44,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -100,6 +102,9 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
+
+    public static final int NOTIFICATION_SCHEDULE_ALL_ID = -10;
+    public static final int NOTIFICATION_SCHEDULE_ALL_DURATION = 4000;
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -287,7 +292,7 @@ public class AlarmNotifications extends BroadcastReceiver
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null) {
                 for (long alarmId : alarmIds) {
-                    cancelAlarmTimeouts(context, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmId));
+                    cancelAlarmTimeouts(context, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId));
                 }
             } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
         } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
@@ -407,7 +412,11 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static Intent getServiceIntent(Context context) {
-        return new Intent(context, NotificationService.class);
+        Intent intent = new Intent(context, NotificationService.class);
+        if (Build.VERSION.SDK_INT >= 16) {
+            intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        }
+        return intent;
     }
 
     public static Intent getFullscreenIntent(Context context, Uri data)
@@ -425,18 +434,23 @@ public class AlarmNotifications extends BroadcastReceiver
         intent.setData(data);
         return intent;
     }
-
+    
     public static Intent getSuntimesIntent(Context context) {
         Intent intent = new Intent(context, SuntimesActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 
-    public static IntentFilter getUpdateBroadcastIntentFilter()
+    public static IntentFilter getUpdateBroadcastIntentFilter() {
+        return getUpdateBroadcastIntentFilter(true);
+    }
+    public static IntentFilter getUpdateBroadcastIntentFilter(boolean withData)
     {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_UPDATE_UI);
-        filter.addDataScheme("content");
+        if (withData) {
+            filter.addDataScheme("content");
+        }
         return filter;
     }
 
@@ -445,7 +459,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Intent intent = new Intent(context, AlarmClockActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (selectedAlarmId != null) {
-            intent.setData(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, selectedAlarmId));
+            intent.setData(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, selectedAlarmId));
             intent.putExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, selectedAlarmId);
         }
         return intent;
@@ -879,7 +893,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         builder.setContentIntent(pendingView);
                         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss_early), pendingDismiss);
                         builder.setAutoCancel(false);
-                        builder.setOngoing(true);
+                        builder.setOngoing(false);     // allow reminder to be swiped away
                     //} else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
                     break;
 
@@ -939,6 +953,27 @@ public class AlarmNotifications extends BroadcastReceiver
                 .setVisibility( NotificationCompat.VISIBILITY_PUBLIC );
         builder.setOnlyAlertOnce(false);
 
+        return builder.build();
+    }
+
+    public static Notification createProgressNotification(Context context, String title, String message)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setDefaults(Notification.DEFAULT_LIGHTS);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setCategory(NotificationCompat.CATEGORY_PROGRESS);
+        builder.setProgress(0,0,true);
+        builder.setAutoCancel(false);
+        builder.setOngoing(true);
+        builder.setContentTitle(title);
+        builder.setContentText(message);
+        builder.setSmallIcon(R.drawable.ic_action_alarms_light);
+        //builder.setColor(ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark))
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.setOnlyAlertOnce(false);
+
+        PendingIntent pendingView = PendingIntent.getActivity(context, title.hashCode(), getAlarmListIntent(context, null), PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.addAction(R.drawable.ic_action_settings, context.getString(R.string.app_name_alarmclock), pendingView);
         return builder.build();
     }
 
@@ -1179,21 +1214,35 @@ public class AlarmNotifications extends BroadcastReceiver
                     itemTask.execute(ContentUris.parseId(data));
 
                 } else {
-                    if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action))
+                    if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action))
                     {
-                        Log.d(TAG, action + ": schedule all");
+                        Log.d(TAG, action + ": schedule all (prevCompleted=" + AlarmSettings.bootCompletedWasRun(getApplicationContext()) + ")");
+                        final long startTime = SystemClock.elapsedRealtime();
+                        AlarmSettings.savePrefLastBootCompleted_started(getApplicationContext(), startTime);
+
                         AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
                         alarmListTask.setParam_enabledOnly(true);
                         alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
-                            public void onItemsLoaded(Long[] ids)
+                            public void onItemsLoaded(final Long[] ids)
                             {
                                 final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener()
                                 {
                                     @Override
                                     public void onObservedAll() {
-                                        Log.d(TAG, "schedule all completed");
-                                        notifications.stopSelf(startId);
+                                        final long endTime = SystemClock.elapsedRealtime();
+                                        final long duration = endTime - startTime;
+                                        AlarmSettings.savePrefLastBootCompleted_finished(getApplicationContext(), System.currentTimeMillis(), duration);
+                                        Log.d(TAG, "schedule all completed (took " + duration + "ms); " + AlarmSettings.bootCompletedWasRun(getApplicationContext()));
+                                        new Handler(Looper.getMainLooper()).postDelayed(new Runnable()
+                                        {
+                                            @Override
+                                            public void run() {
+                                                notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
+                                                sendBroadcast(getFullscreenBroadcast(null));
+                                                notifications.stopSelf(startId);
+                                            }
+                                        }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));
                                     }
                                 });
 
@@ -1218,6 +1267,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 }
                             }
                         });
+                        notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
                         alarmListTask.execute();
 
                     } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
@@ -1234,6 +1284,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (tzOffset != tzOffset_prev)
                             {
                                 Log.i(TAG, "system tz offset changed from " + tzOffset_prev + " to " + tzOffset);
+                                notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
                                 findEnabledAlarms(getApplicationContext(), rescheduleTaskListener_clocktime(startId));
                                 rescheduling = true;
                             }
@@ -1290,12 +1341,23 @@ public class AlarmNotifications extends BroadcastReceiver
             return new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
             {
                 @Override
-                public void onItemsLoaded(Long[] ids) {
+                public void onItemsLoaded(final Long[] ids)
+                {
+                    final long startedAt = System.currentTimeMillis();
                     final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener() {
                         @Override
-                        public void onObservedAll() {
-                            Log.d(TAG, "Re-schedule completed (time zone changed)");
-                            notifications.stopSelf(startId);
+                        public void onObservedAll()
+                        {
+                            long duration = System.currentTimeMillis() - startedAt;
+                            Log.d(TAG, "Re-schedule completed (time zone changed); took " + duration + "ms");
+                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable()
+                            {
+                                @Override
+                                public void run() {
+                                    notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
+                                    notifications.stopSelf(startId);
+                                }
+                            }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));
                         }
                     });
                     if (ids.length == 0) {
@@ -1750,7 +1812,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, itemID)));     // dismiss fullscreen activity
+                            context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, itemID)));     // dismiss fullscreen activity
                             Intent alarmListIntent = getAlarmListIntent(context, itemID);
                             alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
                             context.startActivity(alarmListIntent);                                                                             // open the alarm list
@@ -1797,6 +1859,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         Log.d(TAG, "State Saved (onScheduledNotification)");
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
                     }
                     if (chained != null) {
                         chained.onFinished(true, item);
@@ -1820,6 +1883,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                         notifications.dismissNotification(context, (int)item.rowID);
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
 
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
@@ -1854,6 +1918,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
                             notifications.showNotification(context, item, true);             // show upcoming reminder
                         }
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
 
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
