@@ -594,10 +594,14 @@ public class SuntimesNotes
                 case SUNRISE: case MORNING_GOLDEN: case NOON: case EVENING_GOLDEN:
                 case SUNSET: case EVENING_BLUE4: case EVENING_CIVIL: case EVENING_BLUE8: case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL:
                 default:
-                    SuntimesRiseSetData d = dataset.getData(SolarEvents.toTimeMode(event).name());
-                    if (d != null) {
-                        date = (event.isRising() ? d.sunriseCalendarToday() : d.sunsetCalendarToday());
-                        dateOther = (event.isRising() ? d.sunriseCalendarOther() : d.sunsetCalendarOther());
+                    WidgetSettings.TimeMode mode = SolarEvents.toTimeMode(event);
+                    if (mode != null)
+                    {
+                        SuntimesRiseSetData d = dataset.getData(mode.name());
+                        if (d != null) {
+                            date = (event.isRising() ? d.sunriseCalendarToday() : d.sunsetCalendarToday());
+                            dateOther = (event.isRising() ? d.sunriseCalendarOther() : d.sunsetCalendarOther());
+                        }
                     }
                     break;
             }
