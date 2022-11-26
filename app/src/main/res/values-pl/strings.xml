@@ -246,7 +246,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Ustawienia ogólne</string>                <!-- group title -->
+    <string name="configLabel_general">Ustawienia ogólne</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Źródło danych:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Źródło danych słonecznych</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Źródło danych księżycowych</string>         <!-- preference label -->
@@ -268,6 +268,9 @@
     <string name="configLabel_general_showTimeDate">Wyświetl godzinę przy datach</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Uwzględnij godziny podczas wyświetlania dat.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
+
     <string name="configLabel_general_showWeeks">Wyświetl tygodnie</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Dziel przedziały czasu dłuższe niż 7 dni na tygodnie (np. 15d będzie 2tyg 1d).</string>        <!-- checkbox label -->
 
@@ -278,8 +281,8 @@
     <string name="configLabel_general_observerheight_summary">Wyświetl długość cienia rzucanego przez obiekt o wysokości <xliff:g id="value" example="1 metra">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Zaawansowane ustawienia</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Eksperymentalne ustawienia</string>                <!-- group title -->
+    <string name="configLabel_advanced">Zaawansowane ustawienia</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Eksperymentalne ustawienia</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Wtyczki źródeł danych</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Skanuj i załaduj zewnętrzne wtyczki.</string>   <!-- pref summary -->
 
@@ -299,7 +302,7 @@
     </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
+    <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Wygląd</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Motyw:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Przełączaj układy, aby wypełnić dostępną przestrzeń</string>  <!-- checkbox label -->
@@ -434,7 +437,7 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Ustawienia akcji</string>                  <!-- group title -->
+    <string name="configLabel_action">Ustawienia akcji</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
     <string name="configLabel_action_onTap">Przy kliknięciu:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Przy kliknięciu zegara</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Przy kliknięciu notatki</string>           <!-- spinner label -->
@@ -445,7 +448,7 @@
     <string name="locationMode_current">Obecna (ostatnia znana)</string>  <!-- setting -->
     <string name="locationMode_custom">Użytkownika</string>           <!-- setting -->
 
-    <string name="configLabel_location">Ustawienia lokalizacji</string>              <!-- group title -->
+    <string name="configLabel_location">Ustawienia lokalizacji</string>              <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_location_lat">Szerokość:</string>                  <!-- edittext label -->
     <string name="configHint_location_lat">52.2319</string>                       <!-- edittext hint -->
@@ -475,7 +478,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->
+    <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
@@ -715,12 +718,13 @@
     <string name="configAction_editAlarm">Edytuj</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Usuń</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Usuń wszystkie</string>                <!-- action button / menu item -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms">Sortuj</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Czas alarmu</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Data utworzenia</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Usuń</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Wyczyść</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Ustaw przesunięcie</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Ustaw przesunięcie</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Ustaw typ</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Ustaw etykietę</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Ustaw lokalizację</string>         <!-- button (contentDescription) -->
@@ -816,6 +820,10 @@
     <string name="configLabel_alarms_optWhiteList">Optymalizacja baterii</string>
     <string name="configLabel_alarms_optWhiteList_listed">Bez optymalizacji (zalecane)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Włączona optymalizacja baterii.\nAlarmy mogą zostać opóźnione o maksymalnie 15 minut.</string>
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Powiadomienia</string>
     <string name="configLabel_alarms_notifications_on">Włączone</string>
@@ -823,6 +831,13 @@
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">Na ekranie blokady: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Powiadomienia są wyłączone. Alarmy mogą nie wyświetlić się poprawnie.</string>  <!-- snackbar message -->
+
+    <string name="configLabel_alarms_bootcompleted">Boot Completed</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info_never">Never</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Wycisz (ale nie wyłączaj) po</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
@@ -1057,7 +1072,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Użyj pasywnej usługi określania lokalizacji.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Ustawienia języka</string>   <!-- group title -->
+    <string name="configLabel_locale">Ustawienia języka</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
     <string name="configLabel_localeMode">Tryb</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -1476,8 +1491,22 @@
                 * <b>%M</b> dla trybu (pełny) (np. zimowe przesilenie) <br/>
                 * <b>%o</b> dla kolejności wydarzenia (np. poprzednie, najbliższe, nadchodzące) <br/>
     ]]></string>
+
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] to cancel without making changes.<br/>
+          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
+          [Icon Cancel] to save and disable.<br/>
+          [Icon Delete] to cancel and delete.<br/>
+          <br/>
+          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+    ]]></string>   <!-- TODO -->
+
     <string name="help_general_actualTime"><![CDATA[
-          <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/><br/>
+          <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
           <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6&nbsp;stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
@@ -1530,7 +1559,7 @@
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         W pełni jednoznaczna nazwa klasy czynności do wywołania.<br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
           Przejdź do ekranu głównego, aby <b>dodać nowy widżet</b>.<br/><br/>
           Aby <b>edytować istniejący widżet</b>, wybierz go z poniższej listy.<br/>
@@ -1547,7 +1576,7 @@
         <u><b><font color="#ff9900">Uprawnienia kalendarza zostały usunięte.</font></b></u><br />
         <br />
         Ta funkcja jest teraz dostępna jako <a href="moreInfoLink">osobna aplikacja</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Czasy Słońca nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>

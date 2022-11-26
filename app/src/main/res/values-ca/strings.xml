@@ -182,7 +182,7 @@
     <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
-
+    <string name="date_format_veryshort"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMM</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
     <string name="date_format_short"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g></string> <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
@@ -242,7 +242,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Opcions generals</string>                <!-- group title -->
+    <string name="configLabel_general">Opcions generals</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Font de dades:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Font de dades del Sol</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Font de dades de la Lluna</string>         <!-- preference label -->
@@ -264,6 +264,9 @@
     <string name="configLabel_general_showTimeDate">Mostra el temps (amb dates)</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Inclou el temps quan es mostren les dates.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
+
     <string name="configLabel_general_showWeeks">Mostrar setmanes</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Divideix intervals de temps majors a 7 dies en setmanes (p. ex. 15d es transforma en 2se 1d).</string>        <!-- checkbox label -->
 
@@ -274,8 +277,8 @@
     <string name="configLabel_general_observerheight_summary">Mostra la longitud de les ombres projectades per un objecte amb una altura de <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Configuració avançada</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Configuració experimental</string>                <!-- group title -->
+    <string name="configLabel_advanced">Configuració avançada</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Configuració experimental</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Complements de fonts de dades</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Cerca i carrega complements de tercers.</string>   <!-- pref summary -->
 
@@ -295,7 +298,7 @@
     </string-array>  <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Opcions d\'aparença</string>           <!-- group title -->
+    <string name="configLabel_appearance">Opcions d\'aparença</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Aparença</string>                  <!-- spinner label -->  
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Creix amb l\'espai disponible (reescalable)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
@@ -430,7 +433,7 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Opcions de pulsació</string>                  <!-- group title -->
+    <string name="configLabel_action">Opcions de pulsació</string>                  <!-- group title --><!-- TODO: shortened "Action Settings" to "Action" -->
     <string name="configLabel_action_onTap">Al prèmer:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Al prèmer el rellotge</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Al prèmer una nota</string>           <!-- spinner label -->
@@ -441,7 +444,7 @@
     <string name="locationMode_current">Actual (última coneguda)</string>  <!-- setting -->
     <string name="locationMode_custom">Definida per usuari</string>           <!-- setting -->
 
-    <string name="configLabel_location">Opcions d\'ubicació</string>               <!-- group title -->
+    <string name="configLabel_location">Opcions d\'ubicació</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitud:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">graus decimals</string>      <!-- edittext hint -->
@@ -471,7 +474,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Opcions de zona horària</string>             <!-- group title -->
+    <string name="configLabel_timezone">Opcions de zona horària</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Zona horària:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Temps solar:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
@@ -712,12 +715,13 @@
     <string name="configAction_editAlarm">Editar</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Elimina</string>               <!-- button (contentDescription) -->  
     <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms">Ordena</string>                <!-- action button / menu item -->  
     <string name="configAction_sortAlarms_by_time">Per data de l\'alarma</string>                <!-- action button / menu item -->  
     <string name="configAction_sortAlarms_by_creation">Per data de creació</string>                <!-- action button / menu item -->  
     <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->    <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Tipus</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Etiqueta</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLocation">Ubicació</string>         <!-- button (contentDescription) -->  
@@ -779,7 +783,13 @@
     <string name="clearalarms_dialog_cancel">Canceŀla</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarmes esborrades.</string> <!-- toast msg -->
 
+    <string name="importalarms_title_warning">Import Warning</string> <!-- dialog title -->   <!-- TODO -->
+    <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->  <!-- TODO -->
     <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+    <plurals name="alarmPlural">
+        <item quantity="one">%d alarm</item>
+        <item quantity="other">%d alarms</item>
+    </plurals>   <!-- TODO -->
 
     <string name="alarmlabel_dialog_title">Etiqueta</string>        <!-- dialog title -->  
     <string name="alarmlabel_dialog_ok">Aplica</string>        <!-- button --> 
@@ -804,6 +814,10 @@
     <string name="configLabel_alarms_optWhiteList">Optimització de bateria</string>  
     <string name="configLabel_alarms_optWhiteList_listed">Sense optimitzar (recomanat)</string>  
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimitzant l\'ús de la bateria.\nLes alarmes es poden endarrerir fins a 15 minuts.</string>
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Notificacions</string>
     <string name="configLabel_alarms_notifications_on">Activades</string>
@@ -811,6 +825,13 @@
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">En la pantalla de bloqueig: %1$s</string>
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Les notificacions estan desactivades. Les alarmes poden no mostrar-se correctament.</string>
+
+    <string name="configLabel_alarms_bootcompleted">Boot Completed</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info_never">Never</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Silenciar després de</string>  
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
@@ -1057,7 +1078,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Utilitza el proveïdor d\'ubicació passiva.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Opcions d\'idioma</string>   <!-- group title -->
+    <string name="configLabel_locale">Opcions d\'idioma</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
     <string name="configLabel_localeMode">Mode</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -1482,8 +1503,21 @@
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>    <!-- TODO -->
 
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] to cancel without making changes.<br/>
+          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
+          [Icon Cancel] to save and disable.<br/>
+          [Icon Delete] to cancel and delete.<br/>
+          <br/>
+          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+    ]]></string>   <!-- TODO -->
+
     <string name="help_general_actualTime"><![CDATA[
-      <b>Hora oficial:</b> El Sol està en l\'horitzó: això és l\'hora  aproximada de la sortida i posta de sol.<br/><br/>
+      <b>Hora oficial:</b> El Sol està en l\'horitzó: això és l\'hora  aproximada de la sortida i posta de sol.<br/>
 ]]></string>
     <string name="help_general_twilight"><![CDATA[
       <b>Crepuscle civil:</b> El Sol està 6 graus per sota de l\'horitzó; les estrelles més brillants són visibles. Hi ha suficient llum per a la majoría de les activitats a l\'aire lliure sense necessitat de llanterna.<br/><br/>
@@ -1519,7 +1553,7 @@
     ]]></string>
     <string name="help_action_launch"><![CDATA[
     El nom qualificat de la classe de l\'activitat a ser llençada.<br/>
-]]></string>
+]]></string> <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
       Per <b>afegir un giny</b> has d\'anar a l\'escriptori.<br/><br/>
       Per <b>reconfigurar un giny existent</b> pots sel·leccionar un de la següent llista.<br/>
@@ -1536,7 +1570,7 @@
         <u><b><font color="#ff9900">Els permisos de Calendari s\'han eliminat.</font></b></u><br />
         <br />
         Aquesta caracteristica està disponible en una <a href="moreInfoLink">aplicació separada</a>.
-    ]]></string>  
+    ]]></string>    <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades d\'ubicació. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís d\'<b>ubicació</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; l\'ubicació es configura manualment per defecte.]]></string>

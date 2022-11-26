@@ -82,3 +82,16 @@ def getGitHash()
     }
     return stdout.toString().trim()
 }
+
+tasks.withType(Test) 
+{
+    useJUnit {
+        excludeCategories 'com.forrestguice.suntimeswidget.UnlistedTest'
+    }
+    testLogging 
+    {
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
+    }
+}

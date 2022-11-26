@@ -2,10 +2,11 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.experimental.categories.Category;
 
 import android.support.annotation.Nullable;
-import android.support.test.runner.AndroidJUnit4;
+
+import com.forrestguice.suntimeswidget.UnlistedTest;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;
@@ -22,11 +23,11 @@ import java.util.TimeZone;
 
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@Category(UnlistedTest.class)
 public class SunPositionTest
 {
     /* Test Fix: add the geodetic angle before comparing elevations; brings twilight elevations into agreement with expected values. */
-    public static final boolean APPLY_ALTITUDE_ANGLE = true;
+    public static final boolean APPLY_ALTITUDE_ANGLE = false;
 
     public static final double TEST_TOLERANCE = 0.25;        // degrees
     public static final double TEST_LATITUDE = 33.45579;

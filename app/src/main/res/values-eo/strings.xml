@@ -231,7 +231,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->
+    <string name="configLabel_general">Agordoj ĝeneralaj</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Fonto de lunaj datumoj</string>         <!-- preference label -->
@@ -253,6 +253,9 @@
     <string name="configLabel_general_showTimeDate">Montri horojn (ĉe datoj)</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Ampleksi la horon dum montrado de datoj.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
+
     <string name="configLabel_general_showWeeks">Montri semajnojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn pli longajn ol 7 tagoj inter semajnoj (ekz. 15 t iĝas 2 sem 1 t).</string>        <!-- checkbox label -->
 
@@ -263,8 +266,8 @@
     <string name="configLabel_general_observerheight_summary">Montri longon de ombro kaŭzata de objekto kun alto <xliff:g id="value" example="1 metro">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Agordoj altnivelaj</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Agordoj eksperimentaj</string>                <!-- group title -->
+    <string name="configLabel_advanced">Agordoj altnivelaj</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Agordoj eksperimentaj</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Kromprogramoj de datum-fontoj</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Skani kaj enlegi eksterajn kromprogramojn.</string>   <!-- pref summary -->
 
@@ -437,7 +440,7 @@
     <string name="locationMode_current">Aktuala (laste konata)</string>  <!-- setting -->
     <string name="locationMode_custom">Propra</string>           <!-- setting -->
 
-    <string name="configLabel_location">Agordoj pri loko</string>              <!-- group title -->
+    <string name="configLabel_location">Agordoj pri loko</string>              <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_location_lat">Latitudo:</string>                  <!-- edittext label -->
     <string name="configHint_location_lat">53.1324</string>                       <!-- edittext hint -->
@@ -467,7 +470,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
+    <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Normo:</string>                   <!-- spinner label -->
@@ -708,12 +711,13 @@
     <string name="configAction_editAlarm">Redakti</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Forigi</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Forigi ĉiujn</string>                <!-- action button / menu item -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms">Ordigi</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Tempo de alarmo</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Tempo de kreo</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Forviŝi</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Forviŝi</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Agordi deŝovon</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Agordi deŝovon</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Agordi tipon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Agordi etikedon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Agordi pozicion</string>         <!-- button (contentDescription) -->
@@ -808,6 +812,10 @@
     <string name="configLabel_alarms_optWhiteList">Optimumigo de baterio</string>
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Aktiva optimumigo de baterio.\nAlarmoj povas prokrastĝi maksimume je 15 minutoj.</string>
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Sciigoj</string>
     <string name="configLabel_alarms_notifications_on">Aktivaj</string>
@@ -815,6 +823,13 @@
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">Sur ŝlos‑ekrano: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Sciigos estas malaktivaj. Alarmoj povas ne vidiĝi ĝuste.</string>  <!-- snackbar message -->
+
+    <string name="configLabel_alarms_bootcompleted">Boot Completed</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info_never">Never</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Silentiĝi (ne-malaktivigi) post</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
@@ -1191,7 +1206,7 @@
     </string-array>
     
   <!-- App Setting: locale mode -->
-  <string name="configLabel_locale">Agordoj pri lingvo</string>   <!-- group title -->
+  <string name="configLabel_locale">Agordoj pri lingvo</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
   <string name="configLabel_localeMode">Reĝimo</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -1455,8 +1470,22 @@
                 * <b>%o</b> – kioma okazaĵo (ekz. antaŭa, plej proksima, sekva) <br/>
          ]]>
     </string>
+
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] to cancel without making changes.<br/>
+          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
+          [Icon Cancel] to save and disable.<br/>
+          [Icon Delete] to cancel and delete.<br/>
+          <br/>
+          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+    ]]></string>   <!-- TODO -->
+
     <string name="help_general_actualTime"><![CDATA[
-          <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
+          <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
           <b>Civila krepusko:</b> la Suno estas 6&nbsp;gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte de agadoj eksterdome sen artefarita prilumado.<br/><br/>
@@ -1509,7 +1538,7 @@
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         La plene unusignifa nomo de klaso de ago por lanĉi.<br/>
-    ]]></string>
+    ]]></string>  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
           Por <b>aldoni novan fenestraĵon</b>, iru al la ĉefekrano.<br/><br/>
           Por <b>reagordi ekzistan fenestraĵon</b>, elektu ĝin el la jena listo.<br/>
@@ -1526,7 +1555,7 @@
         <u><b><font color="#ff9900">Kalendaraj permesoj estis forigitaj.</font></b></u><br />
         <br />
         Tiu eblaĵo estas nun disponebla kiel <a href="moreInfoLink">aparta aplikaĵo</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniun reklamon</b>, <b>neniun analizilon</b>, <b>neniun spurilon</b> kaj <b>neniun malnecesan permeson</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>

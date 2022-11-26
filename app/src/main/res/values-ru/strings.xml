@@ -225,6 +225,7 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
     <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
     <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
@@ -305,7 +306,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Общие настройки</string>                <!-- group title -->
+    <string name="configLabel_general">Общие настройки</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Источник данных:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Алгоритм положения солнца</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Алгоритм положения луны</string>         <!-- preference label -->
@@ -327,6 +328,9 @@
     <string name="configLabel_general_showTimeDate">Показывать время рядом с датой</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Включить время в отображение дат.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
+
     <string name="configLabel_general_showWeeks">Использовать недели</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Промежутки времени длиной более 7 дней показывать как недели (15 дн. -> 2 нед. 1 д.).</string>    <!-- checkbox label -->
 
@@ -337,8 +341,8 @@
     <string name="configLabel_general_observerheight_summary">Показывать длину тени, отбрасываемой объектом высотой <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Расширенные настройки</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Экспериментальные настройки</string>                <!-- group title -->
+    <string name="configLabel_advanced">Расширенные настройки</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="configLabel_experimental">Экспериментальные настройки</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Плагины источников данных</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Сканировать и загрузить сторонние плагины.</string>   <!-- pref summary -->
 
@@ -358,7 +362,7 @@
     </string-array>  <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Настройки внешнего вида</string>           <!-- group title -->
+    <string name="configLabel_appearance">Настройки внешнего вида</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Тема оформления</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Тема:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Заполнять все доступное пространство (изменяемый размер)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
@@ -491,7 +495,7 @@
     <string name="expandMore">Больше</string>  <!-- contentDescription -->
     <string name="expandLess">Меньше</string>  <!-- contentDescription -->
 
-    <string name="configLabel_action">Настройки действий</string>                  <!-- group title -->
+    <string name="configLabel_action">Настройки действий</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
     <string name="configLabel_action_onTap">При нажатии:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">При нажатии на часы</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">При нажатии на заметку</string>           <!-- spinner label -->
@@ -502,7 +506,7 @@
     <string name="locationMode_current">Текущее (последнее известное)</string>  <!-- setting -->
     <string name="locationMode_custom">Пользовательское</string>           <!-- setting -->
 
-    <string name="configLabel_location">Настройки местоположения</string>               <!-- group title -->
+    <string name="configLabel_location">Настройки местоположения</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Режим:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Широта:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">градусы (десятичн.)</string>      <!-- edittext hint -->
@@ -532,7 +536,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->
+    <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Режим:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Часовой пояс:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
@@ -776,12 +780,13 @@
     <string name="configAction_editAlarm">Изменить</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Удалить</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Очистить</string>                <!-- action button / menu item -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms">Сортировка</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Время срабатывания</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Время создания</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Очистить</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_setAlarmOffset">Установить смещение</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Установить смещение</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Выбрать тип</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Выбрать название</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Выбрать местоположение</string>         <!-- button (contentDescription) -->
@@ -845,7 +850,15 @@
     <string name="clearalarms_dialog_cancel">Отмена</string>    <!-- button -->
     <string name="clearalarms_toast_success">Все будильники удалены.</string> <!-- toast msg -->
 
+    <string name="importalarms_title_warning">Import Warning</string> <!-- dialog title -->   <!-- TODO -->
+    <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->  <!-- TODO -->
     <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+    <plurals name="alarmPlural">
+        <item quantity="one">%d alarm</item>
+        <item quantity="other">%d alarms</item>
+        <item quantity="few">%d alarms</item>
+        <item quantity="many">%d alarms</item>
+    </plurals>   <!-- TODO -->
 
     <string name="alarmlabel_dialog_title">Название</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Применить</string>        <!-- button -->
@@ -871,6 +884,10 @@
     <string name="configLabel_alarms_optWhiteList">Оптимизация энергопотребления</string>
     <string name="configLabel_alarms_optWhiteList_listed">Не оптимизировано (рекомендовано)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Используется оптимизация.\nСрабатывание сигнала может задерживаться до 15 минут.</string>
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Уведомления от приложения</string>
     <string name="configLabel_alarms_notifications_on">Разрешены</string>
@@ -878,6 +895,13 @@
     <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">На экране блокировки: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Уведомления запрещены. Сигналы могут работать некорректно.</string>  <!-- snackbar message -->
+
+    <string name="configLabel_alarms_bootcompleted">Boot Completed</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info_never">Never</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Воспроизводить сигнал в течение</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 hours">%s</xliff:g></string>
@@ -1232,7 +1256,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Использовать данные местоположения от сотовой сети и WiFi.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Настройки языка</string>   <!-- group title -->
+    <string name="configLabel_locale">Настройки языка</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
     <string name="configLabel_localeMode">Язык приложения</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -1690,8 +1714,21 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] to cancel without making changes.<br/>
+          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
+          [Icon Cancel] to save and disable.<br/>
+          [Icon Delete] to cancel and delete.<br/>
+          <br/>
+          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+    ]]></string>   <!-- TODO -->
+
     <string name="help_general_actualTime"><![CDATA[
-          <b>Фактическое время:</b> Солнце находится на горизонте. Это приблизительное время восхода и захода солнца.<br/><br/>
+          <b>Фактическое время:</b> Солнце находится на горизонте. Это приблизительное время восхода и захода солнца.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
           <b>Гражданские сумерки:</b> Солнце в 6 градусах ниже линии горизонта, видны самые яркие звезды. В это время хватает света для большинства занятий на открытом воздухе без применения искусственного освещения.<br/><br/>
@@ -1768,7 +1805,7 @@
         <br/>
         <br/>
         <b>Extras:</b> Разделенные знаком \"<em>&amp;</em>\" строки, содержащие дополнительные значения. Поддерживаются регулярные выражения.<br/><br/>Значения могут быть представлены типами <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> или <em>String</em>. <br/><small>напр. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
-    ]]></string>
+    ]]></string> <!-- TODO: added Package: -->
     <string name="help_widgetlist"><![CDATA[
           Для <b>добавления</b> или <b>удаления</b> виджета необходимо перейти на домашний экран устройства.<br/><br/>
           Для <b>изменения настроек</b> уже существующего виджета выберите его в списке ниже.<br/>
@@ -1787,7 +1824,7 @@
         <u><b><font color="#ff9900">Интеграция с календарями не настроена.</font></b></u><br />
         <br />
         Эта функция теперь доступна в виде <a href="moreInfoLink">отдельного приложения</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy"><![CDATA[<b>Заявление о конфиденциальности:</b><br/>Suntimes <b>не собирает, не хранит и не передает</b> личные данные пользователя. Приложение <b>не содержит рекламы</b>, <b>аналитики</b>, <b>трекеров</b> и <b>не требует лишних разрешений</b>. <br/><br/>Приложение настраивается на основе данных о местоположении. Эта информация (и другие данные конфигурации, используемые приложением) хранятся локально и не покидают устройство.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes запрашивает разрешение на <b>определение местоположения</b>, чтобы узнать вашу текущую долготу и широту. Данное разрешение является <b>необязательным</b>: по умолчанию местоположение настраивается вручную.]]></string>

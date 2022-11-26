@@ -232,7 +232,7 @@
   <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
   <!-- Widget Setting: general -->
-  <string name="configLabel_general">Allgemeine Einstellungen</string>                <!-- group title -->
+  <string name="configLabel_general">Allgemeine Einstellungen</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
   <string name="configLabel_general_calculator">Datenquelle:</string>         <!-- spinner label -->
   <string name="configLabel_general_calculator_sun">Sonnendatenquelle</string>         <!-- preference label -->
   <string name="configLabel_general_calculator_moon">Monddatenquelle</string>         <!-- preference label -->
@@ -254,6 +254,9 @@
   <string name="configLabel_general_showTimeDate">Uhrzeit (und Datum) anzeigen</string>        <!-- checkbox label -->
   <string name="configLabel_general_showTimeDate_summary">Bei Datum Uhrzeit anzeigen.</string>        <!-- checkbox label -->
 
+  <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
+  <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
+
   <string name="configLabel_general_showWeeks">Wochen anzeigen</string>        <!-- checkbox label -->
   <string name="configLabel_general_showWeeks_summary">Zeiträume länger als 7 Tage in Wochen aufteilen (z.B. aus 15d werden 2w 1d).</string>
 
@@ -264,8 +267,8 @@
   <string name="configLabel_general_observerheight_summary">Zeigt die Länge des Schattens an, der von einem Objekt der Höhe <xliff:g id="value" example="1 Meter">%1$s</xliff:g> geworfen wird.</string>        <!-- checkbox label -->  
 
   <!-- Widget Setting: advanced / experimental -->
-  <string name="configLabel_advanced">Fortgeschrittene Einstellungen</string>                        <!-- group title -->  
-  <string name="configLabel_experimental">Experimentelle Einstellungen</string>                <!-- group title --> 
+  <string name="configLabel_advanced">Fortgeschrittene Einstellungen</string>                        <!-- group title -->      <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+  <string name="configLabel_experimental">Experimentelle Einstellungen</string>                <!-- group title -->     <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
   <string name="configLabel_general_scanPlugins">Datenquellenplugins</string>                                <!-- checkbox label --> 
   <string name="configLabel_general_scanPlugins_summary">Suche nach Plugins von Drittanbietern.</string>   <!-- pref summary -->
 
@@ -719,12 +722,13 @@
   <string name="configAction_editAlarm">Bearbeiten</string>               <!-- button  (contentDescription) -->
   <string name="configAction_deleteAlarm">Löschen</string>               <!-- button  (contentDescription) -->
   <string name="configAction_clearAlarms">Alle löschen</string>                <!-- action button /  menu item -->
+  <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
   <string name="configAction_sortAlarms">Sortieren</string>                <!-- action button /  menu item -->
   <string name="configAction_sortAlarms_by_time">Alarmzeit</string>                <!-- action  button /  menu item -->
   <string name="configAction_sortAlarms_by_creation">Erzeugungsdatum</string>                <!-- action  button / menu item -->
   <string name="configAction_clearOffset">Versatz löschen</string>                <!-- action  button / menu  item -->
   <string name="configAction_clearDate">Löschen</string>                <!-- action button / menu item -->
-  <string name="configAction_setAlarmOffset">Versatz setzen</string>         <!-- button  (contentDescription) -->
+  <string name="configAction_setAlarmOffset">Versatz setzen</string>         <!-- button  (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
   <string name="configAction_setAlarmType">Typ setzen</string>         <!-- button  (contentDescription) -->
   <string name="configAction_setAlarmLabel">Bezeichnung setzen</string>         <!-- button  (contentDescription) -->
   <string name="configAction_setAlarmLocation">Ort setzen</string>         <!-- button  (contentDescription) -->
@@ -788,7 +792,13 @@
   <string name="clearalarms_dialog_cancel">Abbrechen</string>    <!-- button -->
   <string name="clearalarms_toast_success">Alarme gelöscht.</string> <!-- toast msg -->
 
+  <string name="importalarms_title_warning">Import Warning</string> <!-- dialog title -->   <!-- TODO -->
+  <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->  <!-- TODO -->
   <string name="importalarms_toast_success">Importierte %s Alarme.</string> <!-- toast msg -->
+  <plurals name="alarmPlural">
+    <item quantity="one">%d alarm</item>
+    <item quantity="other">%d alarms</item>
+  </plurals>   <!-- TODO -->
 
   <string name="alarmlabel_dialog_title">Bezeichnung</string>        <!-- dialog title -->
   <string name="alarmlabel_dialog_ok">Anwenden</string>        <!-- button -->
@@ -815,6 +825,10 @@
   <string name="configLabel_alarms_optWhiteList">Akkuoptimierung</string>
   <string name="configLabel_alarms_optWhiteList_listed">Nicht optimiert (empfohlen)</string>
   <string name="configLabel_alarms_optWhiteList_unlisted">Optimiere Akkuverbrauch.\nAlarme können um bis zu 15 Minuten verzögert sein.</string>
+  <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
+  <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
+  <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+  <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
   <string name="configLabel_alarms_notifications">Benachrichtigungen</string>
   <string name="configLabel_alarms_notifications_on">An</string>
@@ -823,6 +837,13 @@
   <string name="configLabel_alarms_notifications_summary1">Bei Bildschirmsperre: %1$s</string>  <!-- "On lock screen: Off -->
   <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g>
     Benachrichtigungen sind deaktiviert. Alarme könnten nicht richtig angezeigt werden.</string>  <!-- snackbar message -->
+
+  <string name="configLabel_alarms_bootcompleted">Boot Completed</string>   <!-- TODO -->
+  <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
+  <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
+  <string name="configLabel_alarms_bootcompleted_info_never">Never</string>   <!-- TODO -->
+  <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
+  <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
 
   <string name="configLabel_alarms_silenceAfter">Stumm schalten nach</string>
   <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 Minuten">%s</xliff:g></string>
@@ -1049,7 +1070,7 @@
   <string name="configLabel_getFix_passiveMode_summary">Passiven Standortanbieter verwenden.</string>
 
   <!-- App Setting: locale mode -->
-  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->
+  <string name="configLabel_locale">Spracheinstellungen</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
   <string name="configLabel_localeMode">Modus:</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="Systemsprache">%s</xliff:g></string>
@@ -1477,8 +1498,21 @@
                 * <b>%o</b> für auftrag  (z. B. nächste Ereignisse, kommende Ereignisse)<br/>
     ]]></string>
 
+  <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] to cancel without making changes.<br/>
+          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
+          [Icon Cancel] to save and disable.<br/>
+          [Icon Delete] to cancel and delete.<br/>
+          <br/>
+          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
+    ]]></string>   <!-- TODO -->
+
+  <string name="help_general_dst"><![CDATA[
+          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+    ]]></string>   <!-- TODO -->
+
   <string name="help_general_actualTime"><![CDATA[
-        <b>Tatsächlicher Sonnenauf-/Untergang:</b> Die Sonnenscheibe steht ungefähr mittig am Horizont.<br/><br/>
+        <b>Tatsächlicher Sonnenauf-/Untergang:</b> Die Sonnenscheibe steht ungefähr mittig am Horizont.<br/>
   ]]></string>
   <string name="help_general_twilight"><![CDATA[
         <b>Bürgerliche Dämmerung:</b> Die Sonne steht 6 Grad unter dem Horizont; Nur die hellsten Himmelskörper sind erkennbar. Unter freiem Himmel ist es hell genug für die meisten Aktivitäten, wie beispielsweise Lesen ohne Beleuchtung. (Auch zivile Dämmerung genannt.)<br/><br/>
@@ -1514,7 +1548,7 @@
     ]]></string>
   <string name="help_action_launch"><![CDATA[
       Der "fully qualified class name" der Android-Activity, die gestartet werden soll.
-  ]]></string>
+  ]]></string>  <!-- TODO: update from strings.xml -->
   <string name="help_widgetlist"><![CDATA[
         Benutze deinen Startbildschirm, um <b>ein neues Widget hinzuzufügen</b>. (Meist antippen und halten, bis ein Menü erscheint.)<br/><br/>
         Um <b>ein bestehendes Widget zu konfigurieren</b>, wähle es aus der folgenden Liste aus.<br/>
@@ -1532,7 +1566,7 @@
         <u><b><font color="#ff9900">Kalenderberechtigungen wurden entfernt.</font></b></u><br />
         <br />
         Diese Funktion ist jetzt als <a href="moreInfoLink">eigenständige App verfügbar</a>.
-    ]]></string>
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
   <string
       name="privacy_policy"><![CDATA[<b>Datenschutzerklärung:</b><br/>Suntimes erfasst, speichert oder übermittelt keine persönlichen Benutzerdaten. Die App enthält <b>keine Werbung</b>, <b>keine Analytik</b>, <b>keine Tracker</b> und verlangt <b>keine unnötigen Berechtigungen</b>. <br/><br/>Die App wird über Ortsinformationen konfiguriert. Diese Informationen (und andere von der App verwendete Konfigurationsdaten) werden lokal gespeichert und verlassen das Gerät nicht.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
