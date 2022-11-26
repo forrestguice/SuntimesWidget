@@ -100,8 +100,8 @@ public class SunLayout_2x1_0 extends SunLayout
                 float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
                 if (adjustedSizeSp[0] > timeSizeSp)
                 {
-                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
-                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+                    //float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    //float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
 
                     views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
@@ -110,6 +110,15 @@ public class SunLayout_2x1_0 extends SunLayout
                     views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
 
+                    if (adjustedSizeSp[1] > timeSizeSp)
+                    {
+                        views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                        views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                        views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                        views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                    }
+
+                    /*
                     views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
                     views.setViewPadding(R.id.text_delta_day_prefix, (int)(scaledPadding), 0, 0, (int)(scaledPadding / 2));
                     views.setViewPadding(R.id.text_delta_day_value, 0, 0, 0, (int)(scaledPadding / 2));
@@ -122,6 +131,7 @@ public class SunLayout_2x1_0 extends SunLayout
                     views.setViewPadding(R.id.icon_time_sunrise, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
                     views.setViewPadding(R.id.text_time_noon_suffix, (int)(scaledPadding/2), 0, 0, 0);
                     views.setViewPadding(R.id.icon_time_noon, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
+                    */
 
                     //views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
                     //views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
