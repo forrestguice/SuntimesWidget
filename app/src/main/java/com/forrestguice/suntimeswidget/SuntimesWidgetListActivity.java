@@ -371,6 +371,10 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             return appWidgetId;
         }
 
+        public String getWidgetClass() {
+            return widgetClass;
+        }
+
         public String getConfigClass()
         {
             return configClass;
@@ -414,7 +418,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             ArrayList<ComponentName> components = new ArrayList<>();
             for (WidgetListItem widget : widgets)
             {
-                ComponentName component = new ComponentName(widget.packageName, widget.widgetClass);
+                ComponentName component = new ComponentName(widget.getPackageName(), widget.getWidgetClass());
                 if (!components.contains(component)) {
                     components.add(component);
                 }

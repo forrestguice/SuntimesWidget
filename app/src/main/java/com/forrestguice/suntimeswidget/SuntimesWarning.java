@@ -60,7 +60,7 @@ public class SuntimesWarning
         shouldShow = value;
     }
 
-    private boolean wasDismissed = false;
+    protected boolean wasDismissed = false;
     public boolean wasDismissed() {
         return wasDismissed;
     }
@@ -127,7 +127,7 @@ public class SuntimesWarning
         }
     };
 
-    private void showNextWarning()
+    protected void showNextWarning()
     {
         if (warningListener != null) {
             warningListener.onShowNextWarning();
@@ -163,10 +163,11 @@ public class SuntimesWarning
     public void setContentDescription( String value )
     {
         this.contentDescription = value;
-        TextView snackText = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        if (snackText != null)
-        {
-            snackText.setContentDescription(contentDescription);
+        if (snackbar != null) {
+            TextView snackText = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            if (snackText != null) {
+                snackText.setContentDescription(contentDescription);
+            }
         }
     }
 
