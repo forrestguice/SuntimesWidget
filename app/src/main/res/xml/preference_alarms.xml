@@ -84,6 +84,12 @@
             android:summary="@string/dialog_msg_donotshowagain"
             android:defaultValue="false" />
 
+        <Preference
+            android:key="app_alarms_bootcompleted"
+            android:title="@string/configLabel_alarms_bootcompleted"
+            android:summary="@string/configLabel_alarms_bootcompleted_summary"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -42,9 +42,6 @@ import java.util.TimeZone;
  */
 public class AlarmClockItem implements Parcelable
 {
-    public static final String AUTHORITY = "com.forrestguice.suntimeswidget.alarmclock";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/alarms");
-
     public static final int ICON_ALARM = R.drawable.ic_action_alarms;
     public static final int ICON_NOTIFICATION = R.drawable.ic_action_notification;
     public static final int ICON_NOTIFICATION1 = R.drawable.ic_action_notification1;
@@ -111,7 +108,7 @@ public class AlarmClockItem implements Parcelable
     private AlarmClockItem(Parcel in)
     {
         rowID = in.readLong();
-        type = AlarmType.valueOf(in.readString());
+        type = AlarmType.valueOf(in.readString(), null);
         enabled = (in.readInt() == 1);
         label = in.readString();
 
@@ -153,7 +150,7 @@ public class AlarmClockItem implements Parcelable
     public void writeToParcel(Parcel out, int flags)
     {
         out.writeLong(rowID);
-        out.writeString(type.name());
+        out.writeString(type != null ? type.name() : null);
         out.writeInt(enabled ? 1 : 0);
         out.writeString(label);
 
@@ -166,11 +163,11 @@ public class AlarmClockItem implements Parcelable
         out.writeInt(minute);
         out.writeLong(offset);
 
-        out.writeString(location.getLatitude());
-        out.writeString(location.getLongitude());
-        out.writeString(location.getLabel());
-        out.writeString(location.getAltitude());
-        out.writeInt(location.useAltitude() ? 1 : 0);
+        out.writeString(location != null ? location.getLatitude() : null);
+        out.writeString(location != null ? location.getLongitude() : null);
+        out.writeString(location != null ? location.getLabel() : null);
+        out.writeString(location != null ? location.getAltitude() : null);
+        out.writeInt(location != null ? location.useAltitude() ? 1 : 0 : 0);
 
         //out.writeString(event != null ? event.name() : null);
         out.writeString(event);
@@ -422,7 +419,7 @@ public class AlarmClockItem implements Parcelable
      */
     public Uri getUri()
     {
-        return ContentUris.withAppendedId(CONTENT_URI, rowID);
+        return ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, rowID);
     }
 
     /**
