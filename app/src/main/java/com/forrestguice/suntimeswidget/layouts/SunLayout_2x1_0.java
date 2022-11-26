@@ -91,8 +91,8 @@ public class SunLayout_2x1_0 extends SunLayout
     {
         if (adjustedSizeSp[0] > timeSizeSp)
         {
-            float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
-            float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+            //float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+            //float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
 
             views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
             views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
@@ -101,6 +101,15 @@ public class SunLayout_2x1_0 extends SunLayout
             views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
             views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
 
+            if (adjustedSizeSp[1] > timeSizeSp)
+            {
+                views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+            }
+
+            /*
             views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
             views.setViewPadding(R.id.text_delta_day_prefix, (int)(scaledPadding), 0, 0, (int)(scaledPadding / 2));
             views.setViewPadding(R.id.text_delta_day_value, 0, 0, 0, (int)(scaledPadding / 2));
@@ -113,6 +122,7 @@ public class SunLayout_2x1_0 extends SunLayout
             views.setViewPadding(R.id.icon_time_sunrise, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
             views.setViewPadding(R.id.text_time_noon_suffix, (int)(scaledPadding/2), 0, 0, 0);
             views.setViewPadding(R.id.icon_time_noon, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
+             */
 
             //views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
             //views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
@@ -125,9 +135,11 @@ public class SunLayout_2x1_0 extends SunLayout
             Drawable d2 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetColor);
             views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d2, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-            //Drawable d3 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
-            //SuntimesUtils.tintDrawable(d3, sunriseColor);
-            //views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d3, (int)(iconSizeDp * textScale), (int)(iconSizeDp * textScale)/2, false));
+            int noonIconSizeDp = (int)(adjustedSizeSp[2] * 0.85);
+            if (noonIconSizeDp > 24) {
+                Drawable d3 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+                views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d3, noonIconSizeDp, noonIconSizeDp, false));
+            }
         }
     }
 
@@ -224,7 +236,8 @@ public class SunLayout_2x1_0 extends SunLayout
         Bitmap sunriseIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
 
-        Drawable noonDrawable = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+        Bitmap noonIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_noon_large1, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));   // doesn't call mutate (themes other Drawable instances)
+        Drawable noonDrawable = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);    // specify 24x24 icon (intrinsic height used by layerDrawableToBitmap is wrong)
         views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, noonDrawable, 24, 24, false));
 
         Bitmap sunsetIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
