@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.moon;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -42,6 +42,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -104,6 +106,7 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.setLayoutManager(card_layout);
 
         card_adapter = new PhaseAdapter(context);
+        card_adapter.setAdapterListener(card_listener);
         card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / 4);  // initial width; reassigned later in onSizeChanged
 
         card_view.setAdapter(card_adapter);
@@ -198,7 +201,7 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
-    protected void updateViews( Context context )
+    public void updateViews( Context context )
     {
         if (isInEditMode()) {
             return;
@@ -211,6 +214,17 @@ public class MoonPhasesView1 extends LinearLayout
         }
         showEmptyView( !hasSupport );
     }
+
+    private PhaseAdapterListener card_listener = new PhaseAdapterListener()
+    {
+        @Override
+        public void onClick(View v, PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase)
+        {
+            if (viewListener != null) {
+                viewListener.onClick(v, adapter, position, phase);
+            }
+        }
+    };
 
     private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
         @Override
@@ -250,21 +264,45 @@ public class MoonPhasesView1 extends LinearLayout
         }
     };
 
-    /**@Override
-    public void setOnClickListener( OnClickListener listener )
+    public void scrollToCenter() {
+        card_layout.scrollToPositionWithOffset(MoonPhasesView1.PhaseAdapter.CENTER_POSITION, 0);
+        card_view.smoothScrollBy(1, 0); // triggers a snap
+    }
+    public void scrollToDate( long datetime )
     {
-        super.setOnClickListener(listener);
-        // TODO
-        //content.setOnClickListener(listener);
-    }*/
+        int position = card_adapter.getPositionForDate(getContext(), datetime);
+        boolean alreadyInPosition = (position == card_layout.findFirstVisibleItemPosition());
+        card_layout.scrollToPositionWithOffset(position, 0);
+        if (!alreadyInPosition) {
+            card_view.smoothScrollBy(1, 0);   // triggers snap
+        }
+    }
 
-    /**@Override
-    public void setOnLongClickListener( OnLongClickListener listener)
+    public void lockScrolling() {
+        card_view.setLayoutFrozen(true);
+    }
+
+    public void unlockScrolling() {
+        card_view.setLayoutFrozen(false);
+    }
+
+    private MoonPhasesViewListener viewListener = null;
+    public void setViewListener(MoonPhasesViewListener listener) {
+        this.viewListener = listener;
+    }
+
+    /**
+     * MoonPhasesViewListener
+     */
+    public static class MoonPhasesViewListener extends PhaseAdapterListener {}
+
+    /**
+     * PhaseAdapterListener
+     */
+    public static class PhaseAdapterListener
     {
-        super.setOnLongClickListener(listener);
-        // TODO
-        //content.setOnLongClickListener(listener);
-    }*/
+        public void onClick(View v, PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase) {}
+    }
 
     /**
      * PhaseAdapter
@@ -334,11 +372,13 @@ public class MoonPhasesView1 extends LinearLayout
             themeViews(context, holder, isAgo);
 
             holder.bindDataToPosition(context, moon, holder.phase, position);
+            attachClickListeners(holder, position);
         }
 
         @Override
         public void onViewRecycled(PhaseField holder)
         {
+            detachClickListeners(holder);
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
                 data.remove(holder.position);
             }
@@ -355,7 +395,7 @@ public class MoonPhasesView1 extends LinearLayout
             nextPhase = moon.nextPhase(moon.calendar());
         }
 
-        protected SuntimesMoonData1 initData( Context context, int position )
+        public SuntimesMoonData1 initData( Context context, int position )
         {
             int offset = (position - CENTER_POSITION) % 4;
             int firstPosition = position;
@@ -386,13 +426,23 @@ public class MoonPhasesView1 extends LinearLayout
 
                 Calendar date = Calendar.getInstance(moon.timezone());
                 date.setTimeInMillis(moon0.moonPhaseCalendar(moon0.nextPhase(moon.now())).getTimeInMillis());
-                date.add(Calendar.HOUR, (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d));   // avg length of synodic month (28.53) may vary ~ +-6 hr
+                date.add(Calendar.HOUR, (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d));   // avg length of synodic month (29.53) may vary ~ +-6 hr
                 date.add(Calendar.HOUR, (int)(-24 * 3.5));                                            // so offset several days to overcome potential drift
                 moon.setTodayIs(date);
             }
 
             moon.calculate();
             return moon;
+        }
+
+        public int getPositionForDate(Context context, long datetime)
+        {
+            SuntimesMoonData1 moon0 = initData(context, CENTER_POSITION);
+            long dateCenter = moon0.moonPhaseCalendar(moon0.nextPhase(moon0.now())).getTimeInMillis();
+            long deltaMs = (datetime - dateCenter);
+            double deltaHours = deltaMs / (1000d * 60d * 60d);
+            double deltaMonth = (deltaHours / (29.53d * 24d));
+            return (int)(CENTER_POSITION + (4 * deltaMonth));
         }
 
         @SuppressLint("ResourceType")
@@ -451,6 +501,34 @@ public class MoonPhasesView1 extends LinearLayout
             int textColor = isAgo ? colorDisabled : colorText;
             holder.themeViews(titleColor, spTitle, boldTitle, timeColor, spTime, boldTime, textColor, bitmap);
         }
+
+        private void attachClickListeners(@NonNull PhaseField holder, int position) {
+            holder.layout.setOnClickListener(onItemClick(position, holder.phase));
+        }
+
+        private void detachClickListeners(@NonNull PhaseField holder) {
+            holder.layout.setOnClickListener(null);
+        }
+
+        private OnClickListener onItemClick(final int position, final SuntimesCalculator.MoonPhase phase) {
+            return new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (adapterListener != null) {
+                        adapterListener.onClick(v, PhaseAdapter.this, position, phase);
+                    }
+                }
+            };
+        }
+
+        /**
+         * setAdapterListener
+         * @param listener
+         */
+        public void setAdapterListener( @NonNull PhaseAdapterListener listener ) {
+            adapterListener = listener;
+        }
+        private PhaseAdapterListener adapterListener = new PhaseAdapterListener();
     }
 
     /**

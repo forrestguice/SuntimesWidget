@@ -58,6 +58,8 @@
     <attr name="moonriseColor" format="reference" />
     <attr name="moonsetIcon" format="reference" />
     <attr name="moonsetColor" format="reference" />
+    <attr name="moonnoonIcon" format="reference" />
+    <attr name="moonnightIcon" format="reference" />
 
     <attr name="moonPhaseIcon0" format="reference" />
     <attr name="moonPhaseIcon1" format="reference" />
@@ -168,10 +170,19 @@
 
     <declare-styleable name="MoonPhaseView">
         <attr name="illuminationAtLunarNoon" format="boolean" />
+        <attr name="illuminationRange" format="boolean" />
         <attr name="showPosition" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="MoonPhaseView1">
+        <attr name="illuminationAtLunarNoon" />
+        <attr name="illuminationRange" />
+        <attr name="showPosition" />
     </declare-styleable>
 
     <declare-styleable name="MoonRiseSetView">
+        <attr name="showPosition" />
+    </declare-styleable>
+    <declare-styleable name="MoonRiseSetView1">
         <attr name="showPosition" />
     </declare-styleable>
 

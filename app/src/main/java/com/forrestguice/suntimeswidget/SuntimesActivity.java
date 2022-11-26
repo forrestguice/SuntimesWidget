@@ -2040,12 +2040,20 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onMoonHeaderClick(CardAdapter adapter, int position) {
-            showMoonDialog();
+            onMoonHeaderAction(adapter, position);
         }
         @Override
-        public boolean onMoonHeaderLongClick(CardAdapter adapter, int position) {
-            showMoonDialog();
+        public boolean onMoonHeaderLongClick(CardAdapter adapter, int position)
+        {
+            onMoonHeaderAction(adapter, position);
             return true;
+        }
+        protected void onMoonHeaderAction(CardAdapter adapter, int position)
+        {
+            Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = adapter.initData(SuntimesActivity.this, position);
+            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null) {
+                showMoonPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
+            } else showMoonDialog();
         }
 
         @Override
@@ -2228,6 +2236,12 @@ public class SuntimesActivity extends AppCompatActivity
         public void onShowMap( long suggested) {
             showMapPositionAt(suggested);
         }
+
+        @Override
+        public void onShowMoonInfo(long suggestDate) {
+            showMoonPositionAt(suggestDate);
+        }
+
         @Override
         public void onShowDate(long suggested) {
             scrollToDate(suggested);
@@ -2274,6 +2288,11 @@ public class SuntimesActivity extends AppCompatActivity
             afterConfigDate();*/
 
             scrollToDate(suggested);
+        }
+
+        @Override
+        public void onShowMoonInfo(long suggested) {
+            showMoonPositionAt(suggested - (60 * 1000));
         }
     };
     public void showMapPositionAt(@Nullable Long dateTime)
@@ -2332,6 +2351,12 @@ public class SuntimesActivity extends AppCompatActivity
         public void onShowPosition( long suggested ) {
             showSunPositionAt(suggested);
         }
+
+        @Override
+        public void onShowMoonInfo(long suggested) {
+            showMoonPositionAt(suggested);
+        }
+
         @Override
         public void onShowDate(long suggested) {
             scrollToDate(suggested);
@@ -2341,13 +2366,15 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Show the moon dialog.
      */
-    protected void showMoonDialog()
+    protected MoonDialog showMoonDialog()
     {
         MoonDialog moonDialog = new MoonDialog();
         moonDialog.themeViews(this, appThemeOverride);
-        moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
+        SuntimesMoonData d = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition()).second;
+        moonDialog.setData((d != null) ? d : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
         moonDialog.setDialogListener(moonDialogListener);
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
+        return moonDialog;
     }
     private MoonDialog.MoonDialogListener moonDialogListener = new MoonDialog.MoonDialogListener()
     {
@@ -2357,9 +2384,27 @@ public class SuntimesActivity extends AppCompatActivity
         }
         @Override
         public void onShowMap( long suggestDate ) {
-            showWorldMapDialog();   // TODO: at suggested date
+            showMapPositionAt(suggestDate);
+        }
+        @Override
+        public void onShowPosition( long suggested ) {
+            showSunPositionAt(suggested);
+        }
+        @Override
+        public void onShowDate(long suggested) {
+            scrollToDate(suggested);
         }
     };
+    public void showMoonPositionAt(@Nullable Long dateTime)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        MoonDialog dialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        dialog = showMoonDialog();
+        dialog.showPositionAt(dateTime);
+    }
 
     /**
      * Show data source labels / ui.

@@ -21,6 +21,8 @@
 
     <drawable name="ic_moon_rise_ref">@drawable/ic_moon_rise</drawable>
     <drawable name="ic_moon_set_ref">@drawable/ic_moon_set</drawable>
+    <drawable name="ic_moon_noon_ref">@drawable/ic_moon_noon</drawable>
+    <drawable name="ic_moon_night_ref">@drawable/ic_moon_night</drawable>
 
     <drawable name="ic_action_location_found_ref">@drawable/ic_action_location_found</drawable>
     <drawable name="ic_action_location_off_ref">@drawable/ic_action_location_off</drawable>

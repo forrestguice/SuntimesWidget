@@ -588,6 +588,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     showSeekAltitudePopup(context, sunElevation);
                     return true;
 
+                case R.id.action_moon:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMoonInfo(getMapTime(System.currentTimeMillis()));
+                    }
+                    return true;
+
                 case R.id.action_observerheight:
                     showShadowObjHeightPopup(context, sunShadowObj);
                     return true;
@@ -1702,6 +1708,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         public void onShowDate( long suggestDate ) {}
         public void onShowMap( long suggestDate ) {}
+        public void onShowMoonInfo( long suggestDate ) {}
     }
 
 }

@@ -137,6 +137,11 @@
             android:title="@string/configLabel_ui_showmoon"
             android:summary="@string/configLabel_ui_showmoon_summary"
             android:defaultValue="@string/def_app_ui_showmoon" />
+        <CheckBoxPreference
+            android:key="app_ui_showmoon_noon"
+            android:title="@string/configLabel_ui_showmoon_noon"
+            android:summary="@string/configLabel_ui_showmoon_noon_summary"
+            android:defaultValue="@string/def_app_ui_showmoon_noon" />
 
         <CheckBoxPreference
             android:key="app_ui_showequinox"

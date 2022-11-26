@@ -64,6 +64,8 @@
         <item name="moonriseColor">@color/moonIcon_color_rising</item>
         <item name="moonsetIcon">@drawable/ic_moon_set_ref</item>
         <item name="moonsetColor">@color/moonIcon_color_setting</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon_ref</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night_ref</item>
 
         <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
@@ -238,6 +240,8 @@
         <item name="moonriseColor">@color/moonIcon_color_rising_light</item>
         <item name="moonsetIcon">@drawable/ic_moon_set_light</item>
         <item name="moonsetColor">@color/moonIcon_color_setting_light</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon_light</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night_light</item>
 
         <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
@@ -414,6 +418,8 @@
         <item name="moonriseColor">@color/moonIcon_color_rising_dark</item>
         <item name="moonsetIcon">@drawable/ic_moon_set</item>
         <item name="moonsetColor">@color/moonIcon_color_setting_dark</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night</item>
 
         <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>

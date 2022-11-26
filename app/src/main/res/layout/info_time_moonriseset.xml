@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_moonriseset"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:orientation="vertical" android:background="?attr/selectableItemBackground"
+    android:paddingLeft="8dp" android:paddingRight="8dp" android:paddingTop="8dp" android:paddingBottom="16dp">
+
+    <ImageView android:id="@+id/icon_time_moonriseset"
+        style="@style/TableHeadImageView"
+        android:layout_width="@dimen/table_heading_iconsize"
+        android:background="?attr/moonsetIcon"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="0dp"
+        tools:ignore="contentDescription"/>
+
+    <TextView android:id="@+id/text_time_moonriseset"
+        style="@style/SunsetTimeTextView"
+        android:textColor="?attr/moonsetColor" android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+        tools:text="00:00 PM" />
+
+    <TextView android:id="@+id/text_info_moonriseset" android:visibility="visible"
+        style="@style/SunsetTimeTextView2"
+        android:gravity="center" android:layout_gravity="center"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+        android:textColor="?attr/moonsetColor"
+        tools:text="270  W" />
+
+</LinearLayout>
