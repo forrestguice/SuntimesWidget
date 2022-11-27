@@ -23,7 +23,7 @@
             android:id="@+id/txt_about_name"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             android:text="@string/location_dialog_title"
-            android:gravity="center" android:textSize="36sp"
+            android:gravity="center" android:textSize="?attr/text_size_xlarge"
             android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 

@@ -34,6 +34,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -75,12 +77,15 @@ public class WelcomeActivity extends AppCompatActivity
     private LinearLayout indicatorLayout;
     private AppSettings.LocaleInfo localeInfo;
 
+    private static final SuntimesUtils utils = new SuntimesUtils();
+
     @Override
     protected void attachBaseContext(Context newBase)
     {
         Context context = AppSettings.initLocale(newBase, localeInfo = new AppSettings.LocaleInfo());
         super.attachBaseContext(context);
         WidgetSettings.initDefaults(context);
+        SuntimesUtils.initDisplayStrings(context);
     }
 
     @Override
@@ -651,7 +656,7 @@ public class WelcomeActivity extends AppCompatActivity
     public static class WelcomeTimeZoneFragment extends WelcomeFragment
     {
         private Spinner timeFormatSpinner;
-        private TextView timeZoneWarning;
+        private TextView timeZoneWarning, timeZoneWarningNote;
         private Button timeZoneSuggestButton;
 
         public WelcomeTimeZoneFragment()
@@ -692,6 +697,9 @@ public class WelcomeActivity extends AppCompatActivity
             if (timeZoneWarning != null) {
                 timeZoneWarning.setVisibility(visible ? View.VISIBLE : View.GONE);
             }
+            //if (timeZoneWarningNote != null) {
+            //    timeZoneWarningNote.setVisibility(visible ? View.VISIBLE : View.GONE);
+            //}
             if (timeZoneSuggestButton != null) {
                 timeZoneSuggestButton.setVisibility(visible ? View.VISIBLE : View.GONE);
             }
@@ -714,6 +722,8 @@ public class WelcomeActivity extends AppCompatActivity
             }
 
             timeZoneWarning = (TextView) view.findViewById(R.id.warning_timezone);
+            timeZoneWarningNote = (TextView) view.findViewById(R.id.warning_timezone_note);
+
             if (timeZoneWarning != null)
             {
                 ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
@@ -728,13 +738,18 @@ public class WelcomeActivity extends AppCompatActivity
             timeFormatSpinner = (Spinner) view.findViewById(R.id.appwidget_general_timeformatmode);
             if (timeFormatSpinner != null)
             {
-                WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
-                ArrayAdapter<WidgetSettings.TimeFormatMode> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline,
+                final WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
+                final ArrayAdapter<WidgetSettings.TimeFormatMode> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline,
                         new WidgetSettings.TimeFormatMode[] {WidgetSettings.TimeFormatMode.MODE_SYSTEM, WidgetSettings.TimeFormatMode.MODE_12HR, WidgetSettings.TimeFormatMode.MODE_24HR});
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 timeFormatSpinner.setAdapter(adapter);
-                timeFormatSpinner.setSelection(adapter.getPosition(timeFormat), false);
                 timeFormatSpinner.setOnItemSelectedListener(onTimeFormatSelected);
+                timeFormatSpinner.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        timeFormatSpinner.setSelection(adapter.getPosition(timeFormat), false);
+                    }
+                });
             }
         }
 
@@ -752,11 +767,39 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
+        protected void updateWarningNote(Context context, TimeZone tz)
+        {
+            if (timeZoneWarningNote != null)
+            {
+                long zoneOffsetMillis = tz.getOffset(System.currentTimeMillis());
+                long lonOffsetMillis = Math.round(getLongitude() * (24 * 60 * 60 * 1000) / 360d);
+                long offset = zoneOffsetMillis - lonOffsetMillis;
+                String offsetDisplay = (offset < 0 ? "-" : "+") + utils.timeDeltaLongDisplayString(offset);
+
+                TypedArray typedArray = context.obtainStyledAttributes(new int[] { R.attr.tagColor_warning, R.attr.text_primaryColor });
+                int warningColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
+                int normalColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_primary_dark));
+                typedArray.recycle();
+
+                int highlightColor = normalColor;
+                if (Math.abs(offset / 1000 / 60 / 60) >= WidgetTimezones.WARNING_TOLERANCE_HOURS) {
+                    highlightColor = warningColor;
+                }
+
+                String location = getLongitudeLabel();
+                String note = context.getString(R.string.timezoneWarningNote, tz.getID(), offsetDisplay, location);
+                SpannableString noteDisplay = SuntimesUtils.createBoldColorSpan(null, note, offsetDisplay, highlightColor);
+                noteDisplay = SuntimesUtils.createBoldColorSpan(noteDisplay, note, location, normalColor);
+                timeZoneWarningNote.setText(noteDisplay);
+            }
+        }
+
         private TimeZoneDialog.TimeZoneDialogListener timeZoneDialogListener = new TimeZoneDialog.TimeZoneDialogListener()
         {
             @Override
             public void onSelectionChanged( TimeZone tz ) {
                 toggleWarning(WidgetTimezones.isProbablyNotLocal(tz, getLongitude(), Calendar.getInstance(tz).getTime()));
+                updateWarningNote(getContext(), tz);
             }
         };
 

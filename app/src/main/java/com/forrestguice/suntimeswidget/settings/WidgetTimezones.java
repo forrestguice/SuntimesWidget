@@ -74,14 +74,14 @@ public class WidgetTimezones
         double lonOffset = longitude * 24d / 360d;               // longitude offset in hrs
         double offsetDiff = Math.abs(lonOffset - zoneOffset);
 
-        double offsetTolerance = 3;    // tolerance in hrs
         //noinspection UnnecessaryLocalVariable
-        boolean isProbablyNotLocal = (offsetDiff > offsetTolerance);
+        boolean isProbablyNotLocal = (offsetDiff >= WARNING_TOLERANCE_HOURS);
         //Log.d("DEBUG", "offsets: " + zoneOffset + ", " + lonOffset);
         //Log.d("DEBUG", "offset delta: " +  offsetDiff +" [" + offsetTolerance + "] (" + isProbablyNotLocal + ")");
 
         return isProbablyNotLocal;
     }
+    public static final double WARNING_TOLERANCE_HOURS = 3;
 
     public static TimeZone getTimeZone(String tzId, @Nullable Double longitude)
     {
