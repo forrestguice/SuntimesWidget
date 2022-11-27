@@ -404,6 +404,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             if (location != null) {
                 setLocation(getActivity(), location);
             }
+        } else {
+            getDialogContent().populateLocationList();
         }
     }
 
