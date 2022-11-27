@@ -96,9 +96,12 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         public void updateUI(android.location.Location... locations)
         {
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
-            text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
-            text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-            text_locationAlt.setText( altitudeDisplayString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), 0)) );
+            if (locations != null && locations[0] != null)
+            {
+                text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
+                text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+                text_locationAlt.setText( altitudeDisplayString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), 0)) );
+            }
         }
 
         @Override
