@@ -86,12 +86,14 @@ def getGitHash()
 tasks.withType(Test) 
 {
     useJUnit {
-        excludeCategories 'com.forrestguice.suntimeswidget.UnlistedTest'
+        excludeCategories 'com.forrestguice.suntimeswidget.UnlistedTest', 'com.forrestguice.suntimeswidget.FlakeyTest'
     }
     testLogging 
     {
         exceptionFormat "full"
-        events "started", "skipped", "passed", "failed"
-        showStandardStreams true
+        //events "started", "skipped", "passed", "failed"
+        //showStandardStreams true
+        events "failed"
+        showStandardStreams false
     }
 }

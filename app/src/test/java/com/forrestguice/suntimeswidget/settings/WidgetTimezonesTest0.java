@@ -20,6 +20,8 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.FlakeyTest;
+import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -31,6 +33,7 @@ import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -47,6 +50,7 @@ import static junit.framework.Assert.assertTrue;
 public class WidgetTimezonesTest0
 {
     @Test
+    @Category(FlakeyTest.class)
     public void test_timezone_apparentSolarTime()
     {
         TimeZone timezone1 = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time (Test)");
