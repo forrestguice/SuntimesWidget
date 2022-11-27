@@ -591,14 +591,7 @@ public class LocationConfigView extends LinearLayout
         progress_getfix.setVisibility(View.GONE);
 
         button_getfix = (ImageButton)findViewById(R.id.appwidget_location_getfix);
-        button_getfix.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                getFixHelper.getFix(0);
-            }
-        });
+        button_getfix.setOnClickListener(onGetFixClicked);
 
         // auto mode: get GPS fix
         progress_auto = (ProgressBar)findViewById(R.id.appwidget_location_auto_progress);
@@ -618,6 +611,18 @@ public class LocationConfigView extends LinearLayout
         if (hideMode) {
             setHideMode(hideMode);
         }
+    }
+
+    protected View.OnClickListener onGetFixClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            lookupLocation();
+        }
+    };
+
+    public void lookupLocation() {
+        getFixHelper.getFix(0);
     }
 
 
