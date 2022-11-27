@@ -85,6 +85,8 @@
     <dimen name="settingsGroup_margin">5dp</dimen>
     <dimen name="settingsGroup_padding">4dp</dimen>
 
+    <integer name="anim_welcome_pause_duration">1500</integer>
+
     <item name="anim_slidein_fade_fromalpha" format="float" type="dimen">0.1</item>
     <item name="anim_slidein_fade_toalpha" format="float" type="dimen">1.0</item>
     <integer name="anim_slidein_fade_duration">700</integer>

@@ -50,8 +50,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -65,6 +67,8 @@ import java.util.TimeZone;
 
 public class WelcomeActivity extends AppCompatActivity
 {
+    public static final String EXTRA_PAGE = "page";
+
     private ViewPager pager;
     private WelcomeFragmentAdapter pagerAdapter;
     private Button nextButton, prevButton;
@@ -82,6 +86,7 @@ public class WelcomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        setResult(RESULT_CANCELED);
         setTheme(AppSettings.loadTheme(this));
         super.onCreate(savedInstanceState);
 
@@ -94,6 +99,13 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         setContentView(R.layout.layout_activity_welcome);
+
+        Intent intent = getIntent();
+        int page = 0;
+        if (intent.hasExtra(EXTRA_PAGE)) {
+            page = intent.getIntExtra(EXTRA_PAGE, 0);
+            intent.removeExtra(EXTRA_PAGE);
+        }
 
         pagerAdapter = new WelcomeFragmentAdapter(getSupportFragmentManager());
         pager = (ViewPager) findViewById(R.id.container);
@@ -113,6 +125,17 @@ public class WelcomeActivity extends AppCompatActivity
 
         indicatorLayout = (LinearLayout) findViewById(R.id.indicator_layout);
         pagerChangeListener.onPageSelected(0);
+
+        if (page != 0)
+        {
+            final int selectedPage = page;
+            pager.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    pager.setCurrentItem(selectedPage, true);
+                }
+            }, getResources().getInteger(R.integer.anim_welcome_pause_duration));
+        }
     }
 
     @Override
@@ -162,6 +185,7 @@ public class WelcomeActivity extends AppCompatActivity
         @Override
         public void onPageSelected(int position)
         {
+            Log.d("DEBUG", "onPageSelected: " + position);
             if (saveSettings(getSupportFragmentManager(), previousPosition))
             {
                 updateViews(getSupportFragmentManager(), position);
@@ -171,6 +195,7 @@ public class WelcomeActivity extends AppCompatActivity
                 previousPosition = position;
 
             } else {
+                Log.d("DEBUG", "onPageSelected: reverting to " + previousPosition);
                 pager.setCurrentItem(previousPosition);
             }
         }
@@ -217,6 +242,7 @@ public class WelcomeActivity extends AppCompatActivity
     private void onSkip()
     {
         AppSettings.setFirstLaunch(WelcomeActivity.this, false);
+        setResult(RESULT_CANCELED);
         finish();
     }
 
@@ -224,6 +250,7 @@ public class WelcomeActivity extends AppCompatActivity
     {
         saveSettings(getSupportFragmentManager(), pager.getCurrentItem());
         AppSettings.setFirstLaunch(WelcomeActivity.this, false);
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -384,6 +411,10 @@ public class WelcomeActivity extends AppCompatActivity
 
         public int getLayoutResID() {
             return getArguments().getInt(ARG_LAYOUT_RESID);
+        }
+
+        public int getPreferredIndex() {
+            return 0;
         }
     }
 
@@ -896,15 +927,52 @@ public class WelcomeActivity extends AppCompatActivity
         {
             super.initViews(context, view);
 
-            Button darkThemeButton = (Button) view.findViewById(R.id.button_theme_dark);
-            if (darkThemeButton != null) {
-                darkThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_DARK));
+            RadioButton smallText = (RadioButton) view.findViewById(R.id.radio_text_small);
+            RadioButton normalText = (RadioButton) view.findViewById(R.id.radio_text_normal);
+            RadioButton largeText = (RadioButton) view.findViewById(R.id.radio_text_large);
+            if (smallText != null && normalText != null && largeText != null)
+            {
+                AppSettings.TextSize textSize = AppSettings.TextSize.valueOf(AppSettings.loadTextSizePref(context));
+                switch (textSize)
+                {
+                    case SMALL: smallText.setChecked(true); break;
+                    case LARGE: largeText.setChecked(true); break;
+                    case NORMAL: default: normalText.setChecked(true); break;
+                }
+                smallText.setOnCheckedChangeListener(onTextSizeChecked(context, AppSettings.TextSize.SMALL));
+                normalText.setOnCheckedChangeListener(onTextSizeChecked(context, AppSettings.TextSize.NORMAL));
+                largeText.setOnCheckedChangeListener(onTextSizeChecked(context, AppSettings.TextSize.LARGE));
             }
 
-            Button lightThemeButton = (Button) view.findViewById(R.id.button_theme_light);
+            AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(context);
+            ToggleButton systemThemeButton = (ToggleButton) view.findViewById(R.id.button_theme_system);
+            if (systemThemeButton != null) {
+                systemThemeButton.setChecked(AppSettings.THEME_SYSTEM.equals(themeInfo.getThemeName()));
+                systemThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_SYSTEM));
+            }
+            ToggleButton darkThemeButton = (ToggleButton) view.findViewById(R.id.button_theme_dark);
+            if (darkThemeButton != null) {
+                darkThemeButton.setChecked(AppSettings.THEME_DARK.equals(themeInfo.getThemeName()));
+                darkThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_DARK));
+            }
+            ToggleButton lightThemeButton = (ToggleButton) view.findViewById(R.id.button_theme_light);
             if (lightThemeButton != null) {
+                lightThemeButton.setChecked(AppSettings.THEME_LIGHT.equals(themeInfo.getThemeName()));
                 lightThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_LIGHT));
             }
+        }
+
+        private CompoundButton.OnCheckedChangeListener onTextSizeChecked(final Context context, final AppSettings.TextSize textSize)
+        {
+            return new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        AppSettings.saveTextSizePref(context, textSize);
+                        recreate(getActivity());
+                    }
+                }
+            };
         }
 
         private View.OnClickListener onThemeButtonClicked(final String themeID) {
@@ -917,12 +985,19 @@ public class WelcomeActivity extends AppCompatActivity
             };
         }
 
-        private static void recreate(Activity activity)
+        @Override
+        public int getPreferredIndex() {
+            return 1;
+        }
+
+        private void recreate(Activity activity)
         {
-            if (activity != null) {
+            if (activity != null)
+            {
                 activity.finish();
                 activity.overridePendingTransition(R.anim.transition_restart_in, R.anim.transition_restart_out);
-                activity.startActivity(activity.getIntent());
+                activity.startActivity(activity.getIntent()
+                        .putExtra(EXTRA_PAGE, getPreferredIndex()));
             }
         }
     }

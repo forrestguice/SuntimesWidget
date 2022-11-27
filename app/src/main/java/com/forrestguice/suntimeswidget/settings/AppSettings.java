@@ -563,11 +563,19 @@ public class AppSettings
         return AppThemeInfo.getExtendedThemeName(pref.getString(PREF_KEY_APPEARANCE_THEME, context.getString(R.string.def_app_appearance_theme)), loadTextSizePref(context));
     }
 
+    public static void saveTextSizePref(Context context, TextSize value)
+    {
+        Log.d("DEBUG", "saveTextSizePref: " + value);
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(PREF_KEY_APPEARANCE_TEXTSIZE, value.name());
+        pref.apply();
+    }
     public static String loadTextSizePref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_APPEARANCE_TEXTSIZE, PREF_DEF_APPEARANCE_TEXTSIZE.name());
     }
+
     public static void setThemePref(Context context, String themeID) {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putString(PREF_KEY_APPEARANCE_THEME, themeID);

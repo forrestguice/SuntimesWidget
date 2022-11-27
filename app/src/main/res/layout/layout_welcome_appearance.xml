@@ -12,16 +12,16 @@
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/text_layout"
         app:layout_constraintVertical_chainStyle="spread"
-        app:layout_constraintVertical_weight="2">
+        app:layout_constraintVertical_weight="1">
 
         <ImageView
-            android:id="@+id/icon"
+            android:id="@+id/icon" android:visibility="invisible"
             android:layout_width="128dp" android:layout_height="128dp" android:layout_margin="8dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_action_suntimes_huge"
+            android:src="@drawable/ic_action_suntimes_huge" android:tint="?attr/colorControlHighlight"
             tools:ignore="ContentDescription" />
 
-        <TextView android:visibility="visible"
+        <TextView android:visibility="gone"
             android:id="@+id/text0"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             android:text="@string/app_name"
@@ -30,7 +30,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/text1"
+            android:id="@+id/text1" android:visibility="gone"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             android:gravity="start" android:layout_margin="8dp"
             android:text="@string/welcome_message" />
@@ -47,22 +47,62 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="1">
 
-        <LinearLayout
-            android:layout_width="match_parent" android:layout_height="96dp">
-            
-            <Button android:id="@+id/button_theme_dark" android:theme="@style/DarkThemeButton"
-                android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
+        <TextView
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:gravity="start" android:layout_gravity="start" android:layout_marginBottom="8dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="?attr/text_size_small"
+            android:text="@string/configLabel_appearance" />
 
-            <Button android:id="@+id/button_theme_light" android:theme="@style/LightThemeButton"
-                android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
-            
+
+        <LinearLayout android:orientation="vertical"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <ToggleButton android:id="@+id/button_theme_system" android:theme="@style/SystemThemeButton"
+                android:textOn="@string/appThemes_systemDefault" android:textOff="@string/appThemes_systemDefault"
+                android:layout_width="match_parent" android:layout_weight="1" android:layout_height="0dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="64dp">
+
+                <ToggleButton android:id="@+id/button_theme_dark" android:theme="@style/DarkThemeButton"
+                    android:textOn="@string/appThemes_darkTheme" android:textOff="@string/appThemes_darkTheme"
+                    android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
+
+                <ToggleButton android:id="@+id/button_theme_light" android:theme="@style/LightThemeButton"
+                    android:textOn="@string/appThemes_lightTheme" android:textOff="@string/appThemes_lightTheme"
+                    android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <TextView
             android:layout_height="wrap_content" android:layout_width="wrap_content"
-            android:gravity="start" android:layout_margin="4dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/configLabel_appearance" />
+            android:gravity="start" android:layout_marginTop="32dp" android:layout_marginBottom="8dp" android:layout_gravity="start"
+            android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="?attr/text_size_small"
+            android:text="@string/configLabel_ui_textsize" />
+
+        <RadioGroup
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp" android:layout_marginEnd="32dp"
+            android:orientation="horizontal">
+
+            <RadioButton android:id="@+id/radio_text_small"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:textSize="@dimen/smalltext_size_small"
+                android:text="@string/textSize_small" />
+
+            <RadioButton android:id="@+id/radio_text_normal"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:textSize="@dimen/text_size_small"
+                android:text="@string/textSize_normal" />
+
+            <RadioButton android:id="@+id/radio_text_large"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:textSize="@dimen/largetext_size_small"
+                android:text="@string/textSize_large" />
+        </RadioGroup>
 
     </LinearLayout>
 
