@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -107,6 +108,15 @@ public class LocationConfigView extends LinearLayout
     }
 
     public boolean isInitialized() { return isInitialized; }
+
+    public void setFragment(Fragment f) {
+        if (getFixHelper != null) {
+            getFixHelper.setFragment(f);
+        }
+    }
+    public Fragment getFragment() {
+        return getFixHelper != null ? getFixHelper.getFragment() : null;
+    }
 
     public com.forrestguice.suntimeswidget.calculator.core.Location getLocation()
     {

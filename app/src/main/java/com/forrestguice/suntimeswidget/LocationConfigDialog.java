@@ -276,6 +276,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         dialogContent.setShouldCollapse(collapse);
         dialogContent.setShowAddButton(showAddButton);
         dialogContent.init(myParent, false);
+        dialogContent.setFragment(this);
+
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
