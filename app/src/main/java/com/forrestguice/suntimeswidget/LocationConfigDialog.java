@@ -115,6 +115,10 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
     public static abstract class LocationConfigDialogListener
     {
+        public void onEditModeChanged(LocationConfigView.LocationViewMode mode) {
+            /* EMPTY */
+        }
+
         public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
         {
             return true;
@@ -131,6 +135,12 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         presetLocation = location;
         if (dialogContent != null) {
             dialogContent.loadSettings(context, LocationConfigView.bundleData(presetLocation.getUri(), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+        }
+    }
+
+    public void setMode( LocationConfigView.LocationViewMode mode ) {
+        if (dialogContent != null) {
+            dialogContent.setMode(mode);
         }
     }
 
@@ -273,6 +283,13 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
                 intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
                 //intent.putExtra(PlacesActivity.EXTRA_SELECTED, selectedRowID);
                 startActivityForResult(intent, REQUEST_LOCATION);
+            }
+        });
+        dialogContent.setViewListener(new LocationConfigView.LocationConfigViewListener() {
+            public void onModeChanged(LocationConfigView.LocationViewMode mode) {
+                if (dialogListener != null) {
+                    dialogListener.onEditModeChanged(mode);
+                }
             }
         });
 

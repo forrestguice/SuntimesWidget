@@ -359,6 +359,9 @@ public class LocationConfigView extends LinearLayout
                 flipper2.setDisplayedChild(1);
                 break;
         }
+        if (viewListener != null) {
+            viewListener.onModeChanged(mode);
+        }
     }
 
     private ViewFlipper flipper, flipper2;
@@ -1196,6 +1199,18 @@ public class LocationConfigView extends LinearLayout
         }
     };
 
+    /**
+     * LocationConfigViewListener
+     */
+    public static class LocationConfigViewListener
+    {
+        public void onModeChanged(LocationViewMode mode) {}
+    }
+
+    public void setViewListener(LocationConfigViewListener l) {
+        viewListener = l;
+    }
+    private LocationConfigViewListener viewListener = null;
 
     /**
      * the custom location edit button has been clicked.
