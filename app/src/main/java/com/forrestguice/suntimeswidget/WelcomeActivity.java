@@ -422,8 +422,9 @@ public class WelcomeActivity extends AppCompatActivity
      */
     public static class WelcomeLocationFragment extends WelcomeFragment
     {
-        private Button button_addPlaces;
+        private Button button_addPlaces, button_lookupLocation;
         private ProgressBar progress_addPlaces;
+        private View layout_permissions;
 
         public WelcomeLocationFragment() {}
 
@@ -446,9 +447,60 @@ public class WelcomeActivity extends AppCompatActivity
                 button_addPlaces.setOnClickListener(onAddPlacesClicked);
             }
 
+            button_lookupLocation = (Button) view.findViewById(R.id.button_lookup_location);
+            if (button_lookupLocation != null) {
+                button_lookupLocation.setOnClickListener(onLookupLocationClicked);
+            }
+
+            layout_permissions = view.findViewById(R.id.layout_permissions);
+            if (layout_permissions != null) {
+                layout_permissions.setVisibility(View.GONE);   // toggled visible by locationConfig
+            }
+
+            LocationConfigDialog locationConfig = getLocationConfigDialog();
+            if (locationConfig != null) {
+                locationConfig.setDialogListener(locationConfigListener);
+            }
+
             progress_addPlaces = (ProgressBar) view.findViewById(R.id.progress_build_places);
             toggleProgress(false);
         }
+
+        private final LocationConfigDialog.LocationConfigDialogListener locationConfigListener = new LocationConfigDialog.LocationConfigDialogListener()
+        {
+            @Override
+            public void onEditModeChanged(LocationConfigView.LocationViewMode mode)
+            {
+                switch (mode) {
+                    case MODE_CUSTOM_ADD:
+                    case MODE_CUSTOM_EDIT:
+                        togglePermissionsText(true); break;
+                    default: togglePermissionsText(false); break;
+                }
+            }
+        };
+
+        protected void togglePermissionsText(boolean value) {
+            if (layout_permissions != null) {
+                layout_permissions.setVisibility(value ? View.VISIBLE : View.GONE);
+            }
+        }
+
+        private View.OnClickListener onLookupLocationClicked = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                LocationConfigDialog locationConfig = getLocationConfigDialog();
+                if (locationConfig != null) {
+                    locationConfig.addCurrentLocation(getContext());
+                }
+                if (button_lookupLocation != null) {
+                    button_lookupLocation.setEnabled(false);
+                    button_lookupLocation.setVisibility(View.GONE);
+                }
+            }
+        };
 
         private View.OnClickListener onAddPlacesClicked = new View.OnClickListener()
         {
@@ -470,6 +522,10 @@ public class WelcomeActivity extends AppCompatActivity
                     button_addPlaces.setEnabled(false);
                     button_addPlaces.setVisibility(View.INVISIBLE);
                 }
+                if (button_lookupLocation != null) {
+                    button_lookupLocation.setEnabled(false);
+                    button_lookupLocation.setVisibility(View.INVISIBLE);
+                }
                 setLocationViewMode(LocationConfigView.LocationViewMode.MODE_DISABLED);
                 toggleProgress(true);
             }
@@ -488,6 +544,12 @@ public class WelcomeActivity extends AppCompatActivity
                         button_addPlaces.setVisibility(View.VISIBLE);
                     }
                 }
+
+                if (button_lookupLocation != null) {
+                    button_lookupLocation.setEnabled(true);
+                    button_lookupLocation.setVisibility(View.VISIBLE);
+                }
+
                 setLocationViewMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
                 reloadLocationList();
             }
