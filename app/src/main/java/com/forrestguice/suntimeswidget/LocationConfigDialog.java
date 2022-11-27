@@ -144,6 +144,14 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     }
 
+    public void addCurrentLocation(Context context)
+    {
+        if (dialogContent != null) {
+            dialogContent.loadSettings(context, LocationConfigView.bundleData(null, "", LocationConfigView.LocationViewMode.MODE_CUSTOM_ADD));
+            dialogContent.lookupLocation();
+        }
+    }
+
     /**
      * Show / hide the title widget.
      */
