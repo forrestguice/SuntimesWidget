@@ -1018,6 +1018,7 @@
 
     <string name="configLabel_alarms_upcoming">Reminder within</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="configLabel_alarms_upcoming_checkbox">Show alarm reminder notifications.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_fadein">Gradually increase volume</string>
     <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>

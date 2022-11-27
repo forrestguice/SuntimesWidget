@@ -922,6 +922,21 @@ public class WelcomeActivity extends AppCompatActivity
                 });
             }
 
+            CheckBox reminderNotificationCheck = (CheckBox) view.findViewById(R.id.check_alarms_showreminders);
+            if (reminderNotificationCheck != null)
+            {
+                long reminderMillis = AlarmSettings.loadPrefAlarmUpcoming(context);
+                reminderNotificationCheck.setChecked(reminderMillis > 0);
+                reminderNotificationCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                    {
+                        long reminderMillis = (isChecked ? AlarmSettings.PREF_DEF_ALARM_UPCOMING : 0);
+                        AlarmSettings.savePrefAlarmUpcomingReminder(context, reminderMillis);
+                    }
+                });
+            }
+
             batteryOptimizationText = (TextView) view.findViewById(R.id.text_optWhiteList);
 
             Button batteryOptimizationButton = (Button) view.findViewById(R.id.button_optWhiteList);

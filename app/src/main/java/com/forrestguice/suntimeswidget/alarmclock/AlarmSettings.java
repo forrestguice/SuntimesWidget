@@ -185,6 +185,14 @@ public class AlarmSettings
             return prefs.getInt(PREF_KEY_ALARM_UPCOMING, PREF_DEF_ALARM_UPCOMING);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_UPCOMING, PREF_DEF_ALARM_UPCOMING);
     }
+    public static void savePrefAlarmUpcomingReminder(Context context, long value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        if (Build.VERSION.SDK_INT >= 11) {
+            prefs.putInt(PREF_KEY_ALARM_UPCOMING, (int)value);
+        } else prefs.putString(PREF_KEY_ALARM_UPCOMING, value + "");
+        prefs.apply();
+    }
 
     public static long loadPrefAlarmSnooze(Context context)
     {
