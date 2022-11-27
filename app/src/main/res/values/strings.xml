@@ -1725,8 +1725,8 @@
     <string name="gps_lastfix_toast_cancelled">Location update cancelled.</string> <!-- displayed briefly when location refresh cancelled -->
 
     <!-- Dialog: KeepTrying Location? -->
-    <string name="gps_keeptrying_title">No Fix</string>
-    <string name="gps_keeptrying_msg">Unable to get a fix.</string>
+    <string name="gps_keeptrying_title">No Location</string>
+    <string name="gps_keeptrying_msg">Unable to get location.</string>   <!-- TODO: "get a fix" to "get location" -->
     <string name="gps_keeptrying_ok">Keep Trying</string>
     <string name="gps_keeptrying_cancel">Give Up</string>
     <string name="gps_keeptrying_fallback">Use Last Position</string>
