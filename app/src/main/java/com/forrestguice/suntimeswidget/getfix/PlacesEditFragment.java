@@ -215,6 +215,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         });
 
         getFixHelper = new GetFixHelper(getActivity(), getFixUI_editMode);    // 0; getFixUI_editMode
+        getFixHelper.setFragment(this);
         updateGPSButtonIcons();
     }
 
