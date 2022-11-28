@@ -65,6 +65,12 @@
                 android:layout_gravity="end"
                 android:text="@string/configAction_getFix" />
 
+            <Button android:id="@+id/button_import_alarms" android:visibility="visible"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_gravity="end" android:text="@string/configAction_importAlarms" />
+
+
         </LinearLayout>
 
         <View android:layout_width="match_parent" style="@style/SunsetTimeHorizontalRule"
