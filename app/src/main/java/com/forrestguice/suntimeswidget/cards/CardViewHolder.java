@@ -747,7 +747,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         @SuppressLint("ResourceType")
         public TimeFieldRow addRow(Context context, EventSettings.EventAlias event)
         {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.sunriseColor, R.attr.sunsetColor };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.table_risingColor, R.attr.table_settingColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int color_label = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.grey_50));
             int color_rising = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.sunIcon_color_rising_dark));
@@ -773,11 +773,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                     layout_labels[i].addView(text_label, j);
 
                     TextView text_rising = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_rising.setTextColor(color_rising);
+                    text_rising.setTextColor(angle > 0 ? color_setting : color_rising);
                     layout_rising[i].addView(text_rising, j);
 
                     TextView text_setting = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_setting.setTextColor(color_setting);
+                    text_setting.setTextColor(angle > 0 ? color_rising : color_setting);
                     layout_setting[i].addView(text_setting, j);
 
                     setVisibility(i, true);
