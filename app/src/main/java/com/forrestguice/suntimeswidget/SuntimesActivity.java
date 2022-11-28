@@ -72,7 +72,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -1034,8 +1034,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     } else {
                         String msg = (wasCancelled ? getString(R.string.gps_lastfix_toast_cancelled) : getString(R.string.gps_lastfix_toast_notfound));
-                        Toast errorMsg = Toast.makeText(SuntimesActivity.this, msg, Toast.LENGTH_LONG);
-                        errorMsg.show();
+                        Toast.makeText(SuntimesActivity.this, msg, Toast.LENGTH_LONG).show();
                     }
                     SuntimesActivity.this.calculateData(SuntimesActivity.this);
                     SuntimesActivity.this.setUpdateAlarms(SuntimesActivity.this);
@@ -1508,8 +1507,7 @@ public class SuntimesActivity extends AppCompatActivity
             startActivity(chooserIntent);
 
         } else {
-            Toast noAppError = Toast.makeText(this, getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG);
-            noAppError.show();
+            Toast.makeText(this, getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -1606,8 +1604,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         } else {
             String msg = getString(R.string.schedalarm_dialog_error2);
-            Toast errorMsg = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-            errorMsg.show();
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 

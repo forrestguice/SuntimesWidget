@@ -49,7 +49,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.HelpDialog;

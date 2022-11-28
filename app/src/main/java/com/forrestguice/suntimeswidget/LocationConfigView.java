@@ -48,7 +48,7 @@ import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
@@ -1079,8 +1079,7 @@ public class LocationConfigView extends LinearLayout
 
         if (!silent)
         {
-            Toast copiedMsg = Toast.makeText(context, SuntimesUtils.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG);
-            copiedMsg.show();
+            Toast.makeText(context, SuntimesUtils.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG).show();
         }
     }
 
