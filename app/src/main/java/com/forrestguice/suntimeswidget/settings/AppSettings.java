@@ -913,6 +913,13 @@ public class AppSettings
             return getExtendedThemeName(getThemeName(), textSize);
         }
 
+        public String getDisplayString(Context context) {
+            return getThemeName();
+        }
+        public String toString() {
+            return getThemeName();
+        }
+
         public static String getExtendedThemeName(String themeName, String textSize) {
             return themeName + "_" + textSize;
         }
@@ -940,6 +947,10 @@ public class AppSettings
                 case NORMAL: default: return R.style.AppTheme_System;
             }
         }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_systemDefault);
+        }
     }
 
     public static class LightThemeInfo extends AppThemeInfo
@@ -960,6 +971,10 @@ public class AppSettings
                 case NORMAL: default: return R.style.AppTheme_Light;
             }
         }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_lightTheme);
+        }
     }
     public static class DarkThemeInfo extends AppThemeInfo
     {
@@ -978,6 +993,10 @@ public class AppSettings
                 case LARGE: return R.style.AppTheme_Dark_Large;
                 case NORMAL: default: return R.style.AppTheme_Dark;
             }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_darkTheme);
         }
     }
     public static class DayNightThemeInfo extends AppThemeInfo
@@ -1009,6 +1028,10 @@ public class AppSettings
         public void setIsDay(boolean value) {
             isDay = value;
         }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_nightMode);
+        }
     }
 
     public static class System1ThemeInfo extends AppThemeInfo
@@ -1030,6 +1053,10 @@ public class AppSettings
                 case LARGE: return R.style.AppTheme_System1_Large;
                 case NORMAL: default: return R.style.AppTheme_System1;
             }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_systemDefault1);
         }
     }
 
