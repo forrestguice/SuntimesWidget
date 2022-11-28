@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="198dp" android:layout_height="198dp" android:layout_margin="8dp"
+            android:layout_width="128dp" android:layout_height="128dp" android:layout_margin="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_alarm_256dp" android:tint="?attr/colorControlHighlight"
             tools:ignore="ContentDescription" />

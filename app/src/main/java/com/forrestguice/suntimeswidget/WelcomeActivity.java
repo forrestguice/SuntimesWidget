@@ -1003,6 +1003,11 @@ public class WelcomeActivity extends AppCompatActivity
             }
 
             AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(context);
+            TextView previewDate = (TextView) view.findViewById(R.id.text_date);
+            if (previewDate != null) {
+                previewDate.setText(themeInfo.getDisplayString(context).replace(" ", "\n"));
+            }
+
             ToggleButton systemThemeButton = (ToggleButton) view.findViewById(R.id.button_theme_system);
             if (systemThemeButton != null) {
                 systemThemeButton.setChecked(AppSettings.THEME_SYSTEM.equals(themeInfo.getThemeName()));
