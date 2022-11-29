@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -56,12 +57,12 @@ public class SuntimesCalculatorFactory
      * @param context the Android context used by this factory
      * @param calculatorSetting a SuntimesCalculatorDescriptor that specifies the implementation this factory creates
      */
-    public SuntimesCalculatorFactory(Context context, SuntimesCalculatorDescriptor calculatorSetting)
+    public SuntimesCalculatorFactory(Context context, @Nullable SuntimesCalculatorDescriptor calculatorSetting)
     {
         init(context, calculatorSetting);
     }
 
-    private void init(Context context, SuntimesCalculatorDescriptor calculatorSetting)
+    private void init(Context context, @Nullable SuntimesCalculatorDescriptor calculatorSetting)
     {
         this.contextRef = new WeakReference<Context>(context);
         if (!SuntimesCalculatorDescriptor.initialized)

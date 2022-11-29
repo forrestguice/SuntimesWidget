@@ -53,7 +53,7 @@ public class GetFixDatabaseAdapterTest
 {
     private Context mockContext;
     private GetFixDatabaseAdapter db;
-    private Location[] locations = new Location[] {
+    public static final Location[] locations = new Location[] {
             new Location("Test Loc0", "35", "-112", "0"),
             new Location("Test Loc1", "36", "-111", "1"),
             new Location("Test's Loc2", "37", "-110", "2"),    // name contains '

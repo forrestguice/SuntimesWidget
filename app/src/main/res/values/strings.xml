@@ -1205,6 +1205,7 @@
     <string name="configActionDesc_nextSunrise">Show next sunrise</string>
     <string name="configActionDesc_nextSunset">Show next sunset</string>
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="configActionDesc_settings">@string/configAction_settings</string>
 
     <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1231,6 +1232,7 @@
         <item>@string/app_name</item>
 
         <item>@string/app_name_alarmclock</item>
+        <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
@@ -1269,6 +1271,7 @@
         <item>@string/configActionDesc_themeList</item>
         <item>@string/configActionDesc_actionList</item>
         <item>@string/configActionDesc_widgetList</item>
+        <item>@string/configActionDesc_settings</item>
 
         <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configActionDesc_mapLocation</item>
@@ -1722,8 +1725,8 @@
     <string name="gps_lastfix_toast_cancelled">Location update cancelled.</string> <!-- displayed briefly when location refresh cancelled -->
 
     <!-- Dialog: KeepTrying Location? -->
-    <string name="gps_keeptrying_title">No Fix</string>
-    <string name="gps_keeptrying_msg">Unable to get a fix.</string>
+    <string name="gps_keeptrying_title">No Location</string>
+    <string name="gps_keeptrying_msg">Unable to get location.</string>   <!-- TODO: "get a fix" to "get location" -->
     <string name="gps_keeptrying_ok">Keep Trying</string>
     <string name="gps_keeptrying_cancel">Give Up</string>
     <string name="gps_keeptrying_fallback">Use Last Position</string>

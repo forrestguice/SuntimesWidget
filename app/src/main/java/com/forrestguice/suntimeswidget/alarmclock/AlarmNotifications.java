@@ -60,7 +60,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
@@ -292,7 +291,7 @@ public class AlarmNotifications extends BroadcastReceiver
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null) {
                 for (long alarmId : alarmIds) {
-                    cancelAlarmTimeouts(context, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmId));
+                    cancelAlarmTimeouts(context, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId));
                 }
             } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
         } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
@@ -453,7 +452,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Intent intent = new Intent(context, AlarmClockActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (selectedAlarmId != null) {
-            intent.setData(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, selectedAlarmId));
+            intent.setData(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, selectedAlarmId));
             intent.putExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, selectedAlarmId);
         }
         return intent;
@@ -887,7 +886,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         builder.setContentIntent(pendingView);
                         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss_early), pendingDismiss);
                         builder.setAutoCancel(false);
-                        builder.setOngoing(true);
+                        builder.setOngoing(false);     // allow reminder to be swiped away
                     //} else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
                     break;
 
@@ -1806,7 +1805,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, itemID)));     // dismiss fullscreen activity
+                            context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, itemID)));     // dismiss fullscreen activity
                             Intent alarmListIntent = getAlarmListIntent(context, itemID);
                             alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
                             context.startActivity(alarmListIntent);                                                                             // open the alarm list
