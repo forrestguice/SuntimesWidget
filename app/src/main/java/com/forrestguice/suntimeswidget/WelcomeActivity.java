@@ -24,9 +24,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceCategory;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,7 +35,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
@@ -458,7 +458,9 @@ public class WelcomeActivity extends AppCompatActivity
      */
     public static class WelcomeLocationFragment extends WelcomeFragment
     {
-        private Button button_addPlaces, button_lookupLocation;
+        public static final int IMPORT_REQUEST = 1100;
+
+        private Button button_addPlaces, button_importPlaces, button_lookupLocation;
         private ProgressBar progress_addPlaces;
         private View layout_permissions;
 
@@ -481,6 +483,11 @@ public class WelcomeActivity extends AppCompatActivity
             button_addPlaces = (Button) view.findViewById(R.id.button_build_places);
             if (button_addPlaces != null) {
                 button_addPlaces.setOnClickListener(onAddPlacesClicked);
+            }
+
+            button_importPlaces = (Button) view.findViewById(R.id.button_import_places);
+            if (button_importPlaces != null) {
+                button_importPlaces.setOnClickListener(onImportPlacesClicked);
             }
 
             button_lookupLocation = (Button) view.findViewById(R.id.button_lookup_location);
@@ -522,7 +529,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
-        private View.OnClickListener onLookupLocationClicked = new View.OnClickListener()
+        private final View.OnClickListener onLookupLocationClicked = new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -538,30 +545,45 @@ public class WelcomeActivity extends AppCompatActivity
             }
         };
 
-        private View.OnClickListener onAddPlacesClicked = new View.OnClickListener()
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data)
         {
-            @Override
-            public void onClick(View v)
+            super.onActivityResult(requestCode, resultCode, data);
+            switch (requestCode)
             {
-                BuildPlacesTask task = new BuildPlacesTask(getActivity());
-                task.setTaskListener(buildPlacesListener);
-                task.execute();
+                case IMPORT_REQUEST:
+                    if (resultCode == Activity.RESULT_OK)
+                    {
+                        Uri uri = (data != null ? data.getData() : null);
+                        if (uri != null) {
+                            importPlaces(getActivity(), uri);
+                        }
+                    } else {
+                        reloadLocationList();
+                    }
+                    break;
+            }
+        }
+
+        private final View.OnClickListener onImportPlacesClicked = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(BuildPlacesTask.buildPlacesOpenFileIntent(), IMPORT_REQUEST);
             }
         };
-        private BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+        protected void importPlaces(Context context, @NonNull Uri uri)
+        {
+            BuildPlacesTask task = new BuildPlacesTask(context);
+            task.setTaskListener(importPlacesListener);
+            task.execute(false, uri);
+        }
+        private final BuildPlacesTask.TaskListener importPlacesListener = new BuildPlacesTask.TaskListener()
         {
             @Override
-            public void onStarted()
-            {
+            public void onStarted() {
                 setRetainInstance(true);
-                if (button_addPlaces != null) {
-                    button_addPlaces.setEnabled(false);
-                    button_addPlaces.setVisibility(View.INVISIBLE);
-                }
-                if (button_lookupLocation != null) {
-                    button_lookupLocation.setEnabled(false);
-                    button_lookupLocation.setVisibility(View.INVISIBLE);
-                }
+                toggleControlsEnabled(false);
+                toggleControlsVisible(false);
                 setLocationViewMode(LocationConfigView.LocationViewMode.MODE_DISABLED);
                 toggleProgress(true);
             }
@@ -571,25 +593,90 @@ public class WelcomeActivity extends AppCompatActivity
             {
                 setRetainInstance(false);
                 toggleProgress(false);
+                toggleControlsEnabled(true);
+                toggleControlsVisible(true);
+                if (result > 0)
+                {
+                    Context context = getActivity();
+                    if (context != null && button_importPlaces != null) {
+                        button_importPlaces.setText(context.getString(R.string.locationbuild_toast_success, result.toString()));
+                        button_importPlaces.setEnabled(false);
+                    }
+                }
+                setLocationViewMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+                reloadLocationList();
+            }
+        };
+
+        private final View.OnClickListener onAddPlacesClicked = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                BuildPlacesTask task = new BuildPlacesTask(getActivity());
+                task.setTaskListener(buildPlacesListener);
+                task.execute();
+            }
+        };
+        private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+        {
+            @Override
+            public void onStarted()
+            {
+                setRetainInstance(true);
+                toggleControlsEnabled(false);
+                toggleControlsVisible(false);
+                setLocationViewMode(LocationConfigView.LocationViewMode.MODE_DISABLED);
+                toggleProgress(true);
+            }
+
+            @Override
+            public void onFinished(Integer result)
+            {
+                setRetainInstance(false);
+                toggleProgress(false);
+                toggleControlsEnabled(true);
+                toggleControlsVisible(true);
 
                 if (result > 0)
                 {
                     Context context = getActivity();
-                    if (context != null) {
+                    if (context != null && button_addPlaces != null) {
                         button_addPlaces.setText(context.getString(R.string.locationbuild_toast_success, result.toString()));
-                        button_addPlaces.setVisibility(View.VISIBLE);
+                        button_addPlaces.setEnabled(false);
                     }
-                }
-
-                if (button_lookupLocation != null) {
-                    button_lookupLocation.setEnabled(true);
-                    button_lookupLocation.setVisibility(View.VISIBLE);
                 }
 
                 setLocationViewMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
                 reloadLocationList();
             }
         };
+
+        protected void toggleControlsEnabled(boolean value)
+        {
+            if (button_addPlaces != null) {
+                button_addPlaces.setEnabled(value);
+            }
+            if (button_importPlaces != null) {
+                button_importPlaces.setEnabled(value);
+            }
+            if (button_lookupLocation != null) {
+                button_lookupLocation.setEnabled(value);
+            }
+        }
+
+        protected void toggleControlsVisible(boolean visible)
+        {
+            if (button_addPlaces != null) {
+                button_addPlaces.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+            }
+            if (button_importPlaces != null) {
+                button_importPlaces.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+            }
+            if (button_lookupLocation != null) {
+                button_lookupLocation.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+            }
+        }
 
         protected void toggleProgress(boolean visible) {
             if (progress_addPlaces != null) {

@@ -926,10 +926,8 @@ public class PlacesListFragment extends Fragment
 
     public boolean importPlaces(Context context)
     {
-        if (context != null)
-        {
-            Intent intent = ExportTask.getOpenFileIntent("text/*");
-            startActivityForResult(intent, IMPORT_REQUEST);
+        if (context != null) {
+            startActivityForResult(BuildPlacesTask.buildPlacesOpenFileIntent(), IMPORT_REQUEST);
             return true;
         }
         return false;
