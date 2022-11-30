@@ -42,11 +42,18 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginBottom="16dp">
 
-            <Button android:id="@+id/button_import_alarms" android:visibility="visible"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_gravity="end" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                android:text="@string/configAction_importAlarms" />
+            <FrameLayout
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end" android:animateLayoutChanges="true">
+
+                <Button android:id="@+id/button_import_alarms" android:visibility="visible"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="end"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored" android:text="@string/configAction_importAlarms"  />
+
+                <ProgressBar android:id="@+id/progress_import_alarms" android:visibility="invisible"
+                    android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_gravity="center" />
+
+            </FrameLayout>
 
             <View android:background="?attr/hrColor" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"

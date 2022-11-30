@@ -55,15 +55,24 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemImportTask;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
+import com.forrestguice.suntimeswidget.getfix.PlacesListFragment;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -981,9 +990,13 @@ public class WelcomeActivity extends AppCompatActivity
      */
     public static class WelcomeAlarmsFragment extends WelcomeFragment
     {
+        public static final int IMPORT_REQUEST = 1200;
+
         public WelcomeAlarmsFragment() {}
 
         protected TextView batteryOptimizationText;
+        protected Button importAlarmsButton;
+        private ProgressBar progress_importAlarms;
 
         public static WelcomeAlarmsFragment newInstance()
         {
@@ -1037,6 +1050,12 @@ public class WelcomeActivity extends AppCompatActivity
                     }
                 });
             }
+
+            progress_importAlarms = (ProgressBar) view.findViewById(R.id.progress_import_alarms);
+            importAlarmsButton = (Button) view.findViewById(R.id.button_import_alarms);
+            if (importAlarmsButton != null) {
+                importAlarmsButton.setOnClickListener(onImportAlarmsClicked);
+            }
         }
 
         @Override
@@ -1048,6 +1067,126 @@ public class WelcomeActivity extends AppCompatActivity
                 batteryOptimizationText.setText(AlarmSettings.batteryOptimizationMessage(context));
             }
         }
+
+        protected void toggleControlsEnabled(boolean value)
+        {
+            if (importAlarmsButton != null) {
+                importAlarmsButton.setEnabled(value);
+            }
+        }
+
+        protected void toggleControlsVisible(boolean visible)
+        {
+            if (importAlarmsButton != null) {
+                importAlarmsButton.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+            }
+        }
+
+        protected void toggleProgress(boolean visible) {
+            if (progress_importAlarms != null) {
+                progress_importAlarms.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+            }
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data)
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+            switch (requestCode)
+            {
+                case IMPORT_REQUEST:
+                    if (resultCode == Activity.RESULT_OK)
+                    {
+                        Uri uri = (data != null ? data.getData() : null);
+                        if (uri != null) {
+                            importAlarms(getActivity(), uri);
+                        }
+                    }
+                    break;
+            }
+        }
+
+        protected AlarmClockItemImportTask importTask = null;
+        private final View.OnClickListener onImportAlarmsClicked = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                if (importTask != null) {
+                    Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
+                }
+                AlarmListDialog.importAlarms(WelcomeAlarmsFragment.this, getContext(), getLayoutInflater(), IMPORT_REQUEST);
+            }
+        };
+
+        protected void importAlarms(final Context context, @NonNull Uri uri)
+        {
+            if (importTask != null) {
+                Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
+            }
+            importTask = new AlarmClockItemImportTask(context);
+            importTask.setTaskListener(importAlarmsListener);
+            importTask.execute(uri);
+        }
+
+        private final AlarmClockItemImportTask.TaskListener importAlarmsListener =  new AlarmClockItemImportTask.TaskListener()
+        {
+            @Override
+            public void onStarted()
+            {
+                setRetainInstance(true);
+                toggleProgress(true);
+                toggleControlsEnabled(false);
+                toggleControlsVisible(false);
+            }
+
+            @Override
+            public void onFinished(AlarmClockItemImportTask.TaskResult result)
+            {
+                if (result.getResult())
+                {
+                    final Context context = getContext();
+                    final AlarmClockItem[] items = result.getItems();
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
+                    task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
+                    {
+                        @Override
+                        public void onFinished(Boolean result, AlarmClockItem[] items)
+                        {
+                            setRetainInstance(false);
+                            importTask = null;
+                            toggleProgress(false);
+                            toggleControlsVisible(true);
+
+                            if (result)
+                            {
+                                String plural = getResources().getQuantityString(R.plurals.alarmPlural, items.length, items.length);
+                                importAlarmsButton.setText(getString(R.string.importalarms_toast_success, plural));
+
+                                for (AlarmClockItem item : items) {
+                                    if (item.enabled) {
+                                        context.sendBroadcast( AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri()) );
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    task.execute(items);
+
+                } else {
+                    setRetainInstance(false);
+                    importTask = null;
+                    toggleProgress(false);
+                    toggleControlsEnabled(true);
+                    if (isAdded())
+                    {
+                        Uri uri = result.getUri();   // import failed
+                        String path = ((uri != null) ? uri.toString() : "<path>");
+                        String failureMessage = getString(R.string.msg_import_failure, path);
+                        Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        };
 
     }
 

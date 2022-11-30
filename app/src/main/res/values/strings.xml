@@ -938,7 +938,7 @@
 
     <string name="importalarms_title_warning">Import Warning</string> <!-- dialog title -->
     <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->
-    <string name="importalarms_toast_success">Imported <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <string name="importalarms_toast_success">Imported <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->   <!-- uses alarmPlural -->  <!-- TODO: fix inconsistent translation -->
     <plurals name="alarmPlural">
         <item quantity="one">%d alarm</item>
         <item quantity="other">%d alarms</item>
