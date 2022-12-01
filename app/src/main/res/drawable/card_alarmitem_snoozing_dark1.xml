@@ -8,10 +8,10 @@
     <item android:duration="@integer/anim_alarmitem_snoozing0_duration"
         android:drawable="@drawable/card_alarmitem_snoozing_dark1_1"/>
 
-    <item android:duration="@integer/anim_alarmitem_snoozing0_duration"
+    <!--<item android:duration="@integer/anim_alarmitem_snoozing0_duration"
         android:drawable="@drawable/card_alarmitem_snoozing_dark1_2"/>
 
     <item android:duration="@integer/anim_alarmitem_snoozing0_duration"
-        android:drawable="@drawable/card_alarmitem_snoozing_dark1_3"/>
+        android:drawable="@drawable/card_alarmitem_snoozing_dark1_3"/>-->
 
 </animation-list>

@@ -1056,6 +1056,7 @@ public class AlarmListDialog extends DialogFragment
 
             detachClickListeners(holder);
             holder.bindData(contextRef.get(), items.get(position));
+            holder.startBackgroundAnimation(contextRef.get());
             attachClickListeners(holder, position);
         }
 
@@ -1968,6 +1969,8 @@ public class AlarmListDialog extends DialogFragment
             animated.setExitFadeDuration(exitFadeDuration);
             animated.setOneShot(false);
             animated.setVisible(true, true);
+            animated.stop();
+            animated.start();
         }
     }
 

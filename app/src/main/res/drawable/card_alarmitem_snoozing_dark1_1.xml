@@ -3,9 +3,9 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="@color/alarm_snoozing_bg1_dark"
-                android:endColor="@color/alarm_snoozing_bg0_dark"
-                android:angle="135" />
+                android:startColor="@color/alarm_snoozing_bg0_dark"
+                android:endColor="@color/alarm_snoozing_bg1_dark"
+                android:angle="-90" />
         </shape>
     </item>
 </layer-list>
