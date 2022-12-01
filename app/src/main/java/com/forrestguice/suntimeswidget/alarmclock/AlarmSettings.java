@@ -46,6 +46,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.lang.ref.WeakReference;
 import java.util.TimeZone;
@@ -744,6 +745,69 @@ public class AlarmSettings
         int state = (value ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
         PackageManager packageManager = context.getPackageManager();
         packageManager.setComponentEnabledSetting(componentName, state, PackageManager.DONT_KILL_APP);
+    }
+
+
+    /**
+     * PowerOffAlarmInfo
+     */
+    public static class PowerOffAlarmInfo
+    {
+        public static final String ACTION_SET = "poweroffalarm.action.SET_ALARM";
+        public static final String ACTION_CANCEL = "poweroffalarm.action.CANCEL_ALARM";
+
+        public static final WidgetActions.LaunchType DEF_LAUNCHTYPE = WidgetActions.LaunchType.BROADCAST;
+        public static final String DEF_PACKAGE_POWEROFFALARM = "com.qualcomm.qti.poweroffalarm";
+        public static final String DEF_ACTION_POWEROFFALARM_SET = "org.codeaurora.poweroffalarm.action.SET_ALARM";
+        public static final String DEF_ACTION_POWEROFFALARM_CANCEL = "org.codeaurora.poweroffalarm.action.CANCEL_ALARM";
+        public static final String DEF_PERMISSION_POWEROFFALARM = "org.codeaurora.permission.POWER_OFF_ALARM";
+        public static final String DEF_EXTRA_POWEROFFALARM_TIME = "time";
+
+        public WidgetActions.LaunchType getLaunchType() {
+            return DEF_LAUNCHTYPE;
+        }
+        public String getPackage() {
+            return DEF_PACKAGE_POWEROFFALARM;
+        }
+        public String getSetAction() {
+            return DEF_ACTION_POWEROFFALARM_SET;
+        }
+        public String getCancelAction() {
+            return DEF_ACTION_POWEROFFALARM_CANCEL;
+        }
+        public String getPermission() {
+            return DEF_PERMISSION_POWEROFFALARM;
+        }
+        public String getTimeExtra() {
+            return DEF_EXTRA_POWEROFFALARM_TIME;
+        }
+    }
+
+    public static PowerOffAlarmInfo loadPowerOffAlarmInfo(Context context)
+    {
+        return new PowerOffAlarmInfo();  // TODO
+    }
+
+    public static Intent getPowerOffAlarmIntent(Context context, @Nullable String action, long datetime)
+    {
+        AlarmSettings.PowerOffAlarmInfo info = loadPowerOffAlarmInfo(context);
+        if (action == null) {
+            action = info.getSetAction();
+        }
+        if (action.equals(PowerOffAlarmInfo.ACTION_SET)) {
+            action = info.getSetAction();
+        }
+        if (action.equals(PowerOffAlarmInfo.ACTION_CANCEL)) {
+            action = info.getCancelAction();
+        }
+
+        Intent intent = new Intent(action);
+        intent.setPackage(info.getPackage());
+        intent.putExtra(info.getTimeExtra(), datetime);
+        if (Build.VERSION.SDK_INT >= 16) {
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        }
+        return intent;
     }
 
 }

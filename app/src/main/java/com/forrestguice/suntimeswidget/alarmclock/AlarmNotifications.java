@@ -419,30 +419,15 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static final String PACKAGE_POWEROFFALARM = "com.qualcomm.qti.poweroffalarm";
-    private static final String ACTION_POWEROFFALARM_SET = "org.codeaurora.poweroffalarm.action.SET_ALARM";
-    private static final String ACTION_POWEROFFALARM_CANCEL = "org.codeaurora.poweroffalarm.action.CANCEL_ALARM";
-    public static final String PERMISSION_POWEROFFALARM = "org.codeaurora.permission.POWER_OFF_ALARM";
-    private static final String EXTRA_POWEROFFALARM_TIME = "time";
 
     protected static void setPowerOffAlarm(Context context, @NonNull AlarmClockItem alarm) {
         Log.d(TAG, "setPowerOffAlarm: " + alarm.rowID + " at " + alarm.alarmtime);
-        context.sendBroadcast(getPowerOffAlarmIntent(ACTION_POWEROFFALARM_SET, alarm.alarmtime));
+        context.sendBroadcast(AlarmSettings.getPowerOffAlarmIntent(context, AlarmSettings.PowerOffAlarmInfo.ACTION_SET, alarm.alarmtime));
     }
-    protected static void cancelPowerOffAlarm(Context context, @NonNull AlarmClockItem alarm) {
-        Log.d(TAG, "cancelPowerOffAlarm: " + alarm.rowID + " at " + alarm.alarmtime);
-        context.sendBroadcast(getPowerOffAlarmIntent(ACTION_POWEROFFALARM_CANCEL, alarm.alarmtime));
-    }
-
-    protected static Intent getPowerOffAlarmIntent(@Nullable String action, long datetime)
+    protected static void cancelPowerOffAlarm(Context context, @NonNull AlarmClockItem alarm)
     {
-        Intent intent = new Intent((action != null) ? action : ACTION_POWEROFFALARM_SET);
-        intent.setPackage(PACKAGE_POWEROFFALARM);
-        intent.putExtra(EXTRA_POWEROFFALARM_TIME, datetime);
-        if (Build.VERSION.SDK_INT >= 16) {
-            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
-        }
-        return intent;
+        Log.d(TAG, "cancelPowerOffAlarm: " + alarm.rowID + " at " + alarm.alarmtime);
+        context.sendBroadcast(AlarmSettings.getPowerOffAlarmIntent(context, AlarmSettings.PowerOffAlarmInfo.ACTION_CANCEL, alarm.alarmtime));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

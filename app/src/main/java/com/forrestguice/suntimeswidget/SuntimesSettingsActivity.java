@@ -1882,9 +1882,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public static final int REQUEST_PERMISSION_POWEROFFALARMS = 100;
         protected boolean checkPermissions(Activity activity, boolean requestIfMissing)
         {
-            if (ContextCompat.checkSelfPermission(activity, AlarmNotifications.PERMISSION_POWEROFFALARM) != PackageManager.PERMISSION_GRANTED) {
+            AlarmSettings.PowerOffAlarmInfo info = AlarmSettings.loadPowerOffAlarmInfo(getContext());
+            if (ContextCompat.checkSelfPermission(activity, info.getPermission()) != PackageManager.PERMISSION_GRANTED) {
                 if (requestIfMissing) {
-                    ActivityCompat.requestPermissions(activity, new String[]{AlarmNotifications.PERMISSION_POWEROFFALARM}, REQUEST_PERMISSION_POWEROFFALARMS);
+                    ActivityCompat.requestPermissions(activity, new String[]{info.getPermission()}, REQUEST_PERMISSION_POWEROFFALARMS);
                 }
                 return false;
             } else return true;
@@ -1981,7 +1982,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     return true;
                 }
             });
-            powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, AlarmNotifications.PERMISSION_POWEROFFALARM)));
+
+            AlarmSettings.PowerOffAlarmInfo info = AlarmSettings.loadPowerOffAlarmInfo(context);
+            powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, info.getPermission())));
         }
 
         initPref_alarms_bootCompleted(fragment);
