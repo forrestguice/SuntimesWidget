@@ -671,7 +671,7 @@ public class AlarmClockActivity extends AppCompatActivity
         return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED || sheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED;
     }
 
-    private AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener()
+    private final AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener()
     {
         @Override
         public void onItemClicked(AlarmClockItem item, AlarmListDialog.AlarmListDialogItem view)
@@ -680,7 +680,9 @@ public class AlarmClockActivity extends AppCompatActivity
                 dismissAddDialog();
 
             } else if (list.getSelectedRowID() == item.rowID) {
-                showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM, false);
+                if (item.getState() != AlarmState.STATE_SOUNDING && item.getState() != AlarmState.STATE_SNOOZING) {    // TODO: also restrict edit on TIMEOUT?
+                    showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM, false);
+                }
 
             } else {
                 if (item.enabled && (item.getState() == AlarmState.STATE_SCHEDULED_SOON || item.getState() == AlarmState.STATE_SCHEDULED_DISTANT)) {
