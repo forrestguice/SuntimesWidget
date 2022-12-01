@@ -31,6 +31,7 @@
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_ref</item>
         <item name="alarmCardSounding">@drawable/card_alarmitem_sounding_ref</item>
         <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_ref</item>
+        <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_ref</item>
         <item name="gridItemSelected">@color/grid_selected</item>
         <item name="selectableItemCard">@drawable/selectable_item_ref</item>
 
@@ -209,6 +210,7 @@
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light0</item>
         <item name="alarmCardSounding">@drawable/card_alarmitem_sounding_light0</item>
         <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_light0</item>
+        <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_light</item>    <!-- TODO -->
         <item name="gridItemSelected">@color/grid_selected_light</item>
         <item name="selectableItemCard">@drawable/selectable_item_light</item>
 
@@ -391,6 +393,7 @@
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_dark0</item>
         <item name="alarmCardSounding">@drawable/card_alarmitem_sounding_dark1</item>
         <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_dark1</item>
+        <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_dark</item>
         <item name="gridItemSelected">@color/grid_selected_dark</item>
         <item name="selectableItemCard">@drawable/selectable_item_dark</item>
 

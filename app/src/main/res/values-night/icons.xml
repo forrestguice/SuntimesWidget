@@ -10,6 +10,7 @@
     <drawable name="card_alarmitem_disabled_ref">@drawable/card_alarmitem_disabled_dark0</drawable>
     <drawable name="card_alarmitem_sounding_ref">@drawable/card_alarmitem_sounding_dark0</drawable>
     <drawable name="card_alarmitem_snoozing_ref">@drawable/card_alarmitem_snoozing_dark0</drawable>
+    <drawable name="card_alarmitem_timeout_ref">@drawable/card_alarmitem_timeout_dark</drawable>
 
     <drawable name="selectable_item_ref">@drawable/selectable_item_dark</drawable>
     <drawable name="btn_txt_ref">@drawable/btn_txt_dark</drawable>
