@@ -1824,6 +1824,9 @@ public class AlarmNotifications extends BroadcastReceiver
                             context.sendBroadcast(getFullscreenBroadcast(item.getUri()));   // update fullscreen activity
                         }
                         findUpcomingAlarm(context, null);
+
+                    } else {
+                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
                 }
             };
