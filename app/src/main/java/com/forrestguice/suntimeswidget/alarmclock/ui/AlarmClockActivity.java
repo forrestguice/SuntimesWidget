@@ -683,7 +683,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM, false);
 
             } else {
-                if (item.enabled) {
+                if (item.enabled && (item.getState() == AlarmState.STATE_SCHEDULED_SOON || item.getState() == AlarmState.STATE_SCHEDULED_DISTANT)) {
                     AlarmNotifications.showTimeUntilToast(AlarmClockActivity.this, list.getView(), item);
                 }
             }
