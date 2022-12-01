@@ -96,6 +96,11 @@
                     android:title="@string/configAction_sunDialog"
                     android:icon="@drawable/ic_sun"
                     app:showAsAction="never" />
+
+                <item android:id="@+id/action_moon"
+                    android:title="@string/configAction_moon"
+                    android:icon="@drawable/ic_moon"
+                    app:showAsAction="never" />
             </menu>
     </item>
 

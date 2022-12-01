@@ -184,8 +184,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         appTheme = AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
 
-        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
-        if (themeName != null) {
+        String themeName = AppSettings.getThemeOverride(this, appTheme);
+        if (themeName != null && WidgetThemes.hasValue(themeName)) {
             Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
             appThemeOverride = WidgetThemes.loadTheme(this, themeName);
         }

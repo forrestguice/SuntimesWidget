@@ -3,6 +3,34 @@
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="activity_margin">8dp</dimen>
     <dimen name="dialog_margin">8dp</dimen>
+    <dimen name="dialog_margin1">4dp</dimen>
+
+    <dimen name="smalltext_size_tiny">6sp</dimen>      <!-- "small" sizes -->
+    <dimen name="smalltext_size_xsmall">10sp</dimen>
+    <dimen name="smalltext_size_small">12sp</dimen>
+    <dimen name="smalltext_size_medium">14sp</dimen>
+    <dimen name="smalltext_size_large">16sp</dimen>
+    <dimen name="smalltext_size_xlarge">18sp</dimen>
+    <dimen name="smalltext_size_huge">34sp</dimen>
+    <dimen name="smalltext_size_enormous">52sp</dimen>
+
+    <dimen name="text_size_tiny">10sp</dimen>   <!-- "normal" sizes -->
+    <dimen name="text_size_xsmall">12sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_xlarge">20sp</dimen>
+    <dimen name="text_size_huge">36sp</dimen>
+    <dimen name="text_size_enormous">56sp</dimen>
+
+    <dimen name="largetext_size_tiny">12sp</dimen>    <!-- "large" sizes -->
+    <dimen name="largetext_size_xsmall">14sp</dimen>
+    <dimen name="largetext_size_small">16sp</dimen>
+    <dimen name="largetext_size_medium">18sp</dimen>
+    <dimen name="largetext_size_large">20sp</dimen>
+    <dimen name="largetext_size_xlarge">24sp</dimen>
+    <dimen name="largetext_size_huge">38sp</dimen>
+    <dimen name="largetext_size_enormous">58sp</dimen>
 
     <integer name="widget_size_minWidthDp4x1">250</integer>
     <dimen name="widget_size_minWidth4x1">250dp</dimen>
@@ -84,5 +112,7 @@
     <dimen name="chipIcon_size">20dp</dimen>
     <dimen name="prefIcon_size">24dp</dimen>
     <dimen name="helpIcon_size">24dp</dimen>
+
+    <dimen name="equinoxItem_height">52dp</dimen>
 
 </resources>

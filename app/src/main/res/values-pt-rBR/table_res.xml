@@ -6,8 +6,14 @@
     <dimen name="table_set_leftMargin">12dp</dimen>
 
     <dimen name="table_heading_date_fontsize">13sp</dimen>
+    <style name="TableHeadDateView" parent="TableHeadDateView0">
+        <item name="android:textSize">?attr/text_size_small</item>
+    </style>
 
-    <dimen name="table_heading_label_fontsize">12sp</dimen>
+    <dimen name="table_heading_label_fontsize">@dimen/text_size_small</dimen>
+    <style name="TableHeadTextView" parent="TableHeadTextView0">
+        <item name="android:textSize">?attr/text_size_small</item>
+    </style>
     <dimen name="table_heading_label_iconSpacing">0dp</dimen>
 
 </resources>

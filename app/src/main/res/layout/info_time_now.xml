@@ -32,18 +32,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView style="@style/SunsetTimeTextView"
+            <TextView style="@style/ClockTextView"
                       android:id="@+id/text_time"
                       android:layout_gravity="end"
                       android:text=""
-                      android:textSize="56sp"
                       tools:text="12:00" />
 
             <TextView android:id="@+id/text_time_suffix"
-                      style="@style/SunsetTimeTextSuffixView"
+                      style="@style/ClockSuffixTextView"
                       android:layout_gravity="center_vertical|bottom|end"
-                      android:textSize="18sp"
-                      android:text="" android:maxEms="@integer/clock_amppm_maxems"
+                      android:text=""
                       tools:text="p.m." />
         </LinearLayout>
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="@dimen/equinoxItem_height">
+
+    <View android:id="@+id/focusView" android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="?attr/colorControlHighlight" android:visibility="gone" />
+
+    <View android:id="@+id/clickArea" android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground" />
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/item_layout">
+
+        <TextView android:id="@+id/text_label"
+            style="@style/SunsetTimeTextView" android:textSize="?attr/text_size_small"
+            android:text="@string/timeMode_equinox_vernal" android:labelFor="@+id/text_datetime"
+            android:layout_width="@dimen/solsticetable_column0_width"
+            android:gravity="start|top" android:layout_gravity="top"
+            android:paddingEnd="8dp" android:paddingRight="8dp"
+            android:paddingStart="0dp" android:paddingLeft="0dp"
+            android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
+            android:layout_marginLeft="12dp" android:layout_marginStart="12dp"
+            android:paddingTop="4dp" />
+
+        <LinearLayout android:id="@+id/note_layout"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:orientation="horizontal" android:layout_gravity="start|top" >
+
+            <LinearLayout android:orientation="vertical" android:paddingTop="4dp"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:id="@+id/text_datetime"
+                    android:textSize="?attr/text_size_small" android:antialias="true"
+                    android:textColor="@drawable/txt_equinox_vernal"
+                    android:singleLine="true" android:ellipsize="marquee"
+                    tools:text="March 20, 2016; 9:00 PM" />
+
+                <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:id="@+id/text_note"
+                    tools:text="21d 6h 5m  from now"
+                    android:textSize="?attr/text_size_small" android:antialias="true"
+                    android:layout_marginBottom="8dp" />
+            </LinearLayout>
+
+            <ImageButton style="?attr/actionOverflowButtonStyle" android:visibility="visible"
+                android:id="@+id/menu_button"
+                android:layout_marginLeft="8dp" android:layout_marginRight="0dp"
+                android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/configAction_overflow" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

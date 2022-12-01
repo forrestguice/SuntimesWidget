@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" style="@style/SunsetTimeWidgetFrame1">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:theme="@style/AppTheme" style="@style/SunsetTimeWidgetFrame1">
     <LinearLayout android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget_float_3" android:orientation="vertical">
         <include layout="@layout/layout_widget_moon_1x1_5_content" />
     </LinearLayout>

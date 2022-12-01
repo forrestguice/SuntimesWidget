@@ -1227,6 +1227,10 @@
         <item>winter solstice</item>   <!-- TODO -->
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
     <string-array name="solarevents_long">    <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>reggel csillagászati szürkület (kezdete)</item>
@@ -1256,6 +1260,10 @@
         <item>winter solstice</item>   <!-- TODO -->
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>reggel csillagászati szürkület (kezdete)</item>
@@ -1285,6 +1293,10 @@
         <item>winter solstice</item>   <!-- TODO -->
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
+        <item>@string/timeMode_cross_spring</item>
+        <item>@string/timeMode_cross_summer</item>
+        <item>@string/timeMode_cross_autumnal</item>
+        <item>@string/timeMode_cross_winter</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

@@ -19,7 +19,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     style="?android:attr/dropDownItemStyle"
     android:id="@android:id/text1"
-    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="?attr/text_size_small"
     android:singleLine="true"
     android:textStyle="bold"
     android:layout_width="match_parent"

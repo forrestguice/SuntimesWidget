@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.events.EventIcons;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.ArrayList;
@@ -167,8 +169,16 @@ public class AlarmEvent
             return phrase;
         }
 
-        public int getIcon() {
-            return (event != null ? event.getIcon() : R.attr.icActionExtension);
+        public int getIcon(Context context) {
+            return (event != null)
+                    ? EventIcons.getResID(context, event.getIcon(), R.attr.icActionExtension)
+                    : EventIcons.getIconResID(context, EventIcons.getIconTag(context, uri));
+        }
+
+        public Integer getColor(Context context) {
+            if (event == null) {
+                return EventIcons.getIconTint(context, EventIcons.getIconTag(context, uri));
+            } else return null;
         }
 
         public int supportsRepeating() {
@@ -293,20 +303,17 @@ public class AlarmEvent
             }
 
             ImageView iconView = (ImageView) view.findViewById(android.R.id.icon1);   // retrieve icon
-            int[] iconAttr = { items.get(position).getIcon() };
-            TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
-            int def = R.drawable.ic_moon_rise;
-            int iconResource = typedArray.getResourceId(0, def);
-            typedArray.recycle();
+
+            int iconResource = item.getIcon(context);
 
             SolarEvents event = item.getEvent();                                      // apply icon
             if (event != null) {
                 SolarEvents.SolarEventsAdapter.adjustIcon(iconResource, iconView, event);
+
             } else {
                 Resources resources = context.getResources();
-                int s = (int)resources.getDimension(R.dimen.sunIconLarge_width);
-                int[] iconDimen = new int[] {s,s};
-                adjustIcon(iconResource, iconView, iconDimen, 8);
+                int dimen = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+                adjustIcon(context, iconResource, iconView, new int[] {dimen, dimen}, 8, item.getColor(context));
             }
 
             TextView textView = (TextView) view.findViewById(android.R.id.text1);     // apply text
@@ -316,14 +323,16 @@ public class AlarmEvent
 
             TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
             if (textView2 != null) {
-                textView2.setText(item.getSummary());
+                String summary = item.getSummary();
+                textView2.setText(summary);
+                textView2.setVisibility(summary != null ? View.VISIBLE : View.GONE);
             }
 
             return view;
         }
     }
 
-    public static void adjustIcon(int iconRes, ImageView iconView, int[] dimen, int marginDp)
+    public static void adjustIcon(Context context, int iconRes, ImageView iconView, int[] dimen, int marginDp, Integer color)
     {
         Resources resources = iconView.getContext().getResources();
         ViewGroup.LayoutParams iconParams = iconView.getLayoutParams();
@@ -339,13 +348,24 @@ public class AlarmEvent
         }
 
         iconView.setImageDrawable(null);
-        iconView.setBackgroundResource(iconRes);
+        if (color != null)
+        {
+            Drawable eventIcon = EventIcons.getIconDrawable(context, iconRes, dimen[0], dimen[1], EventIcons.getIconScale((String)null), EventIcons.getIconDrawableInset(context, (String)null), color);
+            iconView.setBackground(eventIcon);
+        } else {
+            iconView.setBackgroundResource(iconRes);
+        }
     }
 
     public static AlarmEventAdapter createAdapter(Context context, boolean northward)
     {
-        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
         ArrayList<AlarmEventItem> items = new ArrayList<>();
+        for (String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION)) {
+            EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
+        }
+        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
         for (SolarEvents event : solarEventsAdapter.getChoices()) {
             items.add(new AlarmEventItem(event));
         }

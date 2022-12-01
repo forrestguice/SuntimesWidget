@@ -41,6 +41,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunLayout_3x1_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X3_0;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
@@ -471,9 +474,22 @@ public class SuntimesWidget0 extends AppWidgetProvider
         SunLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
-            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SunLayout_2x1_0()
-                                                          : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
+            //int minDimen_x4 = context.getResources().getInteger(R.integer.widget_size_minWidthDp4x1);
+            int minDimen_x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
+            int minDimen_x2 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+
+            //int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            //layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SunLayout_2x1_0()
+            //                                              : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
+
+            if (mustFitWithinDp[0] >= minDimen_x3) {
+                layout = new SunLayout_3x1_0();
+            } else if (mustFitWithinDp[0] >= minDimen_x2) {
+                layout = new SunLayout_2x1_0();
+            } else {
+                layout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
+            }
+
         } else {
             layout = defLayout; // WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         }
