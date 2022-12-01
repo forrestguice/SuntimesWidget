@@ -763,8 +763,12 @@ public class AlarmListDialog extends DialogFragment
                 AlarmClockItem item = data.get(0);
                 if (item != null)
                 {
-                    Log.d("DEBUG", "onItemChanged: " + item.rowID);
-                    AlarmNotifications.updateAlarmTime(getActivity(), item);
+                    Log.d("DEBUG", "onItemChanged: " + item.rowID + ", state: " + item.state.getState());
+                    int state = item.getState();
+                    if ((state != AlarmState.STATE_SOUNDING) && (state != AlarmState.STATE_SNOOZING)) {
+                        Log.d("DEBUG", "onItemChanged: updating item timestamp");
+                        AlarmNotifications.updateAlarmTime(getActivity(), item);
+                    }
                     adapter.setItem(item);
                 }
             }
@@ -942,8 +946,10 @@ public class AlarmListDialog extends DialogFragment
                 AlarmClockItem previous = items.remove(position + 1);
 
                 if (item.timestamp != previous.timestamp) {
+                    Log.d("DEBUG", "setItem: timestamp changed: " + previous.timestamp + " -> " + item.timestamp);
                     sortItems();
                 } else {
+                    Log.d("DEBUG", "setItem: position changed");
                     notifyItemChanged(position);
                 }
 
@@ -1883,10 +1889,10 @@ public class AlarmListDialog extends DialogFragment
                 if (background != null)
                 {
                     if (background instanceof StateListDrawable) {
-                        Log.d("DEBUG", "starting background: " + this);
+                        Log.d("DEBUG", "starting background (StateListDrawable): " + this);
                         AlarmListDialogItem.startStateListAnimations(context, (StateListDrawable) background, this.anim_enterFadeDuration, this.anim_exitFadeDuration);
                     } else if (background instanceof AnimationDrawable) {
-                        Log.d("DEBUG", "starting background: " + this);
+                        Log.d("DEBUG", "starting background (AnimatedDrawable): " + this);
                         AlarmListDialogItem.startAnimatedDrawable(context, (AnimationDrawable) background, this.anim_enterFadeDuration, this.anim_exitFadeDuration);
                     } else {
                         Log.d("DEBUG", "starting background: skipped: " + this);
@@ -1903,10 +1909,10 @@ public class AlarmListDialog extends DialogFragment
                 if (background != null)
                 {
                     if (background instanceof StateListDrawable) {
-                        Log.d("DEBUG", "stopping background: " + this);
+                        Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
                         AlarmListDialogItem.stopStateListAnimations(context, (StateListDrawable) background);
                     } else if (background instanceof AnimationDrawable) {
-                        Log.d("DEBUG", "stopping background: " + this);
+                        Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
                         ((AnimationDrawable) background).setVisible(false, false);
                     } else {
                         Log.d("DEBUG", "stopping background: skipped: " + this);
