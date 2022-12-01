@@ -29,6 +29,8 @@
         <item name="alarmColorEnabled">@color/alarm_enabled</item>
         <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_ref</item>
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_ref</item>
+        <item name="alarmCardSounding">@drawable/card_alarmitem_sounding_ref</item>
+        <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_ref</item>
         <item name="gridItemSelected">@color/grid_selected</item>
         <item name="selectableItemCard">@drawable/selectable_item_ref</item>
 
