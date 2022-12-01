@@ -84,6 +84,8 @@
     <attr name="icActionAlarm" format="reference" />
     <attr name="icActionCalendar" format="reference" />
     <attr name="icActionNotification" format="reference" />
+    <attr name="icActionNotification1" format="reference" />
+    <attr name="icActionNotification2" format="reference" />
     <attr name="icActionVibrationEnabled" format="reference" />
     <attr name="icActionSoundEnabled" format="reference" />
     <attr name="icActionSoundDisabled" format="reference" />

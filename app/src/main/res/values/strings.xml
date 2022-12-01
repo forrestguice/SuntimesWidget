@@ -811,6 +811,8 @@
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification1">Notification (ephemeral)</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_notification2">Notification (persistent)</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
     <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->
@@ -922,6 +924,9 @@
 
     <string name="configLabel_alarms_timeoutAfter">Timeout after</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_autoDismissAfter">Auto-dismiss after</string>    <!-- TODO -->
+    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
 
     <string name="configLabel_alarms_snooze">Snooze for</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
@@ -2130,11 +2135,12 @@
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
 
     <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
-    <string name="def_app_alarms_timeout" translatable="false">1200000</string>    <!-- dismiss after 20m -->
+    <string name="def_app_alarms_timeout" translatable="false">1200000</string>    <!-- timeout after 20m -->
     <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
     <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
     <string name="def_app_alarms_fadein" translatable="false">10000</string>       <!-- fade-in 10s to full volume -->
     <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
+    <string name="def_app_alarms_autodismiss" translatable="false">30000</string>    <!-- auto-dismiss after 30s -->
     <string name="def_app_alarms_autoenable" translatable="false">false</string>   <!-- automatically enable new alarms (false) -->
     <string name="def_app_alarms_allringtones" translatable="false">false</string>   <!-- show all ringtones during selection (ignore ringtone type) -->
     <string name="def_app_alarms_showlauncher" translatable="false">true</string>

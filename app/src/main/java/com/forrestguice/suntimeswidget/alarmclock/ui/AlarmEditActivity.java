@@ -606,7 +606,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         int ringtoneType = RingtoneManager.TYPE_RINGTONE;
         if (!AlarmSettings.loadPrefAllRingtones(this)) {
-            ringtoneType = (item.type == AlarmClockItem.AlarmType.NOTIFICATION ? RingtoneManager.TYPE_NOTIFICATION : RingtoneManager.TYPE_ALARM);
+            ringtoneType = (item.type == AlarmClockItem.AlarmType.ALARM ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
         }
 
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);

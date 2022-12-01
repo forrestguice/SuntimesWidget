@@ -378,7 +378,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                                 txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
                                 icon_note.setVisibility(View.GONE);
 
-                                String modeDescription = (type == AlarmClockItem.AlarmType.NOTIFICATION) ? context.getString(R.string.configLabel_schednotify_mode) : context.getString(R.string.configLabel_schedalarm_mode);
+                                String modeDescription = context.getString((type == AlarmClockItem.AlarmType.ALARM) ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode);
                                 SuntimesUtils.announceForAccessibility(txt_note,  modeDescription + " " + displayString + ", " + txt_note.getText());   // TODO: does AlarmCreateDialog also announce?
 
                             } else {
@@ -557,7 +557,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         }
 
         if (txt_modeLabel != null) {
-            txt_modeLabel.setText(type == AlarmClockItem.AlarmType.NOTIFICATION ? getString(R.string.configLabel_schednotify_mode) : getString(R.string.configLabel_schedalarm_mode) );
+            txt_modeLabel.setText(getString(type == AlarmClockItem.AlarmType.ALARM ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode));
         }
     }
 

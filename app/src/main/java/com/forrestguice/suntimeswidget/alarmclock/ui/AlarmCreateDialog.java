@@ -429,7 +429,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
 
         if (text_title != null) {
-            text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? R.string.configAction_addNotification : R.string.configAction_addAlarm));
+            text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.ALARM ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
         }
         if (spin_type != null) {
             spin_type.setSelection(alarmType.ordinal(), false);
@@ -503,10 +503,12 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 view = inflater.inflate(layout, parent, false);
             }
 
-            int[] iconAttr = { R.attr.icActionAlarm, R.attr.icActionNotification };
+            int[] iconAttr = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionNotification1, R.attr.icActionNotification2 };
             TypedArray typedArray = getContext().obtainStyledAttributes(iconAttr);
             int res_iconAlarm = typedArray.getResourceId(0, R.drawable.ic_action_alarms);
             int res_iconNotification = typedArray.getResourceId(1, R.drawable.ic_action_notification);
+            int res_iconNotification1 = typedArray.getResourceId(2, R.drawable.ic_action_notification1);
+            int res_iconNotification2 = typedArray.getResourceId(3, R.drawable.ic_action_notification2);
             typedArray.recycle();
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
@@ -515,7 +517,14 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             if (alarmType != null)
             {
                 icon.setImageDrawable(null);
-                icon.setBackgroundResource(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? res_iconNotification : res_iconAlarm);
+                int backgroundResource;
+                switch (alarmType) {
+                    case NOTIFICATION: backgroundResource = res_iconNotification; break;
+                    case NOTIFICATION1: backgroundResource = res_iconNotification1; break;
+                    case NOTIFICATION2: backgroundResource = res_iconNotification2; break;
+                    case ALARM: default: backgroundResource = res_iconAlarm; break;
+                }
+                icon.setBackgroundResource(backgroundResource);
                 text.setText(alarmType.getDisplayString());
             } else {
                 icon.setImageDrawable(null);

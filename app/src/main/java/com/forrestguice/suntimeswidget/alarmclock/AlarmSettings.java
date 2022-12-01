@@ -68,6 +68,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_UPCOMING = "app_alarms_upcomingMillis";
     public static final int PREF_DEF_ALARM_UPCOMING = 1000 * 60 * 60 * 10;  // 10 hours
 
+    public static final String PREF_KEY_ALARM_AUTODISMISS = "app_alarms_notifyDismissMillis";
+    public static final int PREF_DEF_ALARM_AUTODISMISS = 1000 * 30;  // 30 seconds
+
     public static final String PREF_KEY_ALARM_AUTOENABLE = "app_alarms_autoenable";
     public static final boolean PREF_DEF_ALARM_AUTOENABLE = false;
 
@@ -144,6 +147,14 @@ public class AlarmSettings
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
     }
 
+    public static long loadPrefAlarmAutoDismiss(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_ALARM_AUTODISMISS, PREF_DEF_ALARM_AUTODISMISS);
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_AUTODISMISS, PREF_DEF_ALARM_AUTODISMISS);
+    }
+
     public static boolean loadPrefAlarmAutoEnable(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -199,7 +210,7 @@ public class AlarmSettings
     {
         switch (type)
         {
-            case NOTIFICATION:
+            case NOTIFICATION: case NOTIFICATION1: case NOTIFICATION2:
             case ALARM:
             default:                    // TODO
                 return new long[] {0, 400, 200, 400, 800};   // 0 immediate start, 400ms buzz, 200ms break, 400ms buzz, 800ms break [repeat]
@@ -345,7 +356,7 @@ public class AlarmSettings
                 key_uri = PREF_KEY_ALARM_RINGTONE_URI_ALARM;
                 key_name = PREF_KEY_ALARM_RINGTONE_NAME_ALARM;
                 break;
-            case NOTIFICATION:
+            case NOTIFICATION: case NOTIFICATION1: case NOTIFICATION2:
             default:
                 uri = getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
                 key_uri = PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION;
