@@ -1791,27 +1791,50 @@ public class AlarmListDialog extends DialogFragment
             }
 
             // extended controls
-            switch(alarmState)
+            if (item.type == AlarmClockItem.AlarmType.ALARM)
             {
-                case AlarmState.STATE_SNOOZING:
-                    view.text_note.setVisibility(View.GONE);
-                    view.button_dismiss.setVisibility(View.VISIBLE);
-                    view.button_snooze.setVisibility(View.GONE);
-                    break;
-                case AlarmState.STATE_SOUNDING:
-                    view.text_note.setVisibility(View.GONE);
-                    view.button_dismiss.setVisibility(View.VISIBLE);
-                    view.button_snooze.setVisibility(View.VISIBLE);
-                    break;
-                case AlarmState.STATE_TIMEOUT:
-                    view.text_note.setVisibility(View.VISIBLE);
-                    view.button_dismiss.setVisibility(View.VISIBLE);
-                    view.button_snooze.setVisibility(View.GONE);
-                default:
-                    view.text_note.setVisibility(View.VISIBLE);
-                    view.button_dismiss.setVisibility(View.GONE);
-                    view.button_snooze.setVisibility(View.GONE);
-                    break;
+                switch(alarmState)
+                {
+                    case AlarmState.STATE_SNOOZING:
+                        view.text_note.setVisibility(View.GONE);
+                        view.button_dismiss.setVisibility(View.VISIBLE);
+                        view.button_snooze.setVisibility(View.GONE);
+                        break;
+                    case AlarmState.STATE_SOUNDING:
+                        view.text_note.setVisibility(View.GONE);
+                        view.button_dismiss.setVisibility(View.VISIBLE);
+                        view.button_snooze.setVisibility(View.VISIBLE);
+                        break;
+                    case AlarmState.STATE_TIMEOUT:
+                        view.text_note.setVisibility(View.VISIBLE);
+                        view.button_dismiss.setVisibility(View.VISIBLE);
+                        view.button_snooze.setVisibility(View.GONE);
+                    default:
+                        view.text_note.setVisibility(View.VISIBLE);
+                        view.button_dismiss.setVisibility(View.GONE);
+                        view.button_snooze.setVisibility(View.GONE);
+                        break;
+                }
+
+            } else {
+                switch(alarmState)
+                {
+                    case AlarmState.STATE_SNOOZING:
+                    case AlarmState.STATE_SOUNDING:
+                        view.text_note.setVisibility(View.GONE);
+                        view.button_dismiss.setVisibility(View.VISIBLE);
+                        view.button_snooze.setVisibility(View.GONE);
+                        break;
+                    case AlarmState.STATE_TIMEOUT:
+                        view.text_note.setVisibility(View.VISIBLE);
+                        view.button_dismiss.setVisibility(View.VISIBLE);
+                        view.button_snooze.setVisibility(View.GONE);
+                    default:
+                        view.text_note.setVisibility(View.VISIBLE);
+                        view.button_dismiss.setVisibility(View.GONE);
+                        view.button_snooze.setVisibility(View.GONE);
+                        break;
+                }
             }
 
             // extended tray
