@@ -3,6 +3,7 @@
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/alarm_sounding_bg0_dark" />
+            <corners android:radius="@dimen/alarmcard_corners_sounding" />
         </shape>
     </item>
 </layer-list>

@@ -12,4 +12,9 @@
     <integer name="anim_alarmitem_snoozing0_duration">3000</integer>
     <integer name="anim_alarmitem_snoozing1_duration">1500</integer>
 
+    <dimen name="alarmcard_corners_enabled">12dp</dimen>
+    <dimen name="alarmcard_corners_disabled">0dp</dimen>
+    <dimen name="alarmcard_corners_sounding">12dp</dimen>
+    <dimen name="alarmcard_corners_snoozing">12dp</dimen>
+
 </resources>

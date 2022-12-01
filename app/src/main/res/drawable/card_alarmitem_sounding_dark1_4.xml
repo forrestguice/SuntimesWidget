@@ -2,6 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
+            <corners android:radius="@dimen/alarmcard_corners_sounding" />
             <solid android:color="@color/alarm_sounding_bg1_dark" />
         </shape>
     </item>
