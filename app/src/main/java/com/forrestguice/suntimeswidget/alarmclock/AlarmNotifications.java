@@ -1741,7 +1741,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(AlarmClockItem.ACTIONID_DISMISS), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
                     }
 
-                    if (item.type == AlarmClockItem.AlarmType.NOTIFICATION1) {
+                    if (item.type != AlarmClockItem.AlarmType.ALARM) {
                         notifications.dismissNotification(context, (int)item.rowID);
                     }
 
