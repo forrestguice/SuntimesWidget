@@ -1468,6 +1468,7 @@ public class AlarmListDialog extends DialogFragment
         public int res_backgroundOff = R.drawable.card_alarmitem_disabled_dark1;
         public int res_backgroundSounding = R.drawable.card_alarmitem_sounding_dark1;
         public int res_backgroundSnoozing = R.drawable.card_alarmitem_snoozing_dark1;
+        public int res_backgroundTimeout = R.drawable.card_alarmitem_timeout_dark;
 
         public boolean animatedBackground = false;
         public int res_backgroundCurrent = -1;
@@ -1541,7 +1542,7 @@ public class AlarmListDialog extends DialogFragment
                             R.attr.icActionExtension, R.attr.icActionVibrationEnabled, R.attr.gridItemSelected,
                             R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
                             R.attr.alarmColorEnabled, android.R.attr.textColorSecondary, android.R.attr.textColorPrimary,
-                            R.attr.buttonPressColor, R.attr.alarmCardSounding, R.attr.alarmCardSnoozing,
+                            R.attr.buttonPressColor, R.attr.alarmCardSounding, R.attr.alarmCardSnoozing, R.attr.alarmCardTimeout,
                             R.attr.icActionNotification1, R.attr.icActionNotification2 };
             TypedArray a = context.obtainStyledAttributes(attrs);
             res_iconAlarm = a.getResourceId(0, R.drawable.ic_action_alarms);
@@ -1559,8 +1560,9 @@ public class AlarmListDialog extends DialogFragment
             color_press = ContextCompat.getColor(context, a.getResourceId(12, R.color.btn_tint_pressed_dark));
             res_backgroundSounding = a.getResourceId(13, R.drawable.card_alarmitem_sounding_dark1);
             res_backgroundSnoozing = a.getResourceId(14, R.drawable.card_alarmitem_snoozing_dark1);
-            res_iconNotification1 = a.getResourceId(15, R.drawable.ic_action_notification1);
-            res_iconNotification2 = a.getResourceId(16, R.drawable.ic_action_notification2);
+            res_backgroundTimeout = a.getResourceId(15, R.drawable.card_alarmitem_timeout_dark);
+            res_iconNotification1 = a.getResourceId(16, R.drawable.ic_action_notification1);
+            res_iconNotification2 = a.getResourceId(17, R.drawable.ic_action_notification2);
             a.recycle();
         }
 
@@ -1606,7 +1608,13 @@ public class AlarmListDialog extends DialogFragment
                     view.animatedBackground = true;
                     break;
 
-                // case AlarmState.STATE_TIMEOUT:
+                case AlarmState.STATE_TIMEOUT:
+                    resBackground = res_backgroundTimeout;
+                    view.anim_enterFadeDuration = r.getInteger(R.integer.anim_alarmitem_timeout_fadeIn_duration);
+                    view.anim_exitFadeDuration = r.getInteger(R.integer.anim_alarmitem_timeout_fadeOut_duration);
+                    view.animatedBackground = true;
+                    break;
+
                 default:
                     view.animatedBackground = false;
                     break;
