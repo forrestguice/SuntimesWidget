@@ -113,6 +113,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SORT = "app_alarms_sort";
     public static final int PREF_DEF_ALARM_SORT = SORT_BY_CREATION;
 
+    public static final String PREF_KEY_ALARM_SORT_ENABLED_FIRST = "app_alarms_sort_enabled_first";
+    public static final boolean PREF_DEF_ALARM_SORT_ENABLED_FIRST = false;
+
     public static int loadPrefAlarmSort(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -122,6 +125,18 @@ public class AlarmSettings
     {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putInt(PREF_KEY_ALARM_SORT, value);
+        prefs.apply();
+    }
+
+    public static boolean loadPrefAlarmSortEnabledFirst(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_DEF_ALARM_SORT_ENABLED_FIRST);
+    }
+    public static void savePrefAlarmSortEnabledFirst(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_ALARM_SORT_ENABLED_FIRST, value);
         prefs.apply();
     }
 

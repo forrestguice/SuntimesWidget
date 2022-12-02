@@ -237,6 +237,11 @@ public class AlarmListDialog extends DialogFragment
         if (selectedItem != null) {
             selectedItem.setChecked(true);
         }
+
+        MenuItem enabledFirst = menu.findItem(R.id.sortEnabledFirst);
+        if (enabledFirst != null) {
+            enabledFirst.setChecked(AlarmSettings.loadPrefAlarmSortEnabledFirst(getActivity()));
+        }
     }
 
     @Override
@@ -254,6 +259,14 @@ public class AlarmListDialog extends DialogFragment
 
             case R.id.sortByCreation:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
+                if (Build.VERSION.SDK_INT >= 11) {
+                    getActivity().invalidateOptionsMenu();
+                }  // else { TODO }
+                adapter.sortItems();
+                return true;
+
+            case R.id.sortEnabledFirst:
+                AlarmSettings.savePrefAlarmSortEnabledFirst(getActivity(), !item.isChecked());
                 if (Build.VERSION.SDK_INT >= 11) {
                     getActivity().invalidateOptionsMenu();
                 }  // else { TODO }
@@ -559,7 +572,7 @@ public class AlarmListDialog extends DialogFragment
     protected AlarmClockItem[] getItemsForExport()
     {
         List<AlarmClockItem> itemList = adapter.getItems();
-        AlarmListDialogAdapter.sortItems(itemList, AlarmSettings.SORT_BY_CREATION);   // list is displayed youngest -> oldest
+        AlarmListDialogAdapter.sortItems(itemList, AlarmSettings.SORT_BY_CREATION, false);   // list is displayed youngest -> oldest
         Collections.reverse(itemList);                                                // should be reversed for export (so import encounters/adds older items first)
         return itemList.toArray(new AlarmClockItem[0]);
     }
@@ -943,14 +956,15 @@ public class AlarmListDialog extends DialogFragment
             {
                 items.add(position, item);
                 AlarmClockItem previous = items.remove(position + 1);
+                sortItems();
 
-                if (item.timestamp != previous.timestamp) {
+                /*if (item.timestamp != previous.timestamp) {
                     Log.d("DEBUG", "setItem: timestamp changed: " + previous.timestamp + " -> " + item.timestamp);
                     sortItems();
                 } else {
                     Log.d("DEBUG", "setItem: position changed");
                     notifyItemChanged(position);
-                }
+                }*/
 
             } else {
                 items.add(0, item);
@@ -996,11 +1010,11 @@ public class AlarmListDialog extends DialogFragment
 
         protected List<AlarmClockItem> sortItems(List<AlarmClockItem> items)
         {
-            sortItems(items, AlarmSettings.loadPrefAlarmSort(contextRef.get()));
+            sortItems(items, AlarmSettings.loadPrefAlarmSort(contextRef.get()), AlarmSettings.loadPrefAlarmSortEnabledFirst(contextRef.get()));
             return items;
         }
 
-        public static List<AlarmClockItem> sortItems(List<AlarmClockItem> items, final int sortMode)
+        public static List<AlarmClockItem> sortItems(List<AlarmClockItem> items, final int sortMode, final boolean enabledFirst)
         {
             final long now = Calendar.getInstance().getTimeInMillis();
             switch (sortMode)
@@ -1008,8 +1022,13 @@ public class AlarmListDialog extends DialogFragment
                 case AlarmSettings.SORT_BY_ALARMTIME:    // nearest alarm time first
                     Collections.sort(items, new Comparator<AlarmClockItem>() {
                         @Override
-                        public int compare(AlarmClockItem o1, AlarmClockItem o2) {
-                            return compareLong((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
+                        public int compare(AlarmClockItem o1, AlarmClockItem o2)
+                        {
+                            if (enabledFirst) {
+                                return (o1.enabled && !o2.enabled) ? -1
+                                        : (!o1.enabled && o2.enabled) ? 1
+                                        : compareLong((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
+                            } else return compareLong((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
                         }
                     });
                     break;
@@ -1018,8 +1037,13 @@ public class AlarmListDialog extends DialogFragment
                 default:
                     Collections.sort(items, new Comparator<AlarmClockItem>() {
                         @Override
-                        public int compare(AlarmClockItem o1, AlarmClockItem o2) {
-                            return compareLong(o2.rowID, o1.rowID);
+                        public int compare(AlarmClockItem o1, AlarmClockItem o2)
+                        {
+                            if (enabledFirst) {
+                                return (o1.enabled && !o2.enabled) ? -1
+                                        : (!o1.enabled && o2.enabled) ? 1
+                                        : compareLong(o2.rowID, o1.rowID);
+                            } else return compareLong(o2.rowID, o1.rowID);
                         }
                     });
                     break;
