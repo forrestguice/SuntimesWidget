@@ -764,7 +764,7 @@ public class AlarmListDialog extends DialogFragment
                 {
                     Log.d("DEBUG", "onItemChanged: " + item.rowID + ", state: " + item.state.getState());
                     int state = item.getState();
-                    if ((state != AlarmState.STATE_SOUNDING) && (state != AlarmState.STATE_SNOOZING)) {
+                    if ((state != AlarmState.STATE_SOUNDING) && (state != AlarmState.STATE_SNOOZING) && (state != AlarmState.STATE_TIMEOUT)) {
                         Log.d("DEBUG", "onItemChanged: updating item timestamp");
                         AlarmNotifications.updateAlarmTime(getActivity(), item);
                     }
