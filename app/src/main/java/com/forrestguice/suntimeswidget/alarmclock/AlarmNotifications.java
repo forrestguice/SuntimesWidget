@@ -139,9 +139,22 @@ public class AlarmNotifications extends BroadcastReceiver
 
             Calendar now = Calendar.getInstance();
             SuntimesUtils.initDisplayStrings(context);
-            SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
-            String alarmString = context.getString(messageResID, item.type.getDisplayString(), alarmText.getValue());
-            SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
+
+            String alarmString;
+            SpannableString alarmDisplay;
+            switch(item.getState())
+            {
+                case AlarmState.STATE_TIMEOUT:
+                    alarmString = context.getString(R.string.alarmAction_timeoutMsg);
+                    alarmDisplay = new SpannableString(alarmString);
+                    break;
+
+                default:
+                    SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
+                    alarmString = context.getString(messageResID, item.type.getDisplayString(), alarmText.getValue());
+                    alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
+                    break;
+            }
 
             if (view != null)
             {
