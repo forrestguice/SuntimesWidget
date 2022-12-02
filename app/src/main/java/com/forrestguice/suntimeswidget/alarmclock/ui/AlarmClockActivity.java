@@ -55,6 +55,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
@@ -680,7 +681,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 dismissAddDialog();
 
             } else if (list.getSelectedRowID() == item.rowID) {
-                if (item.getState() != AlarmState.STATE_SOUNDING && item.getState() != AlarmState.STATE_SNOOZING) {    // TODO: also restrict edit on TIMEOUT?
+                if (item.getState() != AlarmState.STATE_SOUNDING && item.getState() != AlarmState.STATE_SNOOZING && item.getState() != AlarmState.STATE_TIMEOUT) {
                     showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM, false);
                 }
 
