@@ -3,9 +3,21 @@
     android:visible="false" android:oneshot="false">
 
     <item android:duration="@integer/anim_alarmitem_sounding1_duration"
-        android:drawable="@drawable/card_alarmitem_sounding_dark1_0"/>
+        android:drawable="@drawable/card_alarmitem_sounding_dark1_3"/>
 
     <item android:duration="@integer/anim_alarmitem_sounding1_duration"
-        android:drawable="@drawable/card_alarmitem_sounding_dark1_6"/>
+        android:drawable="@drawable/card_alarmitem_sounding_dark1_8"/>
+
+    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
+        android:drawable="@drawable/card_alarmitem_sounding_dark1_3"/>
+
+    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
+        android:drawable="@drawable/card_alarmitem_sounding_dark1_8"/>
+
+    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
+        android:drawable="@drawable/card_alarmitem_sounding_dark1_3"/>
+
+    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
+        android:drawable="@drawable/card_alarmitem_sounding_dark1_1"/>
 
 </animation-list>

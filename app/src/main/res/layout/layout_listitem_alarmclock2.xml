@@ -47,7 +47,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/layout_alarmtime"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" android:animateLayoutChanges="true"
                 android:layout_marginLeft="6dp" android:layout_marginRight="6dp">
 
                 <ImageButton
@@ -204,8 +204,8 @@
         <LinearLayout android:id="@+id/layout_alarmcard_tray"
             android:visibility="visible" android:animateLayoutChanges="true"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:gravity="end|right"
-            android:background="?attr/dialogBackground">
+            android:layout_marginTop="3dp" android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:gravity="end|right"
+            android:background="?attr/alarmCardEnabled">
 
             <TextView android:id="@+id/text_note" android:background="?attr/selectableItemBackground"
                 android:layout_width="wrap_content" android:layout_height="match_parent"

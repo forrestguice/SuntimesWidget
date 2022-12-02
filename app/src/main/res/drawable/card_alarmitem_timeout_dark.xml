@@ -2,10 +2,10 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:visible="false" android:oneshot="false">
 
-    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
+    <item android:duration="@integer/anim_alarmitem_timeout1_duration"
         android:drawable="@drawable/card_alarmitem_sounding_dark1_3"/>
 
-    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
+    <item android:duration="@integer/anim_alarmitem_timeout1_duration"
         android:drawable="@drawable/card_alarmitem_sounding_dark1_8"/>
 
 </animation-list>

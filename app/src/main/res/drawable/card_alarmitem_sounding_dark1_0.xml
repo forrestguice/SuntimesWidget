@@ -5,8 +5,10 @@
             <corners android:radius="@dimen/alarmcard_corners_sounding" />
             <gradient
                 android:startColor="@color/alarm_sounding_bg0_dark"
+                android:centerColor="@color/alarm_enabled_bg_dark"
                 android:endColor="@color/alarm_sounding_bg1_dark"
-                android:angle="135" />
+                android:centerY="0.85"
+                android:angle="45" />
         </shape>
     </item>
     <!--<item android:left="-5dp" android:right="-5dp" android:top="-5dp" android:bottom="3dp">

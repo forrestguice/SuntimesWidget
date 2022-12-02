@@ -2,22 +2,25 @@
 <resources>
     <integer name="minAlarmReminderHours">0</integer>
 
-    <integer name="anim_alarmitem_sounding_fadeIn_duration">250</integer>
-    <integer name="anim_alarmitem_sounding_fadeOut_duration">750</integer>
+    <integer name="anim_alarmitem_sounding_fadeIn_duration">250</integer>    <!-- Sounding -->
+    <integer name="anim_alarmitem_sounding_fadeOut_duration">500</integer>
     <integer name="anim_alarmitem_sounding0_duration">1750</integer>
-    <integer name="anim_alarmitem_sounding1_duration">750</integer>
+    <integer name="anim_alarmitem_sounding1_duration">500</integer>
 
-    <integer name="anim_alarmitem_snoozing_fadeIn_duration">3000</integer>
+    <integer name="anim_alarmitem_snoozing_fadeIn_duration">3000</integer>    <!-- Snoozing -->
     <integer name="anim_alarmitem_snoozing_fadeOut_duration">3000</integer>
     <integer name="anim_alarmitem_snoozing0_duration">3000</integer>
     <integer name="anim_alarmitem_snoozing1_duration">1500</integer>
 
-    <integer name="anim_alarmitem_timeout_fadeIn_duration">250</integer>
+    <integer name="anim_alarmitem_timeout_fadeIn_duration">250</integer>    <!-- Timeout -->
     <integer name="anim_alarmitem_timeout_fadeOut_duration">500</integer>
+    <integer name="anim_alarmitem_timeout0_duration">1750</integer>
+    <integer name="anim_alarmitem_timeout1_duration">500</integer>
 
-    <dimen name="alarmcard_corners_enabled">12dp</dimen>
+    <dimen name="alarmcard_corners_pressed">8dp</dimen>
+    <dimen name="alarmcard_corners_enabled">8dp</dimen>
     <dimen name="alarmcard_corners_disabled">0dp</dimen>
-    <dimen name="alarmcard_corners_sounding">12dp</dimen>
-    <dimen name="alarmcard_corners_snoozing">12dp</dimen>
+    <dimen name="alarmcard_corners_sounding">8dp</dimen>
+    <dimen name="alarmcard_corners_snoozing">8dp</dimen>
 
 </resources>
