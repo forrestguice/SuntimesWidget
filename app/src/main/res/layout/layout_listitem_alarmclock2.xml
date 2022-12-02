@@ -205,7 +205,7 @@
             android:visibility="visible" android:animateLayoutChanges="true"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="3dp" android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:gravity="end|right"
-            android:background="?attr/alarmCardEnabled">
+            android:background="?attr/alarmCardControls">
 
             <TextView android:id="@+id/text_note" android:background="?attr/selectableItemBackground"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
