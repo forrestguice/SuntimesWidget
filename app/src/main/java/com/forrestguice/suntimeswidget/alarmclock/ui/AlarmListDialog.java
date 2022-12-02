@@ -1634,12 +1634,15 @@ public class AlarmListDialog extends DialogFragment
 
             // enabled / disabled
             if (Build.VERSION.SDK_INT >= 14) {
-                if (view.switch_enabled != null) {
+                if (view.switch_enabled != null)
+                {
                     view.switch_enabled.setChecked(item.enabled);
+                    view.switch_enabled.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
                 }
             } else {
                 if (view.check_enabled != null) {
                     view.check_enabled.setChecked(item.enabled);
+                    view.check_enabled.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
                 }
             }
 
@@ -1818,6 +1821,7 @@ public class AlarmListDialog extends DialogFragment
                         view.text_note.setVisibility(View.VISIBLE);
                         view.button_dismiss.setVisibility(View.VISIBLE);
                         view.button_snooze.setVisibility(View.GONE);
+                        break;
                     default:
                         view.text_note.setVisibility(View.VISIBLE);
                         view.button_dismiss.setVisibility(View.GONE);
@@ -1838,6 +1842,7 @@ public class AlarmListDialog extends DialogFragment
                         view.text_note.setVisibility(View.VISIBLE);
                         view.button_dismiss.setVisibility(View.VISIBLE);
                         view.button_snooze.setVisibility(View.GONE);
+                        break;
                     default:
                         view.text_note.setVisibility(View.VISIBLE);
                         view.button_dismiss.setVisibility(View.GONE);
