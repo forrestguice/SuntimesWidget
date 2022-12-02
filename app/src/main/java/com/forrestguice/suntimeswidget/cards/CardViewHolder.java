@@ -827,7 +827,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             typedArray.recycle();
 
             TextView view = new TextView(context, null, R.style.SunsetTimeTextView);
-            view.setTextAppearance(android.R.style.TextAppearance_Small);
+            view.setTextAppearance(context, android.R.style.TextAppearance_Small);
             view.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
             view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
             view.getPaint().setAntiAlias(true);
