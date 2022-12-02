@@ -776,10 +776,15 @@ public class AlarmListDialog extends DialogFragment
                 if (item != null)
                 {
                     Log.d("DEBUG", "onItemChanged: " + item.rowID + ", state: " + item.state.getState());
-                    int state = item.getState();
-                    if ((state != AlarmState.STATE_SOUNDING) && (state != AlarmState.STATE_SNOOZING) && (state != AlarmState.STATE_TIMEOUT)) {
-                        Log.d("DEBUG", "onItemChanged: updating item timestamp");
-                        AlarmNotifications.updateAlarmTime(getActivity(), item);
+                    switch(item.getState())
+                    {
+                        case AlarmState.STATE_SOUNDING: case AlarmState.STATE_SNOOZING: case AlarmState.STATE_TIMEOUT:  // sounding/snoozing/timeout alarmtime shouldn't be touched until next transition
+                        case AlarmState.STATE_SCHEDULED_SOON: case AlarmState.STATE_SCHEDULED_DISTANT:                  // scheduled_ alarmtime is already assigned
+                            break;
+                        default:
+                            Log.d("DEBUG", "onItemChanged: updating item timestamp");
+                            AlarmNotifications.updateAlarmTime(getActivity(), item);
+                            break;
                     }
                     adapter.setItem(item);
                 }
@@ -1844,6 +1849,17 @@ public class AlarmListDialog extends DialogFragment
                     case AlarmState.STATE_TIMEOUT:
                         view.text_note.setVisibility(View.VISIBLE);
                         view.button_dismiss.setVisibility(View.VISIBLE);
+                        view.button_snooze.setVisibility(View.GONE);
+                        break;
+                    case AlarmState.STATE_SCHEDULED_SOON:
+                    case AlarmState.STATE_SCHEDULED_DISTANT:
+                        long soonMillis = AlarmSettings.loadPrefAlarmUpcoming(context);
+                        if (soonMillis <= 0) {
+                            soonMillis = 1000 * 60 * 60 * 6;
+                        }
+                        boolean isSoon = ((item.alarmtime - System.currentTimeMillis()) <= soonMillis);
+                        view.text_note.setVisibility(View.VISIBLE);
+                        view.button_dismiss.setVisibility((item.enabled && item.repeating && isSoon) ? View.VISIBLE : View.GONE);    // allow dismiss early (and reschedule)
                         view.button_snooze.setVisibility(View.GONE);
                         break;
                     default:
