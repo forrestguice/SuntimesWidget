@@ -176,7 +176,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             menu_type.setImageDrawable(ContextCompat.getDrawable(context, menuDrawable));
             menu_type.setContentDescription(item.type.getDisplayString());
 
-            edit_label.setText(item.getLabel(context));
+            edit_label.setText(item.getLabel(item.getLabel(context)));
 
             text_offset.setText(displayOffset(context, item));
 
