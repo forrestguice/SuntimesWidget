@@ -52,7 +52,7 @@ jobs:
       if: ${{ steps.translation-info.outputs.result }}
       run: |      
           filepath=${{steps.translation-info.outputs.filepath}}
-          fileUrl="${{github.server_url}}/${{github.repository}}/blob/main/$filepath"
+          fileUrl="${{github.server_url}}/${{github.repository}}/blob/master/$filepath"
           
           lastModified="-1"
           lastSha="-1"
