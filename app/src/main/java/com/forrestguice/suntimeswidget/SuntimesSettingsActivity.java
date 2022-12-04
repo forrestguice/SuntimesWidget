@@ -465,6 +465,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             return;
         }
 
+        if (key.endsWith(AlarmSettings.PREF_KEY_ALARM_UPCOMING))
+        {
+            Log.i(LOG_TAG, "onPreferenceChanged: " + AlarmSettings.PREF_KEY_ALARM_UPCOMING + ", rescheduling alarms..");
+            context.sendBroadcast(new Intent(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, null)));
+            return;
+        }
+
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
         {
             try {
