@@ -1,0 +1,110 @@
+name: Translation Report
+on:
+  workflow_call:
+    inputs:
+      language:
+        type: string
+        required: true
+
+jobs:  
+  translation-report:
+    runs-on: ubuntu-latest
+    steps:              
+    
+    - name: Checkout Branch
+      uses: actions/checkout@v3
+      with:
+          fetch-depth: '0'
+                      
+    - name: Lookup Translation Info
+      id: translation-info
+      run: |
+          while IFS= read -r line; do
+              echo "Read translation info: $line"
+              if [[ "$line" =~ ^#.* ]]; then
+                  echo "Skipping line (comment)"
+                  continue
+              fi              
+              line_parts=($line)              
+              n=3
+              if [ "${#line_parts[@]}" -lt "${n}" ]; then
+                  echo "Skipping line (wrong number of elements)"
+                  continue
+              fi
+          
+              wasFound=false
+              language_code=${line_parts[0]}
+              filepath=${line_parts[1]}
+              issue=${line_parts[2]}                  
+              if [ "${language_code}" == "${{inputs.language}}" ]; then                  
+                  wasFound=true
+                  echo "Found translation info: ${{inputs.language}}"
+                  echo "language=${{inputs.language}}" >> $GITHUB_OUTPUT                  
+                  echo "filepath=$filepath" >> $GITHUB_OUTPUT
+                  echo "issue=$issue" >> $GITHUB_OUTPUT                  
+                  break
+              fi                          
+          done < .github/TRANSLATIONS
+          echo "result=$wasFound" >> $GITHUB_OUTPUT
+    
+    - name: Create translation report
+      id: translation-report
+      if: ${{ steps.translation-info.outputs.result }}
+      run: |      
+          filepath=${{steps.translation-info.outputs.filepath}}
+          fileUrl="${{github.server_url}}/${{github.repository}}/blob/main/$filepath"
+          
+          lastModified="-1"
+          lastSha="-1"
+          todo="0"
+          if [ -f $filepath ]; then
+              lastModified="$(date -r ${filepath} +"%Y-%m-%d %H:%M:%S")"
+              lastSha="$(git log -n 1 --pretty=format:%H -- ${filepath})"
+              todo=$(< ${filepath} grep -o " TODO" | wc -l)
+              echo "result=true" >> $GITHUB_OUTPUT
+          fi
+          shaUrl="${{github.server_url}}/${{github.repository}}/commit/$lastSha"                  
+          echo "Counting TODOs in $filepath: $todo, last modified by: $lastSha on $lastModified"
+          
+          comment="<em><a href='$fileUrl'>$filepath<a/></em> has <b>$todo</b> lines marked TODO.<br />Last modified: <em><small><a href='$shaUrl'>$lastSha</a></small></em>"
+          echo "language=${{steps.translation-info.outputs.language}}" >> $GITHUB_OUTPUT
+          echo "filepath=$filepath" >> $GITHUB_OUTPUT
+          echo "comment=$comment" >> $GITHUB_OUTPUT
+          echo "todo=$todo" >> $GITHUB_OUTPUT    
+          echo "lastSha=$lastSha" >> $GITHUB_OUTPUT
+                            
+    - name: Write translation report
+      id: translation-report-write
+      if: ${{ steps.translation-report.outputs.result }}
+      run: |      
+          git checkout gh-actions-report      
+          filename=".github/translation-report-${{steps.translation-report.outputs.language}}.txt"          
+          prevLine="-1"
+          if [ -f $filename ]; then
+              prevLine="$(tail -1 $filename)"
+          fi
+          line="${{steps.translation-report.outputs.language}} ${{steps.translation-report.outputs.todo}} ${{steps.translation-report.outputs.lastSha}}"
+          if [[ $line != $prevLine ]]; then
+              echo $line >> $filename
+              git config user.name "GitHub Actions Bot"
+              git config user.email "<>"
+              git add $filename
+              git commit -m $filename
+              git push origin gh-actions-report
+                            
+              if [ "${{steps.translation-info.outputs.issue}}" -gt "0" ]; then
+                echo "result=true" >> $GITHUB_OUTPUT
+              else
+                echo "Issue number is missing: $issue"
+                echo "result=false" >> $GITHUB_OUTPUT
+              fi
+          fi
+              
+    - name: Create issue comment
+      id: translation-report-comment
+      if: ${{ steps.translation-report-write.outputs.result }}
+      uses: peter-evans/create-or-update-comment@v2
+      with:
+          issue-number: ${{ steps.translation-info.outputs.issue }}
+          body: ${{ steps.translation-report.outputs.comment }}
+      
