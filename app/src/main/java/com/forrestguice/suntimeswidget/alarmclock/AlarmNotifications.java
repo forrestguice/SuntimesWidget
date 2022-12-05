@@ -949,6 +949,12 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+    public static Notification createProgressNotification(Context context) {
+        return createProgressNotification(context, context.getString(R.string.app_name_alarmclock), "");
+    }
+    public static Notification createProgressNotification(Context context, String message) {
+        return createProgressNotification(context, context.getString(R.string.app_name_alarmclock),  message);
+    }
     public static Notification createProgressNotification(Context context, String title, String message)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -1688,7 +1694,8 @@ public class AlarmNotifications extends BroadcastReceiver
                         WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(AlarmClockItem.ACTIONID_DISMISS), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
                     }
 
-                    if (nextAction != null) {
+                    if (nextAction != null) {                                                // either SCHEDULE, RESCHEDULE1, or DISABLE
+                        notifications.startForeground((int)item.rowID, createProgressNotification(context));    // replace sounding notification
                         context.sendBroadcast(getAlarmIntent(context, nextAction, data));    // trigger followup action
                     }
 
@@ -1875,12 +1882,13 @@ public class AlarmNotifications extends BroadcastReceiver
                         addAlarmTimeout(context, ACTION_SCHEDULE, item.getUri(), transitionAt);
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
-                        notifications.dismissNotification(context, (int)item.rowID);
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
 
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
-                            public void onItemsLoaded(Long[] ids) {
+                            public void onItemsLoaded(Long[] ids)
+                            {
+                                notifications.dismissNotification(context, (int)item.rowID);
                                 if (chained != null) {
                                     chained.onFinished(true, item);
                                 } else notifications.stopSelf(startId);
@@ -1908,14 +1916,18 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "State Saved (onScheduledSoon)");
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
 
-                        if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
-                            notifications.showNotification(context, item, true);             // show upcoming reminder
-                        }
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
 
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
-                            public void onItemsLoaded(Long[] ids) {
+                            public void onItemsLoaded(Long[] ids)
+                            {
+                                boolean showReminder = (AlarmSettings.loadPrefAlarmUpcoming(context) > 0);
+                                notifications.dismissNotification(context, (int)item.rowID);
+                                if (showReminder) {
+                                    notifications.showNotification(context, item, true);             // show upcoming reminder
+                                }
+
                                 if (chained != null) {
                                     chained.onFinished(true, item);
                                 } else notifications.stopSelf(startId);
