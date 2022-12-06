@@ -2039,6 +2039,7 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                t_updateAlarmTime_brokenLoop = true;
                 return null;
             }
 
@@ -2081,6 +2082,7 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                t_updateAlarmTime_brokenLoop = true;
                 return null;
             }
 
@@ -2141,6 +2143,7 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             if (!timestamps.add(alarmTime.getTimeInMillis())) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                t_updateAlarmTime_brokenLoop = true;
                 return null;
             }
 
@@ -2177,6 +2180,7 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             if (!timestamps.add(alarmTime.getTimeInMillis())) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                t_updateAlarmTime_brokenLoop = true;
                 return null;
             }
 
@@ -2287,6 +2291,7 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             if (!timestamps.add(alarmTime.getTimeInMillis())) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                t_updateAlarmTime_brokenLoop = true;
                 return null;
             }
 
@@ -2352,4 +2357,5 @@ public class AlarmNotifications extends BroadcastReceiver
         return data;
     }
 
+    protected static boolean t_updateAlarmTime_brokenLoop = false;   // for testing; set true by updateAlarmTime_ methods if the same timestamp is encountered twice (breaking the loop)
 }

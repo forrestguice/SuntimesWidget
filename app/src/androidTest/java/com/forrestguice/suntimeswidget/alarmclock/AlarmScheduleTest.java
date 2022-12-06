@@ -33,10 +33,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import static android.test.MoreAsserts.assertNotEqual;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
@@ -55,23 +58,14 @@ public class AlarmScheduleTest
     @Test
     public void test_updateAlarmTime_sunEvent()
     {
-        AlarmClockItem[] alarms = AlarmDatabaseAdapterTest.createTestItems();
-        AlarmClockItem alarm = alarms[0];
+        AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
         alarm.location = new Location("Helsinki", "60", "25", "0");
         alarm.timezone = "Europe/Hensinki";
-        alarm.setRepeatingDays("1,2,3,4,5,6,7");
-        alarm.repeating = true;
-        alarm.offset = 0;
+        alarm.hour = -1;
+        alarm.minute = -1;
 
         SolarEvents eventID = SolarEvents.SUNRISE;
-
-        Calendar now = Calendar.getInstance();
-        now.set(Calendar.YEAR, 2022);
-        now.set(Calendar.MONTH, Calendar.OCTOBER);
-        now.set(Calendar.DAY_OF_MONTH, 26);
-        now.set(Calendar.HOUR_OF_DAY, 7);
-        now.set(Calendar.MINUTE, 0);
-        now.set(Calendar.SECOND, 0);
+        Calendar now = getCalendar(2022, Calendar.OCTOBER, 26, 7, 0);
 
         int c = 0, n = 15;
         Calendar event0 = null;
@@ -90,5 +84,152 @@ public class AlarmScheduleTest
             c++;
         }
     }
+
+    public SolarEvents[] getTestEvents()
+    {
+        return new SolarEvents[] { SolarEvents.MORNING_ASTRONOMICAL, SolarEvents.MORNING_NAUTICAL, SolarEvents.MORNING_CIVIL, SolarEvents.SUNRISE, SolarEvents.NOON,
+                                   SolarEvents.SUNSET, SolarEvents.EVENING_CIVIL, SolarEvents.EVENING_NAUTICAL, SolarEvents.EVENING_ASTRONOMICAL,           // sun
+                                   SolarEvents.MOONRISE, SolarEvents.MOONNOON, SolarEvents.MOONSET, SolarEvents.MOONNIGHT,                                  // moon
+                                   SolarEvents.NEWMOON, SolarEvents.FIRSTQUARTER, SolarEvents.FULLMOON, SolarEvents.THIRDQUARTER,
+                                   SolarEvents.EQUINOX_SPRING, SolarEvents.SOLSTICE_SUMMER, SolarEvents.EQUINOX_AUTUMNAL, SolarEvents.EQUINOX_AUTUMNAL      // solstice/equinox
+        };
+    }
+
+    /**
+     * Repeating Alarm
+     */
+    @Test
+    public void test_updateAlarmTime_repeatingAlarm_nullDays()
+    {
+        Calendar now = getCalendar(2022, Calendar.OCTOBER, 26, 7, 0);
+        for (SolarEvents event : getTestEvents()) {
+            test_updateAlarmTime_repeatingAlarm(event.name(), null, now);
+        }
+    }
+
+    @Test
+    public void test_updateAlarmTime_repeatingAlarm_everyday()
+    {
+        Calendar now = getCalendar(2022, Calendar.OCTOBER, 26, 7, 0);
+        for (SolarEvents event : getTestEvents()) {
+            test_updateAlarmTime_repeatingAlarm(event.name(), AlarmClockItem.everyday(), now);
+        }
+    }
+
+    public void test_updateAlarmTime_repeatingAlarm(String eventID, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
+        alarm.location = new Location("Helsinki", "60", "25", "0");
+        alarm.timezone = "Europe/Hensinki";
+        alarm.hour = alarm.minute = -1;
+        alarm.repeatingDays = repeatingDays;
+        alarm.setEvent(eventID);
+        test_updateAlarmTime(alarm, now);
+    }
+
+    /**
+     * Non-Repeating Alarm
+     */
+    @Test
+    public void test_updateAlarmTime_alarm()
+    {
+        Calendar now = getCalendar(2022, Calendar.OCTOBER, 26, 7, 0);
+        for (SolarEvents event : getTestEvents()) {
+            test_updateAlarmTime_alarm(event.name(), now);
+        }
+    }
+
+    public void test_updateAlarmTime_alarm(String eventID, Calendar now)
+    {
+        AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(false);
+        alarm.location = new Location("Helsinki", "60", "25", "0");
+        alarm.timezone = "Europe/Hensinki";
+        alarm.hour = alarm.minute = -1;
+        alarm.repeatingDays = AlarmClockItem.everyday();
+        alarm.setEvent(eventID);
+        test_updateAlarmTime(alarm, now);
+    }
+
+    public void test_updateAlarmTime(AlarmClockItem alarm, Calendar now)
+    {
+        int c = 0, n = 15;
+        Calendar event0 = null;
+        while (c < n)
+        {
+            AlarmNotifications.t_updateAlarmTime_brokenLoop = false;
+
+            AlarmNotifications.updateAlarmTime(context, alarm, now, true);
+            Calendar event = Calendar.getInstance(now.getTimeZone());
+            event.setTimeInMillis(alarm.timestamp);
+            Log.i("TEST", utils.calendarDateTimeDisplayString(context, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
+
+            assertFalse(AlarmNotifications.t_updateAlarmTime_brokenLoop);
+            if (event0 != null) {
+                assertTrue(event.after(event0));
+            }
+            event0 = event;
+
+            now = event;
+            now.add(Calendar.SECOND, 1);
+            c++;
+        }
+    }
+
+    public static Calendar getCalendar(int year, int month, int dayOfMonth, int hour, int minute)
+    {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        c.set(Calendar.HOUR_OF_DAY, hour);
+        c.set(Calendar.MINUTE, minute);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        return c;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

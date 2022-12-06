@@ -409,21 +409,28 @@ public class AlarmNotificationsTest
         test_startCommand_alarm(12 * 60 * 60 * 1000, true, null);
     }
 
-    public void test_startCommand_alarm(int reminderWithinMillis, boolean repeating, String repeatingDays) throws TimeoutException
+    public static AlarmClockItem createAlarmClockItem(boolean repeating)
     {
         AlarmClockItem alarm = new AlarmClockItem();
         alarm.type = AlarmClockItem.AlarmType.ALARM;
         alarm.repeating = repeating;
-        alarm.setRepeatingDays(repeatingDays);
+        alarm.repeatingDays = AlarmClockItem.everyday();
 
         Calendar now = Calendar.getInstance();
         alarm.timezone = TimeZone.getDefault().getID();
         alarm.hour = ((now.get(Calendar.HOUR_OF_DAY) + 1 ) % 24);
         alarm.minute = now.get(Calendar.MINUTE);
         alarm.alarmtime = 0;
+        alarm.offset = 0;
         alarm.setEvent(null);
         alarm.enabled = true;
+        return alarm;
+    }
 
+    public void test_startCommand_alarm(int reminderWithinMillis, boolean repeating, String repeatingDays) throws TimeoutException
+    {
+        AlarmClockItem alarm = createAlarmClockItem(repeating);
+        alarm.setRepeatingDays(repeatingDays);
         test_startCommand_alarm(reminderWithinMillis, alarm);
     }
 
