@@ -377,6 +377,82 @@ public class AlarmNotificationsTest
         assertFalse("failed to delete alarm", hasAlarmId(alarmId2));
     }
 
+    @Test
+    public void test_startCommand_alarm_noReminder() throws TimeoutException {
+        test_startCommand_alarm(false, 0);
+    }
+    @Test
+    public void test_startCommand_alarm_withReminder() throws TimeoutException {
+        test_startCommand_alarm(false, 12 * 60 * 60 * 1000);
+    }
+
+    /**
+     * Repeating alarm with reminder set to never. bug #665
+     */
+    @Test
+    public void test_startCommand_repeatingAlarm_noReminder() throws TimeoutException {
+        test_startCommand_alarm(true, 0);
+    }
+    @Test
+    public void test_startCommand_repeatingAlarm_withReminder() throws TimeoutException {
+        test_startCommand_alarm(true, 12 * 60 * 60 * 1000);
+    }
+
+    public void test_startCommand_alarm(boolean repeating, int reminderWithinMillis) throws TimeoutException
+    {
+        AlarmSettings.savePrefAlarmUpcoming(mockContext, reminderWithinMillis);
+
+        AlarmClockItem[] alarms = AlarmDatabaseAdapterTest.createTestItems();
+        alarms[0].type = AlarmClockItem.AlarmType.ALARM;
+        alarms[0].repeating = repeating;
+        alarms[0].setRepeatingDays("1,2,3,4,5,6,7");
+
+        Calendar now = Calendar.getInstance();
+        alarms[0].timezone = TimeZone.getDefault().getID();
+        alarms[0].hour = ((now.get(Calendar.HOUR_OF_DAY) + 1 ) % 24);
+        alarms[0].minute = now.get(Calendar.MINUTE);
+        alarms[0].alarmtime = 0;
+        alarms[0].setEvent(null);
+        alarms[0].enabled = true;
+
+        long alarmId0 = addAlarmItemToDatabase(alarms[0]);
+        assertTrue("failed to create alarm", hasAlarmId(alarmId0));
+
+        // schedule -> show -> snooze -> show -> dismiss alarm
+        long alarmId2 = addAlarmItemToDatabase(alarms[0]);
+        assertTrue("failed to create alarm", hasAlarmId(alarmId2));
+        Uri data2 = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId2);
+
+        Intent intent0 = AlarmNotifications.getServiceIntent(mockContext);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, 1500);
+        verify_hasAlarmState(alarmId2, AlarmState.STATE_SCHEDULED_SOON);
+
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, 1000);    // should continue running (showing foreground notification)
+        assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
+        verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
+        assertTrue("media player should be playing", AlarmNotifications.isPlaying);
+
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SNOOZE }, data2, false, 1000);    // should continue running (still showing foreground notification)
+        assertTrue("service should be running in the foreground when snoozing", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
+        verify_hasAlarmState(alarmId2, AlarmState.STATE_SNOOZING);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, 1000);    // should continue running (showing foreground notification)
+        assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
+        verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
+        assertTrue("media player should be playing", AlarmNotifications.isPlaying);
+
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, 5000);
+        int expectedState = repeating ? ((reminderWithinMillis <= 0) ? AlarmState.STATE_SCHEDULED_SOON : AlarmState.STATE_SCHEDULED_DISTANT)     // repeating alarms are now scheduled_
+                                      : AlarmState.STATE_DISABLED;                                                                               // non-repeating alarms are now disabled
+        verify_hasAlarmState(alarmId2, expectedState);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, 2000);
+        assertFalse("failed to delete alarm", hasAlarmId(alarmId2));
+    }
+
     protected void test_startComand_withData_calledStop(Intent intent0, String[] actions, Uri data) throws TimeoutException {
         test_startComand_withData_calledStop(intent0, actions, data, true, 1500);
     }
