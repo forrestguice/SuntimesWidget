@@ -465,7 +465,7 @@ public class AlarmNotificationsTest
         verify_hasAlarmState(alarmId2, expectedState);
         assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, 4000);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, 2000);
         assertFalse("failed to delete alarm", hasAlarmId(alarmId2));
     }
 

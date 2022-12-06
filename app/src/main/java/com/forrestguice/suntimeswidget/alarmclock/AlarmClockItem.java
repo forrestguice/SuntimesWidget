@@ -360,6 +360,7 @@ public class AlarmClockItem implements Parcelable
 
     /**
      * repeatsEveryDay
+     * @return true if repeatingDays contains every day (or is null)
      */
     public static boolean repeatsEveryDay(ArrayList<Integer> repeatingDays)
     {
@@ -375,7 +376,7 @@ public class AlarmClockItem implements Parcelable
                         repeatingDays.contains(Calendar.FRIDAY) &&
                         repeatingDays.contains(Calendar.SATURDAY));
             } else return false;
-        } else return false;
+        } else return true;
     }
 
     /**
@@ -402,6 +403,10 @@ public class AlarmClockItem implements Parcelable
         } else return null;
     }
 
+    public static ArrayList<Integer> everyday() {
+        return new ArrayList<>(Arrays.asList(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY));
+    }
+
     /**
      * getUri
      * @return e.g. content://com.forrestguice.suntimeswidget.alarmclock/alarms/[rowID]
@@ -413,9 +418,9 @@ public class AlarmClockItem implements Parcelable
 
     /**
      * setRepeatingDays
-     * @param repeatingDaysString a stringlist representation of repeatingDays Array (e.g. "0,1,2,3");
+     * @param repeatingDaysString a stringlist representation of repeatingDays Array (e.g. "1,2,3,4,5,6,7"), or null (everyday)
      */
-    public void setRepeatingDays(String repeatingDaysString)
+    public void setRepeatingDays(@Nullable String repeatingDaysString)
     {
         if (repeatingDaysString != null)
         {
@@ -435,7 +440,7 @@ public class AlarmClockItem implements Parcelable
                 repeatingDays = new ArrayList<>();
                 repeatingDays.addAll(Arrays.asList(repeatingDaysArray));
             } else repeatingDays = null;
-        } else repeatingDays = null;
+        } else repeatingDays = AlarmClockItem.everyday();
     }
 
     /**
