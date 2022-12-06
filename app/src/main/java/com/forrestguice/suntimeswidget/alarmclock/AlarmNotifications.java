@@ -2149,7 +2149,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
             c++;
             Log.w("AlarmReceiverItem", "updateAlarmTime: moonPhaseEvent advancing to next cycle.. " + c);
-            day.add(Calendar.HOUR, (int)(c * (0.25 * 29.53d * 24d)));
+            day.add(Calendar.SECOND, (int)(29.53d * 24d * 60d * 60d));
             moonData.setTodayIs(day);
             moonData.calculate();
             eventTime = moonData.moonPhaseCalendar(phase);
