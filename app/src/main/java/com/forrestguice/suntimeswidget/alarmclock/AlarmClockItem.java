@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2020 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -35,6 +36,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 /**
@@ -65,6 +67,7 @@ public class AlarmClockItem implements Parcelable
     public boolean vibrate = false;
     public String actionID0 = null;
     public String actionID1 = null;
+    protected HashMap<String, Boolean> alarmFlags = null;
 
     public boolean modified = false;
     public AlarmState state = null;
@@ -96,6 +99,7 @@ public class AlarmClockItem implements Parcelable
         this.ringtoneURI = other.ringtoneURI;
         this.actionID0 = other.actionID0;
         this.actionID1 = other.actionID1;
+        this.alarmFlags = (other.alarmFlags != null ? new HashMap<>(other.alarmFlags) : null);
 
         modified = other.modified;
         state = (other.state != null) ? new AlarmState(other.state) : null;
@@ -142,6 +146,8 @@ public class AlarmClockItem implements Parcelable
         actionID0 = in.readString();
         actionID1 = in.readString();
 
+        setAlarmFlags(in.readString());
+
         modified = (in.readInt() == 1);
         state = in.readParcelable(AlarmClockItem.class.getClassLoader());
     }
@@ -178,6 +184,8 @@ public class AlarmClockItem implements Parcelable
         out.writeString(ringtoneURI);
         out.writeString(actionID0);
         out.writeString(actionID1);
+
+        out.writeString(getAlarmFlags());
 
         out.writeInt(modified ? 1 : 0);
         out.writeParcelable(state, 0);
@@ -221,6 +229,8 @@ public class AlarmClockItem implements Parcelable
         ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
         actionID0 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION0);
         actionID1 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION1);
+
+        setAlarmFlags(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_FLAGS));
     }
 
     public ContentValues asContentValues(boolean withRowID)
@@ -265,6 +275,11 @@ public class AlarmClockItem implements Parcelable
         values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI, ringtoneURI);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION0, actionID0);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION1, actionID1);
+
+        if (alarmFlags != null) {
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_FLAGS, getAlarmFlags());
+        } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_FLAGS);
+
         return values;
     }
 
@@ -368,6 +383,89 @@ public class AlarmClockItem implements Parcelable
     }
     public static final int ACTIONID_MAIN = 0;
     public static final int ACTIONID_DISMISS = 1;
+
+    /**
+     * setAlarmFlags
+     * @param flags as a String, e.g. "flag1=true;flag2=false;..."
+     */
+    public void setAlarmFlags(String flags)
+    {
+        if (flags != null && !flags.trim().isEmpty())
+        {
+            if (alarmFlags == null) {
+                alarmFlags = new HashMap<String, Boolean>();
+            }
+            alarmFlags.clear();
+
+            String[] elements = flags.split(",");
+            for (String flag : elements)
+            {
+                String[] parts = flag.split("=");
+                if (parts.length == 2)
+                {
+                    if (parts[0] != null && isValidFlagName(parts[0])) {
+                        alarmFlags.put(parts[0].trim(), (parts[1] != null && parts[1].equalsIgnoreCase("true")));
+
+                    } else Log.w("AlarmFlags", "setAlarmFlags: invalid flag name; ignoring: '" + flag + "'");
+                } else Log.w("AlarmFlags", "setAlarmFlags: wrong number of elements (" +  parts.length +"); ignoring: '" + flag + "'");
+            }
+        } else {
+            alarmFlags = null;
+        }
+    }
+
+    public String getAlarmFlags()
+    {
+        if (alarmFlags != null)
+        {
+            StringBuilder result = new StringBuilder();
+            for (String key : alarmFlags.keySet())
+            {
+                Boolean value = alarmFlags.get(key);
+                result.append(key);
+                result.append("=");
+                result.append((value != null && value) ? "true" : "false");
+                result.append(",");
+            }
+            return result.toString().substring(0, result.length() - 1);
+        } else return null;
+    }
+
+    public static boolean isValidFlagName(@Nullable String flagname)
+    {
+        if (flagname != null)
+        {
+            String[] forbidden = new String[] {"=", ",", ";", "true", "false"};
+            for (String search : forbidden) {
+                if (flagname.contains(search) || flagname.equalsIgnoreCase(search)) {
+                    return false;
+                }
+            }
+            return true;
+        } else return false;
+    }
+
+    public boolean getFlag(@Nullable String flag)
+    {
+        if (alarmFlags != null && flag != null) {
+            return alarmFlags.get(flag);
+        } else return false;
+    }
+    public boolean setFlag(@NonNull String flag, boolean value)
+    {
+        if (isValidFlagName(flag))
+        {
+            if (alarmFlags == null) {
+                alarmFlags = new HashMap<String, Boolean>();
+            }
+            alarmFlags.put(flag, value);
+            return true;
+
+        } else {
+            Log.w("AlarmFlags", "setFlag: invalid flag name; ignoring " + flag);
+            return false;
+        }
+    }
 
     /**
      * repeatsEveryDay
