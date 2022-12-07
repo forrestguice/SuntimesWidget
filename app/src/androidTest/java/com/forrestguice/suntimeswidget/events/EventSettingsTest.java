@@ -54,7 +54,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         String uri0 = "uri0";
         Integer color0 = Color.GREEN;
 
-        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0);
+        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0, false);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias0);
 
         EventSettings.EventAlias alias1 = new EventSettings.EventAlias(alias0);
@@ -82,7 +82,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         Set<String> list0 = EventSettings.loadEventList(context, type0);
         assertFalse(list0.contains(id0));
 
-        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0);
+        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0, false);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias0);
 
         EventSettings.saveEvent(context, alias0);
