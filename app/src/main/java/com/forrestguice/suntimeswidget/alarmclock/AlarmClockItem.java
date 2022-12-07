@@ -440,7 +440,7 @@ public class AlarmClockItem implements Parcelable
                 repeatingDays = new ArrayList<>();
                 repeatingDays.addAll(Arrays.asList(repeatingDaysArray));
             } else repeatingDays = null;
-        } else repeatingDays = AlarmClockItem.everyday();
+        } else repeatingDays = null;
     }
 
     /**

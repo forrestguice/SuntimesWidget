@@ -25,12 +25,14 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import org.junit.Before;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
@@ -85,14 +87,37 @@ public class AlarmScheduleTest
         }
     }
 
-    public SolarEvents[] getTestEvents()
+    public String[] getTestEvents()
     {
-        return new SolarEvents[] { SolarEvents.MORNING_ASTRONOMICAL, SolarEvents.MORNING_NAUTICAL, SolarEvents.MORNING_CIVIL, SolarEvents.SUNRISE, SolarEvents.NOON,
-                                   SolarEvents.SUNSET, SolarEvents.EVENING_CIVIL, SolarEvents.EVENING_NAUTICAL, SolarEvents.EVENING_ASTRONOMICAL,           // sun
-                                   SolarEvents.MOONRISE, SolarEvents.MOONNOON, SolarEvents.MOONSET, SolarEvents.MOONNIGHT,                                  // moon
-                                   SolarEvents.NEWMOON, SolarEvents.FIRSTQUARTER, SolarEvents.FULLMOON, SolarEvents.THIRDQUARTER,
-                                   SolarEvents.EQUINOX_SPRING, SolarEvents.SOLSTICE_SUMMER, SolarEvents.EQUINOX_AUTUMNAL, SolarEvents.EQUINOX_AUTUMNAL      // solstice/equinox
-        };
+        ArrayList<String> events = new ArrayList<>();
+        for (SolarEvents event : SolarEvents.values()) {    // SolarEvents enum
+            events.add(event.name());
+        }
+        return events.toArray(new String[0]);
+    }
+
+    public String[] getAddonTestEvents()
+    {
+        ArrayList<String> events = new ArrayList<>();
+        events.add("content://suntimes.naturalhour.provider/eventInfo/0_1_0");   // Natural Hour
+        events.add("content://suntimes.intervalmidpoints.provider/eventInfo/sunset_astrorise_2_0");   // Interval Midpoints
+        return events.toArray(new String[0]);
+    }
+
+    /**
+     * Addon Alarms
+     */
+    @Test
+    @Category(UnlistedTest.class)
+    public void test_updateAlarmTime_addonAlarm()
+    {
+        Calendar now = getCalendar(2022, Calendar.OCTOBER, 26, 7, 0);
+        for (String event : getAddonTestEvents())
+        {
+            test_updateAlarmTime_repeatingAlarm(event, null, now);
+            test_updateAlarmTime_repeatingAlarm(event, AlarmClockItem.everyday(), now);
+            test_updateAlarmTime_alarm(event, now);
+        }
     }
 
     /**
@@ -102,28 +127,39 @@ public class AlarmScheduleTest
     public void test_updateAlarmTime_repeatingAlarm_nullDays()
     {
         Calendar now = getCalendar(2022, Calendar.OCTOBER, 26, 7, 0);
-        for (SolarEvents event : getTestEvents()) {
-            test_updateAlarmTime_repeatingAlarm(event.name(), null, now);
+        for (String event : getTestEvents()) {
+            test_updateAlarmTime_repeatingAlarm(event, null, now);    // "event" alarms
         }
+        test_updateAlarmTime_repeatingAlarm(null, now);    // "clock time" alarm
     }
 
     @Test
     public void test_updateAlarmTime_repeatingAlarm_everyday()
     {
         Calendar now = getCalendar(2022, Calendar.OCTOBER, 26, 7, 0);
-        for (SolarEvents event : getTestEvents()) {
-            test_updateAlarmTime_repeatingAlarm(event.name(), AlarmClockItem.everyday(), now);
+        for (String event : getTestEvents()) {    // "event" alarms
+            test_updateAlarmTime_repeatingAlarm(event, AlarmClockItem.everyday(), now);
         }
+        test_updateAlarmTime_repeatingAlarm(AlarmClockItem.everyday(), now);    // "clock time" alarm
     }
 
+    public void test_updateAlarmTime_repeatingAlarm(ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
+        alarm.location = new Location("Helsinki", "60", "25", "0");
+        alarm.timezone = "Europe/Hensinki";
+        alarm.repeatingDays = repeatingDays;
+        alarm.setEvent(null);                     // "clock time" alarm
+        test_updateAlarmTime(alarm, now);
+    }
     public void test_updateAlarmTime_repeatingAlarm(String eventID, ArrayList<Integer> repeatingDays, Calendar now)
     {
         AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
         alarm.location = new Location("Helsinki", "60", "25", "0");
         alarm.timezone = "Europe/Hensinki";
-        alarm.hour = alarm.minute = -1;
         alarm.repeatingDays = repeatingDays;
-        alarm.setEvent(eventID);
+        alarm.setEvent(eventID);                  // "event" alarm
+        alarm.hour = alarm.minute = -1;
         test_updateAlarmTime(alarm, now);
     }
 
@@ -134,11 +170,21 @@ public class AlarmScheduleTest
     public void test_updateAlarmTime_alarm()
     {
         Calendar now = getCalendar(2022, Calendar.OCTOBER, 26, 7, 0);
-        for (SolarEvents event : getTestEvents()) {
-            test_updateAlarmTime_alarm(event.name(), now);
+        for (String event : getTestEvents()) {
+            test_updateAlarmTime_alarm(event, now);
         }
+        test_updateAlarmTime_alarm(now);
     }
 
+    public void test_updateAlarmTime_alarm(Calendar now)
+    {
+        AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(false);
+        alarm.location = new Location("Helsinki", "60", "25", "0");
+        alarm.timezone = "Europe/Hensinki";
+        alarm.repeatingDays = AlarmClockItem.everyday();
+        alarm.setEvent(null);
+        test_updateAlarmTime(alarm, now);
+    }
     public void test_updateAlarmTime_alarm(String eventID, Calendar now)
     {
         AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(false);
@@ -158,7 +204,10 @@ public class AlarmScheduleTest
         {
             AlarmNotifications.t_updateAlarmTime_brokenLoop = false;
 
+            alarm.modified = false;
             AlarmNotifications.updateAlarmTime(context, alarm, now, true);
+            assertTrue(alarm.modified);
+
             Calendar event = Calendar.getInstance(now.getTimeZone());
             event.setTimeInMillis(alarm.timestamp);
             Log.i("TEST", utils.calendarDateTimeDisplayString(context, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
@@ -187,49 +236,5 @@ public class AlarmScheduleTest
         c.set(Calendar.MILLISECOND, 0);
         return c;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 }
