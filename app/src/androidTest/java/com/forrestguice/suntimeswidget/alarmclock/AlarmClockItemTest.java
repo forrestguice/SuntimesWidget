@@ -138,6 +138,7 @@ public class AlarmClockItemTest
         assertEquals(item0.vibrate, item.vibrate);
         assertEquals(item0.actionID1, item.actionID1);
         assertEquals(item0.actionID1, item.actionID1);
+        assertEquals(item0.getAlarmFlags(), item.getAlarmFlags());
         if (withType) {
             assertEquals(item0.type, item.type);
         }

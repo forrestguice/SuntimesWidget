@@ -445,10 +445,17 @@ public class AlarmClockItem implements Parcelable
         } else return false;
     }
 
-    public boolean getFlag(@Nullable String flag)
+    public boolean hasFlag(@Nullable String flagname)
     {
-        if (alarmFlags != null && flag != null) {
-            return alarmFlags.get(flag);
+        if (alarmFlags != null && flagname != null) {
+            return alarmFlags.containsKey(flagname);
+        } else return false;
+    }
+    public boolean getFlag(@Nullable String flagname)
+    {
+        if (alarmFlags != null && flagname != null) {
+            Boolean value = alarmFlags.get(flagname);
+            return (value != null) ? value : false;
         } else return false;
     }
     public boolean setFlag(@NonNull String flag, boolean value)
@@ -465,6 +472,14 @@ public class AlarmClockItem implements Parcelable
             Log.w("AlarmFlags", "setFlag: invalid flag name; ignoring " + flag);
             return false;
         }
+    }
+    public boolean clearFlag(@Nullable String flag)
+    {
+        if (flag != null && alarmFlags != null && alarmFlags.containsKey(flag))
+        {
+            alarmFlags.remove(flag);
+            return true;
+        } else return false;
     }
 
     /**
