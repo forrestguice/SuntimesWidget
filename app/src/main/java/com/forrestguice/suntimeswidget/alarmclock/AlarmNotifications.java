@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -32,6 +33,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.icu.text.MessageFormat;
 import android.media.AudioManager;
@@ -104,6 +106,8 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final int NOTIFICATION_SCHEDULE_ALL_ID = -10;
     public static final int NOTIFICATION_SCHEDULE_ALL_DURATION = 4000;
+
+    public static final int NOTIFICATION_BATTERYOPT_WARNING_ID = -20;
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -949,12 +953,14 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+
     public static Notification createProgressNotification(Context context) {
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock), "");
     }
     public static Notification createProgressNotification(Context context, String message) {
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock),  message);
     }
+
     public static Notification createProgressNotification(Context context, String title, String message)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -973,6 +979,40 @@ public class AlarmNotifications extends BroadcastReceiver
 
         PendingIntent pendingView = PendingIntent.getActivity(context, title.hashCode(), getAlarmListIntent(context, null), PendingIntent.FLAG_UPDATE_CURRENT);
         builder.addAction(R.drawable.ic_action_settings, context.getString(R.string.app_name_alarmclock), pendingView);
+        return builder.build();
+    }
+
+    public static Notification createBatteryOptWarningNotification(Context context)
+    {
+        String message = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive  : R.string.configLabel_alarms_optWhiteList_unlisted)
+                + "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
+
+        Intent intent = AlarmSettings.getRequestIgnoreBatteryOptimizationSettingsIntent(context);
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
+            intent = AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setDefaults(Notification.DEFAULT_LIGHTS);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setCategory(NotificationCompat.CATEGORY_RECOMMENDATION);
+        builder.setAutoCancel(true);
+        builder.setOngoing(false);
+        builder.setOnlyAlertOnce(true);
+        builder.setContentTitle(context.getString(R.string.app_name_alarmclock));
+        builder.setContentText(message);
+        builder.setSmallIcon(R.drawable.ic_action_warning_light);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingView);
+        //builder.addAction(R.drawable.ic_action_settings, context.getString(R.string.configLabel_alarms_optWhiteList), pendingView);
+
+        NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
+        style.setBigContentTitle(context.getString(R.string.app_name_alarmclock));
+        style.bigText(message);
+        builder.setStyle(style);
+
         return builder.build();
     }
 
@@ -1044,20 +1084,22 @@ public class AlarmNotifications extends BroadcastReceiver
     /**
      * showNotification
      * Use this method to display the notification without a foreground service.
+     * @param quiet false call startAlert after showing notification
      * @see NotificationService to display a notification that lives longer than the receiver.
      */
     public static void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet)
     {
-        Notification notification = createNotification(context, item);
-        if (notification != null)
-        {
-            int notificationID = (int)item.rowID;
+        showNotification(context, createNotification(context, item), (int)item.rowID);
+        if (!quiet) {
+            startAlert(context, item);
+        }
+    }
+    public static void showNotification(Context context, @Nullable Notification notification, int notificationID)
+    {
+        if (notification != null) {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
             Log.d("DEBUG", "showNotification: " + notificationID);
-        }
-        if (!quiet) {
-            startAlert(context, item);
         }
     }
     public static void dismissNotification(Context context, int notificationID)
@@ -1135,6 +1177,9 @@ public class AlarmNotifications extends BroadcastReceiver
 
         public void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet) {
             AlarmNotifications.showNotification(context, item, quiet);
+        }
+        public void showNotification(Context context, @NonNull Notification notification, int notificationID) {
+            AlarmNotifications.showNotification(context, notification, notificationID);
         }
         public void dismissNotification(Context context, int notificationID)
         {
@@ -1236,9 +1281,15 @@ public class AlarmNotifications extends BroadcastReceiver
                                         new Handler(Looper.getMainLooper()).postDelayed(new Runnable()
                                         {
                                             @Override
-                                            public void run() {
-                                                notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
+                                            public void run()
+                                            {
                                                 sendBroadcast(getFullscreenBroadcast(null));
+                                                if (ids.length > 0) {    // show warning if alarms where rescheduled
+                                                    if (!AlarmSettings.isIgnoringBatteryOptimizations(getApplicationContext())) {
+                                                        notifications.showNotification(getApplicationContext(), createBatteryOptWarningNotification(getApplicationContext()), NOTIFICATION_BATTERYOPT_WARNING_ID);
+                                                    }
+                                                }
+                                                notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
                                                 notifications.stopSelf(startId);
                                             }
                                         }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));
