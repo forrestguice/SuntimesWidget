@@ -67,6 +67,8 @@ public class AlarmClockItem implements Parcelable
     public boolean vibrate = false;
     public String actionID0 = null;
     public String actionID1 = null;
+    public String actionID2 = null;
+    public String actionID3 = null;
 
     protected HashMap<String, Long> alarmFlags = null;
     public static final String FLAG_REMINDER_WITHIN = "reminder";    // milliseconds
@@ -101,6 +103,8 @@ public class AlarmClockItem implements Parcelable
         this.ringtoneURI = other.ringtoneURI;
         this.actionID0 = other.actionID0;
         this.actionID1 = other.actionID1;
+        this.actionID2 = other.actionID2;
+        this.actionID3 = other.actionID3;
         this.alarmFlags = (other.alarmFlags != null ? new HashMap<>(other.alarmFlags) : null);
 
         modified = other.modified;
@@ -147,6 +151,8 @@ public class AlarmClockItem implements Parcelable
         ringtoneURI = in.readString();
         actionID0 = in.readString();
         actionID1 = in.readString();
+        actionID2 = in.readString();
+        actionID3 = in.readString();
 
         setAlarmFlags(in.readString());
 
@@ -186,6 +192,8 @@ public class AlarmClockItem implements Parcelable
         out.writeString(ringtoneURI);
         out.writeString(actionID0);
         out.writeString(actionID1);
+        out.writeString(actionID2);
+        out.writeString(actionID3);
 
         out.writeString(getAlarmFlags());
 
@@ -231,6 +239,8 @@ public class AlarmClockItem implements Parcelable
         ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
         actionID0 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION0);
         actionID1 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION1);
+        actionID2 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION2);
+        actionID3 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION3);
 
         setAlarmFlags(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_FLAGS));
     }
@@ -277,6 +287,8 @@ public class AlarmClockItem implements Parcelable
         values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI, ringtoneURI);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION0, actionID0);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION1, actionID1);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION2, actionID2);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION3, actionID3);
 
         if (alarmFlags != null) {
             values.put(AlarmDatabaseAdapter.KEY_ALARM_FLAGS, getAlarmFlags());
@@ -370,6 +382,8 @@ public class AlarmClockItem implements Parcelable
     {
         String value;
         switch (actionNum) {
+            case ACTIONID_RESERVED: value = actionID3; break;
+            case ACTIONID_REMINDER: value = actionID2; break;
             case ACTIONID_DISMISS: value = actionID1; break;
             case ACTIONID_MAIN: default: value = actionID0; break;
         }
@@ -379,12 +393,16 @@ public class AlarmClockItem implements Parcelable
     {
         String value = (actionID != null  && !actionID.trim().isEmpty() ? actionID.trim() : null);
         switch (actionNum) {
+            case ACTIONID_RESERVED: actionID2 = value; break;
+            case ACTIONID_REMINDER: actionID2 = value; break;
             case ACTIONID_DISMISS: actionID1 = value; break;
             case ACTIONID_MAIN: default: actionID0 = value; break;
         }
     }
     public static final int ACTIONID_MAIN = 0;
     public static final int ACTIONID_DISMISS = 1;
+    public static final int ACTIONID_REMINDER = 2;
+    public static final int ACTIONID_RESERVED = 3;
 
     /**
      * setAlarmFlags

@@ -385,6 +385,8 @@ public class AlarmDatabaseAdapterTest
             items[i].ringtoneURI = "content://TEST_RING" + i;
             items[i].actionID0 = null;
             items[i].actionID1 = "TEST_ACTION" + i;
+            items[i].actionID2 = "TEST_ACTION" + i;
+            items[i].actionID3 = "TEST_ACTION" + i;
             items[i].setAlarmFlags(flags[i]);
             items[i].enabled = enabled[i];
         }

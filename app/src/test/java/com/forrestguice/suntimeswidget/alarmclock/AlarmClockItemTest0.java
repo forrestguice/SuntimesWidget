@@ -40,10 +40,14 @@ public class AlarmClockItemTest0
         item0.offset = 18 * 60;
         item0.enabled = true;
         item0.repeating = true;
+        item0.actionID0 = "action 0";
+        item0.actionID1 = "action 1";
+        item0.actionID2 = "action 2";
+        item0.actionID3 = null;
         item0.vibrate = true;
         item0.modified = true;
         item0.setRepeatingDays("1,2,3,4,5,6");
-        item0.setAlarmFlags("flag1=true,flag2=false,flag3=true");
+        item0.setAlarmFlags("flag1=1,flag2=0,flag3=3");
         test_alarmClockItem_new(item0);
 
         AlarmClockItem item1 = new AlarmClockItem();
@@ -88,8 +92,10 @@ public class AlarmClockItemTest0
         assertEquals(item0.ringtoneURI, item.ringtoneURI);
         assertEquals(item0.ringtoneName, item.ringtoneName);
         assertEquals(item0.vibrate, item.vibrate);
+        assertEquals(item0.actionID0, item.actionID0);
         assertEquals(item0.actionID1, item.actionID1);
-        assertEquals(item0.actionID1, item.actionID1);
+        assertEquals(item0.actionID2, item.actionID2);
+        assertEquals(item0.actionID3, item.actionID3);
         assertEquals(item0.getAlarmFlags(), item.getAlarmFlags());
         if (withType) {
             assertEquals(item0.type, item.type);
