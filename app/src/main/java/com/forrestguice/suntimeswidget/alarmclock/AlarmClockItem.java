@@ -451,12 +451,15 @@ public class AlarmClockItem implements Parcelable
             return alarmFlags.containsKey(flagname);
         } else return false;
     }
-    public long getFlag(@Nullable String flagname)
+    public long getFlag(@Nullable String flagname) {
+        return getFlag(flagname, 0L);
+    }
+    public long getFlag(@Nullable String flagname, long defaultValue)
     {
         if (alarmFlags != null && flagname != null) {
             Long value = alarmFlags.get(flagname);
-            return (value != null) ? value : 0L;
-        } else return 0L;
+            return (value != null) ? value : defaultValue;
+        } else return defaultValue;
     }
     public boolean flagIsTrue(@Nullable String flagname) {
         return (getFlag(flagname) != 0L);
