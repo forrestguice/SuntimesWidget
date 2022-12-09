@@ -904,6 +904,7 @@
     <string name="alarmMode_notification2">Notification (persistent)</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
     <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_beforeAlertTray">Before Alert:</string>               <!-- group title -->   <!-- TODO -->
     <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onDismissTray">On Dismiss:</string>               <!-- group title -->
 

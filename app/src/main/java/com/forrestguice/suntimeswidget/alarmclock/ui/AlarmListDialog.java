@@ -1474,6 +1474,7 @@ public class AlarmListDialog extends DialogFragment
         public TextView text_ringtone;
         public TextView text_action0;
         public TextView text_action1;
+        public TextView text_action2;
         public TextView text_vibrate;
         public CheckBox check_vibrate;
         public TextView text_repeat;
@@ -1527,6 +1528,7 @@ public class AlarmListDialog extends DialogFragment
             text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
             text_action0 = (TextView) view.findViewById(R.id.text_action0);
             text_action1 = (TextView) view.findViewById(R.id.text_action1);
+            text_action2 = (TextView) view.findViewById(R.id.text_action2);
             text_vibrate = (TextView) view.findViewById(R.id.text_vibrate);
             check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
             text_repeat = (TextView) view.findViewById(R.id.text_repeat);
@@ -1780,6 +1782,12 @@ public class AlarmListDialog extends DialogFragment
                 view.text_action1.setText(actionDisplayChip(context, item, 1, isSelected));
                 view.text_action1.setVisibility( item.actionID1 != null ? View.VISIBLE : View.GONE );
                 view.text_action1.setTextColor(item.enabled ? color_on : color_off);
+            }
+
+            if (view.text_action2 != null) {
+                view.text_action2.setText(actionDisplayChip(context, item, 2, isSelected));
+                view.text_action2.setVisibility( item.actionID2 != null ? View.VISIBLE : View.GONE );
+                view.text_action2.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // vibrate

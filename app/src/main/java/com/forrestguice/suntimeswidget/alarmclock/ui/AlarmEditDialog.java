@@ -389,6 +389,7 @@ public class AlarmEditDialog extends DialogFragment
         holder.check_vibrate.setOnCheckedChangeListener(pickVibrating());
         holder.chip_action0.setOnClickListener(pickAction(0));
         holder.chip_action1.setOnClickListener(pickAction(1));
+        holder.chip_action2.setOnClickListener(pickAction(2));
         holder.layout_datetime.setOnClickListener(triggerPreviewOffsetListener(holder));
     }
 

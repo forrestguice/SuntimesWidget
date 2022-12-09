@@ -91,6 +91,9 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public View chip_action1;
     public TextView text_action1;
 
+    public View chip_action2;
+    public TextView text_action2;
+
     public int res_icAlarm, res_icNotification, res_icNotification1, res_icNotification2;
     public int res_icSoundOn, res_icSoundOff;
     public int res_colorEnabled;
@@ -136,6 +139,9 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         chip_action1 = parent.findViewById(R.id.chip_action1);
         text_action1 = (TextView) parent.findViewById(R.id.text_action1);
+
+        chip_action2 = parent.findViewById(R.id.chip_action2);
+        text_action2 = (TextView) parent.findViewById(R.id.text_action2);
 
         themeHolder(context);
     }
@@ -255,6 +261,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             check_vibrate.setChecked(false);
             text_action0.setText("");
             text_action1.setText("");
+            text_action2.setText("");
         }
     }
 
@@ -274,6 +281,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         check_vibrate.setOnCheckedChangeListener(null);
         chip_action0.setOnClickListener(null);
         chip_action1.setOnClickListener(null);
+        chip_action2.setOnClickListener(null);
     }
 
     public static CharSequence displayAlarmLabel(Context context, AlarmClockItem item)
