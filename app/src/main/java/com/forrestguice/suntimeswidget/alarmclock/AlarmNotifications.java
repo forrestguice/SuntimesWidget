@@ -929,10 +929,19 @@ public class AlarmNotifications extends BroadcastReceiver
                         notificationMsg = notificationTitle;
                         notificationTitle = context.getString(R.string.alarmAction_upcomingMsg);
                         builder.setWhen(alarm.alarmtime);
-                        builder.setContentIntent(pendingView);
                         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss_early), pendingDismiss);
                         builder.setAutoCancel(false);
                         builder.setOngoing(false);     // allow reminder to be swiped away
+
+                        if (alarm.hasActionID(AlarmClockItem.ACTIONID_REMINDER))    // on-click reminder action
+                        {
+                            SuntimesData data = getData(context, alarm);
+                            data.calculate();
+                            Intent reminderIntent = WidgetActions.createIntent(context, 0, alarm.getActionID(AlarmClockItem.ACTIONID_REMINDER), data, null);
+                            if (reminderIntent != null) {
+                                builder.setContentIntent(PendingIntent.getActivity(context, alarm.hashCode(), reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                            } else builder.setContentIntent(pendingView);
+                        } else builder.setContentIntent(pendingView);
                     //} else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
                     break;
 
