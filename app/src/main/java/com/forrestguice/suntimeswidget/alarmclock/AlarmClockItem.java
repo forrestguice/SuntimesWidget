@@ -711,11 +711,13 @@ public class AlarmClockItem implements Parcelable
             APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
         }
 
-        public TimeZone getTimeZone(Location location) {
+        @NonNull
+        public TimeZone getTimeZone(@Nullable Location location) {
             return AlarmTimeZone.getTimeZone(timeZoneID(), location);
         }
 
-        public static TimeZone getTimeZone(String tzID, Location location)
+        @NonNull
+        public static TimeZone getTimeZone(@Nullable String tzID, @Nullable Location location)
         {
             if (location == null || tzID == null) {
                 return TimeZone.getDefault();

@@ -199,14 +199,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
                 text_offset.setCompoundDrawables(null, null, null, null);
             }
 
-            text_location.setText(item.location.getLabel());
+            text_location.setText((item.location != null) ? item.location.getLabel() : "");
             text_repeat.setText( displayRepeating(context, item, selected));
             text_event.setText(displayEvent(context, item));
 
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             if (event != null)
             {
-                boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location.getLatitudeAsDouble() < 0);
+                boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && ((item.location != null) && item.location.getLatitudeAsDouble() < 0);
                 Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
                 text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
