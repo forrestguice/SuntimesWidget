@@ -429,7 +429,7 @@ public class AlarmClockItem implements Parcelable
             for (String key : alarmFlags.keySet()) {
                 result.append(key).append("=").append(alarmFlags.get(key)).append(",");
             }
-            return result.toString().substring(0, result.length() - 1);
+            return ((result.toString().isEmpty()) ? null : result.toString().substring(0, result.length() - 1));
         } else return null;
     }
 
