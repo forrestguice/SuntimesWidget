@@ -1694,7 +1694,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledState;
                                 if (item.type == AlarmClockItem.AlarmType.ALARM)
                                 {
-                                    long reminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
+                                    long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, AlarmSettings.loadPrefAlarmUpcoming(context));
                                     boolean verySoon = (((item.alarmtime - now) < reminderWithin) || reminderWithin <= 0);
                                     nextState = (verySoon ? AlarmState.STATE_SCHEDULED_SOON : AlarmState.STATE_SCHEDULED_DISTANT);
                                     if (verySoon)
@@ -2004,7 +2004,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onScheduledDistant)");
-                        long transitionAt = item.alarmtime - AlarmSettings.loadPrefAlarmUpcoming(context) + 1000;
+                        long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, AlarmSettings.loadPrefAlarmUpcoming(context));
+                        long transitionAt = item.alarmtime - reminderWithin + 1000;
                         addAlarmTimeout(context, ACTION_SCHEDULE, item.getUri(), transitionAt);
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
@@ -2048,7 +2049,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             @Override
                             public void onItemsLoaded(Long[] ids)
                             {
-                                boolean showReminder = (AlarmSettings.loadPrefAlarmUpcoming(context) > 0);
+                                boolean showReminder = (item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, AlarmSettings.loadPrefAlarmUpcoming(context)) > 0);
                                 notifications.dismissNotification(context, (int)item.rowID);
                                 if (showReminder) {
                                     notifications.showNotification(context, item, true);             // show upcoming reminder

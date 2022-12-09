@@ -67,7 +67,9 @@ public class AlarmClockItem implements Parcelable
     public boolean vibrate = false;
     public String actionID0 = null;
     public String actionID1 = null;
+
     protected HashMap<String, Long> alarmFlags = null;
+    public static final String FLAG_REMINDER_WITHIN = "reminder";    // milliseconds
 
     public boolean modified = false;
     public AlarmState state = null;
