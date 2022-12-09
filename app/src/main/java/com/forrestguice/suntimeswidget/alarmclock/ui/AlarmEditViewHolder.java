@@ -224,6 +224,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             check_vibrate.setChecked(item.vibrate);
             text_action0.setText(displayAction(context, item, 0));
             text_action1.setText(displayAction(context, item, 1));
+            text_action2.setText(displayAction(context, item, 2));
 
             text_datetime_offset.setText(isSchedulable ? text_offset.getText() : "");
             text_datetime_offset.setVisibility(preview_offset ? View.INVISIBLE : View.VISIBLE);

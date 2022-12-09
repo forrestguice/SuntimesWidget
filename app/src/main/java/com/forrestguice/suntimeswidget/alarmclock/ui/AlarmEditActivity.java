@@ -84,6 +84,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final int REQUEST_SETTINGS = 20;
     public static final int REQUEST_ACTION0 = 40;
     public static final int REQUEST_ACTION1 = 50;
+    public static final int REQUEST_ACTION2 = 60;
+    public static final int REQUEST_ACTION3 = 70;
 
     private static final String DIALOGTAG_EVENT = "alarmevent";
     private static final String DIALOGTAG_REPEAT = "alarmrepetition";
@@ -173,6 +175,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
             case REQUEST_ACTION1:
                 onActionResult(resultCode, data, 1);
+                break;
+
+            case REQUEST_ACTION2:
+                onActionResult(resultCode, data, 2);
+                break;
+
+            case REQUEST_ACTION3:
+                onActionResult(resultCode, data, 3);
                 break;
         }
     }
@@ -946,6 +956,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     }
     protected int getActionRequestCode(int actionNum) {
         switch (actionNum) {
+            case 3: return REQUEST_ACTION3;
+            case 2: return REQUEST_ACTION2;
             case 1: return REQUEST_ACTION1;
             case 0: default: return REQUEST_ACTION0;
         }
