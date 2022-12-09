@@ -374,7 +374,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public static CharSequence displayRepeating(Context context, AlarmClockItem item, boolean isSelected)
     {
         SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
-        boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
+        boolean noRepeat = (item.repeatingDays != null && item.repeatingDays.isEmpty());
         String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                 ? context.getString(R.string.alarmOption_repeat_all)
                 : noRepeat

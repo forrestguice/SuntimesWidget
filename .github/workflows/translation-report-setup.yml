@@ -1,0 +1,75 @@
+name: Translation Report Setup
+on:
+  workflow_call:
+    inputs:
+      language:
+        type: string
+        required: true
+
+jobs:  
+  translation-report-setup:
+    runs-on: ubuntu-latest
+    steps:              
+    
+    - name: Checkout Branch
+      uses: actions/checkout@v3
+                      
+    - name: Lookup Translation Info
+      id: translation-info
+      run: |
+          missingIssue=false
+          while IFS= read -r line; do
+              echo "Read translation info: $line"
+              if [[ "$line" =~ ^#.* ]]; then
+                  echo "Skipping line (comment)"
+                  continue
+              fi              
+              line_parts=($line)              
+              n=3
+              if [ "${#line_parts[@]}" -lt "${n}" ]; then
+                  echo "Skipping line (wrong number of elements)"
+                  continue
+              fi
+          
+              language_code=${line_parts[0]}
+              filepath=${line_parts[1]}
+              
+              issue=${line_parts[2]}
+              
+              languageName=""              
+              n=${#line_parts[@]}
+              for (( i=3; i<=n; i++ ))
+              do
+                  languageName="$languageName ${line_parts[$i]}"
+              done            
+              languageName=$(echo $languageName | tr -d '"')
+ 
+              wasFound=false
+              if [ "${language_code}" == "${{inputs.language}}" ]; then
+                  wasFound=true
+                  echo "Found translation info: ${{inputs.language}} ($languageName) ($issue)"
+                  echo "language=${{inputs.language}}" >> $GITHUB_OUTPUT
+                  echo "languageName=$languageName" >> $GITHUB_OUTPUT
+                  echo "filepath=$filepath" >> $GITHUB_OUTPUT
+                  echo "issue=$issue" >> $GITHUB_OUTPUT              
+                  if [ "$issue" -lt "1" ]; then
+                      echo "Issue number is missing: $issue"
+                      missingIssue=true
+                      echo "missingIssue=true" >> $GITHUB_OUTPUT                  
+                  fi
+                  break
+              fi                          
+          done < .github/TRANSLATIONS
+          echo "result=$missingIssue" >> $GITHUB_OUTPUT
+    
+    - name: Create issue
+      id: translation-issue
+      if: ${{ steps.translation-info.outputs.result }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
+          LANGUAGE_CODE: ${{steps.translation-info.outputs.language}}
+          LANGUAGE_NAME: ${{steps.translation-info.outputs.languageName}}
+          LANGUAGE_FILE: ${{steps.translation-info.outputs.filepath}}
+      with:
+          filename: .github/translation-issue-template.md

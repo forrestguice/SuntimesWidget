@@ -508,6 +508,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             return;
         }
 
+        if (key.endsWith(AlarmSettings.PREF_KEY_ALARM_UPCOMING))
+        {
+            Log.i(LOG_TAG, "onPreferenceChanged: " + AlarmSettings.PREF_KEY_ALARM_UPCOMING + ", rescheduling alarms..");
+            context.sendBroadcast(new Intent(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, null)));
+            return;
+        }
+
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
         {
             try {
@@ -2164,11 +2171,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                             {
                                 dialog.dismiss();
                                 if (isIgnoringOptimizations) {
-                                    openBatteryOptimizationSettings(context);
+                                    AlarmSettings.openBatteryOptimizationSettings(context);
                                 } else {
                                     if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
-                                        requestIgnoreBatteryOptimization(context);
-                                    } else openBatteryOptimizationSettings(context);
+                                        AlarmSettings.requestIgnoreBatteryOptimization(context);
+                                    } else AlarmSettings.openBatteryOptimizationSettings(context);
                                 }
                             }
                         })
@@ -2185,44 +2192,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                             }
                         });
                 //.setNegativeButton(context.getString(R.string.dialog_cancel), null);
-    }
-
-    public static void openBatteryOptimizationSettings(final Context context)
-    {
-        if (Build.VERSION.SDK_INT >= 23) {
-            try {
-                context.startActivity(getRequestIgnoreBatteryOptimizationSettingsIntent(context));
-            } catch (ActivityNotFoundException e) {
-                Log.e(LOG_TAG, "Failed to launch battery optimization settings Intent: " + e);
-            }
-        }
-    }
-    public static void requestIgnoreBatteryOptimization(final Context context)
-    {
-        if (Build.VERSION.SDK_INT >= 23) {
-            try {
-                context.startActivity( getRequestIgnoreBatteryOptimizationIntent(context));
-            } catch (ActivityNotFoundException e) {
-                Log.e(LOG_TAG, "Failed to launch battery optimization request Intent: " + e);
-            }
-        }
-    }
-
-    /**
-     * Recommended; this Intent shows the optimization list (and the user must find and select the app)
-     */
-    @TargetApi(23)
-    public static Intent getRequestIgnoreBatteryOptimizationSettingsIntent(Context context) {
-        return new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
-    }
-
-    /**
-     * This Intent goes directly to the app's optimization settings.
-     * Requires permission `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`
-     */
-    @TargetApi(23)
-    public static Intent getRequestIgnoreBatteryOptimizationIntent(Context context) {
-        return new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + context.getPackageName()));
     }
 
     protected static boolean isDeviceSecure(Context context)
