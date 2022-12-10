@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -59,6 +61,7 @@ public class AlarmEditDialog extends DialogFragment
     public static final String EXTRA_SHOW_FRAME = "show_frame";
     public static final String EXTRA_SHOW_OVERFLOW = "show_overflow";
 
+    public static final String PREFS_ALARMEDIT = "com.forrestguice.suntimeswidget.alarmedit";
     protected View dialogFrame;
     protected TextView text_title;
     protected AlarmClockItem item = null, original = null;
@@ -72,6 +75,10 @@ public class AlarmEditDialog extends DialogFragment
 
     public void initFromItem(AlarmClockItem item, boolean addItem)
     {
+        if (addItem) {
+            loadSettings(getContext(), item);
+        }
+
         this.original = (addItem ? null : item);
         this.item = new AlarmClockItem(item);
         this.item.modified = false;
@@ -270,12 +277,24 @@ public class AlarmEditDialog extends DialogFragment
         @Override
         public void onClick(View v)
         {
+            saveSettings(getContext());
             if (onAccepted != null) {
                 onAccepted.onClick(getDialog(), 0);
             }
             dismiss();
         }
     };
+
+    protected void saveSettings(Context context)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_ALARMEDIT, 0).edit();
+        prefs.apply();
+    }
+
+    protected void loadSettings(Context context, AlarmClockItem item)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_ALARMEDIT, 0);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////

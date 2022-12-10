@@ -293,13 +293,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     protected void returnItem(AlarmClockItem item)
     {
+        editor.saveSettings(AlarmEditActivity.this);
         Intent intent = getIntent();
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
         setResult(Activity.RESULT_OK, intent);
         supportFinishAfterTransition();
     }
 
-    private DialogInterface.OnClickListener onEditorAccepted = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onEditorAccepted = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             returnItem(editor.getItem());
@@ -970,6 +971,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (actionBar != null) {
             actionBar.setTitle(forItem != null ? forItem.type.getDisplayString() : "");
         }
+
     }
 
     @Override
