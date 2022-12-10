@@ -42,15 +42,16 @@ public class AlarmClockItemTest0
         test_alarmClockItem_new(item0);
 
         AlarmClockItem item1 = new AlarmClockItem();
-        item0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item1.type = AlarmClockItem.AlarmType.NOTIFICATION;
         test_alarmClockItem_new(item1);
 
         AlarmClockItem item2 = new AlarmClockItem();
-        item0.type = null;
+        item2.repeatingDays = null;
+        item2.type = null;
 
         AlarmClockItem item3 = new AlarmClockItem(item2);
-        test_equals(item2, item3, false, true);
-        assertEquals((item2.type != null ? item2.type : ALARM), item3.type);
+        test_equals(item2, item3, true, true);
+        //assertEquals(item2.type, item3.type);
     }
 
     public void test_alarmClockItem_new(AlarmClockItem item0)

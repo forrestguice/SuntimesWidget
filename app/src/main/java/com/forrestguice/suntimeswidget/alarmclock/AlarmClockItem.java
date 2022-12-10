@@ -190,7 +190,10 @@ public class AlarmClockItem implements Parcelable
         label = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
 
         repeating = alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) && (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
-        setRepeatingDays(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
+        String days = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS);
+        if (days != null) {
+            setRepeatingDays(days);
+        } else this.repeatingDays = null;
 
         alarmtime = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED) : -1L);
         timestamp = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_DATETIME) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME) : -1L);
