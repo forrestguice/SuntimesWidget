@@ -90,6 +90,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private static final String DIALOGTAG_EVENT = "alarmevent";
     private static final String DIALOGTAG_REPEAT = "alarmrepetition";
     private static final String DIALOGTAG_LABEL = "alarmlabel";
+    private static final String DIALOGTAG_NOTE = "alarmnote";
     private static final String DIALOGTAG_TIME = "alarmtime";
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
@@ -394,6 +395,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
             case R.id.setAlarmLabel:
                 editor.itemView.edit_label.performClick();
+                return true;
+
+            case R.id.setAlarmNote:
+                editor.itemView.edit_note.performClick();
                 return true;
 
             case R.id.setAlarmOffset:
@@ -789,6 +794,35 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     };
 
     /**
+     * pickNote
+     */
+    protected void pickNote(@NonNull AlarmClockItem item)
+    {
+        AlarmLabelDialog dialog = new AlarmLabelDialog();    // TODO: multi-line
+        dialog.setDialogTitle(getString(R.string.alarmnote_dialog_title));
+        dialog.setMultiLine(true);
+        dialog.setAccentColor(colorAlarmEnabled);
+        dialog.setLabel(item.note);
+        dialog.setOnAcceptedListener(onNoteChanged);
+        dialog.show(getSupportFragmentManager(), DIALOGTAG_NOTE);
+    }
+    private DialogInterface.OnClickListener onNoteChanged = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmLabelDialog dialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_NOTE);
+            if (editor != null && dialog != null)
+            {
+                AlarmClockItem item = editor.getItem();
+                item.note = dialog.getLabel();
+                editor.notifyItemChanged();
+            }
+        }
+    };
+
+    /**
      * pickOffset
      */
     protected void pickOffset(@NonNull AlarmClockItem item)
@@ -977,6 +1011,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     public void onRequestLabel(AlarmClockItem forItem) {
         pickLabel(forItem);
+    }
+
+    @Override
+    public void onRequestNote(AlarmClockItem forItem) {
+        pickNote(forItem);
     }
 
     @Override

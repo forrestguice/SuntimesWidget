@@ -68,6 +68,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public ImageButton menu_type, menu_overflow;
     public EditText edit_label;
+    public TextView edit_note;
 
     public View chip_offset;
     public TextView text_offset;
@@ -122,6 +123,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         menu_type = (ImageButton) parent.findViewById(R.id.type_menu);
         menu_overflow = (ImageButton) parent.findViewById(R.id.overflow_menu);
         edit_label = (EditText) parent.findViewById(R.id.edit_label);
+        edit_note = (TextView) parent.findViewById(R.id.edit_note);
 
         chip_offset = parent.findViewById(R.id.chip_offset);
         text_offset = (TextView) parent.findViewById(R.id.text_offset);
@@ -195,6 +197,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             menu_type.setContentDescription(item.type.getDisplayString());
 
             edit_label.setText(item.getLabel(""));
+
+            if (item.note == null)
+            {
+                CharSequence emptyNote = "";
+                edit_note.setText(emptyNote);
+
+            } else edit_note.setText(item.note);
 
             text_offset.setText(displayOffset(context, item));
 
@@ -276,6 +285,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_date.setText("");
             text_note.setText("");
             edit_label.setText("");
+            edit_note.setText("");
             text_offset.setText("");
             text_event.setText("");
             text_location.setText("");
@@ -295,6 +305,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         menu_type.setOnClickListener(null);
         menu_overflow.setOnClickListener(null);
         edit_label.setOnClickListener(null);
+        edit_note.setOnClickListener(null);
         chip_offset.setOnClickListener(null);
         chip_offset.setOnClickListener(null);
         chip_event.setOnClickListener(null);

@@ -882,6 +882,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        SuntimesData data = null;
 
         String eventString = alarm.getEvent();
         AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
@@ -894,8 +895,14 @@ public class AlarmNotifications extends BroadcastReceiver
 
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = (eventDisplay != null ? eventDisplay : "");
-        if (alarm.note != null) {
+        if (alarm.note != null)
+        {
+            if (data == null) {
+                data = getData(context, alarm);
+                data.calculate();
+            }
             notificationMsg += ((eventDisplay != null) ? "\n\n" : "") + alarm.note;   // TODO: support for %s substitutions
+            notificationMsg = utils.displayStringForTitlePattern(context, notificationMsg, data);
         }
         int notificationIcon = alarm.getIcon();
         int notificationColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
@@ -938,8 +945,10 @@ public class AlarmNotifications extends BroadcastReceiver
 
                         if (alarm.hasActionID(AlarmClockItem.ACTIONID_REMINDER))    // on-click reminder action
                         {
-                            SuntimesData data = getData(context, alarm);
-                            data.calculate();
+                            if (data == null) {
+                                data = getData(context, alarm);
+                                data.calculate();
+                            }
                             String reminderActionID = alarm.getActionID(AlarmClockItem.ACTIONID_REMINDER);
                             Intent reminderIntent = WidgetActions.createIntent(context, 0, reminderActionID, data, null);
                             if (reminderIntent != null)
@@ -998,8 +1007,10 @@ public class AlarmNotifications extends BroadcastReceiver
             PendingIntent pendingAction = null;
             if (alarm.hasActionID(AlarmClockItem.ACTIONID_MAIN))
             {
-                SuntimesData data = getData(context, alarm);
-                data.calculate();
+                if (data == null) {
+                    data = getData(context, alarm);
+                    data.calculate();
+                }
                 Intent actionIntent = WidgetActions.createIntent(context.getApplicationContext(), 0, alarm.getActionID(AlarmClockItem.ACTIONID_MAIN), data, null);
                 pendingAction = (actionIntent != null ? PendingIntent.getBroadcast(context, alarm.hashCode(), actionIntent, PendingIntent.FLAG_UPDATE_CURRENT) : null);
             }

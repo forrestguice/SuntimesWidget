@@ -800,6 +800,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
 
         @Override
+        public void onRequestNote(AlarmClockItem forItem) { /*pickNote(forItem)*/ }
+
+        @Override
         public void onRequestRingtone(AlarmClockItem forItem)
         {
             pickRingtone(forItem);
@@ -920,6 +923,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
         @Override
         public void onRequestLabel(AlarmClockItem forItem) { /* EMPTY */ }
+
+        @Override
+        public void onRequestNote(AlarmClockItem forItem) {
+        }
 
         @Override
         public void onRequestRingtone(AlarmClockItem forItem) {

@@ -33,7 +33,7 @@
             android:id="@+id/layout_header" android:visibility="visible"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical"
-            android:layout_marginTop="6dp" android:layout_marginBottom="8dp">
+            android:layout_marginTop="6dp" android:layout_marginBottom="4dp">
 
             <ImageButton
                 android:id="@+id/type_menu"
@@ -58,6 +58,14 @@
                 style="?attr/actionOverflowButtonStyle" />
 
         </LinearLayout>
+
+        <TextView android:drawableLeft="?attr/icActionAddLabel"
+            android:id="@+id/edit_note" android:background="?attr/selectableItemBackground"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+            android:layout_marginBottom="12dp" android:drawablePadding="8dp"
+            android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_small"
+            android:maxLines="3" tools:text="note" />
 
         <include layout="@layout/layout_listitem_alarmtime" />
 

@@ -411,6 +411,7 @@ public class AlarmEditDialog extends DialogFragment
         holder.menu_type.setOnClickListener(showAlarmTypeMenu());
         holder.menu_overflow.setOnClickListener(showOverflowMenu());
         holder.edit_label.setOnClickListener(pickLabel());
+        holder.edit_note.setOnClickListener(pickNote());
         holder.chip_offset.setOnClickListener(pickOffset());
         holder.chip_event.setOnClickListener(pickEvent());
         holder.chip_location.setOnClickListener(pickLocation());
@@ -460,6 +461,18 @@ public class AlarmEditDialog extends DialogFragment
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestLabel(item);
+                }
+            }
+        };
+    }
+
+    private View.OnClickListener pickNote()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestNote(item);
                 }
             }
         };
