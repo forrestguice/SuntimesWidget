@@ -125,6 +125,7 @@ public class AlarmClockItemTest
         assertEquals(item0.rowID, item.rowID);
         assertEquals(item0.enabled, item.enabled);
         assertEquals(item0.label, item.label);
+        assertEquals(item0.note, item.note);
         assertEquals(item0.location, item.location);
         assertEquals(item0.timezone, item.timezone);
 

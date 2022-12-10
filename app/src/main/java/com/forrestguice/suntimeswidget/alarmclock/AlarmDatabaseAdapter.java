@@ -51,7 +51,7 @@ import java.util.List;
  * 1 initial version
  * 2 adds column ALARM_TIMEZONE ("timezone")
  * 3 adds column ALARM_ACTION0 ("actionID0"), ALARM_ACTION1 ("actionID1")
- * 4 adds column ALARM_FLAGS ("flags"), ALARM_ACTION2 ("actionID2"), ALARM_ACTION3 ("actionID3")
+ * 4 adds column ALARM_NOTE ("note"), ALARM_FLAGS ("flags"), ALARM_ACTION2 ("actionID2"), ALARM_ACTION3 ("actionID3")
  */
 public class AlarmDatabaseAdapter
 {
@@ -133,6 +133,9 @@ public class AlarmDatabaseAdapter
     public static final String KEY_ALARM_RINGTONE_URI = "ringtoneURI";                              // ringtone uri (optional)
     public static final String DEF_ALARM_RINGTONE_URI = KEY_ALARM_RINGTONE_URI + " text";
 
+    public static final String KEY_ALARM_NOTE = "note";                                             // note (optional)
+    public static final String DEF_ALARM_NOTE = KEY_ALARM_NOTE + " text";
+
     public static final String KEY_ALARM_FLAGS = "flags";                                           // alarm flags (optional)
     public static final String DEF_ALARM_FLAGS = KEY_ALARM_FLAGS + " text";
 
@@ -170,15 +173,17 @@ public class AlarmDatabaseAdapter
                                                          + DEF_ALARM_ACTION2 + ", "
                                                          + DEF_ALARM_ACTION3 + ", "
 
-                                                         + DEF_ALARM_FLAGS;
+                                                         + DEF_ALARM_FLAGS + ", "
+                                                         + DEF_ALARM_NOTE;
 
     private static final String TABLE_ALARMS_CREATE = "create table " + TABLE_ALARMS + " (" + TABLE_ALARMS_CREATE_COLS + ");";
     private static final String[] TABLE_ALARMS_UPGRADE_1_2 = new String[] { "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_TIMEZONE };
     private static final String[] TABLE_ALARMS_UPGRADE_2_3 = new String[] { "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION0,
                                                                             "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION1 };
-    private static final String[] TABLE_ALARMS_UPGRADE_3_4 = new String[] { "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION2 ,
-                                                                            "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION3 ,
-                                                                            "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_FLAGS };
+    private static final String[] TABLE_ALARMS_UPGRADE_3_4 = new String[] { "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION2,
+                                                                            "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION3,
+                                                                            "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_FLAGS,
+                                                                            "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_NOTE };
     private static final String[] TABLE_ALARMS_DOWNGRADE = new String[] { "DROP TABLE " + TABLE_ALARMS, TABLE_ALARMS_CREATE };
 
     private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME, KEY_ALARM_LABEL };
@@ -187,7 +192,7 @@ public class AlarmDatabaseAdapter
                                                                           KEY_ALARM_DATETIME_ADJUSTED, KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_HOUR, KEY_ALARM_DATETIME_MINUTE, KEY_ALARM_DATETIME_OFFSET,
                                                                           KEY_ALARM_SOLAREVENT, KEY_ALARM_PLACELABEL, KEY_ALARM_LATITUDE, KEY_ALARM_LONGITUDE, KEY_ALARM_ALTITUDE,
                                                                           KEY_ALARM_VIBRATE, KEY_ALARM_RINGTONE_NAME, KEY_ALARM_RINGTONE_URI,
-                                                                          KEY_ALARM_TIMEZONE, KEY_ALARM_ACTION0, KEY_ALARM_ACTION1, KEY_ALARM_ACTION2, KEY_ALARM_ACTION3, KEY_ALARM_FLAGS };
+                                                                          KEY_ALARM_TIMEZONE, KEY_ALARM_ACTION0, KEY_ALARM_ACTION1, KEY_ALARM_ACTION2, KEY_ALARM_ACTION3, KEY_ALARM_FLAGS, KEY_ALARM_NOTE };
 
     //
     // Table: AlarmState
@@ -464,7 +469,8 @@ public class AlarmDatabaseAdapter
                 KEY_ALARM_ACTION1 + separator +
                 KEY_ALARM_ACTION2 + separator +
                 KEY_ALARM_ACTION3 + separator +
-                KEY_ALARM_FLAGS;
+                KEY_ALARM_FLAGS + separator +
+                KEY_ALARM_NOTE;
         return line;
     }
     public String addAlarmCSV_row( ContentValues alarm )
@@ -494,7 +500,8 @@ public class AlarmDatabaseAdapter
                       alarm.getAsString(KEY_ALARM_ACTION1) + separator +
                       alarm.getAsString(KEY_ALARM_ACTION2) + separator +
                       alarm.getAsString(KEY_ALARM_ACTION3) + separator +
-                      alarm.getAsString(KEY_ALARM_FLAGS);
+                      alarm.getAsString(KEY_ALARM_FLAGS) + separator +
+                      alarm.getAsString(KEY_ALARM_NOTE);
         return line;
     }
 

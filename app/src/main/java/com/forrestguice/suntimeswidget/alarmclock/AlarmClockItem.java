@@ -59,6 +59,7 @@ public class AlarmClockItem implements Parcelable
     public int hour = -1, minute = -1;
     public long offset = 0;
     public String label = null;
+    public String note = null;
     private String event = null;
     public String timezone = null;
     public Location location = null;
@@ -84,6 +85,7 @@ public class AlarmClockItem implements Parcelable
         this.type = other.type;
         this.enabled = other.enabled;
         this.label = other.label;
+        this.note = other.note;
 
         this.repeating = other.repeating;
         this.repeatingDays = ((other.repeatingDays != null) ? new ArrayList<Integer>(other.repeatingDays) : null);
@@ -121,6 +123,7 @@ public class AlarmClockItem implements Parcelable
         type = AlarmType.valueOf(in.readString(), null);
         enabled = (in.readInt() == 1);
         label = in.readString();
+        note = in.readString();
 
         repeating = (in.readInt() == 1);
         setRepeatingDays(in.readString());
@@ -167,6 +170,7 @@ public class AlarmClockItem implements Parcelable
         out.writeString(type != null ? type.name() : null);
         out.writeInt(enabled ? 1 : 0);
         out.writeString(label);
+        out.writeString(note);
 
         out.writeInt(repeating ? 1 : 0);
         out.writeString(getRepeatingDays());
@@ -207,6 +211,7 @@ public class AlarmClockItem implements Parcelable
         type = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
         enabled = alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) && (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
         label = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
+        note = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_NOTE);
 
         repeating = alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) && (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
         setRepeatingDays(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
@@ -293,6 +298,10 @@ public class AlarmClockItem implements Parcelable
         if (alarmFlags != null) {
             values.put(AlarmDatabaseAdapter.KEY_ALARM_FLAGS, getAlarmFlags());
         } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_FLAGS);
+
+        if (note != null) {
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_NOTE, note);
+        } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_NOTE);
 
         return values;
     }
