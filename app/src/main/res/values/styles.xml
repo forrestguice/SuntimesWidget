@@ -148,6 +148,7 @@
         <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off_ref</item>
         <item name="checkVibrate">@drawable/check_vibrate_ref</item>
         <item name="checkVisibility">@drawable/check_visible_ref</item>
+        <item name="checkReminder">@drawable/check_reminder_ref</item>
 
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
@@ -330,6 +331,7 @@
         <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off_light</item>
         <item name="checkVibrate">@drawable/check_vibrate_light</item>
         <item name="checkVisibility">@drawable/check_visible_light</item>
+        <item name="checkReminder">@drawable/check_reminder_light</item>
 
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
@@ -514,6 +516,7 @@
         <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off</item>
         <item name="checkVibrate">@drawable/check_vibrate_dark</item>
         <item name="checkVisibility">@drawable/check_visible_dark</item>
+        <item name="checkReminder">@drawable/check_reminder_dark</item>
 
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>

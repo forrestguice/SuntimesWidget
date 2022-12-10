@@ -82,6 +82,7 @@
     <drawable name="ic_action_visibility_off_ref">@drawable/ic_action_visibility_off_light</drawable>
     <drawable name="check_vibrate_ref">@drawable/check_vibrate_light</drawable>
     <drawable name="check_visible_ref">@drawable/check_visible_light</drawable>
+    <drawable name="check_reminder_ref">@drawable/check_reminder_light</drawable>
 
     <drawable name="ic_action_next_item_ref">@drawable/ic_action_next_item_light</drawable>
     <drawable name="ic_action_previous_item_ref">@drawable/ic_action_previous_item_light</drawable>

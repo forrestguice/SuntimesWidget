@@ -150,6 +150,7 @@
 
     <attr name="checkVibrate" format="reference" />
     <attr name="checkVisibility" format="reference" />
+    <attr name="checkReminder" format="reference" />
 
     <attr name="text_size_tiny" format="dimension" />
     <attr name="text_size_xsmall" format="dimension" />
