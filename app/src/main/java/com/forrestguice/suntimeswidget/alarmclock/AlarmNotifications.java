@@ -937,11 +937,15 @@ public class AlarmNotifications extends BroadcastReceiver
                         {
                             SuntimesData data = getData(context, alarm);
                             data.calculate();
-                            Intent reminderIntent = WidgetActions.createIntent(context, 0, alarm.getActionID(AlarmClockItem.ACTIONID_REMINDER), data, null);
-                            if (reminderIntent != null) {
-                                builder.setContentIntent(PendingIntent.getActivity(context, alarm.hashCode(), reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-                            } else builder.setContentIntent(pendingView);
-                        } else builder.setContentIntent(pendingView);
+                            String reminderActionID = alarm.getActionID(AlarmClockItem.ACTIONID_REMINDER);
+                            Intent reminderIntent = WidgetActions.createIntent(context, 0, reminderActionID, data, null);
+                            if (reminderIntent != null)
+                            {
+                                String actionTitle = WidgetActions.loadActionLaunchPref(context, 0, reminderActionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+                                builder.addAction(R.drawable.ic_action_extension, actionTitle, PendingIntent.getActivity(context, alarm.hashCode(), reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                            }
+                        }
+                        builder.setContentIntent(pendingView);
                     //} else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
                     break;
 
