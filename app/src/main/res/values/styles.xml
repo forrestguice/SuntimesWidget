@@ -137,6 +137,7 @@
         <item name="icActionCancel">@drawable/ic_action_cancel_ref</item>
         <item name="icActionShare">@drawable/ic_action_share_ref</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze_ref</item>
+        <item name="icActionAddLabel">@drawable/ic_action_addlabel_ref</item>
 
         <item name="icActionPlay">@drawable/ic_action_play_ref</item>
         <item name="icActionPause">@drawable/ic_action_pause_ref</item>
@@ -320,6 +321,7 @@
         <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
         <item name="icActionShare">@drawable/ic_action_share_light</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze_light</item>
+        <item name="icActionAddLabel">@drawable/ic_action_addlabel_light</item>
 
         <item name="icActionPlay">@drawable/ic_action_play_light</item>
         <item name="icActionPause">@drawable/ic_action_pause_light</item>
@@ -505,6 +507,7 @@
         <item name="icActionCancel">@drawable/ic_action_cancel</item>
         <item name="icActionShare">@drawable/ic_action_share</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze</item>
+        <item name="icActionAddLabel">@drawable/ic_action_addlabel</item>
 
         <item name="icActionPlay">@drawable/ic_action_play</item>
         <item name="icActionPause">@drawable/ic_action_pause</item>

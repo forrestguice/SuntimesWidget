@@ -71,6 +71,7 @@
     <drawable name="ic_action_cancel_ref">@drawable/ic_action_cancel_light</drawable>
     <drawable name="ic_action_share_ref">@drawable/ic_action_share_light</drawable>
     <drawable name="ic_action_snooze_ref">@drawable/ic_action_snooze_light</drawable>
+    <drawable name="ic_action_addlabel_ref">@drawable/ic_action_addlabel_light</drawable>
 
     <drawable name="ic_action_play_ref">@drawable/ic_action_play_light</drawable>
     <drawable name="ic_action_pause_ref">@drawable/ic_action_pause_light</drawable>
