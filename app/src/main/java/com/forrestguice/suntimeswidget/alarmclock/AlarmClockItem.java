@@ -423,6 +423,7 @@ public class AlarmClockItem implements Parcelable
      */
     public void setRepeatingDays(@Nullable String repeatingDaysString)
     {
+        repeatingDays = new ArrayList<>();
         if (repeatingDaysString != null)
         {
             String[] repeatingDaysStringArray = repeatingDaysString.split(",");
@@ -436,12 +437,10 @@ public class AlarmClockItem implements Parcelable
                 }
             }
 
-            if (repeatingDaysArray != null)
-            {
-                repeatingDays = new ArrayList<>();
+            if (repeatingDaysArray != null) {
                 repeatingDays.addAll(Arrays.asList(repeatingDaysArray));
-            } else repeatingDays = null;
-        } else repeatingDays = null;
+            }
+        }
     }
 
     /**
