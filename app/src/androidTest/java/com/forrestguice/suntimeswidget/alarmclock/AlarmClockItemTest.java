@@ -83,6 +83,7 @@ public class AlarmClockItemTest
         item0.offset = 18 * 60;
         item0.enabled = true;
         item0.repeating = true;
+        item0.setRepeatingDays("2,3,4,5,6");
         item0.vibrate = true;
         item0.actionID0 = "action 0";
         item0.actionID1 = "action 1";
@@ -92,11 +93,14 @@ public class AlarmClockItemTest
         test_alarmClockItem_new(item0);
 
         AlarmClockItem item1 = new AlarmClockItem();
-        item0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item1.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item1.setFlag("TEST1", 1);
+        item1.setFlag("TEST2", 2);
         test_alarmClockItem_new(item1);
 
         AlarmClockItem item2 = new AlarmClockItem();
-        item0.type = null;
+        item2.type = null;
+        item2.repeatingDays = null;
         test_alarmClockItem_new(item2);
     }
     public void test_alarmClockItem_new(AlarmClockItem item0)
@@ -113,7 +117,8 @@ public class AlarmClockItemTest
         ContentValues values = item2.asContentValues(true);
         AlarmClockItem item3 = new AlarmClockItem();
         item3.fromContentValues(context, values);
-        test_equals(item2, item3);
+        test_equals(item2, item3, false, true);
+        assertEquals(item2.type != null ? item2.type : AlarmClockItem.AlarmType.ALARM, item3.type);
     }
 
     public static void test_equals(AlarmClockItem item0, AlarmClockItem item) {
