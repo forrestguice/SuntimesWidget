@@ -136,48 +136,53 @@
                 app:layout_constraintStart_toEndOf="@+id/option_repeat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:animateLayoutChanges="true">
 
+                <LinearLayout android:id="@+id/tray_beforeAlert" android:orientation="vertical"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
 
-                <TextView style="@style/ChipTrayLabel"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-                    android:text="@string/configLabel_alarmEdit_beforeAlertTray" />
-
-                <LinearLayout
-                    android:id="@+id/layout_options2" style="@style/ChipTray"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:gravity="start|center_vertical" android:orientation="horizontal">
+                    <TextView style="@style/ChipTrayLabel"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+                        android:text="@string/configLabel_alarmEdit_beforeAlertTray" />
 
                     <LinearLayout
-                        android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                        android:id="@+id/layout_options2" style="@style/ChipTray"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:gravity="start|center_vertical" android:orientation="horizontal">
 
-                        <FrameLayout style="@style/ChipArea" android:id="@+id/chip_reminder"
-                            android:paddingRight="14dp" android:layout_width="wrap_content" android:layout_height="match_parent">
+                        <LinearLayout android:animateLayoutChanges="true"
+                            android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                            <android.support.v7.widget.AppCompatCheckBox
-                                android:id="@+id/check_reminder" style="@style/ChipTextBase"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
-                                android:paddingLeft="4dp"
-                                android:text="12h reminder" android:checked="false" />  <!-- TODO -->
+                            <FrameLayout style="@style/ChipArea" android:id="@+id/chip_reminder"
+                                android:paddingRight="14dp" android:layout_width="wrap_content" android:layout_height="match_parent">
 
-                        </FrameLayout>
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:id="@+id/check_reminder" style="@style/ChipTextBase"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                    android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
+                                    android:button="?attr/checkReminder" android:paddingLeft="8dp"
+                                    tools:text="12h reminder" android:checked="false" />  <!-- TODO -->
 
-                        <FrameLayout android:id="@+id/chip_action2"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            </FrameLayout>
 
-                            <TextView
-                                android:id="@+id/text_action2"
-                                style="@style/ChipText1"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:button="@android:color/transparent"
-                                android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
-                                tools:text="No Action" />
+                            <FrameLayout android:id="@+id/chip_action2" android:visibility="visible"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-                        </FrameLayout>
+                                <TextView
+                                    android:id="@+id/text_action2"
+                                    style="@style/ChipText1"
+                                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                    android:button="@android:color/transparent"
+                                    android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
+                                    tools:text="No Action" />
+
+                            </FrameLayout>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

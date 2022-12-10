@@ -146,10 +146,12 @@
             app:layout_constraintStart_toEndOf="@+id/option_repeat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:animateLayoutChanges="true">
 
-            <!-- On-Dismiss Tray -->
-            <LinearLayout android:orientation="vertical"
+            <!-- Before Alert Tray -->
+            <LinearLayout android:id="@+id/tray_beforeAlert"
+                android:orientation="vertical"
                 android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
@@ -175,8 +177,8 @@
                                 android:id="@+id/check_reminder" style="@style/ChipTextBase"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
-                                android:paddingLeft="4dp"
-                                android:text="12h reminder" android:checked="false" />  <!-- TODO -->
+                                android:button="?attr/checkReminder"
+                                android:paddingLeft="8dp" tools:text="12h reminder" android:checked="false" />
 
                         </FrameLayout>
 

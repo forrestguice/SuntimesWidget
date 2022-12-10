@@ -26,6 +26,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -40,6 +41,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
@@ -91,8 +93,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public View chip_action1;
     public TextView text_action1;
 
+    public View chip_reminder;
+    public CheckBox check_reminder;
+
     public View chip_action2;
     public TextView text_action2;
+
+    public View tray_beforeAlert;
 
     public int res_icAlarm, res_icNotification, res_icNotification1, res_icNotification2;
     public int res_icSoundOn, res_icSoundOff;
@@ -140,8 +147,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         chip_action1 = parent.findViewById(R.id.chip_action1);
         text_action1 = (TextView) parent.findViewById(R.id.text_action1);
 
+        chip_reminder = parent.findViewById(R.id.chip_reminder);
+        check_reminder = (CheckBox) parent.findViewById(R.id.check_reminder);
+
         chip_action2 = parent.findViewById(R.id.chip_action2);
         text_action2 = (TextView) parent.findViewById(R.id.text_action2);
+
+        tray_beforeAlert = parent.findViewById(R.id.tray_beforeAlert);
 
         themeHolder(context);
     }
@@ -224,7 +236,17 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             check_vibrate.setChecked(item.vibrate);
             text_action0.setText(displayAction(context, item, 0));
             text_action1.setText(displayAction(context, item, 1));
+
+            long defaultReminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
+            tray_beforeAlert.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM && (defaultReminderWithin > 0)) ? View.VISIBLE : View.GONE);
+
+            long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, defaultReminderWithin);
+            Log.d("DEBUG", "bindDataToPosition: showReminder: " + reminderWithin);
+            check_reminder.setText(context.getString(R.string.reminder_label, utils.timeDeltaLongDisplayString(reminderWithin != 0 ? reminderWithin : defaultReminderWithin)));
+            check_reminder.setChecked(reminderWithin > 0);
+
             text_action2.setText(displayAction(context, item, 2));
+            chip_action2.setVisibility(check_reminder.isChecked() ? View.VISIBLE : View.INVISIBLE);
 
             text_datetime_offset.setText(isSchedulable ? text_offset.getText() : "");
             text_datetime_offset.setVisibility(preview_offset ? View.INVISIBLE : View.VISIBLE);
@@ -262,6 +284,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             check_vibrate.setChecked(false);
             text_action0.setText("");
             text_action1.setText("");
+            check_reminder.setChecked(false);
             text_action2.setText("");
         }
     }
@@ -282,6 +305,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         check_vibrate.setOnCheckedChangeListener(null);
         chip_action0.setOnClickListener(null);
         chip_action1.setOnClickListener(null);
+        check_reminder.setOnClickListener(null);
+        check_reminder.setOnCheckedChangeListener(null);
         chip_action2.setOnClickListener(null);
     }
 

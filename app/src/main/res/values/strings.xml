@@ -1049,6 +1049,7 @@
     <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>
 
     <string name="no_reminder">Never</string>
+    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
 
     <plurals name="units_hours">
         <item quantity="one">%d hour</item>
