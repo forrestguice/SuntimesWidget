@@ -893,7 +893,10 @@ public class AlarmNotifications extends BroadcastReceiver
         String emptyLabel = ((eventDisplay != null) ? eventDisplay : context.getString(R.string.alarmOption_solarevent_none));
 
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
-        String notificationMsg = eventDisplay;
+        String notificationMsg = (eventDisplay != null ? eventDisplay : "");
+        if (alarm.note != null) {
+            notificationMsg += ((eventDisplay != null) ? "\n\n" : "") + alarm.note;   // TODO: support for %s substitutions
+        }
         int notificationIcon = alarm.getIcon();
         int notificationColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
 
@@ -1026,6 +1029,14 @@ public class AlarmNotifications extends BroadcastReceiver
                 .setColor(notificationColor)
                 .setVisibility( NotificationCompat.VISIBILITY_PUBLIC );
         builder.setOnlyAlertOnce(false);
+
+        if (notificationMsg.contains("\n"))    // message is more than one line; show "BigTextStyle" notification
+        {
+            NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
+            style.setBigContentTitle(notificationTitle);
+            style.bigText(notificationMsg);
+            builder.setStyle(style);
+        }
 
         return builder.build();
     }
