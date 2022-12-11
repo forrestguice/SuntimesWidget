@@ -1290,9 +1290,15 @@ public class AlarmListDialog extends DialogFragment
         {
             return new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    setSelectedIndex(position);
-                    showAlarmTypeMenu(contextRef.get(), position, v);
+                public void onClick(View v)
+                {
+                    if (position == getSelectedIndex())
+                    {
+                        AlarmClockItem item = items.get(position);
+                        if (item != null && !item.enabled) {
+                            showAlarmTypeMenu(contextRef.get(), position, v);
+                        }
+                    } else setSelectedIndex(position);
                 }
             };
         }
