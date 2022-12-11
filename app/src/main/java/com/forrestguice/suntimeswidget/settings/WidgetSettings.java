@@ -2681,11 +2681,14 @@ public class WidgetSettings
         prefs.putBoolean(prefs_prefix + PREF_KEY_LOCATION_FROMAPP, enabled);
         prefs.apply();
     }
-    public static boolean loadLocationFromAppPref(Context context, int appWidgetId)
+    public static boolean loadLocationFromAppPref(Context context, int appWidgetId) {
+        return loadLocationFromAppPref(context, appWidgetId, PREF_DEF_LOCATION_FROMAPP);
+    }
+    public static boolean loadLocationFromAppPref(Context context, int appWidgetId, boolean defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
-        boolean enabled = prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_FROMAPP, PREF_DEF_LOCATION_FROMAPP);
+        boolean enabled = prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_FROMAPP, defaultValue);
         return enabled;
     }
     public static void deleteLocationFromAppPref(Context context, int appWidgetId)
