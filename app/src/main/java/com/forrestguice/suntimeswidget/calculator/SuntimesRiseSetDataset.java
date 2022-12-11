@@ -207,19 +207,45 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public Calendar findNextEvent()
+    public static class SearchResult
+    {
+        private Calendar calendar;
+        private boolean isRising;
+        private WidgetSettings.RiseSetDataMode mode;
+
+        public SearchResult(WidgetSettings.RiseSetDataMode mode, Calendar calendar, boolean isRising)
+        {
+            this.mode = mode;
+            this.calendar = calendar;
+            this.isRising = isRising;
+        }
+        public Calendar getCalendar() {
+            return calendar;
+        }
+        public boolean isRising() {
+            return isRising;
+        }
+        public WidgetSettings.RiseSetDataMode getMode() {
+            return mode;
+        }
+    }
+
+    public SearchResult findNextEvent()
     {
         Calendar now = now();
         long nearestTime = -1;
+        boolean isRising = false;
+        WidgetSettings.RiseSetDataMode mode = null;
 
         Collection<SuntimesRiseSetData> values = dataset.values();
         Calendar nearest = values.toArray(new SuntimesRiseSetData[0])[0].sunriseCalendarToday();
         for (SuntimesRiseSetData data : values)
         {
-            Calendar[] events = new Calendar[] { data.sunriseCalendarToday(), data.sunriseCalendarOther(),
-                                                 data.sunsetCalendarToday(), data.sunsetCalendarOther() };
-            for (Calendar event : events)
+            Calendar[] events = new Calendar[] { data.sunriseCalendarToday(), data.sunsetCalendarToday(),
+                                                 data.sunriseCalendarOther(), data.sunsetCalendarOther() };
+            for (int i=0; i<events.length; i++)
             {
+                Calendar event = events[i];
                 if (event != null)
                 {
                     long timeUntil = event.getTime().getTime() - now.getTime().getTime();
@@ -227,11 +253,14 @@ public class SuntimesRiseSetDataset
                     {
                         nearestTime = timeUntil;
                         nearest = event;
+                        isRising = (i % 2 == 0);
+                        mode = ((data.dataMode() != null) ? data.dataMode() : data.timeMode());
+                        Log.d("DEBUG", "findNextEvent: mode is: " + mode);
                     }
                 }
             }
         }
-        return nearest;
+        return new SearchResult(mode, nearest, isRising);
     }
 
     public SuntimesCalculator calculator()

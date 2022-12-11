@@ -20,40 +20,23 @@ package com.forrestguice.suntimeswidget.tiles;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.ClockWidget0ConfigActivity;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 @SuppressWarnings("Convert2Diamond")
-public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
+public class NextEventTileConfigActivity extends ClockTileConfigActivity
 {
-    public ClockTileConfigActivity()
+    public NextEventTileConfigActivity()
     {
         super();
     }
+
+    public static final int APPWIDGET_ID = -1;
 
     @Override
     protected void initViews( Context context )
     {
         super.initViews(context);
-        hideAppearanceSettings();
-        showOptionLabels(false);
-        showOptionTitle(false);
-        setConfigActivityTitle(getString(R.string.app_name_clocktile));
-        moveSectionToTop(R.id.appwidget_timezone_layout);
-    }
-
-    @Override
-    protected WidgetSettings.ActionMode[] supportedActionModes() {
-        return new WidgetSettings.ActionMode[] { WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY };
-    }
-
-    protected WidgetSettings.ActionMode defaultActionMode() {
-        return WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
-    }
-
-    public boolean getDefaultLocationFromApp() {
-        return ClockTileService.DEF_LOCATION_FROM_APP;
+        setConfigActivityTitle(getString(R.string.app_name_eventtile));
     }
 
 }

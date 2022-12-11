@@ -2089,6 +2089,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     /**
+     * @param showOption true; show title option, false hide option
+     */
+    protected void showOptionTitle(boolean showOption) {
+        if (checkbox_showTitle != null) {
+            checkbox_showTitle.setVisibility((showOption) ? View.VISIBLE : View.GONE);
+        }
+        View titleLayout = findViewById(R.id.appwidget_appearance_titleText_layout);
+        if (titleLayout != null) {
+            titleLayout.setVisibility((showOption) ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    /**
      * @param showUI true show option, false hide option
      */
     protected void showOptionTimeModeOverride(boolean showUI)

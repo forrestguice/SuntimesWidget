@@ -600,7 +600,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (alarmManager != null)
         {
             Calendar now = dataset.now();
-            Calendar updateTime = dataset.findNextEvent();
+            Calendar updateTime = dataset.findNextEvent().getCalendar();
             if (updateTime != null && updateTime.after(now)) {
                 Log.d("UpdateAlarms", "setAlarm (partialUpdate): " + utils.calendarDateTimeDisplayString(context, updateTime).toString());
                 setUpdateAlarm(alarmManager, updateTime, getPartialUpdateIntent(context));
