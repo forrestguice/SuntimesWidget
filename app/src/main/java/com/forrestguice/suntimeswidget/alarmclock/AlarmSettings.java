@@ -19,8 +19,10 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.Ringtone;
@@ -32,6 +34,7 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -178,6 +181,11 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 11) {
             return prefs.getInt(PREF_KEY_ALARM_UPCOMING, PREF_DEF_ALARM_UPCOMING);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_UPCOMING, PREF_DEF_ALARM_UPCOMING);
+    }
+    public static void savePrefAlarmUpcoming(Context context, int value) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putInt(PREF_KEY_ALARM_UPCOMING, value);
+        prefs.apply();
     }
 
     public static long loadPrefAlarmSnooze(Context context)
@@ -443,6 +451,44 @@ public class AlarmSettings
     }
     public static boolean isSony() {
         return "sony".equalsIgnoreCase(Build.MANUFACTURER);
+    }
+
+    /**
+     * Recommended; this Intent shows the optimization list (and the user must find and select the app)
+     */
+    @TargetApi(23)
+    public static Intent getRequestIgnoreBatteryOptimizationSettingsIntent(Context context) {
+        return new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+    }
+
+    /**
+     * This Intent goes directly to the app's optimization settings.
+     * Requires permission `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`
+     */
+    @TargetApi(23)
+    public static Intent getRequestIgnoreBatteryOptimizationIntent(Context context) {
+        return new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + context.getPackageName()));
+    }
+
+    public static void openBatteryOptimizationSettings(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                context.startActivity(AlarmSettings.getRequestIgnoreBatteryOptimizationSettingsIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e("AlarmSettings", "Failed to launch battery optimization settings Intent: " + e);
+            }
+        }
+    }
+    public static void requestIgnoreBatteryOptimization(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                context.startActivity(AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e("AlarmSettings", "Failed to launch battery optimization request Intent: " + e);
+            }
+        }
     }
 
     /**

@@ -187,7 +187,7 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
     <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
-    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->  <!-- TODO -->
+    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->
     <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
@@ -254,7 +254,7 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">通用设置</string>                <!-- group title -->
+    <string name="configLabel_general">通用</string>                <!-- group title -->
     <string name="configLabel_general_calculator">日期来源:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">日光数据来源</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">月光数据来源</string>         <!-- preference label -->
@@ -276,8 +276,8 @@
     <string name="configLabel_general_showTimeDate">显示时间（和日期）</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">显示日期的同时显示时间。</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
-    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_general_showAbbrMonth">月份缩写</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showAbbrMonth_summary">显示日期的时候使用缩写的月份名称。</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">显示周</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">超过7天的时候用周来记（如: 15天为2周1天）。</string>    <!-- checkbox label -->
@@ -289,8 +289,8 @@
     <string name="configLabel_general_observerheight_summary">显示高度为 <xliff:g id="value" example="1 meter">%1$s</xliff:g> 的物体投射的阴影长度。</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">高级设置</string>                        <!-- group title -->
-    <string name="configLabel_experimental">实验性设置</string>                <!-- group title -->
+    <string name="configLabel_advanced">高级</string>                        <!-- group title -->
+    <string name="configLabel_experimental">实验性</string>                <!-- group title -->
     <string name="configLabel_general_scanPlugins">数据源插件</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">扫描并加载第三方插件。</string>   <!-- pref summary -->
 
@@ -310,7 +310,7 @@
     </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">外观设置</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
+    <string name="configLabel_appearance">外观</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">外观</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">主题:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">交换布局以填充可用空间</string>  <!-- checkbox label -->
@@ -445,7 +445,7 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">动作设置</string>                  <!-- group title -->
+    <string name="configLabel_action">动作</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">轻按时:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">轻按时钟时</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">轻按便签时</string>           <!-- spinner label -->
@@ -456,7 +456,7 @@
     <string name="locationMode_current">当前（最近获取到的位置）</string>  <!-- setting -->
     <string name="locationMode_custom">用户自定</string>           <!-- setting -->
 
-    <string name="configLabel_location">位置设置</string>               <!-- group title -->
+    <string name="configLabel_location">位置</string>               <!-- group title -->
     <string name="configLabel_location_mode">模式:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">纬度:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">十进制</string>      <!-- edittext hint -->
@@ -486,7 +486,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">时区设置</string>             <!-- group title -->
+    <string name="configLabel_timezone">时区</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">模式:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">时区:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">标准:</string>                   <!-- spinner label -->
@@ -503,7 +503,7 @@
     <string name="dateMode_current">今天</string>                  <!-- setting -->
     <string name="dateMode_custom">用户自定</string>            <!-- setting -->
 
-    <string name="configLabel_date">日期设置</string>                      <!-- group title -->
+    <string name="configLabel_date">日期</string>                      <!-- group title -->
     <string name="configLabel_date_mode">模式:</string>                         <!-- spinner label -->
     <string name="configLabel_date_custom">日期:</string>                       <!-- dateSelector label -->
 
@@ -729,13 +729,13 @@
     <string name="configAction_editAlarm">编辑</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">删除</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">清空</string>                <!-- action button / menu item -->
-    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms">排序</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">闹钟时间</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">创建时间</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">清空</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">清空</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">设置补偿</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
+    <string name="configAction_setAlarmOffset">设置前后偏移</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">设置类型</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">设置标签</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">设置位置</string>         <!-- button (contentDescription) -->
@@ -797,12 +797,12 @@
     <string name="clearalarms_dialog_cancel">取消</string>    <!-- button -->
     <string name="clearalarms_toast_success">闹钟已被清空。</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">Import Warning</string> <!-- dialog title -->   <!-- TODO -->
-    <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->  <!-- TODO -->
+    <string name="importalarms_title_warning">导入警告</string> <!-- dialog title -->
+    <string name="importalarms_msg_warning">导入的闹钟可能会将一些设置恢复至默认状态。\n\n您可能需要重新选择声音和动作。</string> <!-- toast msg -->
     <string name="importalarms_toast_success">导入了 %s 个闹钟。</string> <!-- toast msg -->
     <plurals name="alarmPlural">
-        <item quantity="other">%d alarms</item>
-    </plurals>   <!-- TODO -->
+        <item quantity="other">%d 个闹钟</item>
+    </plurals>
 
     <string name="alarmlabel_dialog_title">标签</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">应用</string>        <!-- button -->
@@ -818,7 +818,7 @@
     <string name="alarmtime_dialog_cancel">取消</string>    <!-- button -->
     <string name="alarmtime_dialog_message">覆盖闹钟时间？\n\n此闹钟将不再按事件安排。</string>   <!-- dialog msg -->
 
-    <string name="alarmoffset_dialog_title">闹钟补偿</string>        <!-- dialog title -->
+    <string name="alarmoffset_dialog_title">闹钟偏移</string>        <!-- dialog title -->
     <string name="alarmoffset_dialog_ok">应用</string>        <!-- button -->
     <string name="alarmoffset_dialog_cancel">取消</string>    <!-- button -->
 
@@ -827,10 +827,10 @@
     <string name="configLabel_alarms_optWhiteList">电池优化</string>
     <string name="configLabel_alarms_optWhiteList_listed">未优化（推荐）</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">优化电池使用。\n闹钟至多可延迟 15 分钟。</string>
-    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
-    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
-    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
-    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> 索尼 STAMINA 模式启用。\n闹钟可能无法可靠地工作。</string>  <!-- snackbar message (sony devices only) -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">优化电池使用中。\n闹钟可能无法可靠地工作。</string>
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> 须为 \"未优化\" 以获得更好的更好的结果。</string>
+    <string name="help_battery_optimization_aggressive">这是一个 <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> 设备，需要额外配置才能正常工作。</string>
 
     <string name="configLabel_alarms_notifications">通知</string>
     <string name="configLabel_alarms_notifications_on">打开</string>
@@ -839,12 +839,12 @@
     <string name="configLabel_alarms_notifications_summary1">锁定屏幕时: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> 通知已关闭。闹钟可能无法正确显示。</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_bootcompleted">Boot Completed</string>   <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_info_never">Never</string>   <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
-    <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted">启动完成</string>
+    <string name="configLabel_alarms_bootcompleted_summary">闹钟在重启几分钟后自动重新安排。\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="configLabel_alarms_bootcompleted_info">上一次运行于 <xliff:g id="timestamp" example="never">%1$s</xliff:g>，\n启动后 <xliff:g id="time" example="30s">%2$s</xliff:g> （用时 <xliff:g id="time" example="10s">%3$s</xliff:g>）。</string>
+    <string name="configLabel_alarms_bootcompleted_info_never">永不</string>
+    <string name="configLabel_alarms_bootcompleted_action_confirm">重新安排所有闹钟和通知？</string>
+    <string name="configLabel_alarms_bootcompleted_action_message">重新安排所有闹钟和通知…</string>
 
     <string name="configLabel_alarms_silenceAfter">在…后静音</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
@@ -876,7 +876,7 @@
     <string name="configLabel_alarms_allRingtones">展示所有的铃声</string>
     <string name="configLabel_alarms_allRingtones_summary">显示所有系统铃声（忽略铃声类型）。</string>
 
-    <string name="no_reminder">从不</string>
+    <string name="no_reminder">永不</string>
 
     <plurals name="units_hours">
         <!--<item quantity="one">%d hour</item>-->
@@ -1040,7 +1040,7 @@
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort modes -->
-    <string name="timezone_sort_byOffset">根据补偿</string>
+    <string name="timezone_sort_byOffset">根据偏移</string>
     <string name="timezone_sort_byId">根据 ID</string>
     <string name="timezone_sort_byName">根据名称</string>
 
@@ -1091,7 +1091,7 @@
     <string name="configLabel_getFix_passiveMode_summary">使用被动接收到的位置。</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">语言设置</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" (also confirm other "group title" values are also shortened) -->
+    <string name="configLabel_locale">语言</string>   <!-- group title -->
 
     <string name="configLabel_localeMode">模式</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -1533,17 +1533,17 @@
     </string>
 
     <string name="help_alarms_edit"><![CDATA[
-          [Icon Back] to cancel without making changes.<br/>
-          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
-          [Icon Cancel] to save and disable.<br/>
-          [Icon Delete] to cancel and delete.<br/>
+          [Icon Back] 取消不进行变更。<br/>
+          [Icon Save] 保存，[Icon Done] 保存并启用。<br/>
+          [Icon Cancel] 保存并禁用。<br/>
+          [Icon Delete] 取消并删除。<br/>
           <br/>
-          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
-    ]]></string>   <!-- TODO -->
+          [Icon Offset] 当安排的时间在事件时间上有前后偏移时显示。
+    ]]></string>
 
     <string name="help_general_dst"><![CDATA[
-          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
-    ]]></string>   <!-- TODO -->
+          <b>夏令时:</b> [Icon DST] 当当前时间适用于<b>夏令时</b>，或已被类似规则调整时展示。<br/><br/>
+    ]]></string>
 
     <string name="help_general_actualTime"><![CDATA[
           <b>实际时间:</b> 太阳到达地平线；准确的日出和日落时间。<br/>
@@ -1581,25 +1581,43 @@
         <b>蓝色时刻:</b> 太阳在地平线以下8度到4度之间。 蓝色时刻开始和结束于航海曙暮光和民用曙暮光之间。<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
-        启动活动所需的完整类名。<br/>
-    ]]></string>  <!-- TODO: update from strings.xml -->
+        所有字段均为可选。（如值为空则使用默认意图）
+        <br/>
+        <br/>
+        <b>动作:</b> 动作字符串。<br/><small>如 <em>android.intent.action.VIEW</em></small>
+        <br/>
+        <br/>
+        <b>包:</b> 包名。<br/><small>如 <em>app.package.name</em></small>
+        <br/>
+        <br/>
+        <b>类:</b> 完整的类名。<br/><small>如 <em>app.package.name.MainActivity</em></small>
+        <br/>
+        <br/>
+        <b>数据:</b> 包含或指向附带数据的URI。支持<em>%</em>替换。<small>如 <em>geo:%lat,%lon</em></small>
+        <br/>
+        <br/>
+        <b>MIME:</b> 附带数据的MIME类型。
+        <br/>
+        <br/>
+        <b>额外:</b> 包含额外值的由 <em>&amp;</em> 分割的字符串。支持<em>%</em>替换。<br/><br/>值可为 <em>int</em>、<em>long</em>、<em>double</em>、<em>float</em>、<em>boolean</em> 或 String. <small>如 <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
+    ]]></string>
     <string name="help_widgetlist"><![CDATA[
           如果要<b>新增一个小部件</b>，您需要去手机的主页。<br/><br/>
           如果要<b>配置一个已存在的小部件</b>，您可以从下面的列表中选择。<br/>
     ]]></string>
     <string name="help_themelist">
-          [Icon Add] 添加一个新主题或[Icon Copy]从已有主题中复制一份。\n
+          [Icon Add] 添加一个新主题或 [Icon Copy] 从已有主题中复制一份。\n
           \n
-          [Icon Edit]编辑或[Icon Delete]删除主题。\n
-          [Icon Default]默认主题是不能被删除的。
+          [Icon Edit] 编辑或 [Icon Delete] 删除主题。\n
+          [Icon Default] 默认主题是不能被删除的。
     </string>
 
     <string name="help_calendar"><![CDATA[向 Calendar 应用程序提供事件（月相、至点和分点）。<br />
         <br />
-        <u><b><font color="#ff9900">日历权限已被移除。</font></b></u><br />
+        <u><b><font color="#ff9900">日历权限于 v0.10.0 被移除。</font></b></u><br />
         <br />
         此功能现在作为<a href="moreInfoLink">单独的应用程序</a>使用
-    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
+    ]]></string>
 
     <string name="privacy_policy"><![CDATA[<b>隐私:</b><br/>Suntimes 不会收集、储存、传输个人用户数据。它<b>没有广告</b>，<b>没有用户分析</b>，<b>没有跟踪器</b>，并且<b>不使用不必要的权限</b>。<br/><br/>本应用使用位置信息来配置。位置信息（和其他用来配置本应用的数据）保存在本机并且不会离开本机。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes 使用<b>位置</b>权限以确认您当前的经纬度。<br/><br/>此权限是可选的；位置默认可被手动配置。]]></string>

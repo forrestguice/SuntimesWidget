@@ -215,6 +215,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         dialogContent.setHideTitle(hideTitle);
         dialogContent.setHideMode(hideMode);
         dialogContent.init(myParent, false);
+        dialogContent.setFragment(this);
+
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -402,6 +404,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             if (location != null) {
                 setLocation(getActivity(), location);
             }
+        } else {
+            getDialogContent().populateLocationList();
         }
     }
 

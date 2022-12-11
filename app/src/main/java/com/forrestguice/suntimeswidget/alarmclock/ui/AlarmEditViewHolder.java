@@ -166,7 +166,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             menu_type.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? res_icAlarm : res_icNotification)));
             menu_type.setContentDescription(item.type.getDisplayString());
 
-            edit_label.setText(item.getLabel(context));
+            edit_label.setText(item.getLabel(item.getLabel(context)));
 
             text_offset.setText(displayOffset(context, item));
 
@@ -183,14 +183,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
                 text_offset.setCompoundDrawables(null, null, null, null);
             }
 
-            text_location.setText(item.location.getLabel());
+            text_location.setText((item.location != null) ? item.location.getLabel() : "");
             text_repeat.setText( displayRepeating(context, item, selected));
             text_event.setText(displayEvent(context, item));
 
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             if (event != null)
             {
-                boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location.getLatitudeAsDouble() < 0);
+                boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && ((item.location != null) && item.location.getLatitudeAsDouble() < 0);
                 Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
                 text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
@@ -364,7 +364,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public static CharSequence displayRepeating(Context context, AlarmClockItem item, boolean isSelected)
     {
         SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
-        boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
+        boolean noRepeat = (item.repeatingDays != null && item.repeatingDays.isEmpty());
         String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                 ? context.getString(R.string.alarmOption_repeat_all)
                 : noRepeat
