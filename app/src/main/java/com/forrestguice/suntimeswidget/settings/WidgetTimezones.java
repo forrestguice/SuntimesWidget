@@ -41,7 +41,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 import android.graphics.drawable.GradientDrawable;
 
 import java.lang.ref.WeakReference;
@@ -735,8 +735,7 @@ public class WidgetTimezones
         public void onSortTimeZones( TimeZoneItemAdapter adapter, WidgetTimezones.TimeZoneSort sortMode )
         {
             String msg = context.getString(R.string.timezone_sort_msg, sortMode.getDisplayString());
-            Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
-            toast.show();
+            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         }
 
         protected void sortTimeZones( final WidgetTimezones.TimeZoneSort sortMode )

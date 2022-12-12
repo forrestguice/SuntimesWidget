@@ -59,7 +59,7 @@ import android.support.v7.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -171,8 +171,7 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static void showAlarmSilencedToast(Context context)
     {
         if (context != null) {
-            Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT);
-            msg.show();
+            Toast.makeText(context, context.getString(R.string.alarmAction_silencedMsg), Toast.LENGTH_SHORT).show();
         } else Log.e(TAG, "showAlarmSilencedToast: context is null!");
     }
 
@@ -181,8 +180,7 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static void showAlarmPlayingToast(Context context, AlarmClockItem item)
     {
         if (context != null) {
-            Toast msg = Toast.makeText(context, context.getString(R.string.alarmAction_playingMsg, item.getLabel(context)), Toast.LENGTH_SHORT);
-            msg.show();
+            Toast.makeText(context, context.getString(R.string.alarmAction_playingMsg, item.getLabel(context)), Toast.LENGTH_SHORT).show();
         } else Log.e(TAG, "showAlarmPlayingToast: context is null!");
     }
 
