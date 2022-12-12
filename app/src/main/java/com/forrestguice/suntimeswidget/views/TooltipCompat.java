@@ -18,9 +18,14 @@
 
 package com.forrestguice.suntimeswidget.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.R;
 
 /**
  * TooltipCompat
@@ -37,19 +42,45 @@ public class TooltipCompat
         if (context != null && tooltipText != null)
         {
             if (context.getApplicationContext().getApplicationInfo().targetSdkVersion >= 26) {
-                //return;  // TODO: call through to build-in api
+                //return;  // TODO: call through to built-in api
             }
 
             view.setLongClickable(true);
             view.setOnLongClickListener(new View.OnLongClickListener()
             {
                 @Override
-                public boolean onLongClick(View v) {
-                    Toast.makeText(context, tooltipText, Toast.LENGTH_SHORT).show();
+                public boolean onLongClick(View v)
+                {
+                    int[] position = new int[2];
+                    v.getLocationOnScreen(position);
+                    position[1] += v.getHeight() / 2;
+
+                    android.widget.Toast toast = makeText(context, tooltipText, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP | Gravity.START, position[0], position[1]);
+                    toast.show();
                     return true;
                 }
             });
         }
+    }
+
+    @SuppressLint("ShowToast")
+    private static android.widget.Toast makeText(Context context, CharSequence text, int duration)
+    {
+        android.widget.Toast toast = android.widget.Toast.makeText(context, text, duration);
+        if (context.getApplicationContext().getApplicationInfo().targetSdkVersion < 30)
+        {
+            View v = toast.getView();    // Toast.getView returns null for targetApi R+
+            if (v != null)
+            {
+                v.setBackgroundResource(R.drawable.tooltip_frame);
+                TextView message = (TextView) v.findViewById(android.R.id.message);
+                if (message != null) {
+                    message.setTextAppearance(R.style.TooltipTextAppearance);
+                }
+            }
+        }
+        return toast;
     }
 
 }
