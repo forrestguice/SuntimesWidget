@@ -72,6 +72,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -342,16 +343,19 @@ public class LightMapDialog extends BottomSheetDialogFragment
         resetButton = (ImageButton)dialogView.findViewById(R.id.media_reset);
         if (resetButton != null) {
             resetButton.setEnabled(false);
+            TooltipCompat.setTooltipText(resetButton, resetButton.getContentDescription());
             resetButton.setOnClickListener(resetClickListener);
         }
 
         nextButton = (ImageButton)dialogView.findViewById(R.id.media_next);
         if (nextButton != null) {
+            TooltipCompat.setTooltipText(nextButton, nextButton.getContentDescription());
             nextButton.setOnClickListener(nextClickListener);
         }
 
         prevButton = (ImageButton)dialogView.findViewById(R.id.media_prev);
         if (prevButton != null) {
+            TooltipCompat.setTooltipText(prevButton, prevButton.getContentDescription());
             prevButton.setOnClickListener(prevClickListener);
         }
 

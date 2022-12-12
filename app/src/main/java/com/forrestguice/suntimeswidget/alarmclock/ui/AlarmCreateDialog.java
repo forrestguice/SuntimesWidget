@@ -69,6 +69,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -377,11 +378,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
         if (btn_cancel != null) {
+            TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
             btn_cancel.setOnClickListener(onDialogCancelClick);
         }
 
         ImageButton btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
         if (btn_accept != null) {
+            TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
             btn_accept.setOnClickListener(onDialogAcceptClick);
         }
 
@@ -397,6 +400,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         btn_alarms = (ImageButton) dialogContent.findViewById(R.id.dialog_button_alarms);
         if (btn_alarms != null) {
+            TooltipCompat.setTooltipText(btn_alarms, btn_alarms.getContentDescription());
             btn_alarms.setOnClickListener(onDialogNeutralClick);
         }
     }

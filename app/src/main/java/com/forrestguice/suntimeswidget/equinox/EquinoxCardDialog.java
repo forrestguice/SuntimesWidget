@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.cards.CardAdapter;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
@@ -123,9 +124,11 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             text_title.setOnClickListener(onTitleClicked);
         }
         if (btn_next != null) {
+            TooltipCompat.setTooltipText(btn_next, btn_next.getContentDescription());
             btn_next.setOnClickListener(onNextClicked);
         }
         if (btn_prev != null) {
+            TooltipCompat.setTooltipText(btn_prev, btn_prev.getContentDescription());
             btn_prev.setOnClickListener(onPrevClicked);
         }
         if (btn_menu != null) {
