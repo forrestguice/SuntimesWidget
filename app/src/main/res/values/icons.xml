@@ -76,6 +76,7 @@
     <drawable name="ic_action_expand_ref">@drawable/ic_action_expand_light</drawable>
     <drawable name="ic_action_visibility_on_ref">@drawable/ic_action_visibility_light</drawable>
     <drawable name="ic_action_visibility_off_ref">@drawable/ic_action_visibility_off_light</drawable>
+    <drawable name="check_altitude_ref">@drawable/check_altitude_light</drawable>
     <drawable name="check_vibrate_ref">@drawable/check_vibrate_light</drawable>
     <drawable name="check_visible_ref">@drawable/check_visible_light</drawable>
 
