@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -244,9 +245,11 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
 
         ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
+        TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(onDialogCancelClick);
 
         btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
+        TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
         btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 

@@ -59,7 +59,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
@@ -72,6 +72,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -386,16 +387,19 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         resetButton = (ImageButton)dialogView.findViewById(R.id.media_reset_map);
         if (resetButton != null) {
             resetButton.setEnabled(false);
+            TooltipCompat.setTooltipText(resetButton, resetButton.getContentDescription());
             resetButton.setOnClickListener(resetClickListener);
         }
 
         nextButton = (ImageButton)dialogView.findViewById(R.id.media_next_map);
         if (nextButton != null) {
+            TooltipCompat.setTooltipText(nextButton, nextButton.getContentDescription());
             nextButton.setOnClickListener(nextClickListener);
         }
 
         prevButton = (ImageButton)dialogView.findViewById(R.id.media_prev_map);
         if (prevButton != null) {
+            TooltipCompat.setTooltipText(prevButton, prevButton.getContentDescription());
             prevButton.setOnClickListener(prevClickListener);
         }
 
