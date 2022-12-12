@@ -158,6 +158,11 @@
     <color name="alarm_snoozing_bg3_dark">@color/grey_500</color>
     <color name="alarm_timeout_bg0_dark">@color/tagColor_warning</color>
 
+    <color name="alarm_notification_sounding">#AAEB5B</color>
+    <color name="alarm_notification_snoozing">@color/grey_600</color>
+    <color name="alarm_notification_timeout">#ff5252</color>
+    <color name="alarm_notification_warning">#ff9900</color>
+
     <!-- tags -->
     <color name="warningTag_dark">#ff9900</color>
     <color name="errorTag_dark">#FF5252</color>
