@@ -320,10 +320,26 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout android:orientation="vertical"
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+
+                <TextView style="@style/ChipTrayLabel" android:visibility="invisible"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+                    android:text="" />
+
+                <TextView android:drawableLeft="?attr/icActionAddLabel"
+                    android:id="@+id/edit_note" android:background="?attr/selectableItemBackground"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                    android:layout_marginBottom="12dp" android:drawablePadding="8dp"
+                    android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_small"
+                    android:maxLines="8" tools:text="note\nlinetwo\nlinethree\nline four\nline 5\nline 6"
+                    android:contentDescription="@string/configAction_setAlarmNote" />
+
                 <!-- empty tray -->
             </LinearLayout>
         </LinearLayout>

@@ -66,8 +66,7 @@
             android:layout_marginBottom="12dp" android:drawablePadding="8dp"
             android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_small"
             android:maxLines="3" tools:text="note"
-            android:contentDescription="@string/configAction_setAlarmNote"
-            />
+            android:contentDescription="@string/configAction_setAlarmNote" />
 
         <include layout="@layout/layout_listitem_alarmtime" />
 
