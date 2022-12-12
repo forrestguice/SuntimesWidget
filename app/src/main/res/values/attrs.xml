@@ -149,6 +149,7 @@
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
 
+    <attr name="checkAltitude" format="reference" />
     <attr name="checkVibrate" format="reference" />
     <attr name="checkVisibility" format="reference" />
     <attr name="checkReminder" format="reference" />

@@ -67,7 +67,7 @@
             <ImageButton android:id="@+id/menu_button"
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
-                style="?attr/actionOverflowButtonStyle" android:background="?attr/selectableItemBackground"
+                style="?attr/actionOverflowButtonStyle"
                 android:contentDescription="@string/configAction_overflow" />
 
         </LinearLayout>

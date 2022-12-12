@@ -1812,7 +1812,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
         if (txt_altitude != null)
         {
-            txt_altitude.setText(altitudeString);
+            txt_altitude.setText(altitudeString.isEmpty() ? context.getString(R.string.configLabel_general_altitude_enabled) : altitudeString);
         }
         if (check_altitude != null)
         {
