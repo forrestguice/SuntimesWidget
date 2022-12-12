@@ -32,7 +32,7 @@
             >
 
             <ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
                 android:src="?attr/icActionBack"
                 android:contentDescription="@string/dialog_cancel" />
 
