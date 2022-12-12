@@ -65,7 +65,9 @@
             android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
             android:layout_marginBottom="12dp" android:drawablePadding="8dp"
             android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_small"
-            android:maxLines="3" tools:text="note" />
+            android:maxLines="3" tools:text="note"
+            android:contentDescription="@string/configAction_setAlarmNote"
+            />
 
         <include layout="@layout/layout_listitem_alarmtime" />
 
@@ -83,7 +85,7 @@
                 android:orientation="horizontal" android:gravity="start|center_vertical"
                 android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
 
-                <FrameLayout android:id="@+id/chip_offset"
+                <FrameLayout android:id="@+id/chip_offset" android:contentDescription="@string/configAction_setAlarmOffset"
                     android:layout_width="wrap_content" android:layout_height="match_parent"
                     android:orientation="horizontal" android:gravity="start|center_vertical">
 
@@ -94,7 +96,7 @@
 
                 </FrameLayout>
 
-                <FrameLayout android:id="@+id/chip_event"
+                <FrameLayout android:id="@+id/chip_event" android:contentDescription="@string/configAction_setAlarmEvent"
                     android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                     <TextView android:id="@+id/text_event" style="@style/ChipText1"
@@ -111,7 +113,7 @@
                 android:orientation="horizontal" android:gravity="start|center_vertical"
                 android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
 
-                <FrameLayout android:id="@+id/chip_location"
+                <FrameLayout android:id="@+id/chip_location" android:contentDescription="@string/configAction_setAlarmLocation"
                     android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                     <TextView android:id="@+id/text_location" style="@style/ChipText1"
@@ -123,7 +125,7 @@
 
             </LinearLayout>
 
-            <FrameLayout android:id="@+id/chip_repeat"
+            <FrameLayout android:id="@+id/chip_repeat" android:contentDescription="@string/configAction_setAlarmRepeat"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:layout_gravity="start" android:padding="0dp"
                 android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
@@ -178,7 +180,8 @@
                             </FrameLayout>
 
                             <FrameLayout android:id="@+id/chip_action2" android:visibility="visible"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content">
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:contentDescription="@string/configAction_setAlarmAction">
 
                                 <TextView
                                     android:id="@+id/text_action2"
@@ -216,7 +219,7 @@
                             android:drawableLeft="?attr/icActionSoundDisabled" android:drawableStart="?attr/icActionSoundDisabled"
                             tools:text="No Sound" />-->
 
-                        <FrameLayout android:id="@+id/chip_ringtone"
+                        <FrameLayout android:id="@+id/chip_ringtone" android:contentDescription="@string/configAction_setAlarmSound"
                             android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                             <TextView
@@ -250,7 +253,7 @@
                         android:gravity="start|center_vertical" android:orientation="horizontal"
                         android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
 
-                        <FrameLayout android:id="@+id/chip_action0"
+                        <FrameLayout android:id="@+id/chip_action0" android:contentDescription="@string/configAction_setAlarmAction"
                             android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                             <TextView
@@ -282,7 +285,7 @@
                         android:orientation="horizontal"
                         android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
 
-                        <FrameLayout android:id="@+id/chip_action1"
+                        <FrameLayout android:id="@+id/chip_action1" android:contentDescription="@string/configAction_setAlarmAction"
                             android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                             <TextView

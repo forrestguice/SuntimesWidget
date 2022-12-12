@@ -85,6 +85,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -1548,6 +1549,18 @@ public class AlarmListDialog extends DialogFragment
                 switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);        // switch used by api >= 14 (otherwise null)
             } else {
                 check_enabled = (CheckBox) view.findViewById(R.id.switch_enabled);              // checkbox used by api < 14 (otherwise null)
+            }
+
+            initTooltips();
+        }
+
+        protected void initTooltips()
+        {
+            TooltipCompat.setTooltipText(button_delete, button_delete.getContentDescription());
+            if (Build.VERSION.SDK_INT >= 14) {
+                TooltipCompat.setTooltipText(switch_enabled, switch_enabled.getContentDescription());
+            } else {
+                TooltipCompat.setTooltipText(check_enabled, check_enabled.getContentDescription());
             }
         }
 

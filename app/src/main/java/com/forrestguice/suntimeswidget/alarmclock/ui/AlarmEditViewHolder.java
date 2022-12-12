@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -157,7 +158,22 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         tray_beforeAlert = parent.findViewById(R.id.tray_beforeAlert);
 
+        initTooltips();
         themeHolder(context);
+    }
+
+    protected void initTooltips()
+    {
+        TooltipCompat.setTooltipText(edit_note, edit_note.getContentDescription());
+        TooltipCompat.setTooltipText(chip_offset, chip_offset.getContentDescription());
+        TooltipCompat.setTooltipText(chip_event, chip_event.getContentDescription());
+        TooltipCompat.setTooltipText(chip_location, chip_location.getContentDescription());
+        TooltipCompat.setTooltipText(chip_repeat, chip_repeat.getContentDescription());
+        TooltipCompat.setTooltipText(chip_reminder, chip_reminder.getContentDescription());
+        TooltipCompat.setTooltipText(chip_ringtone, chip_ringtone.getContentDescription());
+        TooltipCompat.setTooltipText(chip_action0, chip_action0.getContentDescription());
+        TooltipCompat.setTooltipText(chip_action1, chip_action1.getContentDescription());
+        TooltipCompat.setTooltipText(chip_action2, chip_action2.getContentDescription());
     }
 
     @SuppressLint("ResourceType")
@@ -195,6 +211,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             }
             menu_type.setImageDrawable(ContextCompat.getDrawable(context, menuDrawable));
             menu_type.setContentDescription(item.type.getDisplayString());
+            TooltipCompat.setTooltipText(menu_type, menu_type.getContentDescription());
 
             edit_label.setText(item.getLabel(""));
 
