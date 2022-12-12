@@ -61,6 +61,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -80,7 +81,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     private AlarmClockItem alarm = null;
     private String mode = null;
 
-    private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText;
+    private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText, noteText;
     private TextView[] labels;
 
     private Button snoozeButton, dismissButton;
@@ -145,6 +146,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         clockText = (TextView)findViewById(R.id.txt_clock_time);
         offsetText = (TextView)findViewById(R.id.txt_alarm_offset);
         infoText = (TextView)findViewById(R.id.txt_snooze);
+        noteText = (TextView)findViewById(R.id.txt_alarm_note);
 
         icon = (ViewFlipper)findViewById(R.id.icon_alarm);
         iconSounding = (ImageView)findViewById(R.id.icon_alarm_sounding);
@@ -558,6 +560,10 @@ public class AlarmDismissActivity extends AppCompatActivity
             offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
         }
         offsetText.setText(offsetSpan);
+
+        if (item.note != null) {
+            noteText.setText(utils.displayStringForTitlePattern(context, item.note, AlarmNotifications.getData(context, item)));
+        } else noteText.setText("");
 
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, item.getCalendar(), false);
         if (SuntimesUtils.is24()) {

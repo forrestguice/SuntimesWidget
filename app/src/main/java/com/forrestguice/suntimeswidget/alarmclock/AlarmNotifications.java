@@ -901,7 +901,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 data = getData(context, alarm);
                 data.calculate();
             }
-            notificationMsg += ((eventDisplay != null) ? "\n\n" : "") + alarm.note;   // TODO: support for %s substitutions
+            notificationMsg += ((eventDisplay != null) ? "\n\n" : "") + alarm.note;
             notificationMsg = utils.displayStringForTitlePattern(context, notificationMsg, data);
         }
         int notificationIcon = alarm.getIcon();
@@ -936,7 +936,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                         builder.setPriority( alarm.repeating ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT );
-                        notificationMsg = notificationTitle;
+                        notificationMsg = notificationTitle + (!notificationMsg.isEmpty() ? "\n\n" + notificationMsg : "");
                         notificationTitle = context.getString(R.string.alarmAction_upcomingMsg);
                         builder.setWhen(alarm.alarmtime);
                         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss_early), pendingDismiss);
@@ -2464,7 +2464,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
-    private static SuntimesData getData(Context context, @NonNull AlarmClockItem alarm)
+    public static SuntimesData getData(Context context, @NonNull AlarmClockItem alarm)
     {
         SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);   // TODO: non SolarEventsEnum
         if (alarm.location != null && event != null)
