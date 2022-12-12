@@ -1711,6 +1711,10 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
+    <!-- Dialog: Moon -->
+    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
+
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
     <string name="configLabel_schednotify_mode">Schedule a notification for</string>

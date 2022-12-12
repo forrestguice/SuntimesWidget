@@ -703,6 +703,10 @@ public class MoonDialog extends BottomSheetDialogFragment
         {
             switch (item.getItemId())
             {
+                case R.id.action_show_controls:
+                    showMediaPopup(getActivity(), text_dialogTimeOffset);
+                    return true;
+
                 case R.id.action_lunarnoon_show:
                     toggleLunarNoon(getContext());
                     return true;
