@@ -78,7 +78,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
 
-    private Button btn_accept;
+    private ImageButton btn_accept;
     private Spinner spinner_timezoneMode;
 
     private LinearLayout layout_timezone;
@@ -243,10 +243,10 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
         label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
 
-        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
+        ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
         btn_cancel.setOnClickListener(onDialogCancelClick);
 
-        btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
+        btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
         btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 
