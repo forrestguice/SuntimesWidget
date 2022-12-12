@@ -231,8 +231,8 @@
 
             <ImageButton android:id="@+id/button_delete"
                 android:layout_width="48dp" android:layout_height="48dp"
-                android:contentDescription="@string/configAction_editAlarm"
-                style="?attr/actionOverflowButtonStyle"
+                android:contentDescription="@string/configAction_deleteAlarm"
+                style="@style/ActionButton"
                 android:src="?attr/icActionDelete" />
 
             <ImageButton
