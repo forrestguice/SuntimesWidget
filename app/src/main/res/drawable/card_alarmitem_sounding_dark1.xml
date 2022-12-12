@@ -6,18 +6,18 @@
         android:drawable="@drawable/card_alarmitem_sounding_dark1_3"/>
 
     <item android:duration="@integer/anim_alarmitem_sounding1_duration"
-        android:drawable="@drawable/card_alarmitem_sounding_dark1_8"/>
-
-    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
-        android:drawable="@drawable/card_alarmitem_sounding_dark1_3"/>
-
-    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
-        android:drawable="@drawable/card_alarmitem_sounding_dark1_8"/>
+        android:drawable="@drawable/card_alarmitem_sounding_dark1_1"/>
 
     <item android:duration="@integer/anim_alarmitem_sounding1_duration"
         android:drawable="@drawable/card_alarmitem_sounding_dark1_3"/>
 
     <item android:duration="@integer/anim_alarmitem_sounding1_duration"
         android:drawable="@drawable/card_alarmitem_sounding_dark1_1"/>
+
+    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
+        android:drawable="@drawable/card_alarmitem_sounding_dark1_3"/>
+
+    <item android:duration="@integer/anim_alarmitem_sounding1_duration"
+        android:drawable="@drawable/card_alarmitem_sounding_dark1_8"/>
 
 </animation-list>
