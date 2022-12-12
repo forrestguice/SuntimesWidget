@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
@@ -232,10 +233,10 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             header.setVisibility(hideHeader ? View.GONE : View.VISIBLE);
         }
 
-        Button btn_cancel = (Button) view.findViewById(R.id.dialog_button_cancel);
+        ImageButton btn_cancel = (ImageButton) view.findViewById(R.id.dialog_button_cancel);
         btn_cancel.setOnClickListener(onDialogCancelClick);
 
-        Button btn_accept = (Button) view.findViewById(R.id.dialog_button_accept);
+        ImageButton btn_accept = (ImageButton) view.findViewById(R.id.dialog_button_accept);
         btn_accept.setOnClickListener(onDialogAcceptClick);
 
         if (savedInstanceState != null) {
