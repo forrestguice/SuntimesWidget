@@ -85,6 +85,8 @@ public class AlarmDismissActivity extends AppCompatActivity
     public static final String TAG = "AlarmReceiverDismiss";
     public static final String EXTRA_MODE = "activityMode";
 
+    public static final String ACTION_DISMISS = AlarmNotifications.ACTION_DISMISS;
+
     private AlarmClockItem alarm = null;
     private String mode = null;
 
@@ -181,14 +183,14 @@ public class AlarmDismissActivity extends AppCompatActivity
             Uri newData = intent.getData();
             if (newData != null)
             {
-                Log.d(TAG, "onNewIntent: " + newData);
+                Log.d(TAG, "onNewIntent: " + newData + ", action: " + intent.getAction());
                 setAlarmID(this, ContentUris.parseId(newData));
 
             } else Log.w(TAG, "onNewIntent: null data!");
         } else Log.w(TAG, "onNewIntent: null Intent!");
     }
 
-    private BroadcastReceiver updateReceiver = new BroadcastReceiver()
+    private final BroadcastReceiver updateReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -238,6 +240,12 @@ public class AlarmDismissActivity extends AppCompatActivity
             Log.e(TAG, "onCreate: missing data uri! canceling...");
             setResult(RESULT_CANCELED);
             finish();
+        }
+
+        if (ACTION_DISMISS.equals(intent.getAction()))
+        {
+            intent.setAction(null);
+            dismissAlarmAfterChallenge(AlarmDismissActivity.this, dismissButton);
         }
     }
 
@@ -518,7 +526,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         }
     }
 
-    public void setAlarmID(final Context context, long alarmID)
+    public void setAlarmID(final Context context, long alarmID) {
+        setAlarmID(context, alarmID, null);
+    }
+    public void setAlarmID(final Context context, long alarmID, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener listener)
     {
         AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
         task.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
@@ -527,6 +538,9 @@ public class AlarmDismissActivity extends AppCompatActivity
             {
                 if (item != null) {
                     setAlarmItem(context, item);
+                }
+                if (listener != null) {
+                    listener.onFinished(result, item);
                 }
             }
         });
