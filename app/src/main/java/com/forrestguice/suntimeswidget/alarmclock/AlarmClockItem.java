@@ -608,6 +608,18 @@ public class AlarmClockItem implements Parcelable
         }
     }
 
+    public boolean hasDismissChallenge(Context context) {
+        return (getDismissChallenge(context) != AlarmSettings.DismissChallenge.NONE);
+    }
+    public AlarmSettings.DismissChallenge getDismissChallenge(Context context)
+    {
+        AlarmSettings.DismissChallenge challenge = AlarmSettings.loadDismissChallengePref(context);
+        if (hasFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE)) {
+            challenge = AlarmSettings.DismissChallenge.valueOf((int)getFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE, challenge.ordinal()), challenge);
+        }
+        return challenge;
+    }
+
     /**
      * AlarmType
      */

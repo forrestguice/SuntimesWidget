@@ -1270,13 +1270,7 @@ public class AlarmListDialog extends DialogFragment
                     if (context != null)
                     {
                         AlarmClockItem alarm = items.get(position);
-                        
-                        AlarmSettings.DismissChallenge challenge = AlarmSettings.loadDismissChallengePref(context);
-                        if (alarm.hasFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE)) {
-                            challenge = AlarmSettings.DismissChallenge.valueOf((int)alarm.getFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE, challenge.ordinal()), challenge);
-                        }
-
-                        if (challenge != AlarmSettings.DismissChallenge.NONE) {
+                        if (alarm.hasDismissChallenge(context)) {
                             context.startActivity(AlarmNotifications.getFullscreenIntent(context, alarm.getUri()).setAction(AlarmDismissActivity.ACTION_DISMISS));
                         } else {
                             context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, alarm.getUri()));

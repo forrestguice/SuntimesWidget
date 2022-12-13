@@ -335,12 +335,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         }
     };
 
+
     protected void dismissAlarmAfterChallenge(Context context, View v)
     {
-        AlarmSettings.DismissChallenge challenge = AlarmSettings.loadDismissChallengePref(context);
-        if (alarm.hasFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE)) {
-            challenge = AlarmSettings.DismissChallenge.valueOf((int)alarm.getFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE, challenge.ordinal()), challenge);
-        }
+        AlarmSettings.DismissChallenge challenge = alarm.getDismissChallenge(context);
         if (challenge != AlarmSettings.DismissChallenge.NONE) {
             showDismissChallenge(context, getDismissChallenge(challenge));
         } else dismissAlarm(context);
