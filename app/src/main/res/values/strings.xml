@@ -869,6 +869,7 @@
     <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_enabled_first">Enabled first</string>                <!-- action button / menu item -->   <!-- TODO -->
+    <string name="configAction_sortAlarms_offset">Before/After Offset</string>                <!-- action button / menu item -->   <!-- TODO -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">Set Offset (Before/After)</string>         <!-- button (contentDescription) -->

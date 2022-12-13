@@ -119,6 +119,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SORT_ENABLED_FIRST = "app_alarms_sort_enabled_first";
     public static final boolean PREF_DEF_ALARM_SORT_ENABLED_FIRST = false;
 
+    public static final String PREF_KEY_ALARM_SORT_SHOW_OFFSET = "app_alarms_sort_show_offset";
+    public static final boolean PREF_DEF_ALARM_SORT_SHOW_OFFSET = false;
+
     public static int loadPrefAlarmSort(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -140,6 +143,18 @@ public class AlarmSettings
     {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putBoolean(PREF_KEY_ALARM_SORT_ENABLED_FIRST, value);
+        prefs.apply();
+    }
+
+    public static boolean loadPrefAlarmSortShowOffset(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_SORT_SHOW_OFFSET, PREF_DEF_ALARM_SORT_SHOW_OFFSET);
+    }
+    public static void savePrefAlarmSortShowOffset(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_ALARM_SORT_SHOW_OFFSET, value);
         prefs.apply();
     }
 

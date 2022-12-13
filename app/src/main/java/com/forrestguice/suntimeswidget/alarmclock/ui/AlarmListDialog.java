@@ -243,6 +243,11 @@ public class AlarmListDialog extends DialogFragment
         if (enabledFirst != null) {
             enabledFirst.setChecked(AlarmSettings.loadPrefAlarmSortEnabledFirst(getActivity()));
         }
+
+        MenuItem showOffset = menu.findItem(R.id.showOffset);
+        if (showOffset != null) {
+            showOffset.setChecked(AlarmSettings.loadPrefAlarmSortShowOffset(getActivity()));
+        }
     }
 
     @Override
@@ -268,6 +273,14 @@ public class AlarmListDialog extends DialogFragment
 
             case R.id.sortEnabledFirst:
                 AlarmSettings.savePrefAlarmSortEnabledFirst(getActivity(), !item.isChecked());
+                if (Build.VERSION.SDK_INT >= 11) {
+                    getActivity().invalidateOptionsMenu();
+                }  // else { TODO }
+                adapter.sortItems();
+                return true;
+
+            case R.id.showOffset:
+                AlarmSettings.savePrefAlarmSortShowOffset(getActivity(), !item.isChecked());
                 if (Build.VERSION.SDK_INT >= 11) {
                     getActivity().invalidateOptionsMenu();
                 }  // else { TODO }
@@ -1078,11 +1091,17 @@ public class AlarmListDialog extends DialogFragment
         @Override
         public void onBindViewHolder(AlarmListDialogItem holder, int position)
         {
+            Context context = contextRef.get();
+
             Log.d("DEBUG", "onBindViewHolder: " + holder);
             AlarmClockItem item = items.get(position);
             holder.isSelected = (item.rowID == selectedRowID);
             holder.preview_offset = !holder.isSelected;
             ViewCompat.setTransitionName(holder.text_datetime, "transition_" + item.rowID);
+
+            if (AlarmSettings.loadPrefAlarmSortShowOffset(context)) {
+                holder.preview_offset = false;
+            }
 
             detachClickListeners(holder);
             holder.bindData(contextRef.get(), items.get(position));
@@ -1848,8 +1867,9 @@ public class AlarmListDialog extends DialogFragment
             // offset (before / after)
             if (view.text_offset != null)
             {
-                CharSequence offsetDisplay = (preview_offset ? "" : AlarmEditViewHolder.displayOffset(context, item));
-                view.text_offset.setText((isSchedulable && isSelected) ? offsetDisplay : "");
+                boolean alwaysShowOffset = AlarmSettings.loadPrefAlarmSortShowOffset(context);
+                CharSequence offsetDisplay = (preview_offset && !alwaysShowOffset ? "" : AlarmEditViewHolder.displayOffset(context, item));
+                view.text_offset.setText((isSchedulable && isSelected || alwaysShowOffset) ? offsetDisplay : "");
 
                 if (preview_offset && item.offset != 0) {
                     view.text_offset.setText(SuntimesUtils.createSpan(context, "i", "i", new ImageSpan(offsetIcon), ImageSpan.ALIGN_BASELINE));
