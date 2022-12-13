@@ -927,6 +927,9 @@ public class AlarmListDialog extends DialogFragment
             Log.d("setSelectedRowID", ""+ rowID);
             selectedRowID = rowID;
             notifyDataSetChanged();
+            if (listener != null) {
+                listener.onItemSelected(selectedRowID);
+            }
         }
         public long getSelectedRowID() {
             return selectedRowID;
@@ -958,6 +961,9 @@ public class AlarmListDialog extends DialogFragment
             if (selectedIndex != -1) {
                 //notifyItemChanged(selectedIndex);
                 notifyDataSetChanged();   // notifyItemChanged also resets the running animation
+            }
+            if (listener != null) {
+                listener.onItemSelected(selectedRowID);
             }
         }
 
@@ -2095,6 +2101,13 @@ public class AlarmListDialog extends DialogFragment
     protected AdapterListener adapterListener = new AdapterListener()
     {
         @Override
+        public void onItemSelected(long rowID) {
+            if (listener != null) {
+                listener.onItemSelected(rowID);
+            }
+        }
+
+        @Override
         public void onItemClicked(AlarmClockItem item, AlarmListDialogItem holder)
         {
             if (listener != null) {
@@ -2151,6 +2164,7 @@ public class AlarmListDialog extends DialogFragment
 
     public interface AdapterListener
     {
+        void onItemSelected(long rowID);
         void onItemClicked(AlarmClockItem item, AlarmListDialogItem view);
         boolean onItemLongClicked(AlarmClockItem item);
         void onItemNoteClicked(AlarmClockItem item, AlarmListDialogItem view);

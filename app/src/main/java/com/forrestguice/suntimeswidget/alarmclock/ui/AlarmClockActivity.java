@@ -675,6 +675,10 @@ public class AlarmClockActivity extends AppCompatActivity
     private final AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener()
     {
         @Override
+        public void onItemSelected(long rowID) {
+        }
+
+        @Override
         public void onItemClicked(AlarmClockItem item, AlarmListDialog.AlarmListDialogItem view)
         {
             if (isAddDialogShowing()) {
@@ -1017,6 +1021,14 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onClick(View v) {
             showAddDialog(null);
+        }
+    };
+
+    private View.OnClickListener onDeselectClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            list.clearSelection();
+            deselectButton.setVisibility(View.INVISIBLE);
         }
     };
 
