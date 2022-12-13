@@ -1104,8 +1104,8 @@ public class AlarmListDialog extends DialogFragment
             }
 
             detachClickListeners(holder);
-            holder.bindData(contextRef.get(), items.get(position));
-            holder.startBackgroundAnimation(contextRef.get());
+            holder.bindData(context, items.get(position));
+            holder.startBackgroundAnimation(context);
             attachClickListeners(holder, position);
         }
 
