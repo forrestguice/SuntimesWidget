@@ -132,6 +132,7 @@
     <attr name="icActionShare" format="reference" />
     <attr name="icActionSnooze" format="reference" />
     <attr name="icActionAddLabel" format="reference" />
+    <attr name="icActionDeselect" format="reference" />
 
     <attr name="icActionPlay" format="reference" />
     <attr name="icActionPause" format="reference" />
