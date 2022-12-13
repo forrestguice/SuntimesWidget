@@ -697,7 +697,9 @@ public class AlarmClockActivity extends AppCompatActivity
                 dismissAddDialog();
 
             } else if (list.getSelectedRowID() == item.rowID) {
-                if (item.getState() != AlarmState.STATE_SOUNDING && item.getState() != AlarmState.STATE_SNOOZING && item.getState() != AlarmState.STATE_TIMEOUT) {
+                if (item.getState() == AlarmState.STATE_SOUNDING || item.getState() == AlarmState.STATE_SNOOZING || item.getState() == AlarmState.STATE_TIMEOUT) {
+                    showAlarmFullscreenActivity(item, view.text_datetime);
+                } else {
                     showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM, false);
                 }
 
@@ -775,6 +777,17 @@ public class AlarmClockActivity extends AppCompatActivity
             dismissAddDialog();
         }
     };
+
+    protected boolean showAlarmFullscreenActivity(@NonNull AlarmClockItem item, @Nullable View sharedView)
+    {
+        if (SystemClock.elapsedRealtime() - showAlarmFullscreenctivity_last < 1000) {
+            return false;  // prevent multiple successive calls (by click handlers) from triggering startActivity multiple times
+        } else showAlarmFullscreenctivity_last = SystemClock.elapsedRealtime();
+
+        startActivity(AlarmNotifications.getFullscreenIntent(AlarmClockActivity.this, item.getUri()));
+        return true;
+    }
+    private long showAlarmFullscreenctivity_last = (SystemClock.elapsedRealtime() - 1000);
 
     protected boolean showAlarmEditActivity(@NonNull AlarmClockItem item, @Nullable View sharedView, int requestCode, boolean isNewAlarm)
     {
