@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -103,6 +104,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public View tray_beforeAlert;
 
+    public View card_backdrop;
+
     public int res_icAlarm, res_icNotification, res_icNotification1, res_icNotification2;
     public int res_icSoundOn, res_icSoundOff;
     public int res_colorEnabled;
@@ -114,6 +117,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         Context context = parent.getContext();
         SuntimesUtils.initDisplayStrings(context);
 
+        card_backdrop = parent.findViewById(R.id.layout_alarmcard0);
         layout_datetime = parent.findViewById(R.id.layout_datetime);
         icon_datetime_offset = (ImageView) parent.findViewById(R.id.icon_datetime_offset);
         text_datetime_offset = (TextView) parent.findViewById(R.id.text_datetime_offset);
@@ -201,6 +205,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         {
             boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
             float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
+
+            /*if (card_backdrop != null)
+            {
+                Integer color = getBackgroundColorForType(context, item.type);
+                if (color != null) {
+                    card_backdrop.setBackgroundColor(color);
+                }
+            }*/
 
             int menuDrawable;
             switch (item.type) {
