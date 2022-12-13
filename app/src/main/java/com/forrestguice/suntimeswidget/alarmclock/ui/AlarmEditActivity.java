@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -35,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -279,6 +281,25 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             actionBar.setDisplayHomeAsUpEnabled(true);
             AlarmClockItem item = editor.getItem();
             actionBar.setTitle(item != null ? item.type.getDisplayString() : "");
+
+            Drawable actionBarBackground = getActionBarBackground(context, item);
+            if (actionBarBackground != null) {
+                actionBar.setBackgroundDrawable(actionBarBackground);
+            }
+        }
+    }
+
+    @Nullable
+    protected Drawable getActionBarBackground(Context context, @Nullable AlarmClockItem item)
+    {
+        if (item == null || item.type == null) {
+            return null;
+        }
+        switch (item.type)
+        {
+            case ALARM:
+            default:
+                return null;
         }
     }
 
