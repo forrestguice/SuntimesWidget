@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,11 +23,12 @@ import android.animation.ValueAnimator;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
@@ -39,16 +40,22 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -61,7 +68,6 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -69,6 +75,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
+import java.util.Random;
 
 /**
  * AlarmDismissActivity
@@ -298,29 +305,51 @@ public class AlarmDismissActivity extends AppCompatActivity
         {
             if (alarm != null) {
                 Log.d(TAG, "onSnoozeClicked");
-                snoozeButton.setEnabled(false);
-                dismissButton.setEnabled(false);
-
-                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, AlarmNotifications.ACTION_SNOOZE, alarm.getUri());
-                sendBroadcast(intent);
+                snoozeAlarm(AlarmDismissActivity.this);
             }
         }
     };
 
-    private View.OnClickListener onDismissClicked = new View.OnClickListener()
+    protected void snoozeAlarm(Context context)
     {
+        snoozeButton.setEnabled(false);
+        dismissButton.setEnabled(false);
+        if (alarm != null) {
+            sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, AlarmNotifications.ACTION_SNOOZE, alarm.getUri()));
+        }
+    }
+
+    private final View.OnClickListener onDismissClicked = new View.OnClickListener() {
         @Override
-        public void onClick(View v)
-        {
-            if (alarm != null) {
-                Log.d(TAG, "onDismissedClicked");
-                snoozeButton.setEnabled(false);
-                dismissButton.setEnabled(false);
-                Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, AlarmNotifications.ACTION_DISMISS, alarm.getUri());
-                sendBroadcast(intent);
-            }
+        public void onClick(View v) {
+            Log.d(TAG, "onDismissedClicked");
+            dismissAlarmAfterChallenge(AlarmDismissActivity.this, v);
         }
     };
+
+    protected void dismissAlarmAfterChallenge(Context context, View v)
+    {
+        AlarmSettings.DismissChallenge setting = AlarmSettings.loadDismissChallengePref(context);
+        if (setting != AlarmSettings.DismissChallenge.NONE) {
+            showDismissChallenge(context, getDismissChallenge(setting));
+        } else dismissAlarm(context);
+    }
+
+    protected void dismissAlarm(Context context)
+    {
+        snoozeButton.setEnabled(false);
+        dismissButton.setEnabled(false);
+        if (alarm != null) {
+            sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, alarm.getUri()));
+        }
+    }
+
+    protected void showDismissChallenge(Context context, @Nullable AlarmDismissChallenge challenge)
+    {
+        if (challenge != null) {
+            challenge.createDismissChallengeDialog(context, dismissButton).show();
+        } else dismissAlarm(context);
+    }
 
     private void setMode( @Nullable String action )
     {
@@ -632,6 +661,157 @@ public class AlarmDismissActivity extends AppCompatActivity
                 //| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON            // a potential workaround is to keep the screen on ... but this might consume noticeable battery.
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+    }
+
+    /**
+     * AlarmDismissChallenge
+     */
+    public interface AlarmDismissChallenge
+    {
+        Dialog createDismissChallengeDialog(Context context, final View view);
+    }
+
+    public AlarmDismissChallenge getDismissChallenge(AlarmSettings.DismissChallenge setting)
+    {
+        switch (setting) {
+            case MATH: return new MathDismissChallenge();
+            case NONE: default: return null;
+        }
+    }
+
+    /**
+     * MathDismissChallenge
+     */
+    protected class MathDismissChallenge implements AlarmDismissChallenge
+    {
+        public static final int ADD = 0;
+        public static final int SUBTRACT = 1;
+        public static final int MULTIPLY = 2;
+
+        protected int apply(int operation, int a, int b) {
+            switch (operation) {
+                case MULTIPLY: return a * b;
+                case SUBTRACT: return a - b;
+                case ADD:
+                default: return a + b;
+            }
+        }
+
+        protected String toString(int operation)
+        {
+            switch (operation) {
+                case MULTIPLY: return " * ";
+                case SUBTRACT: return " - ";
+                case ADD: default: return " + ";
+            }
+        }
+
+        public Pair<String,String> generateMathProblem()
+        {
+            int[] operations = new int[] { ADD, SUBTRACT, MULTIPLY };
+
+            Random r = new Random();
+            int operation = operations[r.nextInt(operations.length)];
+
+            int a, b, c;
+            do {
+                a = r.nextInt(9) + 1;    // [1,9]
+                b = r.nextInt( 9) + 1;   // [1,9]
+                c = apply(operation, a, b);
+
+            } while (((operation == MULTIPLY || operation == ADD) && (a == 1 || b == 1))
+                    || (operation == SUBTRACT && b == 1));       // "too easy"
+
+            String problem = a + toString(operation) + b;
+            String solution = "" + c;
+            return new Pair<>(problem, solution);
+        }
+
+        @Override
+        public Dialog createDismissChallengeDialog(final Context context, final View view)
+        {
+            final Pair<String,String> problem = generateMathProblem();
+
+            FrameLayout layout = new FrameLayout(context);
+            final EditText editText = new EditText(context);
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+            layout.addView(editText);
+
+            int margin = (int) context.getResources().getDimension(R.dimen.dialog_margin);
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) editText.getLayoutParams();
+            params.leftMargin = params.rightMargin = margin;
+            editText.setLayoutParams(params);
+
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Dialog);
+            dialog.setView(layout);
+            dialog.setTitle(problem.first);
+            dialog.setCancelable(true);
+
+            dialog.setNeutralButton(context.getString(R.string.alarmDismiss_math), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    view.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dismissAlarmAfterChallenge(context, editText);
+                        }
+                    }, 250);
+                }
+            });
+            dialog.setPositiveButton(context.getString(R.string.alarmAction_dismiss), onDialogAcceptListener(context, view, editText, problem));
+
+            final Dialog d = dialog.create();
+            editText.setOnEditorActionListener(new TextView.OnEditorActionListener()
+            {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+                {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        d.dismiss();
+                        onDialogAcceptListener(context, view, editText, problem).onClick(d, 0);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            return d;
+        }
+
+        protected DialogInterface.OnClickListener onDialogAcceptListener(final Context context, final View view, final EditText editText, final Pair<String,String> problem)
+        {
+            return new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    String text = sanitizeInput(editText.getText().toString());
+                    if (text != null && text.equals(problem.second)) {
+                        dismissAlarm(context);
+
+                    } else {
+                        view.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismissAlarmAfterChallenge(context, editText);
+                            }
+                        }, 250);
+                    }
+                }
+            };
+        }
+
+        protected String sanitizeInput(@Nullable String text)
+        {
+            if (text != null)
+            {
+                text = text.trim();
+                String[] dashes = new String[] {"-","‐","‑","–","—","―"};   // hypen, non-breaking hyphen, en-dash, em-dash, horizontal bar
+                for (String dash : dashes) {
+                    text = text.replaceAll(dash, "-");   // replaced with hyphen-minus
+                }
+                return text;
+            } else return null;
+        }
     }
 
 }
