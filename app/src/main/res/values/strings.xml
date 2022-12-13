@@ -949,6 +949,18 @@
         <item quantity="other">%d alarms</item>
     </plurals>
 
+    <string name="configLabel_alarms_dismissChallenge">Dismiss Challenge</string>            <!-- pref title -->   <!-- TODO -->
+    <string name="alarmDismiss_none">None</string>                   <!-- alarm setting -->   <!-- TODO -->
+    <string name="alarmDismiss_math">Math Problem</string>           <!-- alarm setting -->   <!-- TODO -->
+    <string-array name="dismissChallenge_values" translatable="false">
+        <item>NONE</item>
+        <item>MATH</item>
+    </string-array>
+    <string-array name="dismissChallenge_display"> <!-- one-to-one with dismissChallenge_values -->
+        <item>@string/alarmDismiss_none</item>
+        <item>@string/alarmDismiss_math</item>
+    </string-array>
+
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button -->
@@ -2362,5 +2374,6 @@
     <string name="def_app_alarms_autoenable" translatable="false">false</string>   <!-- automatically enable new alarms (false) -->
     <string name="def_app_alarms_allringtones" translatable="false">false</string>   <!-- show all ringtones during selection (ignore ringtone type) -->
     <string name="def_app_alarms_showlauncher" translatable="false">true</string>
+    <string name="def_app_alarms_dismiss_challenge" translatable="false">NONE</string>
 
 </resources>

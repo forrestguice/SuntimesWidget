@@ -22,6 +22,14 @@
         android:title="@string/configLabel_alarmClock"
         android:key="app_alarms_category1">
 
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_alarms_dismiss_challenge"
+            android:title="@string/configLabel_alarms_dismissChallenge"
+            android:dialogTitle="@string/configLabel_alarms_dismissChallenge"
+            android:summary="%s"
+            android:entries="@array/dismissChallenge_display" android:entryValues="@array/dismissChallenge_values"
+            android:defaultValue="@string/def_app_alarms_dismiss_challenge" />
+
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_upcomingMillis"
             android:title="@string/configLabel_alarms_upcoming"
