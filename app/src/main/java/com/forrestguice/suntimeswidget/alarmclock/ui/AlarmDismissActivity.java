@@ -223,12 +223,24 @@ public class AlarmDismissActivity extends AppCompatActivity
         super.onResume();
 
         Intent intent = getIntent();
+        AlarmDatabaseAdapter.AlarmItemTaskListener onLoaded = null;
+        if (ACTION_DISMISS.equals(intent.getAction()))
+        {
+            intent.setAction(null);
+            onLoaded = new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+                @Override
+                public void onFinished(Boolean result, AlarmClockItem item) {
+                    dismissAlarmAfterChallenge(AlarmDismissActivity.this, dismissButton);
+                }
+            };
+        }
+
         Uri data = intent.getData();
         if (data != null)
         {
             try {
                 Log.d(TAG, "onCreate: " + data);
-                setAlarmID(this, ContentUris.parseId(data));
+                setAlarmID(this, ContentUris.parseId(data), onLoaded);
                 screenOn();
 
             } catch (NumberFormatException e) {
@@ -240,12 +252,6 @@ public class AlarmDismissActivity extends AppCompatActivity
             Log.e(TAG, "onCreate: missing data uri! canceling...");
             setResult(RESULT_CANCELED);
             finish();
-        }
-
-        if (ACTION_DISMISS.equals(intent.getAction()))
-        {
-            intent.setAction(null);
-            dismissAlarmAfterChallenge(AlarmDismissActivity.this, dismissButton);
         }
     }
 
