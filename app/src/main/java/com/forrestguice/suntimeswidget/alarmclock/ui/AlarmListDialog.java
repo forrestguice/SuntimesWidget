@@ -1267,8 +1267,20 @@ public class AlarmListDialog extends DialogFragment
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    if (context != null) {
-                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, items.get(position).getUri()));
+                    if (context != null)
+                    {
+                        AlarmClockItem alarm = items.get(position);
+                        
+                        AlarmSettings.DismissChallenge challenge = AlarmSettings.loadDismissChallengePref(context);
+                        if (alarm.hasFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE)) {
+                            challenge = AlarmSettings.DismissChallenge.valueOf((int)alarm.getFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE, challenge.ordinal()), challenge);
+                        }
+
+                        if (challenge != AlarmSettings.DismissChallenge.NONE) {
+                            context.startActivity(AlarmNotifications.getFullscreenIntent(context, alarm.getUri()).setAction(AlarmDismissActivity.ACTION_DISMISS));
+                        } else {
+                            context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, alarm.getUri()));
+                        }
                     }
                 }
             };

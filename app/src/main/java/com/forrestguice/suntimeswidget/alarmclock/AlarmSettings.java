@@ -640,6 +640,13 @@ public class AlarmSettings
             return displayString;
         }
 
+        public static DismissChallenge valueOf(int ordinal, DismissChallenge defaultValue)
+        {
+            DismissChallenge[] values = values();
+            if (ordinal >= 0 && ordinal < values.length) {
+                return values[ordinal];
+            } else return defaultValue;
+        }
         public static DismissChallenge valueOf(String name, DismissChallenge defaultValue)
         {
             DismissChallenge retValue;
