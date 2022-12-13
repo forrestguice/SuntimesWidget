@@ -361,6 +361,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         menuButton = (ImageButton)dialogView.findViewById(R.id.media_menu);
         if (menuButton != null) {
+            TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
         }
 

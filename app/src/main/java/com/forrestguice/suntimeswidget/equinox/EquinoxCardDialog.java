@@ -132,6 +132,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             btn_prev.setOnClickListener(onPrevClicked);
         }
         if (btn_menu != null) {
+            TooltipCompat.setTooltipText(btn_menu, btn_menu.getContentDescription());
             btn_menu.setOnClickListener(onMenuClicked);
         }
 

@@ -405,6 +405,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         menuButton = (ImageButton)dialogView.findViewById(R.id.map_menu);
         if (menuButton != null) {
+            TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
         }
 

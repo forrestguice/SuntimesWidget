@@ -77,6 +77,7 @@ import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.Calendar;
 import java.util.List;
@@ -325,7 +326,9 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
         alarmPickers = AlarmAddon.queryEventPickers(context);
         btn_more = (ImageButton) dialogContent.findViewById(R.id.appwidget_schedalarm_more);
-        if (btn_more != null) {
+        if (btn_more != null)
+        {
+            TooltipCompat.setTooltipText(btn_more, btn_more.getContentDescription());
             btn_more.setOnClickListener(onMoreButtonClicked);
             btn_more.setVisibility(View.VISIBLE);
         }
