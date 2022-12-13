@@ -76,6 +76,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -141,6 +142,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private AlarmListDialog list;
 
     private FloatingActionButton addButton;
+    private FloatingActionButton deselectButton;
     private BottomSheetBehavior sheetBehavior;
 
     private SuntimesWarning notificationWarning;
@@ -631,12 +633,21 @@ public class AlarmClockActivity extends AppCompatActivity
 
         addButton = (FloatingActionButton) findViewById(R.id.btn_add);
 
-        if (Build.VERSION.SDK_INT <= 19) {    // override ripple fallback
+        deselectButton = (FloatingActionButton) findViewById(R.id.btn_deselect);
+        deselectButton.setVisibility(View.GONE);
+        TooltipCompat.setTooltipText(deselectButton, deselectButton.getContentDescription());
+
+        if (Build.VERSION.SDK_INT <= 19)    // override ripple fallback
+        {
             addButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
             addButton.setRippleColor(Color.TRANSPARENT);
+
+            deselectButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
+            deselectButton.setRippleColor(Color.TRANSPARENT);
         }
 
         addButton.setOnClickListener(onFabMenuClick);
+        deselectButton.setOnClickListener(onDeselectClick);
 
         list = (AlarmListDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
         list.setOnEmptyViewClick(onEmptyViewClick);
@@ -676,6 +687,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         @Override
         public void onItemSelected(long rowID) {
+            deselectButton.setVisibility(rowID != -1 ? View.VISIBLE : View.GONE);
         }
 
         @Override

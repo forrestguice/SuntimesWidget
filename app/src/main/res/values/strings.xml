@@ -26,6 +26,7 @@
     <string name="configAction_share">Share</string>
     <string name="configAction_export">Export</string>
     <string name="configAction_import">Import</string>
+    <string name="configAction_deselect">Clear Selection</string>   <!-- TODO -->
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
