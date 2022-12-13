@@ -4,6 +4,7 @@
     <dimen name="activity_margin">8dp</dimen>
     <dimen name="dialog_margin">8dp</dimen>
     <dimen name="dialog_margin1">4dp</dimen>
+    <dimen name="tooltip_margin">8dp</dimen>
 
     <dimen name="smalltext_size_tiny">6sp</dimen>      <!-- "small" sizes -->
     <dimen name="smalltext_size_xsmall">10sp</dimen>

@@ -20,7 +20,11 @@ package com.forrestguice.suntimeswidget.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -73,10 +77,18 @@ public class TooltipCompat
             View v = toast.getView();    // Toast.getView returns null for targetApi R+
             if (v != null)
             {
-                v.setBackgroundResource(R.drawable.tooltip_frame);
+                v.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.tooltip_frame));
                 TextView message = (TextView) v.findViewById(android.R.id.message);
-                if (message != null) {
-                    message.setTextAppearance(R.style.TooltipTextAppearance);
+                if (message != null)
+                {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        message.setTextAppearance(R.style.TooltipTextAppearance);
+                    } else {
+                        int paddingDp = (int)context.getResources().getDimension(R.dimen.tooltip_margin);
+                        message.setTextAppearance(context, R.style.TooltipTextAppearance);
+                        message.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
+                        message.setTypeface(Typeface.DEFAULT);
+                    }
                 }
             }
         }
