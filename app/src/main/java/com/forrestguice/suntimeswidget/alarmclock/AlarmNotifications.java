@@ -907,6 +907,7 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setDefaults( Notification.DEFAULT_LIGHTS );
 
         PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), getAlarmIntent(context, ACTION_DISMISS, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingDismissWithChallenge = PendingIntent.getActivity(context, alarm.hashCode(), getFullscreenIntent(context, alarm.getUri()).setAction(ACTION_DISMISS), PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, (int)alarm.rowID, getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, getFullscreenIntent(context, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent pendingView = PendingIntent.getActivity(context, alarm.hashCode(), getAlarmListIntent(context, alarm.rowID), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -968,9 +969,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     notificationIcon = R.drawable.ic_action_snooze;
                     builder.setColor(context.getColor(R.color.alarm_notification_snoozing));
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
-                    builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                    builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), alarm.hasDismissChallenge(context) ? pendingDismissWithChallenge : pendingDismiss);
                     if (Build.VERSION.SDK_INT < 16) {
-                        builder.setContentIntent(pendingDismiss);    // action buttons require expanded notifications (api 16+)
+                        builder.setContentIntent(alarm.hasDismissChallenge(context) ? pendingDismissWithChallenge : pendingDismiss);    // action buttons require expanded notifications (api 16+)
                     }
                     builder.setAutoCancel(false);
                     builder.setOngoing(true);
@@ -983,9 +984,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setProgress(0,0,true);
                     builder.setColor(context.getColor(R.color.alarm_notification_sounding));
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
-                    builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                    builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), alarm.hasDismissChallenge(context) ? pendingDismissWithChallenge : pendingDismiss);
                     if (Build.VERSION.SDK_INT < 16) {
-                        builder.setContentIntent(pendingDismiss);    // action buttons require expanded notifications (api 16+)
+                        builder.setContentIntent(alarm.hasDismissChallenge(context) ? pendingDismissWithChallenge : pendingDismiss);    // action buttons require expanded notifications (api 16+)
                     }
                     builder.setAutoCancel(false);
                     builder.setOngoing(true);
