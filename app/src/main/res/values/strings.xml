@@ -1026,6 +1026,10 @@
     <string name="configLabel_alarms_snooze">Snooze for</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
+    <string name="configLabel_alarms_snoozeLimit">Snooze limit</string>    <!-- TODO -->
+    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>    <!-- TODO -->
+    <string name="configLabel_alarms_snoozeLimit_none">No Limit</string>    <!-- TODO -->
+
     <string name="configLabel_alarms_upcoming">Reminder within</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
@@ -2355,6 +2359,7 @@
     <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
     <string name="def_app_alarms_timeout" translatable="false">1200000</string>    <!-- timeout after 20m -->
     <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
+    <string name="def_app_alarms_snoozeLimit" translatable="false">0</string>      <!-- no snooze limit -->
     <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
     <string name="def_app_alarms_fadein" translatable="false">10000</string>       <!-- fade-in 10s to full volume -->
     <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
