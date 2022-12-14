@@ -80,7 +80,7 @@ import java.util.Random;
 /**
  * AlarmDismissActivity
  */
-public class AlarmDismissActivity extends AppCompatActivity
+public class AlarmDismissActivity extends AppCompatActivity implements AlarmDismissInterface
 {
     public static final String TAG = "AlarmReceiverDismiss";
     public static final String EXTRA_MODE = "activityMode";
@@ -342,7 +342,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     };
 
 
-    protected void dismissAlarmAfterChallenge(Context context, View v)
+    public void dismissAlarmAfterChallenge(Context context, View v)
     {
         AlarmSettings.DismissChallenge challenge = alarm.getDismissChallenge(context);
         if (challenge != AlarmSettings.DismissChallenge.NONE) {
@@ -350,7 +350,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         } else dismissAlarm(context);
     }
 
-    protected void dismissAlarm(Context context)
+    public void dismissAlarm(Context context)
     {
         snoozeButton.setEnabled(false);
         dismissButton.setEnabled(false);
@@ -362,7 +362,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     protected void showDismissChallenge(Context context, @Nullable AlarmDismissChallenge challenge)
     {
         if (challenge != null) {
-            challenge.createDismissChallengeDialog(context, dismissButton).show();
+            challenge.createDismissChallengeDialog(context, dismissButton, this).show();
         } else dismissAlarm(context);
     }
 
@@ -377,7 +377,8 @@ public class AlarmDismissActivity extends AppCompatActivity
                 animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
             }
             SuntimesUtils.initDisplayStrings(this);
-            SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(this));
+            long snoozeMillis = alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this));
+            SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
             String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
             SpannableString snoozeDisplay = SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
             infoText.setText(snoozeDisplay);
@@ -684,15 +685,8 @@ public class AlarmDismissActivity extends AppCompatActivity
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
     }
 
-    /**
-     * AlarmDismissChallenge
-     */
-    public interface AlarmDismissChallenge
-    {
-        Dialog createDismissChallengeDialog(Context context, final View view);
-    }
 
-    public AlarmDismissChallenge getDismissChallenge(AlarmSettings.DismissChallenge setting)
+    public AlarmDismissInterface.AlarmDismissChallenge getDismissChallenge(AlarmSettings.DismissChallenge setting)
     {
         switch (setting) {
             case MATH: return new MathDismissChallenge();
@@ -703,24 +697,26 @@ public class AlarmDismissActivity extends AppCompatActivity
     /**
      * MathDismissChallenge
      */
-    protected class MathDismissChallenge implements AlarmDismissChallenge
+    public static class MathDismissChallenge implements AlarmDismissInterface.AlarmDismissChallenge
     {
         public static final int ADD = 0;
         public static final int SUBTRACT = 1;
         public static final int MULTIPLY = 2;
+        public static final int DIVIDE = 3;
 
         protected int apply(int operation, int a, int b) {
             switch (operation) {
+                case DIVIDE: return a / b;
                 case MULTIPLY: return a * b;
                 case SUBTRACT: return a - b;
-                case ADD:
-                default: return a + b;
+                case ADD: default: return a + b;
             }
         }
 
         protected String toString(int operation)
         {
             switch (operation) {
+                case DIVIDE: return " ÷ ";
                 case MULTIPLY: return " * ";
                 case SUBTRACT: return " - ";
                 case ADD: default: return " + ";
@@ -729,7 +725,7 @@ public class AlarmDismissActivity extends AppCompatActivity
 
         public Pair<String,String> generateMathProblem()
         {
-            int[] operations = new int[] { ADD, SUBTRACT, MULTIPLY };
+            int[] operations = new int[] { ADD, SUBTRACT, MULTIPLY, DIVIDE };
 
             Random r = new Random();
             int operation = operations[r.nextInt(operations.length)];
@@ -740,16 +736,22 @@ public class AlarmDismissActivity extends AppCompatActivity
                 b = r.nextInt( 9) + 1;   // [1,9]
                 c = apply(operation, a, b);
 
-            } while (((operation == MULTIPLY || operation == ADD) && (a == 1 || b == 1))
-                    || (operation == SUBTRACT && b == 1));       // "too easy"
+            } while (filterProblem(operation, a, b, c));
 
             String problem = a + toString(operation) + b;
             String solution = "" + c;
             return new Pair<>(problem, solution);
         }
 
+        protected boolean filterProblem(int operation, int a, int b, int c)
+        {
+            return ((operation == MULTIPLY || operation == ADD) && (a == 1 || b == 1))     // adding 1, multiplying by 1 (too easy)
+                    || (operation == SUBTRACT && b == 1)                                   // subtracting 1 (too easy)
+                    || (operation == DIVIDE && ((a % b) != 0));                            // division with remainder (too hard)
+        }
+
         @Override
-        public Dialog createDismissChallengeDialog(final Context context, final View view)
+        public Dialog createDismissChallengeDialog(final Context context, final View view, final AlarmDismissInterface parent)
         {
             final Pair<String,String> problem = generateMathProblem();
 
@@ -775,12 +777,12 @@ public class AlarmDismissActivity extends AppCompatActivity
                     view.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            dismissAlarmAfterChallenge(context, editText);
+                            parent.dismissAlarmAfterChallenge(context, editText);
                         }
                     }, 250);
                 }
             });
-            dialog.setPositiveButton(context.getString(R.string.alarmAction_dismiss), onDialogAcceptListener(context, view, editText, problem));
+            dialog.setPositiveButton(context.getString(R.string.alarmAction_dismiss), onDialogAcceptListener(context, view, editText, problem, parent));
 
             final Dialog d = dialog.create();
             editText.setOnEditorActionListener(new TextView.OnEditorActionListener()
@@ -790,7 +792,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                 {
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         d.dismiss();
-                        onDialogAcceptListener(context, view, editText, problem).onClick(d, 0);
+                        onDialogAcceptListener(context, view, editText, problem, parent).onClick(d, 0);
                         return true;
                     }
                     return false;
@@ -799,7 +801,7 @@ public class AlarmDismissActivity extends AppCompatActivity
             return d;
         }
 
-        protected DialogInterface.OnClickListener onDialogAcceptListener(final Context context, final View view, final EditText editText, final Pair<String,String> problem)
+        protected DialogInterface.OnClickListener onDialogAcceptListener(final Context context, final View view, final EditText editText, final Pair<String,String> problem, final AlarmDismissInterface parent)
         {
             return new DialogInterface.OnClickListener() {
                 @Override
@@ -807,13 +809,13 @@ public class AlarmDismissActivity extends AppCompatActivity
                 {
                     String text = sanitizeInput(editText.getText().toString());
                     if (text != null && text.equals(problem.second)) {
-                        dismissAlarm(context);
+                        parent.dismissAlarm(context);
 
                     } else {
                         view.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                dismissAlarmAfterChallenge(context, editText);
+                                parent.dismissAlarmAfterChallenge(context, editText);
                             }
                         }, 250);
                     }
