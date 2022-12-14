@@ -1762,7 +1762,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 Log.i(TAG, "Snoozing: " + item.rowID);
                                 cancelAlarmTimeouts(context, item);
 
-                                long snoozeDurationMs = AlarmSettings.loadPrefAlarmSnooze(context);
+                                long snoozeDurationMs = item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(context));
                                 if (extras != null && extras.containsKey(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION))
                                 {
                                     int snoozeDurationMinutes = extras.getInt(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION, -1);
