@@ -218,6 +218,12 @@
         <attr name="zeroValueText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="IntegerPickerPreference">
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="zeroValueText" />
+    </declare-styleable>
+
     <declare-styleable name="HelpPreference">
         <attr name="helpText" format="string" />
         <attr name="helpLink" format="string" />

@@ -68,6 +68,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SNOOZE = "app_alarms_snoozeMillis";
     public static final int PREF_DEF_ALARM_SNOOZE = 1000 * 60 * 10;  // 10 min
 
+    public static final String PREF_KEY_ALARM_SNOOZE_LIMIT = "app_alarms_snoozeLimit";
+    public static final int PREF_DEF_ALARM_SNOOZE_LIMIT = 0;   // unlimited
+
     public static final String PREF_KEY_ALARM_UPCOMING = "app_alarms_upcomingMillis";
     public static final int PREF_DEF_ALARM_UPCOMING = 1000 * 60 * 60 * 10;  // 10 hours
 
@@ -240,6 +243,13 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 11) {
             return prefs.getInt(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE);
+    }
+    public static long loadPrefAlarmSnoozeLimit(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE_LIMIT);
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_SNOOZE_LIMIT, PREF_DEF_ALARM_SNOOZE_LIMIT);
     }
 
     public static boolean loadPrefVibrateDefault(Context context)

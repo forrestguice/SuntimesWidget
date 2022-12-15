@@ -1625,6 +1625,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                     }
                                 }
 
+                                item.clearFlag(AlarmClockItem.FLAG_SNOOZE_COUNT);
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onDismissedState(context, startId, nextAction, item.getUri()));
@@ -1758,12 +1759,21 @@ public class AlarmNotifications extends BroadcastReceiver
                             ////////////////////////////////////////////////////////////////////////////
                             // Snooze Alarm
                             ////////////////////////////////////////////////////////////////////////////
+                            int snoozeLimit = (int) item.getFlag(AlarmClockItem.FLAG_SNOOZE_LIMIT, AlarmSettings.loadPrefAlarmSnoozeLimit(context));
+                            boolean snoozePermitted = (snoozeLimit == 0) || item.getFlag(AlarmClockItem.FLAG_SNOOZE_COUNT, 0) < snoozeLimit;
+                            if (!snoozePermitted)
+                            {
+                                Log.w(TAG, "Snooze blocked; exceeded snooze limit of " + snoozeLimit);
+                                notifications.stopSelf(startId);
+                                return;
+                            }
+
                             if (AlarmState.transitionState(item.state, AlarmState.STATE_SNOOZING))
                             {
                                 Log.i(TAG, "Snoozing: " + item.rowID);
                                 cancelAlarmTimeouts(context, item);
 
-                                long snoozeDurationMs = AlarmSettings.loadPrefAlarmSnooze(context);
+                                long snoozeDurationMs = item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(context));
                                 if (extras != null && extras.containsKey(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION))
                                 {
                                     int snoozeDurationMinutes = extras.getInt(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION, -1);
@@ -1779,6 +1789,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 long snoozeUntil = Calendar.getInstance().getTimeInMillis() + snoozeDurationMs;
                                 addAlarmTimeout(context, ACTION_SHOW, item.getUri(), snoozeUntil);
 
+                                item.incrementFlag(AlarmClockItem.FLAG_SNOOZE_COUNT);
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onSnoozeState(context, startId, snoozeUntil));

@@ -26,6 +26,14 @@
             android:summary="@string/configLabel_alarms_snooze_summary"
             android:defaultValue="@string/def_app_alarms_snooze" />
 
+        <com.forrestguice.suntimeswidget.settings.IntegerPickerPreference
+            android:key="app_alarms_snoozeLimit"
+            android:title="@string/configLabel_alarms_snoozeLimit"
+            android:summary="@string/configLabel_alarms_snoozeLimit_summary"
+            app:zeroValueText="@string/configLabel_alarms_snoozeLimit_none"
+            app:minValue="0" app:maxValue="10"
+            android:defaultValue="@string/def_app_alarms_snoozeLimit" />
+
         <!--<EditTextPreference
             android:key="app_alarms_silenceafter"
             android:title="@string/configLabel_alarms_silenceAfter"

@@ -146,6 +146,18 @@ public class AlarmClockItemTest0
         assertFalse(item0.flagIsTrue("flag5"));
         assertEquals(0L, item0.getFlag("flag5"));
 
+        assertEquals(0L, item0.getFlag("flag6"));
+        assertFalse(item0.hasFlag("flag6"));
+        item0.incrementFlag("flag6");
+        assertTrue(item0.hasFlag("flag6"));
+        assertEquals(1L, item0.getFlag("flag6"));
+
+        item0.incrementFlag("flag6");
+        assertEquals(2L, item0.getFlag("flag6"));
+        item0.clearFlag("flag6");
+        assertEquals(0L, item0.getFlag("flag6"));
+        assertFalse(item0.hasFlag("flag6"));
+
         item0.clearFlag("flag5");
         assertEquals(4, item0.alarmFlags.size());
         assertFalse(item0.hasFlag("flag5"));
