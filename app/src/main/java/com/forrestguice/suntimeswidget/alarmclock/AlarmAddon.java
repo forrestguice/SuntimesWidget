@@ -290,11 +290,16 @@ public class AlarmAddon
         PackageManager packageManager = context.getPackageManager();
         try {
             ProviderInfo providerInfo = packageManager.resolveContentProvider(uri.getAuthority(), 0);
-            PackageInfo packageInfo = packageManager.getPackageInfo(providerInfo.packageName, PackageManager.GET_PERMISSIONS);
-
-            if (!(hasPermission = hasPermission(packageInfo))) {
-                Log.w("AlarmAddon", "checkUriPermission: Permission denied! " + packageInfo.packageName + " does not have required permissions.");
+            if (providerInfo != null)
+            {
+                PackageInfo packageInfo = packageManager.getPackageInfo(providerInfo.packageName, PackageManager.GET_PERMISSIONS);
+                if (!(hasPermission = hasPermission(packageInfo))) {
+                    Log.w("AlarmAddon", "checkUriPermission: Permission denied! " + packageInfo.packageName + " does not have required permissions.");
+                }
+            } else {
+                Log.w("AlarmAddon", "checkUriPermission: null providerInfo!" );
             }
+
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("AlarmAddon", "checkUriPermission: Package not found! " + e);
         }
