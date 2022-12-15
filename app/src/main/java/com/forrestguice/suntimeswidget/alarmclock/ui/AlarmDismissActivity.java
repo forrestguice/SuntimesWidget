@@ -23,6 +23,7 @@ import android.animation.ValueAnimator;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
@@ -362,7 +363,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     protected void showDismissChallenge(Context context, @Nullable AlarmDismissChallenge challenge)
     {
         if (challenge != null) {
-            challenge.createDismissChallengeDialog(context, dismissButton, this).show();
+            challenge.showDismissChallenge(context, dismissButton, this);
         } else dismissAlarm(context);
     }
 
@@ -694,6 +695,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
     /**
      * MathDismissChallenge
      */
@@ -748,6 +754,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             return ((operation == MULTIPLY || operation == ADD) && (a == 1 || b == 1))     // adding 1, multiplying by 1 (too easy)
                     || (operation == SUBTRACT && b == 1)                                   // subtracting 1 (too easy)
                     || (operation == DIVIDE && ((a % b) != 0));                            // division with remainder (too hard)
+        }
+
+        @Override
+        public void showDismissChallenge(Context context, View view, final AlarmDismissInterface parent) {
+            createDismissChallengeDialog(context, view, parent).show();
         }
 
         @Override

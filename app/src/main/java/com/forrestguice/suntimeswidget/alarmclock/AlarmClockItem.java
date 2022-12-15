@@ -73,7 +73,7 @@ public class AlarmClockItem implements Parcelable
 
     protected HashMap<String, Long> alarmFlags = null;
     public static final String FLAG_REMINDER_WITHIN = "reminder";               // milliseconds
-    public static final String FLAG_DISMISS_CHALLENGE = "dismiss_challenge";    // DismissChallenge enum ordinal (0 disabled)
+    public static final String FLAG_DISMISS_CHALLENGE = "dismissChallenge";    // DismissChallenge enum ordinal (0 disabled)
     public static final String FLAG_SNOOZE = "snoozeMillis";                         // milliseconds
     public static final String FLAG_SNOOZE_LIMIT = "snoozeLimit";                    // 0; unlimited
     public static final String FLAG_SNOOZE_COUNT = "snoozeCount";                    // [0, limit)

@@ -18,17 +18,20 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 
 public interface AlarmDismissInterface
 {
+    Activity getActivity();
     void dismissAlarm(Context context);
     void dismissAlarmAfterChallenge(Context context, View v);
 
     interface AlarmDismissChallenge
     {
+        void showDismissChallenge(Context context, final View view, final AlarmDismissInterface parent);
         Dialog createDismissChallengeDialog(Context context, final View view, final AlarmDismissInterface parent);
     }
 }
