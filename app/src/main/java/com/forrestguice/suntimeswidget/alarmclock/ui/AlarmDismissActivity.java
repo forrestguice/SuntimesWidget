@@ -88,6 +88,8 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     public static final String ACTION_DISMISS = AlarmNotifications.ACTION_DISMISS;
 
+    public static final int REQUEST_DISMISS_CHALLENGE = 100;
+
     private AlarmClockItem alarm = null;
     private String mode = null;
 
@@ -692,6 +694,29 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         switch (setting) {
             case MATH: return new MathDismissChallenge();
             case NONE: default: return null;
+        }
+    }
+
+    protected void onDismissChallengeActivityResult(int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK) {
+            Log.i(TAG, "onDismissChallengeResult: pass");
+            dismissAlarm(AlarmDismissActivity.this);
+
+        } else {
+            Log.w(TAG, "onDismissChallengeResult: fail");
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case REQUEST_DISMISS_CHALLENGE:
+                onDismissChallengeActivityResult(resultCode, data);
+                break;
         }
     }
 
