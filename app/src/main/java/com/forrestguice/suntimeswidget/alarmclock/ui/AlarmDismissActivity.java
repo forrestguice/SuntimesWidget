@@ -63,6 +63,7 @@ import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
@@ -76,6 +77,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -349,7 +351,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     {
         AlarmSettings.DismissChallenge challenge = alarm.getDismissChallenge(context);
         if (challenge != AlarmSettings.DismissChallenge.NONE) {
-            showDismissChallenge(context, getDismissChallenge(challenge));
+            showDismissChallenge(context, getDismissChallenge(context, challenge));
         } else dismissAlarm(context);
     }
 
@@ -688,10 +690,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
     }
 
-
-    public AlarmDismissInterface.AlarmDismissChallenge getDismissChallenge(AlarmSettings.DismissChallenge setting)
+    public AlarmDismissInterface.AlarmDismissChallenge getDismissChallenge(Context context, AlarmSettings.DismissChallenge setting)
     {
         switch (setting) {
+            case ADDON: return new AddonDismissChallenge(context, setting.getID());
             case MATH: return new MathDismissChallenge();
             case NONE: default: return null;
         }
@@ -724,6 +726,61 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     public Activity getActivity() {
         return this;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static class AddonDismissChallenge implements AlarmDismissInterface.AlarmDismissChallenge
+    {
+        protected long id = -1;
+        protected AlarmAddon.DismissChallengeInfo info;
+
+        public AddonDismissChallenge(Context context, long id) {
+            this.id = id;
+        }
+
+        public AddonDismissChallenge(AlarmAddon.DismissChallengeInfo info) {
+            this.id = info.getDismissChallengeID();
+            this.info = info;
+        }
+
+        public long getDismissChallengeID() {
+            return id;
+        }
+
+        public AlarmAddon.DismissChallengeInfo getInfo(Context context)
+        {
+            if (info == null)
+            {
+                List<AlarmAddon.DismissChallengeInfo> challenges = AlarmAddon.queryAlarmDismissChallenges(context, id);
+                if (challenges.size() >= 1) {
+                    info = challenges.get(0);
+                }
+            }
+            return info;
+        }
+
+        @Override
+        public void showDismissChallenge(Context context, View view, AlarmDismissInterface parent)
+        {
+            getInfo(context);
+            if (info != null) {
+                parent.getActivity().startActivityForResult(info.getIntent(), REQUEST_DISMISS_CHALLENGE);
+
+            } else {
+                Log.e(TAG, "AddonDismissChallenge: showDismissChallenge: failed to query activity info for challengeID " + id);
+                parent.dismissAlarm(context);
+            }
+        }
+
+        @Override
+        public Dialog createDismissChallengeDialog(Context context, View view, AlarmDismissInterface parent) {
+            return null;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * MathDismissChallenge
