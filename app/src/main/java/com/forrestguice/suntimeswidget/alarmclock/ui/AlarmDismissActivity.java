@@ -88,6 +88,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     public static final String TAG = "AlarmReceiverDismiss";
     public static final String EXTRA_MODE = "activityMode";
 
+    public static final String ACTION_SNOOZE = AlarmNotifications.ACTION_SNOOZE;
     public static final String ACTION_DISMISS = AlarmNotifications.ACTION_DISMISS;
 
     public static final int REQUEST_DISMISS_CHALLENGE = 100;
@@ -231,6 +232,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         AlarmDatabaseAdapter.AlarmItemTaskListener onLoaded = null;
         if (ACTION_DISMISS.equals(intent.getAction()))
         {
+            Log.i(TAG, "onResume: ACTION_DISMISS");
             intent.setAction(null);
             onLoaded = new AlarmDatabaseAdapter.AlarmItemTaskListener() {
                 @Override
@@ -238,23 +240,28 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                     dismissAlarmAfterChallenge(AlarmDismissActivity.this, dismissButton);
                 }
             };
+
+        } else if (ACTION_SNOOZE.equals(intent.getAction())) {
+            Log.i(TAG, "onResume: ACTION_SNOOZE");
+            intent.setAction(null);
+            snoozeAlarm(this);
         }
 
         Uri data = intent.getData();
         if (data != null)
         {
             try {
-                Log.d(TAG, "onCreate: " + data);
+                Log.d(TAG, "onResume: " + data);
                 setAlarmID(this, ContentUris.parseId(data), onLoaded);
                 screenOn();
 
             } catch (NumberFormatException e) {
-                Log.e(TAG, "onCreate: invalid data uri! canceling...");
+                Log.e(TAG, "onResume: invalid data uri! canceling...");
                 setResult(RESULT_CANCELED);
                 finish();
             }
         } else {
-            Log.e(TAG, "onCreate: missing data uri! canceling...");
+            Log.e(TAG, "onResume: missing data uri! canceling...");
             setResult(RESULT_CANCELED);
             finish();
         }

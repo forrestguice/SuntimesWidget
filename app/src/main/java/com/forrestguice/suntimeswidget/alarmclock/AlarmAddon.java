@@ -85,7 +85,7 @@ public class AlarmAddon
         for (ResolveInfo resolveInfo : packageInfo)
         {
             IntentFilter filter = resolveInfo.filter;
-            if (filter != null && filter.hasAction(ACTION_SUNTIMES_DISMISS_CHALLENGE) && filter.hasCategory(CATEGORY_SUNTIMES_ALARM))
+            if (filter != null && filter.hasAction(ACTION_SUNTIMES_DISMISS_CHALLENGE) && filter.hasCategory(CATEGORY_SUNTIMES_ADDON))
             {
                 try {
                     PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
