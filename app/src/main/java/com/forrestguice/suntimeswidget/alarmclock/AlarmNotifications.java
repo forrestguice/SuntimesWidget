@@ -1759,7 +1759,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             // Snooze Alarm
                             ////////////////////////////////////////////////////////////////////////////
                             int snoozeLimit = (int) item.getFlag(AlarmClockItem.FLAG_SNOOZE_LIMIT, AlarmSettings.loadPrefAlarmSnoozeLimit(context));
-                            boolean snoozePermitted = (snoozeLimit <= 0) || item.getFlag(AlarmClockItem.FLAG_SNOOZE_COUNT, 0) < snoozeLimit;
+                            boolean snoozePermitted = (snoozeLimit == 0) || item.getFlag(AlarmClockItem.FLAG_SNOOZE_COUNT, 0) < snoozeLimit;
                             if (!snoozePermitted)
                             {
                                 Log.w(TAG, "Snooze blocked; exceeded snooze limit of " + snoozeLimit);
