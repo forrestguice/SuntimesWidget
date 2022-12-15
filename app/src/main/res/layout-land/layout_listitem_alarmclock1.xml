@@ -299,10 +299,21 @@
                     android:layout_width="match_parent" android:layout_height="match_parent"
                     android:gravity="start|top" android:orientation="horizontal">
 
-                    <LinearLayout
+                    <LinearLayout android:animateLayoutChanges="true"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
+
+                        <FrameLayout android:id="@+id/chip_dismiss_challenge" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:contentDescription="@string/configLabel_alarms_dismissChallenge">
+
+                            <TextView android:id="@+id/text_dismiss_challenge" style="@style/ChipText1"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:button="@android:color/transparent"
+                                android:drawableLeft="?attr/icActionDismiss" android:drawableStart="?attr/icActionDismiss"
+                                tools:text="@string/alarmDismiss_none_long" />
+
+                        </FrameLayout>
 
                         <FrameLayout android:id="@+id/chip_action1" android:contentDescription="@string/configAction_setAlarmAction"
                             android:layout_width="wrap_content" android:layout_height="wrap_content">

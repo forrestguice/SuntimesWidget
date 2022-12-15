@@ -326,7 +326,9 @@ public class AlarmEditDialog extends DialogFragment
                     case R.id.alarmTypeNotification2: item.type = AlarmClockItem.AlarmType.NOTIFICATION2; break;
                     case R.id.alarmTypeAlarm: default: item.type = AlarmClockItem.AlarmType.ALARM; break;
                 }
-                itemView.tray_beforeAlert.setVisibility(item.type == AlarmClockItem.AlarmType.ALARM ? View.VISIBLE : View.GONE);
+                boolean isAlarm = item.type == AlarmClockItem.AlarmType.ALARM;
+                itemView.tray_beforeAlert.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
+                itemView.chip_dismissChallenge.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
 
                 if (listener != null) {
                     listener.onTypeChanged(item);
@@ -422,6 +424,7 @@ public class AlarmEditDialog extends DialogFragment
         holder.chip_action1.setOnClickListener(pickAction(1));
         holder.check_reminder.setOnCheckedChangeListener(pickReminder());
         holder.chip_action2.setOnClickListener(pickAction(2));
+        holder.chip_dismissChallenge.setOnClickListener(pickDismissChallenge());
         holder.layout_datetime.setOnClickListener(triggerPreviewOffsetListener(holder));
     }
 
@@ -642,6 +645,18 @@ public class AlarmEditDialog extends DialogFragment
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestAction(item, actionNum);
+                }
+            }
+        };
+    }
+
+    private View.OnClickListener pickDismissChallenge()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestDismissChallenge(item);
                 }
             }
         };

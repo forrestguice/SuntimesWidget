@@ -1075,6 +1075,12 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     }
 
     @Override
+    public void onRequestDismissChallenge(AlarmClockItem forItem) {
+        Log.d("DEBUG", "onRequestDismissChallenge");
+        // TODO
+    }
+
+    @Override
     public void onRequestDialog(AlarmClockItem forItem) { /* EMPTY */ }
 
 }
