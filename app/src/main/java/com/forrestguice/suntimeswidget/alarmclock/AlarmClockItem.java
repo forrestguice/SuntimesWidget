@@ -620,8 +620,14 @@ public class AlarmClockItem implements Parcelable
     public AlarmSettings.DismissChallenge getDismissChallenge(Context context)
     {
         AlarmSettings.DismissChallenge challenge = AlarmSettings.loadDismissChallengePref(context);
-        if (hasFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE)) {
-            challenge = AlarmSettings.DismissChallenge.valueOf((int)getFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE, challenge.ordinal()), challenge);
+        if (hasFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE))
+        {
+            long value = getFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE, challenge.getID());
+            challenge = AlarmSettings.DismissChallenge.valueOf((int)value, AlarmSettings.DismissChallenge.ADDON);
+
+            if (challenge == AlarmSettings.DismissChallenge.ADDON) {
+                AlarmSettings.DismissChallenge.ADDON.setID(value);
+            }
         }
         return challenge;
     }

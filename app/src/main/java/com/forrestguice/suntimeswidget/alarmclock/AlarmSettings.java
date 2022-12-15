@@ -624,7 +624,8 @@ public class AlarmSettings
     public static enum DismissChallenge
     {
         NONE("None"),
-        MATH("Math Problem");
+        MATH("Math Problem"),
+        ADDON("Addon");
 
         private DismissChallenge(String displayString)
         {
@@ -667,6 +668,14 @@ public class AlarmSettings
             }
             return retValue;
         }
+
+        public void setID(long id) {
+            this.id = id;
+        }
+        public long getID() {
+            return id;
+        }
+        protected long id = ordinal();
     }
 
     public static DismissChallenge loadDismissChallengePref(Context context)
