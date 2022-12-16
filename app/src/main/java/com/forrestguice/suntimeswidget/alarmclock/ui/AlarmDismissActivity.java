@@ -190,7 +190,20 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             if (newData != null)
             {
                 Log.d(TAG, "onNewIntent: " + newData + ", action: " + intent.getAction());
-                setAlarmID(this, ContentUris.parseId(newData));
+
+                AlarmDatabaseAdapter.AlarmItemTaskListener onLoaded = null;
+                if (ACTION_DISMISS.equals(intent.getAction()))
+                {
+                    Log.i(TAG, "onResume: ACTION_DISMISS");
+                    intent.setAction(null);
+                    onLoaded = new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+                        @Override
+                        public void onFinished(Boolean result, AlarmClockItem item) {
+                            dismissAlarmAfterChallenge(AlarmDismissActivity.this, dismissButton);
+                        }
+                    };
+                }
+                setAlarmID(this, ContentUris.parseId(newData), onLoaded);
 
             } else Log.w(TAG, "onNewIntent: null data!");
         } else Log.w(TAG, "onNewIntent: null Intent!");
@@ -383,7 +396,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         } else dismissAlarm(context);
     }
 
-    private void setMode( @Nullable String action )
+    private void setMode( @Nullable String action )   // NPE in here..
     {
         String prevMode = this.mode;
         this.mode = action;
@@ -716,16 +729,29 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         if (resultCode == RESULT_OK) {
             Log.i(TAG, "onDismissChallengeResult: pass");
             dismissAlarm(AlarmDismissActivity.this);
+            return;
 
-        } else {
-            Log.w(TAG, "onDismissChallengeResult: fail");
+        } else if (data != null) {
+            if (data.getIntExtra(Intent.EXTRA_RETURN_RESULT, RESULT_CANCELED) == RESULT_OK)
+            {
+                Log.i(TAG, "onDismissChallengeResult: pass");
+                dismissAlarm(AlarmDismissActivity.this);
+                return;
+
+            } else if (ACTION_SNOOZE.equals(data.getAction())) {
+                Log.i(TAG, "onDismissChallengeResult: snooze");
+                snoozeAlarm(AlarmDismissActivity.this);
+                return;
+            }
         }
+        Log.w(TAG, "onDismissChallengeResult: fail: " + data);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("DEBUG", "onActivityResult: " + requestCode + ", result: " + resultCode);
         switch (requestCode)
         {
             case REQUEST_DISMISS_CHALLENGE:
@@ -777,7 +803,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         {
             getInfo(context);
             if (info != null) {
-                parent.getActivity().startActivityForResult(info.getIntent(), REQUEST_DISMISS_CHALLENGE);
+
+                Intent intent = info.getIntent().setData(parent.getAlarmUri());
+                intent.setFlags(0);
+                Log.d("onDismissChallenge", "showDismissChallenge: intent: " + intent );
+                parent.getActivity().startActivityForResult(intent, REQUEST_DISMISS_CHALLENGE);
 
             } else {
                 Log.e(TAG, "AddonDismissChallenge: showDismissChallenge: failed to query activity info for challengeID " + id);
