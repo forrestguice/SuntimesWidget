@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 
 public interface AlarmDismissInterface
@@ -28,6 +29,7 @@ public interface AlarmDismissInterface
     Activity getActivity();
     void dismissAlarm(Context context);
     void dismissAlarmAfterChallenge(Context context, View v);
+    Uri getAlarmUri();
 
     interface AlarmDismissChallenge
     {

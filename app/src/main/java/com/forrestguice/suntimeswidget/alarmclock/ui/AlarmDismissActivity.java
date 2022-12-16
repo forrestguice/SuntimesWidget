@@ -362,6 +362,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         } else dismissAlarm(context);
     }
 
+    @Override
+    public Uri getAlarmUri() {
+        return (alarm != null ? alarm.getUri() : null);
+    }
+
     public void dismissAlarm(Context context)
     {
         snoozeButton.setEnabled(false);

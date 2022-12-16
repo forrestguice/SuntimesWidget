@@ -77,7 +77,7 @@ public class AlarmAddon
     {
         Intent intent = new Intent();
         intent.setAction(ACTION_SUNTIMES_DISMISS_CHALLENGE);
-        intent.addCategory(CATEGORY_SUNTIMES_ALARM);
+        intent.addCategory(CATEGORY_SUNTIMES_ADDON);
 
         PackageManager packageManager = context.getPackageManager();
         List<ResolveInfo> packageInfo = packageManager.queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER | PackageManager.GET_META_DATA);
@@ -89,7 +89,7 @@ public class AlarmAddon
             {
                 try {
                     PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
-                    long id = resolveInfo.activityInfo.metaData.getLong(KEY_DISMISS_CHALLENGE_ID, -1);
+                    int id = resolveInfo.activityInfo.metaData.getInt(KEY_DISMISS_CHALLENGE_ID, -1);
 
                     if ((searchForID == null || searchForID == id))
                     {
