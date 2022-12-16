@@ -224,6 +224,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
+        AlarmSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
         AlarmClockItem.AlarmType.initDisplayStrings(context);

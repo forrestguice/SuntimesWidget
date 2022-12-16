@@ -952,7 +952,7 @@
     <string name="configLabel_alarms_dismissChallenge">Dismiss Challenge</string>            <!-- pref title -->   <!-- TODO -->
     <string name="alarmDismiss_none">None</string>                         <!-- alarm setting -->   <!-- TODO -->
     <string name="alarmDismiss_none_long">No Challenge</string>            <!-- chip label -->   <!-- TODO -->
-    <string name="alarmDismiss_math">Math Problem</string>           <!-- alarm setting -->   <!-- TODO -->
+    <string name="alarmDismiss_math">Easy Math</string>           <!-- alarm setting -->   <!-- TODO -->
     <string-array name="dismissChallenge_values" translatable="false">
         <item>NONE</item>
         <item>MATH</item>
