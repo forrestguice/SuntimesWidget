@@ -396,7 +396,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         } else dismissAlarm(context);
     }
 
-    private void setMode( @Nullable String action )   // NPE in here..
+    private void setMode( @Nullable String action )
     {
         String prevMode = this.mode;
         this.mode = action;
@@ -407,7 +407,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
             }
             SuntimesUtils.initDisplayStrings(this);
-            long snoozeMillis = alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this));
+            long snoozeMillis = alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this));    // NPE this line after rotation
             SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
             String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
             SpannableString snoozeDisplay = SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
