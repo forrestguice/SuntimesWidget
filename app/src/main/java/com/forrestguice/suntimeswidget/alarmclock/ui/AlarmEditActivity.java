@@ -52,6 +52,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -72,7 +74,11 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAdapterListener
 {
@@ -599,6 +605,61 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * pickDismissChallenge
+     */
+    protected void pickDismissChallenge(@NonNull final AlarmClockItem item) {
+        showDismissChallengePopup(editor.itemView.chip_dismissChallenge, item);
+    }
+
+    public void showDismissChallengePopup(View v, @NonNull final AlarmClockItem item)
+    {
+        PopupMenu popup = new PopupMenu(this, v);
+        Menu menu = popup.getMenu();
+
+        ArrayList<AlarmSettings.DismissChallenge> challenges0 = new ArrayList<AlarmSettings.DismissChallenge>(Arrays.asList(AlarmSettings.DismissChallenge.values()));
+        challenges0.remove(AlarmSettings.DismissChallenge.ADDON);
+        final AlarmSettings.DismissChallenge[] challenges = challenges0.toArray(new AlarmSettings.DismissChallenge[0]);
+
+        for (int i=0; i<challenges.length; i++) {
+            menu.add(Menu.NONE, i, i, challenges[i].getDisplayString());
+        }
+
+        int c = challenges.length + 1;
+        List<AlarmAddon.DismissChallengeInfo> addons = AlarmAddon.queryAlarmDismissChallenges(v.getContext(), null);
+        for (AlarmAddon.DismissChallengeInfo addonInfo : addons) {
+            menu.add(Menu.NONE, (int)addonInfo.getDismissChallengeID(), c, addonInfo.getTitle());
+            c++;
+        }
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                int itemID = menuItem.getItemId();
+                onDismissChallengeResult(itemID);
+                return true;
+            }
+        });
+
+        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        popup.show();
+    }
+
+    protected void onDismissChallengeResult(long dismissChallengeID)
+    {
+        if (editor != null)
+        {
+            AlarmClockItem item = editor.getItem();
+            item.setFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE, dismissChallengeID);
+            editor.notifyItemChanged();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void showAlarmSoundPopup(View v, @NonNull final AlarmClockItem item)
     {
         PopupMenu popup = new PopupMenu(this, v);
@@ -1076,8 +1137,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     @Override
     public void onRequestDismissChallenge(AlarmClockItem forItem) {
-        Log.d("DEBUG", "onRequestDismissChallenge");
-        // TODO
+        pickDismissChallenge(forItem);
     }
 
     @Override
