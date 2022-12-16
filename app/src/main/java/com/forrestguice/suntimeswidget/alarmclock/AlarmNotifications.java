@@ -922,7 +922,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setPriority( NotificationCompat.PRIORITY_HIGH );
                     notificationMsg = context.getString(R.string.alarmAction_timeoutMsg);
                     notificationIcon = R.drawable.ic_action_timeout;
-                    builder.setColor(context.getColor(R.color.alarm_notification_timeout));
+                    builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_timeout));
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
                     builder.setContentIntent(pendingDismiss);
                     builder.setAutoCancel(false);
@@ -966,7 +966,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(System.currentTimeMillis()-5000, alarm.alarmtime);
                     notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
                     notificationIcon = R.drawable.ic_action_snooze;
-                    builder.setColor(context.getColor(R.color.alarm_notification_snoozing));
+                    builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_snoozing));
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
                     builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
                     if (Build.VERSION.SDK_INT < 16) {
@@ -981,7 +981,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setPriority( NotificationCompat.PRIORITY_MAX );
                     builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
                     builder.setProgress(0,0,true);
-                    builder.setColor(context.getColor(R.color.alarm_notification_sounding));
+                    builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_sounding));
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
                     builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
                     if (Build.VERSION.SDK_INT < 16) {
@@ -1100,7 +1100,7 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setContentTitle(context.getString(R.string.app_name_alarmclock));
         builder.setContentText(message);
         builder.setSmallIcon(R.drawable.ic_action_warning);
-        builder.setColor(context.getColor(R.color.alarm_notification_warning));
+        builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_warning));
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
