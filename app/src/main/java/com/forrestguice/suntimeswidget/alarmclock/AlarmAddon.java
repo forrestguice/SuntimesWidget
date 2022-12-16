@@ -294,10 +294,10 @@ public class AlarmAddon
             {
                 PackageInfo packageInfo = packageManager.getPackageInfo(providerInfo.packageName, PackageManager.GET_PERMISSIONS);
                 if (!(hasPermission = hasPermission(packageInfo))) {
-                    Log.w("AlarmAddon", "checkUriPermission: Permission denied! " + packageInfo.packageName + " does not have required permissions.");
+                    Log.e("AlarmAddon", "checkUriPermission: Permission denied! " + packageInfo.packageName + " does not have required permissions.");
                 }
             } else {
-                Log.w("AlarmAddon", "checkUriPermission: null providerInfo!" );
+                Log.e("AlarmAddon", "checkUriPermission: failed to resolve providerInfo for " + eventUri);
             }
 
         } catch (PackageManager.NameNotFoundException e) {

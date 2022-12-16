@@ -54,6 +54,7 @@ import java.util.TimeZone;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_TEXT_SIZE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION_CODE;
@@ -216,6 +217,9 @@ public class CalculatorProviderTest
 
         String timezone = WidgetSettings.loadTimezonePref(mockContext, appWidgetID);
         assertTrue("COLUMN_CONFIG_TIMEZONE should be " + timezone, cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_TIMEZONE)).equals(timezone));
+
+        String textSize = AppSettings.loadTextSizePref(mockContext);
+        assertTrue("COLUMN_CONFIG_TEXTSIZE should be " + textSize, cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_APP_TEXT_SIZE)).equals(textSize));
 
         String appTheme = AppSettings.loadThemePref(mockContext);
         assertTrue("COLUMN_CONFIG_APPTHEME should be " + appTheme, cursor.getString(cursor.getColumnIndex(COLUMN_CONFIG_APP_THEME)).equals(appTheme));

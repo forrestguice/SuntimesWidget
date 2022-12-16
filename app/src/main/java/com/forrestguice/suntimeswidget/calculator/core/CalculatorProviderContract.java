@@ -225,6 +225,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *   5 adds COLUMN_SEASON_CROSS_SPRING, _CROSS_SUMMER, _CROSS_AUTUMN, and _CROSS_WINTER;
  *     adds SEASON_TROPICAL_YEAR_LENGTH (tropical year milliseconds);
  *     deprecates COLUMN_SEASON_VERNAL and replaces it with COLUMN_SEASON_SPRING
+ *     adds COLUMN_CONFIG_APP_TEXT_SIZE
  */
 public interface CalculatorProviderContract
 {
@@ -241,6 +242,7 @@ public interface CalculatorProviderContract
     String COLUMN_CONFIG_PROVIDER_VERSION_CODE_V2 = "config_pvodier_version_code"; // int (key has typo in v0-v2; fixed v3)
     String COLUMN_CONFIG_APP_VERSION = "config_app_version";                       // String (app version string)
     String COLUMN_CONFIG_APP_VERSION_CODE = "config_app_version_code";             // int (app version code)
+    String COLUMN_CONFIG_APP_TEXT_SIZE = "config_app_textsize";                    // String (SMALL, NORMAL, LARGE, XLARGE)
     String COLUMN_CONFIG_APP_THEME = "config_app_theme";                           // String (base: dark, light, daynight)
     String COLUMN_CONFIG_APP_THEME_OVERRIDE = "config_app_theme_override";         // String (themeName)
     String COLUMN_CONFIG_LOCALE = "config_locale";                                 // String (localeCode)
@@ -271,7 +273,7 @@ public interface CalculatorProviderContract
     String[] QUERY_CONFIG_PROJECTION = new String[] {
             COLUMN_CONFIG_APP_VERSION, COLUMN_CONFIG_APP_VERSION_CODE,
             COLUMN_CONFIG_PROVIDER_VERSION, COLUMN_CONFIG_PROVIDER_VERSION_CODE,
-            COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APP_THEME, COLUMN_CONFIG_APP_THEME_OVERRIDE,
+            COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APP_TEXT_SIZE, COLUMN_CONFIG_APP_THEME, COLUMN_CONFIG_APP_THEME_OVERRIDE,
             COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
             COLUMN_CONFIG_LOCATION, COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
             COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID,

@@ -49,6 +49,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_TEXT_SIZE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME_OVERRIDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION;
@@ -390,6 +391,10 @@ public class CalculatorProvider extends ContentProvider
                         case COLUMN_CONFIG_LOCALE:
                             AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(context);
                             row[i] = ((localeMode == AppSettings.LocaleMode.SYSTEM_LOCALE) ? null : AppSettings.loadLocalePref(context));
+                            break;
+
+                        case COLUMN_CONFIG_APP_TEXT_SIZE:
+                            row[i] = AppSettings.loadTextSizePref(context);
                             break;
 
                         case COLUMN_CONFIG_APP_THEME:
