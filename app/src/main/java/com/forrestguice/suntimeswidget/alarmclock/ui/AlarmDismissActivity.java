@@ -805,7 +805,6 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             if (info != null) {
 
                 Intent intent = info.getIntent().setData(parent.getAlarmUri());
-                intent.setFlags(0);
                 Log.d("onDismissChallenge", "showDismissChallenge: intent: " + intent );
                 parent.getActivity().startActivityForResult(intent, REQUEST_DISMISS_CHALLENGE);
 
