@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -189,6 +190,9 @@ public class AlarmEvent
         }
         public boolean requiresLocation() {
             return (event != null ? AlarmEvent.requiresLocation(event) : requires_location);
+        }
+        public void setRequiresLocation(boolean value) {
+            requires_location = value;
         }
 
         public String toString() {

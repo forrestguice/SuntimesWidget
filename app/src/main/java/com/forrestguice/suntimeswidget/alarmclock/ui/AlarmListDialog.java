@@ -66,6 +66,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -1800,8 +1802,18 @@ public class AlarmListDialog extends DialogFragment
             // location
             if (view.text_location != null)
             {
-                boolean showLocation = (item.getEventItem(context).requiresLocation() || (item.getEvent() == null && item.timezone != null));
-                view.text_location.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
+                AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
+                boolean isClockTime = (item.getEvent() == null && item.timezone == null);
+                boolean isSolarTime = (item.getEvent() == null && item.timezone != null);
+
+                if (isClockTime) {
+                    eventItem.setRequiresLocation(false);
+                }
+                if (isSolarTime) {
+                    eventItem.setRequiresLocation(true);
+                }
+
+                view.text_location.setVisibility(eventItem.requiresLocation() ? View.VISIBLE : View.INVISIBLE);
                 view.text_location.setText(item.location != null ? item.location.getLabel() : "");
                 view.text_location.setTextColor(item.enabled ? color_on : color_off);
 
