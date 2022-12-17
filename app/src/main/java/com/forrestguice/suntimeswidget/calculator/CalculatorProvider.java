@@ -73,7 +73,9 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_WARNINGS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_SOLARTIMEMODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONEMODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_APOGEE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
@@ -99,6 +101,7 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_DATE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_EOT;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ISDAY;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_ACTUAL_RISE;
@@ -437,6 +440,14 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = initTimeZone(context, appWidgetID).getID();
                             break;
 
+                        case COLUMN_CONFIG_TIMEZONEMODE:
+                            row[i] = WidgetSettings.loadTimezoneModePref(context, appWidgetID).name();
+                            break;
+
+                        case COLUMN_CONFIG_SOLARTIMEMODE:
+                            row[i] = WidgetSettings.loadSolarTimeModePref(context, appWidgetID).name();
+                            break;
+
                         case COLUMN_CONFIG_APPWIDGETID:
                             row[i] = appWidgetID;
                             break;
@@ -661,6 +672,10 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_SUNPOS_ISDAY:
                             row[i] = calculator.isDay(datetime);
+                            break;
+
+                        case COLUMN_SUNPOS_EOT:
+                            row[i] = calculator.equationOfTime(datetime);
                             break;
 
                         case COLUMN_SUNPOS_DATE:
