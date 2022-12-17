@@ -40,11 +40,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 public class LocationConfigDialog extends BottomSheetDialogFragment
 {
@@ -314,9 +316,11 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
 
         Button btn_cancel = (Button) view.findViewById(R.id.dialog_button_cancel);
+        TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(hideFooter ? null : onDialogCancelClick);
 
         Button btn_accept = (Button) view.findViewById(R.id.dialog_button_accept);
+        TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
         btn_accept.setOnClickListener(hideFooter ? null : onDialogAcceptClick);
 
         if (savedInstanceState != null) {

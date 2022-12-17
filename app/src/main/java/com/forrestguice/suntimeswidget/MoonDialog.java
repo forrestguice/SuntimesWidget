@@ -68,6 +68,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.moon.MoonApsisView;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
@@ -281,15 +282,18 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
         nextButton = (ImageButton) dialogView.findViewById(R.id.media_next);
         if (nextButton != null) {
+            TooltipCompat.setTooltipText(nextButton, nextButton.getContentDescription());
             nextButton.setOnClickListener(onNextClicked);
         }
         prevButton = (ImageButton) dialogView.findViewById(R.id.media_prev);
         if (prevButton != null) {
+            TooltipCompat.setTooltipText(prevButton, prevButton.getContentDescription());
             prevButton.setOnClickListener(onPrevClicked);
         }
         resetButton = (ImageButton) dialogView.findViewById(R.id.media_reset);
         if (resetButton != null)
         {
+            TooltipCompat.setTooltipText(resetButton, resetButton.getContentDescription());
             resetButton.setEnabled(false);
             resetButton.setOnClickListener(onResetClicked);
         }
@@ -703,6 +707,10 @@ public class MoonDialog extends BottomSheetDialogFragment
         {
             switch (item.getItemId())
             {
+                case R.id.action_show_controls:
+                    showMediaPopup(getActivity(), text_dialogTimeOffset);
+                    return true;
+
                 case R.id.action_lunarnoon_show:
                     toggleLunarNoon(getContext());
                     return true;
@@ -799,6 +807,7 @@ public class MoonDialog extends BottomSheetDialogFragment
                 ImageButton resetButton = (ImageButton) popupView.findViewById(R.id.media_reset);
                 if (resetButton != null) {
                     resetButton.setOnClickListener(createMediaPopupListener(popupView, onResetClicked));
+                    TooltipCompat.setTooltipText(resetButton, resetButton.getContentDescription());
                     ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(warningColor, disabledColor, pressedColor));
                 }
                 ImageButton playButton = (ImageButton) popupView.findViewById(R.id.media_play);
@@ -814,11 +823,13 @@ public class MoonDialog extends BottomSheetDialogFragment
                 ImageButton nextButton = (ImageButton) popupView.findViewById(R.id.media_next);
                 if (nextButton != null) {
                     nextButton.setOnClickListener(createMediaPopupListener(popupView, onNextClicked));
+                    TooltipCompat.setTooltipText(nextButton, nextButton.getContentDescription());
                     ImageViewCompat.setImageTintList(nextButton, SuntimesUtils.colorStateList(normalColor, disabledColor, pressedColor));
                 }
                 ImageButton prevButton = (ImageButton) popupView.findViewById(R.id.media_prev);
                 if (prevButton != null) {
                     prevButton.setOnClickListener(createMediaPopupListener(popupView, onPrevClicked));
+                    TooltipCompat.setTooltipText(prevButton, prevButton.getContentDescription());
                     ImageViewCompat.setImageTintList(prevButton, SuntimesUtils.colorStateList(normalColor, disabledColor, pressedColor));
                 }
             }

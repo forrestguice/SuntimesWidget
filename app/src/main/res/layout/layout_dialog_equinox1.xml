@@ -46,6 +46,15 @@
 
             </LinearLayout>
 
+
+            <ImageButton android:id="@+id/menu_button"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                style="?attr/actionOverflowButtonStyle"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/configAction_overflow" />
+
         </android.support.constraint.ConstraintLayout>
 
         <android.support.v7.widget.RecyclerView
@@ -83,13 +92,7 @@
 
             </LinearLayout>
 
-            <ImageButton android:id="@+id/menu_button"
-                android:layout_width="48dp" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
-                style="?attr/actionOverflowButtonStyle" android:background="?attr/selectableItemBackground"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/configAction_overflow" />
+
 
         </android.support.constraint.ConstraintLayout>
 

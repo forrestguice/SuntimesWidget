@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.LocationListTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -579,13 +580,16 @@ public class LocationConfigView extends LinearLayout
         text_locationAltUnits = (TextView)findViewById(R.id.appwidget_location_alt_units);
 
         button_list = (ImageButton)findViewById(R.id.appwidget_location_list);
+        TooltipCompat.setTooltipText(button_list, button_list.getContentDescription());
         button_list.setOnClickListener(onListButtonClicked);
 
         button_cancel = (ImageButton)findViewById(R.id.appwidget_location_cancel);
+        TooltipCompat.setTooltipText(button_cancel, button_cancel.getContentDescription());
         button_cancel.setOnClickListener(onEditCancelButtonClicked);
 
         // custom mode: toggle edit mode
         button_edit = (ImageButton)findViewById(R.id.appwidget_location_edit);
+        TooltipCompat.setTooltipText(button_edit, button_edit.getContentDescription());
         button_edit.setOnClickListener(onEditButtonClicked);
 
         // custom mode: toggle edit mode (add)
@@ -594,6 +598,7 @@ public class LocationConfigView extends LinearLayout
 
         // custom mode: save location
         button_save = (ImageButton)findViewById(R.id.appwidget_location_save);
+        TooltipCompat.setTooltipText(button_save, button_save.getContentDescription());
         button_save.setOnClickListener(onSaveButtonClicked);
 
         // custom mode: get GPS fix
@@ -602,12 +607,14 @@ public class LocationConfigView extends LinearLayout
 
         button_getfix = (ImageButton)findViewById(R.id.appwidget_location_getfix);
         button_getfix.setOnClickListener(onGetFixClicked);
+        TooltipCompat.setTooltipText(button_getfix, button_getfix.getContentDescription());
 
         // auto mode: get GPS fix
         progress_auto = (ProgressBar)findViewById(R.id.appwidget_location_auto_progress);
         progress_auto.setVisibility(View.GONE);
 
         button_auto = (ImageButton)findViewById(R.id.appwidget_location_auto);
+        TooltipCompat.setTooltipText(button_auto, button_auto.getContentDescription());
         button_auto.setOnClickListener(onAutoButtonClicked);
 
         getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);    // 0; getFixUI_editMode

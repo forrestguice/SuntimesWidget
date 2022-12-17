@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -82,7 +83,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
 
-    private Button btn_accept;
+    private ImageButton btn_accept;
     private Spinner spinner_timezoneMode;
 
     private TextView preview_time;
@@ -348,10 +349,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
         label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
 
-        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
+        ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
+        TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(onDialogCancelClick);
 
-        btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
+        btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
+        TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
         btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 

@@ -171,7 +171,10 @@ public class AppSettings
      */
     public static enum TextSize
     {
-        SMALL("Small"), NORMAL("Normal"), LARGE("Large");
+        SMALL("Small"),
+        NORMAL("Normal"),
+        LARGE("Large"),
+        XLARGE("Extra Large");
 
         private TextSize( String displayString ) {
             this.displayString = displayString;
@@ -190,6 +193,7 @@ public class AppSettings
             SMALL.setDisplayString(context.getString(R.string.textSize_small));
             NORMAL.setDisplayString(context.getString(R.string.textSize_normal));
             LARGE.setDisplayString(context.getString(R.string.textSize_large));
+            XLARGE.setDisplayString(context.getString(R.string.textSize_xlarge));
         }
 
         public static TextSize valueOf(String value, TextSize defaultValue)
@@ -944,6 +948,7 @@ public class AppSettings
             switch (size) {
                 case SMALL: return R.style.AppTheme_System_Small;
                 case LARGE: return R.style.AppTheme_System_Large;
+                case XLARGE: return R.style.AppTheme_System_XLarge;
                 case NORMAL: default: return R.style.AppTheme_System;
             }
         }
@@ -968,6 +973,7 @@ public class AppSettings
             switch (size) {
                 case SMALL: return R.style.AppTheme_Light_Small;
                 case LARGE: return R.style.AppTheme_Light_Large;
+                case XLARGE: return R.style.AppTheme_Light_XLarge;
                 case NORMAL: default: return R.style.AppTheme_Light;
             }
         }
@@ -991,6 +997,7 @@ public class AppSettings
             switch (size) {
                 case SMALL: return R.style.AppTheme_Dark_Small;
                 case LARGE: return R.style.AppTheme_Dark_Large;
+                case XLARGE: return R.style.AppTheme_Dark_XLarge;
                 case NORMAL: default: return R.style.AppTheme_Dark;
             }
         }

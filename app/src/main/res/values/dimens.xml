@@ -32,6 +32,15 @@
     <dimen name="largetext_size_huge">38sp</dimen>
     <dimen name="largetext_size_enormous">58sp</dimen>
 
+    <dimen name="xlargetext_size_tiny">14sp</dimen>    <!-- "xlarge" sizes -->
+    <dimen name="xlargetext_size_xsmall">16sp</dimen>
+    <dimen name="xlargetext_size_small">18sp</dimen>
+    <dimen name="xlargetext_size_medium">20sp</dimen>
+    <dimen name="xlargetext_size_large">22sp</dimen>
+    <dimen name="xlargetext_size_xlarge">26sp</dimen>
+    <dimen name="xlargetext_size_huge">40sp</dimen>
+    <dimen name="xlargetext_size_enormous">60sp</dimen>
+
     <integer name="widget_size_minWidthDp4x1">250</integer>
     <dimen name="widget_size_minWidth4x1">250dp</dimen>
 

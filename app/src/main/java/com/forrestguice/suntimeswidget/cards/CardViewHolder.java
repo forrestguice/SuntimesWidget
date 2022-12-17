@@ -25,6 +25,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -747,7 +748,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         @SuppressLint("ResourceType")
         public TimeFieldRow addRow(Context context, EventSettings.EventAlias event)
         {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.sunriseColor, R.attr.sunsetColor };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.table_risingColor, R.attr.table_settingColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int color_label = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.grey_50));
             int color_rising = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.sunIcon_color_rising_dark));
@@ -773,11 +774,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                     layout_labels[i].addView(text_label, j);
 
                     TextView text_rising = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_rising.setTextColor(color_rising);
+                    text_rising.setTextColor(angle > 0 ? color_setting : color_rising);
                     layout_rising[i].addView(text_rising, j);
 
                     TextView text_setting = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_setting.setTextColor(color_setting);
+                    text_setting.setTextColor(angle > 0 ? color_rising : color_setting);
                     layout_setting[i].addView(text_setting, j);
 
                     setVisibility(i, true);
@@ -827,13 +828,15 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             typedArray.recycle();
 
             TextView view = new TextView(context, null, R.style.SunsetTimeTextView);
-            view.setTextAppearance(android.R.style.TextAppearance_Small);
+            view.setTextAppearance(context, android.R.style.TextAppearance_Small);
             view.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
             view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
             view.getPaint().setAntiAlias(true);
             view.setLayoutParams(layoutParams);
             view.setPadding(0, 0, 0, 0);
-            view.setLetterSpacing(0.01f);
+            if (Build.VERSION.SDK_INT >= 21) {
+                view.setLetterSpacing(0.01f);
+            }
             view.setText(context.getString(R.string.time_none));
             return view;
         }

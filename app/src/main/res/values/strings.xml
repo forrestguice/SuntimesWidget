@@ -1264,15 +1264,18 @@
     <string name="textSize_small">Small</string>   <!-- TODO -->
     <string name="textSize_normal">Normal</string>   <!-- TODO -->
     <string name="textSize_large">Large</string>   <!-- TODO -->
+    <string name="textSize_xlarge">Extra Large</string>   <!-- TODO -->
     <string-array name="textSize_display">                      <!-- one-to-one with textSize_values -->
         <item>@string/textSize_small</item>
         <item>@string/textSize_normal</item>
         <item>@string/textSize_large</item>
+        <item>@string/textSize_xlarge</item>
     </string-array>
     <string-array name="textSize_values" translatable="false">  <!-- one-to-one with textSize_display -->
         <item>SMALL</item>
         <item>NORMAL</item>
         <item>LARGE</item>
+        <item>XLARGE</item>
     </string-array>
 
     <!-- App Setting: solstice tracking mode -->
@@ -1710,6 +1713,10 @@
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+
+    <!-- Dialog: Moon -->
+    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
