@@ -315,11 +315,11 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             footer.setVisibility(hideFooter ? View.GONE : View.VISIBLE);
         }
 
-        Button btn_cancel = (Button) view.findViewById(R.id.dialog_button_cancel);
+        ImageButton btn_cancel = (ImageButton) view.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(hideFooter ? null : onDialogCancelClick);
 
-        Button btn_accept = (Button) view.findViewById(R.id.dialog_button_accept);
+        ImageButton btn_accept = (ImageButton) view.findViewById(R.id.dialog_button_accept);
         TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
         btn_accept.setOnClickListener(hideFooter ? null : onDialogAcceptClick);
 
