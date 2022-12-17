@@ -449,6 +449,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 editor.itemView.chip_ringtone.performClick();
                 return true;
 
+            case R.id.setAlarmDismissChallenge:
+                editor.itemView.chip_dismissChallenge.performClick();
+                return true;
+
             case R.id.action_help:
                 showHelp();
                 return true;
