@@ -137,6 +137,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final int REQUEST_TAPACTION_DATE1 = 60;
     public static final int REQUEST_TAPACTION_NOTE = 70;
     public static final int REQUEST_MANAGE_EVENTS = 80;
+    public static final int REQUEST_WELCOME_SCREEN = 90;
 
     public static final String RECREATE_ACTIVITY = "recreate_activity";
 
@@ -714,6 +715,18 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
 
         @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data)
+        {
+            Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
+            switch(requestCode)
+            {
+                case REQUEST_WELCOME_SCREEN:
+                    onWelcomeScreen(requestCode, resultCode, data);
+                    break;
+            }
+        }
+
+        @Override
         @TargetApi(Build.VERSION_CODES.M)
         public void onAttach(Context context)
         {
@@ -728,6 +741,27 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             super.onAttach(activity);
             loadPref_calculator(activity, sunCalculatorPref);
             loadPref_calculator(activity, moonCalculatorPref, "moon");
+        }
+
+
+        private void onWelcomeScreen(int requestCode, int resultCode, Intent data)
+        {
+            Log.d("DEBUG", "onWelcomeScreen");
+            if (!isAdded()) {
+                Log.w(LOG_TAG, "onWelcomeScreen: fragment has not yet been added to activity; ignoring result..");
+                return;
+            }
+
+            Activity activity = getActivity();
+            if (activity instanceof SuntimesSettingsActivity)
+            {
+                SuntimesSettingsActivity settingsActivity = (SuntimesSettingsActivity) activity;
+                settingsActivity.setNeedsRecreateFlag();
+                settingsActivity.rebuildActivity();
+
+            } else {
+                Log.w(LOG_TAG, "onWelcomeScreen: parent activity is not SuntimesSettingsActivity; ignoring result..");
+            }
         }
     }
 
@@ -773,7 +807,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static void initPref_general(PreferenceFragment fragment)
+    private static void initPref_general(final PreferenceFragment fragment)
     {
         Log.i(LOG_TAG, "initPref_general (fragment)");
         Context context = fragment.getActivity();
@@ -816,6 +850,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             initPref_observerHeight(fragment.getActivity(), observerHeightPref);
             loadPref_observerHeight(fragment.getActivity(), observerHeightPref);
+        }
+
+        Preference introScreenPref = fragment.findPreference("appwidget_0_intro_screen");
+        if (introScreenPref != null)
+        {
+            introScreenPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    fragment.startActivityForResult(new Intent(fragment.getActivity(), WelcomeActivity.class), REQUEST_WELCOME_SCREEN);
+                    return false;
+                }
+            });
         }
     }
 
@@ -1881,14 +1928,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             if (Build.VERSION.SDK_INT >= 23)
             {
                 batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
-                if (AlarmSettings.isIgnoringBatteryOptimizations(fragment.getContext()))
-                {
-                    String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
-                    batteryOptimization.setSummary(listed);
-                } else {
-                    String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
-                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning));
-                }
+                batteryOptimization.setSummary(AlarmSettings.batteryOptimizationMessage(context));
                 
             } else {
                 PreferenceCategory alarmsCategory = (PreferenceCategory)fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
@@ -1955,10 +1995,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 {
                     if (context != null)
                     {
-                        ComponentName componentName = new ComponentName(context, "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivityLauncher");
-                        int state = (Boolean)newValue ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-                        PackageManager packageManager = context.getPackageManager();
-                        packageManager.setComponentEnabledSetting(componentName, state, PackageManager.DONT_KILL_APP);
+                        AlarmSettings.setShowLauncherIcon(context, (Boolean)newValue);
                         Toast.makeText(context, context.getString(R.string.reboot_required_message), Toast.LENGTH_LONG).show();
                         return true;
                     }

@@ -40,7 +40,7 @@
         <LinearLayout android:id="@+id/appwidget_timezone_custom_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/settingsGroup_padding">
+            android:paddingTop="8dp">
 
             <TextView android:id="@+id/appwidget_timezone_custom_label"
                 android:layout_gravity="center_vertical"
@@ -78,8 +78,8 @@
         <LinearLayout android:id="@+id/appwidget_solartime_layout"
                       android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_gravity="center"
                       android:orientation="horizontal"
-                      android:paddingTop="@dimen/settingsGroup_padding"
-                      android:visibility="gone">
+                      android:paddingTop="8dp"
+                      android:visibility="visible">
 
             <TextView android:id="@+id/appwidget_solartime_label"
                       android:labelFor="@+id/appwidget_solartime"
@@ -94,9 +94,9 @@
                 android:layout_height="wrap_content" />
 
             <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_solartime_help"
-                style="@style/Widget.AppCompat.ActionButton"
+                style="@style/Widget.AppCompat.ActionButton" android:visibility="visible"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_width="wrap_content" android:layout_height="32dp"
                 android:contentDescription="@string/configAction_help" />
 
         </LinearLayout>

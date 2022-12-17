@@ -230,4 +230,29 @@
         <attr name="moreHelpButtonText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="LocationConfigDialog">
+        <attr name="hideHeader" format="boolean" />
+        <attr name="hideFooter" format="boolean" />
+        <attr name="hideTitle" format="boolean" />
+        <attr name="hideMode" format="boolean" />
+        <attr name="collapse" format="boolean" />
+        <attr name="showAddButton" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TimeZoneConfigDialog">
+        <attr name="hideHeader" />
+        <attr name="hideFooter" />
+        <attr name="hideTitle" />
+        <attr name="hideMode" />
+    </declare-styleable>
+
+    <item type="id" name="text0"/>
+    <item type="id" name="text1"/>
+    <item type="id" name="text2"/>
+    <item type="id" name="text3"/>
+    <item type="id" name="link0"/>
+    <item type="id" name="link1"/>
+    <item type="id" name="link2"/>
+    <item type="id" name="link3"/>
+
 </resources>

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -153,6 +153,15 @@ public class AppSettings
 
     public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";
     public static final boolean PREF_DEF_PLUGINS_ENABLESCAN = false;
+
+    public static final String PREF_KEY_FIRST_LAUNCH = "app_first_launch";
+    public static boolean isFirstLaunch( Context context ) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREF_KEY_FIRST_LAUNCH, true);
+    }
+    public static void setFirstLaunch( Context context, boolean value ) {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_FIRST_LAUNCH, value).apply();
+    }
 
     public static final String PREF_KEY_DIALOG = "dialog";
     public static final String PREF_KEY_DIALOG_DONOTSHOWAGAIN = "donotshowagain";
@@ -558,10 +567,23 @@ public class AppSettings
         return AppThemeInfo.getExtendedThemeName(pref.getString(PREF_KEY_APPEARANCE_THEME, context.getString(R.string.def_app_appearance_theme)), loadTextSizePref(context));
     }
 
+    public static void saveTextSizePref(Context context, TextSize value)
+    {
+        Log.d("DEBUG", "saveTextSizePref: " + value);
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(PREF_KEY_APPEARANCE_TEXTSIZE, value.name());
+        pref.apply();
+    }
     public static String loadTextSizePref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_APPEARANCE_TEXTSIZE, PREF_DEF_APPEARANCE_TEXTSIZE.name());
+    }
+
+    public static void setThemePref(Context context, String themeID) {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(PREF_KEY_APPEARANCE_THEME, themeID);
+        pref.apply();
     }
 
     public static String loadThemeLightPref(Context context)
@@ -895,6 +917,13 @@ public class AppSettings
             return getExtendedThemeName(getThemeName(), textSize);
         }
 
+        public String getDisplayString(Context context) {
+            return getThemeName();
+        }
+        public String toString() {
+            return getThemeName();
+        }
+
         public static String getExtendedThemeName(String themeName, String textSize) {
             return themeName + "_" + textSize;
         }
@@ -923,6 +952,10 @@ public class AppSettings
                 case NORMAL: default: return R.style.AppTheme_System;
             }
         }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_systemDefault);
+        }
     }
 
     public static class LightThemeInfo extends AppThemeInfo
@@ -944,6 +977,10 @@ public class AppSettings
                 case NORMAL: default: return R.style.AppTheme_Light;
             }
         }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_lightTheme);
+        }
     }
     public static class DarkThemeInfo extends AppThemeInfo
     {
@@ -963,6 +1000,10 @@ public class AppSettings
                 case XLARGE: return R.style.AppTheme_Dark_XLarge;
                 case NORMAL: default: return R.style.AppTheme_Dark;
             }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_darkTheme);
         }
     }
     public static class DayNightThemeInfo extends AppThemeInfo
@@ -994,6 +1035,10 @@ public class AppSettings
         public void setIsDay(boolean value) {
             isDay = value;
         }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_nightMode);
+        }
     }
 
     public static class System1ThemeInfo extends AppThemeInfo
@@ -1015,6 +1060,10 @@ public class AppSettings
                 case LARGE: return R.style.AppTheme_System1_Large;
                 case NORMAL: default: return R.style.AppTheme_System1;
             }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_systemDefault1);
         }
     }
 

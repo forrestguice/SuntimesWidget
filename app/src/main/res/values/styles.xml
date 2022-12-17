@@ -898,13 +898,25 @@
 
     <style name="ActionButton" parent="@android:style/Widget.Button.Small" />
 
+    <style name="SystemThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/dialog_bg</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="DarkThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/grey_850</item>
+        <item name="android:textColor">@color/grey_200</item>
+    </style>
+    <style name="LightThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/grey_200</item>
+        <item name="android:textColor">@color/grey_850</item>
+    </style>
+
     <style name="TimePickerStyle">
         <item name="android:textSize">?attr/text_size_medium</item>
     </style>
     <style name="DatePickerStyle">
         <item name="android:textSize">?attr/text_size_medium</item>
     </style>
-
 
     <style name="ToastTextAppearance">
         <item name="android:textColor">?android:attr/textColorPrimary</item>

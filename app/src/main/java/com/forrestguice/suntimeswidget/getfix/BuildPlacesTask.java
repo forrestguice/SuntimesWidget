@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -31,6 +32,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
@@ -255,6 +257,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         signalFinished(result);
     }
 
+
     /**
      * Event Listener
      */
@@ -284,4 +287,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             taskListener.onFinished(result);
     }
 
+    public static Intent buildPlacesOpenFileIntent() {
+        return ExportTask.getOpenFileIntent("text/*");
+    }
 }
