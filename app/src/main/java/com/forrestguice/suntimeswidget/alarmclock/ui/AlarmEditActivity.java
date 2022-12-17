@@ -391,6 +391,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             if (optionsMenu != null) {
                 inflater.inflate(R.menu.alarmcontext2, optionsMenu);
             }
+
+            AlarmClockItem item = editor.getItem();
+            MenuItem item_setDismissChallenge = optionsMenu.findItem(R.id.setAlarmDismissChallenge);
+            if (item_setDismissChallenge != null) {
+                item_setDismissChallenge.setVisible(item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+            }
+            MenuItem item_testDismissChallenge = optionsMenu.findItem(R.id.testAlarmDismissChallenge);
+            if (item_testDismissChallenge != null) {
+                item_testDismissChallenge.setVisible(item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+            }
         }
 
         return true;
@@ -453,6 +463,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 editor.itemView.chip_dismissChallenge.performClick();
                 return true;
 
+            case R.id.testAlarmDismissChallenge:
+                testDismissChallenge(AlarmEditActivity.this);
+                return true;
+
             case R.id.action_help:
                 showHelp();
                 return true;
@@ -504,6 +518,21 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         }
 
         return super.onPrepareOptionsPanel(view, menu);
+    }
+
+    protected void testDismissChallenge(Context context)
+    {
+        AlarmClockItem alarm = editor.getItem();
+        if (alarm != null)
+        {
+            AlarmSettings.DismissChallenge challenge = alarm.getDismissChallenge(context);
+            Log.d("DEBUG", "testDismissChallenge: " + challenge + " .. " + challenge.getID());
+            startActivity(AlarmNotifications.getFullscreenIntent(this, alarm.getUri())
+                    .setAction(AlarmDismissActivity.ACTION_DISMISS)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST, true)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST_CHALLENGE_ID, (int)challenge.getID())
+            );
+        }
     }
 
     @SuppressLint("ResourceType")

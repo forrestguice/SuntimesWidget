@@ -88,6 +88,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     public static final String TAG = "AlarmReceiverDismiss";
     public static final String EXTRA_MODE = "activityMode";
 
+    public static final String EXTRA_TEST = "test";
+    public static final String EXTRA_TEST_CHALLENGE_ID = "testChallengeID";
+
     public static final String ACTION_SNOOZE = AlarmNotifications.ACTION_SNOOZE;
     public static final String ACTION_DISMISS = AlarmNotifications.ACTION_DISMISS;
 
@@ -95,6 +98,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     private AlarmClockItem alarm = null;
     private String mode = null;
+
+    private boolean isTesting = false;
+    private int testChallengeID = -1;
 
     private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText, noteText;
     private TextView[] labels;
@@ -134,6 +140,14 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         super.onCreate(icicle);
         initLocale(this);
         setContentView(R.layout.layout_activity_dismissalarm);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            isTesting = intent.getBooleanExtra(EXTRA_TEST, isTesting);
+            testChallengeID = intent.getIntExtra(EXTRA_TEST_CHALLENGE_ID, testChallengeID);
+            Log.d("DEBUG", "onCreate: isTesting: " + isTesting + ", testChallengeID: " + testChallengeID);
+        }
+
         initViews(this);
     }
 
@@ -172,6 +186,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
         snoozeButton = (Button) findViewById(R.id.btn_snooze);
         snoozeButton.setOnClickListener(onSnoozeClicked);
+        snoozeButton.setVisibility(isTesting ? View.VISIBLE : View.GONE);
 
         buttons = new Button[] {snoozeButton, dismissButton};
         labels = new TextView[] {alarmSubtitle, offsetText};
@@ -370,7 +385,14 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     public void dismissAlarmAfterChallenge(Context context, View v)
     {
         AlarmSettings.DismissChallenge challenge = alarm.getDismissChallenge(context);
-        if (challenge != AlarmSettings.DismissChallenge.NONE) {
+        if (isTesting) {
+            Log.d("DEBUG", "dismissAlarmAfterChallenge: testChallengeID: " + testChallengeID);
+            challenge = AlarmSettings.DismissChallenge.valueOf(testChallengeID, AlarmSettings.DismissChallenge.ADDON);
+            challenge.setID(testChallengeID);
+        }
+
+        if (challenge != AlarmSettings.DismissChallenge.NONE)
+        {
             showDismissChallenge(context, getDismissChallenge(context, challenge));
         } else dismissAlarm(context);
     }
@@ -384,8 +406,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     {
         snoozeButton.setEnabled(false);
         dismissButton.setEnabled(false);
-        if (alarm != null) {
+
+        if (!isTesting && alarm != null) {
             sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, alarm.getUri()));
+        } else {
+            finish();
         }
     }
 
@@ -449,7 +474,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             hardwareButtonPressed = false;
             infoText.setText("");
             infoText.setVisibility(View.GONE);
-            snoozeButton.setVisibility(View.VISIBLE);
+            snoozeButton.setVisibility(isTesting ? View.GONE : View.VISIBLE);
             snoozeButton.setEnabled(true);
             dismissButton.setEnabled(true);
             icon.setDisplayedChild(0);
@@ -672,7 +697,13 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                     break;
 
                 default:
-                    finish();
+                    if (isTesting) {
+                        setMode(null);
+
+                    } else {
+                        Log.i(TAG, "setAlarmItem: state is not SOUNDING/SNOOZING/TIMEOUT.. calling finish()");
+                        finish();
+                    }
                     break;
             }
         }
@@ -876,7 +907,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         {
             return ((operation == MULTIPLY || operation == ADD) && (a == 1 || b == 1))     // adding 1, multiplying by 1 (too easy)
                     || (operation == SUBTRACT && b == 1)                                   // subtracting 1 (too easy)
-                    || (operation == DIVIDE && ((a % b) != 0));                            // division with remainder (too hard)
+                    || (operation == DIVIDE && (((a % b) != 0) || b == 1));                // division with remainder (too hard), division by 1 (too easy)
         }
 
         @Override

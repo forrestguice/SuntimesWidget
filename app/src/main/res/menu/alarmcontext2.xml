@@ -48,5 +48,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:icon="?attr/icActionDismiss"
             app:showAsAction="never" />
 
+        <item android:id="@+id/testAlarmDismissChallenge"
+            android:title="@string/configAction_testAlarmDismissChallenge"
+            android:icon="?attr/icActionPlay"
+            app:showAsAction="never" />
+
     </group>
 </menu>
