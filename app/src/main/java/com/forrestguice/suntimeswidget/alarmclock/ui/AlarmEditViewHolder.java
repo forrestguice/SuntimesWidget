@@ -282,8 +282,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_action0.setText(displayAction(context, item, 0));
             text_action1.setText(displayAction(context, item, 1));
 
-            AlarmSettings.DismissChallenge challenge = item.getDismissChallenge(context);
-            text_dismissChallenge.setText(challenge == AlarmSettings.DismissChallenge.NONE ? context.getString(R.string.alarmDismiss_none_long) : challenge.getDisplayString());
+            AlarmSettings.DismissChallenge challenge = item.getDismissChallenge(context, true);
+            text_dismissChallenge.setText((challenge == AlarmSettings.DismissChallenge.NONE) ? context.getString(R.string.alarmDismiss_none_long) : challenge.getDisplayString());
             text_dismissChallenge.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
 
             long defaultReminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
