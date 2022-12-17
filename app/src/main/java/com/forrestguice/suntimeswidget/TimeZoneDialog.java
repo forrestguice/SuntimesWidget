@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -17,10 +17,12 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -36,6 +38,7 @@ import android.text.style.ImageSpan;
 
 import android.support.annotation.NonNull;
 
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextThemeWrapper;
@@ -71,6 +74,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public static final String KEY_SOLARTIME_MODE = "solartimeMode";
     public static final String KEY_NOW = "paramNow";
     public static final String KEY_LONGITUDE = "paramLongitude";
+    public static final String KEY_TIMEFORMAT_MODE = "timeformatMode";
 
     private static final String DIALOGTAG_HELP = "timezone_help";
 
@@ -81,6 +85,10 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
     private ImageButton btn_accept;
     private Spinner spinner_timezoneMode;
+
+    private TextView preview_time;
+    private TextView preview_time_suffix;
+    private TextView preview_time_tz;
 
     private LinearLayout layout_timezone;
     private TextView label_timezone;
@@ -97,8 +105,16 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private TextView label_tzExtras0;
     private SuntimesUtils utils;
 
+    private ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneMode_adapter;
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
+
+    public TimeZoneDialog()
+    {
+        Bundle args = new Bundle();
+        args.putString(KEY_TIMEFORMAT_MODE, WidgetSettings.TimeFormatMode.MODE_SYSTEM.name());
+        setArguments(args);
+    }
 
     private Calendar now = Calendar.getInstance();
     public void setNow( Calendar now )
@@ -110,6 +126,70 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public void setLongitude( double longitude )
     {
         this.longitude = longitude;
+        updatePreview(getActivity());
+        onSelectionChanged();
+    }
+
+    public void setTimeFormatMode(WidgetSettings.TimeFormatMode mode) {
+        getArguments().putString(KEY_TIMEFORMAT_MODE, mode.name());
+        updatePreview(getActivity());
+    }
+    public WidgetSettings.TimeFormatMode getTimeFormatMode()
+    {
+        try {
+            return WidgetSettings.TimeFormatMode.valueOf(getArguments().getString(KEY_TIMEFORMAT_MODE, WidgetSettings.TimeFormatMode.MODE_SYSTEM.name()));
+        } catch (IllegalArgumentException e) {
+            Log.e(getClass().getSimpleName(), "getTimeFormatMode: " + e);
+            return WidgetSettings.TimeFormatMode.MODE_SYSTEM;
+        }
+    }
+
+    public WidgetSettings.TimezoneMode getTimeZoneMode() {
+        return (spinner_timezoneMode != null) ? (WidgetSettings.TimezoneMode) spinner_timezoneMode.getSelectedItem() : WidgetSettings.TimezoneMode.CURRENT_TIMEZONE;
+    }
+    public void setTimeZoneMode(WidgetSettings.TimezoneMode value)
+    {
+        if (spinner_timezoneMode != null) {
+            spinner_timezoneMode.setSelection(spinner_timezoneMode_adapter.getPosition(value), true);
+        }
+    }
+    public void setCustomTimeZone(final String tzID)
+    {
+        if (spinner_timezoneMode != null) {
+            spinner_timezoneMode.setSelection(spinner_timezoneMode_adapter.getPosition(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE), true);
+        }
+        spinner_timezone.post(new Runnable() {
+            @Override
+            public void run() {
+                WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, tzID);
+            }
+        });
+    }
+
+    public WidgetTimezones.TimeZoneItemAdapter getTimeZoneItemAdapter() {
+        return spinner_timezone_adapter;
+    }
+
+    public TimeZone getTimeZone()
+    {
+        String tzID;
+        WidgetTimezones.TimeZoneItem item;
+        WidgetSettings.TimezoneMode mode = getTimeZoneMode();
+        switch (mode)
+        {
+            case SOLAR_TIME:
+                item = (spinner_solartime != null) ? ((WidgetTimezones.TimeZoneItem) spinner_solartime.getSelectedItem()) : null;
+                tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
+                return WidgetTimezones.getTimeZone(tzID, longitude);
+
+            case CUSTOM_TIMEZONE:
+                item = (spinner_timezone != null) ? ((WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem()) : null;
+                tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
+                return WidgetTimezones.getTimeZone(tzID, longitude);
+
+            case CURRENT_TIMEZONE:
+            default: return TimeZone.getDefault();
+        }
     }
 
     private SuntimesCalculator calculator = null;
@@ -117,6 +197,9 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     {
         this.calculator = calculator;
     }
+
+    private boolean hideHeader = false;
+    private boolean hideFooter = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
@@ -129,6 +212,16 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             loadSettings(savedState);
         } else {
             loadSettings(getActivity());
+        }
+
+        View header = dialogContent.findViewById(R.id.dialog_header);
+        if (header != null) {
+            header.setVisibility(hideHeader ? View.GONE : View.VISIBLE);
+        }
+
+        View footer = dialogContent.findViewById(R.id.dialog_footer);
+        if (footer != null) {
+            footer.setVisibility(hideFooter ? View.GONE : View.VISIBLE);
         }
 
         final Context myParent = getActivity();
@@ -148,6 +241,15 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onDialogShow);
         return dialog;
+    }
+
+    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState)
+    {
+        super.onInflate(activity, attrs, savedInstanceState);
+        TypedArray a = activity.obtainStyledAttributes(attrs,R.styleable.TimeZoneConfigDialog);
+        hideHeader = a.getBoolean(R.styleable.TimeZoneConfigDialog_hideHeader, hideHeader);
+        hideFooter = a.getBoolean(R.styleable.TimeZoneConfigDialog_hideFooter, hideFooter);
+        a.recycle();
     }
 
     /**
@@ -173,16 +275,19 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         SuntimesUtils.initDisplayStrings(context);
         utils = new SuntimesUtils();
 
+        preview_time = (TextView) dialogContent.findViewById(R.id.text_time);
+        preview_time_suffix = (TextView) dialogContent.findViewById(R.id.text_time_suffix);
+        preview_time_tz = (TextView) dialogContent.findViewById(R.id.text_timezone);
+
         layout_timezone = (LinearLayout) dialogContent.findViewById(R.id.appwidget_timezone_custom_layout);
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
         WidgetTimezones.TimeZoneSort.initDisplayStrings(context);
 
-        ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
-        spinner_timezoneModeAdapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
-        spinner_timezoneModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_timezoneMode_adapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
+        spinner_timezoneMode_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_timezoneMode = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_mode);
-        spinner_timezoneMode.setAdapter(spinner_timezoneModeAdapter);
+        spinner_timezoneMode.setAdapter(spinner_timezoneMode_adapter);
         spinner_timezoneMode.setOnItemSelectedListener(onTimeZoneModeSelected);
 
         View spinner_timezone_empty = dialogContent.findViewById(R.id.appwidget_timezone_custom_empty);
@@ -253,6 +358,56 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 
+    protected void updatePreview(@Nullable Context context)
+    {
+        if (context != null && isAdded())
+        {
+            TimeZone tz = getTimeZone();
+            SuntimesUtils.TimeDisplayText timeDisplay = utils.calendarTimeShortDisplayString(context, Calendar.getInstance(tz), false, getTimeFormatMode());
+            if (preview_time != null) {
+                preview_time.setText(timeDisplay.getValue());
+            }
+            if (preview_time_suffix != null) {
+                preview_time_suffix.setText(timeDisplay.getSuffix());
+            }
+            if (preview_time_tz != null) {
+                preview_time_tz.setText(WidgetTimezones.getTimeZoneDisplay(context, tz));
+            }
+        }
+    }
+
+    private void startUpdateTask()
+    {
+        stopUpdateTask();
+        if (preview_time != null)
+            preview_time.post(updateTask);
+    }
+    private void stopUpdateTask()
+    {
+        if (preview_time != null)
+            preview_time.removeCallbacks(updateTask);
+    }
+
+    public static final int UPDATE_RATE = 3000;
+    private Runnable updateTask = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            Activity context = getActivity();
+            updatePreview(context);
+            if (preview_time != null && context != null)
+                preview_time.postDelayed(this, UPDATE_RATE);
+        }
+    };
+
+    @Override
+    public void onStop()
+    {
+        stopUpdateTask();
+        super.onStop();
+    }
+
     private void updateExtrasLabel(@NonNull Context context, int stringResID, long offset)
     {
         int iconSize = (int) Math.ceil(context.getResources().getDimension(R.dimen.statusIcon_size));
@@ -317,6 +472,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null) {
                 updateExtras(context, true, parent.getItemAtPosition(position));
             }
+            updatePreview(getActivity());
+            onSelectionChanged();
         }
 
         @Override
@@ -335,6 +492,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null) {
                 updateExtras(context, false, parent.getItemAtPosition(position));
             }
+            updatePreview(getActivity());
+            onSelectionChanged();
         }
 
         @Override
@@ -369,6 +528,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             updateExtras(getContext(), useSolarTime, item);
 
             SuntimesUtils.announceForAccessibility(spinner_timezoneMode, timezoneMode.getDisplayString());
+            updatePreview(getActivity());
+            onSelectionChanged();
         }
 
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -614,6 +775,9 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
         // save: longitude
         bundle.putDouble(KEY_LONGITUDE, longitude);
+
+        // save: timeformatmode
+        bundle.putString(KEY_TIMEFORMAT_MODE, getTimeFormatMode().name());
     }
 
     /**
@@ -661,6 +825,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
             btn_accept.setEnabled(validateInput());
             progress_timezone.setVisibility(View.GONE);
+            startUpdateTask();
         }
     };
 
@@ -726,6 +891,26 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
+    }
+
+    protected void onSelectionChanged()
+    {
+        if (dialogListener != null) {
+            dialogListener.onSelectionChanged(getTimeZone());
+        }
+    }
+
+    private TimeZoneDialogListener dialogListener = null;
+    public void setDialogListener(TimeZoneDialogListener listener) {
+        dialogListener = listener;
+    }
+
+    /**
+     * TimeZoneDialogListener
+     */
+    public static class TimeZoneDialogListener
+    {
+        public void onSelectionChanged(TimeZone tz) {}
     }
 
 }

@@ -274,6 +274,12 @@ public class SuntimesActivity extends AppCompatActivity
         getFixHelper.loadSettings(savedState);
 
         handleIntent(getIntent());
+
+        if (AppSettings.isFirstLaunch(this))
+        {
+            startActivityForResult(new Intent(this, WelcomeActivity.class), SUNTIMES_SETTINGS_REQUEST);
+            overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+        }
     }
 
     @Override
@@ -1453,6 +1459,7 @@ public class SuntimesActivity extends AppCompatActivity
         TimeZoneDialog timezoneDialog = new TimeZoneDialog();
         timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
         timezoneDialog.setLongitude(dataset.location().getLongitudeAsDouble());
+        timezoneDialog.setTimeFormatMode(WidgetSettings.loadTimeFormatModePref(SuntimesActivity.this, 0));
         timezoneDialog.setCalculator(dataset.calculator());
         timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
         timezoneDialog.setOnCanceledListener(onCancelTimeZone);

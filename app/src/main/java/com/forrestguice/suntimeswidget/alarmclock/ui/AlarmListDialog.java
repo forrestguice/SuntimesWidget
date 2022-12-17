@@ -42,6 +42,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.ViewCompat;
@@ -528,7 +529,6 @@ public class AlarmListDialog extends DialogFragment
         task.execute(items);
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -648,22 +648,26 @@ public class AlarmListDialog extends DialogFragment
     {
         if (importTask != null && exportTask != null) {
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
-
-        } else {
-            DialogInterface.OnClickListener onWarningAcknowledged = new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = ExportTask.getOpenFileIntent(AlarmClockItemExportTask.MIMETYPE);
-                    startActivityForResult(intent, REQUEST_IMPORT_URI);
-                }
-            };
-            if (!AppSettings.checkDialogDoNotShowAgain(context, DIALOG_IMPORT_WARNING)) {
-                AppSettings.buildAlertDialog(DIALOG_IMPORT_WARNING, getLayoutInflater(),
-                        R.drawable.ic_action_warning, context.getString(android.R.string.dialog_alert_title),
-                        context.getString(R.string.importalarms_msg_warning), onWarningAcknowledged).show();
-            } else onWarningAcknowledged.onClick(null, DialogInterface.BUTTON_POSITIVE);
+            return;
         }
+        importAlarms(AlarmListDialog.this, context, getLayoutInflater(), REQUEST_IMPORT_URI);
+    }
+
+    public static void importAlarms(final Fragment fragment, final Context context, LayoutInflater layoutInflater, final int request)
+    {
+        DialogInterface.OnClickListener onWarningAcknowledged = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = ExportTask.getOpenFileIntent(AlarmClockItemExportTask.MIMETYPE);
+                fragment.startActivityForResult(intent, request);
+            }
+        };
+        if (!AppSettings.checkDialogDoNotShowAgain(context, DIALOG_IMPORT_WARNING)) {
+            AppSettings.buildAlertDialog(DIALOG_IMPORT_WARNING, layoutInflater,
+                    R.drawable.ic_action_warning, context.getString(android.R.string.dialog_alert_title),
+                    context.getString(R.string.importalarms_msg_warning), onWarningAcknowledged).show();
+        } else onWarningAcknowledged.onClick(null, DialogInterface.BUTTON_POSITIVE);
     }
 
     protected void importAlarms(final Context context, @NonNull Uri uri)

@@ -16,4 +16,18 @@
         <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
+
+    <style name="SystemThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/dialog_bg</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="DarkThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/grey_850</item>
+        <item name="android:textColor">@color/grey_200</item>
+    </style>
+    <style name="LightThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/grey_200</item>
+        <item name="android:textColor">@color/grey_850</item>
+    </style>
+
 </resources>

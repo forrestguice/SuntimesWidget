@@ -19,11 +19,14 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -37,9 +40,12 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.TimeZone;
@@ -226,6 +232,16 @@ public class AlarmSettings
             return prefs.getInt(PREF_KEY_ALARM_UPCOMING, PREF_DEF_ALARM_UPCOMING);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_UPCOMING, PREF_DEF_ALARM_UPCOMING);
     }
+
+    public static void savePrefAlarmUpcomingReminder(Context context, long value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        if (Build.VERSION.SDK_INT >= 11) {
+            prefs.putInt(PREF_KEY_ALARM_UPCOMING, (int) value);
+        } else prefs.putString(PREF_KEY_ALARM_UPCOMING, value + "");
+        prefs.apply();
+    }
+
     public static void savePrefAlarmUpcoming(Context context, int value) {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putInt(PREF_KEY_ALARM_UPCOMING, value);
@@ -504,6 +520,25 @@ public class AlarmSettings
         return "sony".equalsIgnoreCase(Build.MANUFACTURER);
     }
 
+    public static CharSequence batteryOptimizationMessage(Context context)
+    {
+        int[] colorAttrs = { R.attr.tagColor_warning };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
+        typedArray.recycle();
+
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            if (AlarmSettings.isIgnoringBatteryOptimizations(context)) {
+                return context.getString(R.string.configLabel_alarms_optWhiteList_listed);
+
+            } else {
+                String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
+                return SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning);
+            }
+        } else return "";
+    }
+
     /**
      * Recommended; this Intent shows the optimization list (and the user must find and select the app)
      */
@@ -611,6 +646,25 @@ public class AlarmSettings
     }
     public static long timeOfLastBoot() {
         return System.currentTimeMillis() - SystemClock.elapsedRealtime();
+    }
+
+    public static boolean loadPrefShowLauncher(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, PREF_DEF_ALARM_SHOWLAUNCHER);
+    }
+    public static void savePrefShowLauncher(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, value);
+        prefs.apply();
+        setShowLauncherIcon(context, value);
+    }
+    public static void setShowLauncherIcon(Context context, boolean value)
+    {
+        ComponentName componentName = new ComponentName(context, "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivityLauncher");
+        int state = (value ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
+        PackageManager packageManager = context.getPackageManager();
+        packageManager.setComponentEnabledSetting(componentName, state, PackageManager.DONT_KILL_APP);
     }
 
 }

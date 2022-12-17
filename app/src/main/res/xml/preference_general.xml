@@ -2,6 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Preference
+        android:key="appwidget_0_intro_screen" android:persistent="false"
+        android:title="@string/welcome_pref_title"
+        android:summary="@string/welcome_pref_summary" />
+
     <PreferenceCategory
         android:title="@string/configLabel_general">
 
