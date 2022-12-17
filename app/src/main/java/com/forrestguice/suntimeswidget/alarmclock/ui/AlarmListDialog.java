@@ -63,7 +63,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
@@ -1607,7 +1607,7 @@ public class AlarmListDialog extends DialogFragment
             // repeating
             if (view.text_repeat != null)
             {
-                boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
+                boolean noRepeat = (item.repeatingDays != null && item.repeatingDays.isEmpty());
                 String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                         ? context.getString(R.string.alarmOption_repeat_all)
                         : noRepeat

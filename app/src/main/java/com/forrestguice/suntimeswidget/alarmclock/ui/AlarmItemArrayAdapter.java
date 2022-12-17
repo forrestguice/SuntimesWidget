@@ -53,7 +53,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.R;
@@ -705,7 +705,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // repeating
         if (view.text_repeat != null)
         {
-            boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
+            boolean noRepeat = (item.repeatingDays != null && item.repeatingDays.isEmpty());
             String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                     ? context.getString(R.string.alarmOption_repeat_all)
                     : noRepeat

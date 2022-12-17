@@ -24,6 +24,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -189,7 +190,10 @@ public class AlarmClockItem implements Parcelable
         label = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
 
         repeating = alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) && (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
-        setRepeatingDays(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
+        String days = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS);
+        if (days != null) {
+            setRepeatingDays(days);
+        } else this.repeatingDays = null;
 
         alarmtime = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED) : -1L);
         timestamp = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_DATETIME) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME) : -1L);
@@ -360,6 +364,7 @@ public class AlarmClockItem implements Parcelable
 
     /**
      * repeatsEveryDay
+     * @return true if repeatingDays contains every day (or is null)
      */
     public static boolean repeatsEveryDay(ArrayList<Integer> repeatingDays)
     {
@@ -375,7 +380,7 @@ public class AlarmClockItem implements Parcelable
                         repeatingDays.contains(Calendar.FRIDAY) &&
                         repeatingDays.contains(Calendar.SATURDAY));
             } else return false;
-        } else return false;
+        } else return true;
     }
 
     /**
@@ -402,6 +407,10 @@ public class AlarmClockItem implements Parcelable
         } else return null;
     }
 
+    public static ArrayList<Integer> everyday() {
+        return new ArrayList<>(Arrays.asList(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY));
+    }
+
     /**
      * getUri
      * @return e.g. content://com.forrestguice.suntimeswidget.alarmclock/alarms/[rowID]
@@ -413,10 +422,11 @@ public class AlarmClockItem implements Parcelable
 
     /**
      * setRepeatingDays
-     * @param repeatingDaysString a stringlist representation of repeatingDays Array (e.g. "0,1,2,3");
+     * @param repeatingDaysString a stringlist representation of repeatingDays Array (e.g. "1,2,3,4,5,6,7"), or null (everyday)
      */
-    public void setRepeatingDays(String repeatingDaysString)
+    public void setRepeatingDays(@Nullable String repeatingDaysString)
     {
+        repeatingDays = new ArrayList<>();
         if (repeatingDaysString != null)
         {
             String[] repeatingDaysStringArray = repeatingDaysString.split(",");
@@ -430,12 +440,10 @@ public class AlarmClockItem implements Parcelable
                 }
             }
 
-            if (repeatingDaysArray != null)
-            {
-                repeatingDays = new ArrayList<>();
+            if (repeatingDaysArray != null) {
                 repeatingDays.addAll(Arrays.asList(repeatingDaysArray));
-            } else repeatingDays = null;
-        } else repeatingDays = null;
+            }
+        }
     }
 
     /**
@@ -549,11 +557,13 @@ public class AlarmClockItem implements Parcelable
             APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
         }
 
-        public TimeZone getTimeZone(Location location) {
+        @NonNull
+        public TimeZone getTimeZone(@Nullable Location location) {
             return AlarmTimeZone.getTimeZone(timeZoneID(), location);
         }
 
-        public static TimeZone getTimeZone(String tzID, Location location)
+        @NonNull
+        public static TimeZone getTimeZone(@Nullable String tzID, @Nullable Location location)
         {
             if (location == null || tzID == null) {
                 return TimeZone.getDefault();

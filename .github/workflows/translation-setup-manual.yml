@@ -1,0 +1,15 @@
+name: Translation Setup (Manual Run)
+on:
+  workflow_dispatch:  
+    inputs:
+      language:
+        description: 'ISO language code'
+        default: 'en'
+        required: true
+        
+jobs:  
+  translation-report:
+    uses: ./.github/workflows/translation-report-setup.yml
+    with:
+      language: ${{ github.event.inputs.language }}
+    secrets: inherit
