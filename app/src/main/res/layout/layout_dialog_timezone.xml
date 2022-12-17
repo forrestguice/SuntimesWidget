@@ -78,7 +78,7 @@
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
         android:paddingTop="8dp" android:paddingBottom="8dp">
 
-        <Button
+        <!--<Button
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:id="@+id/dialog_button_cancel"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
             android:id="@+id/dialog_button_accept"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/timezone_dialog_ok" />
+            android:text="@string/timezone_dialog_ok" />-->
 
     </LinearLayout>
 
