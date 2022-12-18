@@ -697,8 +697,13 @@ public class AlarmClockActivity extends AppCompatActivity
                 dismissAddDialog();
 
             } else if (list.getSelectedRowID() == item.rowID) {
-                if (item.getState() == AlarmState.STATE_SOUNDING || item.getState() == AlarmState.STATE_SNOOZING || item.getState() == AlarmState.STATE_TIMEOUT) {
-                    showAlarmFullscreenActivity(item, view.text_datetime);
+                if (item.getState() == AlarmState.STATE_SOUNDING || item.getState() == AlarmState.STATE_SNOOZING || item.getState() == AlarmState.STATE_TIMEOUT)
+                {
+                    if (item.type == AlarmClockItem.AlarmType.ALARM) {
+                        showAlarmFullscreenActivity(item, view.text_datetime);
+                    } else {
+                        sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmClockActivity.this, AlarmNotifications.ACTION_DISMISS, item.getUri()));
+                    }
                 } else {
                     showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM, false);
                 }
