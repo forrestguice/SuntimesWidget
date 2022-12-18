@@ -2067,8 +2067,8 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
-            Log.e(TAG, "updateAlarmTime_sunEvent: empty repeatingDays! returning null");
-            return null;
+            Log.w(TAG, "updateAlarmTime_sunEvent: empty repeatingDays! using EVERYDAY instead..");
+            repeatingDays = AlarmClockItem.everyday();
         }
 
         SuntimesRiseSetData sunData = getData_sunEvent(context, event, location);
@@ -2117,8 +2117,8 @@ public class AlarmNotifications extends BroadcastReceiver
     private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
-            Log.e(TAG, "updateAlarmTime_moonEvent: empty repeatingDays! returning null");
-            return null;
+            Log.w(TAG, "updateAlarmTime_moonEvent: empty repeatingDays! using EVERYDAY instead..");
+            repeatingDays = AlarmClockItem.everyday();
         }
 
         SuntimesMoonData moonData = getData_moonEvent(context, location);
@@ -2258,8 +2258,8 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
-            Log.e(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! returning null");
-            return null;
+            Log.w(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! using EVERYDAY instead..");
+            repeatingDays = AlarmClockItem.everyday();
         }
 
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
@@ -2337,8 +2337,8 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
-            Log.e(TAG, "updateAlarmTime_clockTime: empty repeatingDays! returning null");
-            return null;
+            Log.w(TAG, "updateAlarmTime_clockTime: empty repeatingDays! using EVERYDAY instead..");
+            repeatingDays = AlarmClockItem.everyday();
         }
 
         TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
