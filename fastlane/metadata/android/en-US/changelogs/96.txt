@@ -1,0 +1,4 @@
+- adds a boot warning when battery optimization is enabled.
+- fixes bug "dismissing alarm fails to remove notification" (#665).
+- fixes bug where toast messages are unreadable (Android 12) (#660).
+- miscellaneous Suntimes Alarms bug fixes.
