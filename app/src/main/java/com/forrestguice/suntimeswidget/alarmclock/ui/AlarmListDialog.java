@@ -1966,11 +1966,8 @@ public class AlarmListDialog extends DialogFragment
             }
 
             // note tray
-            if (text_usernote != null)
-            {
-                SuntimesData data = AlarmNotifications.getData(context, item);
-                data.calculate();
-                text_usernote.setText(item.note != null ? utils.displayStringForTitlePattern(context, item.note, data) : "");
+            if (text_usernote != null) {
+                text_usernote.setText(item.note != null ? utils.displayStringForTitlePattern(context, item.note, AlarmNotifications.getData(context, item)) : "");
             }
             if (view.noteTray != null) {
                 view.noteTray.setVisibility(isSelected && item.note != null && !item.note.isEmpty() ? View.VISIBLE : View.GONE);

@@ -1565,6 +1565,10 @@ public class SuntimesUtils
             return displayString;
         }
 
+        if (!data.isCalculated()) {
+            data.calculate();
+        }
+
         Location location = data.location();
         String timezoneID = data.timezone().getID();
         String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().getName();
