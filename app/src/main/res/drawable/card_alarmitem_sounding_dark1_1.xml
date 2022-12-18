@@ -7,7 +7,7 @@
                 android:startColor="@color/alarm_sounding_bg1_dark"
                 android:centerColor="@color/alarm_sounding_bg0_dark"
                 android:endColor="@color/alarm_sounding_bg0_dark"
-                android:centerY="0.10"
+                android:centerY="0.20"
                 />
         </shape>
     </item>
