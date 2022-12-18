@@ -137,6 +137,7 @@
         <item name="icActionCancel">@drawable/ic_action_cancel_ref</item>
         <item name="icActionShare">@drawable/ic_action_share_ref</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze_ref</item>
+        <item name="icActionLabel">@drawable/ic_action_label_ref</item>
         <item name="icActionAddLabel">@drawable/ic_action_addlabel_ref</item>
         <item name="icActionDeselect">@drawable/ic_action_deselect_ref</item>
 
@@ -333,6 +334,7 @@
         <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
         <item name="icActionShare">@drawable/ic_action_share_light</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze_light</item>
+        <item name="icActionLabel">@drawable/ic_action_label_light</item>
         <item name="icActionAddLabel">@drawable/ic_action_addlabel_light</item>
         <item name="icActionDeselect">@drawable/baseline_deselect_light_24</item>
 
@@ -531,6 +533,7 @@
         <item name="icActionCancel">@drawable/ic_action_cancel</item>
         <item name="icActionShare">@drawable/ic_action_share</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze</item>
+        <item name="icActionLabel">@drawable/ic_action_label</item>
         <item name="icActionAddLabel">@drawable/ic_action_addlabel</item>
         <item name="icActionDeselect">@drawable/baseline_deselect_dark_24</item>
 
