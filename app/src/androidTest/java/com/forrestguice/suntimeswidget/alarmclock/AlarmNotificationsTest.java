@@ -378,7 +378,28 @@ public class AlarmNotificationsTest
     }
 
     /**
-     * Non-repeating alarm
+     * Notifications
+     */
+
+    @Test
+    public void test_startCommand_notification() throws TimeoutException {
+        test_startCommand_notification(false, "1,2,3,4,5,6,7");
+    }
+    @Test
+    public void test_startCommand_notification_nullDays() throws TimeoutException {
+        test_startCommand_notification(false, null);
+    }
+    @Test
+    public void test_startCommand_repeatingNotification() throws TimeoutException {
+        test_startCommand_notification( true, "1,2,3,4,5,6,7");
+    }
+    @Test
+    public void test_startCommand_repeatingNotification_nullDays() throws TimeoutException {
+        test_startCommand_notification(true, null);
+    }
+
+    /**
+     * Non-repeating alarm / notification
      */
     @Test
     public void test_startCommand_alarm_noReminder() throws TimeoutException {
@@ -425,6 +446,43 @@ public class AlarmNotificationsTest
         alarm.setEvent(null);
         alarm.enabled = true;
         return alarm;
+    }
+
+    public void test_startCommand_notification(boolean repeating, String repeatingDays) throws TimeoutException
+    {
+        AlarmClockItem alarm = createAlarmClockItem(repeating);
+        alarm.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        alarm.setRepeatingDays(repeatingDays);
+        test_startCommand_notification(alarm);
+    }
+    public void test_startCommand_notification(AlarmClockItem alarm) throws TimeoutException
+    {
+        long alarmId0 = addAlarmItemToDatabase(alarm);
+        assertTrue("failed to create notification", hasAlarmId(alarmId0));
+
+        // schedule -> show -> dismiss
+        long alarmId2 = addAlarmItemToDatabase(alarm);
+        assertTrue("failed to create notification", hasAlarmId(alarmId2));
+        Uri data2 = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId2);
+
+        Intent intent0 = AlarmNotifications.getServiceIntent(mockContext);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, 1500);
+        verify_hasAlarmState(alarmId2, AlarmState.STATE_SCHEDULED_DISTANT);
+
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, 1000);    // service should finish (showing normal notification)
+        assertFalse("service should not be running in the foreground when showing notification", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
+        verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
+        assertTrue("media player should be playing", AlarmNotifications.isPlaying);
+
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, 5000);
+        int expectedState = alarm.repeating ? AlarmState.STATE_SCHEDULED_DISTANT                                           // repeating notifications are now scheduled_
+                : AlarmState.STATE_DISABLED;                                                                               // non-repeating notifications are now disabled
+        verify_hasAlarmState(alarmId2, expectedState);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, 2000);
+        assertFalse("failed to delete notification", hasAlarmId(alarmId2));
     }
 
     public void test_startCommand_alarm(int reminderWithinMillis, boolean repeating, String repeatingDays) throws TimeoutException
