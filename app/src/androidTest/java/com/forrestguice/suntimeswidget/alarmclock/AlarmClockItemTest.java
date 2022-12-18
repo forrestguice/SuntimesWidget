@@ -90,8 +90,8 @@ public class AlarmClockItemTest
 
         AlarmClockItem item1 = new AlarmClockItem();
         item1.type = AlarmClockItem.AlarmType.NOTIFICATION;
-        item1.setFlag("TEST1", 1);
-        item1.setFlag("TEST2", 2);
+        //item1.setFlag("TEST1", 1);
+        //item1.setFlag("TEST2", 2);
         test_alarmClockItem_new(item1);
 
         AlarmClockItem item2 = new AlarmClockItem();
