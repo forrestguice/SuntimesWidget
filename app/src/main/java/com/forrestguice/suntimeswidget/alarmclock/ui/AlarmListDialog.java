@@ -69,6 +69,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -1501,9 +1502,11 @@ public class AlarmListDialog extends DialogFragment
 
         public View card;
         public View cardTray;
+        public View noteTray;
         public View cardBackdrop;
         public ImageButton typeButton;
         public TextView text_label;
+        public TextView text_usernote;
         public TextView text_event;
         public TextView text_note;
         public TextView text_date;
@@ -1555,9 +1558,11 @@ public class AlarmListDialog extends DialogFragment
 
             card = view.findViewById(R.id.layout_alarmcard);
             cardTray = view.findViewById(R.id.layout_alarmcard_tray);
+            noteTray = view.findViewById(R.id.layout_alarm_note);
             cardBackdrop = view.findViewById(R.id.layout_alarmcard0);
             typeButton = (ImageButton) view.findViewById(R.id.type_menu);
             text_label = (TextView) view.findViewById(android.R.id.text1);
+            text_usernote = (TextView) view.findViewById(R.id.text_alarm_note);
             text_event = (TextView) view.findViewById(R.id.text_event);
             text_note = (TextView) view.findViewById(R.id.text_note);
             text_date = (TextView) view.findViewById(R.id.text_date);
@@ -1958,6 +1963,17 @@ public class AlarmListDialog extends DialogFragment
                         view.button_snooze.setVisibility(View.GONE);
                         break;
                 }
+            }
+
+            // note tray
+            if (text_usernote != null)
+            {
+                SuntimesData data = AlarmNotifications.getData(context, item);
+                data.calculate();
+                text_usernote.setText(item.note != null ? utils.displayStringForTitlePattern(context, item.note, data) : "");
+            }
+            if (view.noteTray != null) {
+                view.noteTray.setVisibility(isSelected && item.note != null && !item.note.isEmpty() ? View.VISIBLE : View.GONE);
             }
 
             // extended tray

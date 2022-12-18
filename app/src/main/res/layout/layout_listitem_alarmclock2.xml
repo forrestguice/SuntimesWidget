@@ -201,47 +201,74 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <LinearLayout android:id="@+id/layout_alarmcard_tray"
+
+        <LinearLayout android:id="@+id/layout_alarmcard_tray" android:orientation="vertical"
             android:visibility="visible" android:animateLayoutChanges="true"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="3dp" android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:gravity="end|right"
+            android:layout_marginBottom="2dp"
             android:background="?attr/alarmCardControls">
 
-            <TextView android:id="@+id/text_note" android:background="?attr/selectableItemBackground"
-                android:layout_width="wrap_content" android:layout_height="match_parent"
-                android:paddingLeft="8dp" android:paddingRight="8dp"
-                android:gravity="center_vertical|start" android:textSize="?attr/text_size_small"
-                tools:text="15m from now" />
+            <LinearLayout android:id="@+id/layout_alarm_note" android:orientation="vertical"
+                android:layout_marginTop="3dp" android:layout_marginBottom="0dp"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <Button android:id="@+id/button_snooze"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="4dp"
-                android:drawableLeft="?attr/icActionSnooze" android:drawablePadding="2dp"
-                android:scaleX="0.92" android:scaleY="0.92"
-                android:text="@string/alarmAction_snooze" />
+                <TextView android:id="@+id/text_alarm_note"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:maxLines="2" android:layout_marginLeft="12dp" android:layout_marginRight="12dp"
+                    android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:drawableLeft="?attr/icActionLabel" android:drawablePadding="8dp"
+                    tools:text="one line\ntwo lines\nthree lines" />
 
-            <Button android:id="@+id/button_dismiss"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:drawableLeft="?attr/icActionDismiss" android:drawablePadding="2dp"
-                android:scaleX="0.92" android:scaleY="0.92"
-                android:text="@string/alarmAction_dismiss" />
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="?attr/hrColor" />
 
-            <View android:background="@null" android:layout_height="1dp" android:layout_width="0dp" android:layout_weight="1" />
+            </LinearLayout>
 
-            <ImageButton android:id="@+id/button_delete"
-                android:layout_width="48dp" android:layout_height="48dp"
-                android:contentDescription="@string/configAction_deleteAlarm"
-                style="@style/ActionButton"
-                android:src="?attr/icActionDelete" />
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/overflow_menu" android:visibility="gone"
-                android:layout_width="48dp" android:layout_height="48dp"
-                android:contentDescription="@string/configAction_alarmMenu"
-                style="?attr/actionOverflowButtonStyle" />
+                <TextView android:id="@+id/text_note" android:background="?attr/selectableItemBackground"
+                    android:layout_width="wrap_content" android:layout_height="match_parent"
+                    android:paddingLeft="8dp" android:paddingRight="8dp"
+                    android:gravity="center_vertical|start" android:textSize="?attr/text_size_small"
+                    tools:text="15m from now" />
+
+                <Button android:id="@+id/button_snooze"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="4dp"
+                    android:drawableLeft="?attr/icActionSnooze" android:drawablePadding="2dp"
+                    android:scaleX="0.92" android:scaleY="0.92"
+                    android:text="@string/alarmAction_snooze" />
+
+                <Button android:id="@+id/button_dismiss"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:drawableLeft="?attr/icActionDismiss" android:drawablePadding="2dp"
+                    android:scaleX="0.92" android:scaleY="0.92"
+                    android:text="@string/alarmAction_dismiss" />
+
+                <View android:background="@null" android:layout_height="1dp" android:layout_width="0dp" android:layout_weight="1" />
+
+                <ImageButton android:id="@+id/button_delete"
+                    android:layout_width="48dp" android:layout_height="48dp"
+                    android:contentDescription="@string/configAction_deleteAlarm"
+                    style="@style/ActionButton"
+                    android:src="?attr/icActionDelete" />
+
+                <ImageButton
+                    android:id="@+id/overflow_menu" android:visibility="gone"
+                    android:layout_width="48dp" android:layout_height="48dp"
+                    android:contentDescription="@string/configAction_alarmMenu"
+                    style="?attr/actionOverflowButtonStyle" />
+
+            </LinearLayout>
 
         </LinearLayout>
+
+
 
     </LinearLayout>
 
