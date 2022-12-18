@@ -2191,6 +2191,11 @@ public class AlarmNotifications extends BroadcastReceiver
     @Nullable
     protected static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
+        if (repeatingDays.isEmpty()) {
+            Log.e(TAG, "updateAlarmTime_sunEvent: empty repeatingDays! returning null");
+            return null;
+        }
+
         SuntimesRiseSetData sunData = getData_sunEvent(context, event, location);
 
         Calendar alarmTime = Calendar.getInstance();
@@ -2236,6 +2241,11 @@ public class AlarmNotifications extends BroadcastReceiver
     @Nullable
     private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
+        if (repeatingDays.isEmpty()) {
+            Log.e(TAG, "updateAlarmTime_moonEvent: empty repeatingDays! returning null");
+            return null;
+        }
+
         SuntimesMoonData moonData = getData_moonEvent(context, location);
 
         Calendar alarmTime = Calendar.getInstance();
@@ -2372,7 +2382,12 @@ public class AlarmNotifications extends BroadcastReceiver
 
     protected static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
-        Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating);
+        if (repeatingDays.isEmpty()) {
+            Log.e(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! returning null");
+            return null;
+        }
+
+        Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         long nowMillis = now.getTimeInMillis();
 
         Uri uri_id = Uri.parse(eventID);
@@ -2446,8 +2461,13 @@ public class AlarmNotifications extends BroadcastReceiver
     @Nullable
     protected static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
+        if (repeatingDays.isEmpty()) {
+            Log.e(TAG, "updateAlarmTime_clockTime: empty repeatingDays! returning null");
+            return null;
+        }
+
         TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
-        Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating);
+        Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         Calendar alarmTime = Calendar.getInstance(timezone);
         Calendar eventTime = Calendar.getInstance(timezone);
 
