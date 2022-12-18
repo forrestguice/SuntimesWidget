@@ -2034,6 +2034,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
                     }
+                    notifications.dismissNotification(context, (int)item.rowID);
                     if (chained != null) {
                         chained.onFinished(true, item);
                     } else notifications.stopSelf(startId);
