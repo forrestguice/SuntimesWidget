@@ -48,7 +48,7 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class AlarmScheduleTest
 {
-    public static final long SCHEDULE_WITHIN_MS = 1000;
+    public static final long SCHEDULE_WITHIN_MS = 1500;
 
     public Context context;
     public SuntimesUtils utils = new SuntimesUtils();
@@ -287,7 +287,7 @@ public class AlarmScheduleTest
         final Handler onStartHandler = new Handler(Looper.getMainLooper());
         onStartHandler.post(runnable);
         long now = System.currentTimeMillis();
-        while (System.currentTimeMillis() < (now + withinMs)) {
+        while (System.currentTimeMillis() < (now + withinMs) && AlarmNotifications.t_updateAlarmTime_runningLoop) {
             /* busy wait.. the service needs to finish the command within 1000ms to pass the test */
         }
         assertFalse("failed to finish within " + withinMs + "ms!", AlarmNotifications.t_updateAlarmTime_runningLoop);
