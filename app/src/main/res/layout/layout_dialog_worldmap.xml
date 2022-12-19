@@ -166,9 +166,10 @@
         <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/info_time_offset"
-            android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp" android:layout_height="wrap_content"
+            android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="65dp" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:minLines="2" android:maxLines="2"
             tools:text="30m\nfrom now" android:gravity="center_horizontal" />
 
         <ImageButton
