@@ -434,7 +434,7 @@ public class MoonApsisView extends LinearLayout
         @SuppressLint("ResourceType")
         protected void initTheme(Context context)
         {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor, R.attr.moonriseColor, R.attr.moonsetColor };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor, R.attr.table_moonRisingColor, R.attr.table_moonSettingColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
             colorNote = colorTitle = colorTime = ContextCompat.getColor(context, typedArray.getResourceId(0, def));

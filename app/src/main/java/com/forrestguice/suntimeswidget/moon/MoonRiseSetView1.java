@@ -434,7 +434,7 @@ public class MoonRiseSetView1 extends LinearLayout
         private void initTheme(Context context)
         {
             int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor,
-                    R.attr.moonriseColor, R.attr.moonsetColor };
+                    R.attr.table_moonRisingColor, R.attr.table_moonSettingColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
             colorTime = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
@@ -653,7 +653,7 @@ public class MoonRiseSetView1 extends LinearLayout
 
         protected void initDrawables(Context context)
         {
-            TypedArray a = context.obtainStyledAttributes(new int[] { R.attr.moonriseIcon, R.attr.moonsetIcon, R.attr.moonriseColor, R.attr.moonsetColor, R.attr.moonnoonIcon, R.attr.moonnightIcon });
+            TypedArray a = context.obtainStyledAttributes(new int[] { R.attr.moonriseIcon, R.attr.moonsetIcon, R.attr.table_moonRisingColor, R.attr.table_moonSettingColor, R.attr.moonnoonIcon, R.attr.moonnightIcon });
             icon_rising = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_moon_rise)).mutate();
             icon_setting = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.ic_moon_set)).mutate();
             color_rising = ContextCompat.getColor(context, a.getResourceId(2, R.color.moonIcon_color_rising));

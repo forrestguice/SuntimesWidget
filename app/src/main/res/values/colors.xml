@@ -45,6 +45,8 @@
     <color name="table_rising">@color/table_rising_light</color>
     <color name="table_setting">@color/table_setting_light</color>
     <color name="table_noon">@color/table_setting_light</color>
+    <color name="table_moon_rising">@color/table_moon_rising_light</color>
+    <color name="table_moon_setting">@color/table_moon_setting_light</color>
 
     <color name="alarm_enabled">@color/alarm_enabled_light</color>
     <color name="grid_selected">@color/grid_selected_light</color>
@@ -109,6 +111,8 @@
     <color name="table_rising_dark">@color/sunIcon_color_rising_dark</color>
     <color name="table_setting_dark">@color/sunIcon_color_setting_dark</color>
     <color name="table_noon_dark">@color/sunIcon_color_setting_dark</color>
+    <color name="table_moon_rising_dark">@color/moonIcon_color_rising_dark</color>
+    <color name="table_moon_setting_dark">@color/moonIcon_color_setting_dark</color>
 
     <color name="primaryColor_light">@color/grey_100</color>
     <color name="text_primary_light">@android:color/primary_text_light</color>
@@ -136,6 +140,8 @@
     <color name="table_rising_light">@color/sunIcon_color_rising_light</color>
     <color name="table_setting_light">@color/sunIcon_color_setting_light</color>
     <color name="table_noon_light">@color/sunIcon_color_setting_light</color>
+    <color name="table_moon_rising_light">@color/moonIcon_color_rising_light</color>
+    <color name="table_moon_setting_light">@color/moonIcon_color_setting_light</color>
 
     <!-- alarm cards -->
     <color name="grid_selected_light">@color/text_accent_light</color>

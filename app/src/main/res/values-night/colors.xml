@@ -27,6 +27,8 @@
     <color name="table_rising">@color/table_rising_dark</color>
     <color name="table_setting">@color/table_setting_dark</color>
     <color name="table_noon">@color/table_setting_dark</color>
+    <color name="table_moon_rising">@color/table_moon_rising_dark</color>
+    <color name="table_moon_setting">@color/table_moon_setting_dark</color>
 
     <color name="alarm_enabled">@color/alarm_enabled_dark</color>
     <color name="grid_selected">@color/grid_selected_dark</color>

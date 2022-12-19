@@ -51,6 +51,8 @@
         <item name="table_risingColor">@color/table_rising</item>
         <item name="table_settingColor">@color/table_setting</item>
         <item name="table_noonColor">@color/table_noon</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_ref</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_ref</item>
@@ -238,6 +240,8 @@
         <item name="table_risingColor">@color/table_rising_light</item>
         <item name="table_settingColor">@color/table_setting_light</item>
         <item name="table_noonColor">@color/table_noon_light</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising_light</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting_light</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
@@ -427,6 +431,8 @@
         <item name="table_risingColor">@color/table_rising_dark</item>
         <item name="table_settingColor">@color/table_setting_dark</item>
         <item name="table_noonColor">@color/table_noon_dark</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising_dark</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting_dark</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
@@ -578,6 +584,8 @@
         <item name="table_risingColor">?android:attr/textColorPrimary</item>
         <item name="table_settingColor">?android:attr/textColorSecondary</item>
         <item name="table_noonColor">?android:attr/textColorSecondary</item>
+        <item name="table_moonRisingColor">?android:attr/textColorPrimary</item>
+        <item name="table_moonSettingColor">?android:attr/textColorSecondary</item>
         <item name="springColor">?android:attr/textColorPrimary</item>
         <item name="summerColor">?android:attr/textColorSecondary</item>
         <item name="fallColor">?android:attr/textColorPrimary</item>
@@ -587,6 +595,8 @@
         <item name="table_risingColor">?android:attr/textColorPrimary</item>
         <item name="table_settingColor">?android:attr/textColorSecondary</item>
         <item name="table_noonColor">?android:attr/textColorSecondary</item>
+        <item name="table_moonRisingColor">?android:attr/textColorPrimary</item>
+        <item name="table_moonSettingColor">?android:attr/textColorSecondary</item>
         <item name="springColor">?android:attr/textColorPrimary</item>
         <item name="summerColor">?android:attr/textColorSecondary</item>
         <item name="fallColor">?android:attr/textColorPrimary</item>
@@ -596,6 +606,8 @@
         <item name="table_risingColor">?android:attr/textColorPrimary</item>
         <item name="table_settingColor">?android:attr/textColorSecondary</item>
         <item name="table_noonColor">?android:attr/textColorSecondary</item>
+        <item name="table_moonRisingColor">?android:attr/textColorPrimary</item>
+        <item name="table_moonSettingColor">?android:attr/textColorSecondary</item>
         <item name="springColor">?android:attr/textColorPrimary</item>
         <item name="summerColor">?android:attr/textColorSecondary</item>
         <item name="fallColor">?android:attr/textColorPrimary</item>
@@ -605,6 +617,8 @@
         <item name="table_risingColor">?android:attr/textColorPrimary</item>
         <item name="table_settingColor">?android:attr/textColorSecondary</item>
         <item name="table_noonColor">?android:attr/textColorSecondary</item>
+        <item name="table_moonRisingColor">?android:attr/textColorPrimary</item>
+        <item name="table_moonSettingColor">?android:attr/textColorSecondary</item>
         <item name="springColor">?android:attr/textColorPrimary</item>
         <item name="summerColor">?android:attr/textColorSecondary</item>
         <item name="fallColor">?android:attr/textColorPrimary</item>
