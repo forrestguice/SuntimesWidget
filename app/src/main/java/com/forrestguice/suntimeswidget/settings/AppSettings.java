@@ -1058,6 +1058,7 @@ public class AppSettings
             switch (size) {
                 case SMALL: return R.style.AppTheme_System1_Small;
                 case LARGE: return R.style.AppTheme_System1_Large;
+                case XLARGE: return R.style.AppTheme_System1_XLarge;
                 case NORMAL: default: return R.style.AppTheme_System1;
             }
         }

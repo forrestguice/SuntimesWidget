@@ -1117,8 +1117,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 R.attr.graphColor_nautical,             // 2
                 R.attr.graphColor_civil,                // 3
                 R.attr.graphColor_day,                  // 4
-                R.attr.sunriseColor,                    // 5
-                R.attr.sunsetColor,                     // 6
+                R.attr.table_risingColor,                    // 5
+                R.attr.table_settingColor,                     // 6
                 R.attr.text_disabledColor,              // 7
                 R.attr.buttonPressColor,                // 8
                 android.R.attr.textColorPrimary,        // 9
