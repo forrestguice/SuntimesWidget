@@ -240,7 +240,7 @@ public class AlarmRepeatDialog extends DialogFragment
     /**
      * onRepeatChanged
      */
-    private CompoundButton.OnCheckedChangeListener onRepeatChanged = new CompoundButton.OnCheckedChangeListener()
+    private final CompoundButton.OnCheckedChangeListener onRepeatChanged = new CompoundButton.OnCheckedChangeListener()
     {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -254,7 +254,7 @@ public class AlarmRepeatDialog extends DialogFragment
     /**
      * onRepeatDayChanged
      */
-    private CompoundButton.OnCheckedChangeListener onRepeatDayChanged = new CompoundButton.OnCheckedChangeListener()
+    private final CompoundButton.OnCheckedChangeListener onRepeatDayChanged = new CompoundButton.OnCheckedChangeListener()
     {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -281,14 +281,18 @@ public class AlarmRepeatDialog extends DialogFragment
         }
     };
 
-    private Integer tagToDay(Object tag)
+    @Nullable
+    protected static Integer tagToDay(@Nullable Object tag)
     {
-        try {
-            return Integer.parseInt(tag.toString());
+        if (tag != null)
+        {
+            try {
+                return Integer.parseInt(tag.toString());
 
-        } catch (NumberFormatException e) {
-            return null;
-        }
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        } else return null;
     }
 
     /**
