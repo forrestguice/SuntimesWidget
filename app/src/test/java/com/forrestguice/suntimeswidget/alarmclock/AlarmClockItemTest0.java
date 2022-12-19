@@ -27,10 +27,24 @@ import java.util.Arrays;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 public class AlarmClockItemTest0
 {
+    @Test
+    public void test_alarmClockItem_repeatingDays_everyday()
+    {
+        ArrayList<Integer> days = AlarmClockItem.everyday();
+        assertNotNull(days);
+        assertEquals(days.size(), 7);
+        assertFalse(days.contains(0));
+        for (int i=1; i <= 7; i++) {
+            assertTrue(days.contains(i));
+        }
+    }
+
     @Test
     public void test_alarmClockItem_new()
     {
