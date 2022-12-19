@@ -79,7 +79,7 @@ public class SuntimesNotes
     {
         if (themeOverride == null)
         {
-            int[] colorAttrs = { R.attr.sunriseColor, R.attr.sunsetColor, R.attr.table_moonRisingColor, R.attr.table_moonSettingColor };
+            int[] colorAttrs = { R.attr.table_risingColor, R.attr.table_settingColor, R.attr.table_moonRisingColor, R.attr.table_moonSettingColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
             colorSunrise = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
