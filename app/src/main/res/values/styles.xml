@@ -593,6 +593,9 @@
 
     <!-- Alternate System Theme -->
     <style name="AppTheme.System1" parent="AppTheme.System">
+        <item name="colorPrimary">@color/dialog_bg</item>
+        <item name="timeCardBackground">@color/dialog_bg</item>
+        <item name="android:windowBackground">@color/primaryColor</item>
         <item name="table_risingColor">?android:attr/textColorPrimary</item>
         <item name="table_settingColor">?android:attr/textColorSecondary</item>
         <item name="table_noonColor">?android:attr/textColorSecondary</item>

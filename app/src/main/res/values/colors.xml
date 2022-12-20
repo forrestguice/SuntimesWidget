@@ -161,8 +161,8 @@
     <color name="errorTag_dark">#FF5252</color>
     <color name="dstTag_dark">#ffd500</color>
 
-    <color name="warningTag_light">#ff9900</color>
-    <color name="errorTag_light">#FF5252</color>
+    <color name="warningTag_light">#CF4800</color>    <!-- #ff9900 -->
+    <color name="errorTag_light">#CF4800</color>
     <color name="dstTag_light">#CF4800</color>
 
     <!-- moon icons (rising, setting) -->
