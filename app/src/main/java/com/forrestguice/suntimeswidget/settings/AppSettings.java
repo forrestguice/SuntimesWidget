@@ -59,6 +59,7 @@ public class AppSettings
     public static final String THEME_LIGHT = "light";
     public static final String THEME_DAYNIGHT = "daynight";
     public static final String THEME_SYSTEM = "system";
+    public static final String THEME_SYSTEM1 = "sysalt";
     public static final String THEME_DEFAULT = "default";
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
@@ -128,7 +129,7 @@ public class AppSettings
     public static final String PREF_KEY_UI_EMPHASIZEFIELD = "app_ui_emphasizefield";
 
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
-    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00111111;
+    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00010011;
     public static final int FIELD_ACTUAL = 0;  // bit positions
     public static final int FIELD_CIVIL = 1;
     public static final int FIELD_NAUTICAL = 2;
@@ -591,11 +592,23 @@ public class AppSettings
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_APPEARANCE_THEME_LIGHT, PREF_DEF_APPEARANCE_THEME_LIGHT);
     }
+    public static void saveThemeLightPref(Context context, String themeID)
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(PREF_KEY_APPEARANCE_THEME_LIGHT, themeID);
+        pref.apply();
+    }
 
     public static String loadThemeDarkPref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_APPEARANCE_THEME_DARK, PREF_DEF_APPEARANCE_THEME_DARK);
+    }
+    public static void saveThemeDarkPref(Context context, String themeID)
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(PREF_KEY_APPEARANCE_THEME_DARK, themeID);
+        pref.apply();
     }
 
     public static int setTheme(Activity activity, String appTheme)
@@ -869,7 +882,7 @@ public class AppSettings
     }
 
     @NonNull
-    public static AppThemeInfo loadThemeInfo(String extendedThemeName)
+    public static AppThemeInfo loadThemeInfo(@Nullable String extendedThemeName)
     {
         if (extendedThemeName.startsWith(THEME_LIGHT)) {
             return info_lightTheme;
@@ -1043,7 +1056,7 @@ public class AppSettings
 
     public static class System1ThemeInfo extends AppThemeInfo
     {
-        public static String THEMENAME = "sysalt";
+        public static String THEMENAME = THEME_SYSTEM1;
 
         @Override
         public String getThemeName() {

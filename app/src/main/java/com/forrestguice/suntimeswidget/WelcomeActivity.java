@@ -102,7 +102,7 @@ public class WelcomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         setResult(RESULT_CANCELED);
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(savedInstanceState);
 
         if (Build.VERSION.SDK_INT >= 21)
@@ -1196,6 +1196,9 @@ public class WelcomeActivity extends AppCompatActivity
      */
     public static class WelcomeAppearanceFragment extends WelcomeFragment
     {
+        protected ToggleButton[] buttons = null;
+        protected TextView previewDate;
+
         public WelcomeAppearanceFragment() {}
 
         public static WelcomeAppearanceFragment newInstance()
@@ -1243,26 +1246,69 @@ public class WelcomeActivity extends AppCompatActivity
             setCheckedChangeListener(xlargeText, onTextSizeChecked(context, AppSettings.TextSize.XLARGE));
 
             AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(context);
-            TextView previewDate = (TextView) view.findViewById(R.id.text_date);
-            if (previewDate != null) {
-                previewDate.setText(themeInfo.getDisplayString(context).replace(" ", "\n"));
-            }
+            String darkTheme = AppSettings.loadThemeDarkPref(context);
+            AppSettings.AppThemeInfo darkThemeInfo = AppSettings.loadThemeInfo(darkTheme);
+
+            previewDate = (TextView) view.findViewById(R.id.text_date);
+            updatePreview(context, themeInfo.getDisplayString(context));
 
             ToggleButton systemThemeButton = (ToggleButton) view.findViewById(R.id.button_theme_system);
-            if (systemThemeButton != null) {
-                systemThemeButton.setChecked(AppSettings.THEME_SYSTEM.equals(themeInfo.getThemeName()));
-                systemThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_SYSTEM));
-            }
+            ToggleButton systemTheme1Button = (ToggleButton) view.findViewById(R.id.button_theme_system1);
             ToggleButton darkThemeButton = (ToggleButton) view.findViewById(R.id.button_theme_dark);
-            if (darkThemeButton != null) {
-                darkThemeButton.setChecked(AppSettings.THEME_DARK.equals(themeInfo.getThemeName()));
-                darkThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_DARK));
-            }
             ToggleButton lightThemeButton = (ToggleButton) view.findViewById(R.id.button_theme_light);
-            if (lightThemeButton != null) {
-                lightThemeButton.setChecked(AppSettings.THEME_LIGHT.equals(themeInfo.getThemeName()));
-                lightThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_LIGHT));
+            buttons = new ToggleButton[] {systemThemeButton, systemTheme1Button, darkThemeButton, lightThemeButton};
+            for (ToggleButton button : buttons) {
+                if (button != null) {
+                    button.setChecked(false);
+                }
             }
+
+            if (systemThemeButton != null) {
+                if (setChecked(systemThemeButton, AppSettings.THEME_SYSTEM.equals(themeInfo.getThemeName()) && AppSettings.THEME_DEFAULT.equals(darkTheme))) {
+                    updatePreview(context, themeInfo.getDisplayString(context));
+                }
+                systemThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_SYSTEM, null, null));
+            }
+
+            if (systemTheme1Button != null) {
+                if (setChecked(systemTheme1Button, AppSettings.THEME_SYSTEM.equals(themeInfo.getThemeName()) && AppSettings.THEME_SYSTEM1.equals(darkTheme))) {
+                    updatePreview(context, darkThemeInfo.getDisplayString(context));
+                }
+                systemTheme1Button.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_SYSTEM, AppSettings.THEME_SYSTEM1, AppSettings.THEME_SYSTEM1));
+            }
+
+            if (darkThemeButton != null) {
+                if (setChecked(darkThemeButton, AppSettings.THEME_DARK.equals(themeInfo.getThemeName()))) {
+                    updatePreview(context, themeInfo.getDisplayString(context));
+                }
+                darkThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_DARK, null, null));
+            }
+
+            if (lightThemeButton != null) {
+                if (setChecked(lightThemeButton, AppSettings.THEME_LIGHT.equals(themeInfo.getThemeName()))) {
+                    updatePreview(context, themeInfo.getDisplayString(context));
+                }
+                lightThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_LIGHT, null, null));
+            }
+        }
+
+        protected void updatePreview(Context context, String themeDisplay)
+        {
+            if (previewDate != null) {
+                previewDate.setText(themeDisplay.replace(" ", "\n"));
+            }
+        }
+
+        protected boolean setChecked(ToggleButton button, boolean value)
+        {
+            if (value) {
+                for (ToggleButton b : buttons) {
+                    if (b != null) {
+                        b.setChecked(b == button);
+                    }
+                }
+                return true;
+            } else return false;
         }
 
         private CompoundButton.OnCheckedChangeListener onTextSizeChecked(final Context context, final AppSettings.TextSize textSize)
@@ -1278,11 +1324,16 @@ public class WelcomeActivity extends AppCompatActivity
             };
         }
 
-        private View.OnClickListener onThemeButtonClicked(final String themeID) {
+        private View.OnClickListener onThemeButtonClicked(final String themeID, final String lightThemeID, final String darkThemeID) {
             return new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    AppSettings.setThemePref(getActivity(), themeID);
+                public void onClick(View v)
+                {
+                    Activity activity = getActivity();
+                    AppSettings.saveThemeLightPref(activity, lightThemeID);
+                    AppSettings.saveThemeDarkPref(activity, darkThemeID);
+                    AppSettings.setThemePref(activity, themeID);
+                    AppSettings.setTheme(activity, AppSettings.loadThemePref(activity));
                     recreate(getActivity());
                 }
             };
