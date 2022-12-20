@@ -53,6 +53,10 @@
         <item name="table_noonColor">@color/table_noon</item>
         <item name="table_moonRisingColor">@color/table_moon_rising</item>
         <item name="table_moonSettingColor">@color/table_moon_setting</item>
+        <item name="table_springColor">@color/springColor</item>
+        <item name="table_summerColor">@color/summerColor</item>
+        <item name="table_fallColor">@color/fallColor</item>
+        <item name="table_winterColor">@color/winterColor</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_ref</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_ref</item>
@@ -97,7 +101,7 @@
         <item name="icActionPlace">@drawable/ic_action_place_ref</item>
         <item name="icActionMap">@drawable/ic_action_map1_ref</item>
         <item name="icActionWorldMap">@drawable/ic_action_map_ref</item>
-        <item name="icActionGraph">@drawable/ic_action_timeline</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline_ref</item>
         <item name="icActionTime">@drawable/ic_action_time_ref</item>
         <item name="icActionDst">@drawable/ic_weather_sunny_ref</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_ref</item>
@@ -242,6 +246,10 @@
         <item name="table_noonColor">@color/table_noon_light</item>
         <item name="table_moonRisingColor">@color/table_moon_rising_light</item>
         <item name="table_moonSettingColor">@color/table_moon_setting_light</item>
+        <item name="table_springColor">@color/springColor_light</item>
+        <item name="table_summerColor">@color/summerColor_light</item>
+        <item name="table_fallColor">@color/fallColor_light</item>
+        <item name="table_winterColor">@color/winterColor_light</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
@@ -433,6 +441,10 @@
         <item name="table_noonColor">@color/table_noon_dark</item>
         <item name="table_moonRisingColor">@color/table_moon_rising_dark</item>
         <item name="table_moonSettingColor">@color/table_moon_setting_dark</item>
+        <item name="table_springColor">@color/springColor_dark</item>
+        <item name="table_summerColor">@color/summerColor_dark</item>
+        <item name="table_fallColor">@color/fallColor_dark</item>
+        <item name="table_winterColor">@color/winterColor_dark</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
@@ -586,10 +598,10 @@
         <item name="table_noonColor">?android:attr/textColorSecondary</item>
         <item name="table_moonRisingColor">?android:attr/textColorPrimary</item>
         <item name="table_moonSettingColor">?android:attr/textColorSecondary</item>
-        <item name="springColor">?android:attr/textColorPrimary</item>
-        <item name="summerColor">?android:attr/textColorSecondary</item>
-        <item name="fallColor">?android:attr/textColorPrimary</item>
-        <item name="winterColor">?android:attr/textColorSecondary</item>
+        <item name="table_springColor">?android:attr/textColorPrimary</item>
+        <item name="table_summerColor">?android:attr/textColorSecondary</item>
+        <item name="table_fallColor">?android:attr/textColorPrimary</item>
+        <item name="table_winterColor">?android:attr/textColorSecondary</item>
 
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>

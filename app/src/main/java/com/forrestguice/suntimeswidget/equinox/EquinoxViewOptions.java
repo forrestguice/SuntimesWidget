@@ -52,7 +52,7 @@ public class EquinoxViewOptions
     public void init(Context context)
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor,
-                             R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
+                             R.attr.table_springColor, R.attr.table_summerColor, R.attr.table_fallColor, R.attr.table_winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         textColor = labelColor = titleColor = noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
         disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_disabled_dark));
