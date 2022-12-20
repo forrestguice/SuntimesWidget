@@ -593,18 +593,21 @@
 
     <!-- Alternate System Theme -->
     <style name="AppTheme.System1" parent="AppTheme.System">
-        <item name="colorPrimary">@color/dialog_bg</item>
-        <item name="timeCardBackground">@color/dialog_bg</item>
-        <item name="android:windowBackground">@color/primaryColor</item>
-        <item name="table_risingColor">?android:attr/textColorPrimary</item>
-        <item name="table_settingColor">?android:attr/textColorSecondary</item>
-        <item name="table_noonColor">?android:attr/textColorSecondary</item>
-        <item name="table_moonRisingColor">?android:attr/textColorPrimary</item>
-        <item name="table_moonSettingColor">?android:attr/textColorSecondary</item>
-        <item name="table_springColor">?android:attr/textColorPrimary</item>
-        <item name="table_summerColor">?android:attr/textColorSecondary</item>
-        <item name="table_fallColor">?android:attr/textColorPrimary</item>
-        <item name="table_winterColor">?android:attr/textColorSecondary</item>
+        <item name="colorPrimary">@color/primaryColor_contrast</item>
+        <item name="timeCardBackground">@color/card_bg_contrast</item>
+        <item name="dialogFrame">@color/dialog_frame_contrast</item>
+        <item name="dialogBackground">@color/dialog_bg_contrast</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast</item>
+        <item name="android:windowBackground">@color/window_bg_contrast</item>
+        <item name="table_risingColor">@color/table_rising_contrast</item>
+        <item name="table_settingColor">@color/table_setting_contrast</item>
+        <item name="table_noonColor">@color/table_noon_contrast</item>
+        <item name="table_moonRisingColor">@color/table_moonRising_contrast</item>
+        <item name="table_moonSettingColor">@color/table_moonSetting_contrast</item>
+        <item name="table_springColor">@color/table_spring_contrast</item>
+        <item name="table_summerColor">@color/table_summmer_contrast</item>
+        <item name="table_fallColor">@color/table_fall_contrast</item>
+        <item name="table_winterColor">@color/table_winter_contrast</item>
 
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>

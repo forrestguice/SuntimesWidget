@@ -83,6 +83,23 @@
     <color name="tagColor_error">@color/errorTag_light</color>
     <color name="tagColor_dst">@color/dstTag_light</color>
 
+    <!-- night overrideable (high contrast) -->
+    <color name="primaryColor_contrast">@color/primaryColor_contrast_light</color>
+    <color name="window_bg_contrast">@color/window_bg_contrast_light</color>
+    <color name="dialog_frame_contrast">@color/dialog_frame_contrast_light</color>
+    <color name="dialog_bg_contrast">@color/dialog_bg_contrast_light</color>
+    <color name="dialog_bg_alt_contrast">@color/dialog_bg_alt_contrast_light</color>
+    <color name="card_bg_contrast">@color/card_bg_contrast_light</color>
+    <color name="table_rising_contrast">@color/table_rising_contrast_light</color>
+    <color name="table_setting_contrast">@color/table_setting_contrast_light</color>
+    <color name="table_noon_contrast">@color/table_noon_contrast_light</color>
+    <color name="table_moonRising_contrast">@color/table_moonRising_contrast_light</color>
+    <color name="table_moonSetting_contrast">@color/table_moonSetting_contrast_light</color>
+    <color name="table_spring_contrast">@color/table_spring_contrast_light</color>
+    <color name="table_summmer_contrast">@color/table_summmer_contrast_light</color>
+    <color name="table_fall_contrast">@color/table_fall_contrast_light</color>
+    <color name="table_winter_contrast">@color/table_winter_contrast_light</color>
+
     <!-- general -->
 
     <color name="primaryColor_dark">@color/grey_900</color>
@@ -142,6 +159,38 @@
     <color name="table_noon_light">@color/sunIcon_color_setting_light</color>
     <color name="table_moon_rising_light">@color/moonIcon_color_rising_light</color>
     <color name="table_moon_setting_light">@color/moonIcon_color_setting_light</color>
+
+    <color name="primaryColor_contrast_dark">@color/grey_900</color>
+    <color name="window_bg_contrast_dark">@color/grey_999</color>
+    <color name="dialog_frame_contrast_dark">@color/grey_900</color>
+    <color name="dialog_bg_contrast_dark">@color/grey_999</color>
+    <color name="dialog_bg_alt_contrast_dark">@color/grey_900</color>
+    <color name="card_bg_contrast_dark">@color/grey_900</color>
+    <color name="table_rising_contrast_dark">@android:color/white</color>
+    <color name="table_setting_contrast_dark">@color/grey_300</color>
+    <color name="table_noon_contrast_dark">@color/grey_300</color>
+    <color name="table_moonRising_contrast_dark">@android:color/white</color>
+    <color name="table_moonSetting_contrast_dark">@color/grey_300</color>
+    <color name="table_spring_contrast_dark">@android:color/white</color>
+    <color name="table_summmer_contrast_dark">@color/grey_300</color>
+    <color name="table_fall_contrast_dark">@android:color/white</color>
+    <color name="table_winter_contrast_dark">@color/grey_300</color>
+
+    <color name="primaryColor_contrast_light">@color/grey_100</color>
+    <color name="window_bg_contrast_light">@color/grey_50</color>
+    <color name="dialog_frame_contrast_light">@android:color/white</color>
+    <color name="dialog_bg_contrast_light">@color/grey_50</color>
+    <color name="dialog_bg_alt_contrast_light">@color/grey_300</color>
+    <color name="card_bg_contrast_light">@android:color/white</color>
+    <color name="table_rising_contrast_light">@color/grey_900</color>
+    <color name="table_setting_contrast_light">@color/grey_800</color>
+    <color name="table_noon_contrast_light">@color/grey_800</color>
+    <color name="table_moonRising_contrast_light">@color/grey_900</color>
+    <color name="table_moonSetting_contrast_light">@color/grey_800</color>
+    <color name="table_spring_contrast_light">@color/grey_900</color>
+    <color name="table_summmer_contrast_light">@color/grey_800</color>
+    <color name="table_fall_contrast_light">@color/grey_900</color>
+    <color name="table_winter_contrast_light">@color/grey_800</color>
 
     <!-- alarm cards -->
     <color name="grid_selected_light">@color/text_accent_light</color>
@@ -311,9 +360,11 @@
     <color name="grey_500l">#ffb0b0b0</color>
     <color name="grey_500">#ff9e9e9e</color>
     <color name="grey_600">#ff757575</color>
+    <color name="grey_700">#ff616161</color>
     <color name="grey_800">#ff424242</color>
     <color name="grey_850">#ff303030</color>
     <color name="grey_900">#ff212121</color>
+    <color name="grey_999">#ff111111</color>
     <color name="deep_teal_200">#ff80cbc4</color>
     <color name="deep_teal_500">#ff009688</color>
 

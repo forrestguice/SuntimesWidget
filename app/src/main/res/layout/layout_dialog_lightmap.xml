@@ -23,7 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" android:minHeight="125dp"
     android:orientation="vertical" android:gravity="start"
-    android:paddingTop="8dp" android:background="?graphColor_background">
+    android:paddingTop="8dp" android:background="?dialogBackground">
 
     <TextView android:id="@+id/sundialog_title" style="@style/TableHeadTextView"
         android:text="@string/lightmap_dialog_title"
