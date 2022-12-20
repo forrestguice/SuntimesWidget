@@ -590,39 +590,45 @@
         <item name="summerColor">?android:attr/textColorSecondary</item>
         <item name="fallColor">?android:attr/textColorPrimary</item>
         <item name="winterColor">?android:attr/textColorSecondary</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
     </style>
-    <style name="AppTheme.System1.Small" parent="AppTheme.System.Small">
-        <item name="table_risingColor">?android:attr/textColorPrimary</item>
-        <item name="table_settingColor">?android:attr/textColorSecondary</item>
-        <item name="table_noonColor">?android:attr/textColorSecondary</item>
-        <item name="table_moonRisingColor">?android:attr/textColorPrimary</item>
-        <item name="table_moonSettingColor">?android:attr/textColorSecondary</item>
-        <item name="springColor">?android:attr/textColorPrimary</item>
-        <item name="summerColor">?android:attr/textColorSecondary</item>
-        <item name="fallColor">?android:attr/textColorPrimary</item>
-        <item name="winterColor">?android:attr/textColorSecondary</item>
+    <style name="AppTheme.System1.Small" parent="AppTheme.System1">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
     </style>
-    <style name="AppTheme.System1.Large" parent="AppTheme.System.Large">
-        <item name="table_risingColor">?android:attr/textColorPrimary</item>
-        <item name="table_settingColor">?android:attr/textColorSecondary</item>
-        <item name="table_noonColor">?android:attr/textColorSecondary</item>
-        <item name="table_moonRisingColor">?android:attr/textColorPrimary</item>
-        <item name="table_moonSettingColor">?android:attr/textColorSecondary</item>
-        <item name="springColor">?android:attr/textColorPrimary</item>
-        <item name="summerColor">?android:attr/textColorSecondary</item>
-        <item name="fallColor">?android:attr/textColorPrimary</item>
-        <item name="winterColor">?android:attr/textColorSecondary</item>
+    <style name="AppTheme.System1.Large" parent="AppTheme.System1">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
     </style>
-    <style name="AppTheme.System1.XLarge" parent="AppTheme.System.XLarge">
-        <item name="table_risingColor">?android:attr/textColorPrimary</item>
-        <item name="table_settingColor">?android:attr/textColorSecondary</item>
-        <item name="table_noonColor">?android:attr/textColorSecondary</item>
-        <item name="table_moonRisingColor">?android:attr/textColorPrimary</item>
-        <item name="table_moonSettingColor">?android:attr/textColorSecondary</item>
-        <item name="springColor">?android:attr/textColorPrimary</item>
-        <item name="summerColor">?android:attr/textColorSecondary</item>
-        <item name="fallColor">?android:attr/textColorPrimary</item>
-        <item name="winterColor">?android:attr/textColorSecondary</item>
+    <style name="AppTheme.System1.XLarge" parent="AppTheme.System1">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
     </style>
 
     <!-- view styles -->

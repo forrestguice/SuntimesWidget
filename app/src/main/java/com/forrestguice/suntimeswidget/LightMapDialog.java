@@ -1279,7 +1279,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             field_night.highlight(false);
 
             long dayDelta = data.dayLengthOther() - data.dayLength();
-            field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorDay));
+            field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorRising));
             field_day.highlight(false);
 
             lightmap.updateViews(data);
@@ -1638,7 +1638,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             } else if (info.length >= 2) {
                 String s = context.getString(R.string.length_twilight2, info[0].durationString(showSeconds), info[1].durationString(showSeconds));
                 String delimiter = context.getString(R.string.length_delimiter);
-                text.setText(SuntimesUtils.createBoldColorSpan(null, s, delimiter, colorDay));
+                text.setText(SuntimesUtils.createBoldColorSpan(null, s, delimiter, colorRising));
                 setVisible(true);
 
             } else {
