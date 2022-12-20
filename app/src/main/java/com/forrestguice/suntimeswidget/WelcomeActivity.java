@@ -53,6 +53,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -1206,6 +1207,18 @@ public class WelcomeActivity extends AppCompatActivity
             return fragment;
         }
 
+        protected void setChecked(@Nullable RadioButton button, boolean value) {
+            if (button != null) {
+                button.setChecked(value);
+            }
+        }
+
+        protected void setCheckedChangeListener(@Nullable RadioButton button, CompoundButton.OnCheckedChangeListener listener) {
+            if (button != null) {
+                button.setOnCheckedChangeListener(listener);
+            }
+        }
+
         @Override
         public void initViews(Context context, View view)
         {
@@ -1214,19 +1227,20 @@ public class WelcomeActivity extends AppCompatActivity
             RadioButton smallText = (RadioButton) view.findViewById(R.id.radio_text_small);
             RadioButton normalText = (RadioButton) view.findViewById(R.id.radio_text_normal);
             RadioButton largeText = (RadioButton) view.findViewById(R.id.radio_text_large);
-            if (smallText != null && normalText != null && largeText != null)
+            RadioButton xlargeText = (RadioButton) view.findViewById(R.id.radio_text_xlarge);
+
+            AppSettings.TextSize textSize = AppSettings.TextSize.valueOf(AppSettings.loadTextSizePref(context));
+            switch (textSize)
             {
-                AppSettings.TextSize textSize = AppSettings.TextSize.valueOf(AppSettings.loadTextSizePref(context));
-                switch (textSize)
-                {
-                    case SMALL: smallText.setChecked(true); break;
-                    case LARGE: largeText.setChecked(true); break;
-                    case NORMAL: default: normalText.setChecked(true); break;
-                }
-                smallText.setOnCheckedChangeListener(onTextSizeChecked(context, AppSettings.TextSize.SMALL));
-                normalText.setOnCheckedChangeListener(onTextSizeChecked(context, AppSettings.TextSize.NORMAL));
-                largeText.setOnCheckedChangeListener(onTextSizeChecked(context, AppSettings.TextSize.LARGE));
+                case SMALL: setChecked(smallText, true); break;
+                case LARGE: setChecked(largeText, true); break;
+                case XLARGE: setChecked(xlargeText, true); break;
+                case NORMAL: default: setChecked(normalText, true); break;
             }
+            setCheckedChangeListener(smallText, onTextSizeChecked(context, AppSettings.TextSize.SMALL));
+            setCheckedChangeListener(normalText, onTextSizeChecked(context, AppSettings.TextSize.NORMAL));
+            setCheckedChangeListener(largeText, onTextSizeChecked(context, AppSettings.TextSize.LARGE));
+            setCheckedChangeListener(xlargeText, onTextSizeChecked(context, AppSettings.TextSize.XLARGE));
 
             AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(context);
             TextView previewDate = (TextView) view.findViewById(R.id.text_date);
