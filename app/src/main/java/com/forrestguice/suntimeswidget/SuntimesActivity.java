@@ -168,7 +168,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_ALARM = "alarm";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_LOCATION = "location";
-    private static final String DIALOGTAG_DATE = "dateselect";
+    private static final String DIALOGTAG_DATE_CONFIG = "dateconfig";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
     private static final String DIALOGTAG_WORLDMAP = "worldmap";
     private static final String DIALOGTAG_EQUINOX = "equinox";
@@ -491,12 +491,20 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "LocationConfigDialog listeners restored.");
         }
 
-        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        TimeDateConfigDialog dateDialog = (TimeDateConfigDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_CONFIG);
         if (dateDialog != null)
         {
             dateDialog.setTimezone(dataset.timezone());
             dateDialog.setOnAcceptedListener(onConfigDate);
             dateDialog.setOnCanceledListener(onCancelDate);
+            //Log.d("DEBUG", "TimeDateDialog listeners restored.");
+        }
+
+        TimeDateDialog seekDateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_SEEK);
+        if (dateDialog != null)
+        {
+            seekDateDialog.setTimezone(dataset.timezone());
+            seekDateDialog.setOnAcceptedListener(onSeekDate(seekDateDialog));
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
     }
@@ -1365,11 +1373,11 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void configDate()
     {
-        final TimeDateDialog datePicker = new TimeDateDialog();
+        final TimeDateConfigDialog datePicker = new TimeDateConfigDialog();
         datePicker.setTimezone(dataset.timezone());
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
-        datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
+        datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE_CONFIG);
     }
     DialogInterface.OnClickListener onConfigDate = new DialogInterface.OnClickListener()
     {
@@ -1395,6 +1403,19 @@ public class SuntimesActivity extends AppCompatActivity
         updateViews(SuntimesActivity.this);
         scrollTo(CardAdapter.TODAY_POSITION);
         Log.d("DEBUG", "afterConfigDate");
+    }
+
+    public static class TimeDateConfigDialog extends TimeDateDialog
+    {
+        @Override
+        protected void saveSettings(Context context)
+        {
+            WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
+            WidgetSettings.saveDateModePref(context, appWidgetId, dateMode);
+
+            WidgetSettings.DateInfo dateInfo = getDateInfo();
+            WidgetSettings.saveDatePref(context, appWidgetId, dateInfo);
+        }
     }
 
     /**

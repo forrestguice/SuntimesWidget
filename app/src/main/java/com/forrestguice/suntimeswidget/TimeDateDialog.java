@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,7 +31,6 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
@@ -159,13 +158,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     /**
      * @param context a context used to access shared prefs
      */
-    protected void saveSettings(Context context)
-    {
-        WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
-        WidgetSettings.saveDateModePref(context, appWidgetId, dateMode);
-
-        WidgetSettings.DateInfo dateInfo = getDateInfo();
-        WidgetSettings.saveDatePref(context, appWidgetId, dateInfo);
+    protected void saveSettings(Context context) {
+        /* EMPTY */
     }
 
     public WidgetSettings.DateInfo getDateInfo() {
@@ -192,7 +186,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     {
         appWidgetId = value;
     }
-    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     /**
      * A listener that is triggered when the dialog is accepted.
