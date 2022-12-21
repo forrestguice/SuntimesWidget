@@ -26,6 +26,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,21 +79,28 @@ public class AlarmClockItemTest
     {
         AlarmClockItem item0 = new AlarmClockItem();
         item0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item0.label = "label";
         item0.rowID = 0;
         item0.hour = 4;
         item0.minute = 2;
         item0.offset = 18 * 60;
+        item0.alarmtime = 10;
         item0.enabled = true;
         item0.repeating = true;
         item0.setRepeatingDays("2,3,4,5,6");
+        item0.setActionID(0, "action0");
+        item0.setActionID(1, "action1");
+        item0.location = new Location("test0", "1", "2", "3");
         item0.vibrate = true;
+        item0.ringtoneName = "testName";
+        item0.ringtoneURI = "testUri";
         item0.modified = true;
         test_alarmClockItem_new(item0);
 
         AlarmClockItem item1 = new AlarmClockItem();
         item1.type = AlarmClockItem.AlarmType.NOTIFICATION;
-        item1.setFlag("TEST1", 1);
-        item1.setFlag("TEST2", 2);
+        //item1.setFlag("TEST1", 1);
+        //item1.setFlag("TEST2", 2);
         test_alarmClockItem_new(item1);
 
         AlarmClockItem item2 = new AlarmClockItem();
@@ -99,6 +108,17 @@ public class AlarmClockItemTest
         item2.repeatingDays = null;
         test_alarmClockItem_new(item2);
     }
+
+    @Test
+    public void test_AlarmClockItem_new1()
+    {
+        for (AlarmClockItem item0 : AlarmDatabaseAdapterTest.createTestItems()) {
+            if (item0 != null) {
+                test_alarmClockItem_new(item0);
+            }
+        }
+    }
+
     public void test_alarmClockItem_new(AlarmClockItem item0)
     {
         AlarmClockItem item1 = new AlarmClockItem(item0);
@@ -141,7 +161,7 @@ public class AlarmClockItemTest
         assertEquals(item0.ringtoneURI, item.ringtoneURI);
         assertEquals(item0.ringtoneName, item.ringtoneName);
         assertEquals(item0.vibrate, item.vibrate);
-        assertEquals(item0.actionID1, item.actionID1);
+        assertEquals(item0.actionID0, item.actionID0);
         assertEquals(item0.actionID1, item.actionID1);
         if (withType) {
             assertEquals(item0.type, item.type);
