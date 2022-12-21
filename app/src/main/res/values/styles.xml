@@ -591,9 +591,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <!-- Alternate System Theme -->
+    <!-- Contrast System Theme -->
     <style name="AppTheme.System1" parent="AppTheme.System">
         <item name="colorPrimary">@color/primaryColor_contrast</item>
+        <item name="settingsCardBackground">@color/card_bg_contrast</item>
         <item name="timeCardBackground">@color/card_bg_contrast</item>
         <item name="dialogFrame">@color/dialog_frame_contrast</item>
         <item name="dialogBackground">@color/dialog_bg_contrast</item>
