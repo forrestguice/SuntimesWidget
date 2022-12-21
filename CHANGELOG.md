@@ -1,8 +1,8 @@
 ### ~
 
-### v0.14.12 (2022-12-19)
-* adds a boot "warning notification" if battery optimization is enabled (and alarms are active).
-* fixes bug "dismissing alarm fails to remove alarm notification" (#665).
+### v0.14.12 (2022-12-21)
+* adds a boot notification if battery optimization is enabled (and alarms are active).
+* fixes bug "dismiss alarm fails to remove alarm notification" (#665).
 * fixes bug when re-scheduling repeating moon phase alarms (#494; "unreliable full moon alarm").
 * fixes bug where toast messages are unreadable when using system dark mode (white text on a white background) (Android 12) (#660).
 * fixes bug in AlarmEditActivity where the UI fails to display the configured label.
