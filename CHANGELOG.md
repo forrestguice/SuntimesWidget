@@ -1,6 +1,6 @@
 ### ~
 
-### v0.14.12 (2022-12-21)
+### v0.14.12 (2022-12-22)
 * adds a boot notification if battery optimization is enabled (and alarms are active).
 * fixes bug "dismiss alarm fails to remove alarm notification" (#665).
 * fixes bug when re-scheduling repeating moon phase alarms (#494; "unreliable full moon alarm").
