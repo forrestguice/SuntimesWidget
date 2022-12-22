@@ -241,7 +241,7 @@ public class SuntimesUtilsTest
     @Test
     public void test_initDisplayStrings_executionTime()
     {
-        double bench_millis = 0, threshold_millis = 1.5;
+        double bench_millis = 0, threshold_millis = 2.0;
         double bench_fast = Double.POSITIVE_INFINITY, bench_slow = 0;
         long bench_start = 0, bench_end = 0;
         int n = 100;
