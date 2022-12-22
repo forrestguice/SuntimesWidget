@@ -35,9 +35,15 @@ jobs:
             ${{ runner.os }}-gradle-
     
     - name: Build with Gradle
+      run: ./gradlew build
+    
+    - name: Build with Gradle (Unit tests)
       run: ./gradlew testRelease
     
-    - name: Upload artifacts (apk)
+    - name: Build with Gradle (lintVitalRelease)
+      run: ./gradlew lintVitalRelease
+    
+    - name: Upload artifacts (debug apk)
       uses: actions/upload-artifact@v3.0.0
       with:
         name: app
