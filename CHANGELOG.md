@@ -1,5 +1,16 @@
 ### ~
 
+### v0.14.12 (2022-12-21)
+* adds a boot notification if battery optimization is enabled (and alarms are active).
+* fixes bug "dismiss alarm fails to remove alarm notification" (#665).
+* fixes bug when re-scheduling repeating moon phase alarms (#494; "unreliable full moon alarm").
+* fixes bug where toast messages are unreadable when using system dark mode (white text on a white background) (Android 12) (#660).
+* fixes bug in AlarmEditActivity where the UI fails to display the configured label.
+* fixes bug "alarm reminder is not shown after changing 'reminder within' setting" (#659).
+* fixes potential NPE in AlarmNotifications `updateAlarmTime_` methods when repeatingDays is null.
+* fixes potential NPE in AlarmEditActivity when alarm location is null.
+* fixes potential NPE in AlarmAddons when addon event pickers supply an invalid uri (missing provider, missing permissions).
+
 ### v0.14.11 (2022-11-29)
 * adds permission REQUEST_IGNORE_BATTERY_OPTIMIZATIONS (#651) [PERMISSION]; SuntimesAlarms now makes a direct request to be added to the whitelist.
 * adds a help dialog that explains battery optimization warnings; adds online help; a revised message is shown for devices that are likely to break alarms.
