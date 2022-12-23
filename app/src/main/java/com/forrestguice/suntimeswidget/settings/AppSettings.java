@@ -379,7 +379,7 @@ public class AppSettings
         return context.getResources().getBoolean(R.bool.is_rtl);
     }
 
-    public static void setTimeZoneSortPref( Context context, WidgetTimezones.TimeZoneSort sortMode )
+    public static void saveTimeZoneSortPref(Context context, WidgetTimezones.TimeZoneSort sortMode )
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putString(PREF_KEY_UI_TIMEZONESORT, sortMode.name());

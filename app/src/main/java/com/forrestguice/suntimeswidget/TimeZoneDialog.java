@@ -598,7 +598,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
                 {
                     super.onSaveSortMode(sortMode);
-                    AppSettings.setTimeZoneSortPref(getContext(), sortMode);
+                    AppSettings.saveTimeZoneSortPref(getContext(), sortMode);
                 }
 
                 @Override
@@ -630,7 +630,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
                 {
                     super.onSaveSortMode(sortMode);
-                    AppSettings.setTimeZoneSortPref(context, sortMode);
+                    AppSettings.saveTimeZoneSortPref(context, sortMode);
                 }
 
                 @Override
