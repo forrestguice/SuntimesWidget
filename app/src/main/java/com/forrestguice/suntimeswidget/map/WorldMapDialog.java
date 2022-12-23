@@ -59,6 +59,8 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.MenuAddon;
@@ -713,18 +715,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    public static PopupMenu createMenu(Context context, View view, int menuId, PopupMenu.OnMenuItemClickListener listener)
-    {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(menuId, menu.getMenu());
-        menu.setOnMenuItemClickListener(listener);
-        return menu;
-    }
-
     protected boolean showTimeZoneMenu(Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick);
         WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
         menu.show();
         return true;
@@ -750,7 +743,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     protected boolean showMapModeMenu(final Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
         updateMapModeMenu(context, menu);
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
@@ -793,7 +786,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     protected boolean showSpeedMenu(final Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick); new PopupMenu(context, view);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick); new PopupMenu(context, view);
         updateSpeedMenu(context, menu);
         menu.show();
         return true;
@@ -847,7 +840,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     protected boolean showContextMenu(final Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
         updateContextMenu(context, menu);
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();

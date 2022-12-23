@@ -68,6 +68,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.moon.MoonApsisView;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -664,30 +665,12 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
-    protected static PopupMenu createMenu(Context context, View view, int menuResID, @Nullable PopupMenu.OnMenuItemClickListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener) {
-        return createMenu(context, view, menuResID, Gravity.NO_GRAVITY, onClickListener, onDismissListener);
-    }
-    protected static PopupMenu createMenu(Context context, View view, int menuResID, int gravity, @Nullable PopupMenu.OnMenuItemClickListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener)
-    {
-        PopupMenu menu = new PopupMenu(context, view, gravity);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(menuResID, menu.getMenu());
-        if (onDismissListener != null) {
-            menu.setOnDismissListener(onDismissListener);
-        }
-        if (onClickListener != null) {
-            menu.setOnMenuItemClickListener(onClickListener);
-        }
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
-        return menu;
-    }
-
     /**
      * Overflow Menu
      */
     protected boolean showOverflowMenu(final Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick, null);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick, null);
         updateOverflowMenu(context, menu);
         menu.show();
         return true;
@@ -730,7 +713,7 @@ public class MoonDialog extends BottomSheetDialogFragment
      */
     protected boolean showMediaMenu(final Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.moonmenu_media, onMediaMenuClick, null);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonmenu_media, onMediaMenuClick, null);
         updateMediaMenu(context, menu);
         menu.show();
         return true;
@@ -878,7 +861,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             Calendar date = MoonRiseSetView1.MoonRiseSetEvent.getCalendarForEvent(data, eventID);
             if (date != null)
             {
-                PopupMenu menu = createMenu(context, view, R.menu.moonriseset_context, onContextMenuClick, onMoonRiseSetContextMenuDismissed);
+                PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonriseset_context, onContextMenuClick, onMoonRiseSetContextMenuDismissed);
                 updateContextMenu(context, menu, eventID, date.getTimeInMillis());
                 moonriseset.lockScrolling();   // prevent the popupmenu from nudging the view
                 menu.show();
@@ -896,7 +879,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             Calendar date = data.moonPhaseCalendar(phase);
             if (date != null)
             {
-                PopupMenu menu = createMenu(context, view, R.menu.moonphase_context, onContextMenuClick, onMoonPhaseContextMenuDismissed);
+                PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonphase_context, onContextMenuClick, onMoonPhaseContextMenuDismissed);
                 updateContextMenu(context, menu, SolarEvents.valueOf(phase), date.getTimeInMillis());
                 moonphases.lockScrolling();   // prevent the popupmenu from nudging the view
                 menu.show();
@@ -913,7 +896,7 @@ public class MoonDialog extends BottomSheetDialogFragment
 
         if (event.first != null)
         {
-            PopupMenu menu = createMenu(context, view, R.menu.moonapsis_context, onContextMenuClick, onMoonApsisContextMenuDismissed);
+            PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonapsis_context, onContextMenuClick, onMoonApsisContextMenuDismissed);
             updateContextMenu(context, menu, event.first.getTimeInMillis());
             moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
             menu.show();
