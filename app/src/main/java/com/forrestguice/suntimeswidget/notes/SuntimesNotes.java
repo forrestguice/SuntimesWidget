@@ -158,6 +158,8 @@ public class SuntimesNotes
                 continue;
             else if (event.equals(SolarEvents.EQUINOX_SPRING) || event.equals(SolarEvents.SOLSTICE_SUMMER) || event.equals(SolarEvents.EQUINOX_AUTUMNAL) || event.equals(SolarEvents.SOLSTICE_WINTER))
                 continue;
+            else if (event.equals(SolarEvents.CROSS_SPRING) || event.equals(SolarEvents.CROSS_SUMMER) || event.equals(SolarEvents.CROSS_AUTUMNAL) || event.equals(SolarEvents.CROSS_WINTER))
+                continue;
 
             NoteData note = createNote(event.name());
             notesList.add(note);
