@@ -1654,7 +1654,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             ArrayList<SuntimesTheme.ThemeDescriptor> themes = new ArrayList<>();
             for (SuntimesTheme.ThemeDescriptor theme : themes0)
             {
-                if (!theme.isDefault() || theme.name().equals(mustIncludeTheme)) {
+                //if (!theme.isDefault() || theme.name().equals(mustIncludeTheme)) {
+                if (theme.name().equals(mustIncludeTheme)) {
                     themes.add(theme);    // hide default widget themes, show only user-created themes
                 }                            // this is a workaround - the defaults have tiny (unreadable) font sizes, so we won't advertise their use
             }
