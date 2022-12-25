@@ -392,6 +392,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onDataModified( SuntimesRiseSetDataset data ) {
                     LightMapDialog.this.data = data;
+                    Log.d("DEBUG", "onDataModified: " + data.calendar().get(Calendar.DAY_OF_YEAR));
                     //if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
                     //    graphView.updateViews(data);
                     //}
@@ -1249,8 +1250,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         updateOptions(getContext());
         updateMediaButtons();
-        if (data != null)
+        if (data != null) {
             updateViews(data);
+        }
     }
 
     protected void updateViews( @NonNull SuntimesRiseSetDataset data )

@@ -436,7 +436,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 {
                     Calendar maptime = mapTime(data, colors);
                     Calendar datatime = data.dataActual.calendar();
-                    long data_age = (maptime.getTimeInMillis() - datatime.getTimeInMillis());
+                    long data_age = Math.abs(maptime.getTimeInMillis() - datatime.getTimeInMillis());
                     if (data_age >= (12 * 60 * 60 * 1000)) {    // TODO: more precise
 
                         //Log.d(LightMapTask.class.getSimpleName(), "recalculating dataset with adjusted date: " + data_age);
