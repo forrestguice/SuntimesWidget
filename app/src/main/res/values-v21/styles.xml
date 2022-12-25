@@ -29,5 +29,9 @@
         <item name="android:colorButtonNormal">@color/grey_200</item>
         <item name="android:textColor">@color/grey_850</item>
     </style>
+    <style name="ThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">?attr/colorBackgroundFloating</item>
+        <item name="android:textColor">@drawable/btn_themetoggle</item>
+    </style>
 
 </resources>

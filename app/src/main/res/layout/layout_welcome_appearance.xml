@@ -18,28 +18,28 @@
             android:text="@string/configLabel_appearance" />
 
         <LinearLayout
-            android:layout_width="match_parent" android:layout_height="64dp">
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <ToggleButton android:id="@+id/button_theme_system" android:theme="@style/SystemThemeButton"
+            <ToggleButton android:id="@+id/button_theme_system" android:theme="@style/ThemeButton"
                 android:textOn="@string/appThemes_systemDefault" android:textOff="@string/appThemes_systemDefault"
                 android:textSize="?attr/text_size_small"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
 
-            <ToggleButton android:id="@+id/button_theme_system1" android:theme="@style/SystemThemeButton"
+            <ToggleButton android:id="@+id/button_theme_system1" android:theme="@style/ThemeButton"
                 android:textOn="@string/appThemes_systemDefault1" android:textOff="@string/appThemes_systemDefault1"
                 android:textSize="?attr/text_size_small"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent" android:layout_height="64dp">
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <ToggleButton android:id="@+id/button_theme_dark" android:theme="@style/DarkThemeButton"
+            <ToggleButton android:id="@+id/button_theme_dark" android:theme="@style/ThemeButton"
                 android:textOn="@string/appThemes_darkTheme" android:textOff="@string/appThemes_darkTheme"
                 android:textSize="?attr/text_size_small"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
 
-            <ToggleButton android:id="@+id/button_theme_light" android:theme="@style/LightThemeButton"
+            <ToggleButton android:id="@+id/button_theme_light" android:theme="@style/ThemeButton"
                 android:textOn="@string/appThemes_lightTheme" android:textOff="@string/appThemes_lightTheme"
                 android:textSize="?attr/text_size_small"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
