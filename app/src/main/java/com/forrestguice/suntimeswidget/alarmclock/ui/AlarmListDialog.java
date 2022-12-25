@@ -625,8 +625,12 @@ public class AlarmListDialog extends DialogFragment
         {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = ExportTask.getOpenFileIntent(AlarmClockItemExportTask.MIMETYPE);
-                fragment.startActivityForResult(intent, request);
+                try {
+                    Intent intent = ExportTask.getOpenFileIntent(AlarmClockItemExportTask.MIMETYPE);
+                    fragment.startActivityForResult(intent, request);
+                } catch (Exception e) {
+                    Log.e("ImportAlarms", "Failed to start activity! " + e);
+                }
             }
         };
         if (!AppSettings.checkDialogDoNotShowAgain(context, DIALOG_IMPORT_WARNING)) {
