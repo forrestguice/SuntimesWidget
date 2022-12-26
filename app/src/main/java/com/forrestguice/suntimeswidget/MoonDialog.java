@@ -846,7 +846,8 @@ public class MoonDialog extends BottomSheetDialogFragment
             }
             ImageButton pauseButton = (ImageButton) popupView.findViewById(R.id.media_pause);
             if (pauseButton != null) {
-                pauseButton.setVisibility(isPlaying ? View.VISIBLE : View.GONE);
+                //pauseButton.setVisibility(isPlaying ? View.VISIBLE : View.GONE);
+                pauseButton.setVisibility(View.GONE);  // TODO: implement play update loop
             }
         }
     }
