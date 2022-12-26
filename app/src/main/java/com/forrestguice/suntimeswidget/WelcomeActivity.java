@@ -1222,6 +1222,9 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
+        protected String themeID = null, darkThemeID = null, lightThemeID = null;
+        protected AppSettings.TextSize textSize;
+
         @Override
         public void initViews(Context context, View view)
         {
@@ -1232,7 +1235,7 @@ public class WelcomeActivity extends AppCompatActivity
             RadioButton largeText = (RadioButton) view.findViewById(R.id.radio_text_large);
             RadioButton xlargeText = (RadioButton) view.findViewById(R.id.radio_text_xlarge);
 
-            AppSettings.TextSize textSize = AppSettings.TextSize.valueOf(AppSettings.loadTextSizePref(context));
+            textSize = AppSettings.TextSize.valueOf(AppSettings.loadTextSizePref(context));
             switch (textSize)
             {
                 case SMALL: setChecked(smallText, true); break;
@@ -1246,8 +1249,10 @@ public class WelcomeActivity extends AppCompatActivity
             setCheckedChangeListener(xlargeText, onTextSizeChecked(context, AppSettings.TextSize.XLARGE));
 
             AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(context);
-            String darkTheme = AppSettings.loadThemeDarkPref(context);
-            AppSettings.AppThemeInfo darkThemeInfo = AppSettings.loadThemeInfo(darkTheme);
+            themeID = themeInfo.getThemeName();
+            darkThemeID = AppSettings.loadThemeDarkPref(context);
+            lightThemeID = AppSettings.loadThemeLightPref(context);
+            AppSettings.AppThemeInfo darkThemeInfo = AppSettings.loadThemeInfo(darkThemeID);
 
             previewDate = (TextView) view.findViewById(R.id.text_date);
             updatePreview(context, themeInfo.getDisplayString(context));
@@ -1264,28 +1269,28 @@ public class WelcomeActivity extends AppCompatActivity
             }
 
             if (systemThemeButton != null) {
-                if (setChecked(systemThemeButton, AppSettings.THEME_SYSTEM.equals(themeInfo.getThemeName()) && AppSettings.THEME_DEFAULT.equals(darkTheme))) {
+                if (setChecked(systemThemeButton, AppSettings.THEME_SYSTEM.equals(themeID) && AppSettings.THEME_DEFAULT.equals(darkThemeID))) {
                     updatePreview(context, themeInfo.getDisplayString(context));
                 }
                 systemThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_SYSTEM, null, null));
             }
 
             if (systemTheme1Button != null) {
-                if (setChecked(systemTheme1Button, AppSettings.THEME_SYSTEM.equals(themeInfo.getThemeName()) && AppSettings.THEME_SYSTEM1.equals(darkTheme))) {
+                if (setChecked(systemTheme1Button, AppSettings.THEME_SYSTEM.equals(themeID) && AppSettings.THEME_SYSTEM1.equals(darkThemeID))) {
                     updatePreview(context, darkThemeInfo.getDisplayString(context));
                 }
                 systemTheme1Button.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_SYSTEM, AppSettings.THEME_SYSTEM1, AppSettings.THEME_SYSTEM1));
             }
 
             if (darkThemeButton != null) {
-                if (setChecked(darkThemeButton, AppSettings.THEME_DARK.equals(themeInfo.getThemeName()))) {
+                if (setChecked(darkThemeButton, AppSettings.THEME_DARK.equals(themeID))) {
                     updatePreview(context, themeInfo.getDisplayString(context));
                 }
                 darkThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_DARK, null, null));
             }
 
             if (lightThemeButton != null) {
-                if (setChecked(lightThemeButton, AppSettings.THEME_LIGHT.equals(themeInfo.getThemeName()))) {
+                if (setChecked(lightThemeButton, AppSettings.THEME_LIGHT.equals(themeID))) {
                     updatePreview(context, themeInfo.getDisplayString(context));
                 }
                 lightThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_LIGHT, null, null));
@@ -1316,7 +1321,9 @@ public class WelcomeActivity extends AppCompatActivity
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
+                    if (isChecked)
+                    {
+                        WelcomeAppearanceFragment.this.textSize = textSize;
                         AppSettings.saveTextSizePref(context, textSize);
                         recreate(getActivity());
                     }
@@ -1330,6 +1337,9 @@ public class WelcomeActivity extends AppCompatActivity
                 public void onClick(View v)
                 {
                     Activity activity = getActivity();
+                    WelcomeAppearanceFragment.this.themeID = themeID;
+                    WelcomeAppearanceFragment.this.lightThemeID = lightThemeID;
+                    WelcomeAppearanceFragment.this.darkThemeID = darkThemeID;
                     AppSettings.saveThemeLightPref(activity, lightThemeID);
                     AppSettings.saveThemeDarkPref(activity, darkThemeID);
                     AppSettings.setThemePref(activity, themeID);
@@ -1354,7 +1364,16 @@ public class WelcomeActivity extends AppCompatActivity
                         .putExtra(EXTRA_PAGE, getPreferredIndex()));
             }
         }
-    }
 
+        @Override
+        public boolean saveSettings(Context context)
+        {
+            AppSettings.saveThemeLightPref(context, lightThemeID);
+            AppSettings.saveThemeDarkPref(context, darkThemeID);
+            AppSettings.saveTextSizePref(context, textSize);
+            AppSettings.setThemePref(context, themeID);
+            return true;
+        }
+    }
 
 }
