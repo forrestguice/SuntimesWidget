@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
@@ -119,10 +120,12 @@ public class MoonPhasesView1 extends LinearLayout
         //card_view.setOnScrollListener(onCardScrollListener);
 
         forwardButton = (ImageButton)findViewById(R.id.info_time_nextbtn);
+        TooltipCompat.setTooltipText(forwardButton, forwardButton.getContentDescription());
         forwardButton.setOnClickListener(onResetClick1);
         forwardButton.setVisibility(GONE);
 
         backButton = (ImageButton)findViewById(R.id.info_time_prevbtn);
+        TooltipCompat.setTooltipText(backButton, backButton.getContentDescription());
         backButton.setOnClickListener(onResetClick0);
         backButton.setVisibility(VISIBLE);
         backButton.postDelayed(new Runnable() {
