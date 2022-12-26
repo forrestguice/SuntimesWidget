@@ -1000,7 +1000,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     break;
             }
 
-        } else if (alarm.type == AlarmClockItem.AlarmType.NOTIFICATION2) {
+        } /*else if (alarm.type == AlarmClockItem.AlarmType.NOTIFICATION2) {
             // NOTIFICATION (persistent reminder)
             PendingIntent pendingView1 = PendingIntent.getActivity(context, alarm.hashCode(), getSuntimesIntent(context), PendingIntent.FLAG_UPDATE_CURRENT);
             PendingIntent pendingDisable = PendingIntent.getBroadcast(context, alarm.hashCode(), getAlarmIntent(context, ACTION_DISABLE, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -1024,7 +1024,7 @@ public class AlarmNotifications extends BroadcastReceiver
             builder.setContentIntent((pendingAction != null) ? pendingAction : pendingView1);
             builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDisable);
 
-        } else {
+        }*/ else {
             // NOTIFICATION
             builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
             builder.setPriority( NotificationCompat.PRIORITY_HIGH );

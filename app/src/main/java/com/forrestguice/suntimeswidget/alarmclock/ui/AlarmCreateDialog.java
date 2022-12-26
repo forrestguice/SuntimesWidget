@@ -481,7 +481,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             layout = resource;
 
             if (Build.VERSION.SDK_INT >= 11) {
-                addAll(AlarmClockItem.AlarmType.values());
+                addAll(AlarmClockItem.AlarmType.ALARM, AlarmClockItem.AlarmType.NOTIFICATION, AlarmClockItem.AlarmType.NOTIFICATION1);
             } else {
                 for (AlarmClockItem.AlarmType type : AlarmClockItem.AlarmType.values()) {
                     add(type);
