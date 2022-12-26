@@ -386,20 +386,21 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         inflater.inflate(R.menu.alarmedit, menu);
 
         MenuItem optionsItem = menu.findItem(R.id.action_options);
-        if (optionsItem != null) {
+        if (optionsItem != null)
+        {
             SubMenu optionsMenu = optionsItem.getSubMenu();
             if (optionsMenu != null) {
                 inflater.inflate(R.menu.alarmcontext2, optionsMenu);
-            }
-
-            AlarmClockItem item = editor.getItem();
-            MenuItem item_setDismissChallenge = optionsMenu.findItem(R.id.setAlarmDismissChallenge);
-            if (item_setDismissChallenge != null) {
-                item_setDismissChallenge.setVisible(item != null && item.type == AlarmClockItem.AlarmType.ALARM);
-            }
-            MenuItem item_testDismissChallenge = optionsMenu.findItem(R.id.testAlarmDismissChallenge);
-            if (item_testDismissChallenge != null) {
-                item_testDismissChallenge.setVisible(item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+                
+                AlarmClockItem item = editor.getItem();
+                MenuItem item_setDismissChallenge = optionsMenu.findItem(R.id.setAlarmDismissChallenge);
+                if (item_setDismissChallenge != null) {
+                    item_setDismissChallenge.setVisible(item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+                }
+                MenuItem item_testDismissChallenge = optionsMenu.findItem(R.id.testAlarmDismissChallenge);
+                if (item_testDismissChallenge != null) {
+                    item_testDismissChallenge.setVisible(item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+                }
             }
         }
 
