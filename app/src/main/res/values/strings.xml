@@ -905,7 +905,7 @@
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification1">Notification (ephemeral)</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_notification1">Quick Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
     <string name="alarmMode_notification2">Notification (persistent)</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
     <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->
