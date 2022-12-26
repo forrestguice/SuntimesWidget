@@ -378,7 +378,8 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         Location pref1 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match! " + pref1.getUri() + " != " + testloc1.getUri(), pref1.equals(testloc1));
 
-        Location testloc0 = new Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
+        //Location testloc0 = new Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
+        Location testloc0 = WidgetSettings.loadLocationPref(context, 0);
         WidgetSettings.deleteLocationPref(context, appWidgetId);
         Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match default! " + pref0.getUri() + " != " + testloc0.getUri(), pref0.equals(testloc0));

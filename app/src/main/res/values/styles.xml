@@ -55,6 +55,12 @@
         <item name="table_risingColor">@color/table_rising</item>
         <item name="table_settingColor">@color/table_setting</item>
         <item name="table_noonColor">@color/table_noon</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting</item>
+        <item name="table_springColor">@color/springColor</item>
+        <item name="table_summerColor">@color/summerColor</item>
+        <item name="table_fallColor">@color/fallColor</item>
+        <item name="table_winterColor">@color/winterColor</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_ref</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_ref</item>
@@ -99,7 +105,7 @@
         <item name="icActionPlace">@drawable/ic_action_place_ref</item>
         <item name="icActionMap">@drawable/ic_action_map1_ref</item>
         <item name="icActionWorldMap">@drawable/ic_action_map_ref</item>
-        <item name="icActionGraph">@drawable/ic_action_timeline</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline_ref</item>
         <item name="icActionTime">@drawable/ic_action_time_ref</item>
         <item name="icActionDst">@drawable/ic_weather_sunny_ref</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_ref</item>
@@ -250,6 +256,12 @@
         <item name="table_risingColor">@color/table_rising_light</item>
         <item name="table_settingColor">@color/table_setting_light</item>
         <item name="table_noonColor">@color/table_noon_light</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising_light</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting_light</item>
+        <item name="table_springColor">@color/springColor_light</item>
+        <item name="table_summerColor">@color/summerColor_light</item>
+        <item name="table_fallColor">@color/fallColor_light</item>
+        <item name="table_winterColor">@color/winterColor_light</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
@@ -449,6 +461,12 @@
         <item name="table_risingColor">@color/table_rising_dark</item>
         <item name="table_settingColor">@color/table_setting_dark</item>
         <item name="table_noonColor">@color/table_noon_dark</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising_dark</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting_dark</item>
+        <item name="table_springColor">@color/springColor_dark</item>
+        <item name="table_summerColor">@color/summerColor_dark</item>
+        <item name="table_fallColor">@color/fallColor_dark</item>
+        <item name="table_winterColor">@color/winterColor_dark</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
@@ -601,21 +619,63 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <!-- Alternate System Theme -->
+    <!-- Contrast System Theme -->
     <style name="AppTheme.System1" parent="AppTheme.System">
-        <item name="table_risingColor">?android:attr/textColorPrimary</item>
-        <item name="table_settingColor">?android:attr/textColorSecondary</item>
-        <item name="table_noonColor">?android:attr/textColorSecondary</item>
+        <item name="colorPrimary">@color/primaryColor_contrast</item>
+        <item name="settingsCardBackground">@color/card_bg_contrast</item>
+        <item name="timeCardBackground">@color/card_bg_contrast</item>
+        <item name="dialogFrame">@color/dialog_frame_contrast</item>
+        <item name="dialogBackground">@color/dialog_bg_contrast</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast</item>
+        <item name="android:windowBackground">@color/window_bg_contrast</item>
+        <item name="table_risingColor">@color/table_rising_contrast</item>
+        <item name="table_settingColor">@color/table_setting_contrast</item>
+        <item name="table_noonColor">@color/table_noon_contrast</item>
+        <item name="table_moonRisingColor">@color/table_moonRising_contrast</item>
+        <item name="table_moonSettingColor">@color/table_moonSetting_contrast</item>
+        <item name="table_springColor">@color/table_spring_contrast</item>
+        <item name="table_summerColor">@color/table_summmer_contrast</item>
+        <item name="table_fallColor">@color/table_fall_contrast</item>
+        <item name="table_winterColor">@color/table_winter_contrast</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
     </style>
-    <style name="AppTheme.System1.Small" parent="AppTheme.System.Small">
-        <item name="table_risingColor">?android:attr/textColorPrimary</item>
-        <item name="table_settingColor">?android:attr/textColorSecondary</item>
-        <item name="table_noonColor">?android:attr/textColorSecondary</item>
+    <style name="AppTheme.System1.Small" parent="AppTheme.System1">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
     </style>
-    <style name="AppTheme.System1.Large" parent="AppTheme.System.Large">
-        <item name="table_risingColor">?android:attr/textColorPrimary</item>
-        <item name="table_settingColor">?android:attr/textColorSecondary</item>
-        <item name="table_noonColor">?android:attr/textColorSecondary</item>
+    <style name="AppTheme.System1.Large" parent="AppTheme.System1">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+    </style>
+    <style name="AppTheme.System1.XLarge" parent="AppTheme.System1">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
     </style>
 
     <!-- view styles -->
@@ -913,6 +973,10 @@
         <item name="colorButtonNormal">@color/grey_200</item>
         <item name="android:textColor">@color/grey_850</item>
     </style>
+    <style name="ThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/dialog_bg</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
 
     <style name="TimePickerStyle">
         <item name="android:textSize">?attr/text_size_medium</item>
@@ -924,11 +988,18 @@
     <style name="ToastTextAppearance">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
     <style name="TooltipTextAppearance">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
+
+    <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">?attr/text_size_xlarge</item>
+    </style>
+    <style name="ToolbarSubtitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textSize">?attr/text_size_small</item>
+    </style>
+
 </resources>

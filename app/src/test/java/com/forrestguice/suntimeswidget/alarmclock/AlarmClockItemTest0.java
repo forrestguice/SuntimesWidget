@@ -18,7 +18,12 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
 import static junit.framework.Assert.assertEquals;
@@ -30,11 +35,26 @@ import static junit.framework.Assert.assertTrue;
 public class AlarmClockItemTest0
 {
     @Test
+    public void test_alarmClockItem_repeatingDays_everyday()
+    {
+        ArrayList<Integer> days = AlarmClockItem.everyday();
+        assertNotNull(days);
+        assertEquals(days.size(), 7);
+        assertFalse(days.contains(0));
+        for (int i=1; i <= 7; i++) {
+            assertTrue(days.contains(i));
+        }
+    }
+
+    @Test
     public void test_alarmClockItem_new()
     {
         AlarmClockItem item0 = new AlarmClockItem();
-        item0.type = AlarmClockItem.AlarmType.NOTIFICATION;
-        item0.rowID = 0;
+        item0.label = "test0";
+        item0.type = ALARM;
+        item0.timezone = "test";
+        item0.location = new Location("test0", "1", "2", "3");
+        item0.rowID = 10;
         item0.hour = 4;
         item0.minute = 2;
         item0.offset = 18 * 60;
@@ -46,21 +66,59 @@ public class AlarmClockItemTest0
         item0.actionID3 = null;
         item0.vibrate = true;
         item0.modified = true;
-        item0.setRepeatingDays("1,2,3,4,5,6");
-        item0.setAlarmFlags("flag1=1,flag2=0,flag3=3");
+        item0.repeatingDays = new ArrayList<>(Arrays.asList(1, 2));
+        item0.actionID0 = "action0";
+        item0.actionID1 = "action1";
+        item0.alarmtime = 1;
+        item0.ringtoneURI = "testUri0";
+        item0.ringtoneName = "test";
+        item0.setState(AlarmState.STATE_SCHEDULED_SOON);
         test_alarmClockItem_new(item0);
 
         AlarmClockItem item1 = new AlarmClockItem();
+        item1.label = "test1";
         item1.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item1.rowID = 20;
+        item1.repeating = false;
+        item1.setRepeatingDays("1,2,3,4,5,6,7");
+        item1.enabled = false;
+        item1.vibrate = false;
+        item1.modified = false;
+        item1.setEvent("SUNRISE");
+        item1.offset = 0;
+        item1.alarmtime = 2;
+        item1.ringtoneURI = "testUri1";
+        item1.ringtoneName = "test";
+        item1.setState(AlarmState.STATE_SOUNDING);
         test_alarmClockItem_new(item1);
 
         AlarmClockItem item2 = new AlarmClockItem();
+        item2.label = null;
         item2.repeatingDays = null;
         item2.type = null;
+        item2.timezone = null;
+        item2.location = null;
+        item2.actionID0 = null;
+        item2.actionID1 = null;
+        item2.ringtoneURI = null;
+        item2.ringtoneName = null;
+        item2.offset = -1;
+        item2.alarmtime = -1;
+        test_alarmClockItem_new(item2);
 
-        AlarmClockItem item3 = new AlarmClockItem(item2);
-        test_equals(item2, item3, true, true);
-        //assertEquals(item2.type, item3.type);
+        AlarmClockItem item3 = new AlarmClockItem();
+        item3.label = "";
+        item3.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item2.timezone = "";
+        item3.repeating = true;
+        item3.repeatingDays = new ArrayList<>();    // empty repeating days
+        item3.actionID0 = "";                       // empty actions
+        item3.actionID1 = "";
+        item3.ringtoneURI = "";
+        item3.ringtoneName = "";
+        item3.offset = 0;
+        item3.alarmtime = 0;
+        test_alarmClockItem_new(item3);
     }
 
     public void test_alarmClockItem_new(AlarmClockItem item0)

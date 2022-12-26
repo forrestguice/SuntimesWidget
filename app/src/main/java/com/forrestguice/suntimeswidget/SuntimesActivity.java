@@ -129,6 +129,8 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String ACTION_CARD_PREV = "suntimes.action.CARD_PREV";
     public static final String ACTION_CARD_RESET = "suntimes.action.SWAP_CARD";
     public static final String ACTION_CARD_SHOW = "suntimes.action.SHOW_CARD";
+
+    public static final String ACTION_SHOW_DATE = "suntimes.action.SHOW_DATE";
     public static final String EXTRA_SHOW_DATE = MenuAddon.EXTRA_SHOW_DATE;
 
     public static final String ACTION_NOTE_NEXT = "suntimes.action.NEXT_NOTE";
@@ -168,7 +170,8 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_ALARM = "alarm";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_LOCATION = "location";
-    private static final String DIALOGTAG_DATE = "dateselect";
+    private static final String DIALOGTAG_DATE_CONFIG = "dateconfig";
+    private static final String DIALOGTAG_DATE_SEEK = "dateselect";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
     private static final String DIALOGTAG_WORLDMAP = "worldmap";
     private static final String DIALOGTAG_EQUINOX = "equinox";
@@ -324,6 +327,9 @@ public class SuntimesActivity extends AppCompatActivity
 
             } else if (action.equals(ACTION_CONFIG_DATE)) {
                 configDate();
+
+            } else if (action.equals(ACTION_SHOW_DATE)) {
+                showDate(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_NOTE_SEEK)) {
                 String eventID = intent.getStringExtra(EXTRA_SOLAREVENT);
@@ -491,12 +497,20 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "LocationConfigDialog listeners restored.");
         }
 
-        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        TimeDateConfigDialog dateDialog = (TimeDateConfigDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_CONFIG);
         if (dateDialog != null)
         {
             dateDialog.setTimezone(dataset.timezone());
             dateDialog.setOnAcceptedListener(onConfigDate);
             dateDialog.setOnCanceledListener(onCancelDate);
+            //Log.d("DEBUG", "TimeDateDialog listeners restored.");
+        }
+
+        TimeDateDialog seekDateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_SEEK);
+        if (dateDialog != null)
+        {
+            seekDateDialog.setTimezone(dataset.timezone());
+            seekDateDialog.setOnAcceptedListener(onSeekDate(seekDateDialog));
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
     }
@@ -1332,7 +1346,7 @@ public class SuntimesActivity extends AppCompatActivity
                 return true;
 
             case R.id.action_date:
-                configDate();
+                showDate();
                 return true;
 
             case R.id.action_alarm:
@@ -1361,15 +1375,50 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
+     * showDate
+     */
+    protected void showDate() {
+        showDate(-1L);
+    }
+    protected void showDate(long datetime)
+    {
+        final TimeDateDialog datePicker = new TimeDateDialog();
+        datePicker.setTimezone(dataset.timezone());
+        datePicker.setOnAcceptedListener(onSeekDate(datePicker));
+
+        if (datetime != -1) {
+            Calendar calendar = Calendar.getInstance(dataset.timezone());
+            calendar.setTimeInMillis(datetime);
+            datePicker.init(calendar);
+        }
+        datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE_SEEK);
+    }
+    DialogInterface.OnClickListener onSeekDate(final TimeDateDialog dialog)
+    {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                Calendar now = Calendar.getInstance(dialog.getTimeZone());
+                Calendar then = dialog.getDateInfo().getCalendar(dialog.getTimeZone(), now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
+                then.set(Calendar.SECOND, now.get(Calendar.SECOND));
+                then.set(Calendar.MILLISECOND, now.get(Calendar.MILLISECOND));
+                scrollToDate(then.getTimeInMillis());
+            }
+        };
+    }
+    
+    /**
      * Select a date other than today.
      */
     private void configDate()
     {
-        final TimeDateDialog datePicker = new TimeDateDialog();
+        final TimeDateConfigDialog datePicker = new TimeDateConfigDialog();
         datePicker.setTimezone(dataset.timezone());
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
-        datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
+        datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE_CONFIG);
     }
     DialogInterface.OnClickListener onConfigDate = new DialogInterface.OnClickListener()
     {
@@ -1395,6 +1444,19 @@ public class SuntimesActivity extends AppCompatActivity
         updateViews(SuntimesActivity.this);
         scrollTo(CardAdapter.TODAY_POSITION);
         Log.d("DEBUG", "afterConfigDate");
+    }
+
+    public static class TimeDateConfigDialog extends TimeDateDialog
+    {
+        @Override
+        protected void saveSettings(Context context)
+        {
+            WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
+            WidgetSettings.saveDateModePref(context, appWidgetId, dateMode);
+
+            WidgetSettings.DateInfo dateInfo = getDateInfo();
+            WidgetSettings.saveDatePref(context, appWidgetId, dateInfo);
+        }
     }
 
     /**

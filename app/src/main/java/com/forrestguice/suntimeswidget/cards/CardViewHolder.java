@@ -769,7 +769,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                     int margin = (int)context.getResources().getDimension(R.dimen.table_cell_spacing);
 
                     TextView text_label = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_label.setText(event.getLabel() + " " + j + " " + angle);
+                    text_label.setText(event.getLabel());  // + " " + j + " " + angle);
                     text_label.setTextColor(color_label);
                     layout_labels[i].addView(text_label, j);
 

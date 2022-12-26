@@ -79,7 +79,7 @@ public class SuntimesNotes
     {
         if (themeOverride == null)
         {
-            int[] colorAttrs = { R.attr.sunriseColor, R.attr.sunsetColor, R.attr.moonriseColor, R.attr.moonsetColor };
+            int[] colorAttrs = { R.attr.table_risingColor, R.attr.table_settingColor, R.attr.table_moonRisingColor, R.attr.table_moonSettingColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
             colorSunrise = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
@@ -157,6 +157,8 @@ public class SuntimesNotes
             else if (event.equals(SolarEvents.FULLMOON) || event.equals(SolarEvents.NEWMOON) || event.equals(SolarEvents.FIRSTQUARTER) || event.equals(SolarEvents.THIRDQUARTER))
                 continue;
             else if (event.equals(SolarEvents.EQUINOX_SPRING) || event.equals(SolarEvents.SOLSTICE_SUMMER) || event.equals(SolarEvents.EQUINOX_AUTUMNAL) || event.equals(SolarEvents.SOLSTICE_WINTER))
+                continue;
+            else if (event.equals(SolarEvents.CROSS_SPRING) || event.equals(SolarEvents.CROSS_SUMMER) || event.equals(SolarEvents.CROSS_AUTUMNAL) || event.equals(SolarEvents.CROSS_WINTER))
                 continue;
 
             NoteData note = createNote(event.name());

@@ -72,6 +72,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.text.NumberFormat;
@@ -392,6 +393,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onDataModified( SuntimesRiseSetDataset data ) {
                     LightMapDialog.this.data = data;
+                    Log.d("DEBUG", "onDataModified: " + data.calendar().get(Calendar.DAY_OF_YEAR));
                     //if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
                     //    graphView.updateViews(data);
                     //}
@@ -730,7 +732,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     protected boolean showTimeZoneMenu(Context context, View view)
     {
-        PopupMenu menu = WorldMapDialog.createMenu(context, view, R.menu.lightmapmenu_tz, onTimeZoneMenuClick);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_tz, onTimeZoneMenuClick);
         WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID));
         menu.show();
         return true;
@@ -1118,8 +1120,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 R.attr.graphColor_nautical,             // 2
                 R.attr.graphColor_civil,                // 3
                 R.attr.graphColor_day,                  // 4
-                R.attr.sunriseColor,                    // 5
-                R.attr.sunsetColor,                     // 6
+                R.attr.table_risingColor,                    // 5
+                R.attr.table_settingColor,                     // 6
                 R.attr.text_disabledColor,              // 7
                 R.attr.buttonPressColor,                // 8
                 android.R.attr.textColorPrimary,        // 9
@@ -1249,8 +1251,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         updateOptions(getContext());
         updateMediaButtons();
-        if (data != null)
+        if (data != null) {
             updateViews(data);
+        }
     }
 
     protected void updateViews( @NonNull SuntimesRiseSetDataset data )
@@ -1280,7 +1283,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             field_night.highlight(false);
 
             long dayDelta = data.dayLengthOther() - data.dayLength();
-            field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorDay));
+            field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorRising));
             field_day.highlight(false);
 
             lightmap.updateViews(data);
@@ -1639,7 +1642,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             } else if (info.length >= 2) {
                 String s = context.getString(R.string.length_twilight2, info[0].durationString(showSeconds), info[1].durationString(showSeconds));
                 String delimiter = context.getString(R.string.length_delimiter);
-                text.setText(SuntimesUtils.createBoldColorSpan(null, s, delimiter, colorDay));
+                text.setText(SuntimesUtils.createBoldColorSpan(null, s, delimiter, colorRising));
                 setVisible(true);
 
             } else {

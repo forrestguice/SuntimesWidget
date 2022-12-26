@@ -1229,7 +1229,7 @@
     <string name="appThemes_darkTheme">Dark Theme</string>
     <string name="appThemes_nightMode">Light Theme / Dark Theme (Night&#160;Mode)</string>  <!-- TODO -->
     <string name="appThemes_systemDefault">System default</string>
-    <string name="appThemes_systemDefault1">System default (Alt)</string>
+    <string name="appThemes_systemDefault1">Contrast (System Default)</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>

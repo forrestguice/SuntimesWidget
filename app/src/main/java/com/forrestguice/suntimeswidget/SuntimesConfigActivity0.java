@@ -59,7 +59,6 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
@@ -625,7 +624,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             public void onSaveSortMode(WidgetTimezones.TimeZoneSort sortMode)
             {
                 super.onSaveSortMode(sortMode);
-                AppSettings.setTimeZoneSortPref(SuntimesConfigActivity0.this, sortMode);
+                AppSettings.saveTimeZoneSortPref(SuntimesConfigActivity0.this, sortMode);
             }
 
             @Override

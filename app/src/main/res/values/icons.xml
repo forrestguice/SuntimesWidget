@@ -35,6 +35,7 @@
     <drawable name="ic_action_place_ref">@drawable/ic_action_place_light</drawable>
     <drawable name="ic_action_map1_ref">@drawable/ic_action_map1_light</drawable>
     <drawable name="ic_action_map_ref">@drawable/ic_action_map_light</drawable>
+    <drawable name="ic_action_timeline_ref">@drawable/ic_action_timeline_light</drawable>
     <drawable name="ic_action_time_ref">@drawable/ic_action_time_light</drawable>
     <drawable name="ic_weather_sunny_ref">@drawable/ic_weather_sunny_light</drawable>
     <drawable name="ic_action_alarms_ref">@drawable/ic_action_alarms_light</drawable>

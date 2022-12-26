@@ -570,7 +570,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putInt(EXTRA_MINUTE, prefs.getInt(EXTRA_MINUTE, getMinute()));
         args.putString(EXTRA_TIMEZONE, prefs.getString(EXTRA_TIMEZONE, getTimeZone()));
         args.putString(EXTRA_EVENT, prefs.getString(EXTRA_EVENT, DEF_EVENT));
-        args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.valueOf(prefs.getString(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM.name())));
+        args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.valueOf(prefs.getString(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM.name()), DEF_ALARMTYPE));
 
         if (isAdded())
         {

@@ -39,19 +39,18 @@
 
         <LinearLayout android:id="@+id/appwidget_timezone_custom_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="8dp">
+            android:orientation="horizontal" android:animateLayoutChanges="true"
+            android:paddingTop="8dp" android:gravity="center_vertical">
 
             <TextView android:id="@+id/appwidget_timezone_custom_label"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_timezone_custom"
-                android:textColor="@drawable/btn_labeltxt" android:textSize="?attr/text_size_small"
-                android:clickable="true" android:focusable="true"
-                android:enabled="false" android:labelFor="@+id/appwidget_timezone_custom" />
+                android:textSize="?attr/text_size_small"
+                android:labelFor="@+id/appwidget_timezone_custom" />
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content">
 
                 <Spinner android:id="@+id/appwidget_timezone_custom" android:layout_width="match_parent"
@@ -72,6 +71,12 @@
                 <include layout="@layout/layout_listitem_timezone" />
 
             </LinearLayout>
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/sort_timezones"
+                style="@style/ActionButton" android:visibility="visible"
+                android:src="?attr/icActionSort" android:tint="?attr/colorAccent"
+                android:layout_width="wrap_content" android:layout_height="32dp"
+                android:contentDescription="@string/timezone_sort_contextAction" />
 
         </LinearLayout>
 
@@ -94,7 +99,7 @@
                 android:layout_height="wrap_content" />
 
             <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_solartime_help"
-                style="@style/Widget.AppCompat.ActionButton" android:visibility="visible"
+                style="@style/ActionButton" android:visibility="visible"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
                 android:layout_width="wrap_content" android:layout_height="32dp"
                 android:contentDescription="@string/configAction_help" />

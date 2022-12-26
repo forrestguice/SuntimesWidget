@@ -69,7 +69,8 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_alarms_upcoming_checkbox"
                 android:textSize="?attr/text_size_small"
-                android:checked="false" />
+                android:checked="false"
+                android:visibility="gone" />
 
             <View android:background="?attr/hrColor" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"

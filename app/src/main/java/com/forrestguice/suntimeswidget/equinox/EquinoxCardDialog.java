@@ -78,7 +78,8 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     public static final String DIALOGTAG_HELP = "equinox_help";
     protected static SuntimesUtils utils = new SuntimesUtils();
 
-    protected TextView empty, text_title, text_year_length;
+    protected TextView empty, text_title;
+    protected TextView text_year_length, text_year_length_label;
     protected ImageButton btn_next, btn_prev, btn_menu;
 
     protected EquinoxViewOptions options = new EquinoxViewOptions();
@@ -112,6 +113,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_equinox1, parent, false);
         initLocale(context);
         options.init(context);
+        options.showSeconds = true;
 
         empty = (TextView)v.findViewById(R.id.txt_empty);
         text_title = (TextView)v.findViewById(R.id.text_title1);
@@ -119,6 +121,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         btn_prev = (ImageButton)v.findViewById(R.id.info_time_prevbtn1);
         btn_menu = (ImageButton)v.findViewById(R.id.menu_button);
         text_year_length = (TextView)v.findViewById(R.id.info_time_year_length);
+        text_year_length_label = (TextView)v.findViewById(R.id.info_time_year_length_label);
 
         if (text_title != null) {
             text_title.setOnClickListener(onTitleClicked);
@@ -144,6 +147,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
 
         themeViews(context);
+        updateViews(getContext(), card_adapter.initData(getContext(), EquinoxDataAdapter.CENTER_POSITION));
         return v;
     }
 
@@ -302,6 +306,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             card_view.setLayoutFrozen(false);
             card_view.scrollToPosition(position);
             card_view.setLayoutFrozen(false);
+        }
+        if (text_year_length_label != null && options.columnWidthPx != -1)
+        {
+            ViewGroup.LayoutParams layoutParams = text_year_length_label.getLayoutParams();
+            layoutParams.width = options.columnWidthPx;
+            text_year_length_label.setLayoutParams(layoutParams);
         }
         Log.d("DEBUG", "EquinoxDialog updated");
     }
@@ -666,7 +676,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         //card_view.setLayoutParams(params);
     }
 
-    private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy)

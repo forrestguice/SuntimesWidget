@@ -43,26 +43,26 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content">
 
             <TextView android:visibility="gone"
-                android:id="@+id/link0"
+                android:id="@+id/link0" android:textSize="?attr/text_size_small"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="start" android:layout_margin="8dp" android:layout_gravity="start"
                 android:text="@string/app_url" />
 
             <TextView
-                android:id="@+id/text1"
+                android:id="@+id/text1" android:textSize="?attr/text_size_large"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="start" android:layout_margin="8dp" android:layout_gravity="start"
                 android:textAppearance="?android:attr/textAppearanceMedium" android:textStyle="bold"
                 android:text="Suntimes is free and open-source software." />
 
             <TextView
-                android:id="@+id/text2"
+                android:id="@+id/text2" android:textSize="?attr/text_size_small"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="start" android:layout_margin="8dp"
                 android:text="@string/app_legal1" />
 
             <TextView
-                android:id="@+id/link1"
+                android:id="@+id/link1" android:textSize="?attr/text_size_small"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="start" android:layout_gravity="start"
                 android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
@@ -70,13 +70,13 @@
                 android:text="@string/app_license_url" />
 
             <TextView
-                android:id="@+id/text3"
+                android:id="@+id/text3" android:textSize="?attr/text_size_small"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="start" android:layout_margin="8dp" android:layout_gravity="start"
                 android:text="@string/privacy_policy0" />
 
             <TextView
-                android:id="@+id/link3"
+                android:id="@+id/link3" android:textSize="?attr/text_size_small"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="start" android:layout_margin="8dp" android:layout_gravity="start"
                 android:text="@string/privacy_url" />

@@ -49,6 +49,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
@@ -105,10 +106,12 @@ public class MoonApsisView extends LinearLayout
         snapHelper.attachToRecyclerView(card_view);
 
         forwardButton = (ImageButton)findViewById(R.id.info_time_nextbtn);
+        TooltipCompat.setTooltipText(forwardButton, forwardButton.getContentDescription());
         forwardButton.setOnClickListener(onResetClick1);
         forwardButton.setVisibility(GONE);
 
         backButton = (ImageButton)findViewById(R.id.info_time_prevbtn);
+        TooltipCompat.setTooltipText(backButton, backButton.getContentDescription());
         backButton.setOnClickListener(onResetClick0);
         backButton.setVisibility(VISIBLE);
         backButton.postDelayed(new Runnable() {
@@ -434,7 +437,7 @@ public class MoonApsisView extends LinearLayout
         @SuppressLint("ResourceType")
         protected void initTheme(Context context)
         {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor, R.attr.moonriseColor, R.attr.moonsetColor };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor, R.attr.table_moonRisingColor, R.attr.table_moonSettingColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
             colorNote = colorTitle = colorTime = ContextCompat.getColor(context, typedArray.getResourceId(0, def));

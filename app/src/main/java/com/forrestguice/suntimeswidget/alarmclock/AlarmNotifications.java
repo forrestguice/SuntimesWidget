@@ -2190,9 +2190,10 @@ public class AlarmNotifications extends BroadcastReceiver
     @Nullable
     protected static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
+        t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
-            Log.e(TAG, "updateAlarmTime_sunEvent: empty repeatingDays! returning null");
-            return null;
+            Log.w(TAG, "updateAlarmTime_sunEvent: empty repeatingDays! using EVERYDAY instead..");
+            repeatingDays = AlarmClockItem.everyday();
         }
 
         SuntimesRiseSetData sunData = getData_sunEvent(context, event, location);
@@ -2219,6 +2220,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
                 t_updateAlarmTime_brokenLoop = true;
+                t_updateAlarmTime_runningLoop = false;
                 return null;
             }
 
@@ -2234,15 +2236,17 @@ public class AlarmNotifications extends BroadcastReceiver
             }
             c++;
         }
+        t_updateAlarmTime_runningLoop = false;
         return eventTime;
     }
 
     @Nullable
     private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
+        t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
-            Log.e(TAG, "updateAlarmTime_moonEvent: empty repeatingDays! returning null");
-            return null;
+            Log.w(TAG, "updateAlarmTime_moonEvent: empty repeatingDays! using EVERYDAY instead..");
+            repeatingDays = AlarmClockItem.everyday();
         }
 
         SuntimesMoonData moonData = getData_moonEvent(context, location);
@@ -2267,6 +2271,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
                 t_updateAlarmTime_brokenLoop = true;
+                t_updateAlarmTime_runningLoop = false;
                 return null;
             }
 
@@ -2280,7 +2285,9 @@ public class AlarmNotifications extends BroadcastReceiver
                 eventTime.set(Calendar.SECOND, 0);
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
-            c++;        }
+            c++;
+        }
+        t_updateAlarmTime_runningLoop = false;
         return eventTime;
     }
 
@@ -2307,6 +2314,7 @@ public class AlarmNotifications extends BroadcastReceiver
     @Nullable
     private static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
+        t_updateAlarmTime_runningLoop = true;
         SuntimesCalculator.MoonPhase phase = event.toMoonPhase();
         SuntimesMoonData moonData = getData_moonEvent(context, location);
 
@@ -2328,6 +2336,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (!timestamps.add(alarmTime.getTimeInMillis())) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
                 t_updateAlarmTime_brokenLoop = true;
+                t_updateAlarmTime_runningLoop = false;
                 return null;
             }
 
@@ -2340,12 +2349,14 @@ public class AlarmNotifications extends BroadcastReceiver
             eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
+        t_updateAlarmTime_runningLoop = false;
         return eventTime;
     }
 
     @Nullable
     private static Calendar updateAlarmTime_seasonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
+        t_updateAlarmTime_runningLoop = true;
         SuntimesEquinoxSolsticeData data = getData_seasons(context, event, location);
 
         Calendar alarmTime = Calendar.getInstance();
@@ -2365,6 +2376,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (!timestamps.add(alarmTime.getTimeInMillis())) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
                 t_updateAlarmTime_brokenLoop = true;
+                t_updateAlarmTime_runningLoop = false;
                 return null;
             }
 
@@ -2376,14 +2388,15 @@ public class AlarmNotifications extends BroadcastReceiver
             eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
+        t_updateAlarmTime_runningLoop = false;
         return eventTime;
     }
 
     protected static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
-            Log.e(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! returning null");
-            return null;
+            Log.w(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! using EVERYDAY instead..");
+            repeatingDays = AlarmClockItem.everyday();
         }
 
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
@@ -2460,9 +2473,10 @@ public class AlarmNotifications extends BroadcastReceiver
     @Nullable
     protected static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
+        t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
-            Log.e(TAG, "updateAlarmTime_clockTime: empty repeatingDays! returning null");
-            return null;
+            Log.w(TAG, "updateAlarmTime_clockTime: empty repeatingDays! using EVERYDAY instead..");
+            repeatingDays = AlarmClockItem.everyday();
         }
 
         TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
@@ -2486,6 +2500,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (!timestamps.add(alarmTime.getTimeInMillis())) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
                 t_updateAlarmTime_brokenLoop = true;
+                t_updateAlarmTime_runningLoop = false;
                 return null;
             }
 
@@ -2493,6 +2508,7 @@ public class AlarmNotifications extends BroadcastReceiver
             eventTime.add(Calendar.DAY_OF_YEAR, 1);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
+        t_updateAlarmTime_runningLoop = false;
         return eventTime;
     }
 
@@ -2552,4 +2568,5 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     protected static boolean t_updateAlarmTime_brokenLoop = false;   // for testing; set true by updateAlarmTime_ methods if the same timestamp is encountered twice (breaking the loop)
+    protected static boolean t_updateAlarmTime_runningLoop = false;  // for testing; set true/false by updateAlarmTime_ methods
 }
