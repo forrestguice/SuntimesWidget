@@ -55,6 +55,7 @@ public class AlarmAddon
     public static final String KEY_EVENT_INFO_PROVIDER = "EventInfoProvider";
 
     public static final String ACTION_SUNTIMES_DISMISS_CHALLENGE = "suntimes.action.DISMISS_CHALLENGE";
+    public static final String ACTION_SUNTIMES_DISMISS_CHALLENGE_CONFIG = "suntimes.action.DISMISS_CHALLENGE_CONFIG";
     public static final String KEY_DISMISS_CHALLENGE_TITLE = "SuntimesDismissChallengeTitle";
     public static final String KEY_DISMISS_CHALLENGE_ID = "SuntimesDismissChallengeID";
 
@@ -73,10 +74,16 @@ public class AlarmAddon
     /**
      * queryAlarmDismissChallenges
      */
-    public static List<DismissChallengeInfo> queryAlarmDismissChallenges(@NonNull Context context, @Nullable Long searchForID)
+    public static List<DismissChallengeInfo> queryAlarmDismissChallenges(@NonNull Context context, @Nullable Long searchForID) {
+        return queryAlarmDismissChallenges(context, ACTION_SUNTIMES_DISMISS_CHALLENGE, searchForID);
+    }
+    public static List<DismissChallengeInfo> queryAlarmDismissChallengeConfig(@NonNull Context context, @Nullable Long searchForID) {
+        return queryAlarmDismissChallenges(context, ACTION_SUNTIMES_DISMISS_CHALLENGE_CONFIG, searchForID);
+    }
+    public static List<DismissChallengeInfo> queryAlarmDismissChallenges(@NonNull Context context, @NonNull String action, @Nullable Long searchForID)
     {
         Intent intent = new Intent();
-        intent.setAction(ACTION_SUNTIMES_DISMISS_CHALLENGE);
+        intent.setAction(action);
         intent.addCategory(CATEGORY_SUNTIMES_ADDON);
 
         PackageManager packageManager = context.getPackageManager();
@@ -85,7 +92,7 @@ public class AlarmAddon
         for (ResolveInfo resolveInfo : packageInfo)
         {
             IntentFilter filter = resolveInfo.filter;
-            if (filter != null && filter.hasAction(ACTION_SUNTIMES_DISMISS_CHALLENGE) && filter.hasCategory(CATEGORY_SUNTIMES_ADDON))
+            if (filter != null && filter.hasAction(action) && filter.hasCategory(CATEGORY_SUNTIMES_ADDON))
             {
                 try {
                     PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);

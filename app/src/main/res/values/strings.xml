@@ -880,6 +880,7 @@
     <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
     <string name="configAction_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLocation">Set Location</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmRepeat">Set Repeating</string>         <!-- button (contentDescription) -->
