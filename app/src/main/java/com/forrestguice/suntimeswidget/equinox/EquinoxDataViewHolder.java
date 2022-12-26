@@ -77,7 +77,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
             if (event != null)
             {
                 Calendar now = Calendar.getInstance();
-                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, event, WidgetSettings.loadShowTimeDatePref(context, 0), WidgetSettings.loadShowSecondsPref(context, 0));
+                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, event, WidgetSettings.loadShowTimeDatePref(context, 0), options.showSeconds);
                 text_datetime.setText(timeText.toString());
                 text_label.setText(data.timeMode().getLongDisplayString());
                 updateNote(context, now, data, WidgetSettings.loadShowWeeksPref(context, 0), WidgetSettings.loadShowHoursPref(context, 0), options);

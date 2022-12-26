@@ -113,6 +113,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_equinox1, parent, false);
         initLocale(context);
         options.init(context);
+        options.showSeconds = true;
 
         empty = (TextView)v.findViewById(R.id.txt_empty);
         text_title = (TextView)v.findViewById(R.id.text_title1);

@@ -36,6 +36,7 @@ public class EquinoxViewOptions
     public int highlightPosition = -1;
 
     public WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
+    public boolean showSeconds = false;
 
     public int titleColor, noteColor, disabledColor, pressedColor;
     public Integer[] seasonColors = new Integer[4];
