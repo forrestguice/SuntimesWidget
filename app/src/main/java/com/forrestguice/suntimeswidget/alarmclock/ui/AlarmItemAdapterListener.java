@@ -35,5 +35,6 @@ public interface AlarmItemAdapterListener
     void onRequestOffset(AlarmClockItem forItem);
     void onRequestRepetition(AlarmClockItem forItem);
     void onRequestAction(AlarmClockItem forItem, int actionNum);
+    void onRequestDismissChallenge(AlarmClockItem forItem);
     void onRequestDialog(AlarmClockItem forItem);
 }

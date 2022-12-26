@@ -848,6 +848,12 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                         }
                         return true;
 
+                    case R.id.setAlarmDismissChallenge:
+                        if (adapterListener != null) {
+                            adapterListener.onRequestDismissChallenge(item);
+                        }
+                        return true;
+
                     case R.id.setAlarmLabel:
                         if (adapterListener != null) {
                             adapterListener.onRequestLabel(item);

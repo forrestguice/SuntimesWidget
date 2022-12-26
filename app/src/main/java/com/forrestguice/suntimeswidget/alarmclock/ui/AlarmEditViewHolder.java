@@ -106,6 +106,9 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public View card_backdrop;
 
+    public View chip_dismissChallenge;
+    public TextView text_dismissChallenge;
+
     public int res_icAlarm, res_icNotification, res_icNotification1, res_icNotification2;
     public int res_icSoundOn, res_icSoundOff;
     public int res_colorEnabled;
@@ -162,6 +165,9 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         tray_beforeAlert = parent.findViewById(R.id.tray_beforeAlert);
 
+        chip_dismissChallenge = parent.findViewById(R.id.chip_dismiss_challenge);
+        text_dismissChallenge = (TextView) parent.findViewById(R.id.text_dismiss_challenge);
+
         initTooltips();
         themeHolder(context);
     }
@@ -178,6 +184,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         TooltipCompat.setTooltipText(chip_action0, chip_action0.getContentDescription());
         TooltipCompat.setTooltipText(chip_action1, chip_action1.getContentDescription());
         TooltipCompat.setTooltipText(chip_action2, chip_action2.getContentDescription());
+        TooltipCompat.setTooltipText(chip_dismissChallenge, chip_dismissChallenge.getContentDescription());
     }
 
     @SuppressLint("ResourceType")
@@ -275,6 +282,10 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_action0.setText(displayAction(context, item, 0));
             text_action1.setText(displayAction(context, item, 1));
 
+            AlarmSettings.DismissChallenge challenge = item.getDismissChallenge(context, true);
+            text_dismissChallenge.setText((challenge == AlarmSettings.DismissChallenge.NONE) ? context.getString(R.string.alarmDismiss_none_long) : challenge.getDisplayString());
+            text_dismissChallenge.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+
             long defaultReminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
             tray_beforeAlert.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM && (defaultReminderWithin > 0)) ? View.VISIBLE : View.GONE);
 
@@ -325,6 +336,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_action1.setText("");
             check_reminder.setChecked(false);
             text_action2.setText("");
+            text_dismissChallenge.setText("");
         }
     }
 
@@ -348,6 +360,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         check_reminder.setOnClickListener(null);
         check_reminder.setOnCheckedChangeListener(null);
         chip_action2.setOnClickListener(null);
+        chip_dismissChallenge.setOnClickListener(null);
     }
 
     public static CharSequence displayAlarmLabel(Context context, AlarmClockItem item)

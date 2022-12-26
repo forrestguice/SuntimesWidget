@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -72,7 +73,8 @@ public class AlarmClockItem implements Parcelable
     public String actionID3 = null;
 
     protected HashMap<String, Long> alarmFlags = null;
-    public static final String FLAG_REMINDER_WITHIN = "reminderMillis";              // milliseconds
+    public static final String FLAG_REMINDER_WITHIN = "reminder";               // milliseconds
+    public static final String FLAG_DISMISS_CHALLENGE = "dismissChallenge";    // DismissChallenge enum ordinal (0 disabled)
     public static final String FLAG_SNOOZE = "snoozeMillis";                         // milliseconds
     public static final String FLAG_SNOOZE_LIMIT = "snoozeLimit";                    // 0; unlimited
     public static final String FLAG_SNOOZE_COUNT = "snoozeCount";                    // [0, limit)
@@ -611,6 +613,39 @@ public class AlarmClockItem implements Parcelable
                 repeatingDays.addAll(Arrays.asList(repeatingDaysArray));
             }
         }
+    }
+
+    public boolean hasDismissChallenge(Context context) {
+        return (getDismissChallenge(context, false) != AlarmSettings.DismissChallenge.NONE);
+    }
+    public AlarmSettings.DismissChallenge getDismissChallenge(Context context) {
+        return getDismissChallenge(context, false);
+    }
+    public AlarmSettings.DismissChallenge getDismissChallenge(Context context, boolean queryDisplayStrings)
+    {
+        AlarmSettings.DismissChallenge challenge = AlarmSettings.loadDismissChallengePref(context);
+        if (hasFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE))
+        {
+            long value = getFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE, challenge.getID());
+            challenge = AlarmSettings.DismissChallenge.valueOf((int)value, AlarmSettings.DismissChallenge.ADDON);
+
+            if (challenge == AlarmSettings.DismissChallenge.ADDON)
+            {
+                AlarmSettings.DismissChallenge.ADDON.setID(value);   // temporary assignments; used to pass the ID and displayString to a previous point in the call stack (UI thread only! not thread safe..)
+                if (queryDisplayStrings)
+                {
+                    List<AlarmAddon.DismissChallengeInfo> info = AlarmAddon.queryAlarmDismissChallenges(context, value);
+                    if (info != null && info.size() > 0)
+                    {
+                        AlarmAddon.DismissChallengeInfo addonInfo = info.get(0);
+                        if (addonInfo != null) {
+                            AlarmSettings.DismissChallenge.ADDON.setDisplayString(addonInfo.getTitle());
+                        }
+                    }
+                }
+            }
+        }
+        return challenge;
     }
 
     /**

@@ -131,6 +131,11 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SORT_SHOW_OFFSET = "app_alarms_sort_show_offset";
     public static final boolean PREF_DEF_ALARM_SORT_SHOW_OFFSET = false;
 
+    public static final String PREF_KEY_ALARM_DISMISS_CHALLENGE = "app_alarms_dismiss_challenge";
+    public static final DismissChallenge PREF_DEF_ALARM_DISMISS_CHALLENGE = DismissChallenge.NONE;
+
+
+
     public static int loadPrefAlarmSort(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -646,6 +651,80 @@ public class AlarmSettings
     }
     public static long timeOfLastBoot() {
         return System.currentTimeMillis() - SystemClock.elapsedRealtime();
+    }
+    
+    /**
+     * DismissChallenge
+     */
+    public static enum DismissChallenge
+    {
+        NONE("None"),
+        MATH("Math Problem"),
+        ADDON("Addon");
+
+        private DismissChallenge(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        private String displayString;
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+        public void setDisplayString(String value)
+        {
+            displayString = value;
+        }
+        public static void initDisplayStrings(Context context)
+        {
+            NONE.setDisplayString(context.getString(R.string.alarmDismiss_none));
+            MATH.setDisplayString(context.getString(R.string.alarmDismiss_math));
+        }
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public static DismissChallenge valueOf(int ordinal, DismissChallenge defaultValue)
+        {
+            DismissChallenge[] values = values();
+            if (ordinal >= 0 && ordinal < values.length) {
+                return values[ordinal];
+            } else return defaultValue;
+        }
+        public static DismissChallenge valueOf(String name, DismissChallenge defaultValue)
+        {
+            DismissChallenge retValue;
+            try {
+                retValue = DismissChallenge.valueOf(name);
+            } catch (IllegalArgumentException e) {
+                retValue = defaultValue;
+            }
+            return retValue;
+        }
+
+        public void setID(long id) {
+            this.id = id;
+        }
+        public long getID() {
+            return id;
+        }
+        protected long id = ordinal();
+    }
+
+    public static DismissChallenge loadDismissChallengePref(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return DismissChallenge.valueOf(prefs.getString(PREF_KEY_ALARM_DISMISS_CHALLENGE, PREF_DEF_ALARM_DISMISS_CHALLENGE.name()), PREF_DEF_ALARM_DISMISS_CHALLENGE);
+    }
+
+    /**
+     * initDisplayStrings
+     * @param context
+     */
+    public static void initDisplayStrings(Context context) {
+        DismissChallenge.initDisplayStrings(context);
     }
 
     public static boolean loadPrefShowLauncher(Context context) {
