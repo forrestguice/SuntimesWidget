@@ -12,6 +12,8 @@
     <drawable name="card_alarmitem_snoozing_ref">@drawable/card_alarmitem_snoozing_light</drawable>
     <drawable name="card_alarmitem_timeout_ref">@drawable/card_alarmitem_timeout_light</drawable>   <!-- TODO -->
     <drawable name="card_alarmitem_controls_ref">@drawable/card_alarmitem_controls_light</drawable>
+    <drawable name="card_alarmitem_backdrop_ref">@drawable/card_alarmitem_backdrop_light</drawable>
+
 
     <drawable name="selectable_item_ref">@drawable/selectable_item_light</drawable>
     <drawable name="btn_txt_ref">@drawable/btn_txt_light</drawable>

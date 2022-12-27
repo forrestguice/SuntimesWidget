@@ -24,10 +24,13 @@
         android:layout_width="match_parent" android:layout_height="match_parent" android:animateLayoutChanges="true"
         android:layout_marginBottom="3dp" android:layout_marginTop="3dp">
 
+        <FrameLayout android:background="?attr/alarmCardBackdrop"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp" android:layout_marginRight="6dp">
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/layout_alarmcard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp" android:layout_marginRight="6dp"
             android:paddingTop="4dp" android:paddingBottom="8dp"
             android:background="@drawable/card_alarmitem_enabled_dark0"
             android:orientation="horizontal" android:descendantFocusability="blocksDescendants">
@@ -200,7 +203,7 @@
             </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
-
+        </FrameLayout>
 
         <LinearLayout android:id="@+id/layout_alarmcard_tray" android:orientation="vertical"
             android:visibility="visible" android:animateLayoutChanges="true"

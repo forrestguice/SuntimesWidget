@@ -33,6 +33,7 @@
         <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_ref</item>
         <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_ref</item>
         <item name="alarmCardControls">@drawable/card_alarmitem_controls_ref</item>
+        <item name="alarmCardBackdrop">@drawable/card_alarmitem_backdrop_ref</item>
         <item name="gridItemSelected">@color/grid_selected</item>
         <item name="selectableItemCard">@drawable/selectable_item_ref</item>
 
@@ -234,6 +235,7 @@
         <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_light0</item>
         <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_light</item>    <!-- TODO -->
         <item name="alarmCardControls">@drawable/card_alarmitem_controls_light</item>
+        <item name="alarmCardBackdrop">@drawable/card_alarmitem_backdrop_light</item>
         <item name="gridItemSelected">@color/grid_selected_light</item>
         <item name="selectableItemCard">@drawable/selectable_item_light</item>
 
@@ -439,6 +441,7 @@
         <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_dark1</item>
         <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_dark</item>
         <item name="alarmCardControls">@drawable/card_alarmitem_controls_dark</item>
+        <item name="alarmCardBackdrop">@drawable/card_alarmitem_backdrop_dark</item>
         <item name="gridItemSelected">@color/grid_selected_dark</item>
         <item name="selectableItemCard">@drawable/selectable_item_dark</item>
 

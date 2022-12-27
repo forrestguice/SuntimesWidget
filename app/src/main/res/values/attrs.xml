@@ -27,6 +27,7 @@
     <attr name="alarmCardSnoozing" format="reference" />
     <attr name="alarmCardTimeout" format="reference" />
     <attr name="alarmCardControls" format="reference" />
+    <attr name="alarmCardBackdrop" format="reference" />
     <attr name="gridItemSelected" format="reference" />
     <attr name="selectableItemCard" format="reference" />
 

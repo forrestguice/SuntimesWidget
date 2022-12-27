@@ -3,10 +3,12 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/alarmcard_corners_snoozing" />
-            <gradient
-                android:startColor="@color/alarm_snoozing_bg0_dark"
-                android:endColor="@color/alarm_snoozing_bg1_dark"
-                android:angle="-90" />
+            <gradient android:type="linear" android:angle="315"
+                android:startColor="@color/alarm_snoozing_bg1_dark"
+                android:centerColor="@color/alarm_snoozing_bg0_dark"
+                android:endColor="@color/alarm_snoozing_bg0_dark"
+                android:centerY="0.20"
+                />
         </shape>
     </item>
 </layer-list>
