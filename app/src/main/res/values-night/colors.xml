@@ -83,4 +83,12 @@
     <color name="table_fall_contrast">@color/table_fall_contrast_dark</color>
     <color name="table_winter_contrast">@color/table_winter_contrast_dark</color>
 
+    <color name="chip_bg_disabled_contrast">@color/chip_bg_disabled_contrast_dark</color>
+    <color name="chip_bg_disabled_stroke_contrast">@color/chip_bg_disabled_stroke_contrast_dark</color>
+    <color name="chip_bg_enabled_contrast">@color/chip_bg_enabled_contrast_dark</color>
+    <color name="chip_bg_enabled_stroke_contrast">@color/chip_bg_enabled_stroke_contrast_dark</color>
+    <color name="chip_bg_pressed_contrast">@color/chip_bg_pressed_contrast_dark</color>
+    <color name="chip_bg_pressed_stroke_contrast">@color/chip_bg_pressed_stroke_contrast_dark</color>
+    <color name="chip_tray_bg_contrast">@color/chip_tray_bg_contrast_dark</color>
+
 </resources>

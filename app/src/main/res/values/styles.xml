@@ -642,6 +642,8 @@
         <item name="table_summerColor">@color/table_summmer_contrast</item>
         <item name="table_fallColor">@color/table_fall_contrast</item>
         <item name="table_winterColor">@color/table_winter_contrast</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_contrast</item>
+        <item name="chipBackground">@drawable/chip_contrast</item>
 
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>

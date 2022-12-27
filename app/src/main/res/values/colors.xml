@@ -100,6 +100,14 @@
     <color name="table_fall_contrast">@color/table_fall_contrast_light</color>
     <color name="table_winter_contrast">@color/table_winter_contrast_light</color>
 
+    <color name="chip_bg_disabled_contrast">@color/chip_bg_disabled_contrast_light</color>
+    <color name="chip_bg_disabled_stroke_contrast">@color/chip_bg_disabled_stroke_contrast_light</color>
+    <color name="chip_bg_enabled_contrast">@color/chip_bg_enabled_contrast_light</color>
+    <color name="chip_bg_enabled_stroke_contrast">@color/chip_bg_enabled_stroke_contrast_light</color>
+    <color name="chip_bg_pressed_contrast">@color/chip_bg_pressed_contrast_light</color>
+    <color name="chip_bg_pressed_stroke_contrast">@color/chip_bg_pressed_stroke_contrast_light</color>
+    <color name="chip_tray_bg_contrast">@color/chip_tray_bg_contrast_light</color>
+
     <!-- general -->
 
     <color name="primaryColor_dark">@color/grey_900</color>
@@ -166,6 +174,13 @@
     <color name="dialog_bg_contrast_dark">@color/grey_999</color>
     <color name="dialog_bg_alt_contrast_dark">@color/grey_900</color>
     <color name="card_bg_contrast_dark">@color/grey_900</color>
+    <color name="chip_bg_disabled_contrast_dark">@color/grey_500</color>
+    <color name="chip_bg_disabled_stroke_contrast_dark">@color/grey_500</color>
+    <color name="chip_bg_enabled_contrast_dark">@color/grey_900</color>
+    <color name="chip_bg_enabled_stroke_contrast_dark">@color/grey_900</color>
+    <color name="chip_bg_pressed_contrast_dark">@color/text_accent_dark</color>
+    <color name="chip_bg_pressed_stroke_contrast_dark">@color/text_accent_dark</color>
+    <color name="chip_tray_bg_contrast_dark">@color/grey_800</color>
     <color name="table_rising_contrast_dark">@android:color/white</color>
     <color name="table_setting_contrast_dark">@color/grey_300</color>
     <color name="table_noon_contrast_dark">@color/grey_300</color>
@@ -182,6 +197,13 @@
     <color name="dialog_bg_contrast_light">@color/grey_50</color>
     <color name="dialog_bg_alt_contrast_light">@color/grey_300</color>
     <color name="card_bg_contrast_light">@android:color/white</color>
+    <color name="chip_bg_disabled_contrast_light">@color/grey_500</color>
+    <color name="chip_bg_disabled_stroke_contrast_light">@color/grey_500</color>
+    <color name="chip_bg_enabled_contrast_light">@color/grey_50</color>
+    <color name="chip_bg_enabled_stroke_contrast_light">@color/grey_600</color>
+    <color name="chip_bg_pressed_contrast_light">@color/text_accent_light</color>
+    <color name="chip_bg_pressed_stroke_contrast_light">@color/text_accent_light</color>
+    <color name="chip_tray_bg_contrast_light">@color/grey_200</color>
     <color name="table_rising_contrast_light">@color/grey_900</color>
     <color name="table_setting_contrast_light">@color/grey_800</color>
     <color name="table_noon_contrast_light">@color/grey_800</color>

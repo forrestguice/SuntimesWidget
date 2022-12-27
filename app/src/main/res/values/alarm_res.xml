@@ -20,7 +20,7 @@
     <dimen name="alarmcard_corners_controls">8dp</dimen>
     <dimen name="alarmcard_corners_pressed">8dp</dimen>
     <dimen name="alarmcard_corners_enabled">8dp</dimen>
-    <dimen name="alarmcard_corners_disabled">0dp</dimen>
+    <dimen name="alarmcard_corners_disabled">1dp</dimen>
     <dimen name="alarmcard_corners_sounding">8dp</dimen>
     <dimen name="alarmcard_corners_snoozing">8dp</dimen>
 
