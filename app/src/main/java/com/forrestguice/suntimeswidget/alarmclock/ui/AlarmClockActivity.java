@@ -209,6 +209,7 @@ public class AlarmClockActivity extends AppCompatActivity
     @Override
     public void onDestroy()
     {
+        unregisterReceiver(updateBroadcastReceiver);
         super.onDestroy();
     }
 
