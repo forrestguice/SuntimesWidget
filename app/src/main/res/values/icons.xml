@@ -43,6 +43,8 @@
     <drawable name="ic_action_alarms_ref">@drawable/ic_action_alarms_light</drawable>
     <drawable name="ic_calendar_ref">@drawable/ic_calendar_light</drawable>
     <drawable name="ic_action_notification_ref">@drawable/ic_action_notification_light</drawable>
+    <drawable name="ic_action_notification1_ref">@drawable/ic_action_notification1_light</drawable>
+    <drawable name="ic_action_notification2_ref">@drawable/ic_action_notification2_light</drawable>
     <drawable name="ic_action_vibration_ref">@drawable/ic_action_vibration_light</drawable>
     <drawable name="ic_action_soundenabled_ref">@drawable/ic_action_soundenabled_light</drawable>
     <drawable name="ic_action_sounddisabled_ref">@drawable/ic_action_sounddisabled_light</drawable>

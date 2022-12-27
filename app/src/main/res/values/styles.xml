@@ -112,6 +112,8 @@
         <item name="icActionAlarm">@drawable/ic_action_alarms_ref</item>
         <item name="icActionCalendar">@drawable/ic_calendar_ref</item>
         <item name="icActionNotification">@drawable/ic_action_notification_ref</item>
+        <item name="icActionNotification1">@drawable/ic_action_notification1_ref</item>
+        <item name="icActionNotification2">@drawable/ic_action_notification2_ref</item>
         <item name="icActionVibrationEnabled">@drawable/ic_action_vibration_ref</item>
         <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled_ref</item>
         <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled_ref</item>
