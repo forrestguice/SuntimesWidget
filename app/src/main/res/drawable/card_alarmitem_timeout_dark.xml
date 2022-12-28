@@ -3,9 +3,9 @@
     android:visible="false" android:oneshot="false">
 
     <item android:duration="@integer/anim_alarmitem_timeout1_duration"
-        android:drawable="@drawable/card_alarmitem_sounding_dark1_3"/>
+        android:drawable="@drawable/card_alarmitem_timeout_dark1_2"/>
 
     <item android:duration="@integer/anim_alarmitem_timeout1_duration"
-        android:drawable="@drawable/card_alarmitem_sounding_dark1_8"/>
+        android:drawable="@drawable/card_alarmitem_timeout_dark1_1"/>
 
 </animation-list>
