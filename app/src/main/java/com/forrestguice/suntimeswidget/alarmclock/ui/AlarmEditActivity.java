@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,12 +20,10 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
@@ -34,7 +32,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -74,7 +71,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -390,21 +386,27 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (optionsItem != null)
         {
             SubMenu optionsMenu = optionsItem.getSubMenu();
-            if (optionsMenu != null) {
+            if (optionsMenu != null)
+            {
                 inflater.inflate(R.menu.alarmcontext2, optionsMenu);
-
                 AlarmClockItem item = editor.getItem();
+                boolean isAlarm = (item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+
+                MenuItem item_menuDismissChallenge = optionsMenu.findItem(R.id.menuAlarmDismissChallenge);
+                if (item_menuDismissChallenge != null) {
+                    item_menuDismissChallenge.setVisible(isAlarm);
+                }
                 MenuItem item_setDismissChallenge = optionsMenu.findItem(R.id.setAlarmDismissChallenge);
                 if (item_setDismissChallenge != null) {
-                    item_setDismissChallenge.setVisible(item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+                    item_setDismissChallenge.setVisible(isAlarm);
                 }
                 MenuItem item_configDismissChallenge = optionsMenu.findItem(R.id.configAlarmDismissChallenge);
                 if (item_configDismissChallenge != null) {
-                    item_configDismissChallenge.setVisible(item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+                    item_configDismissChallenge.setVisible(isAlarm);
                 }
                 MenuItem item_testDismissChallenge = optionsMenu.findItem(R.id.testAlarmDismissChallenge);
                 if (item_testDismissChallenge != null) {
-                    item_testDismissChallenge.setVisible(item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+                    item_testDismissChallenge.setVisible(isAlarm);
                 }
             }
         }
@@ -1163,7 +1165,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (actionBar != null) {
             actionBar.setTitle(forItem != null ? forItem.type.getDisplayString() : "");
         }
-
+        invalidateOptionsMenu();
     }
 
     @Override
