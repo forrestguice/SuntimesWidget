@@ -1404,7 +1404,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            final WidgetSettings.ActionMode[] actionModes = WidgetSettings.ActionMode.values();
+            final WidgetSettings.ActionMode[] actionModes = supportedActionModes();
             WidgetSettings.ActionMode actionMode = actionModes[parent.getSelectedItemPosition()];
 
             View launchActionView = findViewById(R.id.applayout_action_launch);
@@ -1699,7 +1699,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         checkbox_useAltitude.setChecked(useAltitude);
 
         // load: locationFromApp
-        boolean locationFromApp = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
+        boolean locationFromApp = WidgetSettings.loadLocationFromAppPref(context, appWidgetId, getDefaultLocationFromApp());
         checkbox_locationFromApp.setChecked(locationFromApp);
 
         // load: tzFromApp
@@ -1715,6 +1715,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // load: time format
         loadTimeFormatMode(context);
+    }
+
+    public boolean getDefaultLocationFromApp() {
+        return WidgetSettings.PREF_DEF_LOCATION_FROMAPP;
     }
 
     /**
@@ -1971,6 +1975,22 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void hideAppearanceSettings()
+    {
+        View settings = findViewById(R.id.appwidget_appearance_layout);
+        if (settings != null) {
+            settings.setVisibility(View.GONE);
+        }
+    }
+
+    protected void hideActionSettings()
+    {
+        View settings = findViewById(R.id.appwidget_action_layout);
+        if (settings != null) {
+            settings.setVisibility(View.GONE);
+        }
+    }
+
     protected void showDataSource(boolean showDataSourceUI)
     {
         View dataSourceLayout = findViewById(R.id.appwidget_general_calculator_layout);
@@ -2064,6 +2084,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (checkbox_showLabels != null)
         {
             checkbox_showLabels.setVisibility((showOption) ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    /**
+     * @param showOption true; show title option, false hide option
+     */
+    protected void showOptionTitle(boolean showOption) {
+        if (checkbox_showTitle != null) {
+            checkbox_showTitle.setVisibility((showOption) ? View.VISIBLE : View.GONE);
+        }
+        View titleLayout = findViewById(R.id.appwidget_appearance_titleText_layout);
+        if (titleLayout != null) {
+            titleLayout.setVisibility((showOption) ? View.VISIBLE : View.GONE);
         }
     }
 
