@@ -817,7 +817,7 @@ public class AlarmClockActivity extends AppCompatActivity
     }
     private long showAlarmEditActivity_last = (SystemClock.elapsedRealtime() - 1000);
 
-    private AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
+    private final AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
     {
         @Override
         public void onFinished(Boolean result, AlarmClockItem item)
@@ -825,7 +825,7 @@ public class AlarmClockActivity extends AppCompatActivity
             if (result)
             {
                 if (item.enabled) {
-                    sendBroadcast( AlarmNotifications.getAlarmIntent(AlarmClockActivity.this, AlarmNotifications.ACTION_SCHEDULE, item.getUri()) );
+                    sendBroadcast( AlarmNotifications.getAlarmIntent(AlarmClockActivity.this, AlarmNotifications.ACTION_RESCHEDULE, item.getUri()) );
                     listAdapter.onAlarmToggled(item, true);
                 }
 
