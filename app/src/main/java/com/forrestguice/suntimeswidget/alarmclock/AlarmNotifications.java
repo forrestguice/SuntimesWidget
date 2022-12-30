@@ -1710,6 +1710,8 @@ public class AlarmNotifications extends BroadcastReceiver
                                         sendBroadcast(getAlarmIntent(context, ACTION_DISMISS, item.getUri()));
                                         return;
                                     }
+                                } else {
+                                    Log.i(TAG, "Scheduling: " + item.rowID + " already has a valid alarmTime! (skipped call to updateAlarmTime)");
                                 }
 
                                 int nextState = AlarmState.STATE_SCHEDULED_DISTANT;
@@ -2178,7 +2180,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
-            Log.w(TAG, "updateAlarmTime_sunEvent: empty repeatingDays! using EVERYDAY instead..");
+            //Log.w(TAG, "updateAlarmTime_sunEvent: empty repeatingDays! using EVERYDAY instead..");
             repeatingDays = AlarmClockItem.everyday();
         }
 
@@ -2231,7 +2233,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
-            Log.w(TAG, "updateAlarmTime_moonEvent: empty repeatingDays! using EVERYDAY instead..");
+            //Log.w(TAG, "updateAlarmTime_moonEvent: empty repeatingDays! using EVERYDAY instead..");
             repeatingDays = AlarmClockItem.everyday();
         }
 
@@ -2381,7 +2383,7 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
-            Log.w(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! using EVERYDAY instead..");
+            //Log.w(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! using EVERYDAY instead..");
             repeatingDays = AlarmClockItem.everyday();
         }
 
@@ -2461,7 +2463,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
-            Log.w(TAG, "updateAlarmTime_clockTime: empty repeatingDays! using EVERYDAY instead..");
+            //Log.w(TAG, "updateAlarmTime_clockTime: empty repeatingDays! using EVERYDAY instead..");
             repeatingDays = AlarmClockItem.everyday();
         }
 
