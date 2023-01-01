@@ -1385,9 +1385,9 @@ public class SuntimesUtils
         return displayString;
     }
 
-    public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesRiseSetDataset dataset) {
+    /*public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesRiseSetDataset dataset) {
         return displayStringForTitlePattern(context, titlePattern, (dataset != null ? dataset.dataActual : null));
-    }
+    }*/
 
     @Nullable
     public static Double getDegreesForEvent(SolarEvents event, SuntimesRiseSetData data)
