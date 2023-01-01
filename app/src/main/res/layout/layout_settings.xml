@@ -43,7 +43,7 @@
 
             <TextView android:id="@+id/activity_title"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="@string/configLabel_title0"
+                android:text="@string/configLabel_title0" android:textSize="?attr/text_size_small"
                 style="?android:attr/listSeparatorTextViewStyle" />
 
             <TextView android:id="@+id/text_appwidgetid"
@@ -124,7 +124,7 @@
                         <CheckBox
                             android:id="@+id/appwidget_timezone_fromapp"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/configLabel_timezone_fromapp" />
+                            android:text="@string/configLabel_timezone_fromapp" android:textSize="?attr/text_size_small" />
 
                     </LinearLayout>
 

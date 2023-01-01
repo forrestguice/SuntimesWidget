@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView style="@style/SunsetTimeTextTitleView"
+    <TextView style="@style/WidgetTitleTextView"
               android:id="@+id/text_title" android:visibility="gone"
               android:layout_width="match_parent" android:layout_height="wrap_content"
               android:gravity="start"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center" android:layout_gravity="center">
 
-            <TextView style="@style/SunsetTimeTextView"
+            <TextView style="@style/WidgetTimeTextView"
                 android:id="@+id/text_date"
                 android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
                 android:paddingTop="0dp" android:paddingBottom="0dp"
@@ -26,7 +26,7 @@
                 tools:text="April 12, 2022" />
 
             <TextView android:id="@+id/text_date_extras" android:visibility="visible"
-                style="@style/SunsetTimeTextSuffixView"
+                style="@style/WidgetSuffixTextView"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_below="@+id/text_date" android:layout_alignRight="@+id/text_date" android:layout_alignEnd="@+id/text_date"
                 android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
