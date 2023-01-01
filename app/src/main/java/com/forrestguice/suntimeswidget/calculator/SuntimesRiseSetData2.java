@@ -157,6 +157,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         this.layoutID = layoutID;
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
+        this.angle = other.angle;
 
         this.dayLengthToday = other.dayLengthToday();
         this.dayLengthOther = other.dayLengthOther();
@@ -242,6 +243,13 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 
         for (int i=0; i<calendar.length; i++)
         {
+            if (angle != null)
+            {
+                sunrise[i] = calculator.getSunriseCalendarForDate(calendar[i], angle);
+                sunset[i] = calculator.getSunsetCalendarForDate(calendar[i], angle);
+                continue;
+            }
+
             switch (timeMode)
             {
                 case GOLD:

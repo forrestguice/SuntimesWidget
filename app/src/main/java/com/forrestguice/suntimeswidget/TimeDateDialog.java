@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,13 +31,14 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -78,10 +79,12 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     {
         picker = (DatePicker) dialogContent.findViewById(R.id.appwidget_date_custom);
 
-        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
+        ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
+        TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(onDialogCancelClick);
 
-        Button btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
+        ImageButton btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
+        TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
         btn_accept.setOnClickListener(onDialogAcceptClick);
 
         Button btn_neutral = (Button) dialogContent.findViewById(R.id.dialog_button_neutral);
@@ -155,13 +158,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     /**
      * @param context a context used to access shared prefs
      */
-    protected void saveSettings(Context context)
-    {
-        WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
-        WidgetSettings.saveDateModePref(context, appWidgetId, dateMode);
-
-        WidgetSettings.DateInfo dateInfo = getDateInfo();
-        WidgetSettings.saveDatePref(context, appWidgetId, dateInfo);
+    protected void saveSettings(Context context) {
+        /* EMPTY */
     }
 
     public WidgetSettings.DateInfo getDateInfo() {
@@ -188,7 +186,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     {
         appWidgetId = value;
     }
-    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     /**
      * A listener that is triggered when the dialog is accepted.

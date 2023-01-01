@@ -70,6 +70,7 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
     {
         super.initWidgetModeLayout(context);
         showOption2x1LayoutMode(true);
+        showOption3x1LayoutMode(true);
     }
 
     @Override

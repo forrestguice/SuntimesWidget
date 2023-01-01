@@ -100,12 +100,12 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     public Calendar eventCalendarUpcoming(Calendar now) {
         Calendar event = eventCalendarThisYear();
         if (now.after(event)) {
-            event = eventCalendarOtherYear();
+            event = eventCalendarNextYear();
         }
         return event;
     }
     public Calendar eventCalendarRecent(Calendar now) {
-        Calendar event = eventCalendarOtherYear();
+        Calendar event = eventCalendarNextYear();
         if (!now.after(event)) {
             event = eventCalendarThisYear();
         }
@@ -116,7 +116,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     {
         long timeDeltaMin = Long.MAX_VALUE;
         Calendar closest = eventCalendarThisYear;
-        Calendar[] events = {eventCalendarThisYear(), eventCalendarOtherYear()};
+        Calendar[] events = {eventCalendarThisYear(), eventCalendarNextYear()};
         for (Calendar event : events)
         {
             if (event != null)
@@ -145,18 +145,24 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
      * result: eventCalendarThisYear
      */
     private Calendar eventCalendarThisYear;
-    public Calendar eventCalendarThisYear()
-    {
+    public Calendar eventCalendarThisYear() {
         return eventCalendarThisYear;
     }
 
     /**
-     * result: eventCalendarOtherYear
+     * result: eventCalendarLastYear
      */
-    private Calendar eventCalendarOtherYear;
-    public Calendar eventCalendarOtherYear()
-    {
-        return eventCalendarOtherYear;
+    private Calendar eventCalendarLastYear;
+    public Calendar eventCalendarLastYear() {
+        return eventCalendarLastYear;
+    }
+
+    /**
+     * result: eventCalendarNextYear
+     */
+    private Calendar eventCalendarNextYear;
+    public Calendar eventCalendarNextYear() {
+        return eventCalendarNextYear;
     }
 
     public void initCalculator()
@@ -183,41 +189,87 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
 
         initTimezone(context);
 
-        todaysCalendar = Calendar.getInstance(timezone);
-        otherCalendar = Calendar.getInstance(timezone);
+        Calendar lastYearCalendar = Calendar.getInstance(timezone);
+        Calendar thisYearCalendar = todaysCalendar = Calendar.getInstance(timezone);
+        Calendar nextYearCalendar = otherCalendar = Calendar.getInstance(timezone);
 
         if (todayIsNotToday())
         {
-            todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            lastYearCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            thisYearCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            nextYearCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
         }
 
-        otherCalendar.add(Calendar.YEAR, 1);
+        lastYearCalendar.add(Calendar.YEAR, -1);
+        nextYearCalendar.add(Calendar.YEAR, 1);
 
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
         switch (timeMode)
         {
+            case CROSS_SPRING:
+                if (localizeHemisphere && location.getLatitudeAsDouble() < 0)
+                {
+                    eventCalendarNextYear = midpoint(calculator.getWinterSolsticeForYear(lastYearCalendar), calculator.getSpringEquinoxForYear(lastYearCalendar));
+                    eventCalendarThisYear = midpoint(calculator.getWinterSolsticeForYear(thisYearCalendar), calculator.getSpringEquinoxForYear(thisYearCalendar));
+                    eventCalendarNextYear = midpoint(calculator.getWinterSolsticeForYear(nextYearCalendar), calculator.getSpringEquinoxForYear(nextYearCalendar));
+
+                } else {
+                    eventCalendarLastYear = null;
+                    eventCalendarThisYear = midpoint(calculator.getWinterSolsticeForYear(lastYearCalendar), calculator.getSpringEquinoxForYear(thisYearCalendar));
+                    eventCalendarNextYear = midpoint(calculator.getWinterSolsticeForYear(thisYearCalendar), calculator.getSpringEquinoxForYear(nextYearCalendar));
+                }
+                break;
+
+            case CROSS_AUTUMN:
+                if (localizeHemisphere && location.getLatitudeAsDouble() < 0)
+                {
+                    eventCalendarNextYear = null;
+                    eventCalendarThisYear = midpoint(calculator.getSummerSolsticeForYear(lastYearCalendar), calculator.getAutumnalEquinoxForYear(thisYearCalendar));
+                    eventCalendarNextYear = midpoint(calculator.getSummerSolsticeForYear(thisYearCalendar), calculator.getAutumnalEquinoxForYear(nextYearCalendar));
+                } else {
+                    eventCalendarLastYear = midpoint(calculator.getSummerSolsticeForYear(lastYearCalendar), calculator.getAutumnalEquinoxForYear(lastYearCalendar));
+                    eventCalendarThisYear = midpoint(calculator.getSummerSolsticeForYear(thisYearCalendar), calculator.getAutumnalEquinoxForYear(thisYearCalendar));
+                    eventCalendarNextYear = midpoint(calculator.getSummerSolsticeForYear(nextYearCalendar), calculator.getAutumnalEquinoxForYear(nextYearCalendar));
+                }
+                break;
+
+            case CROSS_SUMMER:
+                eventCalendarLastYear = midpoint(calculator.getSpringEquinoxForYear(lastYearCalendar), calculator.getSummerSolsticeForYear(lastYearCalendar));
+                eventCalendarThisYear = midpoint(calculator.getSpringEquinoxForYear(thisYearCalendar), calculator.getSummerSolsticeForYear(thisYearCalendar));
+                eventCalendarNextYear = midpoint(calculator.getSpringEquinoxForYear(nextYearCalendar), calculator.getSummerSolsticeForYear(nextYearCalendar));
+                break;
+
+            case CROSS_WINTER:
+                eventCalendarLastYear = midpoint(calculator.getAutumnalEquinoxForYear(lastYearCalendar), calculator.getWinterSolsticeForYear(lastYearCalendar));
+                eventCalendarThisYear = midpoint(calculator.getAutumnalEquinoxForYear(thisYearCalendar), calculator.getWinterSolsticeForYear(thisYearCalendar));
+                eventCalendarNextYear = midpoint(calculator.getAutumnalEquinoxForYear(nextYearCalendar), calculator.getWinterSolsticeForYear(nextYearCalendar));
+                break;
+
             case EQUINOX_SPRING:
-                eventCalendarThisYear = calculator.getSpringEquinoxForYear(todaysCalendar);
-                eventCalendarOtherYear = calculator.getSpringEquinoxForYear(otherCalendar);
+                eventCalendarLastYear = calculator.getSpringEquinoxForYear(lastYearCalendar);
+                eventCalendarThisYear = calculator.getSpringEquinoxForYear(thisYearCalendar);
+                eventCalendarNextYear = calculator.getSpringEquinoxForYear(nextYearCalendar);
                 break;
 
             case SOLSTICE_SUMMER:
-                eventCalendarThisYear = calculator.getSummerSolsticeForYear(todaysCalendar);
-                eventCalendarOtherYear = calculator.getSummerSolsticeForYear(otherCalendar);
+                eventCalendarLastYear = calculator.getSummerSolsticeForYear(lastYearCalendar);
+                eventCalendarThisYear = calculator.getSummerSolsticeForYear(thisYearCalendar);
+                eventCalendarNextYear = calculator.getSummerSolsticeForYear(nextYearCalendar);
                 break;
 
             case EQUINOX_AUTUMNAL:
-                eventCalendarThisYear = calculator.getAutumnalEquinoxForYear(todaysCalendar);
-                eventCalendarOtherYear = calculator.getAutumnalEquinoxForYear(otherCalendar);
+                eventCalendarLastYear = calculator.getAutumnalEquinoxForYear(lastYearCalendar);
+                eventCalendarThisYear = calculator.getAutumnalEquinoxForYear(thisYearCalendar);
+                eventCalendarNextYear = calculator.getAutumnalEquinoxForYear(nextYearCalendar);
                 break;
 
             case SOLSTICE_WINTER:
             default:
-                eventCalendarThisYear = calculator.getWinterSolsticeForYear(todaysCalendar);
-                eventCalendarOtherYear = calculator.getWinterSolsticeForYear(otherCalendar);
+                eventCalendarLastYear = calculator.getWinterSolsticeForYear(lastYearCalendar);
+                eventCalendarThisYear = calculator.getWinterSolsticeForYear(thisYearCalendar);
+                eventCalendarNextYear = calculator.getWinterSolsticeForYear(nextYearCalendar);
                 break;
         }
 
@@ -228,6 +280,13 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     {
         SuntimesCalculatorDescriptor calculatorDesc = calculatorMode();
         return calculatorDesc.hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
+    }
+
+    public long tropicalYearLength()
+    {
+        Calendar c1 = eventCalendarThisYear();
+        Calendar c2 = eventCalendarNextYear();
+        return ((c1 != null && c2 != null) ? (c2.getTimeInMillis() - c1.getTimeInMillis()) : 0);
     }
 }
 

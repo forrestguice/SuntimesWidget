@@ -26,6 +26,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,24 +79,50 @@ public class AlarmClockItemTest
     {
         AlarmClockItem item0 = new AlarmClockItem();
         item0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item0.label = "label";
         item0.rowID = 0;
         item0.hour = 4;
         item0.minute = 2;
         item0.offset = 18 * 60;
+        item0.alarmtime = 10;
         item0.enabled = true;
         item0.repeating = true;
+        item0.setRepeatingDays("2,3,4,5,6");
+        item0.setActionID(0, "action0");
+        item0.setActionID(1, "action1");
+        item0.location = new Location("test0", "1", "2", "3");
         item0.vibrate = true;
+        item0.actionID0 = "action 0";
+        item0.actionID1 = "action 1";
+        item0.actionID2 = "action 2";
+        item0.actionID3 = null;
+        item0.ringtoneName = "testName";
+        item0.ringtoneURI = "testUri";
         item0.modified = true;
         test_alarmClockItem_new(item0);
 
         AlarmClockItem item1 = new AlarmClockItem();
-        item0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item1.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        //item1.setFlag("TEST1", 1);
+        //item1.setFlag("TEST2", 2);
         test_alarmClockItem_new(item1);
 
         AlarmClockItem item2 = new AlarmClockItem();
-        item0.type = null;
+        item2.type = null;
+        item2.repeatingDays = null;
         test_alarmClockItem_new(item2);
     }
+
+    @Test
+    public void test_AlarmClockItem_new1()
+    {
+        for (AlarmClockItem item0 : AlarmDatabaseAdapterTest.createTestItems()) {
+            if (item0 != null) {
+                test_alarmClockItem_new(item0);
+            }
+        }
+    }
+
     public void test_alarmClockItem_new(AlarmClockItem item0)
     {
         AlarmClockItem item1 = new AlarmClockItem(item0);
@@ -109,7 +137,8 @@ public class AlarmClockItemTest
         ContentValues values = item2.asContentValues(true);
         AlarmClockItem item3 = new AlarmClockItem();
         item3.fromContentValues(context, values);
-        test_equals(item2, item3);
+        test_equals(item2, item3, false, true);
+        assertEquals(item2.type != null ? item2.type : AlarmClockItem.AlarmType.ALARM, item3.type);
     }
 
     public static void test_equals(AlarmClockItem item0, AlarmClockItem item) {
@@ -121,6 +150,7 @@ public class AlarmClockItemTest
         assertEquals(item0.rowID, item.rowID);
         assertEquals(item0.enabled, item.enabled);
         assertEquals(item0.label, item.label);
+        assertEquals(item0.note, item.note);
         assertEquals(item0.location, item.location);
         assertEquals(item0.timezone, item.timezone);
 
@@ -136,8 +166,11 @@ public class AlarmClockItemTest
         assertEquals(item0.ringtoneURI, item.ringtoneURI);
         assertEquals(item0.ringtoneName, item.ringtoneName);
         assertEquals(item0.vibrate, item.vibrate);
+        assertEquals(item0.actionID0, item.actionID0);
         assertEquals(item0.actionID1, item.actionID1);
-        assertEquals(item0.actionID1, item.actionID1);
+        assertEquals(item0.actionID2, item.actionID2);
+        assertEquals(item0.actionID3, item.actionID3);
+        assertEquals(item0.getAlarmFlags(), item.getAlarmFlags());
         if (withType) {
             assertEquals(item0.type, item.type);
         }

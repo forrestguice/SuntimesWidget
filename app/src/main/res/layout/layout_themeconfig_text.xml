@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                android:text="@string/configLabel_themeBoldTitle" />
+                android:textSize="?attr/text_size_small" android:text="@string/configLabel_themeBoldTitle" />
 
         </LinearLayout>
 
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:text="@string/configLabel_themeBoldTime" />
+                android:textSize="?attr/text_size_small" android:text="@string/configLabel_themeBoldTime" />
 
         </LinearLayout>
 

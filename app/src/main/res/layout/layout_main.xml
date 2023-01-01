@@ -36,6 +36,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:theme="?attr/toolbarTheme"
+            app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
+            app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
             app:popupTheme="?attr/actionBarPopupTheme"/>
 
         <LinearLayout
@@ -125,9 +127,10 @@
                 android:layout_marginRight="@dimen/activity_margin" android:layout_marginLeft="@dimen/activity_margin"
                 android:layout_marginTop="0dp" android:layout_marginBottom="6dp">
 
-                <com.forrestguice.suntimeswidget.EquinoxView
+                <com.forrestguice.suntimeswidget.equinox.EquinoxCardView
                     android:id="@+id/info_date_solsticequinox"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_margin="0dp" android:padding="0dp"
                     app:minimized="true" />
 
             </LinearLayout>

@@ -57,7 +57,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.AlarmDialog;
@@ -184,8 +184,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         appTheme = AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
 
-        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
-        if (themeName != null) {
+        String themeName = AppSettings.getThemeOverride(this, appTheme);
+        if (themeName != null && WidgetThemes.hasValue(themeName)) {
             Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
             appThemeOverride = WidgetThemes.loadTheme(this, themeName);
         }
@@ -657,7 +657,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         if (eventDialog0 == null)
         {
             final AlarmDialog dialog = new AlarmDialog();
-            dialog.setDialogTitle((type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
+            dialog.setDialogTitle(getString((type == AlarmClockItem.AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
             initEventDialog(dialog, null);
             dialog.setType(type);
             dialog.setChoice(SolarEvents.SUNRISE.name());
@@ -800,6 +800,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
 
         @Override
+        public void onRequestNote(AlarmClockItem forItem) { /*pickNote(forItem)*/ }
+
+        @Override
         public void onRequestRingtone(AlarmClockItem forItem)
         {
             pickRingtone(forItem);
@@ -809,6 +812,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         public void onRequestAction(AlarmClockItem forItem, int actionNum)
         {
             pickAction(forItem, actionNum);
+        }
+
+        @Override
+        public void onRequestDismissChallenge(AlarmClockItem forItem) {
         }
 
         @Override
@@ -922,6 +929,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         public void onRequestLabel(AlarmClockItem forItem) { /* EMPTY */ }
 
         @Override
+        public void onRequestNote(AlarmClockItem forItem) {
+        }
+
+        @Override
         public void onRequestRingtone(AlarmClockItem forItem) {
             // TODO
         }
@@ -957,6 +968,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
 
         @Override
+        public void onRequestDismissChallenge(AlarmClockItem forItem) {
+        }
+
+        @Override
         public void onRequestDialog(AlarmClockItem forItem) { /* EMPTY */ }
     };
 
@@ -967,7 +982,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
         final AlarmDialog dialog = new AlarmDialog();
-        dialog.setDialogTitle((item.type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
+        dialog.setDialogTitle(getString((item.type == AlarmClockItem.AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
         initEventDialog(dialog, item.location);
         dialog.setChoice(item.getEvent());
         dialog.setOnAcceptedListener(onSolarEventChanged);

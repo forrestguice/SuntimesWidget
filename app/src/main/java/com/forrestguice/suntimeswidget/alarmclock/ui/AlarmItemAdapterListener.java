@@ -27,6 +27,7 @@ public interface AlarmItemAdapterListener
 {
     void onTypeChanged(AlarmClockItem forItem);
     void onRequestLabel(AlarmClockItem forItem);
+    void onRequestNote(AlarmClockItem forItem);
     void onRequestRingtone(AlarmClockItem forItem);
     void onRequestSolarEvent(AlarmClockItem forItem);
     void onRequestLocation(AlarmClockItem forItem);
@@ -34,5 +35,6 @@ public interface AlarmItemAdapterListener
     void onRequestOffset(AlarmClockItem forItem);
     void onRequestRepetition(AlarmClockItem forItem);
     void onRequestAction(AlarmClockItem forItem, int actionNum);
+    void onRequestDismissChallenge(AlarmClockItem forItem);
     void onRequestDialog(AlarmClockItem forItem);
 }

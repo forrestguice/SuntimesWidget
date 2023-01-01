@@ -6,6 +6,14 @@
         android:title="@string/configLabel_alarmClock"
         android:key="app_alarms_category">
 
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_alarms_dismiss_challenge"
+            android:title="@string/configLabel_alarms_dismissChallenge"
+            android:dialogTitle="@string/configLabel_alarms_dismissChallenge"
+            android:summary="%s"
+            android:entries="@array/dismissChallenge_display" android:entryValues="@array/dismissChallenge_values"
+            android:defaultValue="@string/def_app_alarms_dismiss_challenge" />
+
         <com.forrestguice.suntimeswidget.settings.EditTextPreference
             android:key="app_alarms_upcomingMillis"
             android:title="@string/configLabel_alarms_upcoming"
@@ -17,6 +25,14 @@
             android:title="@string/configLabel_alarms_snooze"
             android:summary="@string/configLabel_alarms_snooze_summary"
             android:defaultValue="@string/def_app_alarms_snooze" />
+
+        <com.forrestguice.suntimeswidget.settings.IntegerPickerPreference
+            android:key="app_alarms_snoozeLimit"
+            android:title="@string/configLabel_alarms_snoozeLimit"
+            android:summary="@string/configLabel_alarms_snoozeLimit_summary"
+            app:zeroValueText="@string/configLabel_alarms_snoozeLimit_none"
+            app:minValue="0" app:maxValue="5"
+            android:defaultValue="@string/def_app_alarms_snoozeLimit" />
 
         <!--<EditTextPreference
             android:key="app_alarms_silenceafter"
@@ -42,6 +58,19 @@
             android:key="app_alarms_batterytopt" android:persistent="false"
             android:title="@string/configLabel_alarms_optWhiteList"
             android:summary="@string/configLabel_alarms_optWhiteList_unlisted" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/alarmMode_notification1"
+        android:key="app_alarms_category2">
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_notifyDismissMillis"
+            android:title="@string/configLabel_alarms_autoDismissAfter"
+            android:summary="@string/configLabel_alarms_autoDismissAfter_summary"
+            android:defaultValue="@string/def_app_alarms_autodismiss"
+            app:mode="seconds" app:minValue="5" />
 
     </PreferenceCategory>
 

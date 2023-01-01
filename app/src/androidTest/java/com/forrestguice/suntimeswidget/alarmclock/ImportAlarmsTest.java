@@ -205,7 +205,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         values0.remove(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);     // null
         values0.remove(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);      // null
 
-        HashMap<String,String> map0 = AlarmClockItemImportTask.AlarmClockItemJson.toMap(values0);
+        HashMap<String,String> map0 = ExportTask.toMap(values0);
         test_import(new JSONObject(map0).toString(), true);
 
         // remove additional values
@@ -221,7 +221,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         values0.remove(AlarmDatabaseAdapter.KEY_ALARM_DATETIME);
         values0.remove(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED);
 
-        HashMap<String,String> map1 = AlarmClockItemImportTask.AlarmClockItemJson.toMap(values0);
+        HashMap<String,String> map1 = ExportTask.toMap(values0);
         test_import(new JSONObject(map1).toString(), true);
     }
 

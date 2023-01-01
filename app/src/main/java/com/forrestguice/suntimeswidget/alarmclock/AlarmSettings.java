@@ -19,9 +19,14 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.ComponentName;
+import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -32,11 +37,16 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.lang.ref.WeakReference;
 import java.util.TimeZone;
@@ -65,8 +75,14 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SNOOZE = "app_alarms_snoozeMillis";
     public static final int PREF_DEF_ALARM_SNOOZE = 1000 * 60 * 10;  // 10 min
 
+    public static final String PREF_KEY_ALARM_SNOOZE_LIMIT = "app_alarms_snoozeLimit";
+    public static final int PREF_DEF_ALARM_SNOOZE_LIMIT = 0;   // unlimited
+
     public static final String PREF_KEY_ALARM_UPCOMING = "app_alarms_upcomingMillis";
     public static final int PREF_DEF_ALARM_UPCOMING = 1000 * 60 * 60 * 10;  // 10 hours
+
+    public static final String PREF_KEY_ALARM_AUTODISMISS = "app_alarms_notifyDismissMillis";
+    public static final int PREF_DEF_ALARM_AUTODISMISS = 1000 * 30;  // 30 seconds
 
     public static final String PREF_KEY_ALARM_AUTOENABLE = "app_alarms_autoenable";
     public static final boolean PREF_DEF_ALARM_AUTOENABLE = false;
@@ -110,6 +126,17 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SORT = "app_alarms_sort";
     public static final int PREF_DEF_ALARM_SORT = SORT_BY_CREATION;
 
+    public static final String PREF_KEY_ALARM_SORT_ENABLED_FIRST = "app_alarms_sort_enabled_first";
+    public static final boolean PREF_DEF_ALARM_SORT_ENABLED_FIRST = false;
+
+    public static final String PREF_KEY_ALARM_SORT_SHOW_OFFSET = "app_alarms_sort_show_offset";
+    public static final boolean PREF_DEF_ALARM_SORT_SHOW_OFFSET = false;
+
+    public static final String PREF_KEY_ALARM_DISMISS_CHALLENGE = "app_alarms_dismiss_challenge";
+    public static final DismissChallenge PREF_DEF_ALARM_DISMISS_CHALLENGE = DismissChallenge.NONE;
+
+
+
     public static int loadPrefAlarmSort(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -119,6 +146,30 @@ public class AlarmSettings
     {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putInt(PREF_KEY_ALARM_SORT, value);
+        prefs.apply();
+    }
+
+    public static boolean loadPrefAlarmSortEnabledFirst(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_DEF_ALARM_SORT_ENABLED_FIRST);
+    }
+    public static void savePrefAlarmSortEnabledFirst(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_ALARM_SORT_ENABLED_FIRST, value);
+        prefs.apply();
+    }
+
+    public static boolean loadPrefAlarmSortShowOffset(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_SORT_SHOW_OFFSET, PREF_DEF_ALARM_SORT_SHOW_OFFSET);
+    }
+    public static void savePrefAlarmSortShowOffset(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_ALARM_SORT_SHOW_OFFSET, value);
         prefs.apply();
     }
 
@@ -142,6 +193,14 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 11) {
             return prefs.getInt(PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
+    }
+
+    public static long loadPrefAlarmAutoDismiss(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_ALARM_AUTODISMISS, PREF_DEF_ALARM_AUTODISMISS);
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_AUTODISMISS, PREF_DEF_ALARM_AUTODISMISS);
     }
 
     public static boolean loadPrefAlarmAutoEnable(Context context)
@@ -180,12 +239,34 @@ public class AlarmSettings
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_UPCOMING, PREF_DEF_ALARM_UPCOMING);
     }
 
+    public static void savePrefAlarmUpcomingReminder(Context context, long value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        if (Build.VERSION.SDK_INT >= 11) {
+            prefs.putInt(PREF_KEY_ALARM_UPCOMING, (int) value);
+        } else prefs.putString(PREF_KEY_ALARM_UPCOMING, value + "");
+        prefs.apply();
+    }
+
+    public static void savePrefAlarmUpcoming(Context context, int value) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putInt(PREF_KEY_ALARM_UPCOMING, value);
+        prefs.apply();
+    }
+
     public static long loadPrefAlarmSnooze(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
             return prefs.getInt(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE);
+    }
+    public static long loadPrefAlarmSnoozeLimit(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE_LIMIT);
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_SNOOZE_LIMIT, PREF_DEF_ALARM_SNOOZE_LIMIT);
     }
 
     public static boolean loadPrefVibrateDefault(Context context)
@@ -199,7 +280,7 @@ public class AlarmSettings
     {
         switch (type)
         {
-            case NOTIFICATION:
+            case NOTIFICATION: case NOTIFICATION1: case NOTIFICATION2:
             case ALARM:
             default:                    // TODO
                 return new long[] {0, 400, 200, 400, 800};   // 0 immediate start, 400ms buzz, 200ms break, 400ms buzz, 800ms break [repeat]
@@ -345,7 +426,7 @@ public class AlarmSettings
                 key_uri = PREF_KEY_ALARM_RINGTONE_URI_ALARM;
                 key_name = PREF_KEY_ALARM_RINGTONE_NAME_ALARM;
                 break;
-            case NOTIFICATION:
+            case NOTIFICATION: case NOTIFICATION1: case NOTIFICATION2:
             default:
                 uri = getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
                 key_uri = PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION;
@@ -445,6 +526,63 @@ public class AlarmSettings
         return "sony".equalsIgnoreCase(Build.MANUFACTURER);
     }
 
+    public static CharSequence batteryOptimizationMessage(Context context)
+    {
+        int[] colorAttrs = { R.attr.tagColor_warning };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
+        typedArray.recycle();
+
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            if (AlarmSettings.isIgnoringBatteryOptimizations(context)) {
+                return context.getString(R.string.configLabel_alarms_optWhiteList_listed);
+
+            } else {
+                String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
+                return SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning);
+            }
+        } else return "";
+    }
+
+    /**
+     * Recommended; this Intent shows the optimization list (and the user must find and select the app)
+     */
+    @TargetApi(23)
+    public static Intent getRequestIgnoreBatteryOptimizationSettingsIntent(Context context) {
+        return new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+    }
+
+    /**
+     * This Intent goes directly to the app's optimization settings.
+     * Requires permission `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`
+     */
+    @TargetApi(23)
+    public static Intent getRequestIgnoreBatteryOptimizationIntent(Context context) {
+        return new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + context.getPackageName()));
+    }
+
+    public static void openBatteryOptimizationSettings(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                context.startActivity(AlarmSettings.getRequestIgnoreBatteryOptimizationSettingsIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e("AlarmSettings", "Failed to launch battery optimization settings Intent: " + e);
+            }
+        }
+    }
+    public static void requestIgnoreBatteryOptimization(final Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                context.startActivity(AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e("AlarmSettings", "Failed to launch battery optimization request Intent: " + e);
+            }
+        }
+    }
+
     /**
      * BootCompletedInfo
      */
@@ -514,6 +652,162 @@ public class AlarmSettings
     }
     public static long timeOfLastBoot() {
         return System.currentTimeMillis() - SystemClock.elapsedRealtime();
+    }
+    
+    /**
+     * DismissChallenge
+     */
+    public static enum DismissChallenge
+    {
+        NONE("None"),
+        MATH("Math Problem"),
+        ADDON("Addon");
+
+        private DismissChallenge(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        private String displayString;
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+        public void setDisplayString(String value)
+        {
+            displayString = value;
+        }
+        public static void initDisplayStrings(Context context)
+        {
+            NONE.setDisplayString(context.getString(R.string.alarmDismiss_none));
+            MATH.setDisplayString(context.getString(R.string.alarmDismiss_math));
+        }
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public static DismissChallenge valueOf(int ordinal, DismissChallenge defaultValue)
+        {
+            DismissChallenge[] values = values();
+            if (ordinal >= 0 && ordinal < values.length) {
+                return values[ordinal];
+            } else return defaultValue;
+        }
+        public static DismissChallenge valueOf(String name, DismissChallenge defaultValue)
+        {
+            DismissChallenge retValue;
+            try {
+                retValue = DismissChallenge.valueOf(name);
+            } catch (IllegalArgumentException e) {
+                retValue = defaultValue;
+            }
+            return retValue;
+        }
+
+        public void setID(long id) {
+            this.id = id;
+        }
+        public long getID() {
+            return id;
+        }
+        protected long id = ordinal();
+    }
+
+    public static DismissChallenge loadDismissChallengePref(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return DismissChallenge.valueOf(prefs.getString(PREF_KEY_ALARM_DISMISS_CHALLENGE, PREF_DEF_ALARM_DISMISS_CHALLENGE.name()), PREF_DEF_ALARM_DISMISS_CHALLENGE);
+    }
+
+    /**
+     * initDisplayStrings
+     * @param context
+     */
+    public static void initDisplayStrings(Context context) {
+        DismissChallenge.initDisplayStrings(context);
+    }
+
+    public static boolean loadPrefShowLauncher(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, PREF_DEF_ALARM_SHOWLAUNCHER);
+    }
+    public static void savePrefShowLauncher(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, value);
+        prefs.apply();
+        setShowLauncherIcon(context, value);
+    }
+    public static void setShowLauncherIcon(Context context, boolean value)
+    {
+        ComponentName componentName = new ComponentName(context, "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivityLauncher");
+        int state = (value ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
+        PackageManager packageManager = context.getPackageManager();
+        packageManager.setComponentEnabledSetting(componentName, state, PackageManager.DONT_KILL_APP);
+    }
+
+
+    /**
+     * PowerOffAlarmInfo
+     */
+    public static class PowerOffAlarmInfo
+    {
+        public static final String ACTION_SET = "poweroffalarm.action.SET_ALARM";
+        public static final String ACTION_CANCEL = "poweroffalarm.action.CANCEL_ALARM";
+
+        public static final WidgetActions.LaunchType DEF_LAUNCHTYPE = WidgetActions.LaunchType.BROADCAST;
+        public static final String DEF_PACKAGE_POWEROFFALARM = "com.qualcomm.qti.poweroffalarm";
+        public static final String DEF_ACTION_POWEROFFALARM_SET = "org.codeaurora.poweroffalarm.action.SET_ALARM";
+        public static final String DEF_ACTION_POWEROFFALARM_CANCEL = "org.codeaurora.poweroffalarm.action.CANCEL_ALARM";
+        public static final String DEF_PERMISSION_POWEROFFALARM = "org.codeaurora.permission.POWER_OFF_ALARM";
+        public static final String DEF_EXTRA_POWEROFFALARM_TIME = "time";
+
+        public WidgetActions.LaunchType getLaunchType() {
+            return DEF_LAUNCHTYPE;
+        }
+        public String getPackage() {
+            return DEF_PACKAGE_POWEROFFALARM;
+        }
+        public String getSetAction() {
+            return DEF_ACTION_POWEROFFALARM_SET;
+        }
+        public String getCancelAction() {
+            return DEF_ACTION_POWEROFFALARM_CANCEL;
+        }
+        public String getPermission() {
+            return DEF_PERMISSION_POWEROFFALARM;
+        }
+        public String getTimeExtra() {
+            return DEF_EXTRA_POWEROFFALARM_TIME;
+        }
+    }
+
+    public static PowerOffAlarmInfo loadPowerOffAlarmInfo(Context context)
+    {
+        return new PowerOffAlarmInfo();  // TODO
+    }
+
+    public static Intent getPowerOffAlarmIntent(Context context, @Nullable String action, long datetime)
+    {
+        AlarmSettings.PowerOffAlarmInfo info = loadPowerOffAlarmInfo(context);
+        if (action == null) {
+            action = info.getSetAction();
+        }
+        if (action.equals(PowerOffAlarmInfo.ACTION_SET)) {
+            action = info.getSetAction();
+        }
+        if (action.equals(PowerOffAlarmInfo.ACTION_CANCEL)) {
+            action = info.getCancelAction();
+        }
+
+        Intent intent = new Intent(action);
+        intent.setPackage(info.getPackage());
+        intent.putExtra(info.getTimeExtra(), datetime);
+        if (Build.VERSION.SDK_INT >= 16) {
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        }
+        return intent;
     }
 
 }

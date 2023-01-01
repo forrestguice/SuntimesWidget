@@ -54,7 +54,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -926,10 +926,8 @@ public class PlacesListFragment extends Fragment
 
     public boolean importPlaces(Context context)
     {
-        if (context != null)
-        {
-            Intent intent = ExportTask.getOpenFileIntent("text/*");
-            startActivityForResult(intent, IMPORT_REQUEST);
+        if (context != null) {
+            startActivityForResult(BuildPlacesTask.buildPlacesOpenFileIntent(), IMPORT_REQUEST);
             return true;
         }
         return false;

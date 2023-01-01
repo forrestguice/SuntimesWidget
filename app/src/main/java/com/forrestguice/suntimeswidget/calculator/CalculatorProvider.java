@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2020 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -45,11 +45,11 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_TEXT_SIZE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME_OVERRIDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION;
@@ -73,7 +73,9 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_WARNINGS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_SOLARTIMEMODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONEMODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_APOGEE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
@@ -89,10 +91,17 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_RISE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_SET;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_THIRD_DISTANCE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_CROSS_AUTUMN;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_CROSS_SPRING;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_CROSS_SUMMER;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_CROSS_WINTER;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_SPRING;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_TROPICAL_YEAR_LENGTH;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_DATE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_EOT;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ISDAY;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_ACTUAL_RISE;
@@ -387,13 +396,16 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = ((localeMode == AppSettings.LocaleMode.SYSTEM_LOCALE) ? null : AppSettings.loadLocalePref(context));
                             break;
 
+                        case COLUMN_CONFIG_APP_TEXT_SIZE:
+                            row[i] = AppSettings.loadTextSizePref(context);
+                            break;
+
                         case COLUMN_CONFIG_APP_THEME:
                             row[i] = AppSettings.loadThemePref(context);
                             break;
 
                         case COLUMN_CONFIG_APP_THEME_OVERRIDE:
-                            int resID = AppSettings.themePrefToStyleId(context, AppSettings.loadThemePref(context), null);
-                            row[i] = AppSettings.getThemeOverride(context, resID);
+                            row[i] = AppSettings.getThemeOverride(context, AppSettings.loadThemePref(context));
                             break;
 
                         case COLUMN_CONFIG_LOCATION:
@@ -426,6 +438,14 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_CONFIG_TIMEZONE:
                             row[i] = initTimeZone(context, appWidgetID).getID();
+                            break;
+
+                        case COLUMN_CONFIG_TIMEZONEMODE:
+                            row[i] = WidgetSettings.loadTimezoneModePref(context, appWidgetID).name();
+                            break;
+
+                        case COLUMN_CONFIG_SOLARTIMEMODE:
+                            row[i] = WidgetSettings.loadSolarTimeModePref(context, appWidgetID).name();
                             break;
 
                         case COLUMN_CONFIG_APPWIDGETID:
@@ -652,6 +672,10 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_SUNPOS_ISDAY:
                             row[i] = calculator.isDay(datetime);
+                            break;
+
+                        case COLUMN_SUNPOS_EOT:
+                            row[i] = calculator.equationOfTime(datetime);
                             break;
 
                         case COLUMN_SUNPOS_DATE:
@@ -897,6 +921,10 @@ public class CalculatorProvider extends ContentProvider
             Calendar year = Calendar.getInstance(calculator.getTimeZone());
             year.setTimeInMillis(range[0]);
 
+            Calendar year0 = Calendar.getInstance(calculator.getTimeZone());
+            year0.setTimeInMillis(year.getTimeInMillis());
+            year0.add(Calendar.YEAR, -1);
+
             Calendar endYear = Calendar.getInstance(calculator.getTimeZone());
             endYear.setTimeInMillis(range[1]);
             endYear.add(Calendar.YEAR, 1);                   // +1 year (make range[1] inclusive)
@@ -911,7 +939,36 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = year.get(Calendar.YEAR);
                             break;
 
-                        case COLUMN_SEASON_VERNAL:  // TODO: SPRING
+                        case COLUMN_SEASON_TROPICAL_YEAR_LENGTH:
+                            row[i] = calculator.getTropicalYearLength(year);
+                            break;
+
+                        case COLUMN_SEASON_CROSS_SPRING:
+                            if (calculator.getLocation().getLatitudeAsDouble() >= 0) {
+                                row[i] = SuntimesData.midpoint(calculator.getWinterSolsticeForYear(year0), calculator.getSpringEquinoxForYear(year)).getTimeInMillis();
+                            } else {
+                                row[i] = SuntimesData.midpoint(calculator.getWinterSolsticeForYear(year), calculator.getSpringEquinoxForYear(year)).getTimeInMillis();
+                            }
+                            break;
+
+                        case COLUMN_SEASON_CROSS_AUTUMN:
+                            if (calculator.getLocation().getLatitudeAsDouble() >= 0) {
+                                row[i] = SuntimesData.midpoint(calculator.getSummerSolsticeForYear(year), calculator.getAutumnalEquinoxForYear(year)).getTimeInMillis();
+                            } else {
+                                row[i] = SuntimesData.midpoint(calculator.getSummerSolsticeForYear(year0), calculator.getAutumnalEquinoxForYear(year)).getTimeInMillis();
+                            }
+                            break;
+
+                        case COLUMN_SEASON_CROSS_SUMMER:
+                            row[i] = SuntimesData.midpoint(calculator.getSpringEquinoxForYear(year), calculator.getSummerSolsticeForYear(year)).getTimeInMillis();
+                            break;
+
+                        case COLUMN_SEASON_CROSS_WINTER:
+                            row[i] = SuntimesData.midpoint(calculator.getAutumnalEquinoxForYear(year), calculator.getWinterSolsticeForYear(year)).getTimeInMillis();
+                            break;
+
+                        case COLUMN_SEASON_VERNAL:
+                        case COLUMN_SEASON_SPRING:
                             row[i] = calculator.getSpringEquinoxForYear(year).getTimeInMillis();
                             break;
 
@@ -933,6 +990,7 @@ public class CalculatorProvider extends ContentProvider
                 }
                 retValue.addRow(row);
                 year.add(Calendar.YEAR, 1);
+                year0.add(Calendar.YEAR, 1);
             } while (year.before(endYear));
 
         } else Log.w("CalculatorProvider", "querySeasons: sunSource is null!");

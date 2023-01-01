@@ -73,9 +73,12 @@ public class ListPreference extends android.preference.ListPreference
         super.onPrepareDialogBuilder(builder);
     }
 
-    protected ListAdapter createListAdapter(int selectedPos)
-    {
-        return new ListPrefAdapter(getContext(), R.layout.layout_listitem_checkedoneline, getEntries(), selectedPos);
+    protected ListAdapter createListAdapter(int selectedPos) {
+        return new ListPrefAdapter(getContext(), listLayoutResId(), getEntries(), selectedPos);
+    }
+
+    protected int listLayoutResId() {
+        return R.layout.layout_listitem_checkedoneline;
     }
 
     /**
@@ -83,9 +86,9 @@ public class ListPreference extends android.preference.ListPreference
      */
     public static class ListPrefAdapter extends ArrayAdapter<CharSequence>
     {
-        private CharSequence[] summaries;
-        private int layoutID;
-        private int index;
+        protected CharSequence[] summaries;
+        protected int layoutID;
+        protected int index;
 
         public ListPrefAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull CharSequence[] entries, int i)
         {
@@ -122,10 +125,15 @@ public class ListPreference extends android.preference.ListPreference
                 summaryText.setText(getSummary(position));
             }
 
+            updateView(position, row);
             return row;
         }
 
-        private CharSequence getSummary(int i)
+        protected void updateView(int position, View view) {
+            /* EMPTY */
+        }
+
+        protected CharSequence getSummary(int i)
         {
             if (i >= 0 && i < summaries.length)
                 return summaries[i];
