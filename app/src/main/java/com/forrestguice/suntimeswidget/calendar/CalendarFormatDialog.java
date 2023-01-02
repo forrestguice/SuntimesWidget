@@ -138,7 +138,9 @@ public class CalendarFormatDialog extends DialogFragment
         return -1;
     }
 
-    public void updateCustomCalendarFormat(String pattern) {
+    public void updateCustomCalendarFormat(String pattern)
+    {
+        Log.d("DEBUG", "updateCustomCalendarFormat");
         CalendarMode mode = getCalendarMode();
         CalendarFormat.CUSTOM.setPattern(pattern);
         CalendarFormat.CUSTOM.initDisplayString(getActivity(), mode, Calendar.getInstance());
@@ -147,12 +149,16 @@ public class CalendarFormatDialog extends DialogFragment
 
     public void notifyDataSetChanged_calendarFormatAdapter()
     {
-        try {
-            @SuppressWarnings("unchecked")
-            ArrayAdapter<CalendarFormat> adapter = (ArrayAdapter<CalendarFormat>) spinner_calendarFormat.getAdapter();
-            adapter.notifyDataSetChanged();
-        } catch (ClassCastException e) {
-            Log.e(getClass().getSimpleName(), "Failed to update calendar format adapter: " + e);
+        if (spinner_calendarFormat != null)
+        {
+            try {
+                @SuppressWarnings("unchecked")
+                ArrayAdapter<CalendarFormat> adapter = (ArrayAdapter<CalendarFormat>) spinner_calendarFormat.getAdapter();
+                adapter.notifyDataSetChanged();
+                Log.d("DEBUG", "notifyDataSetChanged_calendarFormatAdapter");
+            } catch (ClassCastException e) {
+                Log.e(getClass().getSimpleName(), "Failed to update calendar format adapter: " + e);
+            }
         }
     }
 
@@ -163,14 +169,9 @@ public class CalendarFormatDialog extends DialogFragment
         {
             CalendarFormat item = (CalendarFormat)parent.getItemAtPosition(position);
             text_calendarFormatPattern.setEnabled(item == CalendarFormat.CUSTOM);
-            button_calendarFormatEdit.setVisibility(item == CalendarFormat.CUSTOM ? View.INVISIBLE : View.VISIBLE);
-
-            if (item != CalendarFormat.CUSTOM) {
-                text_calendarFormatPattern.setText(item.getPattern());
-                getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, item.getPattern());
-            } else {
-                getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, text_calendarFormatPattern.getText().toString());
-            }
+            button_calendarFormatEdit.setVisibility(item == CalendarFormat.CUSTOM ? View.GONE : View.VISIBLE);
+            text_calendarFormatPattern.setText(item.getPattern());
+            getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, item.getPattern());
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -205,17 +206,20 @@ public class CalendarFormatDialog extends DialogFragment
         }
     };
 
-    private View.OnClickListener onEditButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onEditButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             setCalendarFormat(CalendarFormat.CUSTOM);
+            String pattern = text_calendarFormatPattern.getText().toString();
+            getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
+            updateCustomCalendarFormat(pattern);
             if (listener != null) {
                 listener.onEditClick(CalendarFormatDialog.this);
             }
         }
     };
 
-    private View.OnClickListener onHelpButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onHelpButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (listener != null) {
