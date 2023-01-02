@@ -72,14 +72,15 @@
         <LinearLayout android:id="@+id/appwidget_general_calendarMode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingRight="16dp" android:paddingLeft="16dp"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding"
             android:weightSum="1" android:visibility="gone">
 
             <TextView android:labelFor="@+id/appwidget_general_calendarMode"
                 android:id="@+id/appwidget_general_calendarMode_label"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_general_calendarMode" />
+                android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_calendarMode" android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_general_calendarMode" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
@@ -97,8 +98,9 @@
         <LinearLayout android:id="@+id/appwidget_general_calendarFormat_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingRight="16dp" android:paddingLeft="16dp"
-            android:weightSum="1" android:visibility="gone" android:animateLayoutChanges="true">
+            android:paddingRight="8dp" android:paddingLeft="16dp"
+            android:paddingEnd="8dp" android:paddingStart="16dp"
+            android:weightSum="1" android:visibility="visible" android:animateLayoutChanges="true">
 
             <fragment android:tag="CalendarFormatDialog"
                 android:name="com.forrestguice.suntimeswidget.calendar.CalendarFormatDialog"
