@@ -102,9 +102,8 @@
             android:paddingEnd="8dp" android:paddingStart="16dp"
             android:weightSum="1" android:visibility="visible" android:animateLayoutChanges="true">
 
-            <fragment android:tag="CalendarFormatDialog"
-                android:name="com.forrestguice.suntimeswidget.calendar.CalendarFormatDialog"
-                android:layout_width="match_parent" android:layout_height="match_parent" />
+            <FrameLayout android:id="@+id/appwidget_general_calendarFormat_fragmentContainer"
+                android:layout_width="match_parent" android:layout_height="wrap_content" />
 
         </LinearLayout>
 

@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -127,6 +128,22 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void initCalendarMode(final Context context)
     {
+        CalendarMode mode = CalendarSettings.loadCalendarModePref(DateWidget0ConfigActivity.this, appWidgetId);
+        String pattern = CalendarSettings.loadCalendarFormatPatternPref(DateWidget0ConfigActivity.this, appWidgetId, mode.name());
+
+        FragmentManager fragments = getSupportFragmentManager();
+        if (fragments != null)
+        {
+            FragmentTransaction transaction = fragments.beginTransaction();
+            CalendarFormatDialog fragment = new CalendarFormatDialog();
+            fragment.setCalendarMode(mode);
+            fragment.setFormatPattern(pattern);
+            fragment.updateCustomCalendarFormat(pattern);
+            fragment.setDialogListener(calendarFormatDialogListener);
+            transaction.replace(R.id.appwidget_general_calendarFormat_fragmentContainer, fragment, "CalendarFormatDialog");
+            transaction.commit();
+        }
+
         spinner_calendarMode = (Spinner) findViewById(R.id.appwidget_general_calendarMode);
         if (spinner_calendarMode != null)
         {
@@ -135,32 +152,26 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
             spinner_calendarMode.setAdapter(adapter);
             spinner_calendarMode.setOnItemSelectedListener(onCalendarModeSelected);
         }
-
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null) {
-            CalendarFormatDialog calendarFormat = (CalendarFormatDialog) fragments.findFragmentByTag("CalendarFormatDialog");
-            if (calendarFormat != null)
-            {
-                calendarFormat.setDialogListener(new CalendarFormatDialog.DialogListener()
-                {
-                    @Override
-                    public void onChanged(CalendarFormatDialog dialog) {}
-
-                    @Override
-                    public void onEditClick(CalendarFormatDialog dialog) {}
-
-                    @Override
-                    public void onHelpClick(CalendarFormatDialog dialog) {
-                        HelpDialog helpDialog = new HelpDialog();
-                        helpDialog.setContent(getString(R.string.help_general_calendarFormatPattern));
-                        helpDialog.setNeutralButtonListener(onCalendarFormatPatternHelpRestoreDefaults, "calendarFormatPattern");
-                        helpDialog.setShowNeutralButton(context.getString(R.string.configAction_restoreDefaults));
-                        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-                    }
-                });
-            }
-        }
     }
+
+    private final CalendarFormatDialog.DialogListener calendarFormatDialogListener = new CalendarFormatDialog.DialogListener()
+    {
+        @Override
+        public void onChanged(CalendarFormatDialog dialog) {}
+
+        @Override
+        public void onEditClick(CalendarFormatDialog dialog) {}
+
+        @Override
+        public void onHelpClick(CalendarFormatDialog dialog)
+        {
+            HelpDialog helpDialog = new HelpDialog();
+            helpDialog.setContent(getString(R.string.help_general_calendarFormatPattern));
+            helpDialog.setNeutralButtonListener(onCalendarFormatPatternHelpRestoreDefaults, "calendarFormatPattern");
+            helpDialog.setShowNeutralButton(getString(R.string.configAction_restoreDefaults));
+            helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+        }
+    };
 
     private final AdapterView.OnItemSelectedListener onCalendarModeSelected = new AdapterView.OnItemSelectedListener()
     {
