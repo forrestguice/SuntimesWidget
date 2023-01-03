@@ -93,6 +93,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
@@ -560,6 +561,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         if (button_timezone_sort != null)
         {
+            TooltipCompat.setTooltipText(button_timezone_sort, button_timezone_sort.getContentDescription());
             button_timezone_sort.setOnClickListener(new View.OnClickListener()
             {
                 @Override
