@@ -64,6 +64,7 @@ public class AppSettings
     public static final String THEME_LIGHT1 = "contrast_light";
 
     public static final String THEME_DEFAULT = "default";
+    public static final String[] THEMES = new String[] { THEME_DEFAULT, THEME_DARK, THEME_LIGHT, THEME_DAYNIGHT, THEME_SYSTEM, THEME_SYSTEM1, THEME_DARK1, THEME_LIGHT1 };
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     // public static final String PREF_DEF_APPEARANCE_THEME = THEME_SYSTEM;    // @see R.string.def_app_appearance_theme
