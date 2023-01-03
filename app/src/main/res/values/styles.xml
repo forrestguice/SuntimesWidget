@@ -685,6 +685,128 @@
         <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
     </style>
 
+    <!-- Contrast Light Theme -->
+    <style name="AppTheme.Light1" parent="AppTheme.Light">
+        <item name="colorPrimary">@color/primaryColor_contrast_light</item>
+        <item name="settingsCardBackground">@color/card_bg_contrast_light</item>
+        <item name="timeCardBackground">@color/card_bg_contrast_light</item>
+        <item name="dialogFrame">@color/dialog_frame_contrast_light</item>
+        <item name="dialogBackground">@color/dialog_bg_contrast_light</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast_light</item>
+        <item name="android:windowBackground">@color/window_bg_contrast_light</item>
+        <item name="table_risingColor">@color/table_rising_contrast_light</item>
+        <item name="table_settingColor">@color/table_setting_contrast_light</item>
+        <item name="table_noonColor">@color/table_noon_contrast_light</item>
+        <item name="table_moonRisingColor">@color/table_moonRising_contrast_light</item>
+        <item name="table_moonSettingColor">@color/table_moonSetting_contrast_light</item>
+        <item name="table_springColor">@color/table_spring_contrast_light</item>
+        <item name="table_summerColor">@color/table_summmer_contrast_light</item>
+        <item name="table_fallColor">@color/table_fall_contrast_light</item>
+        <item name="table_winterColor">@color/table_winter_contrast_light</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_contrast_light</item>
+        <item name="chipBackground">@drawable/chip_contrast_light</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+    </style>
+    <style name="AppTheme.Light1.Small" parent="AppTheme.Light1">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+    </style>
+    <style name="AppTheme.Light1.Large" parent="AppTheme.Light1">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+    </style>
+    <style name="AppTheme.Light1.XLarge" parent="AppTheme.Light1">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+    </style>
+
+    <!-- Contrast Dark Theme -->
+    <style name="AppTheme.Dark1" parent="AppTheme.Dark">
+        <item name="colorPrimary">@color/primaryColor_contrast_dark</item>
+        <item name="settingsCardBackground">@color/card_bg_contrast_dark</item>
+        <item name="timeCardBackground">@color/card_bg_contrast_dark</item>
+        <item name="dialogFrame">@color/dialog_frame_contrast_dark</item>
+        <item name="dialogBackground">@color/dialog_bg_contrast_dark</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast_dark</item>
+        <item name="android:windowBackground">@color/window_bg_contrast_dark</item>
+        <item name="table_risingColor">@color/table_rising_contrast_dark</item>
+        <item name="table_settingColor">@color/table_setting_contrast_dark</item>
+        <item name="table_noonColor">@color/table_noon_contrast_dark</item>
+        <item name="table_moonRisingColor">@color/table_moonRising_contrast_dark</item>
+        <item name="table_moonSettingColor">@color/table_moonSetting_contrast_dark</item>
+        <item name="table_springColor">@color/table_spring_contrast_dark</item>
+        <item name="table_summerColor">@color/table_summmer_contrast_dark</item>
+        <item name="table_fallColor">@color/table_fall_contrast_dark</item>
+        <item name="table_winterColor">@color/table_winter_contrast_dark</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_contrast_dark</item>
+        <item name="chipBackground">@drawable/chip_contrast_dark</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+    </style>
+    <style name="AppTheme.Dark1.Small" parent="AppTheme.Dark1">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+    </style>
+    <style name="AppTheme.Dark1.Large" parent="AppTheme.Dark1">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+    </style>
+    <style name="AppTheme.Dark1.XLarge" parent="AppTheme.Dark1">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+    </style>
+
     <!-- view styles -->
 
     <!-- main activity card items -->

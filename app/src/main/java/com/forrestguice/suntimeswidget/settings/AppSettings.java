@@ -59,7 +59,10 @@ public class AppSettings
     public static final String THEME_LIGHT = "light";
     public static final String THEME_DAYNIGHT = "daynight";
     public static final String THEME_SYSTEM = "system";
-    public static final String THEME_SYSTEM1 = "sysalt";
+    public static final String THEME_SYSTEM1 = "contrast_system";
+    public static final String THEME_DARK1 = "contrast_dark";
+    public static final String THEME_LIGHT1 = "contrast_light";
+
     public static final String THEME_DEFAULT = "default";
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
@@ -884,11 +887,20 @@ public class AppSettings
     @NonNull
     public static AppThemeInfo loadThemeInfo(@Nullable String extendedThemeName)
     {
-        if (extendedThemeName.startsWith(THEME_LIGHT)) {
+        if (extendedThemeName == null) {
+            return info_defaultTheme;
+
+        } else if (extendedThemeName.startsWith(THEME_LIGHT)) {
             return info_lightTheme;
+
+        } else if (extendedThemeName.startsWith(THEME_LIGHT1)) {
+            return info_light1Theme;
 
         } else if (extendedThemeName.startsWith(THEME_DARK)) {
             return info_darkTheme;
+
+        } else if (extendedThemeName.startsWith(THEME_DARK1)) {
+            return info_dark1Theme;
 
         } else if (extendedThemeName.startsWith(THEME_SYSTEM)) {
             return info_systemTheme;
@@ -901,7 +913,7 @@ public class AppSettings
 
         } // else if (extendedThemeName.startsWith(SOME_THEME_NAME)) { /* TODO: additional themes here */ }
         else {
-            return info_systemTheme;
+            return info_defaultTheme;
         }
     }
     private static final AppThemeInfo info_darkTheme = new DarkThemeInfo();
@@ -909,6 +921,9 @@ public class AppSettings
     private static final AppThemeInfo info_dayNightTheme = new DayNightThemeInfo();
     private static final AppThemeInfo info_systemTheme = new SystemThemeInfo();
     private static final AppThemeInfo info_system1Theme = new System1ThemeInfo();
+    private static final AppThemeInfo info_dark1Theme = new DarkTheme1Info();
+    private static final AppThemeInfo info_light1Theme = new LightTheme1Info();
+    private static final AppThemeInfo info_defaultTheme = info_systemTheme;
 
     /**
      * AppThemeInfo
@@ -995,6 +1010,7 @@ public class AppSettings
             return context.getString(R.string.appThemes_lightTheme);
         }
     }
+
     public static class DarkThemeInfo extends AppThemeInfo
     {
         @Override
@@ -1019,6 +1035,7 @@ public class AppSettings
             return context.getString(R.string.appThemes_darkTheme);
         }
     }
+
     public static class DayNightThemeInfo extends AppThemeInfo
     {
         @Override
@@ -1051,6 +1068,56 @@ public class AppSettings
         @Override
         public String getDisplayString(Context context) {
             return context.getString(R.string.appThemes_nightMode);
+        }
+    }
+
+    public static class LightTheme1Info extends AppThemeInfo
+    {
+        @Override
+        public String getThemeName() {
+            return THEME_LIGHT1;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegate.MODE_NIGHT_NO;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Light1_Small;
+                case LARGE: return R.style.AppTheme_Light1_Large;
+                case XLARGE: return R.style.AppTheme_Light1_XLarge;
+                case NORMAL: default: return R.style.AppTheme_Light1;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_lightTheme1);
+        }
+    }
+
+    public static class DarkTheme1Info extends AppThemeInfo
+    {
+        @Override
+        public String getThemeName() {
+            return THEME_DARK1;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegate.MODE_NIGHT_YES;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Dark1_Small;
+                case LARGE: return R.style.AppTheme_Dark1_Large;
+                case XLARGE: return R.style.AppTheme_Dark1_XLarge;
+                case NORMAL: default: return R.style.AppTheme_Dark1;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_darkTheme1);
         }
     }
 
