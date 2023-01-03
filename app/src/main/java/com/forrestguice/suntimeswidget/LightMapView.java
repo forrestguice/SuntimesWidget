@@ -499,7 +499,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             {
                 // draw astro twilight
                 p.setColor(colors.colorAstro);
-                if (!(layer_astro = drawRect(data.dataAstro, c, p)))
+                if (!(layer_astro = drawRect(colors, data.dataAstro, c, p)))
                 {
                     if (data.dataNautical.hasSunriseTimeToday() || data.dataNautical.hasSunsetTimeToday())
                     {
@@ -509,7 +509,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                 // draw nautical twilight
                 p.setColor(colors.colorNautical);
-                if (!(layer_nautical = drawRect(data.dataNautical, c, p)))
+                if (!(layer_nautical = drawRect(colors, data.dataNautical, c, p)))
                 {
                     if (data.dataCivil.hasSunriseTimeToday() || data.dataCivil.hasSunsetTimeToday())
                     {
@@ -519,7 +519,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                 // draw civil twilight
                 p.setColor(colors.colorCivil);
-                if (!(layer_civil = drawRect(data.dataCivil, c, p)))
+                if (!(layer_civil = drawRect(colors, data.dataCivil, c, p)))
                 {
                     if (data.dataActual.hasSunriseTimeToday() || data.dataActual.hasSunsetTimeToday())
                     {
@@ -529,7 +529,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                 // draw foreground (day)
                 p.setColor(colors.colorDay);
-                if (!drawRect(data.dataActual, c, p))
+                if (!drawRect(colors, data.dataActual, c, p))
                 {
                     boolean noLayers = !layer_astro && !layer_nautical && !layer_civil;
                     if (noLayers)
@@ -573,6 +573,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                                         (int)Math.ceil(c.getHeight() / (2.75d * 2d)) )     // a circle that is ~36% height of the graph
                             : colors.option_drawNow_pointSizePx;
                     int pointStroke = (int)Math.ceil(pointRadius / 3d);
+
+                    if (colors.option_lmt)
+                    {
+                        TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                        Calendar nowLmt = Calendar.getInstance(lmt);
+                        nowLmt.setTimeInMillis(now.getTimeInMillis());
+                        now = nowLmt;
+                    }
 
                     switch (colors.option_drawNow) {
                         case LightMapColors.DRAW_SUN2:
@@ -673,13 +681,30 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-        protected boolean drawRect( SuntimesRiseSetData data, Canvas c, Paint p )
+        protected boolean drawRect( LightMapColors options, SuntimesRiseSetData data, Canvas c, Paint p )
         {
             Calendar riseTime = data.sunriseCalendarToday();
             Calendar setTime = data.sunsetCalendarToday();
             if (riseTime == null && setTime == null)
             {
                 return false;
+            }
+
+            if (options.option_lmt)
+            {
+                TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                if (riseTime != null)
+                {
+                    Calendar riseTimeLmt = Calendar.getInstance(lmt);
+                    riseTimeLmt.setTimeInMillis(riseTime.getTimeInMillis());
+                    riseTime = riseTimeLmt;
+                }
+                if (setTime != null)
+                {
+                    Calendar setTimeLmt = Calendar.getInstance(lmt);
+                    setTimeLmt.setTimeInMillis(setTime.getTimeInMillis());
+                    setTime = setTimeLmt;
+                }
             }
 
             int w = c.getWidth();
@@ -795,6 +820,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public int colorPointFill, colorPointStroke;
         public int option_drawNow = DRAW_SUN1;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
+        public boolean option_lmt = false;
 
         public long offsetMinutes = 0;
         public long now = -1L;
