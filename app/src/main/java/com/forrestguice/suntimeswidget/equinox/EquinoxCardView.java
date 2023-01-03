@@ -82,7 +82,7 @@ public class EquinoxCardView extends LinearLayout
         }
     }
 
-    public int getLayouResID() {
+    public int getLayoutResID() {
         return R.layout.layout_view_equinox1;
     }
 
@@ -90,7 +90,7 @@ public class EquinoxCardView extends LinearLayout
     {
         initLocale(context);
         options.init(context);
-        LayoutInflater.from(context).inflate(getLayouResID(), this, true);
+        LayoutInflater.from(context).inflate(getLayoutResID(), this, true);
 
         if (attrs != null)
         {
