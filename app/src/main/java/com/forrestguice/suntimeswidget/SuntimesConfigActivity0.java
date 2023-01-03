@@ -177,6 +177,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected Spinner spinner_timezoneMode;
 
     protected LinearLayout layout_timezone;
+    protected TextView label_timezone;
     protected ImageButton button_timezone_sort;
     protected Spinner spinner_timezone;
     protected ProgressBar progress_timezone;
@@ -553,6 +554,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         layout_timezone = (LinearLayout) findViewById(R.id.appwidget_timezone_custom_layout);
         button_timezone_sort = (ImageButton) findViewById(R.id.sort_timezones);
+        label_timezone = (TextView) findViewById(R.id.appwidget_timezone_custom_label);
         spinner_timezone = (Spinner) findViewById(R.id.appwidget_timezone_custom);
         progress_timezone = (ProgressBar) findViewById(R.id.appwidget_timezone_progress);
 
@@ -1379,6 +1381,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         boolean useAppTz = (checkbox_tzFromApp != null && checkbox_tzFromApp.isChecked());
         button_timezone_sort.setEnabled(value && !useAppTz);
+        label_timezone.setEnabled(value && !useAppTz);
         spinner_timezone.setEnabled(value && !useAppTz);
     }
 

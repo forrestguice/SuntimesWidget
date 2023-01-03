@@ -74,7 +74,7 @@
 
             <android.support.v7.widget.AppCompatImageButton android:id="@+id/sort_timezones"
                 style="@style/ActionButton" android:visibility="visible"
-                android:src="?attr/icActionSort" android:tint="?attr/colorAccent"
+                android:src="?attr/icActionSort" android:tint="@drawable/btn_accent"
                 android:layout_width="wrap_content" android:layout_height="32dp"
                 android:contentDescription="@string/timezone_sort_contextAction" />
 
