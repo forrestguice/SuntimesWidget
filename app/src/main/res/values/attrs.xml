@@ -49,6 +49,9 @@
 
     <attr name="table_risingColor" format="reference" />
     <attr name="table_settingColor" format="reference" />
+    <attr name="table_civilColor" format="reference" />
+    <attr name="table_astroColor" format="reference" />
+    <attr name="table_nightColor" format="reference" />
     <attr name="table_noonColor" format="reference" />
     <attr name="table_moonRisingColor" format="reference" />
     <attr name="table_moonSettingColor" format="reference" />

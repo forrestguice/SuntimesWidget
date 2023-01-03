@@ -27,6 +27,9 @@
 
     <color name="table_rising">@color/table_rising_dark</color>
     <color name="table_setting">@color/table_setting_dark</color>
+    <color name="table_civil">@color/table_civil_dark</color>
+    <color name="table_astro">@color/table_astro_dark</color>
+    <color name="table_night">@color/table_night_dark</color>
     <color name="table_noon">@color/table_setting_dark</color>
     <color name="table_moon_rising">@color/table_moon_rising_dark</color>
     <color name="table_moon_setting">@color/table_moon_setting_dark</color>
@@ -75,6 +78,9 @@
     <color name="card_bg_contrast">@color/card_bg_contrast_dark</color>
     <color name="table_rising_contrast">@color/table_rising_contrast_dark</color>
     <color name="table_setting_contrast">@color/table_setting_contrast_dark</color>
+    <color name="table_civil_contrast">@color/table_civil_contrast_dark</color>
+    <color name="table_astro_contrast">@color/table_astro_contrast_dark</color>
+    <color name="table_night_contrast">@color/table_night_contrast_dark</color>
     <color name="table_noon_contrast">@color/table_noon_contrast_dark</color>
     <color name="table_moonRising_contrast">@color/table_moonRising_contrast_dark</color>
     <color name="table_moonSetting_contrast">@color/table_moonSetting_contrast_dark</color>

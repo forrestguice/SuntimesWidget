@@ -112,6 +112,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private int colorNight, colorAstro, colorNautical, colorCivil, colorDay;
     private int colorRising, colorSetting;
     private int colorLabel;
+    private int colorRisingLabel, colorSettingLabel, colorCivilLabel, colorAstroLabel;
     private boolean showSeconds = true;
     private int decimalPlaces = 1;
     private View dialogContent = null;
@@ -1126,7 +1127,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 R.attr.buttonPressColor,                // 8
                 android.R.attr.textColorPrimary,        // 9
                 R.attr.text_accentColor,                // 10
-                R.attr.tagColor_warning                 /// 11
+                R.attr.tagColor_warning,                // 11
+                R.attr.table_risingColor,               // 12
+                R.attr.table_settingColor,              // 13
+                R.attr.table_civilColor,                // 14
+                R.attr.table_astroColor,                // 15
+                R.attr.table_nightColor,                // 16
         };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
@@ -1142,6 +1148,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
         color_normal = ContextCompat.getColor(context, typedArray.getResourceId(9, Color.WHITE));
         color_accent = ContextCompat.getColor(context, typedArray.getResourceId(10, Color.YELLOW));
         color_warning = ContextCompat.getColor(context, typedArray.getResourceId(11, Color.YELLOW));
+        colorRisingLabel = ContextCompat.getColor(context, typedArray.getResourceId(12, def));
+        colorSettingLabel = ContextCompat.getColor(context, typedArray.getResourceId(13, def));
+        colorCivilLabel = ContextCompat.getColor(context, typedArray.getResourceId(14, def));
+        colorAstroLabel = ContextCompat.getColor(context, typedArray.getResourceId(15, def));
+        colorLabel = ContextCompat.getColor(context, typedArray.getResourceId(16, def));
         typedArray.recycle();
 
         if (themeOverride != null)
@@ -1184,6 +1195,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
             colorCivil = themeOverride.getCivilColor();
             colorRising = themeOverride.getSunriseTextColor();
             colorSetting = themeOverride.getSunsetTextColor();
+            colorRisingLabel = colorRising;
+            colorSettingLabel = colorSetting;
+            colorCivilLabel = colorCivil;
+            colorAstroLabel = colorAstro;
 
             field_astro.themeViews(themeOverride);
             field_nautical.themeViews(themeOverride);
@@ -1233,7 +1248,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         SuntimesUtils.colorizeImageView(field_civil.icon, colorCivil);
         SuntimesUtils.colorizeImageView(field_day.icon, colorDay);
 
-        colorLabel = field_night.label.getTextColors().getColorForState(new int[] { -android.R.attr.state_enabled }, Color.BLUE); // field_night.label.getCurrentTextColor()
+        //colorLabel = field_night.label.getTextColors().getColorForState(new int[] { -android.R.attr.state_enabled }, Color.BLUE); // field_night.label.getCurrentTextColor()
     }
 
     private SuntimesTheme themeOverride = null;
@@ -1335,13 +1350,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private int getColorForPosition(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
     {
         if (position.elevation >= 0)
-            return (SuntimesRiseSetDataset.isRising(position, noonPosition) ? colorRising : colorSetting);
+            return (SuntimesRiseSetDataset.isRising(position, noonPosition) ? colorRisingLabel : colorSettingLabel);
 
         if (position.elevation >= -6)
-            return colorCivil;
+            return colorCivilLabel;
 
         if (position.elevation >= -12)  //if (elevation >= -18)   // share color
-            return colorAstro;
+            return colorAstroLabel;
 
         return colorLabel;
     }

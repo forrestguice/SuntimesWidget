@@ -44,6 +44,9 @@
 
     <color name="table_rising">@color/table_rising_light</color>
     <color name="table_setting">@color/table_setting_light</color>
+    <color name="table_civil">@color/table_civil_light</color>
+    <color name="table_astro">@color/table_astro_light</color>
+    <color name="table_night">@color/table_night_light</color>
     <color name="table_noon">@color/table_setting_light</color>
     <color name="table_moon_rising">@color/table_moon_rising_light</color>
     <color name="table_moon_setting">@color/table_moon_setting_light</color>
@@ -92,6 +95,9 @@
     <color name="card_bg_contrast">@color/card_bg_contrast_light</color>
     <color name="table_rising_contrast">@color/table_rising_contrast_light</color>
     <color name="table_setting_contrast">@color/table_setting_contrast_light</color>
+    <color name="table_civil_contrast">@color/table_civil_contrast_light</color>
+    <color name="table_astro_contrast">@color/table_astro_contrast_light</color>
+    <color name="table_night_contrast">@color/table_night_contrast_light</color>
     <color name="table_noon_contrast">@color/table_noon_contrast_light</color>
     <color name="table_moonRising_contrast">@color/table_moonRising_contrast_light</color>
     <color name="table_moonSetting_contrast">@color/table_moonSetting_contrast_light</color>
@@ -135,6 +141,9 @@
     <color name="snackbar_text_dark">@android:color/primary_text_dark</color>
     <color name="table_rising_dark">@color/sunIcon_color_rising_dark</color>
     <color name="table_setting_dark">@color/sunIcon_color_setting_dark</color>
+    <color name="table_civil_dark">@color/graphColor_civil_dark</color>
+    <color name="table_astro_dark">@color/graphColor_astronomical_dark</color>
+    <color name="table_night_dark">@color/graphColor_night_dark</color>
     <color name="table_noon_dark">@color/sunIcon_color_setting_dark</color>
     <color name="table_moon_rising_dark">@color/moonIcon_color_rising_dark</color>
     <color name="table_moon_setting_dark">@color/moonIcon_color_setting_dark</color>
@@ -164,6 +173,9 @@
     <color name="snackbar_text_light">@android:color/primary_text_light</color>
     <color name="table_rising_light">@color/sunIcon_color_rising_light</color>
     <color name="table_setting_light">@color/sunIcon_color_setting_light</color>
+    <color name="table_civil_light">@color/graphColor_civil_light</color>
+    <color name="table_astro_light">@color/graphColor_astronomical_light</color>
+    <color name="table_night_light">@color/graphColor_night_light</color>
     <color name="table_noon_light">@color/sunIcon_color_setting_light</color>
     <color name="table_moon_rising_light">@color/moonIcon_color_rising_light</color>
     <color name="table_moon_setting_light">@color/moonIcon_color_setting_light</color>
@@ -183,6 +195,9 @@
     <color name="chip_tray_bg_contrast_dark">@color/grey_800</color>
     <color name="table_rising_contrast_dark">@android:color/white</color>
     <color name="table_setting_contrast_dark">@color/grey_300</color>
+    <color name="table_civil_contrast_dark">#FFb1c9ff</color>
+    <color name="table_astro_contrast_dark">#FF7BA3FF</color>
+    <color name="table_night_contrast_dark">@color/grey_500</color>
     <color name="table_noon_contrast_dark">@color/grey_300</color>
     <color name="table_moonRising_contrast_dark">@android:color/white</color>
     <color name="table_moonSetting_contrast_dark">@color/grey_300</color>
@@ -206,6 +221,9 @@
     <color name="chip_tray_bg_contrast_light">@color/grey_200</color>
     <color name="table_rising_contrast_light">@color/grey_900</color>
     <color name="table_setting_contrast_light">@color/grey_800</color>
+    <color name="table_civil_contrast_light">#5287ff</color>
+    <color name="table_astro_contrast_light">#0000FF</color>
+    <color name="table_night_contrast_light">@color/grey_600</color>
     <color name="table_noon_contrast_light">@color/grey_800</color>
     <color name="table_moonRising_contrast_light">@color/grey_900</color>
     <color name="table_moonSetting_contrast_light">@color/grey_800</color>
@@ -331,12 +349,12 @@
     <color name="graphColor_civil_light">#ff7ba3ff</color>
     <color name="graphColor_nautical_light">#ff007bff</color>
     <color name="graphColor_astronomical_light">#ff0000ff</color>
-    <color name="graphColor_night_light">#ff757575</color>
+    <color name="graphColor_night_light">@color/grey_400</color>  <!-- #ff757575 -->
     <color name="graphColor_pointFill_light">@color/sunIcon_color_noon_light</color>
     <color name="graphColor_pointStroke_light">@color/sunIcon_color_noonBorder_light</color>
-    <color name="graphColor_axis_light">@color/grey_500</color>  <!-- TODO -->
-    <color name="graphColor_grid_light">@color/grey_500</color>  <!-- TODO -->
-    <color name="graphColor_labels_light">@color/grey_600</color>  <!-- TODO -->
+    <color name="graphColor_axis_light">@color/grey_300</color>  <!-- TODO -->
+    <color name="graphColor_grid_light">@color/grey_300</color>
+    <color name="graphColor_labels_light">@color/grey_800</color>
 
     <!-- Dingy Yellows
     <color name="graphColor_bg_light">@color/material_grey_50</color>
