@@ -92,6 +92,7 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 
 import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
@@ -176,7 +177,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected Spinner spinner_timezoneMode;
 
     protected LinearLayout layout_timezone;
-    protected TextView label_timezone;
+    protected ImageButton button_timezone_sort;
     protected Spinner spinner_timezone;
     protected ProgressBar progress_timezone;
 
@@ -551,26 +552,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: timezone / solartime
         //
         layout_timezone = (LinearLayout) findViewById(R.id.appwidget_timezone_custom_layout);
-        label_timezone = (TextView) findViewById(R.id.appwidget_timezone_custom_label);
+        button_timezone_sort = (ImageButton) findViewById(R.id.sort_timezones);
         spinner_timezone = (Spinner) findViewById(R.id.appwidget_timezone_custom);
         progress_timezone = (ProgressBar) findViewById(R.id.appwidget_timezone_progress);
 
-        if (label_timezone != null)
+        if (button_timezone_sort != null)
         {
-            label_timezone.setOnClickListener(new View.OnClickListener()
+            button_timezone_sort.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
                 {
-                    triggerTimeZoneActionMode(view);
-                }
-            });
-            label_timezone.setOnLongClickListener(new View.OnLongClickListener()
-            {
-                @Override
-                public boolean onLongClick(View view)
-                {
-                    return triggerTimeZoneActionMode(view);
+                    //triggerTimeZoneActionMode(view);
+                    showTimeZoneSortMenu(context, view);
                 }
             });
         }
@@ -1384,7 +1378,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         boolean useAppTz = (checkbox_tzFromApp != null && checkbox_tzFromApp.isChecked());
-        label_timezone.setEnabled(value && !useAppTz);
+        button_timezone_sort.setEnabled(value && !useAppTz);
         spinner_timezone.setEnabled(value && !useAppTz);
     }
 
@@ -1398,6 +1392,42 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
         return false;
     }
+
+    protected boolean showTimeZoneSortMenu(Context context, View view)
+    {
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.timezonesort, onTimeZoneSortMenuClick);
+        TimeZoneDialog.updateTimeZoneSortMenu(context, menu);
+        menu.show();
+        return true;
+    }
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = SuntimesConfigActivity0.this;
+            WidgetTimezones.TimeZoneSpinnerSortActionBase sortActionBase = new WidgetTimezones.TimeZoneSpinnerSortActionBase()
+            {
+                @Override
+                public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
+                {
+                    super.onSortTimeZones(result, sortMode);
+                    spinner_timezone_adapter = result;
+                    WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                    progress_timezone.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+                {
+                    super.onSaveSortMode(sortMode);
+                    AppSettings.saveTimeZoneSortPref(context, sortMode);
+                }
+            };
+            sortActionBase.init(context, spinner_timezone);
+            return sortActionBase.onActionItemClicked(item.getItemId());
+        }
+    };
 
     /**
      *

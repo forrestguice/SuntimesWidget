@@ -585,7 +585,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         menu.show();
         return true;
     }
-    protected void updateTimeZoneSortMenu(Context context, PopupMenu popup)
+    protected static void updateTimeZoneSortMenu(Context context, PopupMenu popup)
     {
         Menu menu = popup.getMenu();
         MenuItem sortByOffset = menu.findItem(R.id.sortByOffset);
@@ -601,7 +601,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 break;
         }
     }
-    private void setChecked(@Nullable MenuItem item, boolean value) {
+    public static void setChecked(@Nullable MenuItem item, boolean value) {
         if (item != null) {
             item.setChecked(value);
         }
