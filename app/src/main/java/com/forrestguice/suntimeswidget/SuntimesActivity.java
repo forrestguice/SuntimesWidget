@@ -822,9 +822,8 @@ public class SuntimesActivity extends AppCompatActivity
 
             if (needsRecreate)
             {
-                Log.i("SuntimesActivity", "theme/locale was changed; calling recreate");
-                Handler handler = new Handler();
-                handler.postDelayed(recreateRunnable, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
+                Log.i("SuntimesActivity", "settings were changed; calling recreate");
+                txt_time.postDelayed(recreateRunnable, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
             }
         }
     }
@@ -841,6 +840,7 @@ public class SuntimesActivity extends AppCompatActivity
             } else {
                 finish();
                 startActivity(getIntent());
+                overridePendingTransition(R.anim.transition_restart_in, R.anim.transition_restart_out);
             }
         }
     };
