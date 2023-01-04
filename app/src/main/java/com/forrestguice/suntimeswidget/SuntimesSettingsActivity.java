@@ -367,7 +367,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         super.onDestroy();
     }
 
-    private void initLocale(Bundle icicle)
+    private void initLocale(@Nullable Bundle icicle)
     {
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.initDefaults(context);
@@ -475,7 +475,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                PlacesPrefsFragment.class.getName().equals(fragmentName);
     }
 
-    private SharedPreferences.OnSharedPreferenceChangeListener onChangedNeedingRebuild = new SharedPreferences.OnSharedPreferenceChangeListener()
+    private final SharedPreferences.OnSharedPreferenceChangeListener onChangedNeedingRebuild = new SharedPreferences.OnSharedPreferenceChangeListener()
     {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
@@ -492,6 +492,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     };
 
     public void setNeedsRecreateFlag() {
+        Log.d("DEBUG", "setNeedsRecreateFlag");
         getIntent().putExtra(RECREATE_ACTIVITY, true);
         setResult(RESULT_OK, getResultData());
     }
@@ -1152,7 +1153,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         /**
          * Manage Places (click handler)
          */
-        private Preference.OnPreferenceClickListener onClickManagePlaces = new Preference.OnPreferenceClickListener()
+        private final Preference.OnPreferenceClickListener onClickManagePlaces = new Preference.OnPreferenceClickListener()
         {
             public boolean onPreferenceClick(Preference preference)
             {
@@ -1170,7 +1171,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         /**
          * Build Places (click handler)
          */
-        private Preference.OnPreferenceClickListener onClickBuildPlaces = new Preference.OnPreferenceClickListener()
+        private final Preference.OnPreferenceClickListener onClickBuildPlaces = new Preference.OnPreferenceClickListener()
         {
             public boolean onPreferenceClick(Preference preference)
             {
@@ -1188,7 +1189,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         /**
          * Build Places (task handler)
          */
-        private BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+        private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
         {
             @Override
             public void onStarted()
@@ -1212,7 +1213,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         /**
          * Export Places (click handler)
          */
-        private Preference.OnPreferenceClickListener onClickExportPlaces = new Preference.OnPreferenceClickListener()
+        private final Preference.OnPreferenceClickListener onClickExportPlaces = new Preference.OnPreferenceClickListener()
         {
             public boolean onPreferenceClick(Preference preference)
             {
@@ -1230,7 +1231,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         /**
          * Export Places (task handler)
          */
-        private ExportPlacesTask.TaskListener exportPlacesListener = new ExportPlacesTask.TaskListener()
+        private final ExportPlacesTask.TaskListener exportPlacesListener = new ExportPlacesTask.TaskListener()
         {
             @Override
             public void onStarted()
@@ -1279,7 +1280,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         /**
          * Clear Places (click handler)
          */
-        private Preference.OnPreferenceClickListener onClickClearPlaces = new Preference.OnPreferenceClickListener()
+        private final Preference.OnPreferenceClickListener onClickClearPlaces = new Preference.OnPreferenceClickListener()
         {
             public boolean onPreferenceClick(Preference preference)
             {
@@ -1310,7 +1311,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         /**
          * Clear Places (task handler)
          */
-        private BuildPlacesTask.TaskListener clearPlacesListener = new BuildPlacesTask.TaskListener()
+        private final BuildPlacesTask.TaskListener clearPlacesListener = new BuildPlacesTask.TaskListener()
         {
             @Override
             public void onStarted()
