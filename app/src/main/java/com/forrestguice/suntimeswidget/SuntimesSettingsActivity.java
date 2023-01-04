@@ -24,6 +24,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -51,6 +52,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -130,6 +132,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static String calendarPackage = "com.forrestguice.suntimescalendars";
     public static String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
 
+    public static final int REQUEST_HEADER = 10;
     public static final int REQUEST_PICKTHEME_LIGHT = 20;
     public static final int REQUEST_PICKTHEME_DARK = 30;
     public static final int REQUEST_TAPACTION_CLOCK = 40;
@@ -183,6 +186,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
         switch(requestCode)
         {
+            case REQUEST_HEADER:
+                setResult(RESULT_OK, data);
+                break;
+
             case REQUEST_PICKTHEME_DARK:
             case REQUEST_PICKTHEME_LIGHT:
                 onPickTheme(requestCode, resultCode, data);
@@ -2449,6 +2456,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         super.onHeaderClick(header, position);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
+
+    @Override
+    public void startWithFragment(String fragmentName, Bundle args, Fragment resultTo, int resultRequestCode, @StringRes int titleRes, @StringRes int shortTitleRes)
+    {
+        Intent intent = onBuildStartFragmentIntent(fragmentName, args, titleRes, shortTitleRes);
+        if (resultTo != null) {
+            resultTo.startActivityForResult(intent, resultRequestCode);
+        } else {
+            startActivityForResult(intent, REQUEST_HEADER);
+        }
     }
 
 }
