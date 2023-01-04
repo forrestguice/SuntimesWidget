@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 public class LocationConfigDialog extends BottomSheetDialogFragment
 {
@@ -470,7 +471,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        disableTouchOutsideBehavior();
+        ViewUtils.disableTouchOutsideBehavior(getDialog());
     }
 
     @Override
@@ -502,15 +503,6 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     }
 
-    private void disableTouchOutsideBehavior()
-    {
-        Dialog dialog = getDialog();
-        Window window = dialog != null ? dialog.getWindow() : null;
-        if (window != null) {
-            View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
-            decorView.setOnClickListener(null);
-        }
-    }
 
 }
 

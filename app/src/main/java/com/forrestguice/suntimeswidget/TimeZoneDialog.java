@@ -65,6 +65,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -970,7 +971,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         if (layout != null)
         {
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(true);
+            behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
@@ -981,6 +982,13 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         if (dialogListener != null) {
             dialogListener.onSelectionChanged(getTimeZone());
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        ViewUtils.disableTouchOutsideBehavior(getDialog());
     }
 
     private TimeZoneDialogListener dialogListener = null;

@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -30,6 +31,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -129,6 +131,15 @@ public class ViewUtils
                     behavior.setPeekHeight(-1);
                 }
             }
+        }
+    }
+
+    public static void disableTouchOutsideBehavior(Dialog dialog)
+    {
+        Window window = (dialog != null ? dialog.getWindow() : null);
+        if (window != null) {
+            View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
+            decorView.setOnClickListener(null);
         }
     }
 
