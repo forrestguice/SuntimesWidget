@@ -83,7 +83,17 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     protected ImageButton btn_next, btn_prev, btn_menu;
 
     protected EquinoxViewOptions options = new EquinoxViewOptions();
-    protected boolean userSwappedCard = false;
+
+    protected void setUserSwappedCard(boolean value) {
+        getArguments().putBoolean("userSwappedCard", value);
+    }
+    public boolean userSwappedCard() {
+        return getArguments().getBoolean("userSwappedCard", false);
+    }
+
+    public EquinoxCardDialog() {
+        setArguments(new Bundle());
+    }
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -240,7 +250,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     };
     protected void onNextClicked(int position) {
         if (position >= 0) {
-            userSwappedCard = showNextCard(position);
+            setUserSwappedCard(showNextCard(position));
         }
     }
 
@@ -252,7 +262,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     };
     protected void onPrevClicked(int position) {
         if (position >= 0) {
-            userSwappedCard = showPreviousCard(position);
+            setUserSwappedCard(showPreviousCard(position));
         }
     }
 
@@ -302,7 +312,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     {
         showEmptyView(!isImplemented(card_adapter.initData(context, EquinoxDatasetAdapter.CENTER_POSITION)));
         int position = card_adapter.highlightNote(context);
-        if (position != -1 && !userSwappedCard) {
+        if (position != -1 && !userSwappedCard()) {
             card_view.setLayoutFrozen(false);
             card_view.scrollToPosition(position);
             card_view.setLayoutFrozen(false);
@@ -344,14 +354,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
-        outState.putBoolean("userSwappedCard", userSwappedCard);
         outState.putInt("currentCardPosition", currentCardPosition());
         super.onSaveInstanceState(outState);
     }
 
     public void loadState(Bundle bundle)
     {
-        userSwappedCard = bundle.getBoolean("userSwappedCard", false);
         int cardPosition = bundle.getInt("currentCardPosition", EquinoxDatasetAdapter.CENTER_POSITION);
         if (cardPosition == RecyclerView.NO_POSITION) {
             cardPosition = EquinoxDatasetAdapter.CENTER_POSITION;
@@ -693,7 +701,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
-                userSwappedCard = true;
+                setUserSwappedCard(true);
             }
         }
     };
@@ -724,7 +732,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         int nextPosition = (position + card_itemsPerPage);
         int n = card_adapter.getItemCount();
         if (nextPosition < n) {
-            userSwappedCard = true;
+            setUserSwappedCard(true);
             card_scroller.setTargetPosition(nextPosition);
             card_layout.startSmoothScroll(card_scroller);
         }
@@ -735,7 +743,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     {
         int prevPosition = (position - card_itemsPerPage);
         if (prevPosition >= 0) {
-            userSwappedCard = true;
+            setUserSwappedCard(true);
             card_scroller.setTargetPosition(prevPosition);
             card_layout.startSmoothScroll(card_scroller);
         }
