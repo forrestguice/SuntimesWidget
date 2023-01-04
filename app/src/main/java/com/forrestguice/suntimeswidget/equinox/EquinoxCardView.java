@@ -167,7 +167,7 @@ public class EquinoxCardView extends LinearLayout
         if (position != -1) {
             card_view.scrollToPosition(position);
         }
-        Log.d("DEBUG", "EquinoxDialog updated");
+        Log.d("DEBUG", "EquinoxCardView updated: position: " + position);
     }
 
     protected void updateViews(Context context, SuntimesEquinoxSolsticeData data) {
@@ -205,23 +205,22 @@ public class EquinoxCardView extends LinearLayout
 
     public boolean saveState(Bundle bundle)
     {
-        bundle.putInt("currentCardPosition", currentCardPosition());
-        bundle.putBoolean("userSwappedCard", userSwappedCard);
-        bundle.putBoolean("minimized", options.minimized);
+        bundle.putInt("EquinoxCardView_currentCardPosition", currentCardPosition());
+        bundle.putBoolean("EquinoxCardView_userSwappedCard", userSwappedCard);
+        bundle.putBoolean("EquinoxCardView_minimized", options.minimized);
         return true;
     }
 
     public void loadState(Bundle bundle)
     {
-        userSwappedCard = bundle.getBoolean("userSwappedCard", false);
-        options.minimized = bundle.getBoolean("minimized", options.minimized);
+        userSwappedCard = bundle.getBoolean("EquinoxCardView_userSwappedCard", false);
+        options.minimized = bundle.getBoolean("EquinoxCardView_minimized", options.minimized);
 
-        int cardPosition = bundle.getInt("currentCardPosition", EquinoxDataAdapter.CENTER_POSITION);
+        int cardPosition = bundle.getInt("EquinoxCardView_currentCardPosition", EquinoxDataAdapter.CENTER_POSITION);
         if (cardPosition == RecyclerView.NO_POSITION) {
             cardPosition = EquinoxDataAdapter.CENTER_POSITION;
         }
         card_view.scrollToPosition(cardPosition);
-        card_view.smoothScrollBy(1, 0);  // triggers a snap
     }
 
     public int currentCardPosition() {
