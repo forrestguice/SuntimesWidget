@@ -244,7 +244,7 @@ public class EquinoxCardView extends LinearLayout
         @Override public void onMenuClick(View view, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {}
     };
 
-    private View.OnClickListener onResetClicked = new View.OnClickListener() {
+    private final View.OnClickListener onResetClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             int position = card_adapter.highlightNote(getContext());
@@ -272,7 +272,7 @@ public class EquinoxCardView extends LinearLayout
         }
     }
 
-    private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy)

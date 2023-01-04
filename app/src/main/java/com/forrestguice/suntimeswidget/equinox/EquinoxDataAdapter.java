@@ -213,12 +213,13 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     public int highlightNote(Context context)
     {
         ArrayList<Pair<Integer,Calendar>> notes = new ArrayList<>();
-        int position = CENTER_POSITION - 8;
+        int position = CENTER_POSITION - 16;
         do {
             SuntimesEquinoxSolsticeData data1 = initData(context, position);
             notes.add(new Pair<Integer,Calendar>(position, data1.eventCalendarThisYear()));
             position++;
-        } while (position < CENTER_POSITION + 8);
+        } while (position < CENTER_POSITION + 16);
+
         return highlightPosition(findClosestNote(Calendar.getInstance(), options.trackingMode, notes));
     }
 
