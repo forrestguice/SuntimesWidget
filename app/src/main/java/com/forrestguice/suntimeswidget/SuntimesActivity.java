@@ -755,7 +755,6 @@ public class SuntimesActivity extends AppCompatActivity
             cardPosition = CardAdapter.TODAY_POSITION;
         }
         card_view.scrollToPosition(cardPosition);
-        card_view.smoothScrollBy(1, 0);  // triggers a snap
     }
 
     /**
