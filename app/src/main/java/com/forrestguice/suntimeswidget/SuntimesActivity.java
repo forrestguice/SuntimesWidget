@@ -812,7 +812,10 @@ public class SuntimesActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
-            boolean needsRecreate = ((data != null && data.getBooleanExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, false))    // recreate requested
+            boolean recreateFlag = (data != null && data.getBooleanExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, false));
+            Log.d("DEBUG", "onActivityResult: " + requestCode + ":" + resultCode + " recreate? " + recreateFlag + ", hasData? " + (data != null));
+
+            boolean needsRecreate = (recreateFlag    // recreate requested
                     || (!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))                                                  // or theme mode changed
             //        || (appThemeOverride != null && !appThemeOverride.themeName().equals(AppSettings.getThemeOverride(this, appThemeResID))) // or theme override changed
                     || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))                             // or localeMode changed

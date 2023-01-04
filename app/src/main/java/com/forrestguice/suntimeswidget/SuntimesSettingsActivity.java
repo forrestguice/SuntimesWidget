@@ -164,6 +164,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @Override
     public void onCreate(Bundle icicle)
     {
+        Log.d("DEBUG", "onCreate");
         setResult(RESULT_OK, getResultData());
         context = SuntimesSettingsActivity.this;
         appTheme = AppSettings.loadThemePref(this);
@@ -177,7 +178,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     public Intent getResultData() {
-        return new Intent().putExtra(RECREATE_ACTIVITY, getIntent().getBooleanExtra(RECREATE_ACTIVITY, false));
+        boolean value = getIntent().getBooleanExtra(RECREATE_ACTIVITY, false);
+        Log.d("DEBUG", "getResultData: needsRecreate? " + value);
+        return new Intent().putExtra(RECREATE_ACTIVITY, value);
     }
 
     @Override
@@ -341,6 +344,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public void onResume()
     {
         super.onResume();
+        Log.d("DEBUG", "onResume");
         initLocale(null);
         PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(this);
 
