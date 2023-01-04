@@ -1385,6 +1385,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showDate(long datetime)
     {
         final TimeDateDialog datePicker = new TimeDateDialog();
+        datePicker.setDialogTitle(getString(R.string.configAction_viewDate));
         datePicker.setTimezone(dataset.timezone());
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
 
@@ -1454,10 +1455,10 @@ public class SuntimesActivity extends AppCompatActivity
         protected void saveSettings(Context context)
         {
             WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
-            WidgetSettings.saveDateModePref(context, appWidgetId, dateMode);
+            WidgetSettings.saveDateModePref(context, getAppWidgetId(), dateMode);
 
             WidgetSettings.DateInfo dateInfo = getDateInfo();
-            WidgetSettings.saveDatePref(context, appWidgetId, dateInfo);
+            WidgetSettings.saveDatePref(context, getAppWidgetId(), dateInfo);
         }
     }
 
