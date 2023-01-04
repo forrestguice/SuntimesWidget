@@ -160,7 +160,7 @@ public class SuntimesActivity extends AppCompatActivity
     public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
     public static final String KEY_UI_NOTEINDEX = "noteIndex";
-    public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
+    public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard_main";
     public static final String KEY_UI_CARDPOSITION = "cardPosition";
 
     public static final String WARNINGID_DATE = "Date";
