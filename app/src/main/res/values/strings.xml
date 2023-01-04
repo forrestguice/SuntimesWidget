@@ -2299,7 +2299,7 @@
     ]]></string>
     <string name="help_general_moonillum"><![CDATA[
         <b>Moon Illumination:</b> The main page displays the moon\'s illumination at lunar noon, while the moon dialog displays the moon\'s current illumination.<br/>
-    ]]></string>
+    ]]></string>   <!-- TODO: deprecated -->
     <string name="help_general_goldhour"><![CDATA[
         <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
     ]]></string>

@@ -1604,7 +1604,7 @@ public class SuntimesActivity extends AppCompatActivity
         String blueHour = getString(R.string.help_general_bluehour);
         String blueGoldText = getString(R.string.help_general2, blueHour, goldHour);
 
-        String moonIllum = getString(R.string.help_general_moonillum);
+        //String moonIllum = getString(R.string.help_general_moonillum);
         String dstText = getString(R.string.help_general_dst);
 
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
@@ -1617,7 +1617,7 @@ public class SuntimesActivity extends AppCompatActivity
         SuntimesUtils.ImageSpanTag[] helpTags = {
                 new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
-        CharSequence helpText = SuntimesUtils.fromHtml(getString(R.string.help_general4, moonIllum, timeText, blueGoldText, dstText));
+        CharSequence helpText = SuntimesUtils.fromHtml(getString(R.string.help_general3, timeText, blueGoldText, dstText));
         CharSequence helpSpan = SuntimesUtils.createSpan(this, helpText, helpTags);
 
         HelpDialog helpDialog = new HelpDialog();
