@@ -162,6 +162,12 @@
             android:entries="@array/solsticeTrackingMode_display" android:entryValues="@array/solsticeTrackingMode_values"
             android:defaultValue="@string/def_appwidget_0_general_trackingmode" />
 
+        <com.forrestguice.suntimeswidget.settings.LengthPreference
+            android:key="appwidget_0_general_observerheight"
+            android:title="@string/configLabel_general_observerheight"
+            android:summary="@string/configLabel_general_observerheight_summary"
+            android:defaultValue="@string/def_appwidget_0_general_observerheight" />
+
         <CheckBoxPreference
             android:key="app_ui_showwarnings"
             android:title="@string/configLabel_ui_showWarnings"

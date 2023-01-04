@@ -809,14 +809,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             initPref_calculator(this, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(this, moonCalculatorPref,"moon");
         }
-
-        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
-        LengthPreference observerHeightPref = (LengthPreference) findPreference(key_observerHeight);
-        if (observerHeightPref != null)
-        {
-            initPref_observerHeight(this, observerHeightPref);
-            loadPref_observerHeight(this, observerHeightPref);
-        }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_general(final PreferenceFragment fragment)
@@ -854,14 +846,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             initPref_calculator(context, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(context, moonCalculatorPref, "moon");
-        }
-
-        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
-        LengthPreference observerHeightPref = (LengthPreference) fragment.findPreference(key_observerHeight);
-        if (observerHeightPref != null)
-        {
-            initPref_observerHeight(fragment.getActivity(), observerHeightPref);
-            loadPref_observerHeight(fragment.getActivity(), observerHeightPref);
         }
 
         Preference introScreenPref = fragment.findPreference("appwidget_0_intro_screen");
@@ -1455,6 +1439,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
         updatePref_ui_themeOverride(AppSettings.loadThemePref(this), overrideTheme_dark, overrideTheme_light);
 
+        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
+        LengthPreference observerHeightPref = (LengthPreference) findPreference(key_observerHeight);
+        if (observerHeightPref != null)
+        {
+            initPref_observerHeight(this, observerHeightPref);
+            loadPref_observerHeight(this, observerHeightPref);
+        }
+
         Preference manage_events = findPreference("manage_events");
         if (manage_events != null) {
             manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(SuntimesSettingsActivity.this));
@@ -1501,6 +1493,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         final ActionButtonPreference overrideTheme_dark = (ActionButtonPreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         initPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         loadPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+
+        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
+        LengthPreference observerHeightPref = (LengthPreference) fragment.findPreference(key_observerHeight);
+        if (observerHeightPref != null)
+        {
+            initPref_observerHeight(fragment.getActivity(), observerHeightPref);
+            loadPref_observerHeight(fragment.getActivity(), observerHeightPref);
+        }
 
         Preference manage_events = fragment.findPreference("manage_events");
         if (manage_events != null) {
