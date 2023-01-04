@@ -40,7 +40,7 @@
 
         <LinearLayout android:id="@+id/appwidget_timezone_custom_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:animateLayoutChanges="true"
+            android:orientation="horizontal"
             android:paddingTop="8dp" android:gravity="center_vertical">
 
             <TextView android:id="@+id/appwidget_timezone_custom_label"
@@ -58,7 +58,7 @@
                     android:dropDownVerticalOffset="32sp" android:layout_height="wrap_content" />
 
                 <ProgressBar android:id="@+id/appwidget_timezone_progress" android:visibility="gone"
-                    android:layout_width="wrap_content" android:layout_height="match_parent"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end|right"/>
 
             </FrameLayout>
