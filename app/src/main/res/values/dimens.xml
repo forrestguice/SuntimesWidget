@@ -125,6 +125,6 @@
     <dimen name="prefIcon_size">24dp</dimen>
     <dimen name="helpIcon_size">24dp</dimen>
 
-    <dimen name="equinoxItem_height">52dp</dimen>
+    <dimen name="equinoxItem_height">56dp</dimen>
 
 </resources>
