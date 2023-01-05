@@ -759,7 +759,7 @@ public class SuntimesUtils
         return calendarDateDisplayString(context, calendar, false);
     }
     public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar, boolean showYear) {
-        return calendarDateDisplayString(context, calendar, false, false);
+        return calendarDateDisplayString(context, calendar, showYear, false);
     }
     public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar, boolean showYear, boolean abbreviate)
     {
