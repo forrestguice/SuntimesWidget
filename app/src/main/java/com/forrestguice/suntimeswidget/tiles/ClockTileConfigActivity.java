@@ -39,6 +39,7 @@ public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
         hideAppearanceSettings();
         showOptionLabels(false);
         showOptionTitle(false);
+        showOptionShowDate(false);
         setConfigActivityTitle(getString(R.string.app_name_clocktile));
         moveSectionToTop(R.id.appwidget_timezone_layout);
     }
