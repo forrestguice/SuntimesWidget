@@ -27,15 +27,19 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
+import android.os.Handler;
 import android.service.quicksettings.Tile;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -113,8 +117,49 @@ public class ClockTileService extends SuntimesTileService
             }
         });
 
-        return dialog.create();
+        final Dialog d = dialog.create();
+        d.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog)
+            {
+                handler = new Handler();
+                updateTask = updateTask(d);
+                handler.postDelayed(updateTask, UPDATE_RATE);
+            }
+        });
+        d.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (handler != null && updateTask != null) {
+                    handler.removeCallbacks(updateTask);
+                }
+            }
+        });
+        return d;
     }
+
+    protected void updateDialogViews(Context context, Dialog dialog)
+    {
+        dialog.setTitle(formatDialogTitle(context));
+        TextView message = (TextView) dialog.findViewById(android.R.id.message);
+        if (message != null) {
+            message.setText(formatDialogMessage(context));
+        }
+    }
+
+    private Handler handler;
+    private Runnable updateTask;
+    protected final Runnable updateTask(final Dialog dialog)
+    {
+        return new Runnable() {
+            @Override
+            public void run() {
+                updateDialogViews(getApplicationContext(), dialog);
+                handler.postDelayed(this, UPDATE_RATE);
+            }
+        };
+    }
+    public static final int UPDATE_RATE = 3000;     // update rate: 3s
 
     protected SpannableStringBuilder formatDialogTitle(Context context)
     {
