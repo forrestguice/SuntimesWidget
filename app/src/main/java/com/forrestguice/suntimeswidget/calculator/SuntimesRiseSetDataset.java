@@ -255,7 +255,7 @@ public class SuntimesRiseSetDataset
                         nearest = event;
                         isRising = (i % 2 == 0);
                         mode = ((data.dataMode() != null) ? data.dataMode() : data.timeMode());
-                        Log.d("DEBUG", "findNextEvent: mode is: " + mode);
+                        //Log.d("DEBUG", "findNextEvent: mode is: " + mode);
                     }
                 }
             }

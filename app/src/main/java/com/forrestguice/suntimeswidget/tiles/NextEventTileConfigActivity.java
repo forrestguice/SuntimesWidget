@@ -30,8 +30,6 @@ public class NextEventTileConfigActivity extends ClockTileConfigActivity
         super();
     }
 
-    public static final int APPWIDGET_ID = -1;
-
     @Override
     protected void initViews( Context context )
     {

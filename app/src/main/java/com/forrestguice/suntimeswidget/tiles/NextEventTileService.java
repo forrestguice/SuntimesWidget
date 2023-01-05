@@ -20,10 +20,8 @@ package com.forrestguice.suntimeswidget.tiles;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.service.quicksettings.Tile;
@@ -37,10 +35,8 @@ import android.view.ContextThemeWrapper;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
 import java.util.TimeZone;

@@ -2220,7 +2220,7 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE, mode.name());
-        Log.d("DEBUG", "save time mode: " + mode.name());
+        //Log.d("DEBUG", "save time mode: " + mode.name());
         prefs.apply();
     }
     public static RiseSetDataMode loadTimeModePref(Context context, int appWidgetId)
@@ -2240,7 +2240,7 @@ public class WidgetSettings
                 mode = PREF_DEF_GENERAL_TIMEMODE;
             }
         }
-        Log.d("DEBUG", "load time mode: " + mode.name());
+        //Log.d("DEBUG", "load time mode: " + mode.name());
         return mode;
     }
     public static void deleteTimeModePref(Context context, int appWidgetId)
