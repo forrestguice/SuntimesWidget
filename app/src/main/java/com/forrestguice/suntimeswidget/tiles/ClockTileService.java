@@ -24,13 +24,19 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.service.quicksettings.Tile;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.view.ContextThemeWrapper;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -89,48 +95,10 @@ public class ClockTileService extends SuntimesTileService
         initLocale(context);
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
 
-        TimeZone timezone = timezone(context);
-        Location location = location(context);
-        Calendar now = now(context);
-
-        WidgetSettings.TimeFormatMode formatMode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
-        String dateDisplay = utils.calendarDateDisplayString(context, now).toString();
-        String timeDisplay = utils.calendarTimeShortDisplayString(context, now, false, formatMode).toString();
-        String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, timezone);
-        boolean isLocalTime = isLocalTime(timezone.getID());
-
-        String sunriseDisplay = null, sunsetDisplay = null;
-        SuntimesRiseSetData2 data = initData(context);
-        if (data != null)
-        {
-            Calendar sunrise = data.sunriseCalendarToday();
-            sunriseDisplay = utils.calendarTimeShortDisplayString(context, sunrise, false, formatMode).toString();
-
-            Calendar sunset = data.sunsetCalendarToday();
-            sunsetDisplay = utils.calendarTimeShortDisplayString(context, sunset, false, formatMode).toString();
-        }
-
-
-        String title = timeDisplay;
-        String message = tzDisplay + (isLocalTime ? "\n" + location.getLabel() : "");
-
-        message += "\n\n" + dateDisplay;
-        if (sunriseDisplay != null) {
-            message += "\n" + sunriseDisplay + " sunrise";   // TODO
-        }
-        if (sunsetDisplay != null) {
-            message += ", " + sunsetDisplay + " sunset" ;    // TODO
-        }
-        
-        int[] attrs = { R.attr.icActionTime, R.attr.icActionDst };
-        TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
-        int icon = a.getResourceId(isLocalTime ? 1 : 0, R.drawable.ic_action_time);
-        a.recycle();
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(contextWrapper, android.R.style.ThemeOverlay_Material_Dialog);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setIcon(ContextCompat.getDrawable(context, icon));
+        dialog.setTitle(formatDialogTitle(context));
+        dialog.setMessage(formatDialogMessage(context));
+        dialog.setIcon(dialogIcon(context));
 
         dialog.setNeutralButton(context.getString(R.string.configAction_settings), new DialogInterface.OnClickListener() {
             @Override
@@ -146,6 +114,68 @@ public class ClockTileService extends SuntimesTileService
         });
 
         return dialog.create();
+    }
+
+    protected SpannableStringBuilder formatDialogTitle(Context context)
+    {
+        Calendar now = now(context);
+        WidgetSettings.TimeFormatMode formatMode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+        String timeString = utils.calendarTimeShortDisplayString(context, now, false, formatMode).toString();
+        SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
+        timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
+
+        SpannableStringBuilder title = new SpannableStringBuilder();
+        title.append(timeDisplay);
+        return title;
+    }
+
+    protected SpannableStringBuilder formatDialogMessage(Context context)
+    {
+        TimeZone timezone = timezone(context);
+        Location location = location(context);
+        String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, timezone);
+        boolean isLocalTime = isLocalTime(timezone.getID());
+
+        String dateString = utils.calendarDateDisplayString(context, now(context), true).toString();
+        SpannableString dateDisplay = SuntimesUtils.createBoldSpan(null, dateString, dateString);
+        dateDisplay = SuntimesUtils.createRelativeSpan(dateDisplay, dateString, dateString, 1.25f);
+
+        SpannableStringBuilder message = new SpannableStringBuilder(tzDisplay);
+        message.append((isLocalTime ? "\n" + location.getLabel() : ""));
+        message.append("\n\n");
+        message.append(dateDisplay);
+        return message;
+
+        //String sunriseDisplay = null, sunsetDisplay = null;
+        //SuntimesRiseSetData2 data = initData(context);
+        //if (data != null)
+        //{
+        //    Calendar sunrise = data.sunriseCalendarToday();
+        //    sunriseDisplay = utils.calendarTimeShortDisplayString(context, sunrise, false, formatMode).toString();
+        //    Calendar sunset = data.sunsetCalendarToday();
+        //    sunsetDisplay = utils.calendarTimeShortDisplayString(context, sunset, false, formatMode).toString();
+        //}
+
+        /**message += "\n\n" + dateDisplay;
+         if (sunriseDisplay != null) {
+         message += "\n" + sunriseDisplay + " sunrise";   // TODO
+         }
+         if (sunsetDisplay != null) {
+         message += ", " + sunsetDisplay + " sunset" ;    // TODO
+         }*/
+    }
+
+    protected Drawable dialogIcon(Context context)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
+        TimeZone timezone = timezone(context);
+        boolean isLocalTime = isLocalTime(timezone.getID());
+
+        int[] attrs = { R.attr.icActionTime, R.attr.icActionDst };
+        TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
+        int icon = a.getResourceId(isLocalTime ? 1 : 0, R.drawable.ic_action_time);
+        a.recycle();
+        return ContextCompat.getDrawable(context, icon);
     }
 
 }
