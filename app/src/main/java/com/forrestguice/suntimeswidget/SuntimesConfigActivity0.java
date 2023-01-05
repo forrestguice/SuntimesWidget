@@ -2042,6 +2042,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void hideTimeZoneSettings()
+    {
+        View settings = findViewById(R.id.appwidget_timezone_layout);
+        if (settings != null) {
+            settings.setVisibility(View.GONE);
+        }
+    }
+
     protected void hideAppearanceSettings()
     {
         View settings = findViewById(R.id.appwidget_appearance_layout);

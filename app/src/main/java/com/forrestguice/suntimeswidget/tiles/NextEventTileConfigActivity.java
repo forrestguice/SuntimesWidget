@@ -37,6 +37,7 @@ public class NextEventTileConfigActivity extends ClockTileConfigActivity
     {
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.app_name_eventtile));
+        hideTimeZoneSettings();
     }
 
 }
