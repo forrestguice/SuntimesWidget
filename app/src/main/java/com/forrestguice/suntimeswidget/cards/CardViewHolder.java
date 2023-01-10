@@ -351,7 +351,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
         lightmapOptions.option_lmt = true;
         lightmap.setData(options.showLightmap ? sun : null);
-        Log.d("DEBUG", "bindDataToPosition: " + sun.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
+        //Log.d("DEBUG", "bindDataToPosition: " + sun.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
 
         toggleNextPrevButtons(position);
     }

@@ -174,17 +174,17 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     public void updateViews(@Nullable SuntimesRiseSetDataset data)
     {
         setData(data);
-        Log.d("DEBUG", "updateViews: " + data.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
+        //Log.d("DEBUG", "updateViews: " + data.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
 
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
-            Log.d("DEBUG", "updateViews: canceling existing task..");
+            //Log.d("DEBUG", "updateViews: canceling existing task..");
             //Log.w(LightMapView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(LightMapView.this.hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
         } //else Log.d(LightMapView.class.getSimpleName(), "updateViews: starting task " + data);
 
         if (getWidth() == 0 || getHeight() == 0) {
-            Log.d(LightMapView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
+            Log.w(LightMapView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
             return;
         }
 
@@ -482,7 +482,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             }
             colors.offsetMinutes -= colors.anim_frameOffsetMinutes;
 
-            Log.d("DEBUG", "doInBackground: done: " + (data != null ? data.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR) : "null"));
+            //Log.d("DEBUG", "doInBackground: done: " + (data != null ? data.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR) : "null"));
             return frame;
         }
 
