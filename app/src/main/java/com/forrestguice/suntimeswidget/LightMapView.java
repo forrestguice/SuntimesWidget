@@ -55,7 +55,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
-    private LightMapTask drawTask;
+    private LightMapTask drawTask = null;
 
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
@@ -77,6 +77,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         super(context, attribs);
         init(context);
     }
+
+    public void setUseMainThread(boolean value) {
+        useMainThread = value;
+    }
+    private boolean useMainThread = false;
 
     /**
      * @param context a context used to access resources
@@ -183,12 +188,20 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return;
         }
 
-        drawTask = new LightMapTask();
-        drawTask.setListener(drawTaskListener);
-        drawTask.execute(data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes);
+        if (useMainThread)
+        {
+            LightMapTask draw = new LightMapTask();
+            Bitmap b = draw.makeBitmap(data, getWidth(), getHeight(), colors);
+            drawTaskListener.onFinished(b);
+
+        } else {
+            drawTask = new LightMapTask();
+            drawTask.setListener(drawTaskListener);
+            drawTask.execute(data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes);
+        }
     }
 
-    private LightMapTaskListener drawTaskListener = new LightMapTaskListener() {
+    private final LightMapTaskListener drawTaskListener = new LightMapTaskListener() {
         @Override
         public void onStarted() {
             //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onStarted: " + Integer.toHexString(LightMapView.this.hashCode()));

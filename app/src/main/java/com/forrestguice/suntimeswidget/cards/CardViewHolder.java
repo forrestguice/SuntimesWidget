@@ -182,6 +182,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
 
         lightmap = (LightMapView) view.findViewById(R.id.info_time_lightmap);
+        lightmap.setUseMainThread(true);
 
         lightmapLayout = view.findViewById(R.id.info_time_lightmap_layout);
         lightmapLayout.setClickable(true);
