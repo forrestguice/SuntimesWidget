@@ -32,6 +32,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.widget.TextView;
 
@@ -115,22 +116,39 @@ public class ClockTileService extends SuntimesTileService
         final Dialog d = dialog.create();
         d.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onShow(DialogInterface dialog)
-            {
-                handler = new Handler();
-                updateTask = updateTask(d);
-                handler.postDelayed(updateTask, UPDATE_RATE);
+            public void onShow(DialogInterface dialog) {
+                startUpdateTask(d);
             }
         });
         d.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (handler != null && updateTask != null) {
-                    handler.removeCallbacks(updateTask);
-                }
+                stopUpdateTask();
             }
         });
         return d;
+    }
+
+    protected void startUpdateTask(Dialog dialog)
+    {
+        Log.d("DEBUG", "startUpdateTask");
+        if (handler == null) {
+            handler = new Handler();
+        }
+        if (updateTask != null) {
+            stopUpdateTask();
+        }
+        updateTask = updateTask(dialog);
+        handler.postDelayed(updateTask, UPDATE_RATE);
+    }
+
+    protected void stopUpdateTask()
+    {
+        Log.d("DEBUG", "stopUpdateTask");
+        if (handler != null && updateTask != null) {
+            handler.removeCallbacks(updateTask);
+            updateTask = null;
+        }
     }
 
     protected void updateDialogViews(Context context, Dialog dialog)
@@ -148,7 +166,8 @@ public class ClockTileService extends SuntimesTileService
     {
         return new Runnable() {
             @Override
-            public void run() {
+            public void run()
+            {
                 updateDialogViews(getApplicationContext(), dialog);
                 handler.postDelayed(this, UPDATE_RATE);
             }
