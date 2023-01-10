@@ -5,40 +5,35 @@
 * adds "High Contrast" app themes (#492, #615); changes default theme to "System default" (#666).
 * adds "Text Size" setting; display "small", "normal", "large", or "extra-large" text (#492, #615, #622, #656).
 * adds support for "Quick Settings" tiles; show information in the settings tray; "clock tile" and "next event tile" (#399).
+* adds support for "Cross-Quarter Days" (#551); solstice and equinox midpoints.
 * adds support for custom sun elevation events. Show custom events from a widget, or use them to schedule alarms and notifications (#522, #537, #598).
-* adds support for cross-quarter dates (#551); solstice and equinox midpoints.
-* adds "date" widget; show the date using different calendars (Coptic, Ethiopian, Gregorian, Hebrew, Julian, Solar Hijiri, Thai Solar) (#398).
+* adds "date" widget; show the date using different calendars (Coptic, Ethiopian, Gregorian, Hebrew, Julian, Solar Hijiri, Thai Solar) (#398); adds "date" option to clock widget (Gregorian).
 * adds support for "Quick Notifications" (#552); notifications are automatically dismissed after a few moments.
-* adds alarm "note"; user-defined text as part of notifications and other UI; supports %s substitutions.
+* adds alarm "note"; show user-defined text as part of notifications and other UI; supports %s substitutions.
 * adds alarm "snooze limit" option; defaults to "no limit".
-* adds support for alarm challenges; dismiss alarms after solving "easy math" problems.
-* adds support for alarm challenge addons; e.g. dismiss alarms with an NFC tag (https://github.com/forrestguice/SuntimesNFC).
+* adds support for alarm challenges (and addons); dismiss alarms after solving "easy math" problems; dismiss alarms with an NFC tag (https://github.com/forrestguice/SuntimesNFC).
 * adds alarm "reminder" option (#628), and "reminder action" option; notifications may perform a custom action when dismissed.
 * increments alarm database version 3 -> 4; adds "note", "flags", "actionID2", and "actionID3" columns.
 * enhances alarm cards; list UI now indicates state, animates sounding and snoozing states, and displays action buttons when applicable.
-* adds alarm list sort options; "Enabled First", "Show Offsets" (#611).
-* adds alarm list "Clear Selection" button.
-* adds "Altitude Graph" to Sun Position dialog (#625).
+* adds alarm list sort options; "Enabled First", "Show Offsets" (#611); adds "Clear Selection" button.
+* adds "Altitude Graph" to Sun Position dialog; adds 3x2 "Altitude Graph" to sun position widgets (#625).
 * adds "Seek Altitude" to Sun Position dialog (#625); jump to sunrise, sunset, noon, or user-defined sun elevation.
+* changes the main card to display moon illumination as a range (#384, #572).
 * adds Moon dialog playback controls; step forward/back by 5m increments.
-* enhances Moon dialog rise/set view (swipe-able, seeks forward/back); adds "lunar noon" and "lunar midnight".
+* adds "lunar noon" and "lunar midnight" to Moon dialog; enhances rise/set view (swipe-able, seeks forward/back).
+* adds "moon day" widget (#345); show number of days since the new moon.
 * adds "Emphasize Field" to User Interface settings; enlarges text displayed by main table (#622, #615).
 * removes "Set Date" dialog; replaced with "View Date" (#613); cards now seek to date instead of (re)centering.
 * enhances solstice/equinox card (swipe-able, cross-quarter dates).
-* changes the main card to display moon illumination as a range (#384, #572).
-* adds "moon day" widget (#345); show number of days since the new moon.
-* adds 3x2 "altitude graph" to sun position widgets (#625).
 * adds 3x1 sun widget (#423); an expanded version of the 2x1 widget.
-* adds "date" option to clock widget (Gregorian).
 * adds "use app time zone" widget option.
-* adds TimeZone dialog preview; displays current time with the selected time zone.
-* replaces TimeZone dialog sort action mode with a context menu.
+* adds TimeZone dialog preview; replaces TimeZone dialog sort action mode with a context menu.
 * misc dialog improvements; changes to Location, Date, and TimeZone dialog layouts.
 * misc settings; "object shadow" moved from "General" to "User Interface".
 * fixes bug "sun/moon drop-downs show wrong data" (#613).
 * fixes bug "sun position is out of alignment" (#601).
 * fixes bug where already enabled alarms fail to reschedule after modifying alarm details (#TODO).
-* fixes tooltip help (now available for all buttons); press and hold buttons to display help.
+* fixes tooltip help (now available for all buttons); press and hold to display help.
 
 ### v0.14.12 (2022-12-22)
 * adds a boot notification if battery optimization is enabled (and alarms are active).
