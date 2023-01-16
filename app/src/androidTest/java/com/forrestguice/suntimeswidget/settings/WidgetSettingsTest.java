@@ -890,7 +890,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteTrackingLevelPref(context, appWidgetId);
         int level0 = WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
         assertEquals(WidgetSettings.PREF_DEF_GENERAL_TRACKINGLEVEL, level0);
-        assertEquals(0, WidgetSettings.PREF_DEF_GENERAL_TRACKINGLEVEL);
+        assertEquals(10, WidgetSettings.PREF_DEF_GENERAL_TRACKINGLEVEL);
     }
 
     @Test
