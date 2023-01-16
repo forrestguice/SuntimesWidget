@@ -1271,13 +1271,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
-    protected int insertEventAliasIntoTimeModeAdapter(Context context, String eventID)
+    protected int insertEventAliasIntoTimeModeAdapter(@NonNull Context context, String eventID)
     {
         TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
         if (adapter != null)
         {
-            for (int i=0; i<adapter.getCount(); i++) {
-                if (adapter.getItem(i).name().equals(eventID)) {
+            for (int i=0; i<adapter.getCount(); i++)
+            {
+                WidgetSettings.RiseSetDataMode item = adapter.getItem(i);
+                if (item != null && item.name().equals(eventID)) {
                     return i;
                 }
             }
@@ -2750,16 +2752,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         @Override
         protected String getSummaryForMode(WidgetSettings.RiseSetDataMode item)
         {
+            Context context = contextRef.get();
             WidgetSettings.TimeMode timeMode = item.getTimeMode();
             if (timeMode != null)
             {
                 Double angle = timeMode.angle();
                 return angle != null ? utils.formatAsDegrees(angle, 1) : null;
 
-            } else if (EventSettings.hasEvent(contextRef.get(), item.name())) {
-                String eventID = EventSettings.getEventUriLastPathSegment(contextRef.get(), item.name());
+            } else if (context != null && EventSettings.hasEvent(context, item.name())) {
+                String eventID = EventSettings.getEventUriLastPathSegment(context, item.name());
                 AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(eventID);
-                return utils.formatAsDegrees(event.getAngle(), 1);
+                return ((event != null) ? utils.formatAsDegrees(event.getAngle(), 1) : null);
 
             } else return null;
         }

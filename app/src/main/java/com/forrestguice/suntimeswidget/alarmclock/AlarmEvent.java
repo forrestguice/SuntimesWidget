@@ -170,13 +170,13 @@ public class AlarmEvent
             return phrase;
         }
 
-        public int getIcon(Context context) {
+        public int getIcon(@Nullable Context context) {
             return (event != null)
                     ? EventIcons.getResID(context, event.getIcon(), R.attr.icActionExtension)
                     : EventIcons.getIconResID(context, EventIcons.getIconTag(context, uri));
         }
 
-        public Integer getColor(Context context) {
+        public Integer getColor(@Nullable Context context) {
             if (event == null) {
                 return EventIcons.getIconTint(context, EventIcons.getIconTag(context, uri));
             } else return null;

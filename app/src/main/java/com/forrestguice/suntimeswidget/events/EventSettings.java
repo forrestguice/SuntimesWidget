@@ -194,7 +194,7 @@ public class EventSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static String suggestEventID(Context context)
+    public static String suggestEventID(@NonNull Context context)
     {
         String id;
         int i = 0;
@@ -205,11 +205,11 @@ public class EventSettings
         return id;
     }
 
-    public static String suggestEventLabel(Context context, @Nullable String eventID) {
+    public static String suggestEventLabel(@NonNull Context context, @Nullable String eventID) {
         return context.getString(R.string.editevent_dialog_label_suggested);
     }
 
-    public static EventAlias saveEvent(Context context, @NonNull AlarmEventProvider.EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
+    public static EventAlias saveEvent(@NonNull Context context, @NonNull AlarmEventProvider.EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
     {
         if (id == null) {
             id = suggestEventID(context);
@@ -356,7 +356,7 @@ public class EventSettings
         prefs.commit();
     }
 
-    public static boolean hasEvent(Context context, @NonNull String id)
+    public static boolean hasEvent(@NonNull Context context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";

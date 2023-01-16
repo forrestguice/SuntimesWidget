@@ -71,7 +71,7 @@ public class EventIcons
             default: return 0;
         }
     }
-    public static int getIconResID(Context context, String tag)
+    public static int getIconResID(@Nullable Context context, String tag)
     {
         if (tag != null)
         {
@@ -94,7 +94,7 @@ public class EventIcons
                     Log.d("DEBUG", "suffix::" + suffix);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                if (EventSettings.hasEvent(context, eventID)) {
+                if (context != null && EventSettings.hasEvent(context, eventID)) {
                     return (suffix == null ? R.drawable.svg_season
                             : (AlarmEventProvider.ElevationEvent.SUFFIX_RISING.equals(suffix) ? R.drawable.svg_sunrise : R.drawable.svg_sunset));
                 } else {
@@ -117,7 +117,7 @@ public class EventIcons
     }
 
     @SuppressLint("ResourceType")
-    public static Integer getIconTint(Context context, SolarEvents event)
+    public static Integer getIconTint(@Nullable Context context, SolarEvents event)
     {
         switch (event)
         {
@@ -143,7 +143,7 @@ public class EventIcons
             default: return null;
         }
     }
-    public static Integer getIconTint(Context context, String tag) {
+    public static Integer getIconTint(@Nullable Context context, String tag) {
         if (tag != null)
         {
             if (tag.startsWith(TAG_ALIAS)) {
@@ -151,7 +151,7 @@ public class EventIcons
                 if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                return EventSettings.hasEvent(context, eventID) ? EventSettings.getColor(context, eventID) : null;
+                return ((context != null && EventSettings.hasEvent(context, eventID)) ? EventSettings.getColor(context, eventID) : null);
             }
         }
         return null;
@@ -215,22 +215,30 @@ public class EventIcons
         return eventIcon;
     }
 
-    public static int getResID(Context context, int attr, int defResID)
+    public static int getResID(@Nullable Context context, int attr, int defResID)
     {
-        int[] attrs = {attr};
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        int resID = a.getResourceId(0, defResID);
-        a.recycle();
-        return resID;
+        if (context != null)
+        {
+            int[] attrs = {attr};
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            int resID = a.getResourceId(0, defResID);
+            a.recycle();
+            return resID;
+        }
+        return defResID;
     }
 
-    public static int getColor(Context context, int attr, int defColor)
+    public static int getColor(@Nullable Context context, int attr, int defColor)
     {
-        int[] attrs = {attr};
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        int color = ContextCompat.getColor(context, a.getResourceId(0, defColor));
-        a.recycle();
-        return color;
+        if (context != null)
+        {
+            int[] attrs = {attr};
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            int color = ContextCompat.getColor(context, a.getResourceId(0, defColor));
+            a.recycle();
+            return color;
+        }
+        return defColor;
     }
 
     public static void tintDrawable(Drawable d, int color)
@@ -246,7 +254,7 @@ public class EventIcons
     public static final String TAG_ALIAS = "alias_";
     public static final String TAG_TZ = "tz_";
 
-    public static final String getIconTag(Context context, @Nullable String uriString)
+    public static String getIconTag(@Nullable Context context, @Nullable String uriString)
     {
         if (uriString == null) {
             return EventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;
@@ -263,7 +271,7 @@ public class EventIcons
                     suffix = eventID.substring(eventID.length()-1);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                if (EventSettings.hasEvent(context, eventID)) {
+                if (context != null && EventSettings.hasEvent(context, eventID)) {
                     tag = EventIcons.TAG_ALIAS + eventID + suffix;
                 } else tag = null;
             } else tag = EventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;
@@ -272,7 +280,7 @@ public class EventIcons
         return tag;
     }
 
-    public static final String getIconTag(Context context, AlarmClockItem item)
+    public static String getIconTag(@Nullable Context context, AlarmClockItem item)
     {
         return (item.timezone != null)
                 ? EventIcons.TAG_TZ + item.timezone
