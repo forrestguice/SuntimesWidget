@@ -495,7 +495,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
     protected boolean showContextMenu(final Context context, View view, final WidgetSettings.SolsticeEquinoxMode mode,  final long datetime)
     {
-        PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
+        PopupMenu menu = new PopupMenu(context, view, Gravity.START);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.equinoxcontext, menu.getMenu());
         menu.setOnMenuItemClickListener(onContextMenuClick);
