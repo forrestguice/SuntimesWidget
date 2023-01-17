@@ -74,7 +74,7 @@ public class EquinoxCardView extends LinearLayout
 
     private void applyAttributes(Context context, AttributeSet attrs)
     {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EquinoxView, 0, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EquinoxCardView, 0, 0);
         try {
             setMinimized(a.getBoolean(R.styleable.EquinoxView_minimized, false));
         } finally {

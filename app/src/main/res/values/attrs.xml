@@ -188,6 +188,9 @@
     <declare-styleable name="EquinoxView">
         <attr name="minimized" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="EquinoxCardView">
+        <attr name="minimized" />
+    </declare-styleable>
 
     <declare-styleable name="MoonPhaseView">
         <attr name="illuminationAtLunarNoon" format="boolean" />
