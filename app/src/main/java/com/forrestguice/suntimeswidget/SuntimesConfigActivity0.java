@@ -1191,15 +1191,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             button_timeModeHelp.setOnClickListener(new View.OnClickListener()
             {
                 @Override
-                public void onClick(View v)
-                {
-                    HelpDialog helpDialog = new HelpDialog();
-                    String help0 = getString(R.string.help_general_actualTime);
-                    String help1 = getString(R.string.help_general_twilight);
-                    String help2 = getString(R.string.help_general_bluehour);
-                    String help3 = getString(R.string.help_general_goldhour);
-                    helpDialog.setContent(getString(R.string.help_general4, help0, help1, help2, help3));
-                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                public void onClick(View v) {
+                    showTimeModeHelp();
                 }
             });
             button_timeModeHelp.setVisibility(View.GONE);
@@ -1247,7 +1240,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     return true;
 
                 case R.id.action_help:
-                    button_timeModeHelp.callOnClick();
+                    showTimeModeHelp();
                     return true;
 
                 default:
@@ -1255,6 +1248,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             }
         }
     };
+
+    protected void showTimeModeHelp()
+    {
+        HelpDialog helpDialog = new HelpDialog();
+        String help0 = getString(R.string.help_general_actualTime);
+        String help1 = getString(R.string.help_general_twilight);
+        String help2 = getString(R.string.help_general_bluehour);
+        String help3 = getString(R.string.help_general_goldhour);
+        helpDialog.setContent(getString(R.string.help_general4, help0, help1, help2, help3));
+        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+    }
 
     protected Intent eventEditorIntent(Context context)
     {

@@ -100,14 +100,10 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
 
         if (button_timeModeHelp != null)
         {
-            button_timeModeHelp.setOnClickListener(new View.OnClickListener()
-            {
+            button_timeModeHelp.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
-                    HelpDialog helpDialog = new HelpDialog();
-                    helpDialog.setContent(getString(R.string.help_general2, getString(R.string.help_general_timeMode2), getString(R.string.help_general_timeMode2_1)));
-                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                public void onClick(View v) {
+                    showTimeModeHelp();
                 }
             });
             button_timeModeHelp.setVisibility(View.VISIBLE);
@@ -131,6 +127,14 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
                 }
             });
         }
+    }
+
+    @Override
+    protected void showTimeModeHelp()
+    {
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(getString(R.string.help_general2, getString(R.string.help_general_timeMode2), getString(R.string.help_general_timeMode2_1)));
+        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
     @Override
