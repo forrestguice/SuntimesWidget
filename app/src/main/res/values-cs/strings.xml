@@ -950,7 +950,7 @@
         <item quantity="one">%s den</item>
         <item quantity="other">%s dní</item>
         <item quantity="few">%s dny</item>
-        <item quantity="many">%s dne</item>
+        <!--<item quantity="many">%s dne</item>-->
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
     <string name="configLabel_alarmMisc">Různé</string>
