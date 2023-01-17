@@ -82,6 +82,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -483,7 +484,7 @@ public class AlarmClockActivity extends AppCompatActivity
             protected boolean passesFilter(Cursor cursor, long rowID) {
                 int index = cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
                 String label = (index >= 0) ? cursor.getString(index) : null;
-                return (label != null && label.toLowerCase().contains(search.toLowerCase()));
+                return (label != null && label.toLowerCase(Locale.ROOT).contains(search.toLowerCase(Locale.ROOT)));
             }
         };
     }
