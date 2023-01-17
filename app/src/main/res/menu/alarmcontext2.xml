@@ -57,13 +57,13 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 
                 <item android:id="@+id/configAlarmDismissChallenge"
                     android:title="@string/configAction_configAlarmDismissChallenge"
-                    android:icon="?attr/icActionSettings"
-                    app:showAsAction="never" />
+                    android:icon="?attr/icActionSettings" android:visible="false" android:enabled="false"
+                    app:showAsAction="never" />   <!-- TODO -->
 
                 <item android:id="@+id/testAlarmDismissChallenge"
-                    android:title="@string/configAction_testAlarmDismissChallenge"
+                    android:title="@string/configAction_testAlarmDismissChallenge" android:visible="false" android:enabled="false"
                     android:icon="?attr/icActionPlay"
-                    app:showAsAction="never" />
+                    app:showAsAction="never" />   <!-- TODO -->
 
             </menu>
         </item>
