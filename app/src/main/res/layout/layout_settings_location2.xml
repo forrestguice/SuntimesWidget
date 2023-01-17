@@ -97,7 +97,7 @@
                     <EditText android:id="@+id/appwidget_location_name"
                               android:layout_width="fill_parent" android:layout_height="wrap_content"
                               android:textAppearance="?android:attr/textAppearanceSmall"
-                              android:hint="@string/configHint_location_name" android:enabled="false"
+                              android:hint="@string/configHint_location_name" android:enabled="false" android:inputType="text"
                               android:paddingLeft="5dp" android:paddingRight="5dp"
                         android:layout_gravity="center_vertical" />
 
