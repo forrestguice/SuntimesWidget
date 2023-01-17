@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -91,6 +92,7 @@ public abstract class SunPosLayout extends PositionLayout
         return sunPosition;
     }
 
+    @TargetApi(16)
     protected void scaleLabels(Context context, RemoteViews views)
     {
         int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / 4)};

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -87,6 +88,7 @@ public class SunLayout_2x1_0 extends SunLayout
         return adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
     }
 
+    @TargetApi(16)
     public void scaleViews(Context context, int appWidgetId, RemoteViews views, float[] adjustedSizeSp)
     {
         if (adjustedSizeSp[0] > timeSizeSp)
