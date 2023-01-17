@@ -558,6 +558,7 @@ public class AlarmSettings
      * Requires permission `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`
      */
     @TargetApi(23)
+    @SuppressLint("BatteryLife")
     public static Intent getRequestIgnoreBatteryOptimizationIntent(Context context) {
         return new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + context.getPackageName()));
     }
