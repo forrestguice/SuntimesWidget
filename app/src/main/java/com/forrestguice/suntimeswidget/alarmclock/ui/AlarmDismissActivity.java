@@ -384,7 +384,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     public void dismissAlarmAfterChallenge(Context context, View v)
     {
-        AlarmSettings.DismissChallenge challenge = alarm.getDismissChallenge(context);
+        AlarmSettings.DismissChallenge challenge = (alarm != null ? alarm.getDismissChallenge(context) : AlarmSettings.DismissChallenge.NONE);
         if (isTesting) {
             Log.d("DEBUG", "dismissAlarmAfterChallenge: testChallengeID: " + testChallengeID);
             challenge = AlarmSettings.DismissChallenge.valueOf(testChallengeID, AlarmSettings.DismissChallenge.ADDON);
