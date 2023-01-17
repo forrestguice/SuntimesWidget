@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="start" android:layout_margin="8dp" android:layout_gravity="start"
                 android:textAppearance="?android:attr/textAppearanceMedium" android:textStyle="bold"
-                android:text="Suntimes is free and open-source software." />
+                android:text="@string/app_license_about" />
 
             <TextView
                 android:id="@+id/text2" android:textSize="?attr/text_size_small"
