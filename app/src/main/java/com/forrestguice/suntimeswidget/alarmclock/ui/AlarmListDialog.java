@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020-2022 Forrest Guice
+    Copyright (C) 2020-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -2046,7 +2046,11 @@ public class AlarmListDialog extends DialogFragment
 
         public void resetBackground()
         {
-            card.setBackground(null);
+            if (Build.VERSION.SDK_INT >= 16) {
+                card.setBackground(null);
+            } else {
+                card.setBackgroundDrawable(null);
+            }
             res_backgroundCurrent = -1;
             animatedBackground = false;
         }
@@ -2110,8 +2114,11 @@ public class AlarmListDialog extends DialogFragment
 
         public static void startAnimatedDrawable(Context context, AnimationDrawable animated, int enterFadeDuration, int exitFadeDuration)
         {
-            animated.setEnterFadeDuration(enterFadeDuration);
-            animated.setExitFadeDuration(exitFadeDuration);
+            if (Build.VERSION.SDK_INT >= 11)
+            {
+                animated.setEnterFadeDuration(enterFadeDuration);
+                animated.setExitFadeDuration(exitFadeDuration);
+            }
             animated.setOneShot(false);
             animated.setVisible(true, true);
             animated.stop();

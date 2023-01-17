@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2021 Forrest Guice
+    Copyright (C) 2021-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -355,7 +356,11 @@ public class AlarmEvent
         if (color != null)
         {
             Drawable eventIcon = EventIcons.getIconDrawable(context, iconRes, dimen[0], dimen[1], EventIcons.getIconScale((String)null), EventIcons.getIconDrawableInset(context, (String)null), color);
-            iconView.setBackground(eventIcon);
+            if (Build.VERSION.SDK_INT >= 16) {
+                iconView.setBackground(eventIcon);
+            } else {
+                iconView.setBackgroundDrawable(eventIcon);
+            }
         } else {
             iconView.setBackgroundResource(iconRes);
         }
