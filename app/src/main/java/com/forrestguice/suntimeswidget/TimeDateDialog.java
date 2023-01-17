@@ -199,7 +199,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
 
     @Nullable
     public String getDialogTitle() {
-        return getArguments().getString(KEY_DIALOG_TITLE, null);
+        return getArguments().getString(KEY_DIALOG_TITLE);
     }
     public void setDialogTitle(@Nullable String title) {
         getArguments().putString(KEY_DIALOG_TITLE, title);

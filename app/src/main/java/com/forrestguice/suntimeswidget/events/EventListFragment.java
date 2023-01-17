@@ -75,7 +75,7 @@ public class EventListFragment extends Fragment
         helper.setDisallowSelect(getArguments().getBoolean(EXTRA_NOSELECT, false));
         helper.initViews(getActivity(), v, savedState);
 
-        String preselectedEvent = getArguments().getString(EXTRA_SELECTED, null);
+        String preselectedEvent = getArguments().getString(EXTRA_SELECTED);
         if (preselectedEvent != null && !preselectedEvent.trim().isEmpty()) {
             helper.setSelected(preselectedEvent);
             helper.triggerActionMode();
