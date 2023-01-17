@@ -39,6 +39,7 @@
         android:id="@id/checkbox" android:enabled="false" android:visibility="invisible"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_margin="8dp" android:button="?attr/checkVisibility"
-        android:layout_alignParentEnd="true" android:layout_alignTop="@+id/icon_layout" android:layout_alignBottom="@+id/icon_layout" />
+        android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/icon_layout" android:layout_alignBottom="@+id/icon_layout" />
 
 </RelativeLayout>

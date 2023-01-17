@@ -134,7 +134,8 @@
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
                 android:hint="@string/editevent_dialog_id_hint" android:inputType="text"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
                 android:layout_gravity="center_vertical" />
 
             <android.support.v7.widget.AppCompatCheckBox
