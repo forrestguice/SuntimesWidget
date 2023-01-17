@@ -30,8 +30,8 @@
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
-    <string name="configAction_lineGraph">Altitude Graph</string>
-    <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->
+    <string name="configAction_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
+    <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
     <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
     <string name="configAction_moon">Moon</string>
     <string name="configAction_help">Help</string>
@@ -1780,6 +1780,13 @@
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+
+    <string name="seekAltitude_configHint">degrees</string>   <!-- TODO -->
+    <string name="seekAltitude_suffix">°∠</string>   <!-- TODO -->
+    <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>   <!-- TODO -->
+    <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>   <!-- TODO -->
+    <string name="seekAltitude_setting">@string/eventalias_title_tag_setting</string>   <!-- TODO -->
+    <string name="seekAltitude_setting_contentDescription">@string/sunset</string>   <!-- TODO -->
 
     <!-- Dialog: Moon -->
     <string name="moon_dialog_title">@string/configAction_moon</string>

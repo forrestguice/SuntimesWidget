@@ -11,27 +11,26 @@
     <EditText android:id="@+id/edit_altitude"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:singleLine="true" android:maxLines="1" android:gravity="end" tools:text="45"
-        android:inputType="numberSigned" android:minWidth="72dp" />
+        android:inputType="numberSigned" android:minWidth="72dp"
+        android:hint="@string/seekAltitude_configHint" />
 
     <TextView android:id="@+id/suffix_altitude"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
-        android:text="°∠" />
+        android:text="@string/seekAltitude_suffix" />
 
     <Button
         android:id="@+id/button_rising"
         android:layout_width="48dp" android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground" android:layout_margin="8dp"
-        android:text="@string/eventalias_title_tag_rising" android:textColor="?attr/text_accentColor"
-        android:contentDescription="@string/sunrise"
-        android:src="?attr/icActionSearch" />
+        android:text="@string/seekAltitude_rising" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/seekAltitude_rising_contentDescription" />
 
     <Button
         android:id="@+id/button_setting"
         android:layout_width="48dp" android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground" android:layout_margin="8dp"
-        android:text="@string/eventalias_title_tag_setting" android:textColor="?attr/text_accentColor"
-        android:contentDescription="@string/sunset"
-        android:src="?attr/icActionSearch" />
+        android:text="@string/seekAltitude_setting" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/seekAltitude_setting_contentDescription" />
 
 </LinearLayout>
