@@ -1139,7 +1139,6 @@
     <style name="TooltipTextAppearance">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
