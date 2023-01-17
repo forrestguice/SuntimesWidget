@@ -42,29 +42,29 @@
             <menu>
 
                 <item android:id="@+id/graphOption_showGrid"
-                    android:title="Grid"
+                    android:title="@string/graph_option_grid"
                     android:checkable="true"
-                    app:showAsAction="never" />   <!-- TODO -->
+                    app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showLabels"
-                    android:title="Labels"
+                    android:title="@string/graph_option_labels"
                     android:checkable="true"
-                    app:showAsAction="never" />   <!-- TODO -->
+                    app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showAxis"
-                    android:title="Axis"
+                    android:title="@string/graph_option_axis"
                     android:checkable="true"
-                    app:showAsAction="never" />   <!-- TODO -->
+                    app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_fillPath"
-                    android:title="Filled Path"
+                    android:title="@string/graph_option_filledpath"
                     android:checkable="true"
-                    app:showAsAction="never" />   <!-- TODO -->
+                    app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showMoon"
-                    android:title="Show Moon"
+                    android:title="@string/graph_option_moon"
                     android:checkable="true"
-                    app:showAsAction="never" />   <!-- TODO -->
+                    app:showAsAction="never" />
 
             </menu>
         </item>

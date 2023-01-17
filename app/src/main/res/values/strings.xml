@@ -1781,6 +1781,12 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
+    <string name="graph_option_grid">Grid</string>              <!-- TODO -->
+    <string name="graph_option_labels">Labels</string>          <!-- TODO -->
+    <string name="graph_option_axis">Axis</string>              <!-- TODO -->
+    <string name="graph_option_filledpath">Filled Path</string> <!-- TODO -->
+    <string name="graph_option_moon">Show Moon</string>         <!-- TODO -->
+
     <string name="seekAltitude_configHint">degrees</string>   <!-- TODO -->
     <string name="seekAltitude_suffix">°∠</string>   <!-- TODO -->
     <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>   <!-- TODO -->
@@ -2108,6 +2114,7 @@
     <string name="app_source_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
     ]]></xliff:g></string>
+    <string name="app_license_about">Suntimes is free and open-source software.</string>   <!-- displayed by welcome dialog -->
     <string name="app_license_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/blob/master/LICENSE">github.com/forrestguice/SuntimesWidget/blob/master/LICENSE</a>
     ]]></xliff:g></string>
