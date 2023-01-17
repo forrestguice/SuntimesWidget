@@ -485,7 +485,7 @@
     <string name="actionMode_update">Обновить содержимое</string>           <!-- setting -->
     <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
     <string name="actionMode_config">Настроить виджет</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Действие из списка...</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Действие из списка…</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Перекл. на след. событие</string>      <!-- setting -->
     <!-- Note for translators: don't translate next 3 lines (launchType_...) -->
     <string name="launchType_activity">Activity</string>           <!-- setting -->

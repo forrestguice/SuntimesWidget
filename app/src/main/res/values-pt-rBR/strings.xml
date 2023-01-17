@@ -1233,7 +1233,7 @@
     <string name="worldmap_dialog_option_center_clear_msg">Centro do mapa redefinido para o padrão \n[%s]</string>
     <string name="worldmap_dialog_option_background">Definir Fundo</string>
     <string name="worldmap_dialog_option_background_clear">Limpar Fundo</string>
-    <string name="worldmap_dialog_option_background_warning0">A imagem possui proporção errada... esperado %2$s, mas encontrado %1$s!</string>    <!-- toast message; aspect ratio warning -->
+    <string name="worldmap_dialog_option_background_warning0">A imagem possui proporção errada… esperado %2$s, mas encontrado %1$s!</string>    <!-- toast message; aspect ratio warning -->
     <string name="worldmap_dialog_option_background_error0">Falha ao abrir fundo do mapa.</string>    <!-- toast message; io error -->
     <string name="worldmap_dialog_option_latitudes">Linhas Principais</string>
     <string name="worldmap_dialog_option_minorgrid">Gratícula</string>
