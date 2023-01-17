@@ -696,7 +696,11 @@ public class MoonRiseSetView1 extends LinearLayout
             this.eventID = eventID;
 
             Calendar event = MoonRiseSetEvent.getCalendarForEvent(data, eventID);
-            iconView.setBackground(getIconForEvent(eventID));
+            if (Build.VERSION.SDK_INT >= 16) {
+                iconView.setBackground(getIconForEvent(eventID));
+            } else {
+                iconView.setBackgroundDrawable(getIconForEvent(eventID));
+            }
             updateField(context, event, WidgetSettings.loadShowSecondsPref(context, 0));
             if (positionView.getVisibility() == VISIBLE && data != null)
             {

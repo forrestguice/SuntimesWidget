@@ -27,6 +27,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -188,7 +189,12 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         drawTask = new LineGraphTask();
         drawTask.setListener(drawTaskListener);
-        drawTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetMinutes);
+
+        if (Build.VERSION.SDK_INT >= 11) {
+            drawTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetMinutes);
+        } else {
+            drawTask.execute(data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetMinutes);
+        }
     }
 
     private LineGraphTaskListener drawTaskListener = new LineGraphTaskListener() {

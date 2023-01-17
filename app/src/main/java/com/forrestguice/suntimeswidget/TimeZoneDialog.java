@@ -142,7 +142,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public WidgetSettings.TimeFormatMode getTimeFormatMode()
     {
         try {
-            return WidgetSettings.TimeFormatMode.valueOf(getArguments().getString(KEY_TIMEFORMAT_MODE, WidgetSettings.TimeFormatMode.MODE_SYSTEM.name()));
+            String mode = getArguments().getString(KEY_TIMEFORMAT_MODE);
+            return ((mode != null) ? WidgetSettings.TimeFormatMode.valueOf(mode) : WidgetSettings.TimeFormatMode.MODE_SYSTEM);
         } catch (IllegalArgumentException e) {
             Log.e(getClass().getSimpleName(), "getTimeFormatMode: " + e);
             return WidgetSettings.TimeFormatMode.MODE_SYSTEM;

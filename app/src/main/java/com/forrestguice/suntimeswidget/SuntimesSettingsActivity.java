@@ -1894,7 +1894,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public static final int REQUEST_PERMISSION_POWEROFFALARMS = 100;
         protected boolean checkPermissions(Activity activity, boolean requestIfMissing)
         {
-            AlarmSettings.PowerOffAlarmInfo info = AlarmSettings.loadPowerOffAlarmInfo(getContext());
+            AlarmSettings.PowerOffAlarmInfo info = AlarmSettings.loadPowerOffAlarmInfo(activity);
             if (ContextCompat.checkSelfPermission(activity, info.getPermission()) != PackageManager.PERMISSION_GRANTED) {
                 if (requestIfMissing) {
                     ActivityCompat.requestPermissions(activity, new String[]{info.getPermission()}, REQUEST_PERMISSION_POWEROFFALARMS);
@@ -2462,6 +2462,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
+    @TargetApi(14)
     @Override
     public void startWithFragment(String fragmentName, Bundle args, Fragment resultTo, int resultRequestCode, @StringRes int titleRes, @StringRes int shortTitleRes)
     {
