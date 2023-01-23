@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;
@@ -39,14 +40,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -58,7 +57,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
@@ -72,8 +70,6 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
-import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
-import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -98,7 +94,6 @@ import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
@@ -146,6 +141,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_locationFromApp;
     protected CheckBox checkbox_tzFromApp;
     protected CheckBox checkbox_localizeHemisphere;
+    protected EditText edit_dayOffset;
 
     protected Spinner spinner_timeMode;
     protected ImageButton button_timeModeMenu;
@@ -525,6 +521,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_timezoneMode.setAdapter(createAdapter_timezoneMode());
             spinner_timezoneMode.setOnItemSelectedListener(onTimezoneModeListener);
         }
+
+        //
+        // widget: date offset
+        //
+        edit_dayOffset = (EditText) findViewById(R.id.appwidget_general_dayOffset);
 
         //
         // widget: riseSetOrder
@@ -1157,6 +1158,26 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    protected void loadDateOffset(Context context)
+    {
+        if (edit_dayOffset != null) {
+            edit_dayOffset.setText(WidgetSettings.loadDateOffsetPref(context, appWidgetId) + "");
+        }
+    }
+    protected void saveDateOffset(Context context)
+    {
+        if (edit_dayOffset != null)
+        {
+            int offset = 0;
+            try {
+                offset = Integer.parseInt(edit_dayOffset.getText().toString());
+            } catch (NumberFormatException e) {
+                Log.e("saveSettings", "saveDateOffset: " + e);
+            }
+            WidgetSettings.saveDateOffsetPref(context, appWidgetId, offset);
+        }
+    }
 
     /**
      * @param context a context used to access resources
@@ -1712,6 +1733,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // save: time format
         saveTimeFormatMode(context);
+
+        // save: date offset
+        saveDateOffset(context);
     }
 
     /**
@@ -1788,6 +1812,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // load: time format
         loadTimeFormatMode(context);
+
+        // load: date offset
+        loadDateOffset(context);
     }
 
     public boolean getDefaultLocationFromApp() {
@@ -2346,6 +2373,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         View layout_mode = findViewById(R.id.appwidget_appearance_3x3mode_layout);
         if (layout_mode != null) {
             layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    protected void showOptionDateOffset(boolean show)
+    {
+        View layout = findViewById(R.id.appwidget_general_dayOffset_layout);
+        if (layout != null) {
+            layout.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 

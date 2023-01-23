@@ -339,6 +339,9 @@
     <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->
     <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_dayOffset">Day Offset</string>        <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
+
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Advanced</string>                        <!-- group title -->
     <string name="configLabel_experimental">Experimental</string>                <!-- group title -->
