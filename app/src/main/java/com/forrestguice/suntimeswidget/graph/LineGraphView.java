@@ -1350,7 +1350,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                     R.attr.graphColor_axis,                 // 7
                     R.attr.graphColor_grid,                 // 8
                     R.attr.graphColor_labels,               // 9
-                    R.attr.moonsetColor,                   // 10
+                    R.attr.moonriseColor,                   // 10
                     R.attr.moonsetColor                     // 11
             };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);

@@ -33,10 +33,22 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
+
+import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_FILLPATH;
+import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
+import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWLABELS;
+import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWMOON;
+import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
+import static com.forrestguice.suntimeswidget.LightMapDialog.MAPTAG_LIGHTMAP;
+import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_FILLPATH;
+import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWAXIS;
+import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
+import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWMOON;
 
 /**
  * A 3x2 line graph
@@ -103,6 +115,13 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
     protected LineGraphView.LineGraphOptions options;
     protected int dpWidth = 512, dpHeight = 256;
 
+    @Override
+    public void themeViews(Context context, RemoteViews views, int appWidgetId)
+    {
+        super.themeViews(context, views, appWidgetId);
+        //options.axisX_labels_show = options.axisY_labels_show = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+    }
+
     @SuppressLint("ResourceType")
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -121,6 +140,23 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
         options.colorPointFill = theme.getGraphPointFillColor();
         options.colorPointStroke = theme.getGraphPointStrokeColor();
 
+        options.colorBackground = options.colorNight;
+        options.sunPath_color_day = options.sunPath_color_day_closed = options.colorDay;
+        options.sunPath_color_night = options.sunPath_color_night_closed = options.colorNautical;
+        options.moonPath_color_day = options.moonPath_color_day_closed = theme.getMoonriseTextColor();
+        options.moonPath_color_night = options.moonPath_color_night_closed = theme.getMoonsetTextColor();
+
+        options.graph_width = LineGraphView.MINUTES_IN_DAY;
+        options.graph_height = 180;
+        options.graph_x_offset = options.graph_y_offset = 0;
+        options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
+        options.axisX_labels_show = options.axisY_labels_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWLABELS);
+        options.axisX_show = options.axisY_show = options.gridY_major_show = options.gridX_major_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWAXIS);
+        options.sunPath_show_line = true;
+        options.sunPath_show_fill = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
+        options.moonPath_show_line = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON);
+        options.moonPath_show_fill = options.sunPath_show_fill;
+
         themeViewsAzimuthElevationText(context, views, theme);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -130,5 +166,6 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
             views.setTextViewTextSize(R.id.info_sun_azimuth_setting, TypedValue.COMPLEX_UNIT_DIP, timeSize);
         }
     }
+
 
 }
