@@ -4,7 +4,7 @@
                     tools:ignore="UnusedAttribute"
 
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/clockwidget_1x1_preview"
+    android:previewImage="@drawable/datewidget_1x1_preview"
     android:resizeMode="horizontal|vertical"
     android:initialKeyguardLayout="@layout/layout_widget_date_1x1_0"
 
