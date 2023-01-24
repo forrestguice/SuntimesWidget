@@ -41,6 +41,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -245,7 +246,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     {
         @Override
         public void onShow(DialogInterface dialog) {
-            // EMPTY; placeholder
+            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
         }
     };
 

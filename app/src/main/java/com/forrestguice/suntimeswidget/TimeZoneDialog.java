@@ -63,7 +63,6 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
-import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -914,15 +913,15 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     };
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog) {
-            // EMPTY; placeholder
+            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getDialog().cancel();
@@ -937,7 +936,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)

@@ -37,8 +37,6 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
@@ -399,14 +397,14 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
         @Override
-        public void onShow(DialogInterface dialogInterface) {
-            // EMPTY; placeholder
+        public void onShow(DialogInterface dialog) {
+            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getDialog().cancel();
@@ -423,7 +421,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
