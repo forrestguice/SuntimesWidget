@@ -2492,7 +2492,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         updateWidgetModeAdapter(spinner_1x1mode, themeValues);    // refresh widget previews
         updateWidgetModeAdapter(spinner_2x1mode, themeValues);
         updateWidgetModeAdapter(spinner_3x1mode, themeValues);
-        updateWidgetModeAdapter(spinner_3x1mode, themeValues);
         updateWidgetModeAdapter(spinner_3x2mode, themeValues);
         updateWidgetModeAdapter(spinner_3x3mode, themeValues);
         updateTimeModeAdapter(themeValues);

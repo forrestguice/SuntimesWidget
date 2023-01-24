@@ -151,7 +151,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos3x1.values()) {
             @Override
             protected void modifyThemeValues(int position, ContentValues values) {
-                if (position >=0 && position < WidgetSettings.WidgetModeSunPos3x1.values().length) {
+                if (position >= 0 && position < WidgetSettings.WidgetModeSunPos3x1.values().length) {
                     WidgetSettings.WidgetModeSunPos3x1 mode = WidgetSettings.WidgetModeSunPos3x1.values()[position];
                     values.put(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1, mode.name());
                     //values.put("option_drawNow", LightMapView.LightMapColors.DRAW_NONE);
@@ -199,10 +199,21 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         modes.add(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
-        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]));
+
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]))
+        {
+            @Override
+            protected void modifyThemeValues(int position, ContentValues values) {
+                if (position >= 0 && position < WidgetSettings.WidgetModeSunPos3x2.values().length) {
+                    WidgetSettings.WidgetModeSunPos3x2 mode = WidgetSettings.WidgetModeSunPos3x2.values()[position];
+                    values.put(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x2, mode.name());
+                }
+            }
+        };
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
-        return adapter;
+
+    return adapter;
     }
 
     @Override
