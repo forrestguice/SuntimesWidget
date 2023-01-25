@@ -372,7 +372,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         if (data != null && degrees != null)
         {
             Calendar calendar = Calendar.getInstance(data.timezone());
-            calendar.setTimeInMillis(colors.now + colors.offsetMinutes);
+            calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
             Calendar event = rising ? data.calculator().getSunriseCalendarForDate(calendar, degrees)
                     : data.calculator().getSunsetCalendarForDate(calendar, degrees);
             return ((event != null) ? event.getTimeInMillis() : null);
