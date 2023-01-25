@@ -875,11 +875,11 @@
     <string name="editevent_dialog_angle_suffix">°</string>    <!-- TODO -->
     <string name="editevent_dialog_angle_error">Angle is required!</string>    <!-- TODO -->
 
-    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may cease to work and should be reassigned.</string>    <!-- TODO -->
+    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may no longer work and should be reassigned.</string>    <!-- TODO -->
     <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
     <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAlarms, notifications, or widgets using these events may cease to work and should be reassigned.</string>   <!-- TODO -->
+    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAlarms, notifications, or widgets using these events may no longer work and should be reassigned.</string>   <!-- TODO -->
     <string name="clearevents_dialog_ok">Clear</string>   <!-- TODO -->
     <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
     <string name="clearevents_toast">Custom events cleared.</string>   <!-- TODO -->
