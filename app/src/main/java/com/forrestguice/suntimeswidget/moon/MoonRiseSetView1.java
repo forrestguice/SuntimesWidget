@@ -171,7 +171,8 @@ public class MoonRiseSetView1 extends LinearLayout
             }
         }, 1200);
 
-        card_view.setOnScrollListener(onScrollChanged);
+        //card_view.setOnScrollListener(onScrollChanged);
+        card_view.addOnScrollListener(onScrollChanged);
 
         initTheme(context);
     }
@@ -339,7 +340,6 @@ public class MoonRiseSetView1 extends LinearLayout
     }
     public void scrollToDate( long datetime ) {
         card_layout.scrollToPositionWithOffset(card_adapter.getPositionForDate(getContext(), datetime), 0);
-        card_view.smoothScrollBy(1, 0); // triggers a snap
     }
     public void lockScrolling() {
         card_view.setLayoutFrozen(true);
