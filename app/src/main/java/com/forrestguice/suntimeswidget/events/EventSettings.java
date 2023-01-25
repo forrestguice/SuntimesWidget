@@ -59,7 +59,7 @@ public class EventSettings
 
     public static final String PREF_KEY_EVENT_LABEL = "label"; // SuntimesEventContract.COLUMN_EVENT_LABEL;  // TODO: contract class
     public static final String PREF_KEY_EVENT_COLOR = "color"; // SuntimesEventContract.COLUMN_EVENT_COLOR;  // TODO: contract class
-    public static int PREF_DEF_EVENT_COLOR = Color.YELLOW;
+    public static int PREF_DEF_EVENT_COLOR = Color.GRAY;
 
     public static final String PREF_KEY_EVENT_SHOWN = "shown"; // SuntimesEventContract.COLUMN_EVENT_SHOWN;  // TODO: contract class
     public static final boolean PREF_DEF_EVENT_SHOWN = false;
