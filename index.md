@@ -8,6 +8,10 @@
  <br /> <br />
   <a href="https://github.com/forrestguice/NaturalHour"><img align="left" src="{{ 'assets/images/ic_naturalhour.png' | relative_url }}" hspace="8" height="64" /></a>  <br/>[Natural Hour](https://github.com/forrestguice/NaturalHour) <br />A 24-hour clock & roman timekeeping add-on app.
  <br /> <br />
+  <a href="https://github.com/forrestguice/SuntimesNFC"><img align="left" src="{{ 'assets/images/ic_suntimesnfc.png' | relative_url }}" hspace="8" height="64" /></a>  <br/>[Suntimes NFC](https://github.com/forrestguice/SuntimesNFC) <br />An NFC Addon for Suntimes Alarms; dismiss alarms with an NFC tag.
+ <br /> <br />
+  <a href="https://github.com/forrestguice/IntervalMidpoints"><img align="left" src="{{ 'assets/images/ic_imidpoints.png' | relative_url }}" hspace="8" height="64" /></a>  <br/>[Interval Midpoints](https://github.com/forrestguice/IntervalMidpoints) <br />A midpoint calculator add-on for Suntimes Alarms; schedule alarms for event midpoints.
+ <br /> <br />
 <hr />
 <hr />
 {% include donate.html %}
