@@ -61,7 +61,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
-    private LineGraphTask drawTask;
+    private LineGraphTask drawTask = null;
 
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
@@ -409,7 +409,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             int i = 0;
             while (i < numFrames || numFrames <= 0)
             {
-                Log.d(getClass().getSimpleName(), "generating frame " + i + " | " + w + "," + h + " :: " + numFrames);
+                //Log.d(getClass().getSimpleName(), "generating frame " + i + " | " + w + "," + h + " :: " + numFrames);
                 if (isCancelled()) {
                     break;
                 }
@@ -418,7 +418,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 {
                     Calendar maptime = graphTime(data, options);
                     Calendar datatime = data.dataActual.calendar();
-                    long data_age = (maptime.getTimeInMillis() - datatime.getTimeInMillis());
+                    long data_age = Math.abs(maptime.getTimeInMillis() - datatime.getTimeInMillis());
                     if (data_age >= (12 * 60 * 60 * 1000)) {    // TODO: more precise
 
                         //Log.d(LightMapTask.class.getSimpleName(), "recalculating dataset with adjusted date: " + data_age);
