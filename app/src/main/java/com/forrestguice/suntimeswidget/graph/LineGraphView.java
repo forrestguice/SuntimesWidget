@@ -1064,13 +1064,15 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         {
             int h = c.getHeight();
 
-            Calendar calendar = Calendar.getInstance(now.getTimeZone());
-            calendar.set(Calendar.HOUR_OF_DAY, (options.axisY_interval / 60));
-            calendar.set(Calendar.MINUTE, (options.axisY_interval % 60));
-            calendar.set(Calendar.SECOND, 0);
+            if (drawAxisY_calendar == null) {
+                drawAxisY_calendar = Calendar.getInstance(now.getTimeZone());
+            }
+            drawAxisY_calendar.set(Calendar.HOUR_OF_DAY, (options.axisY_interval / 60));
+            drawAxisY_calendar.set(Calendar.MINUTE, (options.axisY_interval % 60));
+            drawAxisY_calendar.set(Calendar.SECOND, 0);
 
             Calendar lmt = lmt(data.location());
-            lmt.setTimeInMillis(calendar.getTimeInMillis());
+            lmt.setTimeInMillis(drawAxisY_calendar.getTimeInMillis());
 
             int n = 2 * MINUTES_IN_DAY;
             int hour = lmt.get(Calendar.HOUR_OF_DAY);
@@ -1082,6 +1084,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 i += options.axisY_interval;
             }
         }
+        private Calendar drawAxisY_calendar = null;
 
         protected void drawAxisXLabels(Canvas c, Paint p, LineGraphOptions options)
         {
