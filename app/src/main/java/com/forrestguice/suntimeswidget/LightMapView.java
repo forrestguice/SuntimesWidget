@@ -33,17 +33,16 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.concurrent.locks.Lock;
 
 /**
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
@@ -446,6 +445,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 if (isCancelled()) {
                     break;
                 }
+                colors.acquireDrawLock();
 
                 if (data != null && data.dataActual != null)
                 {
@@ -479,6 +479,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 colors.offsetMinutes += colors.anim_frameOffsetMinutes;
                 time0 = System.nanoTime();
                 i++;
+                colors.releaseDrawLock();
             }
             colors.offsetMinutes -= colors.anim_frameOffsetMinutes;
 
@@ -843,6 +844,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public long now = -1L;
         public int anim_frameLengthMs = 100;         // frames shown for 200 ms
         public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
+        public Lock anim_lock = null;
 
         public LightMapColors() {}
 
@@ -890,6 +892,21 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             colorNight = ContextCompat.getColor(context, R.color.graphColor_night_light);
             colorPointFill = ContextCompat.getColor(context, R.color.graphColor_pointFill_light);
             colorPointStroke = ContextCompat.getColor(context, R.color.graphColor_pointStroke_light);
+        }
+
+        public void acquireDrawLock()
+        {
+            if (anim_lock != null) {
+                anim_lock.lock();
+                //Log.d("DEBUG", "MapView :: acquire " + anim_lock);
+            }
+        }
+        public void releaseDrawLock()
+        {
+            if (anim_lock != null) {
+                //Log.d("DEBUG", "MapView :: release " + anim_lock);
+                anim_lock.unlock();
+            }
         }
     }
 

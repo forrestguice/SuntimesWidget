@@ -65,7 +65,6 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -80,6 +79,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -106,6 +107,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private int color_normal, color_disabled, color_pressed, color_warning, color_accent;
 
     private LineGraphView graphView;
+    private final Lock anim_lock = new ReentrantLock(true);    // synchronize animations
 
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
@@ -796,6 +798,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 options.offsetMinutes = 1;
                 Log.d("DEBUG", "updateOptions: now: " + now);
             }
+            options.anim_lock = anim_lock;
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
                     ? 24 * 60 : 1;
 
@@ -815,6 +818,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 options1.sunPath_show_fill = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
                 options1.moonPath_show_line = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON);
                 options1.moonPath_show_fill = options1.sunPath_show_fill;
+                options1.anim_lock = anim_lock;
             }
         }
     }

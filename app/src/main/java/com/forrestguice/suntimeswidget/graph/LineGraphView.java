@@ -51,6 +51,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.locks.Lock;
 
 /**
  * LineGraphView
@@ -413,6 +414,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 if (isCancelled()) {
                     break;
                 }
+                options.acquireDrawLock();
 
                 if (data != null && data.dataActual != null)
                 {
@@ -446,6 +448,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 options.offsetMinutes += options.anim_frameOffsetMinutes;
                 time0 = System.nanoTime();
                 i++;
+                options.releaseDrawLock();
             }
             options.offsetMinutes -= options.anim_frameOffsetMinutes;
             return frame;
@@ -1334,6 +1337,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public long now = -1L;
         public int anim_frameLengthMs = 100;         // frames shown for 200 ms
         public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
+        public Lock anim_lock = null;
 
         public LineGraphOptions() {}
 
@@ -1417,6 +1421,22 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, R.color.moonIcon_color_setting_light);
             init(context);
         }
+
+        public void acquireDrawLock()
+        {
+            if (anim_lock != null) {
+                anim_lock.lock();
+                //Log.d("DEBUG", "GraphView :: acquire " + anim_lock);
+            }
+        }
+        public void releaseDrawLock()
+        {
+            if (anim_lock != null) {
+                //Log.d("DEBUG", "GraphView :: release " + anim_lock);
+                anim_lock.unlock();
+            }
+        }
+
     }
 
 }
