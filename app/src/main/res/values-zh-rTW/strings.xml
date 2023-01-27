@@ -782,11 +782,17 @@
     <string name="configAction_sortAlarms">排序</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">鬧鐘時間</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">創建時間</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->   <!-- TODO -->
+    <string name="configAction_sortAlarms_offset">Show Offsets</string>                <!-- action button / menu item -->   <!-- TODO -->
     <string name="configAction_clearOffset">清空</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">清空</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">設定前後補償</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">設定類型</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">設定標記</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
+    <string name="configAction_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLocation">設定位置</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmRepeat">設定重復</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">設定事件</string>         <!-- button (contentDescription) -->
@@ -813,7 +819,9 @@
 
     <string name="alarmMode_alarm">鬧鐘</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">通知</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification1">Quick Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
+    <string name="configLabel_alarmEdit_beforeAlertTray">Before Alert:</string>               <!-- group title -->   <!-- TODO -->
     <string name="configLabel_alarmEdit_scheduleTray">日程:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">響起時:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onDismissTray">解除時:</string>               <!-- group title -->

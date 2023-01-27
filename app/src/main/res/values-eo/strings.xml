@@ -764,11 +764,17 @@
     <string name="configAction_sortAlarms">Ordigi</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Tempo de alarmo</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Tempo de kreo</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->   <!-- TODO -->
+    <string name="configAction_sortAlarms_offset">Show Offsets</string>                <!-- action button / menu item -->   <!-- TODO -->
     <string name="configAction_clearOffset">Forviŝi</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Forviŝi</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">Agordi deŝovon</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Agordi tipon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Agordi etikedon</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
+    <string name="configAction_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLocation">Agordi pozicion</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmRepeat">Agordi ripeton</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">Agordi okazaĵon</string>         <!-- button (contentDescription) -->
@@ -795,7 +801,9 @@
 
     <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification1">Quick Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
+    <string name="configLabel_alarmEdit_beforeAlertTray">Before Alert:</string>               <!-- group title -->   <!-- TODO -->
     <string name="configLabel_alarmEdit_scheduleTray">Plani:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">Ludi sonon &#47; ekigi:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onDismissTray">Post premi “silentigi”:</string>               <!-- group title -->

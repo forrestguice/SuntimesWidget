@@ -780,11 +780,17 @@
     <string name="configAction_sortAlarms">Sorter</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Alarmtid</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Opprettelsesdato</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->   <!-- TODO -->
+    <string name="configAction_sortAlarms_offset">Show Offsets</string>                <!-- action button / menu item -->   <!-- TODO -->
     <string name="configAction_clearOffset">Fjern</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Fjern</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">Sett forskyvning før/etter</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Sett type</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Sett påskrift</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
+    <string name="configAction_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLocation">Sett sted</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmRepeat">Sett gjentagelse</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">Sett hendelse</string>         <!-- button (contentDescription) -->
@@ -811,7 +817,9 @@
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
     <string name="alarmMode_notification">Varsel</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification1">Quick Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
+    <string name="configLabel_alarmEdit_beforeAlertTray">Before Alert:</string>               <!-- group title -->   <!-- TODO -->
     <string name="configLabel_alarmEdit_scheduleTray">Planlegg:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">På varsel:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onDismissTray">På avslåing:</string>               <!-- group title -->

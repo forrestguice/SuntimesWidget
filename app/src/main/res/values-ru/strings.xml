@@ -836,11 +836,17 @@
     <string name="configAction_sortAlarms">Сортировка</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Время срабатывания</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Время создания</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->   <!-- TODO -->
+    <string name="configAction_sortAlarms_offset">Show Offsets</string>                <!-- action button / menu item -->   <!-- TODO -->
     <string name="configAction_clearOffset">Очистить</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_setAlarmOffset">Установить смещение</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Выбрать тип</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Выбрать название</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
+    <string name="configAction_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLocation">Выбрать местоположение</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmRepeat">Добавить повторение</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">Выбрать событие</string>         <!-- button (contentDescription) -->
@@ -867,7 +873,9 @@
 
     <string name="alarmMode_alarm">Будильник</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Уведомление</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification1">Quick Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
+    <string name="configLabel_alarmEdit_beforeAlertTray">Before Alert:</string>               <!-- group title -->   <!-- TODO -->
     <string name="configLabel_alarmEdit_scheduleTray">Планирование:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">При срабатывании:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onDismissTray">При отключении:</string>               <!-- group title -->

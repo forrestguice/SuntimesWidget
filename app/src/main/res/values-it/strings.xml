@@ -782,11 +782,17 @@
     <string name="configAction_sortAlarms">Ordina</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Ora dell\'allarme</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Data di creazione</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->   <!-- TODO -->
+    <string name="configAction_sortAlarms_offset">Show Offsets</string>                <!-- action button / menu item -->   <!-- TODO -->
     <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_setAlarmOffset">Imposta Offset</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
     <string name="configAction_setAlarmType">Imposta Tipo</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Imposta Etichetta</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
+    <string name="configAction_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLocation">Imposta Posizione</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmRepeat">Imposta Ripetizione</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">Imposta Evento</string>         <!-- button (contentDescription) -->
@@ -813,7 +819,9 @@
 
     <string name="alarmMode_alarm">Allarme</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Notifica</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification1">Quick Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
+    <string name="configLabel_alarmEdit_beforeAlertTray">Before Alert:</string>               <!-- group title -->   <!-- TODO -->
     <string name="configLabel_alarmEdit_scheduleTray">Pianifica:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">All\'Allarme:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onDismissTray">Al termine:</string>               <!-- group title -->  <!-- TODO: review -->
