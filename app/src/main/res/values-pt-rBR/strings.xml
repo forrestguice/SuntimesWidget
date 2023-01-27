@@ -293,6 +293,9 @@
     <string name="configLabel_title1">Widget Giratório</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
     <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
+    <string name="app_name_datewidget0">Date Widget</string>  <!-- TODO -->
+    <string name="app_name_clocktile">Clock Tile</string>   <!-- TODO -->
+    <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 

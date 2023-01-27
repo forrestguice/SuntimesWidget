@@ -1514,6 +1514,9 @@
     <string name="app_name_widget1">Widget orari solari (invertibile)</string>
     <string name="app_name_widget2">Widget posizione del sole</string>
     <string name="app_name_clockwidget0">Widget Orologio</string>
+    <string name="app_name_datewidget0">Date Widget</string>  <!-- TODO -->
+    <string name="app_name_clocktile">Clock Tile</string>   <!-- TODO -->
+    <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
     <string name="app_name_solsticewidget0">Widget solstizio</string>
     <string name="app_name_moonwidget0">Widget luna</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString" >%s</xliff:g></string>

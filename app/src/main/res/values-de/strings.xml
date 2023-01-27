@@ -1485,6 +1485,9 @@
   <string name="app_name_widget1">Suntimes Widget (umschaltbar)</string>
   <string name="app_name_widget2">Sonnenposition Widget</string>
   <string name="app_name_clockwidget0">Uhr-Widget</string>
+  <string name="app_name_datewidget0">Date Widget</string>  <!-- TODO -->
+  <string name="app_name_clocktile">Clock Tile</string>   <!-- TODO -->
+  <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
   <string name="app_name_solsticewidget0">Sonnenwend Widget</string>
   <string name="app_name_moonwidget0">Mond Widget</string>
   <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>

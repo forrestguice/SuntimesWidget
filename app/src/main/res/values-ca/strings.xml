@@ -1498,7 +1498,10 @@
     <string name="app_name_widget0">Giny de Suntimes</string>
     <string name="app_name_widget1">Giny de Suntimes (reversible)</string>
     <string name="app_name_widget2">Giny solar</string>
-    <string name="app_name_clockwidget0">Giny de rellotge</string>  
+    <string name="app_name_clockwidget0">Giny de rellotge</string>
+    <string name="app_name_datewidget0">Date Widget</string>  <!-- TODO -->
+    <string name="app_name_clocktile">Clock Tile</string>   <!-- TODO -->
+    <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
     <string name="app_name_solsticewidget0">Giny de solstici</string>
     <string name="app_name_moonwidget0">Giny lunar</string>
     <string name="app_version"><![CDATA[<b>Versió:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>

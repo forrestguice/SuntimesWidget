@@ -1488,7 +1488,10 @@
     <string name="app_name_widget0">Widget de Suntimes</string>
     <string name="app_name_widget1">Widget de Suntimes (reversible)</string>
     <string name="app_name_widget2">widget solar</string>
-    <string name="app_name_clockwidget0">Widget de reloj</string>  
+    <string name="app_name_clockwidget0">Widget de reloj</string>
+    <string name="app_name_datewidget0">Date Widget</string>  <!-- TODO -->
+    <string name="app_name_clocktile">Clock Tile</string>   <!-- TODO -->
+    <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
     <string name="app_name_solsticewidget0">Widget de solsticio</string>
     <string name="app_name_moonwidget0">Widget lunar</string>
     <string name="app_version"><![CDATA[<b>Versión:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>

@@ -1496,6 +1496,9 @@
     <string name="app_name_widget1">Czasy Słońca (przełączalny)</string>
     <string name="app_name_widget2">Czasy Słońca: pozycja Sł.</string>
     <string name="app_name_clockwidget0">Czasy Słońca: zegar</string>
+    <string name="app_name_datewidget0">Date Widget</string>  <!-- TODO -->
+    <string name="app_name_clocktile">Clock Tile</string>   <!-- TODO -->
+    <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
     <string name="app_name_solsticewidget0">Czasy Słońca: przesilenia</string>
     <string name="app_name_moonwidget0">Czasy Słońca: Księżyc</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>

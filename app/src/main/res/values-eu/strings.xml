@@ -1507,6 +1507,9 @@
     <string name="app_name_widget1">Suntimes Widgeta (aldagarria)</string>
     <string name="app_name_widget2">Eguzkiaren kokapenaren widgeta</string>
     <string name="app_name_clockwidget0">Clock Widget</string>  <!-- TODO -->
+    <string name="app_name_datewidget0">Date Widget</string>  <!-- TODO -->
+    <string name="app_name_clocktile">Clock Tile</string>   <!-- TODO -->
+    <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
     <string name="app_name_solsticewidget0">Solstizioaren widgeta</string>
     <string name="app_name_moonwidget0">Ilargiaren widgeta</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
