@@ -766,6 +766,74 @@
   <string name="widgetLabel_declination_short">Dek</string>           <!-- label -->
   <string name="widgetLabel_distance">Entfernung</string>           <!-- label -->
 
+
+  <!--
+       CUSTOM EVENTS
+  -->
+  <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
+  <string name="eventlist_dialog_title">Custom Events</string>   <!-- TODO -->
+
+  <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+  <string name="configLabel_event_alarmitem_desc">%1$s</string>
+
+  <string name="eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
+  <string name="eventalias_title_tag_rising" >↑</string>
+  <string name="eventalias_title_tag_setting">↓</string>
+
+  <string name="sunevent_title">Sun</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
+  <string name="sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
+  <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> at <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
+  <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+
+  <string name="configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
+  <string name="configLabel_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
+  <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>    <!-- TODO -->
+
+  <string name="configAction_manageEvents">Custom Events</string>   <!-- TODO -->
+  <string name="configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+
+  <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
+  <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+  <string name="importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
+  <plurals name="eventPlural">
+    <item quantity="one">%d event</item>
+    <item quantity="other">%d events</item>
+  </plurals>   <!-- TODO -->
+
+  <string name="editevent_dialog_id_label">ID</string>    <!-- TODO -->
+  <string name="editevent_dialog_id_hint">Event ID</string>    <!-- TODO -->
+  <string name="editevent_dialog_id_error">@string/addaction_error_id</string>    <!-- TODO -->
+  <string name="editevent_dialog_uri_hint">Event Uri</string>    <!-- TODO -->
+  <string name="editevent_dialog_showevent">Display this event within the app.</string>
+  <string name="editevent_dialog_showevent_off">This event will no longer be displayed.</string>    <!-- TODO -->
+
+  <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title --> <!-- TODO -->
+  <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title --> <!-- TODO -->
+  <string name="editevent_dialog_label_label">Label</string>    <!-- TODO -->
+  <string name="editevent_dialog_label_hint">Event Label</string>    <!-- TODO -->
+  <string name="editevent_dialog_label_error">@string/addaction_error_title</string>    <!-- TODO -->
+  <string name="editevent_dialog_label_suggested">Custom Angle</string>    <!-- TODO -->
+
+  <string name="editevent_dialog_angle">Angle</string>    <!-- TODO -->
+  <string name="editevent_dialog_angle_hint">-6</string>    <!-- TODO -->
+  <string name="editevent_dialog_angle_suffix">°</string>    <!-- TODO -->
+  <string name="editevent_dialog_angle_error">Angle is required!</string>    <!-- TODO -->
+
+  <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may no longer work and should be reassigned.</string>    <!-- TODO -->
+  <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
+  <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
+
+  <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAlarms, notifications, or widgets using these events may no longer work and should be reassigned.</string>   <!-- TODO -->
+  <string name="clearevents_dialog_ok">Clear</string>   <!-- TODO -->
+  <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
+  <string name="clearevents_toast">Custom events cleared.</string>   <!-- TODO -->
+
+
   <!--
        ALARM CLOCK
   -->
@@ -1020,6 +1088,7 @@
   <!-- App Setting: UI -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->
   <string name="configLabel_ui_fields">Anzeige</string>                <!-- group title, followed  by a list of "[X] <Twilight Event>" fields -->
+  <string name="configLabel_ui_fields1">Custom Events</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->  <!-- TODO -->
   <string name="configLabel_ui_misc">Verschiedenes</string>
 
   <!-- App Setting: Verbose Accessibility -->
