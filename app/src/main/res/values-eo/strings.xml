@@ -837,10 +837,17 @@
         <item quantity="other">%d alarmojn</item>
     </plurals>
 
+    <string name="configLabel_alarms_dismissChallenge">Dismiss Challenge</string>            <!-- pref title -->   <!-- TODO -->
+    <string name="alarmDismiss_none">None</string>                         <!-- alarm setting -->   <!-- TODO -->
+    <string name="alarmDismiss_none_long">No Challenge</string>            <!-- chip label -->   <!-- TODO -->
+    <string name="alarmDismiss_math">Easy Math</string>           <!-- alarm setting -->   <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Etikedo</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apliki</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Nuligi</string>    <!-- button -->
     <string name="alarmlabel_hint">Etikedo</string>        <!-- EditText hint -->
+
+    <string name="alarmnote_dialog_title">Note</string>        <!-- dialog title -->   <!-- TODO -->
 
     <string name="alarmrepeat_dialog_title">Ripeti alarmon</string>        <!-- dialog title -->
     <string name="alarmrepeat_dialog_ok">Apliki</string>        <!-- button -->

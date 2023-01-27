@@ -846,10 +846,17 @@
         <item quantity="other">%d alarmów</item>
     </plurals>
 
+    <string name="configLabel_alarms_dismissChallenge">Dismiss Challenge</string>            <!-- pref title -->   <!-- TODO -->
+    <string name="alarmDismiss_none">None</string>                         <!-- alarm setting -->   <!-- TODO -->
+    <string name="alarmDismiss_none_long">No Challenge</string>            <!-- chip label -->   <!-- TODO -->
+    <string name="alarmDismiss_math">Easy Math</string>           <!-- alarm setting -->   <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Etykieta</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Zastosuj</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Anuluj</string>    <!-- button -->
     <string name="alarmlabel_hint">Etykieta</string>        <!-- EditText hint -->
+
+    <string name="alarmnote_dialog_title">Note</string>        <!-- dialog title -->   <!-- TODO -->
 
     <string name="alarmrepeat_dialog_title">Powtórz alarm</string>        <!-- dialog title -->
     <string name="alarmrepeat_dialog_ok">Zastosuj</string>        <!-- button -->
