@@ -1809,6 +1809,8 @@
     ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
   <string
+      name="privacy_policy0"><![CDATA[<b>Datenschutzerklärung:</b><br/>Suntimes erfasst, speichert oder übermittelt keine persönlichen Benutzerdaten. Die App enthält <b>keine Werbung</b>, <b>keine Analytik</b>, <b>keine Tracker</b> und verlangt <b>keine unnötigen Berechtigungen</b>.]]></string>
+  <string
       name="privacy_policy"><![CDATA[<b>Datenschutzerklärung:</b><br/>Suntimes erfasst, speichert oder übermittelt keine persönlichen Benutzerdaten. Die App enthält <b>keine Werbung</b>, <b>keine Analytik</b>, <b>keine Tracker</b> und verlangt <b>keine unnötigen Berechtigungen</b>. <br/><br/>Die App wird über Ortsinformationen konfiguriert. Diese Informationen (und andere von der App verwendete Konfigurationsdaten) werden lokal gespeichert und verlassen das Gerät nicht.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
   <string
       name="privacy_permission_location"><![CDATA[Suntimes verwendet die <b>Standortberechtigung</b> um den aktuellen Längen- und Breitengrad zu bestimmen.<br/><br/>Diese Berechtigung ist optional; der Standort wird in der Vorgabe manuell konfiguriert.]]></string>

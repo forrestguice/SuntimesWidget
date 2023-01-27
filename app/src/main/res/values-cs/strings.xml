@@ -1990,6 +1990,7 @@
         Tato funkce je nyní dostupná jako <a href="moreInfoLink">oddělená aplikace</a>.
     ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
+    <string name="privacy_policy0"><![CDATA[<b>Soukromí:</b><br/>Suntimes neshromažďuje, neukládá ani nepřenáší osobní uživatelská data. Neobsahuje <b>žádnou reklamu</b>, <b>žádnou analýzu</b>, <b>žádné sledovače</b> a <b>žádná zbytečná oprávnění</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Soukromí:</b><br/>Suntimes neshromažďuje, neukládá ani nepřenáší osobní uživatelská data. Neobsahuje <b>žádnou reklamu</b>, <b>žádnou analýzu</b>, <b>žádné sledovače</b> a <b>žádná zbytečná oprávnění</b>. <br/><br/>Aplikace je nakonfigurována na základě údajů o poloze. Tyto informace (a další konfigurační data používaná aplikací) jsou uloženy lokálně a neopouštějí zařízení.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes používá oprávnění k <b>poloze</b> k určení vaší aktuální zeměpisné délky a šířky.<br/><br/>Toto oprávnění je volitelné; umístění je ve výchozím nastavení nakonfigurováno ručně.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes používá oprávnění <b>externího úložiště</b> k zálohování/exportu dat do souboru (např. míst, motivů).]]></string>

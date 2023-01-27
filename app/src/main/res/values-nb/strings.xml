@@ -1868,6 +1868,7 @@
         Denne funksjonen er nå tilgjengelig som en <a href="moreInfoLink">separat app</a>.
     ]]></string>
 
+    <string name="privacy_policy0"><![CDATA[<b>Privacy:</b><br/>Suntimes samler ikke inn, lagrer eller overfører personlige data. Inneholder <b>ingen reklame</b>, <b>ingen analyser</b>, <b>ingen sporere</b> og <b>ingen unødvendige tillatelser</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes samler ikke inn, lagrer eller overfører personlige data. Inneholder <b>ingen reklame</b>, <b>ingen analyser</b>, <b>ingen sporere</b> og <b>ingen unødvendige tillatelser</b>. <br/><br/>Appen stilles inn med posisjonsdata. Denne informasjonen (og andre innstilte data brukt av appen) lagres lokalt og forlater ikke enheten.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes bruker <b>plasseringstillatelsen</b> til å bestemme gjeldende lengde- og breddegrad.<br/><br/>Denne tillatelsen er valgfri; plasseringen er manuelt innstilt som standard.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->

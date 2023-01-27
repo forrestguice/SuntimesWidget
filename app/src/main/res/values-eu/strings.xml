@@ -1838,6 +1838,7 @@
         Ezaugarri hau <a href="moreInfoLink">beste aplikazio</a> batean eskuragarri dago.
     ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
+    <string name="privacy_policy0"><![CDATA[<b>Pribatutasuna:</b><br/>Suntimes aplikazioak ez du inolako informazio pertsonalik biltzen, gordetzen, edo bidaltzen. <b>Ez du iragarkirik</b>, <b>ez analisi tresnarik</b>, <b>ez aztarnaririk</b>, ezta <b>beharrezkoa ez den baimenik</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Pribatutasuna:</b><br/>Suntimes aplikazioak ez du inolako informazio pertsonalik biltzen, gordetzen, edo bidaltzen. <b>Ez du iragarkirik</b>, <b>ez analisi tresnarik</b>, <b>ez aztarnaririk</b>, ezta <b>beharrezkoa ez den baimenik</b>. <br/><br/>Aplikazioa kokapen datuekin konfiguratuta dago. Informazio hau (eta aplikazioak erabiltzen duen beste konfigurazio datuak) gailuan bertan gordetzen da eta ez du gailua uzten.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes aplikazioak <b>kokapen</b> baimena behar du zure uneko longitudea eta latitudea zehazteko.<br/><br/>Baimen hau hautazkoa da; kokapena eskuz ezartzen da modu lehenetsian.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes aplikazioak <b>kanpoko biltegirako</b> baimenak behar ditu datuen babes kopiak egiteko eta esportatzeko (adib. tokiak, gaiak).]]></string>

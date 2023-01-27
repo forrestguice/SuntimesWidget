@@ -1904,6 +1904,7 @@
         Agora é uma função disponível como <a href="moreInfoLink">aplicativo separado</a>.
     ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
+    <string name="privacy_policy0"><![CDATA[<b>Privacidade:</b><br/>Suntimes não coleta, armazena ou distribui dados do usuário. Não contém <b>propagandas</b>, <b>ferramentas de análise</b>, <b>rastreadores</b>, e <b>nem permissões desnecessárias</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Privacidade:</b><br/>Suntimes não coleta, armazena ou distribui dados do usuário. Não contém <b>propagandas</b>, <b>ferramentas de análise</b>, <b>rastreadores</b>, e <b>nem permissões desnecessárias</b>. <br/><br/>Os dados são armazenados localmente e não saem do aparelho.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes usa a permissão de <b>localização</b> para determinar sua atual localização.<br/><br/>Permissão opcional, você pode definir seu local manualmente.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes usa a permissão de <b>armazenamento</b> para backup/exportar dados para arquivos (lugares e temas).]]></string>
