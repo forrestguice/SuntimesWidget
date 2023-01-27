@@ -93,6 +93,7 @@
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> prilumata</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
     <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> je <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
+    <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>   <!-- TODO: review -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -183,6 +184,9 @@
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
+    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">metraj</string>
     <string name="lengthUnits_imperial">imperiaj</string>
@@ -269,6 +273,9 @@
 
     <string name="configLabel_general_observerheight">Ombro de objekto</string>        <!-- checkbox label -->
     <string name="configLabel_general_observerheight_summary">Montri longon de ombro kaŭzata de objekto kun alto <xliff:g id="value" example="1 metro">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_dayOffset">Day Offset</string>        <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Agordoj altnivelaj</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
@@ -1481,7 +1488,16 @@
 
     <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
     <string name="app_about_media"><![CDATA[ <b>Bildoj:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
-    
+
+    <!-- Dialog: Welcome / Initial setup -->
+    <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
+    <string name="welcome_action_prev">Back</string>    <!-- TODO -->
+    <string name="welcome_action_next">Next</string>    <!-- TODO -->
+    <string name="welcome_action_done">Finish</string>    <!-- TODO -->
+    <string name="welcome_message">@string/app_shortdesc</string>    <!-- TODO -->
+    <string name="welcome_pref_title">Welcome Screen</string>    <!-- TODO -->
+    <string name="welcome_pref_summary">Start the first launch configuration wizard.</string>    <!-- TODO -->
+
     <!-- Dialog: Help -->  
     <string name="help_dialog_title">Helpo</string>
     <string name="help_appearance_allowresize"><![CDATA[
