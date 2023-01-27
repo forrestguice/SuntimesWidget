@@ -472,15 +472,20 @@
     <string name="widgetMode1x1_sunset">Apenas pôr do Sol</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Nascer &amp; Pôr do Sol (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Nascer &amp; Pôr do Sol (2)</string>  <!-- setting -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode1x1_altaz">Altitude &amp; Azimute</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Declinação &amp; Ascensão Reta</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Distância atual</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Próximo apogeu ou perigeu</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
+    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Básico</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->

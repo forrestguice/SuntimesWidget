@@ -432,15 +432,20 @@
     <string name="widgetMode1x1_sunset">Bare solnedgang</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Soloppgang &amp; Solnedgang (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Soloppgang &amp; Solnedgang (2)</string>  <!-- setting -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode1x1_altaz">Høyde &amp; Asimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinasjon &amp; Rektasensjon</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Gjeldende avstand</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Neste apogeum eller perigeum</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
     
     <string name="widgetMode3x1_lightmap_large">Lysgraf</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_medium">Lysgraf (medium)</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_small">Lysgraf (liten)</string>     <!-- setting -->
+
+    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Enkelt</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [nord]</string>     <!-- setting -->

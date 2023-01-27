@@ -481,15 +481,20 @@
     <string name="widgetMode1x1_sunset">Pouze západ slunce</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Východ slunce &amp; Západ slunce (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Východ slunce &amp; Západ slunce (2)</string>  <!-- setting -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode1x1_altaz">Výška &amp; Azimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinace &amp; Rektascenze</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Aktualní vzdálenost</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Další apogeum nebo perigeum</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
+    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Základní</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polární [severní]</string>     <!-- setting -->

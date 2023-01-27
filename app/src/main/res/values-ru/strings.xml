@@ -490,15 +490,20 @@
     <string name="widgetMode1x1_sunset">Только заход солнца</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Восход и заход солнца (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Восход и заход солнца (2)</string>  <!-- setting -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode1x1_altaz">Высота НУМ и азимут</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Склонение и прямое восхождение</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Текущее расстояние</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Следующий апогей или перигей</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
+    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Карта-схема</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Полярная [Сев. п.]</string>     <!-- setting -->

@@ -419,15 +419,20 @@
     <string name="widgetMode1x1_sunset">Sólo atardecer</string>
     <string name="widgetMode1x1_both_1">Amanecer y atardecer (1)</string>
     <string name="widgetMode1x1_both_2">Amanecer y atardecer (2)</string>
+    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode1x1_altaz">Altitud y Azimut</string>     
     <string name="widgetMode1x1_decright">Inclinación y ascensión derecha</string>
     <string name="widgetMode1x1_distance">Distancia actual</string>     <!-- setting -->    
     <string name="widgetMode1x1_apsis">Siguiente apogeo o perigeo</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
+    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Básico</string>
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [norte]</string>  

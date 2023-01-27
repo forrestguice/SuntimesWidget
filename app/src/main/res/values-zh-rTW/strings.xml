@@ -435,15 +435,20 @@
     <string name="widgetMode1x1_sunset">僅日落</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">日出 &amp; 日落 (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">日出 &amp; 日落 (2)</string>  <!-- setting -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode1x1_altaz">海拔 &amp; 方位</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">赤經 &amp; 赤緯</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">當前距離</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">下一個遠地點或近地點</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode3x1_lightmap_large">光照圖</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_medium">光照圖（中等）</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_small">光照圖（小）</string>     <!-- setting -->
+
+    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">預設</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">北半球視角</string>     <!-- setting -->

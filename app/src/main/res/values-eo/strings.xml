@@ -412,15 +412,20 @@
     <string name="widgetMode1x1_sunset">Nur sunsubiro</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Sunleviĝo kaj sunsubiro (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Sunleviĝo kaj sunsubiro (2)</string>  <!-- setting -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode1x1_altaz">Altitudo kaj azimuto</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinacio kaj rektascensio</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Nuna distanco</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Sekva apogeo aŭ perigeo</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
 
     <string name="widgetMode3x1_lightmap_large">Lum-mapo</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_medium">Lum-mapo (meza)</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_small">Lum-mapo (malgranda)</string>     <!-- setting -->
+
+    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Norma</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polusa (nordo)</string>     <!-- setting -->
