@@ -1277,8 +1277,8 @@
     <string name="appThemes_nightMode">Light Theme / Dark Theme (Night&#160;Mode)</string>  <!-- TODO -->
     <string name="appThemes_systemDefault">System default</string>
     <string name="appThemes_systemDefault1">Contrast (System Default)</string>
-    <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
-    <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
+    <string name="appThemes_darkTheme1">Contrast (Dark)</string>
+    <string name="appThemes_lightTheme1">Contrast (Light)</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
@@ -1327,14 +1327,13 @@
     </string-array>
 
     <!-- App Setting: text size -->
+    <string name="configLabel_ui_textsize">Text Size</string>
+    <string name="configLabel_ui_textsize_summary">%s</string>
 
-    <string name="configLabel_ui_textsize">Text Size</string>     <!-- TODO -->
-    <string name="configLabel_ui_textsize_summary">%s</string>     <!-- TODO -->
-
-    <string name="textSize_small">Small</string>   <!-- TODO -->
-    <string name="textSize_normal">Normal</string>   <!-- TODO -->
-    <string name="textSize_large">Large</string>   <!-- TODO -->
-    <string name="textSize_xlarge">Extra Large</string>   <!-- TODO -->
+    <string name="textSize_small">Small</string>
+    <string name="textSize_normal">Normal</string>
+    <string name="textSize_large">Large</string>
+    <string name="textSize_xlarge">Extra Large</string>
     <string-array name="textSize_display">                      <!-- one-to-one with textSize_values -->
         <item>@string/textSize_small</item>
         <item>@string/textSize_normal</item>

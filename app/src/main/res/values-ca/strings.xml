@@ -1034,12 +1034,30 @@
     <string name="appThemes_darkTheme">Tema fosc</string>
     <string name="appThemes_nightMode">Tema clar / Tema fosc (mode&#160;nit)</string>
     <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
+    <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
+    <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
+    <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
         <item>@string/timeFormatMode_system</item>
         <item>@string/timeFormatMode_12hr</item>
         <item>@string/timeFormatMode_24hr</item>
+    </string-array>
+
+    <!-- App Setting: text size -->
+    <string name="configLabel_ui_textsize">Text Size</string>     <!-- TODO -->
+    <string name="configLabel_ui_textsize_summary">%s</string>     <!-- TODO -->
+
+    <string name="textSize_small">Small</string>   <!-- TODO -->
+    <string name="textSize_normal">Normal</string>   <!-- TODO -->
+    <string name="textSize_large">Large</string>   <!-- TODO -->
+    <string name="textSize_xlarge">Extra Large</string>   <!-- TODO -->
+    <string-array name="textSize_display">                      <!-- one-to-one with textSize_values -->
+        <item>@string/textSize_small</item>
+        <item>@string/textSize_normal</item>
+        <item>@string/textSize_large</item>
+        <item>@string/textSize_xlarge</item>
     </string-array>
 
     <!-- App Setting: solstice tracking mode -->

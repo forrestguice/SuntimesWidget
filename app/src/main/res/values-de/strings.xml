@@ -1047,6 +1047,24 @@
   <string name="appThemes_darkTheme">Dunkles Thema</string>
   <string name="appThemes_nightMode">Helles Thema / dunkles Thema (Nachtmodus)</string>
   <string name="appThemes_systemDefault">System Standart</string>
+  <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
+  <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
+  <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
+
+  <!-- App Setting: text size -->
+  <string name="configLabel_ui_textsize">Text Size</string>     <!-- TODO -->
+  <string name="configLabel_ui_textsize_summary">%s</string>     <!-- TODO -->
+
+  <string name="textSize_small">Small</string>   <!-- TODO -->
+  <string name="textSize_normal">Normal</string>   <!-- TODO -->
+  <string name="textSize_large">Large</string>   <!-- TODO -->
+  <string name="textSize_xlarge">Extra Large</string>   <!-- TODO -->
+  <string-array name="textSize_display">                      <!-- one-to-one with textSize_values -->
+    <item>@string/textSize_small</item>
+    <item>@string/textSize_normal</item>
+    <item>@string/textSize_large</item>
+    <item>@string/textSize_xlarge</item>
+  </string-array>
 
   <string name="configActionDesc_doNothing">Nichts tun</string>
   <string name="configActionDesc_nextNote">Nächste Kurzinfo anzeigen</string>
