@@ -908,11 +908,19 @@
     <string name="configLabel_alarms_timeoutAfter">在…后超時</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
+    <string name="configLabel_alarms_autoDismissAfter">Auto-dismiss after</string>    <!-- TODO -->
+    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_snoozeLimit">Snooze limit</string>    <!-- TODO -->
+    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="configLabel_alarms_snoozeLimit_none">No Limit</string>    <!-- TODO -->
+
     <string name="configLabel_alarms_snooze">延時</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
     <string name="configLabel_alarms_upcoming">在…后提醒</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="configLabel_alarms_upcoming_checkbox">Show alarm reminder notifications.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_fadein">逐漸增加音量</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
@@ -933,6 +941,7 @@
     <string name="configLabel_alarms_allRingtones_summary">顯示所有系統鈴聲（忽略鈴聲類型）。</string>
 
     <string name="no_reminder">從不</string>
+    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
 
     <plurals name="units_hours">
         <!--<item quantity="one">%d hour</item>-->

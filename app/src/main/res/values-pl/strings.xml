@@ -901,11 +901,19 @@
     <string name="configLabel_alarms_timeoutAfter">Wycisz po</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
 
+    <string name="configLabel_alarms_autoDismissAfter">Auto-dismiss after</string>    <!-- TODO -->
+    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_snoozeLimit">Snooze limit</string>    <!-- TODO -->
+    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="configLabel_alarms_snoozeLimit_none">No Limit</string>    <!-- TODO -->
+
     <string name="configLabel_alarms_snooze">Długość drzemki</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
 
     <string name="configLabel_alarms_upcoming">Przypomnienie</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g> przed</string>
+    <string name="configLabel_alarms_upcoming_checkbox">Show alarm reminder notifications.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_fadein">Stopniowo zwiększaj głośność</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
@@ -926,6 +934,7 @@
     <string name="configLabel_alarms_allRingtones_summary">Pokaż wszystkie dźwięki systemowe podczas podczas wyboru (ignoruj typ dzwonka).</string>
 
     <string name="no_reminder">nigdy</string>
+    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
 
     <plurals name="units_hours">
         <item quantity="one">%d godzina</item>
