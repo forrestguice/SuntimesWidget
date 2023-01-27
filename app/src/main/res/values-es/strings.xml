@@ -31,6 +31,10 @@
     <string name="configAction_sunDialog">Posición del Sol</string>
     <string name="configAction_equinoxDialog">Solsticio / Equinoccio</string>
     <string name="configAction_worldMap">Mapa del mundo</string>
+    <string name="configAction_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
+    <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
+    <string name="configAction_deselect">Clear Selection</string>                                    <!-- TODO -->
     <string name="configAction_moon">Luna</string>
     <string name="configAction_help">Ayuda</string>
     <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
@@ -55,6 +59,7 @@
     -->
     <string name="timezoneField"><xliff:g example="US/Mountain" id="timezone">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La zona horaria puede no ser la de esta ubicación.</string>
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%s</xliff:g>).</string>  <!-- TODO -->
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> horario de verano</string>  <!-- timezone dialog label -->  
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> ecuación del tiempo</string>  <!-- timezone dialog label -->  
 
@@ -331,6 +336,7 @@
     <string name="timeMode_blue8">Hora azul (8\u00B0)</string>
     <string name="timeMode_blue4_short">Azul (4\u00B0)</string>
     <string name="timeMode_blue4">Hora azul (4\u00B0)</string>
+    <string name="timeMode_none">None</string>                 <!-- label -->  <!-- TODO -->
 
     <string name="timeMode_equinox_vernal">Equinoccio de primavera</string>
     <string name="timeMode_equinox_vernal_short">Equinoccio</string>
@@ -339,7 +345,16 @@
     <string name="timeMode_solstice_summer">Solsticio de verano</string>    
     <string name="timeMode_solstice_summer_short">Solsticio</string>     
     <string name="timeMode_solstice_winter">Solsticio de invierno</string>    
-    <string name="timeMode_solstice_winter_short">Solsticio</string>     
+    <string name="timeMode_solstice_winter_short">Solsticio</string>
+
+    <string name="timeMode_cross_spring">Spring Cross-Quarter</string>      <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_spring_short">Cross-Quarter</string>       <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_autumnal">Autumn Cross-Quarter</string>  <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_autumnal_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_summer">Summer Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_summer_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_winter">Winter Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_winter_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="timeMode_moon">Luna</string>                     
     <string name="timeMode_moon_new">Luna nueva</string>               
@@ -375,8 +390,23 @@
     <string name="label_apogee">Apogeo</string>      
     <string name="label_perigee">Perigeo</string>    
 
-    <string name="configLabel_general_timeMode">Modo:</string>          
+    <string name="configLabel_general_timeMode">Modo:</string>
 
+    <!-- Widget Setting: calendar -->
+    <string name="configLabel_general_showDate">Show Date</string>   <!-- group title -->   <!-- TODO -->
+    <string name="configLabel_general_calendar">Calendar</string>   <!-- group title -->    <!-- TODO -->
+    <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat">Date Format:</string>          <!-- spinner label -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configAction_editCalendarFormat">Edit</string>                        <!-- button (contentDescription) -->    <!-- TODO -->
     
     <string name="widgetMode1x1_sunrise">Sólo amanecer</string>
     <string name="widgetMode1x1_sunset">Sólo atardecer</string>
@@ -470,11 +500,13 @@
     <string name="time_apparent">Hora solar aparente</string>
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     
     <string name="timezoneCustom_line2">El <xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string>
+    <string name="configAction_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
 
     <string name="configLabel_timezone">Opciones de zona horaria</string>      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Modo:</string>       
     <string name="configLabel_timezone_custom">Zona horaria:</string>
     <string name="configLabel_timezone_standard">Hora solar:</string>    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="configLabel_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->   <!-- TODO -->
 
     
     <string name="timeFormatMode_system">Formato del sistema</string>
@@ -484,6 +516,14 @@
     <string name="configLabel_timeFormatMode">Formato de hora</string>
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>
 
+    <!-- Widget Setting: calendar mode -->
+    <string name="calendarMode_coptic">Coptic</string>                      <!-- TODO -->
+    <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
+    <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
+    <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
+    <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
+    <string name="calendarMode_persian">Persian (Solar Hijiri)</string>     <!-- TODO -->
+    <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
     
     <string name="dateMode_current">Hoy</string>
     <string name="dateMode_custom">Definido por el usuario</string>
@@ -1197,6 +1237,23 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
+    <string name="graph_option_grid">Grid</string>              <!-- TODO -->
+    <string name="graph_option_labels">Labels</string>          <!-- TODO -->
+    <string name="graph_option_axis">Axis</string>              <!-- TODO -->
+    <string name="graph_option_filledpath">Filled Path</string> <!-- TODO -->
+    <string name="graph_option_moon">Show Moon</string>         <!-- TODO -->
+
+    <string name="seekAltitude_configHint">degrees</string>   <!-- TODO -->
+    <string name="seekAltitude_suffix">°∠</string>
+    <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>
+    <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
+    <string name="seekAltitude_setting">@string/eventalias_title_tag_setting</string>
+    <string name="seekAltitude_setting_contentDescription">@string/sunset</string>
+
+    <!-- Dialog: Moon -->
+    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
+
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planificar alarma para</string>
     <string name="configLabel_schednotify_mode">Planificar notificación para</string>  
@@ -1493,6 +1550,40 @@
                 * <b>%m</b> para el modo (corto) (p. ej. Solsticio) <br/>
                 * <b>%M</b> para el modo (largo) (p. ej. Solsticio de invierno) <br/>
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>    <!-- TODO -->
+
+    <string name="help_general_calendarFormatPattern"><![CDATA[
+          <b>Date Format:</b> A date format pattern.<br/>
+          <br/>Available elements may differ between calendars, but usually include..<br/>
+          <br/>
+          <b>E</b> : day of week <br/>
+          <b>d</b> : day of month <br/>
+          <b>D</b> : day of year <br/>
+          <b>F</b> : weekday in month <br/>
+          <b>M</b> : month of year <br/>
+          <b>y</b> : year of era <br/>
+          <b>G</b> : era <br/>
+          <br/>
+    ]]></string>    <!-- TODO -->
+
+    <string name="help_general_moondialog"><![CDATA[
+          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
+          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
+          \n\nShare [Icon Share] will copy text to the clipboard.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
+          <b>Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
+          <b>Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
+          <b>Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->  <!-- TODO -->
+
+    <string name="help_eventlist"><![CDATA[
+          [Icon OK] Choose a custom event.\n
+          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
+          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
+          [Icon View] Marked events are displayed by the app.
     ]]></string>    <!-- TODO -->
 
     <string name="help_alarms_edit"><![CDATA[
