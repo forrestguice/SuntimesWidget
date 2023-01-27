@@ -1200,16 +1200,16 @@
     <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
-    <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>
+    <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>
+
+    <!-- App Setting: Show Cross Quarter days -->
+    <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
+    <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
-
-    <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
-    <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
@@ -1224,7 +1224,7 @@
     <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->
     <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
     <string-array name="emphasizefield_display">                      <!-- one-to-one with headerText_values -->
         <item>@string/timeMode_none</item>

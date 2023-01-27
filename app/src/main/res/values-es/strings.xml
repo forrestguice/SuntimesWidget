@@ -993,6 +993,12 @@
     <string name="configLabel_ui_showmoon">Mostrar la Luna</string>
     <string name="configLabel_ui_showmoon_summary">Muestra los momentos de salida y puesta, fase e iluminación.</string>
 
+
+    <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+
+    <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
+    <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
     
     <string name="configLabel_ui_showEquinox">Mostrar solsticio / equinoccio</string>
     <string name="configLabel_ui_showEquinox_summary">Mostrar tiempo hasta próximo solsticio o equinoccio.</string>
@@ -1008,6 +1014,9 @@
 
     <string name="configLabel_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
     <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
+
+    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->

@@ -1010,6 +1010,14 @@
     <string name="configLabel_ui_showmoon">顯示月亮訊息</string>
     <string name="configLabel_ui_showmoon_summary">顯示月出月落的時間，月相和月光飽滿度。</string>
 
+    <!-- App Setting: Show Lunar Noon -->
+    <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+
+    <!-- App Setting: Show Cross Quarter days -->
+    <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
+    <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
+
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">顯示至點/分點</string>
     <string name="configLabel_ui_showEquinox_summary">顯示到下一次至點/分點的時間。</string>
@@ -1025,6 +1033,10 @@
     <!-- App Setting: show map button -->
     <string name="configLabel_ui_showmapbutton">顯示地圖按鈕</string>
     <string name="configLabel_ui_showmapbutton_summary">顯示一個打開預設地圖應用的操作欄按鈕。</string>
+
+    <!-- App Setting: emphasize field -->
+    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">列標題</string>              <!-- group title -->
