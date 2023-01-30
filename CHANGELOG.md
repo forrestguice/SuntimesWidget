@@ -1,6 +1,6 @@
 ### ~
 
-### DEVELOP
+### v0.15.0 (2023-01-31)
 * adds "Welcome Dialog"; a guided introduction and initial configuration wizard (#603).
 * adds "High Contrast" app themes (#492, #615); changes default theme to "System default" (#666).
 * adds "Text Size" setting; display "small", "normal", "large", or "extra-large" text (#492, #615, #622, #656).
