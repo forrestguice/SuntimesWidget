@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:visible="false" android:oneshot="false">
+
+    <item android:duration="@integer/anim_alarmitem_timeout1_duration"
+        android:drawable="@drawable/card_alarmitem_timeout_dark1_2"/>
+
+    <item android:duration="@integer/anim_alarmitem_timeout1_duration"
+        android:drawable="@drawable/card_alarmitem_timeout_dark1_1"/>
+
+</animation-list>

@@ -60,9 +60,9 @@ public class LocationDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_setLocation()
     {
-        String name[] = {TESTLOC_0_LABEL, TESTLOC_1_LABEL};
-        String lat[]  = {TESTLOC_0_LAT, TESTLOC_1_LAT };
-        String lon[]  = {TESTLOC_0_LON, TESTLOC_1_LON };
+        String[] name = {TESTLOC_0_LABEL, TESTLOC_1_LABEL};
+        String[] lat  = {TESTLOC_0_LAT, TESTLOC_1_LAT };
+        String[] lon  = {TESTLOC_0_LON, TESTLOC_1_LON };
 
         int n = name.length;
         int i = new Random().nextInt(n);
@@ -197,8 +197,9 @@ public class LocationDialogTest extends SuntimesActivityTestBase
 
     public static void applyLocationDialog(Context context)
     {
-        String setLocationText = context.getString(R.string.location_dialog_ok);
-        onView(withText(setLocationText)).perform(click());
+        //String setLocationText = context.getString(R.string.location_dialog_ok);
+        //onView(withText(setLocationText)).perform(click());
+        onView(withId(R.id.dialog_button_accept)).perform(click());
 
         // TODO: verify action
         //onView(allOf(isDescendantOfA(withResourceName("app_menubar")), withText(name))).check( assertShown );      // activity title should now be updated
@@ -208,8 +209,9 @@ public class LocationDialogTest extends SuntimesActivityTestBase
 
     public static void cancelLocationDialog(Context context)
     {
-        String setLocationText = context.getString(R.string.location_dialog_cancel);
-        onView(withText(setLocationText)).perform(click());
+        //String setLocationText = context.getString(R.string.location_dialog_cancel);
+        //onView(withText(setLocationText)).perform(click());
+        onView(withId(R.id.dialog_button_cancel)).perform(click());
     }
 
     public void editLocation( String name, String latitude, String longitude )

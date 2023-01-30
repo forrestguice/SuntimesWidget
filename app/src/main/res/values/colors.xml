@@ -18,21 +18,38 @@
 
     <!-- "night" overridable -->
 
+    <color name="primaryColor">@color/primaryColor_light</color>
     <color name="dialog_frame">@color/dialog_frame_light</color>
     <color name="dialog_bg">@color/dialog_bg_light</color>
     <color name="dialog_bg_alt">@color/dialog_bg_light</color>
     <color name="card_bg">@color/card_bg_light</color>
     <color name="card_bg_trans">@color/card_bg_lighttrans</color>
+    <color name="chip_bg_disabled">@color/chip_bg_disabled_light</color>
+    <color name="chip_bg_disabled_stroke">@color/chip_bg_disabled_stroke_light</color>
+    <color name="chip_bg_enabled">@color/chip_bg_enabled_light</color>
+    <color name="chip_bg_enabled_stroke">@color/chip_bg_enabled_stroke_light</color>
+    <color name="chip_bg_pressed">@color/chip_bg_pressed_light</color>
+    <color name="chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_light</color>
+    <color name="chip_tray_bg">@color/chip_tray_bg_light</color>
 
     <color name="hr">@color/hr_light</color>
     <color name="text_disabled">@color/text_disabled_light</color>
     <color name="text_accent">@color/text_accent_light</color>
+    <color name="text_primary">@color/text_primary_light</color>
+    <color name="text_secondary">@color/text_secondary_light</color>
+    <color name="text_tertiary">@color/text_tertiary_light</color>
+    <color name="text_time">@color/text_time_light</color>
     <color name="snackbar_text">@color/snackbar_text_light</color>
     <color name="fab_ripple">@color/fab_ripple_light</color>
 
     <color name="table_rising">@color/table_rising_light</color>
     <color name="table_setting">@color/table_setting_light</color>
+    <color name="table_civil">@color/table_civil_light</color>
+    <color name="table_astro">@color/table_astro_light</color>
+    <color name="table_night">@color/table_night_light</color>
     <color name="table_noon">@color/table_setting_light</color>
+    <color name="table_moon_rising">@color/table_moon_rising_light</color>
+    <color name="table_moon_setting">@color/table_moon_setting_light</color>
 
     <color name="alarm_enabled">@color/alarm_enabled_light</color>
     <color name="grid_selected">@color/grid_selected_light</color>
@@ -46,6 +63,9 @@
     <color name="graphColor_astronomical">@color/graphColor_astronomical_light</color>
     <color name="graphColor_pointFill">@color/graphColor_pointFill_light</color>
     <color name="graphColor_pointStroke">@color/graphColor_pointStroke_light</color>
+    <color name="graphColor_axis">@color/graphColor_axis_light</color>
+    <color name="graphColor_grid">@color/graphColor_grid_light</color>
+    <color name="graphColor_labels">@color/graphColor_labels_light</color>
 
     <color name="warningTag">@color/warningTag_light</color>
     <color name="errorTag">@color/errorTag_light</color>
@@ -66,8 +86,41 @@
     <color name="tagColor_error">@color/errorTag_light</color>
     <color name="tagColor_dst">@color/dstTag_light</color>
 
+    <!-- night overrideable (high contrast) -->
+    <color name="primaryColor_contrast">@color/primaryColor_contrast_light</color>
+    <color name="window_bg_contrast">@color/window_bg_contrast_light</color>
+    <color name="dialog_frame_contrast">@color/dialog_frame_contrast_light</color>
+    <color name="dialog_bg_contrast">@color/dialog_bg_contrast_light</color>
+    <color name="dialog_bg_alt_contrast">@color/dialog_bg_alt_contrast_light</color>
+    <color name="card_bg_contrast">@color/card_bg_contrast_light</color>
+    <color name="table_rising_contrast">@color/table_rising_contrast_light</color>
+    <color name="table_setting_contrast">@color/table_setting_contrast_light</color>
+    <color name="table_civil_contrast">@color/table_civil_contrast_light</color>
+    <color name="table_astro_contrast">@color/table_astro_contrast_light</color>
+    <color name="table_night_contrast">@color/table_night_contrast_light</color>
+    <color name="table_noon_contrast">@color/table_noon_contrast_light</color>
+    <color name="table_moonRising_contrast">@color/table_moonRising_contrast_light</color>
+    <color name="table_moonSetting_contrast">@color/table_moonSetting_contrast_light</color>
+    <color name="table_spring_contrast">@color/table_spring_contrast_light</color>
+    <color name="table_summmer_contrast">@color/table_summmer_contrast_light</color>
+    <color name="table_fall_contrast">@color/table_fall_contrast_light</color>
+    <color name="table_winter_contrast">@color/table_winter_contrast_light</color>
+
+    <color name="chip_bg_disabled_contrast">@color/chip_bg_disabled_contrast_light</color>
+    <color name="chip_bg_disabled_stroke_contrast">@color/chip_bg_disabled_stroke_contrast_light</color>
+    <color name="chip_bg_enabled_contrast">@color/chip_bg_enabled_contrast_light</color>
+    <color name="chip_bg_enabled_stroke_contrast">@color/chip_bg_enabled_stroke_contrast_light</color>
+    <color name="chip_bg_pressed_contrast">@color/chip_bg_pressed_contrast_light</color>
+    <color name="chip_bg_pressed_stroke_contrast">@color/chip_bg_pressed_stroke_contrast_light</color>
+    <color name="chip_tray_bg_contrast">@color/chip_tray_bg_contrast_light</color>
+
     <!-- general -->
 
+    <color name="primaryColor_dark">@color/grey_900</color>
+    <color name="text_primary_dark">@android:color/primary_text_dark</color>
+    <color name="text_secondary_dark">@android:color/secondary_text_dark</color>
+    <color name="text_tertiary_dark">@android:color/tertiary_text_dark</color>
+    <color name="text_time_dark">@android:color/primary_text_dark</color>
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
     <color name="hr_dark">#33ffffff</color>
@@ -76,13 +129,30 @@
     <color name="dialog_bg_alt_dark">@color/grey_900</color>
     <color name="card_bg_dark">@color/grey_800</color>
     <color name="card_bg_darktrans">#aa212121</color>
+    <color name="chip_bg_disabled_dark">@color/grey_500</color>
+    <color name="chip_bg_disabled_stroke_dark">@color/grey_500</color>
+    <color name="chip_bg_enabled_dark">@color/grey_850</color>
+    <color name="chip_bg_enabled_stroke_dark">@color/grey_850</color>
+    <color name="chip_bg_pressed_dark">@color/text_accent_dark</color>
+    <color name="chip_bg_pressed_stroke_dark">@color/text_accent_dark</color>
+    <color name="chip_tray_bg_dark">@color/grey_800</color>
     <color name="widget_bg_dark">#82212121</color>
     <color name="fab_ripple_dark">@color/grey_900</color>
     <color name="snackbar_text_dark">@android:color/primary_text_dark</color>
     <color name="table_rising_dark">@color/sunIcon_color_rising_dark</color>
     <color name="table_setting_dark">@color/sunIcon_color_setting_dark</color>
+    <color name="table_civil_dark">@color/graphColor_civil_dark</color>
+    <color name="table_astro_dark">@color/graphColor_astronomical_dark</color>
+    <color name="table_night_dark">@color/graphColor_night_dark</color>
     <color name="table_noon_dark">@color/sunIcon_color_setting_dark</color>
+    <color name="table_moon_rising_dark">@color/moonIcon_color_rising_dark</color>
+    <color name="table_moon_setting_dark">@color/moonIcon_color_setting_dark</color>
 
+    <color name="primaryColor_light">@color/grey_100</color>
+    <color name="text_primary_light">@android:color/primary_text_light</color>
+    <color name="text_secondary_light">@android:color/secondary_text_light</color>
+    <color name="text_tertiary_light">@android:color/tertiary_text_light</color>
+    <color name="text_time_light">@android:color/primary_text_light</color>
     <color name="text_disabled_light">#39000000</color>
     <color name="text_accent_light">@color/deep_teal_500</color>
     <color name="hr_light">#1f000000</color>
@@ -91,12 +161,76 @@
     <color name="dialog_bg_alt_light">@color/grey_300</color>
     <color name="card_bg_light">@android:color/white</color>
     <color name="card_bg_lighttrans">#aaffffff</color>
+    <color name="chip_bg_disabled_light">@color/grey_500</color>
+    <color name="chip_bg_disabled_stroke_light">@color/grey_500</color>
+    <color name="chip_bg_enabled_light">@color/grey_50</color>
+    <color name="chip_bg_enabled_stroke_light">@color/grey_200</color>
+    <color name="chip_bg_pressed_light">@color/text_accent_light</color>
+    <color name="chip_bg_pressed_stroke_light">@color/text_accent_light</color>
+    <color name="chip_tray_bg_light">@color/grey_200</color>
     <color name="widget_bg_light">@color/card_bg_lighttrans</color>
     <color name="fab_ripple_light">@color/grey_50</color>
     <color name="snackbar_text_light">@android:color/primary_text_light</color>
     <color name="table_rising_light">@color/sunIcon_color_rising_light</color>
     <color name="table_setting_light">@color/sunIcon_color_setting_light</color>
+    <color name="table_civil_light">@color/graphColor_civil_light</color>
+    <color name="table_astro_light">@color/graphColor_astronomical_light</color>
+    <color name="table_night_light">@color/graphColor_night_light</color>
     <color name="table_noon_light">@color/sunIcon_color_setting_light</color>
+    <color name="table_moon_rising_light">@color/moonIcon_color_rising_light</color>
+    <color name="table_moon_setting_light">@color/moonIcon_color_setting_light</color>
+
+    <color name="primaryColor_contrast_dark">@color/grey_900</color>
+    <color name="window_bg_contrast_dark">@color/grey_999</color>
+    <color name="dialog_frame_contrast_dark">@color/grey_900</color>
+    <color name="dialog_bg_contrast_dark">@color/grey_999</color>
+    <color name="dialog_bg_alt_contrast_dark">@color/grey_900</color>
+    <color name="card_bg_contrast_dark">@color/grey_900</color>
+    <color name="chip_bg_disabled_contrast_dark">@color/grey_500</color>
+    <color name="chip_bg_disabled_stroke_contrast_dark">@color/grey_500</color>
+    <color name="chip_bg_enabled_contrast_dark">@color/grey_900</color>
+    <color name="chip_bg_enabled_stroke_contrast_dark">@color/grey_900</color>
+    <color name="chip_bg_pressed_contrast_dark">@color/text_accent_dark</color>
+    <color name="chip_bg_pressed_stroke_contrast_dark">@color/text_accent_dark</color>
+    <color name="chip_tray_bg_contrast_dark">@color/grey_800</color>
+    <color name="table_rising_contrast_dark">@android:color/white</color>
+    <color name="table_setting_contrast_dark">@color/grey_300</color>
+    <color name="table_civil_contrast_dark">#FFb1c9ff</color>
+    <color name="table_astro_contrast_dark">#FF7BA3FF</color>
+    <color name="table_night_contrast_dark">@color/grey_500</color>
+    <color name="table_noon_contrast_dark">@color/grey_300</color>
+    <color name="table_moonRising_contrast_dark">@android:color/white</color>
+    <color name="table_moonSetting_contrast_dark">@color/grey_300</color>
+    <color name="table_spring_contrast_dark">@android:color/white</color>
+    <color name="table_summmer_contrast_dark">@color/grey_300</color>
+    <color name="table_fall_contrast_dark">@android:color/white</color>
+    <color name="table_winter_contrast_dark">@color/grey_300</color>
+
+    <color name="primaryColor_contrast_light">@color/grey_100</color>
+    <color name="window_bg_contrast_light">@color/grey_50</color>
+    <color name="dialog_frame_contrast_light">@android:color/white</color>
+    <color name="dialog_bg_contrast_light">@color/grey_50</color>
+    <color name="dialog_bg_alt_contrast_light">@color/grey_300</color>
+    <color name="card_bg_contrast_light">@android:color/white</color>
+    <color name="chip_bg_disabled_contrast_light">@color/grey_500</color>
+    <color name="chip_bg_disabled_stroke_contrast_light">@color/grey_500</color>
+    <color name="chip_bg_enabled_contrast_light">@color/grey_50</color>
+    <color name="chip_bg_enabled_stroke_contrast_light">@color/grey_600</color>
+    <color name="chip_bg_pressed_contrast_light">@color/text_accent_light</color>
+    <color name="chip_bg_pressed_stroke_contrast_light">@color/text_accent_light</color>
+    <color name="chip_tray_bg_contrast_light">@color/grey_200</color>
+    <color name="table_rising_contrast_light">@color/grey_900</color>
+    <color name="table_setting_contrast_light">@color/grey_800</color>
+    <color name="table_civil_contrast_light">#5287ff</color>
+    <color name="table_astro_contrast_light">#0000FF</color>
+    <color name="table_night_contrast_light">@color/grey_600</color>
+    <color name="table_noon_contrast_light">@color/grey_800</color>
+    <color name="table_moonRising_contrast_light">@color/grey_900</color>
+    <color name="table_moonSetting_contrast_light">@color/grey_800</color>
+    <color name="table_spring_contrast_light">@color/grey_900</color>
+    <color name="table_summmer_contrast_light">@color/grey_800</color>
+    <color name="table_fall_contrast_light">@color/grey_900</color>
+    <color name="table_winter_contrast_light">@color/grey_800</color>
 
     <!-- alarm cards -->
     <color name="grid_selected_light">@color/text_accent_light</color>
@@ -104,20 +238,43 @@
     <color name="alarm_enabled_light">@color/text_accent_light</color>
     <color name="alarm_enabled_bg_light">@color/grey_50</color>
     <color name="alarm_disabled_bg_light">@color/grey_100</color>
+    <color name="alarm_sounding_bg0_light">@color/grey_50</color>
+    <color name="alarm_sounding_bg1_light">@color/deep_teal_200</color>
+    <color name="alarm_sounding_bg2_light">@color/alarm_pressed_dark</color>
+    <color name="alarm_snoozing_bg0_light">@color/grey_50</color>
+    <color name="alarm_snoozing_bg1_light">@color/grey_600</color>
+    <color name="alarm_snoozing_bg2_light">#000000</color>
+    <color name="alarm_snoozing_bg3_light">@color/grey_500</color>
+    <color name="alarm_timeout_bg0_light">@color/grey_50</color>
+    <color name="alarm_timeout_bg1_light">@color/tagColor_warning</color>
 
     <color name="grid_selected_dark">@color/text_accent_dark</color>  <!-- #aaff9900-->
     <color name="alarm_pressed_dark">#8080cbc4</color>
     <color name="alarm_enabled_dark">@color/text_accent_dark</color>
     <color name="alarm_enabled_bg_dark">@color/grey_900</color>
     <color name="alarm_disabled_bg_dark">@color/grey_800</color>
+    <color name="alarm_sounding_bg0_dark">@color/grey_900</color>
+    <color name="alarm_sounding_bg1_dark">@color/deep_teal_200</color>
+    <color name="alarm_sounding_bg2_dark">@color/alarm_pressed_dark</color>
+    <color name="alarm_snoozing_bg0_dark">@color/grey_900</color>
+    <color name="alarm_snoozing_bg1_dark">@color/grey_600</color>
+    <color name="alarm_snoozing_bg2_dark">#000000</color>
+    <color name="alarm_snoozing_bg3_dark">@color/grey_500</color>
+    <color name="alarm_timeout_bg0_dark">@color/grey_900</color>
+    <color name="alarm_timeout_bg1_dark">@color/tagColor_warning</color>
+
+    <color name="alarm_notification_sounding">#AAEB5B</color>
+    <color name="alarm_notification_snoozing">@color/grey_600</color>
+    <color name="alarm_notification_timeout">#ff5252</color>
+    <color name="alarm_notification_warning">#ff9900</color>
 
     <!-- tags -->
     <color name="warningTag_dark">#ff9900</color>
     <color name="errorTag_dark">#FF5252</color>
     <color name="dstTag_dark">#ffd500</color>
 
-    <color name="warningTag_light">#ff9900</color>
-    <color name="errorTag_light">#FF5252</color>
+    <color name="warningTag_light">#CF4800</color>    <!-- #ff9900 -->
+    <color name="errorTag_light">#CF4800</color>
     <color name="dstTag_light">#CF4800</color>
 
     <!-- moon icons (rising, setting) -->
@@ -183,15 +340,21 @@
     <color name="graphColor_night_dark">#ff424242</color>
     <color name="graphColor_pointFill_dark">@color/sunIcon_color_setting_dark</color>
     <color name="graphColor_pointStroke_dark">@color/sunIcon_color_noon_light</color>
+    <color name="graphColor_axis_dark">@color/grey_900</color>  <!-- TODO -->
+    <color name="graphColor_grid_dark">@color/grey_500</color>  <!-- TODO -->
+    <color name="graphColor_labels_dark">@color/grey_300</color>  <!-- TODO -->
 
     <color name="graphColor_bg_light">@color/material_grey_50</color>
     <color name="graphColor_day_light">#ffffcc00</color>
     <color name="graphColor_civil_light">#ff7ba3ff</color>
     <color name="graphColor_nautical_light">#ff007bff</color>
     <color name="graphColor_astronomical_light">#ff0000ff</color>
-    <color name="graphColor_night_light">#ff757575</color>
+    <color name="graphColor_night_light">@color/grey_400</color>  <!-- #ff757575 -->
     <color name="graphColor_pointFill_light">@color/sunIcon_color_noon_light</color>
     <color name="graphColor_pointStroke_light">@color/sunIcon_color_noonBorder_light</color>
+    <color name="graphColor_axis_light">@color/grey_300</color>  <!-- TODO -->
+    <color name="graphColor_grid_light">@color/grey_300</color>
+    <color name="graphColor_labels_light">@color/grey_800</color>
 
     <!-- Dingy Yellows
     <color name="graphColor_bg_light">@color/material_grey_50</color>
@@ -246,7 +409,7 @@
     <color name="winterColor_dark">#37BBF0</color>
 
     <color name="springColor_light">#45807A</color>
-    <color name="summerColor_light">#FFC107</color>
+    <color name="summerColor_light">#FF4800</color>  <!-- #FFC107 -->
     <color name="fallColor_light">#CF461D</color>
     <color name="winterColor_light">#3277C7</color>
 
@@ -260,9 +423,11 @@
     <color name="grey_500l">#ffb0b0b0</color>
     <color name="grey_500">#ff9e9e9e</color>
     <color name="grey_600">#ff757575</color>
+    <color name="grey_700">#ff616161</color>
     <color name="grey_800">#ff424242</color>
     <color name="grey_850">#ff303030</color>
     <color name="grey_900">#ff212121</color>
+    <color name="grey_999">#ff111111</color>
     <color name="deep_teal_200">#ff80cbc4</color>
     <color name="deep_teal_500">#ff009688</color>
 

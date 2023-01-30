@@ -37,10 +37,12 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.concurrent.locks.Lock;
 
 /**
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
@@ -52,7 +54,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
-    private LightMapTask drawTask;
+    private LightMapTask drawTask = null;
 
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
@@ -74,6 +76,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         super(context, attribs);
         init(context);
     }
+
+    public void setUseMainThread(boolean value) {
+        useMainThread = value;
+    }
+    private boolean useMainThread = false;
 
     /**
      * @param context a context used to access resources
@@ -166,24 +173,34 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     public void updateViews(@Nullable SuntimesRiseSetDataset data)
     {
         setData(data);
+        //Log.d("DEBUG", "updateViews: " + data.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
 
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
+            //Log.d("DEBUG", "updateViews: canceling existing task..");
             //Log.w(LightMapView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(LightMapView.this.hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
         } //else Log.d(LightMapView.class.getSimpleName(), "updateViews: starting task " + data);
 
         if (getWidth() == 0 || getHeight() == 0) {
-            //Log.d(LightMapView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
+            Log.w(LightMapView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
             return;
         }
 
-        drawTask = new LightMapTask();
-        drawTask.setListener(drawTaskListener);
-        drawTask.execute(data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes);
+        if (useMainThread)
+        {
+            LightMapTask draw = new LightMapTask();
+            Bitmap b = draw.makeBitmap(data, getWidth(), getHeight(), colors);
+            drawTaskListener.onFinished(b);
+
+        } else {
+            drawTask = new LightMapTask();
+            drawTask.setListener(drawTaskListener);
+            drawTask.execute(data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes);
+        }
     }
 
-    private LightMapTaskListener drawTaskListener = new LightMapTaskListener() {
+    private final LightMapTaskListener drawTaskListener = new LightMapTaskListener() {
         @Override
         public void onStarted() {
             //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onStarted: " + Integer.toHexString(LightMapView.this.hashCode()));
@@ -316,13 +333,49 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     @Override
-    public void onVisibilityAggregated(boolean isVisible)    // TODO: only called for api 24+ ?
+    public void onVisibilityAggregated(boolean isVisible)
     {
         super.onVisibilityAggregated(isVisible);
         //Log.d("DEBUG", "onVisibilityAggregated: " + isVisible);
         if (!isVisible && drawTask != null) {
             drawTask.cancel(true);
         }
+    }
+
+    public void seekDateTime( Context context, @Nullable Calendar calendar )
+    {
+        if (calendar != null) {
+            seekDateTime(context, calendar.getTimeInMillis());
+        }
+    }
+    public void seekDateTime( Context context, long datetime )
+    {
+        long offsetMillis = datetime - colors.now;
+        colors.offsetMinutes = (offsetMillis / 1000 / 60);
+        updateViews(true);
+    }
+    public Long seekAltitude( Context context, @Nullable Integer degrees, boolean rising )
+    {
+        if (data != null && degrees != null)
+        {
+            Long event = findAltitude(context, degrees, rising);
+            if (event != null) {
+                seekDateTime(context, event);
+                return event;
+            }
+        }
+        return null;
+    }
+    public Long findAltitude( Context context, @Nullable Integer degrees, boolean rising )
+    {
+        if (data != null && degrees != null)
+        {
+            Calendar calendar = Calendar.getInstance(data.timezone());
+            calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
+            Calendar event = rising ? data.calculator().getSunriseCalendarForDate(calendar, degrees)
+                    : data.calculator().getSunsetCalendarForDate(calendar, degrees);
+            return ((event != null) ? event.getTimeInMillis() : null);
+        } else return null;
     }
 
     public void setOffsetMinutes( long value ) {
@@ -392,12 +445,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 if (isCancelled()) {
                     break;
                 }
+                colors.acquireDrawLock();
 
                 if (data != null && data.dataActual != null)
                 {
                     Calendar maptime = mapTime(data, colors);
                     Calendar datatime = data.dataActual.calendar();
-                    long data_age = (maptime.getTimeInMillis() - datatime.getTimeInMillis());
+                    long data_age = Math.abs(maptime.getTimeInMillis() - datatime.getTimeInMillis());
                     if (data_age >= (12 * 60 * 60 * 1000)) {    // TODO: more precise
 
                         //Log.d(LightMapTask.class.getSimpleName(), "recalculating dataset with adjusted date: " + data_age);
@@ -425,8 +479,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 colors.offsetMinutes += colors.anim_frameOffsetMinutes;
                 time0 = System.nanoTime();
                 i++;
+                colors.releaseDrawLock();
             }
             colors.offsetMinutes -= colors.anim_frameOffsetMinutes;
+
+            //Log.d("DEBUG", "doInBackground: done: " + (data != null ? data.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR) : "null"));
             return frame;
         }
 
@@ -460,7 +517,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             {
                 // draw astro twilight
                 p.setColor(colors.colorAstro);
-                if (!(layer_astro = drawRect(data.dataAstro, c, p)))
+                if (!(layer_astro = drawRect(colors, data.dataAstro, c, p)))
                 {
                     if (data.dataNautical.hasSunriseTimeToday() || data.dataNautical.hasSunsetTimeToday())
                     {
@@ -470,7 +527,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                 // draw nautical twilight
                 p.setColor(colors.colorNautical);
-                if (!(layer_nautical = drawRect(data.dataNautical, c, p)))
+                if (!(layer_nautical = drawRect(colors, data.dataNautical, c, p)))
                 {
                     if (data.dataCivil.hasSunriseTimeToday() || data.dataCivil.hasSunsetTimeToday())
                     {
@@ -480,7 +537,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                 // draw civil twilight
                 p.setColor(colors.colorCivil);
-                if (!(layer_civil = drawRect(data.dataCivil, c, p)))
+                if (!(layer_civil = drawRect(colors, data.dataCivil, c, p)))
                 {
                     if (data.dataActual.hasSunriseTimeToday() || data.dataActual.hasSunsetTimeToday())
                     {
@@ -490,7 +547,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                 // draw foreground (day)
                 p.setColor(colors.colorDay);
-                if (!drawRect(data.dataActual, c, p))
+                if (!drawRect(colors, data.dataActual, c, p))
                 {
                     boolean noLayers = !layer_astro && !layer_nautical && !layer_civil;
                     if (noLayers)
@@ -534,6 +591,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                                         (int)Math.ceil(c.getHeight() / (2.75d * 2d)) )     // a circle that is ~36% height of the graph
                             : colors.option_drawNow_pointSizePx;
                     int pointStroke = (int)Math.ceil(pointRadius / 3d);
+
+                    if (colors.option_lmt)
+                    {
+                        TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                        Calendar nowLmt = Calendar.getInstance(lmt);
+                        nowLmt.setTimeInMillis(now.getTimeInMillis());
+                        now = nowLmt;
+                    }
 
                     switch (colors.option_drawNow) {
                         case LightMapColors.DRAW_SUN2:
@@ -634,13 +699,30 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-        protected boolean drawRect( SuntimesRiseSetData data, Canvas c, Paint p )
+        protected boolean drawRect( LightMapColors options, SuntimesRiseSetData data, Canvas c, Paint p )
         {
             Calendar riseTime = data.sunriseCalendarToday();
             Calendar setTime = data.sunsetCalendarToday();
             if (riseTime == null && setTime == null)
             {
                 return false;
+            }
+
+            if (options.option_lmt)
+            {
+                TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                if (riseTime != null)
+                {
+                    Calendar riseTimeLmt = Calendar.getInstance(lmt);
+                    riseTimeLmt.setTimeInMillis(riseTime.getTimeInMillis());
+                    riseTime = riseTimeLmt;
+                }
+                if (setTime != null)
+                {
+                    Calendar setTimeLmt = Calendar.getInstance(lmt);
+                    setTimeLmt.setTimeInMillis(setTime.getTimeInMillis());
+                    setTime = setTimeLmt;
+                }
             }
 
             int w = c.getWidth();
@@ -756,11 +838,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public int colorPointFill, colorPointStroke;
         public int option_drawNow = DRAW_SUN1;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
+        public boolean option_lmt = false;
 
         public long offsetMinutes = 0;
         public long now = -1L;
         public int anim_frameLengthMs = 100;         // frames shown for 200 ms
         public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
+        public Lock anim_lock = null;
 
         public LightMapColors() {}
 
@@ -808,6 +892,21 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             colorNight = ContextCompat.getColor(context, R.color.graphColor_night_light);
             colorPointFill = ContextCompat.getColor(context, R.color.graphColor_pointFill_light);
             colorPointStroke = ContextCompat.getColor(context, R.color.graphColor_pointStroke_light);
+        }
+
+        public void acquireDrawLock()
+        {
+            if (anim_lock != null) {
+                anim_lock.lock();
+                //Log.d("DEBUG", "MapView :: acquire " + anim_lock);
+            }
+        }
+        public void releaseDrawLock()
+        {
+            if (anim_lock != null) {
+                //Log.d("DEBUG", "MapView :: release " + anim_lock);
+                anim_lock.unlock();
+            }
         }
     }
 

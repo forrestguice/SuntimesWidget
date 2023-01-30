@@ -124,7 +124,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
         onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(WidgetSettings.TimezoneMode.SOLAR_TIME.toString())));
 
         onView(withId(R.id.appwidget_timezone_custom)).check(assertHidden);
-        onView(withId(R.id.appwidget_timezone_custom_label)).check(assertHidden);
+        onView(withId(R.id.sort_timezones)).check(assertHidden);
 
         WidgetSettings.SolarTimeMode solarTimeMode = WidgetSettings.loadSolarTimeModePref(context, 0);
         onView(withId(R.id.appwidget_solartime)).check(matches(withSpinnerText( containsString(solarTimeMode.toString()) )));
@@ -135,7 +135,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
     {
         onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(WidgetSettings.TimezoneMode.CURRENT_TIMEZONE.toString())));
         onView(withId(R.id.appwidget_solartime)).check(assertHidden);
-        onView(withId(R.id.appwidget_timezone_custom_label)).check(assertDisabled);
+        onView(withId(R.id.sort_timezones)).check(assertHidden);
 
         String timezoneId = TimeZone.getDefault().getID();
         onView(withId(R.id.appwidget_timezone_custom)).check(matches(withSpinnerText( containsString(timezoneId) )));
@@ -147,13 +147,14 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
         onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE.toString())));
         onView(withId(R.id.appwidget_solartime)).check(assertHidden);
 
-        onView(withId(R.id.appwidget_timezone_custom_label)).check(assertEnabled);
-        onView(withId(R.id.appwidget_timezone_custom_label)).check(assertClickable);
+        onView(withId(R.id.sort_timezones)).check(assertEnabled);
+        onView(withId(R.id.sort_timezones)).check(assertClickable);
 
         WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, 0);
         String timezoneId = WidgetSettings.loadTimezonePref(context, 0, (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE ? TimeZoneDialog.SLOT_CUSTOM0 : ""));
         onView(withId(R.id.appwidget_timezone_custom)).check(matches(withSpinnerText( containsString(timezoneId) )));
         onView(withId(R.id.appwidget_timezone_custom)).check(assertEnabled);
+        onView(withId(R.id.appwidget_timezone_custom)).check(assertClickable);
     }
 
     public static WidgetSettings.TimezoneMode getTimezoneDialogMode()

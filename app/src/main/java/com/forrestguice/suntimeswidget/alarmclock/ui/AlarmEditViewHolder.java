@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -41,10 +42,12 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
-import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -67,6 +70,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public ImageButton menu_type, menu_overflow;
     public EditText edit_label;
+    public TextView edit_note;
 
     public View chip_offset;
     public TextView text_offset;
@@ -92,7 +96,20 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public View chip_action1;
     public TextView text_action1;
 
-    public int res_icAlarm, res_icNotification;
+    public View chip_reminder;
+    public CheckBox check_reminder;
+
+    public View chip_action2;
+    public TextView text_action2;
+
+    public View tray_beforeAlert;
+
+    public View card_backdrop;
+
+    public View chip_dismissChallenge;
+    public TextView text_dismissChallenge;
+
+    public int res_icAlarm, res_icNotification, res_icNotification1, res_icNotification2;
     public int res_icSoundOn, res_icSoundOff;
     public int res_colorEnabled;
     public int res_icOffset;
@@ -103,6 +120,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         Context context = parent.getContext();
         SuntimesUtils.initDisplayStrings(context);
 
+        card_backdrop = parent.findViewById(R.id.layout_alarmcard0);
         layout_datetime = parent.findViewById(R.id.layout_datetime);
         icon_datetime_offset = (ImageView) parent.findViewById(R.id.icon_datetime_offset);
         text_datetime_offset = (TextView) parent.findViewById(R.id.text_datetime_offset);
@@ -113,6 +131,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         menu_type = (ImageButton) parent.findViewById(R.id.type_menu);
         menu_overflow = (ImageButton) parent.findViewById(R.id.overflow_menu);
         edit_label = (EditText) parent.findViewById(R.id.edit_label);
+        edit_note = (TextView) parent.findViewById(R.id.edit_note);
 
         chip_offset = parent.findViewById(R.id.chip_offset);
         text_offset = (TextView) parent.findViewById(R.id.text_offset);
@@ -138,13 +157,41 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         chip_action1 = parent.findViewById(R.id.chip_action1);
         text_action1 = (TextView) parent.findViewById(R.id.text_action1);
 
+        chip_reminder = parent.findViewById(R.id.chip_reminder);
+        check_reminder = (CheckBox) parent.findViewById(R.id.check_reminder);
+
+        chip_action2 = parent.findViewById(R.id.chip_action2);
+        text_action2 = (TextView) parent.findViewById(R.id.text_action2);
+
+        tray_beforeAlert = parent.findViewById(R.id.tray_beforeAlert);
+
+        chip_dismissChallenge = parent.findViewById(R.id.chip_dismiss_challenge);
+        text_dismissChallenge = (TextView) parent.findViewById(R.id.text_dismiss_challenge);
+
+        initTooltips();
         themeHolder(context);
+    }
+
+    protected void initTooltips()
+    {
+        TooltipCompat.setTooltipText(edit_note, edit_note.getContentDescription());
+        TooltipCompat.setTooltipText(chip_offset, chip_offset.getContentDescription());
+        TooltipCompat.setTooltipText(chip_event, chip_event.getContentDescription());
+        TooltipCompat.setTooltipText(chip_location, chip_location.getContentDescription());
+        TooltipCompat.setTooltipText(chip_repeat, chip_repeat.getContentDescription());
+        TooltipCompat.setTooltipText(chip_reminder, chip_reminder.getContentDescription());
+        TooltipCompat.setTooltipText(chip_ringtone, chip_ringtone.getContentDescription());
+        TooltipCompat.setTooltipText(chip_action0, chip_action0.getContentDescription());
+        TooltipCompat.setTooltipText(chip_action1, chip_action1.getContentDescription());
+        TooltipCompat.setTooltipText(chip_action2, chip_action2.getContentDescription());
+        TooltipCompat.setTooltipText(chip_dismissChallenge, chip_dismissChallenge.getContentDescription());
     }
 
     @SuppressLint("ResourceType")
     public void themeHolder(Context context)
     {
-        int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled, R.attr.alarmColorEnabled, R.attr.icActionTimeReset };
+        int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled, R.attr.alarmColorEnabled, R.attr.icActionTimeReset,
+                R.attr.icActionNotification1, R.attr.icActionNotification2 };
         TypedArray a = context.obtainStyledAttributes(attrs);
         res_icAlarm = a.getResourceId(0, R.drawable.ic_action_extension);
         res_icNotification = a.getResourceId(1, R.drawable.ic_action_notification);
@@ -152,6 +199,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         res_icSoundOff = a.getResourceId(3, R.drawable.ic_action_sounddisabled);
         res_colorEnabled = a.getResourceId(4, R.color.alarm_enabled_dark);
         res_icOffset = a.getResourceId(5, R.drawable.ic_action_timereset);;
+        res_icNotification1 = a.getResourceId(6, R.drawable.ic_action_notification1);
+        res_icNotification2 = a.getResourceId(7, R.drawable.ic_action_notification2);
         a.recycle();
     }
 
@@ -164,10 +213,33 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
             float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
 
-            menu_type.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? res_icAlarm : res_icNotification)));
-            menu_type.setContentDescription(item.type.getDisplayString());
+            /*if (card_backdrop != null)
+            {
+                Integer color = getBackgroundColorForType(context, item.type);
+                if (color != null) {
+                    card_backdrop.setBackgroundColor(color);
+                }
+            }*/
 
-            edit_label.setText(item.getLabel(item.getLabel(context)));
+            int menuDrawable;
+            switch (item.type) {
+                case NOTIFICATION: menuDrawable = res_icNotification; break;
+                case NOTIFICATION1: menuDrawable = res_icNotification1; break;
+                case NOTIFICATION2: menuDrawable = res_icNotification2; break;
+                case ALARM: default:  menuDrawable = res_icAlarm; break;
+            }
+            menu_type.setImageDrawable(ContextCompat.getDrawable(context, menuDrawable));
+            menu_type.setContentDescription(item.type.getDisplayString());
+            TooltipCompat.setTooltipText(menu_type, menu_type.getContentDescription());
+
+            edit_label.setText(item.getLabel(""));
+
+            if (item.note == null)
+            {
+                CharSequence emptyNote = "";
+                edit_note.setText(emptyNote);
+
+            } else edit_note.setText(item.note);
 
             text_offset.setText(displayOffset(context, item));
 
@@ -186,21 +258,19 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             text_location.setText((item.location != null) ? item.location.getLabel() : "");
             text_repeat.setText( displayRepeating(context, item, selected));
-
             text_event.setText(displayEvent(context, item));
-            Log.d("DEBUG", "set event text: " + text_event.getText());
 
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             if (event != null)
             {
                 boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && ((item.location != null) && item.location.getLatitudeAsDouble() < 0);
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
-                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
+                Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
+                text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
 
             } else {
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.timezone, (int)iconSize, (int)iconSize);
-                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.timezone));
+                Drawable eventIcon = EventIcons.getIconDrawable(context, EventIcons.getIconTag(context, item), (int)iconSize, (int)iconSize);
+                text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, item.timezone));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
             }
 
@@ -211,6 +281,21 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             check_vibrate.setChecked(item.vibrate);
             text_action0.setText(displayAction(context, item, 0));
             text_action1.setText(displayAction(context, item, 1));
+
+            AlarmSettings.DismissChallenge challenge = item.getDismissChallenge(context, true);
+            text_dismissChallenge.setText((challenge == AlarmSettings.DismissChallenge.NONE) ? context.getString(R.string.alarmDismiss_none_long) : challenge.getDisplayString());
+            text_dismissChallenge.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+
+            long defaultReminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
+            tray_beforeAlert.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM && (defaultReminderWithin > 0)) ? View.VISIBLE : View.GONE);
+
+            long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, defaultReminderWithin);
+            Log.d("DEBUG", "bindDataToPosition: showReminder: " + reminderWithin);
+            check_reminder.setText(context.getString(R.string.reminder_label, utils.timeDeltaLongDisplayString(reminderWithin != 0 ? reminderWithin : defaultReminderWithin)));
+            check_reminder.setChecked(reminderWithin > 0);
+
+            text_action2.setText(displayAction(context, item, 2));
+            chip_action2.setVisibility(check_reminder.isChecked() ? View.VISIBLE : View.INVISIBLE);
 
             text_datetime_offset.setText(isSchedulable ? text_offset.getText() : "");
             text_datetime_offset.setVisibility(preview_offset ? View.INVISIBLE : View.VISIBLE);
@@ -240,6 +325,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_date.setText("");
             text_note.setText("");
             edit_label.setText("");
+            edit_note.setText("");
             text_offset.setText("");
             text_event.setText("");
             text_location.setText("");
@@ -248,6 +334,9 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             check_vibrate.setChecked(false);
             text_action0.setText("");
             text_action1.setText("");
+            check_reminder.setChecked(false);
+            text_action2.setText("");
+            text_dismissChallenge.setText("");
         }
     }
 
@@ -257,6 +346,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         menu_type.setOnClickListener(null);
         menu_overflow.setOnClickListener(null);
         edit_label.setOnClickListener(null);
+        edit_note.setOnClickListener(null);
         chip_offset.setOnClickListener(null);
         chip_offset.setOnClickListener(null);
         chip_event.setOnClickListener(null);
@@ -267,6 +357,10 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         check_vibrate.setOnCheckedChangeListener(null);
         chip_action0.setOnClickListener(null);
         chip_action1.setOnClickListener(null);
+        check_reminder.setOnClickListener(null);
+        check_reminder.setOnCheckedChangeListener(null);
+        chip_action2.setOnClickListener(null);
+        chip_dismissChallenge.setOnClickListener(null);
     }
 
     public static CharSequence displayAlarmLabel(Context context, AlarmClockItem item)
@@ -414,9 +508,26 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public static CharSequence displayEvent(Context context, AlarmClockItem item)
     {
         String eventString = item.getEvent();
-        if (eventString != null) {
+        if (eventString != null)
+        {
             AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
-            return eventItem.getTitle();
+            String summary = eventItem.getSummary();
+            if (summary != null)
+            {
+                int[] attrs = { R.attr.text_disabledColor };
+                TypedArray a = context.obtainStyledAttributes(attrs);
+                int color = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_disabled_dark));
+                a.recycle();
+
+                summary = context.getString(R.string.configLabel_event_alarmitem_desc, summary);
+                String displayString = context.getString(R.string.configLabel_event_alarmitem, eventItem.getTitle(), summary);
+                SpannableString s = SuntimesUtils.createRelativeSpan(null, displayString, summary, 0.75f);
+                s = SuntimesUtils.createColorSpan(s, displayString, summary, color);
+                return s;
+
+            } else {
+                return eventItem.getTitle();
+            }
 
         } else if (item.timezone != null) {
             Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Philipsburg, Sint Maarten</string>
+    <string name="default_location_latitude">18.02419</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-63.05048</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>             <!-- meters -->
+</resources>

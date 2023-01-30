@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -30,12 +31,9 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
-
-import java.util.Calendar;
 
 public class SunLayout_2x1_0 extends SunLayout
 {
@@ -45,7 +43,7 @@ public class SunLayout_2x1_0 extends SunLayout
         this.layoutID = R.layout.layout_widget_2x1_0;
     }
 
-    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+    protected WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
 
     @Override
     public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)
@@ -76,6 +74,77 @@ public class SunLayout_2x1_0 extends SunLayout
         }
     }
 
+    protected float[] findAdjustedSize(Context context, int appWidgetId)
+    {
+        boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
+        int numRows = 1, numCols = 2;
+        numRows += showSolarNoon ? 1 : 0;
+        numRows += showDayDelta ? 1 : 0;
+        int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2] + 32)) / numCols,
+                ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
+        float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
+        return adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
+    }
+
+    @TargetApi(16)
+    public void scaleViews(Context context, int appWidgetId, RemoteViews views, float[] adjustedSizeSp)
+    {
+        if (adjustedSizeSp[0] > timeSizeSp)
+        {
+            //float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+            //float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+            views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+            views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+            views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+            views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+            views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+            views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+
+            if (adjustedSizeSp[1] > timeSizeSp)
+            {
+                views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+            }
+
+            /*
+            views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+            views.setViewPadding(R.id.text_delta_day_prefix, (int)(scaledPadding), 0, 0, (int)(scaledPadding / 2));
+            views.setViewPadding(R.id.text_delta_day_value, 0, 0, 0, (int)(scaledPadding / 2));
+            views.setViewPadding(R.id.text_delta_day_units, 0, 0, 0, (int)(scaledPadding / 2));
+            views.setViewPadding(R.id.text_delta_day_suffix, 0, 0, 0, (int)(scaledPadding / 2));
+
+            views.setViewPadding(R.id.text_time_set_suffix, (int)(scaledPadding/2), 0, 0, 0);
+            views.setViewPadding(R.id.icon_time_sunset, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
+            views.setViewPadding(R.id.text_time_rise_suffix, (int)(scaledPadding/2), 0, 0, 0);
+            views.setViewPadding(R.id.icon_time_sunrise, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
+            views.setViewPadding(R.id.text_time_noon_suffix, (int)(scaledPadding/2), 0, 0, 0);
+            views.setViewPadding(R.id.icon_time_noon, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
+             */
+
+            //views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+            //views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+            //views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+            //views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+
+            Drawable d1 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), sunriseColor);
+            views.setImageViewBitmap(R.id.icon_time_sunrise, SuntimesUtils.drawableToBitmap(context, d1, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
+
+            Drawable d2 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetColor);
+            views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d2, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
+
+            int noonIconSizeDp = (int)(adjustedSizeSp[2] * 0.85);
+            if (noonIconSizeDp > 24) {
+                Drawable d3 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+                views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d3, noonIconSizeDp, noonIconSizeDp, false));
+            }
+        }
+    }
+
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
@@ -88,68 +157,8 @@ public class SunLayout_2x1_0 extends SunLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
-            {
-                int numRows = 1;
-                numRows += showSolarNoon ? 1 : 0;
-                numRows += showDayDelta ? 1 : 0;
-
-                int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2] + 32)) / 2,
-                                         ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
-                float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
-                if (adjustedSizeSp[0] > timeSizeSp)
-                {
-                    //float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
-                    //float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
-
-                    views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
-                    views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
-                    views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
-                    views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
-                    views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
-                    views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
-
-                    if (adjustedSizeSp[1] > timeSizeSp)
-                    {
-                        views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
-                        views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
-                        views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
-                        views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
-                    }
-
-                    /*
-                    views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
-                    views.setViewPadding(R.id.text_delta_day_prefix, (int)(scaledPadding), 0, 0, (int)(scaledPadding / 2));
-                    views.setViewPadding(R.id.text_delta_day_value, 0, 0, 0, (int)(scaledPadding / 2));
-                    views.setViewPadding(R.id.text_delta_day_units, 0, 0, 0, (int)(scaledPadding / 2));
-                    views.setViewPadding(R.id.text_delta_day_suffix, 0, 0, 0, (int)(scaledPadding / 2));
-
-                    views.setViewPadding(R.id.text_time_set_suffix, (int)(scaledPadding/2), 0, 0, 0);
-                    views.setViewPadding(R.id.icon_time_sunset, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
-                    views.setViewPadding(R.id.text_time_rise_suffix, (int)(scaledPadding/2), 0, 0, 0);
-                    views.setViewPadding(R.id.icon_time_sunrise, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
-                    views.setViewPadding(R.id.text_time_noon_suffix, (int)(scaledPadding/2), 0, 0, 0);
-                    views.setViewPadding(R.id.icon_time_noon, (int)(scaledPadding/2), 0, (int)scaledPadding/2, 0);
-                    */
-
-                    //views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
-                    //views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
-                    //views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
-                    //views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
-
-                    Drawable d1 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), sunriseColor);
-                    views.setImageViewBitmap(R.id.icon_time_sunrise, SuntimesUtils.drawableToBitmap(context, d1, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
-
-                    Drawable d2 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetColor);
-                    views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d2, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
-
-                    int noonIconSizeDp = (int)(adjustedSizeSp[2] * 0.85);
-                    if (noonIconSizeDp > 24) {
-                        Drawable d3 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
-                        views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d3, noonIconSizeDp, noonIconSizeDp, false));
-                    }
-                }
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId)) {
+                scaleViews(context, appWidgetId, views, findAdjustedSize(context, appWidgetId));
             }
         }
 
@@ -236,4 +245,5 @@ public class SunLayout_2x1_0 extends SunLayout
         Bitmap sunsetIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);
     }
+
 }

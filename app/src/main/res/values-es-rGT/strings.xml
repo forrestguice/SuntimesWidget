@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Guatemala City</string>
+    <string name="default_location_latitude">14.61333</string>     <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-90.53527</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">1500</string>         <!-- meters -->
+</resources>

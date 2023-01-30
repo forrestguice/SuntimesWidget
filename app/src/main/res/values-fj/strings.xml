@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Suva</string>
+    <string name="default_location_latitude">-18.14857</string>     <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">178.42384</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>             <!-- meters -->
+</resources>

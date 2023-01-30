@@ -29,6 +29,7 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmTyp
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 public class AlarmClockItemTest0
@@ -59,6 +60,10 @@ public class AlarmClockItemTest0
         item0.offset = 18 * 60;
         item0.enabled = true;
         item0.repeating = true;
+        item0.actionID0 = "action 0";
+        item0.actionID1 = "action 1";
+        item0.actionID2 = "action 2";
+        item0.actionID3 = null;
         item0.vibrate = true;
         item0.modified = true;
         item0.repeatingDays = new ArrayList<>(Arrays.asList(1, 2));
@@ -131,6 +136,7 @@ public class AlarmClockItemTest0
         assertEquals(item0.rowID, item.rowID);
         assertEquals(item0.enabled, item.enabled);
         assertEquals(item0.label, item.label);
+        assertEquals(item0.note, item.note);
         assertEquals(item0.location, item.location);
         assertEquals(item0.timezone, item.timezone);
 
@@ -148,6 +154,9 @@ public class AlarmClockItemTest0
         assertEquals(item0.vibrate, item.vibrate);
         assertEquals(item0.actionID0, item.actionID0);
         assertEquals(item0.actionID1, item.actionID1);
+        assertEquals(item0.actionID2, item.actionID2);
+        assertEquals(item0.actionID3, item.actionID3);
+        assertEquals(item0.getAlarmFlags(), item.getAlarmFlags());
         if (withType) {
             assertEquals(item0.type, item.type);
         }
@@ -155,6 +164,87 @@ public class AlarmClockItemTest0
             assertEquals(item0.getState(), item.getState());
         }
         //assertEquals((item0.type != null ? item0.type : ALARM), item.type);
+    }
+
+    @Test
+    public void test_setAlarmFlags()
+    {
+        // setAlarmFlags -> getFlag
+        String flags0 = "flag1=100,flag2=0,flag3=300";
+        AlarmClockItem item0 = new AlarmClockItem();
+        item0.setAlarmFlags(flags0);
+        assertNotNull(item0.alarmFlags);
+        assertEquals(3, item0.alarmFlags.size());
+
+        assertTrue(item0.hasFlag("flag1"));
+        assertTrue(item0.hasFlag("flag2"));
+        assertTrue(item0.hasFlag("flag3"));
+        assertFalse(item0.hasFlag("flag4"));
+
+        assertEquals(100L, item0.getFlag("flag1"));
+        assertEquals(0L, item0.getFlag("flag2"));
+        assertEquals(300L, item0.getFlag("flag3"));
+        assertEquals(0L, item0.getFlag("flag4"));
+
+        // setFlag -> getFlag
+        item0.setFlag("flag4", 400L);
+        assertEquals(4, item0.alarmFlags.size());
+        assertTrue(item0.hasFlag("flag4"));
+        assertEquals(400L, item0.getFlag("flag4"));
+
+        item0.setFlag("flag5", true);
+        assertEquals(5, item0.alarmFlags.size());
+        assertTrue(item0.hasFlag("flag5"));
+        assertTrue(item0.flagIsTrue("flag5"));
+        assertEquals(1L, item0.getFlag("flag5"));
+
+        item0.setFlag("flag5", false);
+        assertEquals(5, item0.alarmFlags.size());
+        assertTrue(item0.hasFlag("flag5"));
+        assertFalse(item0.flagIsTrue("flag5"));
+        assertEquals(0L, item0.getFlag("flag5"));
+
+        assertEquals(0L, item0.getFlag("flag6"));
+        assertFalse(item0.hasFlag("flag6"));
+        item0.incrementFlag("flag6");
+        assertTrue(item0.hasFlag("flag6"));
+        assertEquals(1L, item0.getFlag("flag6"));
+
+        item0.incrementFlag("flag6");
+        assertEquals(2L, item0.getFlag("flag6"));
+        item0.clearFlag("flag6");
+        assertEquals(0L, item0.getFlag("flag6"));
+        assertFalse(item0.hasFlag("flag6"));
+
+        item0.clearFlag("flag5");
+        assertEquals(4, item0.alarmFlags.size());
+        assertFalse(item0.hasFlag("flag5"));
+        assertFalse(item0.flagIsTrue("flag5"));
+        assertEquals(0L, item0.getFlag("flag5"));
+
+        // getAlarmFlags -> setAlarmFlags
+        String flags1 = item0.getAlarmFlags();
+        AlarmClockItem item1 = new AlarmClockItem();
+        item1.setAlarmFlags(flags1);
+        assertNotNull(item1.alarmFlags);
+        assertEquals(4, item1.alarmFlags.size());
+        assertEquals(100L, item1.getFlag("flag1"));
+        assertEquals(0L, item1.getFlag("flag2"));
+        assertEquals(300L, item1.getFlag("flag3"));
+        assertEquals(400L, item1.getFlag("flag4"));
+        assertEquals(0L, item1.getFlag("flag5"));
+    }
+
+    @Test
+    public void test_setAlarmFlags_null()
+    {
+        String[] empty = new String[] {null, "", " "};
+        for (String flags : empty)
+        {
+            AlarmClockItem item = new AlarmClockItem();
+            item.setAlarmFlags(flags);
+            assertNull(item.alarmFlags);
+        }
     }
 
 }

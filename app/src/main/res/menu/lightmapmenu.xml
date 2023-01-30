@@ -16,6 +16,11 @@
                     android:icon="?attr/icActionTimeReset"
                     app:showAsAction="never" />
 
+                <item android:id="@+id/action_moon"
+                    android:title="@string/configAction_moon"
+                    android:icon="@drawable/ic_moon"
+                    app:showAsAction="never" />
+
                 <item android:id="@+id/action_worldmap"
                     android:icon="?attr/icActionWorldMap"
                     android:title="@string/configAction_worldMap"
@@ -23,6 +28,51 @@
 
             </menu>
         </item>
+
+        <item android:id="@+id/action_showgraph"
+            android:icon="?attr/icActionGraph"
+            android:title="@string/configAction_lineGraph"
+            android:checkable="true"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/optionsSubMenu"
+            android:icon="?attr/icActionGraph"
+            android:title="@string/configAction_options"
+            app:showAsAction="never">
+            <menu>
+
+                <item android:id="@+id/graphOption_showGrid"
+                    android:title="@string/graph_option_grid"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/graphOption_showLabels"
+                    android:title="@string/graph_option_labels"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/graphOption_showAxis"
+                    android:title="@string/graph_option_axis"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/graphOption_fillPath"
+                    android:title="@string/graph_option_filledpath"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/graphOption_showMoon"
+                    android:title="@string/graph_option_moon"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+            </menu>
+        </item>
+
+        <item android:id="@+id/action_seekaltitude"
+            android:icon="?attr/icActionSearch"
+            android:title="@string/configAction_seekAltitude"
+            app:showAsAction="never" />
 
         <item android:id="@+id/action_observerheight"
             android:icon="?attr/icActionShadow"

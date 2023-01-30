@@ -59,6 +59,8 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.MenuAddon;
@@ -72,6 +74,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -386,21 +389,25 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         resetButton = (ImageButton)dialogView.findViewById(R.id.media_reset_map);
         if (resetButton != null) {
             resetButton.setEnabled(false);
+            TooltipCompat.setTooltipText(resetButton, resetButton.getContentDescription());
             resetButton.setOnClickListener(resetClickListener);
         }
 
         nextButton = (ImageButton)dialogView.findViewById(R.id.media_next_map);
         if (nextButton != null) {
+            TooltipCompat.setTooltipText(nextButton, nextButton.getContentDescription());
             nextButton.setOnClickListener(nextClickListener);
         }
 
         prevButton = (ImageButton)dialogView.findViewById(R.id.media_prev_map);
         if (prevButton != null) {
+            TooltipCompat.setTooltipText(prevButton, prevButton.getContentDescription());
             prevButton.setOnClickListener(prevClickListener);
         }
 
         menuButton = (ImageButton)dialogView.findViewById(R.id.map_menu);
         if (menuButton != null) {
+            TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
         }
 
@@ -709,18 +716,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    public static PopupMenu createMenu(Context context, View view, int menuId, PopupMenu.OnMenuItemClickListener listener)
-    {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(menuId, menu.getMenu());
-        menu.setOnMenuItemClickListener(listener);
-        return menu;
-    }
-
     protected boolean showTimeZoneMenu(Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick);
         WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
         menu.show();
         return true;
@@ -746,7 +744,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     protected boolean showMapModeMenu(final Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
         updateMapModeMenu(context, menu);
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
@@ -789,7 +787,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     protected boolean showSpeedMenu(final Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick); new PopupMenu(context, view);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick); new PopupMenu(context, view);
         updateSpeedMenu(context, menu);
         menu.show();
         return true;
@@ -843,7 +841,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     protected boolean showContextMenu(final Context context, View view)
     {
-        PopupMenu menu = createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
         updateContextMenu(context, menu);
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
@@ -1150,6 +1148,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_moon:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMoonInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                        collapseSheet(getDialog());
+                    }
+                    return true;
+
                 case R.id.action_date:
                     if (dialogListener != null) {
                         dialogListener.onShowDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
@@ -1436,6 +1441,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         public void onShowDate( long suggestedDate ) {}
         public void onShowPosition( long suggestDate ) {}
+        public void onShowMoonInfo( long suggestDate ) {}
     }
 
 }

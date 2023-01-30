@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewCompat;
@@ -35,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.forrestguice.suntimeswidget.R;
@@ -49,6 +51,25 @@ public class AlarmLabelDialog extends DialogFragment
 
     private EditText edit;
     private String label = PREF_DEF_ALARM_LABEL;
+
+    public AlarmLabelDialog() {
+        setArguments(new Bundle());
+    }
+
+    public void setDialogTitle(String value) {
+        getArguments().putString("dialogTitle", value);
+    }
+    public String getDialogTitle(Context context) {
+        String title = getArguments().getString("dialogTitle");
+        return (title != null ? title : context.getString(R.string.alarmlabel_dialog_title));
+    }
+
+    public void setMultiLine(boolean value) {
+        getArguments().putBoolean("multiLine", value);
+    }
+    public boolean isMultiLine() {
+        return getArguments().getBoolean("multiLine", false);
+    }
 
     /**
      * @param savedInstanceState a Bundle containing dialog state
@@ -70,7 +91,7 @@ public class AlarmLabelDialog extends DialogFragment
 
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent, 0, padding, 0, 0);
-        builder.setTitle(myParent.getString(R.string.alarmlabel_dialog_title));
+        builder.setTitle(getDialogTitle(myParent));
 
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
@@ -146,6 +167,11 @@ public class AlarmLabelDialog extends DialogFragment
         edit = (EditText) dialogContent.findViewById(R.id.edit_alarmLabel);
         if (edit != null)
         {
+            if (isMultiLine()) {
+                edit.setSingleLine(false);
+                edit.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+            }
+
             if (accentColor != -1) {
                 ViewCompat.setBackgroundTintList(edit, SuntimesUtils.colorStateList(accentColor, accentColor, accentColor));
             }

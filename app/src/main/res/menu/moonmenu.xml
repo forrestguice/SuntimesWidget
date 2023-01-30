@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_show_controls"
+        android:title="@string/moon_dialog_controls"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_lunarnoon_show"
+        android:title="@string/configLabel_ui_showmoon_noon"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_help"
+        android:title="@string/configAction_help"
+        android:icon="?attr/icActionHelp"
+        app:showAsAction="never" />
+
+</menu>

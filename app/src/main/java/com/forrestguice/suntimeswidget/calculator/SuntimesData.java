@@ -232,6 +232,14 @@ public class SuntimesData
 
     public void initTimezone(Context context)
     {
+        int widgetID = appWidgetID;
+        if (appWidgetID != 0 && WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetID))
+        {
+            widgetID = 0;
+            timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0));
+            timezoneMode = WidgetSettings.loadTimezoneModePref(context, 0);
+        }
+
         switch (timezoneMode)
         {
             case CUSTOM_TIMEZONE:
@@ -243,7 +251,7 @@ public class SuntimesData
                 break;
 
             case SOLAR_TIME:
-                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetID);
+                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, widgetID);
                 switch (solarMode)
                 {
                     case APPARENT_SOLAR_TIME:
@@ -372,6 +380,14 @@ public class SuntimesData
             }
         }
         return (soonest != null ? soonest.getTimeInMillis() : -1);
+    }
+
+    public static Calendar midpoint(Calendar c1, Calendar c2)
+    {
+        Calendar r = (Calendar)c1.clone();
+        long d = c2.getTimeInMillis() - c1.getTimeInMillis();
+        r.setTimeInMillis(c1.getTimeInMillis() + (d/2L));
+        return r;
     }
 
 }

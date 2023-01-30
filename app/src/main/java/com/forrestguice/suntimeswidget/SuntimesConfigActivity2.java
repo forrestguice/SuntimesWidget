@@ -151,7 +151,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos3x1.values()) {
             @Override
             protected void modifyThemeValues(int position, ContentValues values) {
-                if (position >=0 && position < WidgetSettings.WidgetModeSunPos3x1.values().length) {
+                if (position >= 0 && position < WidgetSettings.WidgetModeSunPos3x1.values().length) {
                     WidgetSettings.WidgetModeSunPos3x1 mode = WidgetSettings.WidgetModeSunPos3x1.values()[position];
                     values.put(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1, mode.name());
                     //values.put("option_drawNow", LightMapView.LightMapColors.DRAW_NONE);
@@ -195,13 +195,25 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x2()
     {
-        ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>();
+        ArrayList<WidgetSettings.WidgetModeDisplay> modes = new ArrayList<>();
+        modes.add(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
-        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]));
+
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]))
+        {
+            @Override
+            protected void modifyThemeValues(int position, ContentValues values) {
+                if (position >= 0 && position < WidgetSettings.WidgetModeSunPos3x2.values().length) {
+                    WidgetSettings.WidgetModeSunPos3x2 mode = WidgetSettings.WidgetModeSunPos3x2.values()[position];
+                    values.put(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x2, mode.name());
+                }
+            }
+        };
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
-        return adapter;
+
+    return adapter;
     }
 
     @Override
@@ -209,8 +221,18 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x2mode != null)
         {
-            WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) spinner_3x2mode.getSelectedItem();
-            WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, mode, WorldMapWidgetSettings.MAPTAG_3x2);
+            WidgetSettings.WidgetModeDisplay mode = (WidgetSettings.WidgetModeDisplay) spinner_3x2mode.getSelectedItem();
+            WidgetSettings.WidgetModeSunPos3x2 widgetMode;
+
+            if (mode.name().equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH.name())) {
+                widgetMode = (WidgetSettings.WidgetModeSunPos3x2) spinner_3x2mode.getSelectedItem();
+
+            } else {
+                widgetMode = WidgetSettings.WidgetModeSunPos3x2.MODE3x2_WORLDMAP;
+                WorldMapWidgetSettings.WorldMapWidgetMode mapMode = (WorldMapWidgetSettings.WorldMapWidgetMode) spinner_3x2mode.getSelectedItem();
+                WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, mapMode, WorldMapWidgetSettings.MAPTAG_3x2);
+            }
+            WidgetSettings.saveSunPos3x2ModePref(context, appWidgetId, widgetMode);
         }
     }
 
@@ -219,8 +241,9 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x2mode != null)
         {
-            WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
-            int pos = searchForIndex(spinner_3x2mode, mode);
+            WidgetSettings.WidgetModeSunPos3x2 widgetMode = WidgetSettings.loadSunPos3x2ModePref(context, appWidgetId);
+            WorldMapWidgetSettings.WorldMapWidgetMode mapMode = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+            int pos = searchForIndex(spinner_3x2mode, ((widgetMode == WidgetSettings.WidgetModeSunPos3x2.MODE3x2_WORLDMAP) ? mapMode : widgetMode));
             if (pos >= 0) {
                 spinner_3x2mode.setSelection(pos);
             }
@@ -230,7 +253,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     private static int searchForIndex(Spinner spinner, Object enumValue)
     {
         for (int i=0; i<spinner.getAdapter().getCount(); i++) {
-            if (spinner.getAdapter().getItem(i) == enumValue) {
+            if (spinner.getAdapter().getItem(i).equals(enumValue)) {
                 return i;
             }
         }

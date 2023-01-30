@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/alarmcard_corners_snoozing" />
+            <solid android:color="@color/alarm_snoozing_bg0_light" />
+        </shape>
+    </item>
+</layer-list>

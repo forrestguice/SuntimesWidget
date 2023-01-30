@@ -27,17 +27,24 @@ A hunting and fishing add-on for Suntimes.<br/><br />
 
 <a href="https://github.com/forrestguice/NaturalHour/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_naturalhour.png" height="64" /></a> <a href="https://github.com/forrestguice/NaturalHour/">Natural Hour</a> <br />
 A 24-hour clock & roman timekeeping add-on for Suntimes.<br/><br />
-    
+
+<a href="https://github.com/forrestguice/SuntimesNFC/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_suntimesnfc.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesNFC/">Suntimes NFC</a> <br />
+An NFC Addon for Suntimes Alarms; dismiss alarms with an NFC tag.<br/><br />
+
+<a href="https://github.com/forrestguice/IntervalMidpoints/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_imidpoints.png" height="64" /></a> <a href="https://github.com/forrestguice/IntervalMidpoints/">Interval Midpoints</a> <br />
+A midpoint calculator add-on for Suntimes Alarms; schedule alarms for event midpoints.<br/><br />
+
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
 * displays the time until the next rising/setting event.
 * displays the sunrise and sunset, blue and golden hour, and twilight times (civil / nautical / astronomical).
-* displays the current moon phase, illumination, moonrise and moonset times, and major phase dates.
-* displays the current sunlight and moonlight projected over a world map (basic equirectangular, blue marble).
-* displays the solstices and equinoxes, and notes the time until the next event.
+* displays the current moon phase, illumination, moonrise, moonset, lunar noon, lunar midnight, apogee, perigee, and major phase dates.
+* displays the current sunlight and moonlight projected over a world map (basic equirectangular, blue marble, or azimuthal maps).
+* displays the solstices, equinoxes, and cross-quarter days, and notes the time until the next event.
 * displays the sun's current position, and its position at sunrise, sunset, and noon.
 * displays the moon's current position, and its position at moonrise and moonset.
 * includes an Alarm Clock that can set a repeating alarm or notification for the next sunrise or sunset (or other rising/setting event).
+* includes a "Quick Settings" tile that displays information as part of the settings tray.
 * can display the configured location on a map (requires a map application) and configure the location from a map (using geo intent).
 
 The app:
@@ -60,27 +67,32 @@ Widgets are resizable and include...
 **Clock widgets:**
 * 1x1 digital clock widget that displays solar time (or a given timezone).
 
+**Date widgets:**
+* 1x1 date widget that displays the date with a given calendars (Coptic, Ethiopian, Gregorian, Hebrew, Julian, Solar Hijiri, or Thai Solar).
+
 **Sun widgets:**
 * 1x1 sun widget that displays the sunrise or sunset time.
 * 1x1 sun widget that displays both sunrise and sunset times.
 * 1x1 sun widget that flips between sunrise and sunset times.
-* 2x1 sun widget that displays the sunrise and sunset times, and the difference in daylight between today and tomorrow (or yesterday).
+* 2x1 and 3x1 sun widgets that displays the sunrise and sunset times, and the difference in daylight between today and tomorrow (or yesterday).
 
 **Moon widgets:**
 * 1x1 moon widget that displays moonrise and moonset.
 * 1x1 moon widget that displays next major phase.
 * 1x1 moon widget that displays phase and illumination (or phase only, or illumination only).
+* 1x1 moon widget that displays the number of days since the new moon.
 * 2x1 moon widget that displays moonrise and moonset, phase, and illumination.
 * 3x1 moon widget that displays upcoming major moon phases.
 
 **Solstice widgets:**
-* 1x1 solstice widget that tracks the upcoming solstice or equinox.
+* 1x1 solstice widget that tracks the upcoming solstice, equinox, or cross-quarter day.
 
 **Position widgets:**
 * 1x1 sun position widget that tracks the sun's altitude and azimuth.
 * 1x1 sun position widget that tracks the sun's declination and right ascension.
 * 3x1 sun position widget that displays the lightmap graph, and tracks the sun's altitude and azimuth (current, sunrise/sunset, and at noon).
 * 3x2 sun position widget that displays current sunlight and moonlight projected over a world map.
+* 3x2 sun position widget that displays the sun's altitude as a line graph.
 
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/clockwidget_1x1_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget1_preview.png" align="center"></img>
@@ -144,7 +156,7 @@ When reporting a bug **please be detailed as possible**. What did you expect the
 
 ## Legal Stuff
 
-Copyright &#169; 2014-2022 Forrest Guice<br/>
+Copyright &#169; 2014-2023 Forrest Guice<br/>
 
 The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.

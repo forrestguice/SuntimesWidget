@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -59,6 +61,9 @@ public class AlarmEditDialog extends DialogFragment
     public static final String EXTRA_SHOW_FRAME = "show_frame";
     public static final String EXTRA_SHOW_OVERFLOW = "show_overflow";
 
+    public static final String PREFS_ALARMEDIT = "com.forrestguice.suntimeswidget.alarmedit";
+    public static final String PREF_KEY_SHOWREMINDER = "showReminder";
+
     protected View dialogFrame;
     protected TextView text_title;
     protected AlarmClockItem item = null, original = null;
@@ -72,6 +77,10 @@ public class AlarmEditDialog extends DialogFragment
 
     public void initFromItem(AlarmClockItem item, boolean addItem)
     {
+        if (addItem) {
+            loadSettings(getContext(), item);
+        }
+
         this.original = (addItem ? null : item);
         this.item = new AlarmClockItem(item);
         this.item.modified = false;
@@ -270,12 +279,31 @@ public class AlarmEditDialog extends DialogFragment
         @Override
         public void onClick(View v)
         {
+            saveSettings(getContext());
             if (onAccepted != null) {
                 onAccepted.onClick(getDialog(), 0);
             }
             dismiss();
         }
     };
+
+    protected void saveSettings(Context context)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_ALARMEDIT, 0).edit();
+        prefs.putBoolean(PREF_KEY_SHOWREMINDER, itemView.check_reminder.isChecked());
+        prefs.apply();
+    }
+
+    protected void loadSettings(Context context, AlarmClockItem item)
+    {
+        long defaultReminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_ALARMEDIT, 0);
+        boolean showReminder = prefs.getBoolean(PREF_KEY_SHOWREMINDER, (defaultReminderWithin > 0));
+
+        if (!showReminder && defaultReminderWithin > 0) {
+            item.setFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, 0);
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -293,23 +321,20 @@ public class AlarmEditDialog extends DialogFragment
             {
                 switch (menuItem.getItemId())
                 {
-                    case R.id.alarmTypeNotification:
-                        item.type = AlarmClockItem.AlarmType.NOTIFICATION;
-                        if (listener != null) {
-                            listener.onTypeChanged(item);
-                        }
-                        notifyItemChanged();
-                        return true;
-
-                    case R.id.alarmTypeAlarm:
-                    default:
-                        item.type = AlarmClockItem.AlarmType.ALARM;
-                        if (listener != null) {
-                            listener.onTypeChanged(item);
-                        }
-                        notifyItemChanged();
-                        return true;
+                    case R.id.alarmTypeNotification: item.type = AlarmClockItem.AlarmType.NOTIFICATION; break;
+                    case R.id.alarmTypeNotification1: item.type = AlarmClockItem.AlarmType.NOTIFICATION1; break;
+                    case R.id.alarmTypeNotification2: item.type = AlarmClockItem.AlarmType.NOTIFICATION2; break;
+                    case R.id.alarmTypeAlarm: default: item.type = AlarmClockItem.AlarmType.ALARM; break;
                 }
+                boolean isAlarm = item.type == AlarmClockItem.AlarmType.ALARM;
+                itemView.tray_beforeAlert.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
+                itemView.chip_dismissChallenge.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
+
+                if (listener != null) {
+                    listener.onTypeChanged(item);
+                }
+                notifyItemChanged();
+                return true;
             }
         });
 
@@ -388,6 +413,7 @@ public class AlarmEditDialog extends DialogFragment
         holder.menu_type.setOnClickListener(showAlarmTypeMenu());
         holder.menu_overflow.setOnClickListener(showOverflowMenu());
         holder.edit_label.setOnClickListener(pickLabel());
+        holder.edit_note.setOnClickListener(pickNote());
         holder.chip_offset.setOnClickListener(pickOffset());
         holder.chip_event.setOnClickListener(pickEvent());
         holder.chip_location.setOnClickListener(pickLocation());
@@ -396,6 +422,9 @@ public class AlarmEditDialog extends DialogFragment
         holder.check_vibrate.setOnCheckedChangeListener(pickVibrating());
         holder.chip_action0.setOnClickListener(pickAction(0));
         holder.chip_action1.setOnClickListener(pickAction(1));
+        holder.check_reminder.setOnCheckedChangeListener(pickReminder());
+        holder.chip_action2.setOnClickListener(pickAction(2));
+        holder.chip_dismissChallenge.setOnClickListener(pickDismissChallenge());
         holder.layout_datetime.setOnClickListener(triggerPreviewOffsetListener(holder));
     }
 
@@ -435,6 +464,18 @@ public class AlarmEditDialog extends DialogFragment
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestLabel(item);
+                }
+            }
+        };
+    }
+
+    private View.OnClickListener pickNote()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestNote(item);
                 }
             }
         };
@@ -608,5 +649,43 @@ public class AlarmEditDialog extends DialogFragment
             }
         };
     }
+
+    private View.OnClickListener pickDismissChallenge()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestDismissChallenge(item);
+                }
+            }
+        };
+    }
+
+    private CompoundButton.OnCheckedChangeListener pickReminder()
+    {
+        return new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                itemView.chip_action2.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
+
+                if (AlarmSettings.loadPrefAlarmUpcoming(getContext()) > 0)
+                {
+                    if (isChecked) {
+                        item.clearFlag(AlarmClockItem.FLAG_REMINDER_WITHIN);
+                    } else item.setFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, 0);    // set "disabled flag"
+
+                } /* else {
+                    if (isChecked) {
+                        item.setFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, value);         // set "enabled flag"
+                    } else item.clearFlag(AlarmClockItem.FLAG_REMINDER_WITHIN);
+                }*/
+
+                item.modified = true;
+            }
+        };
+    }
+
 
 }

@@ -92,6 +92,10 @@ public class AlarmClockItemTest
         item0.setActionID(1, "action1");
         item0.location = new Location("test0", "1", "2", "3");
         item0.vibrate = true;
+        item0.actionID0 = "action 0";
+        item0.actionID1 = "action 1";
+        item0.actionID2 = "action 2";
+        item0.actionID3 = null;
         item0.ringtoneName = "testName";
         item0.ringtoneURI = "testUri";
         item0.modified = true;
@@ -146,6 +150,7 @@ public class AlarmClockItemTest
         assertEquals(item0.rowID, item.rowID);
         assertEquals(item0.enabled, item.enabled);
         assertEquals(item0.label, item.label);
+        assertEquals(item0.note, item.note);
         assertEquals(item0.location, item.location);
         assertEquals(item0.timezone, item.timezone);
 
@@ -163,6 +168,9 @@ public class AlarmClockItemTest
         assertEquals(item0.vibrate, item.vibrate);
         assertEquals(item0.actionID0, item.actionID0);
         assertEquals(item0.actionID1, item.actionID1);
+        assertEquals(item0.actionID2, item.actionID2);
+        assertEquals(item0.actionID3, item.actionID3);
+        assertEquals(item0.getAlarmFlags(), item.getAlarmFlags());
         if (withType) {
             assertEquals(item0.type, item.type);
         }

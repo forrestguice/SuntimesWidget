@@ -28,6 +28,10 @@
   <string name="configAction_sunDialog">Sonnenstand</string>
   <string name="configAction_equinoxDialog">Sonnenwende / Tag-Nacht-Gleiche</string>
   <string name="configAction_worldMap">Weltkarte</string>
+  <string name="configAction_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
+  <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
+  <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
+  <string name="configAction_deselect">Clear Selection</string>                                    <!-- TODO -->
   <string name="configAction_moon">Mond</string>
   <string name="configAction_help">Hilfe</string>
   <string name="configAction_onlineHelp">Onlinehilfe</string>
@@ -53,6 +57,7 @@
   <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
   <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Die Zeitzone für diesen Ort könnte falsch
     sein (nicht lokal).</string>  <!-- snackbar message -->
+  <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%s</xliff:g>).</string>  <!-- TODO -->
   <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Sommerzeit</string>  <!-- timezone dialog label -->  
   <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> Zeitgleichung</string>  <!-- timezone dialog label -->  
 
@@ -91,6 +96,7 @@
   <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminiert</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
   <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
   <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
+  <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>   <!-- TODO: review -->
 
   <!-- Field: today/tomorrow time delta
        (layout/info_time_daydelta.xml)
@@ -179,6 +185,9 @@
   <string name="time_none">keine</string>  <!-- no time / time does not occur -->
   <string name="time_loading">…</string>  <!-- calculating / time is loading -->
 
+  <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
+  <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+
   <!-- distances (meters, feet, etc) -->
   <string name="lengthUnits_metric">Metrisch</string>    
   <string name="lengthUnits_imperial">Imperial</string>   
@@ -264,7 +273,10 @@
   <string name="configLabel_general_showHours_summary">Bei Zeiträumen länger als einem Tag, Stunden und Minuten anzeigen.</string>    <!-- checkbox label -->
 
   <string name="configLabel_general_observerheight">Objektschatten</string>        <!-- checkbox label -->  
-  <string name="configLabel_general_observerheight_summary">Zeigt die Länge des Schattens an, der von einem Objekt der Höhe <xliff:g id="value" example="1 Meter">%1$s</xliff:g> geworfen wird.</string>        <!-- checkbox label -->  
+  <string name="configLabel_general_observerheight_summary">Zeigt die Länge des Schattens an, der von einem Objekt der Höhe <xliff:g id="value" example="1 Meter">%1$s</xliff:g> geworfen wird.</string>        <!-- checkbox label -->
+
+  <string name="configLabel_general_dayOffset">Day Offset</string>        <!-- edittext label -->  <!-- TODO -->
+  <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
 
   <!-- Widget Setting: advanced / experimental -->
   <string name="configLabel_advanced">Fortgeschrittene Einstellungen</string>                        <!-- group title -->      <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
@@ -324,6 +336,7 @@
   <string name="timeMode_blue8">Blaue Stunde (8°)</string>                     <!-- setting -->
   <string name="timeMode_blue4_short">Blaue (4°)</string>                    <!-- setting -->
   <string name="timeMode_blue4">Blaue Stunde (4°)</string>                     <!-- setting -->
+  <string name="timeMode_none">None</string>                 <!-- label -->  <!-- TODO -->
 
   <string name="timeMode_equinox_vernal">Frühjahrs-Tag-Nacht-Gleiche</string>      <!-- setting -->
   <string name="timeMode_equinox_vernal_short">Tag-Nacht-Gleiche</string>       <!-- setting -->
@@ -333,6 +346,15 @@
   <string name="timeMode_solstice_summer_short">Sonnenwende</string>     <!-- setting -->
   <string name="timeMode_solstice_winter">Wintersonnenwende</string>    <!-- setting -->
   <string name="timeMode_solstice_winter_short">Sonnenwende</string>     <!-- setting -->
+
+  <string name="timeMode_cross_spring">Spring Cross-Quarter</string>      <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_cross_spring_short">Cross-Quarter</string>       <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_cross_autumnal">Autumn Cross-Quarter</string>  <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_cross_autumnal_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_cross_summer">Summer Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_cross_summer_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_cross_winter">Winter Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
+  <string name="timeMode_cross_winter_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
 
   <string name="timeMode_moon">Mond</string>                               <!-- label -->
   <string name="timeMode_moon_new">Neumond</string>                               <!-- setting -->
@@ -370,20 +392,41 @@
 
   <string name="configLabel_general_timeMode">Modus:</string>          <!-- spinner label -->
 
+  <!-- Widget Setting: calendar -->
+  <string name="configLabel_general_showDate">Show Date</string>   <!-- group title -->   <!-- TODO -->
+  <string name="configLabel_general_calendar">Calendar</string>   <!-- group title -->    <!-- TODO -->
+  <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
+  <string name="configLabel_general_calendarFormat">Date Format:</string>          <!-- spinner label -->   <!-- TODO -->
+  <string name="configLabel_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
+  <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
+  <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->   <!-- TODO -->
+  <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
+  <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
+  <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->   <!-- TODO -->
+  <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
+  <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
+  <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
+  <string name="configAction_editCalendarFormat">Edit</string>                        <!-- button (contentDescription) -->    <!-- TODO -->
+
   <!-- Widget Setting: layout mode -->
   <string name="widgetMode1x1_sunrise">Nur Sonnenaufgang</string>             <!-- setting -->
   <string name="widgetMode1x1_sunset">Nur Sonnenuntergang</string>               <!-- setting -->
   <string name="widgetMode1x1_both_1">Sonnenauf- &amp; -untergang (1)</string>  <!-- setting -->
   <string name="widgetMode1x1_both_2">Sonnenauf- &amp; -untergang (2)</string>  <!-- setting -->
+  <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
 
   <string name="widgetMode1x1_altaz">Zenit &amp; Azimut</string>     <!-- setting -->
   <string name="widgetMode1x1_decright">Deklination &amp; Rektaszension</string>     <!-- setting -->
   <string name="widgetMode1x1_distance">Aktuelle Entfernung</string>     <!-- setting -->    
   <string name="widgetMode1x1_apsis">Nächste Erdferne oder Erdnähe</string>     <!-- setting -->
+  <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
 
   <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
   <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
   <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
+  <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
+  <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
   <string name="widgetMode_sunPosMap_simplerectangular">Basis</string>  <!-- setting -->  
   <string name="widgetMode_sunPosMap_simpleazimuthal">Pol [Nord]</string>     <!-- setting -->  
@@ -463,11 +506,13 @@
   <string name="time_apparent">Sonnenzeit</string>              <!-- setting / custom timezone id -->
   <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
   <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+  <string name="configAction_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
 
   <string name="configLabel_timezone">Zeitzone</string>             <!-- group title -->
   <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
   <string name="configLabel_timezone_custom">Zeitzone:</string>              <!-- spinner label -->
-  <string name="configLabel_timezone_standard">Sonnenzeit:</string>                   <!-- spinner label --> 
+  <string name="configLabel_timezone_standard">Sonnenzeit:</string>                   <!-- spinner label -->
+  <string name="configLabel_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->   <!-- TODO -->
 
   <!-- Widget Setting: timeFormat mode -->
   <string name="timeFormatMode_system">Systemformat</string>          <!-- setting -->
@@ -476,6 +521,15 @@
 
   <string name="configLabel_timeFormatMode">Zeitformat</string>             <!-- preference label -->
   <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+
+  <!-- Widget Setting: calendar mode -->
+  <string name="calendarMode_coptic">Coptic</string>                      <!-- TODO -->
+  <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
+  <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
+  <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
+  <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
+  <string name="calendarMode_persian">Persian (Solar Hijiri)</string>     <!-- TODO -->
+  <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
 
   <!-- Widget Setting: date mode -->
   <string name="dateMode_current">Heute</string>                  <!-- setting -->
@@ -712,6 +766,74 @@
   <string name="widgetLabel_declination_short">Dek</string>           <!-- label -->
   <string name="widgetLabel_distance">Entfernung</string>           <!-- label -->
 
+
+  <!--
+       CUSTOM EVENTS
+  -->
+  <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
+  <string name="eventlist_dialog_title">Custom Events</string>   <!-- TODO -->
+
+  <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+  <string name="configLabel_event_alarmitem_desc">%1$s</string>
+
+  <string name="eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
+  <string name="eventalias_title_tag_rising" >↑</string>
+  <string name="eventalias_title_tag_setting">↓</string>
+
+  <string name="sunevent_title">Sun</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
+  <string name="sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
+  <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> at <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
+  <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+
+  <string name="configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
+  <string name="configLabel_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
+  <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>    <!-- TODO -->
+
+  <string name="configAction_manageEvents">Custom Events</string>   <!-- TODO -->
+  <string name="configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+
+  <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
+  <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+  <string name="importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
+  <plurals name="eventPlural">
+    <item quantity="one">%d event</item>
+    <item quantity="other">%d events</item>
+  </plurals>   <!-- TODO -->
+
+  <string name="editevent_dialog_id_label">ID</string>    <!-- TODO -->
+  <string name="editevent_dialog_id_hint">Event ID</string>    <!-- TODO -->
+  <string name="editevent_dialog_id_error">@string/addaction_error_id</string>    <!-- TODO -->
+  <string name="editevent_dialog_uri_hint">Event Uri</string>    <!-- TODO -->
+  <string name="editevent_dialog_showevent">Display this event within the app.</string>
+  <string name="editevent_dialog_showevent_off">This event will no longer be displayed.</string>    <!-- TODO -->
+
+  <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title --> <!-- TODO -->
+  <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title --> <!-- TODO -->
+  <string name="editevent_dialog_label_label">Label</string>    <!-- TODO -->
+  <string name="editevent_dialog_label_hint">Event Label</string>    <!-- TODO -->
+  <string name="editevent_dialog_label_error">@string/addaction_error_title</string>    <!-- TODO -->
+  <string name="editevent_dialog_label_suggested">Custom Angle</string>    <!-- TODO -->
+
+  <string name="editevent_dialog_angle">Angle</string>    <!-- TODO -->
+  <string name="editevent_dialog_angle_hint">-6</string>    <!-- TODO -->
+  <string name="editevent_dialog_angle_suffix">°</string>    <!-- TODO -->
+  <string name="editevent_dialog_angle_error">Angle is required!</string>    <!-- TODO -->
+
+  <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may no longer work and should be reassigned.</string>    <!-- TODO -->
+  <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
+  <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
+
+  <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAlarms, notifications, or widgets using these events may no longer work and should be reassigned.</string>   <!-- TODO -->
+  <string name="clearevents_dialog_ok">Clear</string>   <!-- TODO -->
+  <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
+  <string name="clearevents_toast">Custom events cleared.</string>   <!-- TODO -->
+
+
   <!--
        ALARM CLOCK
   -->
@@ -726,11 +848,17 @@
   <string name="configAction_sortAlarms">Sortieren</string>                <!-- action button /  menu item -->
   <string name="configAction_sortAlarms_by_time">Alarmzeit</string>                <!-- action  button /  menu item -->
   <string name="configAction_sortAlarms_by_creation">Erzeugungsdatum</string>                <!-- action  button / menu item -->
+  <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->   <!-- TODO -->
+  <string name="configAction_sortAlarms_offset">Show Offsets</string>                <!-- action button / menu item -->   <!-- TODO -->
   <string name="configAction_clearOffset">Versatz löschen</string>                <!-- action  button / menu  item -->
   <string name="configAction_clearDate">Löschen</string>                <!-- action button / menu item -->
   <string name="configAction_setAlarmOffset">Versatz setzen</string>         <!-- button  (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
   <string name="configAction_setAlarmType">Typ setzen</string>         <!-- button  (contentDescription) -->
   <string name="configAction_setAlarmLabel">Bezeichnung setzen</string>         <!-- button  (contentDescription) -->
+  <string name="configAction_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
+  <string name="configAction_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
   <string name="configAction_setAlarmLocation">Ort setzen</string>         <!-- button  (contentDescription) -->
   <string name="configAction_setAlarmRepeat">Wiederholung setzen</string>         <!-- button  (contentDescription) -->
   <string name="configAction_setAlarmEvent">Ereignis setzen</string>         <!-- button  (contentDescription)   -->
@@ -757,7 +885,9 @@
 
   <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
   <string name="alarmMode_notification">Benachrichtigung</string>                <!-- alarm type  (setting) -->
+  <string name="alarmMode_notification1">Quick Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
+  <string name="configLabel_alarmEdit_beforeAlertTray">Before Alert:</string>               <!-- group title -->   <!-- TODO -->
   <string name="configLabel_alarmEdit_scheduleTray">Zeitplan:</string>               <!-- group  title -->
   <string name="configLabel_alarmEdit_onAlertTray">Bei Alarm:</string>               <!-- group  title -->
   <string name="configLabel_alarmEdit_onDismissTray">Beim Ablehnen:</string>               <!--   group title -->
@@ -800,10 +930,17 @@
     <item quantity="other">%d alarms</item>
   </plurals>   <!-- TODO -->
 
+  <string name="configLabel_alarms_dismissChallenge">Dismiss Challenge</string>            <!-- pref title -->   <!-- TODO -->
+  <string name="alarmDismiss_none">None</string>                         <!-- alarm setting -->   <!-- TODO -->
+  <string name="alarmDismiss_none_long">No Challenge</string>            <!-- chip label -->   <!-- TODO -->
+  <string name="alarmDismiss_math">Easy Math</string>           <!-- alarm setting -->   <!-- TODO -->
+
   <string name="alarmlabel_dialog_title">Bezeichnung</string>        <!-- dialog title -->
   <string name="alarmlabel_dialog_ok">Anwenden</string>        <!-- button -->
   <string name="alarmlabel_dialog_cancel">Abbrechen</string>    <!-- button -->
   <string name="alarmlabel_hint">Bezeichnung</string>        <!-- EditText hint -->
+
+  <string name="alarmnote_dialog_title">Note</string>        <!-- dialog title -->   <!-- TODO -->
 
   <string name="alarmrepeat_dialog_title">Alarm wiederholen</string>        <!-- dialog title -->
   <string name="alarmrepeat_dialog_ok">Anwenden</string>        <!-- button -->
@@ -851,11 +988,19 @@
   <string name="configLabel_alarms_timeoutAfter">Zeitüberschreitung nach</string>
   <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 Minuten">%s</xliff:g></string>
 
+  <string name="configLabel_alarms_autoDismissAfter">Auto-dismiss after</string>    <!-- TODO -->
+  <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+
+  <string name="configLabel_alarms_snoozeLimit">Snooze limit</string>    <!-- TODO -->
+  <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+  <string name="configLabel_alarms_snoozeLimit_none">No Limit</string>    <!-- TODO -->
+
   <string name="configLabel_alarms_snooze">Schlummern für</string>
   <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 Minuten">%s</xliff:g></string>
 
   <string name="configLabel_alarms_upcoming">Erinnerung in</string>
   <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 Minuten">%s</xliff:g></string>
+  <string name="configLabel_alarms_upcoming_checkbox">Show alarm reminder notifications.</string>  <!-- TODO -->
 
   <string name="configLabel_alarms_fadein">Lautstärke stufenweise erhöhen</string>
   <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
@@ -876,6 +1021,7 @@
   <string name="configLabel_alarms_allRingtones_summary">Alle Systemtöne während der Auswahl anzeigen (Kligeltontyp wird ignoriert).</string>
 
   <string name="no_reminder">Niemals</string>
+  <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
 
   <plurals name="units_hours">
     <item quantity="one">%d Stunde</item>
@@ -942,6 +1088,7 @@
   <!-- App Setting: UI -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->
   <string name="configLabel_ui_fields">Anzeige</string>                <!-- group title, followed  by a list of "[X] <Twilight Event>" fields -->
+  <string name="configLabel_ui_fields1">Custom Events</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->  <!-- TODO -->
   <string name="configLabel_ui_misc">Verschiedenes</string>
 
   <!-- App Setting: Verbose Accessibility -->
@@ -961,6 +1108,14 @@
   <string name="configLabel_ui_showmoon">Zeige Mond</string>
   <string name="configLabel_ui_showmoon_summary">Zeige Aufgangs- und Untergangszeiten, Mondphasen und Illumination.</string>
 
+  <!-- App Setting: Show Lunar Noon -->
+  <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
+  <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+
+  <!-- App Setting: Show Cross Quarter days -->
+  <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
+  <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
+
   <!-- App Setting: Show Equinox / Solstice -->
   <string name="configLabel_ui_showEquinox">Zeige Sonnenwende / Tag-Nacht-Gleiche</string>
   <string name="configLabel_ui_showEquinox_summary">Zeige Zeit bis zur nächsten Sonnenwende oder Tag-Nacht-Gleiche.</string>
@@ -976,6 +1131,10 @@
   <!-- App Setting: show map button -->
   <string name="configLabel_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
   <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
+
+  <!-- App Setting: emphasize field -->
+  <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+  <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
   <!-- App Setting: show headers -->
   <string name="configLabel_ui_showheaders">Überschriften</string>              <!-- group title -->
@@ -998,6 +1157,24 @@
   <string name="appThemes_darkTheme">Dunkles Thema</string>
   <string name="appThemes_nightMode">Helles Thema / dunkles Thema (Nachtmodus)</string>
   <string name="appThemes_systemDefault">System Standart</string>
+  <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
+  <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
+  <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
+
+  <!-- App Setting: text size -->
+  <string name="configLabel_ui_textsize">Text Size</string>     <!-- TODO -->
+  <string name="configLabel_ui_textsize_summary">%s</string>     <!-- TODO -->
+
+  <string name="textSize_small">Small</string>   <!-- TODO -->
+  <string name="textSize_normal">Normal</string>   <!-- TODO -->
+  <string name="textSize_large">Large</string>   <!-- TODO -->
+  <string name="textSize_xlarge">Extra Large</string>   <!-- TODO -->
+  <string-array name="textSize_display">                      <!-- one-to-one with textSize_values -->
+    <item>@string/textSize_small</item>
+    <item>@string/textSize_normal</item>
+    <item>@string/textSize_large</item>
+    <item>@string/textSize_xlarge</item>
+  </string-array>
 
   <string name="configActionDesc_doNothing">Nichts tun</string>
   <string name="configActionDesc_nextNote">Nächste Kurzinfo anzeigen</string>
@@ -1195,6 +1372,23 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
+  <string name="graph_option_grid">Grid</string>              <!-- TODO -->
+  <string name="graph_option_labels">Labels</string>          <!-- TODO -->
+  <string name="graph_option_axis">Axis</string>              <!-- TODO -->
+  <string name="graph_option_filledpath">Filled Path</string> <!-- TODO -->
+  <string name="graph_option_moon">Show Moon</string>         <!-- TODO -->
+
+  <string name="seekAltitude_configHint">degrees</string>   <!-- TODO -->
+  <string name="seekAltitude_suffix">°∠</string>
+  <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>
+  <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
+  <string name="seekAltitude_setting">@string/eventalias_title_tag_setting</string>
+  <string name="seekAltitude_setting_contentDescription">@string/sunset</string>
+
+  <!-- Dialog: Moon -->
+  <string name="moon_dialog_title">@string/configAction_moon</string>
+  <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
+
   <!-- Dialog: Set Alarm -->
   <string name="configLabel_schedalarm_mode">Plane einen Alarm für</string>
   <string name="configLabel_schednotify_mode">Plane eine Benachrichtigung für</string>
@@ -1236,6 +1430,10 @@
     <item>Wintersonnenwende</item>
     <item>Mondmittag</item>
     <item>Mondmitternacht</item>
+    <item>@string/timeMode_cross_spring</item>
+    <item>@string/timeMode_cross_summer</item>
+    <item>@string/timeMode_cross_autumnal</item>
+    <item>@string/timeMode_cross_winter</item>
   </string-array>
   <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
     <item>Astronomische Morgendämmerung (Beginn)</item>
@@ -1265,6 +1463,10 @@
     <item>Wintersonnenwende</item>
     <item>Mondmittag</item>
     <item>Mondmitternacht</item>
+    <item>@string/timeMode_cross_spring</item>
+    <item>@string/timeMode_cross_summer</item>
+    <item>@string/timeMode_cross_autumnal</item>
+    <item>@string/timeMode_cross_winter</item>
   </string-array>
   <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
     <item>Astronomische Morgendämmerung (Beginn)</item>
@@ -1294,6 +1496,10 @@
     <item>Wintersonnenwende</item>
     <item>Mondmittag</item>
     <item>Mondmitternacht</item>
+    <item>@string/timeMode_cross_spring</item>
+    <item>@string/timeMode_cross_summer</item>
+    <item>@string/timeMode_cross_autumnal</item>
+    <item>@string/timeMode_cross_winter</item>
   </string-array>  <!-- TODO: review -->
 
   <!-- Dialog: Enable GPS? -->
@@ -1407,6 +1613,9 @@
   <string name="app_name_widget1">Suntimes Widget (umschaltbar)</string>
   <string name="app_name_widget2">Sonnenposition Widget</string>
   <string name="app_name_clockwidget0">Uhr-Widget</string>
+  <string name="app_name_datewidget0">Date Widget</string>  <!-- TODO -->
+  <string name="app_name_clocktile">Clock Tile</string>   <!-- TODO -->
+  <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
   <string name="app_name_solsticewidget0">Sonnenwend Widget</string>
   <string name="app_name_moonwidget0">Mond Widget</string>
   <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
@@ -1416,7 +1625,7 @@
       <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> um eine Anfrage zu stellen.
   ]]></string>
   <string name="app_legal1"><![CDATA[
-      Copyright &#169 2014-2022 Forrest Guice <br />
+      Copyright &#169 2014-2023 Forrest Guice <br />
       Quellcode verf&uuml;gbar unter GPLv3.
   ]]></string>
 
@@ -1428,6 +1637,15 @@
 
   <string name="app_legal3"><![CDATA[ <b>Bibliotheken:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
   <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+
+  <!-- Dialog: Welcome / Initial setup -->
+  <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
+  <string name="welcome_action_prev">Back</string>    <!-- TODO -->
+  <string name="welcome_action_next">Next</string>    <!-- TODO -->
+  <string name="welcome_action_done">Finish</string>    <!-- TODO -->
+  <string name="welcome_message">@string/app_shortdesc</string>    <!-- TODO -->
+  <string name="welcome_pref_title">Welcome Screen</string>    <!-- TODO -->
+  <string name="welcome_pref_summary">Start the first launch configuration wizard.</string>    <!-- TODO -->
 
   <!-- Dialog: Help -->
   <string name="help_dialog_title">Hilfe</string>
@@ -1485,6 +1703,40 @@
                 * <b>%M</b> für Modus (lang) (z.B. Wintersonnenwende) <br/>
                 * <b>%o</b> für auftrag  (z. B. nächste Ereignisse, kommende Ereignisse)<br/>
     ]]></string>
+
+  <string name="help_general_calendarFormatPattern"><![CDATA[
+          <b>Date Format:</b> A date format pattern.<br/>
+          <br/>Available elements may differ between calendars, but usually include..<br/>
+          <br/>
+          <b>E</b> : day of week <br/>
+          <b>d</b> : day of month <br/>
+          <b>D</b> : day of year <br/>
+          <b>F</b> : weekday in month <br/>
+          <b>M</b> : month of year <br/>
+          <b>y</b> : year of era <br/>
+          <b>G</b> : era <br/>
+          <br/>
+    ]]></string>    <!-- TODO -->
+
+  <string name="help_general_moondialog"><![CDATA[
+          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
+          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
+          \n\nShare [Icon Share] will copy text to the clipboard.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
+
+  <string name="help_general_timeMode2_1"><![CDATA[
+          <b>Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
+          <b>Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
+          <b>Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
+          <b>Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->  <!-- TODO -->
+
+  <string name="help_eventlist"><![CDATA[
+          [Icon OK] Choose a custom event.\n
+          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
+          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
+          [Icon View] Marked events are displayed by the app.
+    ]]></string>    <!-- TODO -->
 
   <string name="help_alarms_edit"><![CDATA[
           [Icon Back] to cancel without making changes.<br/>
@@ -1556,6 +1808,8 @@
         Diese Funktion ist jetzt als <a href="moreInfoLink">eigenständige App verfügbar</a>.
     ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
+  <string
+      name="privacy_policy0"><![CDATA[<b>Datenschutzerklärung:</b><br/>Suntimes erfasst, speichert oder übermittelt keine persönlichen Benutzerdaten. Die App enthält <b>keine Werbung</b>, <b>keine Analytik</b>, <b>keine Tracker</b> und verlangt <b>keine unnötigen Berechtigungen</b>.]]></string>
   <string
       name="privacy_policy"><![CDATA[<b>Datenschutzerklärung:</b><br/>Suntimes erfasst, speichert oder übermittelt keine persönlichen Benutzerdaten. Die App enthält <b>keine Werbung</b>, <b>keine Analytik</b>, <b>keine Tracker</b> und verlangt <b>keine unnötigen Berechtigungen</b>. <br/><br/>Die App wird über Ortsinformationen konfiguriert. Diese Informationen (und andere von der App verwendete Konfigurationsdaten) werden lokal gespeichert und verlassen das Gerät nicht.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
   <string

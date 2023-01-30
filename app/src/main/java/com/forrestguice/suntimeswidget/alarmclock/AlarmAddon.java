@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2021 Forrest Guice
+    Copyright (C) 2021-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -54,6 +54,11 @@ public class AlarmAddon
     public static final String ACTION_SUNTIMES_ADDON_EVENT = "suntimes.action.ADDON_EVENT";
     public static final String KEY_EVENT_INFO_PROVIDER = "EventInfoProvider";
 
+    public static final String ACTION_SUNTIMES_DISMISS_CHALLENGE = "suntimes.action.DISMISS_CHALLENGE";
+    public static final String ACTION_SUNTIMES_DISMISS_CHALLENGE_CONFIG = "suntimes.action.DISMISS_CHALLENGE_CONFIG";
+    public static final String KEY_DISMISS_CHALLENGE_TITLE = "SuntimesDismissChallengeTitle";
+    public static final String KEY_DISMISS_CHALLENGE_ID = "SuntimesDismissChallengeID";
+
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
     public static final String ACTION_SUNTIMES_PICK_EVENT = "suntimes.action.PICK_EVENT";
     public static final String KEY_EVENT_PICKER_TITLE = "SuntimesEventPickerTitle";
@@ -64,6 +69,54 @@ public class AlarmAddon
 
     public static String getEventCalcUri(String authority, String eventID) {
         return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_CALC + "/" + eventID;
+    }
+
+    /**
+     * queryAlarmDismissChallenges
+     */
+    public static List<DismissChallengeInfo> queryAlarmDismissChallenges(@NonNull Context context, @Nullable Long searchForID) {
+        return queryAlarmDismissChallenges(context, ACTION_SUNTIMES_DISMISS_CHALLENGE, searchForID);
+    }
+    public static List<DismissChallengeInfo> queryAlarmDismissChallengeConfig(@NonNull Context context, @Nullable Long searchForID) {
+        return queryAlarmDismissChallenges(context, ACTION_SUNTIMES_DISMISS_CHALLENGE_CONFIG, searchForID);
+    }
+    public static List<DismissChallengeInfo> queryAlarmDismissChallenges(@NonNull Context context, @NonNull String action, @Nullable Long searchForID)
+    {
+        Intent intent = new Intent();
+        intent.setAction(action);
+        intent.addCategory(CATEGORY_SUNTIMES_ADDON);
+
+        PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> packageInfo = packageManager.queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER | PackageManager.GET_META_DATA);
+        ArrayList<DismissChallengeInfo> matches = new ArrayList<>();
+        for (ResolveInfo resolveInfo : packageInfo)
+        {
+            IntentFilter filter = resolveInfo.filter;
+            if (filter != null && filter.hasAction(action) && filter.hasCategory(CATEGORY_SUNTIMES_ADDON))
+            {
+                try {
+                    PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
+                    int id = resolveInfo.activityInfo.metaData.getInt(KEY_DISMISS_CHALLENGE_ID, -1);
+
+                    if ((searchForID == null || searchForID == id))
+                    {
+                        if (hasPermission(packageInfo0))
+                        {
+                            String title_metadata = resolveInfo.activityInfo.metaData.getString(KEY_DISMISS_CHALLENGE_TITLE);
+                            String title = (title_metadata != null ? title_metadata : resolveInfo.activityInfo.name);
+                            matches.add(new DismissChallengeInfo(title, resolveInfo.activityInfo, id));
+
+                        } else {
+                            Log.w("AlarmAddon", "queryAlarmDismissChallenges: Permission denied! " + packageInfo0.packageName + " does not have required permissions.");
+                        }
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    Log.e("AlarmAddon", "queryAlarmDismissChallenges: Package not found! " + e);
+                }
+            }
+        }
+        Collections.sort(matches, compareActivityInfo);
+        return matches;
     }
 
     /**
@@ -99,21 +152,23 @@ public class AlarmAddon
                 }
             }
         }
-        Collections.sort(matches, new Comparator<EventPickerInfo>() {
-            @Override
-            public int compare(EventPickerInfo o1, EventPickerInfo o2) {
-                return o1.getTitle().compareTo(o2.getTitle());
-            }
-        });
+        Collections.sort(matches, compareActivityInfo);
         return matches;
     }
 
+    private static final Comparator<AddonActivityInfo> compareActivityInfo = new Comparator<AddonActivityInfo>() {
+        @Override
+        public int compare(AddonActivityInfo o1, AddonActivityInfo o2) {
+            return o1.getTitle().compareTo(o2.getTitle());
+        }
+    };
+
     /**
-     * EventPickerInfo
+     * AddonActivityInfo
      */
-    public static class EventPickerInfo
+    public static class AddonActivityInfo
     {
-        public EventPickerInfo(@NonNull String title, ActivityInfo info)
+        public AddonActivityInfo(@NonNull String title, ActivityInfo info)
         {
             this.title = title;
             this.info = info;
@@ -130,14 +185,65 @@ public class AlarmAddon
             return info;
         }
 
+        public String toString() {
+            return title;
+        }
+
         public Intent getIntent() {
             return getIntent(null);
         }
+
+        public Intent getIntent(@Nullable String action)
+        {
+            Intent intent = new Intent();
+            if (info != null) {
+                intent.setClassName(info.packageName, info.name);
+            }
+            if (action != null) {
+                intent.setAction(action);
+            }
+            return intent;
+        }
+    }
+
+    /**
+     * DismissChallengeInfo
+     */
+    public static class DismissChallengeInfo extends AddonActivityInfo
+    {
+        protected long id;
+
+        public DismissChallengeInfo(@NonNull String title, ActivityInfo info, long challengeID) {
+            super(title, info);
+            this.id = challengeID;
+        }
+
+        @Override
+        public Intent getIntent() {
+            return getIntent(ACTION_SUNTIMES_DISMISS_CHALLENGE);
+        }
+
+        public long getDismissChallengeID() {
+            return id;
+        }
+    }
+
+    /**
+     * EventPickerInfo
+     */
+    public static class EventPickerInfo extends AddonActivityInfo
+    {
+        public EventPickerInfo(@NonNull String title, ActivityInfo info) {
+            super(title, info);
+        }
+
+        @Override
+        public Intent getIntent() {
+            return getIntent((Location) null);
+        }
         public Intent getIntent(@Nullable Location location)
         {
-            Intent intent = new Intent(AlarmAddon.ACTION_SUNTIMES_PICK_EVENT);
-            intent.setClassName(info.packageName, info.name);
-
+            Intent intent = getIntent(AlarmAddon.ACTION_SUNTIMES_PICK_EVENT);
             if (location != null)
             {
                 intent.putExtra(AlarmEventContract.EXTRA_LOCATION_LABEL, location.getLabel());
@@ -146,10 +252,6 @@ public class AlarmAddon
                 intent.putExtra(AlarmEventContract.EXTRA_LOCATION_ALT, location.getAltitudeAsDouble());
             }
             return intent;
-        }
-
-        public String toString() {
-            return title;
         }
     }
 

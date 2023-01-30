@@ -2,6 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Preference
+        android:key="appwidget_0_intro_screen" android:persistent="false"
+        android:title="@string/welcome_pref_title"
+        android:summary="@string/welcome_pref_summary" />
+
     <PreferenceCategory
         android:title="@string/configLabel_general">
 
@@ -35,12 +40,6 @@
             android:key="appwidget_0_location_altitude_enabled"
             android:title="@string/configLabel_general_altitude_enabled"
             android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@string/def_appwidget_0_general_altitude_enabled" />
-
-        <com.forrestguice.suntimeswidget.settings.LengthPreference
-            android:key="appwidget_0_general_observerheight"
-            android:title="@string/configLabel_general_observerheight"
-            android:summary="@string/configLabel_general_observerheight_summary"
-            android:defaultValue="@string/def_appwidget_0_general_observerheight" />
 
     </PreferenceCategory>
 

@@ -113,7 +113,7 @@ public class DialogTest extends SuntimesActivityTestBase
             cancelEquinoxDialog();
 
         } else {
-            onView(withId(R.id.info_time_equinox)).check(matches(not(isDisplayed())));
+            onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
         }
     }
 
@@ -133,13 +133,13 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void verifyEquinoxDialog()
     {
-        onView(withId(R.id.info_time_equinox)).check(assertShown);
+        onView(withId(R.id.dialog_header)).check(assertShown);
     }
 
     public static void cancelEquinoxDialog()
     {
-        onView(withId(R.id.info_time_equinox)).perform(pressBack());
-        onView(withId(R.id.info_time_equinox)).check(doesNotExist());
+        onView(withId(R.id.dialog_header)).perform(pressBack());
+        onView(withId(R.id.dialog_header)).check(doesNotExist());
     }
 
     /**

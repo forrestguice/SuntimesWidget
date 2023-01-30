@@ -692,6 +692,13 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             view.text_action1.setVisibility( item.actionID1 != null ? View.VISIBLE : View.GONE );
         }
 
+        /*if (view.text_action2 != null)
+        {
+            view.text_action2.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            view.text_action2.setText( actionDisplayChip(item, 2, isSelected));
+            view.text_action2.setVisibility( item.actionID2 != null ? View.VISIBLE : View.GONE );
+        }*/
+
         // vibrate
         if (view.check_vibrate != null)
         {
@@ -778,8 +785,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         ImageSpan actionIcon = (isSelected || item.enabled)
                 ? SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
                 : SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
-        String actionName = item.getActionID(actionNum);  // TODO
-        String actionString = isSelected ? (item.actionID1 != null ? actionName : "") : "";
+        String actionName = item.getActionID(actionNum);
+        String actionString = isSelected ? (actionName != null ? actionName : "") : "";
         String actionLabel = context.getString(R.string.alarmOption_action_label, actionString);
         return SuntimesUtils.createSpan(context, actionLabel, "[icon]", actionIcon);
     }
@@ -838,6 +845,12 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                     case R.id.setAlarmSound:
                         if (adapterListener != null) {
                             adapterListener.onRequestRingtone(item);
+                        }
+                        return true;
+
+                    case R.id.setAlarmDismissChallenge:
+                        if (adapterListener != null) {
+                            adapterListener.onRequestDismissChallenge(item);
                         }
                         return true;
 
@@ -912,6 +925,12 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                 {
                     case R.id.alarmTypeNotification:
                         return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION);
+
+                    case R.id.alarmTypeNotification1:
+                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION1);
+
+                    case R.id.alarmTypeNotification2:
+                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION2);
 
                     case R.id.alarmTypeAlarm:
                     default:
