@@ -6,14 +6,34 @@
         <item>@string/appThemes_darkTheme</item>
         <item>@string/appThemes_nightMode</item>
         <item>@string/appThemes_systemDefault</item>
-
     </string-array>
-    <string-array name="appThemes_values" tools:ignore="InconsistentArrays"
-        translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
+    <string-array name="appThemes_values" tools:ignore="InconsistentArrays" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
         <item>light</item>
         <item>dark</item>
         <item>daynight</item>
         <item>system</item>
+    </string-array>
+
+    <string-array name="appThemes_light_display" tools:ignore="InconsistentArrays"> <!-- display values (one-to-one with appThemes_dark_values) -->
+        <item>@string/configLabel_tagDefault</item>
+        <item>@string/appThemes_systemDefault1</item>
+        <item>@string/appThemes_lightTheme1</item>
+    </string-array>
+    <string-array name="appThemes_light_values" translatable="false" tools:ignore="InconsistentArrays">  <!-- config values (one-to-one with appThemes_dark_display) -->
+        <item>default</item>
+        <item>contrast_system</item>
+        <item>contrast_light</item>
+    </string-array>
+
+    <string-array name="appThemes_dark_display" tools:ignore="InconsistentArrays"> <!-- display values (one-to-one with appThemes_dark_values) -->
+        <item>@string/configLabel_tagDefault</item>
+        <item>@string/appThemes_systemDefault1</item>
+        <item>@string/appThemes_darkTheme1</item>
+    </string-array>
+    <string-array name="appThemes_dark_values" translatable="false" tools:ignore="InconsistentArrays">  <!-- config values (one-to-one with appThemes_dark_display) -->
+        <item>default</item>
+        <item>contrast_system</item>
+        <item>contrast_dark</item>
     </string-array>
 
 </resources>
