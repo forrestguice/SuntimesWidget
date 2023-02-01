@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,17 +27,21 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -46,6 +50,7 @@ import java.util.TimeZone;
 public class TimeDateDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_TIMEDATE_APPWIDGETID = "appwidgetid";
+    public static final String KEY_DIALOG_TITLE = "dialog_title";
 
     protected DatePicker picker;
 
@@ -55,6 +60,10 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     }
     public TimeZone getTimeZone() {
         return timezone;
+    }
+
+    public TimeDateDialog() {
+        setArguments(new Bundle());
     }
 
     public void init(Calendar date)
@@ -78,14 +87,22 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     {
         picker = (DatePicker) dialogContent.findViewById(R.id.appwidget_date_custom);
 
-        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
+        ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
+        TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(onDialogCancelClick);
 
-        Button btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
+        ImageButton btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
+        TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
         btn_accept.setOnClickListener(onDialogAcceptClick);
 
         Button btn_neutral = (Button) dialogContent.findViewById(R.id.dialog_button_neutral);
         btn_neutral.setOnClickListener(onDialogNeutralClick);
+
+        String title = getDialogTitle();
+        TextView text_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
+        if (text_title != null && title != null) {
+            text_title.setText(title);
+        }
     }
 
     @Override
@@ -130,9 +147,9 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * Restore the dialog state from the provided bundle.
      * @param bundle state loaded from this Bundle
      */
-    protected void loadSettings(Bundle bundle)
-    {
-        appWidgetId = bundle.getInt(KEY_TIMEDATE_APPWIDGETID, appWidgetId);
+    protected void loadSettings(Bundle bundle) {
+        //getArguments().putInt(KEY_TIMEDATE_APPWIDGETID, bundle.getInt(KEY_TIMEDATE_APPWIDGETID, getAppWidgetId()));
+        //getArguments().putString(KEY_DIALOG_TITLE, bundle.getString(KEY_DIALOG_TITLE, null));
     }
 
     /**
@@ -141,6 +158,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      */
     protected void loadSettings(Context context)
     {
+        int appWidgetId = getAppWidgetId();
         WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
         if (mode == WidgetSettings.DateMode.CURRENT_DATE)
         {
@@ -155,13 +173,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     /**
      * @param context a context used to access shared prefs
      */
-    protected void saveSettings(Context context)
-    {
-        WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
-        WidgetSettings.saveDateModePref(context, appWidgetId, dateMode);
-
-        WidgetSettings.DateInfo dateInfo = getDateInfo();
-        WidgetSettings.saveDatePref(context, appWidgetId, dateInfo);
+    protected void saveSettings(Context context) {
+        /* EMPTY */
     }
 
     public WidgetSettings.DateInfo getDateInfo() {
@@ -172,23 +185,26 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * Save the dialog state to a bundle to be restored at a later time (occurs onSaveInstanceState).
      * @param bundle state persisted to this Bundle
      */
-    protected void saveSettings(Bundle bundle)
-    {
-        bundle.putInt(KEY_TIMEDATE_APPWIDGETID, appWidgetId);
+    protected void saveSettings(Bundle bundle) {
     }
 
     /**
      * @return the appWidgetID used by this dialog when saving/loading prefs (use 0 for main app)
      */
-    public int getAppWidgetId()
-    {
-        return appWidgetId;
+    public int getAppWidgetId() {
+        return getArguments().getInt(KEY_TIMEDATE_APPWIDGETID, AppWidgetManager.INVALID_APPWIDGET_ID);
     }
-    public void setAppWidgetId(int value)
-    {
-        appWidgetId = value;
+    public void setAppWidgetId(int value) {
+        getArguments().putInt(KEY_TIMEDATE_APPWIDGETID, value);
     }
-    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+
+    @Nullable
+    public String getDialogTitle() {
+        return getArguments().getString(KEY_DIALOG_TITLE);
+    }
+    public void setDialogTitle(@Nullable String title) {
+        getArguments().putString(KEY_DIALOG_TITLE, title);
+    }
 
     /**
      * A listener that is triggered when the dialog is accepted.
@@ -230,7 +246,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     {
         @Override
         public void onShow(DialogInterface dialog) {
-            // EMPTY; placeholder
+            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
         }
     };
 

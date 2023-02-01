@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -97,7 +97,7 @@
                     <EditText android:id="@+id/appwidget_location_name"
                               android:layout_width="fill_parent" android:layout_height="wrap_content"
                               android:textAppearance="?android:attr/textAppearanceSmall"
-                              android:hint="@string/configHint_location_name" android:enabled="false"
+                              android:hint="@string/configHint_location_name" android:enabled="false" android:inputType="text"
                               android:paddingLeft="5dp" android:paddingRight="5dp"
                         android:layout_gravity="center_vertical" />
 
@@ -130,22 +130,26 @@
                         android:layout_gravity="center" />
                 </FrameLayout>
 
+                <ImageButton android:id="@+id/appwidget_location_add"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="?attr/icActionNew"
+                    android:contentDescription="@string/configAction_addPlace" />
+
                 <ImageButton android:id="@+id/appwidget_location_edit"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:src="?attr/icActionPlace"
+                    android:src="?attr/icActionEdit"
                     android:contentDescription="@string/configAction_editPlace" />
 
                 <ImageButton android:id="@+id/appwidget_location_save"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionSave"
-                    android:visibility="gone"
                     android:contentDescription="@string/configAction_savePlace" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/layout_details"
             android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
 
 

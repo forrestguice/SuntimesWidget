@@ -35,6 +35,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -44,6 +45,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+import java.lang.ref.WeakReference;
 import java.security.Security;
 import java.util.ArrayList;
 
@@ -79,6 +81,14 @@ public class GetFixHelper
         myParent = parent;
         addUI(ui);
     }
+
+    public void setFragment(Fragment f) {
+        fragmentRef = new WeakReference<>(f);
+    }
+    public Fragment getFragment() {
+        return fragmentRef != null ? fragmentRef.get() : null;
+    }
+    private WeakReference<Fragment> fragmentRef = null;
 
     /**
      * Get a fix; main entry point for GPS "get fix" button in location settings.
@@ -208,7 +218,7 @@ public class GetFixHelper
                         {
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+                                requestPermissions(requestID);
                             }
                         });
 
@@ -223,6 +233,18 @@ public class GetFixHelper
             }
         }
         return hasPermission;
+    }
+
+    protected void requestPermissions(final int requestID) {
+        if (getFragment() != null) {
+            requestPermissions(getFragment(), requestID);
+        } else requestPermissions(myParent, requestID);
+    }
+    protected void requestPermissions(Activity activity, final int requestID) {
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+    }
+    protected void requestPermissions(Fragment fragment, final int requestID) {
+        fragment.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
     }
 
     public boolean isGettingFix()

@@ -81,7 +81,7 @@ public class TextSizePreference extends ListPreference
             initTextSizes(context);
         }
 
-        protected float[] textSizes = {12, 14, 16};
+        protected float[] textSizes = {12, 14, 16, 18};
 
         @SuppressLint("ResourceType")
         protected void initTextSizes(Context context)
@@ -89,6 +89,7 @@ public class TextSizePreference extends ListPreference
             textSizes[0] = context.getResources().getDimension(R.dimen.smalltext_size_small);
             textSizes[1] = context.getResources().getDimension(R.dimen.text_size_small);
             textSizes[2] = context.getResources().getDimension(R.dimen.largetext_size_medium);
+            textSizes[3] = context.getResources().getDimension(R.dimen.xlargetext_size_medium);
         }
 
         public float getTextSizePx(int position) {

@@ -19,7 +19,9 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
@@ -186,6 +188,20 @@ public class MillisecondPickerPreference extends DialogPreference
             case MODE_MINUTES:
             default:
                 return value * MINUTE_TO_MS;
+        }
+    }
+
+    protected void onPrepareDialogBuilder(AlertDialog.Builder builder)
+    {
+        super.onPrepareDialogBuilder(builder);
+        if (param_zeroText != null)
+        {
+            builder.setNeutralButton(param_zeroText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    setValue(0);
+                }
+            });
         }
     }
 

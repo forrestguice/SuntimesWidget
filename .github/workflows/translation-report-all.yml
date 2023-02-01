@@ -1,0 +1,14 @@
+name: Translation Report (All)
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  translation-report-all:
+    strategy:
+      matrix:
+        language: [en, ca, cs, de, eo, eu, fr, hu, it, nb, nl, pl, pt, ru, es, zh_TW, zh_CN]
+    uses: ./.github/workflows/translation-report.yml
+    with:
+      language: ${{ matrix.language }}
+    secrets: inherit

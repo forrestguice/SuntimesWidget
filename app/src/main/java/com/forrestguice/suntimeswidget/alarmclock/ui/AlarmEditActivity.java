@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -14,27 +14,26 @@
 
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
-*/ 
+*/
 
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -50,7 +49,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.widget.Toast;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -70,7 +71,10 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAdapterListener
 {
@@ -84,10 +88,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final int REQUEST_SETTINGS = 20;
     public static final int REQUEST_ACTION0 = 40;
     public static final int REQUEST_ACTION1 = 50;
+    public static final int REQUEST_ACTION2 = 60;
+    public static final int REQUEST_ACTION3 = 70;
+    public static final int REQUEST_DISMISS_CHALLENGE_CONFIG = 80;
 
     private static final String DIALOGTAG_EVENT = "alarmevent";
     private static final String DIALOGTAG_REPEAT = "alarmrepetition";
     private static final String DIALOGTAG_LABEL = "alarmlabel";
+    private static final String DIALOGTAG_NOTE = "alarmnote";
     private static final String DIALOGTAG_TIME = "alarmtime";
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
@@ -174,6 +182,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             case REQUEST_ACTION1:
                 onActionResult(resultCode, data, 1);
                 break;
+
+            case REQUEST_ACTION2:
+                onActionResult(resultCode, data, 2);
+                break;
+
+            case REQUEST_ACTION3:
+                onActionResult(resultCode, data, 3);
+                break;
         }
     }
 
@@ -205,6 +221,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
+        AlarmSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
         AlarmClockItem.AlarmType.initDisplayStrings(context);
@@ -268,6 +285,25 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             actionBar.setDisplayHomeAsUpEnabled(true);
             AlarmClockItem item = editor.getItem();
             actionBar.setTitle(item != null ? item.type.getDisplayString() : "");
+
+            Drawable actionBarBackground = getActionBarBackground(context, item);
+            if (actionBarBackground != null) {
+                actionBar.setBackgroundDrawable(actionBarBackground);
+            }
+        }
+    }
+
+    @Nullable
+    protected Drawable getActionBarBackground(Context context, @Nullable AlarmClockItem item)
+    {
+        if (item == null || item.type == null) {
+            return null;
+        }
+        switch (item.type)
+        {
+            case ALARM:
+            default:
+                return null;
         }
     }
 
@@ -283,13 +319,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     protected void returnItem(AlarmClockItem item)
     {
+        editor.saveSettings(AlarmEditActivity.this);
         Intent intent = getIntent();
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
         setResult(Activity.RESULT_OK, intent);
         supportFinishAfterTransition();
     }
 
-    private DialogInterface.OnClickListener onEditorAccepted = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onEditorAccepted = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             returnItem(editor.getItem());
@@ -346,10 +383,31 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         inflater.inflate(R.menu.alarmedit, menu);
 
         MenuItem optionsItem = menu.findItem(R.id.action_options);
-        if (optionsItem != null) {
+        if (optionsItem != null)
+        {
             SubMenu optionsMenu = optionsItem.getSubMenu();
-            if (optionsMenu != null) {
+            if (optionsMenu != null)
+            {
                 inflater.inflate(R.menu.alarmcontext2, optionsMenu);
+                AlarmClockItem item = editor.getItem();
+                boolean isAlarm = (item != null && item.type == AlarmClockItem.AlarmType.ALARM);
+
+                MenuItem item_menuDismissChallenge = optionsMenu.findItem(R.id.menuAlarmDismissChallenge);
+                if (item_menuDismissChallenge != null) {
+                    item_menuDismissChallenge.setVisible(isAlarm);
+                }
+                MenuItem item_setDismissChallenge = optionsMenu.findItem(R.id.setAlarmDismissChallenge);
+                if (item_setDismissChallenge != null) {
+                    item_setDismissChallenge.setVisible(isAlarm);
+                }
+                MenuItem item_configDismissChallenge = optionsMenu.findItem(R.id.configAlarmDismissChallenge);
+                if (item_configDismissChallenge != null) {
+                    item_configDismissChallenge.setVisible(isAlarm);
+                }
+                MenuItem item_testDismissChallenge = optionsMenu.findItem(R.id.testAlarmDismissChallenge);
+                if (item_testDismissChallenge != null) {
+                    item_testDismissChallenge.setVisible(isAlarm);
+                }
             }
         }
 
@@ -385,6 +443,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 editor.itemView.edit_label.performClick();
                 return true;
 
+            case R.id.setAlarmNote:
+                editor.itemView.edit_note.performClick();
+                return true;
+
             case R.id.setAlarmOffset:
                 editor.itemView.chip_offset.performClick();
                 return true;
@@ -403,6 +465,18 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
             case R.id.setAlarmSound:
                 editor.itemView.chip_ringtone.performClick();
+                return true;
+
+            case R.id.setAlarmDismissChallenge:
+                editor.itemView.chip_dismissChallenge.performClick();
+                return true;
+
+            case R.id.configAlarmDismissChallenge:
+                configureDismissChallenge(AlarmEditActivity.this);
+                return true;
+
+            case R.id.testAlarmDismissChallenge:
+                testDismissChallenge(AlarmEditActivity.this);
                 return true;
 
             case R.id.action_help:
@@ -458,6 +532,45 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         return super.onPrepareOptionsPanel(view, menu);
     }
 
+    protected void configureDismissChallenge(Context context)
+    {
+        AlarmClockItem alarm = editor.getItem();
+        if (alarm != null)
+        {
+            AlarmSettings.DismissChallenge challenge = alarm.getDismissChallenge(context);
+            Log.d("DEBUG", "configureDismissChallenge: " + challenge + " .. " + challenge.getID());
+
+            List<AlarmAddon.DismissChallengeInfo> info = AlarmAddon.queryAlarmDismissChallengeConfig(context, challenge.getID());
+            if (info.size() > 0)
+            {
+                Log.i(TAG, "configureDismissChallenge: " + info.get(0).getIntent());
+                AlarmAddon.DismissChallengeInfo configInfo = info.get(0);
+                startActivityForResult(configInfo.getIntent()
+                                .putExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, alarm.rowID)
+                                .putExtra(AlarmNotifications.EXTRA_NOTIFICATION_ID, alarm.rowID)
+                        , REQUEST_DISMISS_CHALLENGE_CONFIG);
+
+            } else {
+                Log.w(TAG, "configureDismissChallenge: activity not found!");
+            }
+        }
+    }
+
+    protected void testDismissChallenge(Context context)
+    {
+        AlarmClockItem alarm = editor.getItem();
+        if (alarm != null)
+        {
+            AlarmSettings.DismissChallenge challenge = alarm.getDismissChallenge(context);
+            Log.d("DEBUG", "testDismissChallenge: " + challenge + " .. " + challenge.getID());
+            startActivity(AlarmNotifications.getFullscreenIntent(this, alarm.getUri())
+                    .setAction(AlarmDismissActivity.ACTION_DISMISS)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST, true)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST_CHALLENGE_ID, (int)challenge.getID())
+            );
+        }
+    }
+
     @SuppressLint("ResourceType")
     protected void showHelp()
     {
@@ -493,7 +606,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     protected void showAbout()
     {
         Intent about = new Intent(this, AboutActivity.class);
-        about.putExtra(AboutActivity.EXTRA_ICONID, R.mipmap.ic_launcher_alarms_round);
+        about.putExtra(AboutActivity.EXTRA_ICONID, R.drawable.ic_suntimesalarms);
         startActivity(about);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
@@ -562,6 +675,69 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * pickDismissChallenge
+     */
+    protected void pickDismissChallenge(@NonNull final AlarmClockItem item) {
+        showDismissChallengePopup(editor.itemView.chip_dismissChallenge, item);
+    }
+
+    public void showDismissChallengePopup(View v, @NonNull final AlarmClockItem item)
+    {
+        int[] attrs = { R.attr.icActionExtension, R.attr.icActionDismiss };
+        TypedArray a = obtainStyledAttributes(attrs);
+        int icExtensionResId = a.getResourceId(0, R.drawable.ic_action_extension);
+        @SuppressLint("ResourceType") int icDismissResId = a.getResourceId(1, R.drawable.ic_action_cancel);
+        a.recycle();
+
+        PopupMenu popup = new PopupMenu(this, v);
+        Menu menu = popup.getMenu();
+
+        ArrayList<AlarmSettings.DismissChallenge> challenges0 = new ArrayList<AlarmSettings.DismissChallenge>(Arrays.asList(AlarmSettings.DismissChallenge.values()));
+        challenges0.remove(AlarmSettings.DismissChallenge.ADDON);
+        final AlarmSettings.DismissChallenge[] challenges = challenges0.toArray(new AlarmSettings.DismissChallenge[0]);
+
+        for (int i=0; i<challenges.length; i++) {
+            MenuItem menuItem = menu.add(Menu.NONE, i, i, challenges[i].getDisplayString());
+            menuItem.setIcon(icDismissResId);
+        }
+
+        int c = challenges.length + 1;
+        List<AlarmAddon.DismissChallengeInfo> addons = AlarmAddon.queryAlarmDismissChallenges(v.getContext(), null);
+        for (AlarmAddon.DismissChallengeInfo addonInfo : addons) {
+            MenuItem menuItem = menu.add(Menu.NONE, (int)addonInfo.getDismissChallengeID(), c, addonInfo.getTitle());
+            menuItem.setIcon(icExtensionResId);
+            c++;
+        }
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                int itemID = menuItem.getItemId();
+                onDismissChallengeResult(itemID);
+                return true;
+            }
+        });
+
+        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        popup.show();
+    }
+
+    protected void onDismissChallengeResult(long dismissChallengeID)
+    {
+        if (editor != null)
+        {
+            AlarmClockItem item = editor.getItem();
+            item.setFlag(AlarmClockItem.FLAG_DISMISS_CHALLENGE, dismissChallengeID);
+            editor.notifyItemChanged();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void showAlarmSoundPopup(View v, @NonNull final AlarmClockItem item)
     {
         PopupMenu popup = new PopupMenu(this, v);
@@ -606,7 +782,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         int ringtoneType = RingtoneManager.TYPE_RINGTONE;
         if (!AlarmSettings.loadPrefAllRingtones(this)) {
-            ringtoneType = (item.type == AlarmClockItem.AlarmType.NOTIFICATION ? RingtoneManager.TYPE_NOTIFICATION : RingtoneManager.TYPE_ALARM);
+            ringtoneType = (item.type == AlarmClockItem.AlarmType.ALARM ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
         }
 
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
@@ -772,6 +948,35 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             {
                 AlarmClockItem item = editor.getItem();
                 item.label = dialog.getLabel();
+                editor.notifyItemChanged();
+            }
+        }
+    };
+
+    /**
+     * pickNote
+     */
+    protected void pickNote(@NonNull AlarmClockItem item)
+    {
+        AlarmLabelDialog dialog = new AlarmLabelDialog();    // TODO: multi-line
+        dialog.setDialogTitle(getString(R.string.alarmnote_dialog_title));
+        dialog.setMultiLine(true);
+        dialog.setAccentColor(colorAlarmEnabled);
+        dialog.setLabel(item.note);
+        dialog.setOnAcceptedListener(onNoteChanged);
+        dialog.show(getSupportFragmentManager(), DIALOGTAG_NOTE);
+    }
+    private DialogInterface.OnClickListener onNoteChanged = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmLabelDialog dialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_NOTE);
+            if (editor != null && dialog != null)
+            {
+                AlarmClockItem item = editor.getItem();
+                item.note = dialog.getLabel();
                 editor.notifyItemChanged();
             }
         }
@@ -946,6 +1151,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     }
     protected int getActionRequestCode(int actionNum) {
         switch (actionNum) {
+            case 3: return REQUEST_ACTION3;
+            case 2: return REQUEST_ACTION2;
             case 1: return REQUEST_ACTION1;
             case 0: default: return REQUEST_ACTION0;
         }
@@ -958,11 +1165,17 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (actionBar != null) {
             actionBar.setTitle(forItem != null ? forItem.type.getDisplayString() : "");
         }
+        invalidateOptionsMenu();
     }
 
     @Override
     public void onRequestLabel(AlarmClockItem forItem) {
         pickLabel(forItem);
+    }
+
+    @Override
+    public void onRequestNote(AlarmClockItem forItem) {
+        pickNote(forItem);
     }
 
     @Override
@@ -998,6 +1211,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     public void onRequestAction(AlarmClockItem forItem, int actionNum) {
         pickAction(forItem, actionNum);
+    }
+
+    @Override
+    public void onRequestDismissChallenge(AlarmClockItem forItem) {
+        pickDismissChallenge(forItem);
     }
 
     @Override

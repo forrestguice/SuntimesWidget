@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
@@ -38,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 import static android.support.test.espresso.Espresso.registerIdlingResources;
 import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 
+@Category(UnlistedTest.class)
 @SuppressWarnings("Convert2Diamond")
 @LargeTest
 @RunWith(AndroidJUnit4.class)

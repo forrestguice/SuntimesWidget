@@ -24,6 +24,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
@@ -55,7 +56,13 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             AppSettings.loadLocale(context, languageTag);
             verify_stringArrayLength("locale_values", R.array.locale_values, "locale_display", R.array.locale_display);
             verify_stringArrayLength("locale_credits", R.array.locale_credits, "locale_display", R.array.locale_display);
+
             verify_stringArrayLength("appThemes_values", R.array.appThemes_values, "appThemes_display", R.array.appThemes_display);
+            verify_stringArrayLength("appThemes_dark_values", R.array.appThemes_dark_values, "appThemes_dark_display", R.array.appThemes_dark_display);
+            verify_stringArrayLength("appThemes_light_values", R.array.appThemes_light_values, "appThemes_light_display", R.array.appThemes_light_display);
+
+            verify_stringArrayLength("textSize_values", R.array.textSize_values, "textSize_display", R.array.textSize_display);
+            verify_stringArrayValuesOfEnum("textSize_values", R.array.textSize_values, AppSettings.TextSize.class);
 
             verify_stringArrayValuesOfEnum("localeMode_values", R.array.localeMode_values, AppSettings.LocaleMode.class);
             verify_stringArrayLength("localeMode_values", R.array.localeMode_values, "localeMode_display", R.array.localeMode_display);
@@ -94,6 +101,12 @@ public class SuntimesResTest extends SuntimesActivityTestBase
 
             verify_stringArrayValuesOfEnum("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, WidgetSettings.TrackingMode.class);
             verify_stringArrayLength("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, "solsticeTrackingMode_display", R.array.solsticeTrackingMode_display);
+
+            verify_stringArrayLength("emphasizefield_values", R.array.emphasizefield_values, "emphasizefield_display", R.array.emphasizefield_display);
+            verify_stringArrayLength("headerText_values", R.array.headerText_values, "headerText_display", R.array.headerText_display);
+
+            verify_stringArrayLength("dismissChallenge_values", R.array.dismissChallenge_values, "dismissChallenge_display", R.array.dismissChallenge_display);
+            verify_stringArrayValuesOfEnum("dismissChallenge_values", R.array.dismissChallenge_values, AlarmSettings.DismissChallenge.class);
         }
     }
 
@@ -199,10 +212,17 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_pluralFormat("units_meters_long", R.plurals.units_meters_long, values, displayValues);
             verify_pluralFormat("units_kilometers_long", R.plurals.units_kilometers_long, values, displayValues);
 
+            verify_pluralFormatI("units_days", R.plurals.units_days, values);
             verify_pluralFormatI("units_hours", R.plurals.units_hours, values);
             verify_pluralFormatI("units_minutes", R.plurals.units_minutes, values);
             verify_pluralFormatI("units_seconds", R.plurals.units_seconds, values);
+
+            verify_pluralFormatI("alarmPlural", R.plurals.alarmPlural, values);
+            verify_pluralFormatI("eventPlural", R.plurals.eventPlural, values);
+            verify_pluralFormatI("placePlural", R.plurals.placePlural, values);
+            verify_pluralFormatI("locationdelete_dialog_success", R.plurals.locationdelete_dialog_success, values);
             verify_pluralFormatI("themePlural", R.plurals.themePlural, values);
+
             verify_pluralFormatI("offset_before_plural", R.plurals.offset_before_plural, values);
             verify_pluralFormatI("offset_after_plural", R.plurals.offset_after_plural, values);
             verify_pluralFormatI("offset_at_plural", R.plurals.offset_at_plural, values);

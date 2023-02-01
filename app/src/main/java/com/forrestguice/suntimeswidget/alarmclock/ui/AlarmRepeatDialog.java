@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.CompoundButtonCompat;
@@ -55,7 +56,7 @@ public class AlarmRepeatDialog extends DialogFragment
     public static final boolean PREF_DEF_ALARM_REPEAT = false;
 
     public static final String PREF_KEY_ALARM_REPEATDAYS = "alarmrepeat_days";
-    public static final ArrayList<Integer> PREF_DEF_ALARM_REPEATDAYS = new ArrayList<>(Arrays.asList(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY));
+    public static final ArrayList<Integer> PREF_DEF_ALARM_REPEATDAYS = AlarmClockItem.everyday();
 
     public static final String KEY_COLORS = "alarmrepeat_colors";
 
@@ -239,7 +240,7 @@ public class AlarmRepeatDialog extends DialogFragment
     /**
      * onRepeatChanged
      */
-    private CompoundButton.OnCheckedChangeListener onRepeatChanged = new CompoundButton.OnCheckedChangeListener()
+    private final CompoundButton.OnCheckedChangeListener onRepeatChanged = new CompoundButton.OnCheckedChangeListener()
     {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -253,7 +254,7 @@ public class AlarmRepeatDialog extends DialogFragment
     /**
      * onRepeatDayChanged
      */
-    private CompoundButton.OnCheckedChangeListener onRepeatDayChanged = new CompoundButton.OnCheckedChangeListener()
+    private final CompoundButton.OnCheckedChangeListener onRepeatDayChanged = new CompoundButton.OnCheckedChangeListener()
     {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -280,23 +281,28 @@ public class AlarmRepeatDialog extends DialogFragment
         }
     };
 
-    private Integer tagToDay(Object tag)
+    @Nullable
+    protected static Integer tagToDay(@Nullable Object tag)
     {
-        try {
-            return Integer.parseInt(tag.toString());
+        if (tag != null)
+        {
+            try {
+                return Integer.parseInt(tag.toString());
 
-        } catch (NumberFormatException e) {
-            return null;
-        }
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        } else return null;
     }
 
     /**
      * @param value true alarm should repeat, false one-time alarm
+     * @param days list of repeat days, or null (everyday)
      */
-    public void setRepetition(boolean value, ArrayList<Integer> days)
+    public void setRepetition(boolean value, @Nullable ArrayList<Integer> days)
     {
         this.repeat = value;
-        repeatDays = (days != null ? new ArrayList<Integer>(days) : new ArrayList<Integer>());
+        repeatDays = (days != null ? new ArrayList<Integer>(days) : AlarmClockItem.everyday());
         updateViews(getContext());
     }
 

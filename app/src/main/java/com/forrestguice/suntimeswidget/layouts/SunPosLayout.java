@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -29,10 +30,13 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.util.Calendar;
 
 public abstract class SunPosLayout extends PositionLayout
 {
@@ -64,6 +68,57 @@ public abstract class SunPosLayout extends PositionLayout
         CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
+    }
+
+    protected SuntimesCalculator.SunPosition updateLabels(Context context, RemoteViews views, SuntimesRiseSetDataset dataset)
+    {
+        Calendar now = dataset.now();
+        SuntimesCalculator calculator = dataset.calculator();
+        SuntimesCalculator.SunPosition sunPosition = (calculator != null ? calculator.getSunPosition(now) : null);
+
+        SuntimesRiseSetData riseSetData = dataset.dataActual;
+        Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
+        SuntimesCalculator.SunPosition risingPosition = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
+
+        SuntimesRiseSetData noonData = dataset.dataNoon;
+        Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
+        SuntimesCalculator.SunPosition noonPosition = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
+
+        Calendar setTime = (riseSetData != null ? riseSetData.sunsetCalendarToday() : null);
+        SuntimesCalculator.SunPosition settingPosition = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
+
+        updateViewsAzimuthElevationText(context, views, sunPosition, noonPosition);
+        updateViewsAzimuthElevationText(context, views, sunPosition, risingPosition, noonPosition, settingPosition);
+        return sunPosition;
+    }
+
+    @TargetApi(16)
+    protected void scaleLabels(Context context, RemoteViews views)
+    {
+        int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / 4)};
+        float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "MMM.MMM MMM.MMM MMM.MMM MMM.MMM MMM.MMM", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
+        if (adjustedSizeSp[0] > timeSizeSp)
+        {
+            float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+            float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+            views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+
+            views.setTextViewTextSize(R.id.info_sun_azimuth_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+            views.setViewPadding(R.id.info_sun_azimuth_current, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding));
+
+            views.setTextViewTextSize(R.id.info_sun_elevation_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+            views.setViewPadding(R.id.info_sun_elevation_current, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+
+            views.setTextViewTextSize(R.id.info_sun_azimuth_rising, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+            views.setViewPadding(R.id.info_sun_azimuth_rising, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding));
+
+            views.setTextViewTextSize(R.id.info_sun_elevation_atnoon, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+            views.setViewPadding(R.id.info_sun_elevation_atnoon, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding));
+
+            views.setTextViewTextSize(R.id.info_sun_azimuth_setting, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+            views.setViewPadding(R.id.info_sun_azimuth_setting, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding));
+        }
     }
 
     protected void updateViewsAzimuthElevationText(Context context, @NonNull RemoteViews views, @Nullable SuntimesCalculator.SunPosition sunPosition, @Nullable SuntimesCalculator.SunPosition noonPosition)

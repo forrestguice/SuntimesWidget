@@ -9,6 +9,11 @@
 
     <drawable name="card_alarmitem_enabled_ref">@drawable/card_alarmitem_enabled_dark0</drawable>
     <drawable name="card_alarmitem_disabled_ref">@drawable/card_alarmitem_disabled_dark0</drawable>
+    <drawable name="card_alarmitem_sounding_ref">@drawable/card_alarmitem_sounding_dark0</drawable>
+    <drawable name="card_alarmitem_snoozing_ref">@drawable/card_alarmitem_snoozing_dark0</drawable>
+    <drawable name="card_alarmitem_timeout_ref">@drawable/card_alarmitem_timeout_dark</drawable>
+    <drawable name="card_alarmitem_controls_ref">@drawable/card_alarmitem_controls_dark</drawable>
+    <drawable name="card_alarmitem_backdrop_ref">@drawable/card_alarmitem_backdrop_dark</drawable>
 
     <drawable name="selectable_item_ref">@drawable/selectable_item_dark</drawable>
     <drawable name="btn_txt_ref">@drawable/btn_txt_dark</drawable>
@@ -22,6 +27,8 @@
 
     <drawable name="ic_moon_rise_ref">@drawable/ic_moon_rise</drawable>
     <drawable name="ic_moon_set_ref">@drawable/ic_moon_set</drawable>
+    <drawable name="ic_moon_noon_ref">@drawable/ic_moon_noon</drawable>
+    <drawable name="ic_moon_night_ref">@drawable/ic_moon_night</drawable>
 
     <drawable name="ic_action_location_found_ref">@drawable/ic_action_location_found</drawable>
     <drawable name="ic_action_location_off_ref">@drawable/ic_action_location_off</drawable>
@@ -30,11 +37,14 @@
     <drawable name="ic_action_place_ref">@drawable/ic_action_place</drawable>
     <drawable name="ic_action_map1_ref">@drawable/ic_action_map1</drawable>
     <drawable name="ic_action_map_ref">@drawable/ic_action_map</drawable>
+    <drawable name="ic_action_timeline_ref">@drawable/ic_action_timeline</drawable>
     <drawable name="ic_action_time_ref">@drawable/ic_action_time</drawable>
     <drawable name="ic_weather_sunny_ref">@drawable/ic_weather_sunny</drawable>
     <drawable name="ic_action_alarms_ref">@drawable/ic_action_alarms</drawable>
     <drawable name="ic_calendar_ref">@drawable/ic_calendar</drawable>
     <drawable name="ic_action_notification_ref">@drawable/ic_action_notification</drawable>
+    <drawable name="ic_action_notification1_ref">@drawable/ic_action_notification1</drawable>
+    <drawable name="ic_action_notification2_ref">@drawable/ic_action_notification2</drawable>
     <drawable name="ic_action_vibration_ref">@drawable/ic_action_vibration</drawable>
     <drawable name="ic_action_soundenabled_ref">@drawable/ic_action_soundenabled</drawable>
     <drawable name="ic_action_sounddisabled_ref">@drawable/ic_action_sounddisabled</drawable>
@@ -42,6 +52,7 @@
     <drawable name="ic_action_warning_ref">@drawable/ic_action_warning</drawable>
     <drawable name="ic_action_error_ref">@drawable/ic_action_error</drawable>
     <drawable name="ic_action_widget_ref">@drawable/ic_action_widget</drawable>
+    <drawable name="ic_action_events_ref">@drawable/ic_action_widget</drawable>  <!-- TODO -->
     <drawable name="ic_palette_ref">@drawable/ic_palette</drawable>
     <drawable name="ic_action_extension_ref">@drawable/ic_action_extension</drawable>
     <drawable name="baseline_terrain_ref_18">@drawable/baseline_terrain_white_18</drawable>
@@ -65,6 +76,9 @@
     <drawable name="ic_action_cancel_ref">@drawable/ic_action_cancel</drawable>
     <drawable name="ic_action_share_ref">@drawable/ic_action_share</drawable>
     <drawable name="ic_action_snooze_ref">@drawable/ic_action_snooze</drawable>
+    <drawable name="ic_action_label_ref">@drawable/ic_action_label</drawable>
+    <drawable name="ic_action_addlabel_ref">@drawable/ic_action_addlabel</drawable>
+    <drawable name="ic_action_deselect_ref">@drawable/baseline_deselect_dark_24</drawable>
 
     <drawable name="ic_action_play_ref">@drawable/ic_action_play</drawable>
     <drawable name="ic_action_pause_ref">@drawable/ic_action_pause</drawable>
@@ -72,7 +86,12 @@
     <drawable name="ic_action_timereset_ref">@drawable/ic_action_timereset</drawable>
 
     <drawable name="ic_action_expand_ref">@drawable/ic_action_expand</drawable>
+    <drawable name="ic_action_visibility_on_ref">@drawable/ic_action_visibility</drawable>
+    <drawable name="ic_action_visibility_off_ref">@drawable/ic_action_visibility_off</drawable>
+    <drawable name="check_altitude_ref">@drawable/check_altitude_dark</drawable>
     <drawable name="check_vibrate_ref">@drawable/check_vibrate_dark</drawable>
+    <drawable name="check_visible_ref">@drawable/check_visible_dark</drawable>
+    <drawable name="check_reminder_ref">@drawable/check_reminder_dark</drawable>
 
     <drawable name="ic_action_next_item_ref">@drawable/ic_action_next_item</drawable>
     <drawable name="ic_action_previous_item_ref">@drawable/ic_action_previous_item</drawable>

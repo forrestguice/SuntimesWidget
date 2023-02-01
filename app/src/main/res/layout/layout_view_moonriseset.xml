@@ -39,7 +39,7 @@
             <TextView
                 style="@style/SunsetTimeTextView"
                 android:id="@+id/text_time_moonrise"
-                android:textColor="?attr/moonriseColor" android:layout_gravity="center_horizontal"
+                android:textColor="?attr/table_moonRisingColor" android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
                 tools:text="00:00 AM" />
 
@@ -47,7 +47,7 @@
                 style="@style/SunsetTimeTextView2"
                 android:id="@+id/text_info_moonrise" android:gravity="center" android:layout_gravity="center"
                 android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                android:textColor="?attr/moonriseColor"
+                android:textColor="?attr/table_moonRisingColor"
                 tools:text="270  W" />
 
         </LinearLayout>
@@ -70,7 +70,7 @@
             <TextView
                 style="@style/SunsetTimeTextView"
                 android:id="@+id/text_time_moonset"
-                android:textColor="?attr/moonsetColor" android:layout_gravity="center_horizontal"
+                android:textColor="?attr/table_moonSettingColor" android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
                 tools:text="00:00 PM" />
 
@@ -78,7 +78,7 @@
                 style="@style/SunsetTimeTextView2"
                 android:id="@+id/text_info_moonset" android:gravity="center" android:layout_gravity="center"
                 android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                android:textColor="?attr/moonsetColor"
+                android:textColor="?attr/table_moonSettingColor"
                 tools:text="270  W" />
 
 
@@ -107,7 +107,7 @@
             <TextView
                 style="@style/SunsetTimeTextView"
                 android:id="@+id/text_time_moonrise1"
-                android:textColor="?attr/moonriseColor" android:layout_gravity="center_horizontal"
+                android:textColor="?attr/table_moonRisingColor" android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
                 tools:text="1:11" />
 
@@ -115,7 +115,7 @@
                 style="@style/SunsetTimeTextView2"
                 android:id="@+id/text_info_moonrise1" android:gravity="center" android:layout_gravity="center"
                 android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                android:textColor="?attr/moonriseColor"
+                android:textColor="?attr/table_moonRisingColor"
                 tools:text="270  W" />
 
         </LinearLayout>
@@ -138,7 +138,7 @@
             <TextView
                 style="@style/SunsetTimeTextView"
                 android:id="@+id/text_time_moonset1"
-                android:textColor="?attr/moonsetColor" android:layout_gravity="center_horizontal"
+                android:textColor="?attr/table_moonSettingColor" android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
                 tools:text="1:11" />
 
@@ -146,7 +146,7 @@
                 style="@style/SunsetTimeTextView2"
                 android:id="@+id/text_info_moonset1" android:gravity="center" android:layout_gravity="center"
                 android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
-                android:textColor="?attr/moonsetColor"
+                android:textColor="?attr/table_moonSettingColor"
                 tools:text="270  W" />
 
         </LinearLayout>

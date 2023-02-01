@@ -26,6 +26,7 @@ import android.support.test.InstrumentationRegistry;
 
 import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -39,7 +40,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,6 +54,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withKey;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -111,11 +115,11 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifySettingsActivity(Activity activity)
     {
-        onView(withText(activity.getString(R.string.configLabel_general))).check(assertShown);
-        onView(withText(activity.getString(R.string.configLabel_locale))).check(assertShown);
-        onView(withText(activity.getString(R.string.configLabel_places))).check(assertShown);
-        onView(withText(activity.getString(R.string.configLabel_ui))).check(assertShown);
-        onView(withText(activity.getString(R.string.configLabel_widgetList))).check(assertShown);
+        onView(withIndex(withText(activity.getString(R.string.configLabel_general)),0)).check(assertShown);
+        onView(withIndex(withText(activity.getString(R.string.configLabel_locale)),0)).check(assertShown);
+        onView(withIndex(withText(activity.getString(R.string.configLabel_places)),0)).check(assertShown);
+        onView(withIndex(withText(activity.getString(R.string.configLabel_ui)),0)).check(assertShown);
+        onView(withIndex(withText(activity.getString(R.string.configLabel_widgetList)),0)).check(assertShown);
     }
 
     /**
@@ -132,14 +136,14 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void showGeneralSettings(Activity activity)
     {
-        onView(withText(activity.getString(R.string.configLabel_general))).perform(click());
+        onView(withIndex(withText(activity.getString(R.string.configLabel_general)),0)).perform(click());
         verifyGeneralSettings(activity);
     }
 
     public static void verifyGeneralSettings(Context context)
     {
-        verifyGeneralSettings_dataSource(context);
         verifyUISettings_timeFormatMode(context);
+        verifyGeneralSettings_dataSource(context);
     }
 
     public static void verifyGeneralSettings_dataSource(Context context)
@@ -479,6 +483,25 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
                 return context.getResources().getStringArray(R.array.locale_display)[i];
         }
         return "";
+    }
+
+    /* https://stackoverflow.com/a/39756832 */
+    public static Matcher<View> withIndex(final Matcher<View> matcher, final int index) {
+        return new TypeSafeMatcher<View>() {
+            int currentIndex = 0;
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with index: ");
+                description.appendValue(index);
+                matcher.describeTo(description);
+            }
+
+            @Override
+            public boolean matchesSafely(View view) {
+                return matcher.matches(view) && currentIndex++ == index;
+            }
+        };
     }
 
 }

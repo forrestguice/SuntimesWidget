@@ -193,15 +193,15 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_timeZoneSortPref()
     {
-        AppSettings.setTimeZoneSortPref(context, WidgetTimezones.TimeZoneSort.SORT_BY_ID);
+        AppSettings.saveTimeZoneSortPref(context, WidgetTimezones.TimeZoneSort.SORT_BY_ID);
         WidgetTimezones.TimeZoneSort sort2 = AppSettings.loadTimeZoneSortPref(context);
         assertTrue("pref should be SORT_BY_ID but was " + sort2, sort2 == WidgetTimezones.TimeZoneSort.SORT_BY_ID);
 
-        AppSettings.setTimeZoneSortPref(context, WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+        AppSettings.saveTimeZoneSortPref(context, WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
         WidgetTimezones.TimeZoneSort sort1 = AppSettings.loadTimeZoneSortPref(context);
         assertTrue("pref should be SORT_BY_OFFSET but was " + sort1, sort1 == WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
 
-        AppSettings.setTimeZoneSortPref(context, AppSettings.PREF_DEF_UI_TIMEZONESORT);
+        AppSettings.saveTimeZoneSortPref(context, AppSettings.PREF_DEF_UI_TIMEZONESORT);
         WidgetTimezones.TimeZoneSort sort0 = AppSettings.loadTimeZoneSortPref(context);
         assertTrue("pref should be default (SORT_BY_ID) but was " + sort0, sort0 == AppSettings.PREF_DEF_UI_TIMEZONESORT && sort0 == WidgetTimezones.TimeZoneSort.SORT_BY_ID);
     }

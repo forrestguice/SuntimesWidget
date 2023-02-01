@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:baselineAligned="false">
+
+    <View
+        android:id="@android:id/icon1" android:background="@color/accent"
+        android:layout_width="8dp" android:layout_height="match_parent"
+        tools:ignore="ContentDescription"
+        android:visibility="visible" />
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingTop="8dp" android:paddingBottom="8dp">
+
+        <TextView
+            style="?attr/spinnerDropDownItemStyle"
+            android:id="@android:id/text1"
+            android:singleLine="true" android:ellipsize="marquee"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            tools:text="Primary" />
+
+        <TextView
+            style="?attr/spinnerDropDownItemStyle"
+            android:id="@android:id/text2"
+            android:singleLine="true" android:ellipsize="marquee" android:textSize="@dimen/text_size_small"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            tools:text="Secondary" />
+
+    </LinearLayout>
+
+</LinearLayout>

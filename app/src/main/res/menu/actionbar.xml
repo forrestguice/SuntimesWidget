@@ -17,19 +17,19 @@
           android:title="@string/configAction_mapLocation"
           app:showAsAction="ifRoom" />
 
+    <item android:id="@+id/action_date"
+        android:icon="?attr/icActionCalendar"
+        android:title="@string/configAction_viewDate"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_timezone"
+        android:icon="?attr/icActionTime"
+        android:title="@string/configAction_setTimeZone"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_alarm"
           android:icon="?attr/icActionAlarm"
           android:title="@string/configAction_setAlarm"
-          app:showAsAction="never" />
-
-    <item android:id="@+id/action_date"
-          android:icon="?attr/icActionTime"
-          android:title="@string/configAction_setDate"
-          app:showAsAction="never" />
-
-    <item android:id="@+id/action_timezone"
-          android:icon="?attr/icActionTime"
-          android:title="@string/configAction_setTimeZone"
           app:showAsAction="never" />
 
     <item android:id="@+id/action_moon"

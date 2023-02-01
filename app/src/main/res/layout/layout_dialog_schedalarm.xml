@@ -61,7 +61,7 @@
                     android:layout_weight="1" />
 
                 <ImageButton android:id="@+id/appwidget_schedalarm_more"
-                    style="@style/ActionButton" android:src="?attr/icActionSearch"
+                    style="?attr/actionOverflowButtonStyle" android:contentDescription="@string/configAction_options"
                     android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             </LinearLayout>

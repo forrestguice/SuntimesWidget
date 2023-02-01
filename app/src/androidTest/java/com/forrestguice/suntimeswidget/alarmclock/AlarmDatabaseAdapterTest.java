@@ -358,6 +358,7 @@ public class AlarmDatabaseAdapterTest
         Location[] locations = new Location[] {location0, location0, location1, location1, location0, null};
         String[] timezones = new String[] {TESTTZID_0, TESTTZID_1, TESTTZID_2, TESTTZID_1, TESTTZID_2, null};
         String[] repeatDays = new String[] {"", "1", "0,1,2,3", "1,2", null, "1,2,3,4,5,6"};   // 0 is invalid value
+        String[] flags = new String[] {"", "flag1=true", "flag1=true,flag2=false,flag3=true", "flag1=true,flag2=burrito", "flag3=false", null};
         AlarmClockItem.AlarmType[] types = new AlarmClockItem.AlarmType[] { ALARM, ALARM, NOTIFICATION, null, ALARM, ALARM };
         int[] hours = new int[] {6, 18, 5, 19, 12, 6};
         int[] minutes = new int[] {30, 10, 0, 1, 59, 6};
@@ -369,6 +370,7 @@ public class AlarmDatabaseAdapterTest
             items[i] = new AlarmClockItem();
             items[i].rowID = i;
             items[i].label = "TEST" + i;
+            items[i].note = "NOTE" + i;
             items[i].type = types[i];
             items[i].setEvent(events[i]);
             items[i].location = locations[i];
@@ -384,6 +386,9 @@ public class AlarmDatabaseAdapterTest
             items[i].ringtoneURI = "content://TEST_RING" + i;
             items[i].actionID0 = null;
             items[i].actionID1 = "TEST_ACTION" + i;
+            items[i].actionID2 = "TEST_ACTION" + i;
+            items[i].actionID3 = "TEST_ACTION" + i;
+            items[i].setAlarmFlags(flags[i]);
             items[i].enabled = enabled[i];
         }
         return items;

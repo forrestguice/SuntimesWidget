@@ -125,15 +125,19 @@ public abstract class EditBottomSheetDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v)
         {
-            if (validateInput())
-            {
-                dismiss();
-                if (onAccepted != null) {
-                    onAccepted.onClick(getDialog(), 0);
-                }
-            }
+            accept();
         }
     };
+    protected void accept()
+    {
+        if (validateInput())
+        {
+            dismiss();
+            if (onAccepted != null) {
+                onAccepted.onClick(getDialog(), 0);
+            }
+        }
+    }
 
     protected DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {

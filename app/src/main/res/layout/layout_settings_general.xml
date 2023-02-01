@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2021 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -16,7 +16,8 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical"
         style="@style/SunsetTimeWidget_dark"
@@ -44,11 +45,66 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1" />
 
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_timeMode_moreButton"
+                style="?attr/actionOverflowButtonStyle"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:contentDescription="@string/configAction_overflow" />
+
             <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
-                style="@style/Widget.AppCompat.ActionButton"
+                style="@style/Widget.AppCompat.ActionButton" android:visibility="gone"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
                 android:contentDescription="@string/configAction_help" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_showDate_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:visibility="gone"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox
+                android:id="@+id/appwidget_general_showDate"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showDate" android:textSize="?attr/text_size_small" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_calendarMode_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding"
+            android:weightSum="1" android:visibility="gone">
+
+            <TextView android:labelFor="@+id/appwidget_general_calendarMode"
+                android:id="@+id/appwidget_general_calendarMode_label"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_calendarMode" android:textSize="?attr/text_size_small" />
+
+            <Spinner android:id="@+id/appwidget_general_calendarMode" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarMode_helpButton"
+                style="@style/Widget.AppCompat.ActionButton" android:visibility="invisible"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:contentDescription="@string/configAction_help" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_calendarFormat_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="16dp"
+            android:paddingEnd="8dp" android:paddingStart="16dp"
+            android:weightSum="1" android:visibility="visible" android:animateLayoutChanges="true">
+
+            <FrameLayout android:id="@+id/appwidget_general_calendarFormat_fragmentContainer"
+                android:layout_width="match_parent" android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -115,7 +171,8 @@
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
             android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_showTitle" />
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        <LinearLayout android:id="@+id/appwidget_appearance_titleText_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="16dp" android:paddingRight="8dp"
             android:paddingStart="16dp" android:paddingEnd="8dp">
@@ -301,6 +358,25 @@
             <CheckBox android:id="@+id/appwidget_general_showSeconds"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_showSeconds" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_dayOffset_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:visibility="gone"
+            android:paddingTop="@dimen/settingsGroup_padding"
+            android:paddingStart="16dp" android:paddingEnd="8dp"
+            android:paddingLeft="16dp" android:paddingRight="8dp">
+
+            <TextView android:id="@+id/appwidget_general_dayOffset_label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_dayOffset" />
+
+            <EditText android:id="@+id/appwidget_general_dayOffset" android:inputType="numberSigned"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100dp"
+                android:textSize="?attr/text_size_small" android:hint="@string/configLabel_general_dayOffset_hint"
+                android:singleLine="true" android:maxLines="1" android:textAlignment="center"
+                tools:ignore="TextFields" tools:text="5" />
 
         </LinearLayout>
 

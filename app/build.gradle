@@ -23,8 +23,8 @@ android
         minSdkVersion 10
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 25
-        versionCode 94
-        versionName "0.14.10"
+        versionCode 97
+        versionName "0.15.0"
 
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
@@ -81,4 +81,19 @@ def getGitHash()
         standardOutput = stdout
     }
     return stdout.toString().trim()
+}
+
+tasks.withType(Test) 
+{
+    useJUnit {
+        excludeCategories 'com.forrestguice.suntimeswidget.UnlistedTest', 'com.forrestguice.suntimeswidget.FlakeyTest'
+    }
+    testLogging 
+    {
+        exceptionFormat "full"
+        //events "started", "skipped", "passed", "failed"
+        //showStandardStreams true
+        events "failed"
+        showStandardStreams false
+    }
 }

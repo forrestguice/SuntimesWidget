@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2014 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout style="@style/SunsetTimeLayout" android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout style="@style/SunsetTimeLayout"
+            android:orientation="horizontal" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
+
+            <TextView
+                style="@style/WidgetTimeTextView"
+                android:id="@+id/text_time_set"
+                android:textColor="@color/sunIcon_color_setting_dark"
+                tools:text="6:20" />
+
+            <TextView
+                style="@style/WidgetSuffixTextView"
+                android:id="@+id/text_time_set_suffix"
+                android:layout_gravity="bottom"
+                android:layout_height="match_parent"
+                tools:text="PM" />
+
+        </LinearLayout>
+
+        <ImageView android:id="@+id/icon_time_sunset" style="@style/SunsetTimeImageView2"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:src="@drawable/svg_sunset2"
+            android:scaleType="fitStart"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="0dp" android:layout_marginBottom="4dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+            android:contentDescription="@string/sunset" />
+
+    </LinearLayout>
+</merge>

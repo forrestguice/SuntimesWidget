@@ -72,7 +72,7 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
     }
     public static void showDateDialog(Context context, boolean verify)
     {
-        String actionDateText = context.getString(R.string.configAction_setDate);
+        String actionDateText = context.getString(R.string.configAction_viewDate);
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(actionDateText)).perform(click());
         if (verify) {
@@ -113,8 +113,9 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
 
     public static void applyDateDialog(Context context)
     {
-        String setDateText = context.getString(R.string.timedate_dialog_ok);
-        onView(withText(setDateText)).perform(click());
+        onView(withId(R.id.dialog_button_accept)).perform(click());
+        //String setDateText = context.getString(R.string.timedate_dialog_ok);
+        //onView(withText(setDateText)).perform(click());
         // TODO: verify action
     }
 
