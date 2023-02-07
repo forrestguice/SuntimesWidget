@@ -86,7 +86,9 @@ public class DateLayout_1x1_0 extends DateLayout
                 int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
                 float maxSp = DateLayout.MAX_SP;
                 int[] maxDp = new int[] { maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) };
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldDate, displayString, dateSizeSp, maxSp, "", 0);
+
+                String s = (displayString.length() <= 3 ? "0:00" : displayString);
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldDate, s, dateSizeSp, maxSp, "", 0);
 
                 if (adjustedSizeSp[0] != dateSizeSp) {
                     views.setTextViewTextSize(R.id.text_date, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
