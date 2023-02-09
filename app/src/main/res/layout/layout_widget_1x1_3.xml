@@ -17,7 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:theme="@style/AppTheme" style="@style/SunsetTimeWidgetFrame">
+    style="@style/SunsetTimeWidgetFrame">
 
     <LinearLayout
         android:layout_width="wrap_content"
