@@ -28,10 +28,10 @@
     <string name="configAction_sunDialog">太陽位置</string>
     <string name="configAction_equinoxDialog">至點/分點</string>
     <string name="configAction_worldMap">世界地圖</string>
-    <string name="configAction_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
-    <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
-    <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
-    <string name="configAction_deselect">Clear Selection</string>                                    <!-- TODO -->
+    <string name="configAction_lineGraph">海拔圖</string>
+    <string name="configAction_seekAltitude">查找海拔</string>        <!-- checkbox label -->
+    <string name="configAction_search">搜尋</string>        <!-- button (contentDescription) -->
+    <string name="configAction_deselect">清除選擇</string>
     <string name="configAction_moon">月亮</string>
     <string name="configAction_help">幫助</string>
     <string name="configAction_onlineHelp">在線幫助</string>
@@ -55,8 +55,8 @@
          The time zone field that appears below the clock (main activity).
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> 這個位置的時區可能是錯的。</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%s</xliff:g>).</string>  <!-- TODO -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> 此位置的時區可能是錯的。</string>  <!-- snackbar message -->
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> 是 <xliff:g id="timeSpan">%s</xliff:g> 采用地方平時（<xliff:g id="locationName">%s</xliff:g>）</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> 夏令時</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> 時間等式</string>  <!-- timezone dialog label -->
 
@@ -99,7 +99,7 @@
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>飽滿度</string>  <!-- used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
     <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
-    <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>   <!-- TODO: review -->
+    <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -201,7 +201,7 @@
     <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
-    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
     <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- location display formats -->
@@ -297,8 +297,8 @@
     <string name="configLabel_general_observerheight">物體陰影</string>        <!-- checkbox label -->
     <string name="configLabel_general_observerheight_summary">顯示高度為 <xliff:g id="value" example="1 meter">%1$s</xliff:g> 的物體投射的陰影長度。</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">Day Offset</string>        <!-- edittext label -->  <!-- TODO -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
+    <string name="configLabel_general_dayOffset">日偏移</string>        <!-- edittext label -->
+    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">進階進階</string>                        <!-- group title -->
@@ -358,7 +358,7 @@
     <string name="timeMode_blue8">藍色時刻 (8\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_blue4_short">藍色 (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">藍色時刻 (4\u00B0)</string>                     <!-- setting -->
-    <string name="timeMode_none">None</string>                 <!-- label -->  <!-- TODO -->
+    <string name="timeMode_none">無</string>                 <!-- label -->
 
     <string name="timeMode_equinox_vernal">春分</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">春分</string>       <!-- setting -->
@@ -369,14 +369,14 @@
     <string name="timeMode_solstice_winter">冬至</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">冬至</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">Spring Cross-Quarter</string>      <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_spring_short">Cross-Quarter</string>       <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal">Autumn Cross-Quarter</string>  <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer">Summer Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter">Winter Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_spring">春跨季度</string>      <!-- setting -->
+    <string name="timeMode_cross_spring_short">跨季度</string>       <!-- setting -->
+    <string name="timeMode_cross_autumnal">秋跨季度</string>  <!-- setting -->
+    <string name="timeMode_cross_autumnal_short">跨季度</string>     <!-- setting -->
+    <string name="timeMode_cross_summer">夏跨季度</string>    <!-- setting -->
+    <string name="timeMode_cross_summer_short">跨季度</string>     <!-- setting -->
+    <string name="timeMode_cross_winter">冬跨季度</string>    <!-- setting -->
+    <string name="timeMode_cross_winter_short">跨季度</string>     <!-- setting -->
 
     <string name="timeMode_moon">月光</string>                               <!-- label -->
     <string name="timeMode_moon_new">新月</string>                               <!-- setting -->
@@ -415,33 +415,33 @@
     <string name="configLabel_general_timeMode">模式:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Show Date</string>   <!-- group title -->   <!-- TODO -->
-    <string name="configLabel_general_calendar">Calendar</string>   <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat">Date Format:</string>          <!-- spinner label -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configAction_editCalendarFormat">Edit</string>                        <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configLabel_general_showDate">顯示日期</string>   <!-- group title -->
+    <string name="configLabel_general_calendar">日歷</string>   <!-- group title -->
+    <string name="configLabel_general_calendarMode">日歷:</string>          <!-- spinner label -->
+    <string name="configLabel_general_calendarFormat">日期格式:</string>          <!-- spinner label -->
+    <string name="configLabel_general_calendarFormatPattern">日期模式:</string>          <!-- edittext label -->
+    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->
+    <string name="configLabel_general_calendarFormat_custom">用戶自訂 (%s)</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_yyyy">%s [年]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_MMMM">%s [月]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_EEEE">%s [周中日]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_MM">%s [月]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_dd">%s [月中日]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_DD">%s [年中日]</string>       <!-- spinner value -->
+    <string name="configAction_editCalendarFormat">編輯</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">僅日出</string>             <!-- setting -->
     <string name="widgetMode1x1_sunset">僅日落</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">日出 &amp; 日落 (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">日出 &amp; 日落 (2)</string>  <!-- setting -->
-    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">日出，日落，和正午</string>  <!-- setting -->
 
     <string name="widgetMode1x1_altaz">海拔 &amp; 方位</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">赤經 &amp; 赤緯</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">當前距離</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">下一個遠地點或近地點</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode1x1_moonday">月亮日</string>     <!-- setting -->
 
     <string name="widgetMode3x1_lightmap_large">光照圖</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_medium">光照圖（中等）</string>     <!-- setting -->
@@ -528,13 +528,13 @@
     <string name="time_apparent">視太陽時間</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
+    <string name="configAction_suggestTimeZone">建議時區</string>
 
     <string name="configLabel_timezone">時區</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">模式:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">時區:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">標準:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->   <!-- TODO -->
+    <string name="configLabel_timezone_fromapp">使用應用時區</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">系統格式</string>          <!-- setting -->
@@ -545,13 +545,13 @@
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
-    <string name="calendarMode_coptic">Coptic</string>                      <!-- TODO -->
-    <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
-    <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
-    <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
-    <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
-    <string name="calendarMode_persian">Persian (Solar Hijiri)</string>     <!-- TODO -->
-    <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
+    <string name="calendarMode_coptic">科普特歷</string>
+    <string name="calendarMode_ethiopian">埃塞俄比亞歷</string>
+    <string name="calendarMode_gregorian">公歷</string>
+    <string name="calendarMode_hebrew">希伯來歷</string>
+    <string name="calendarMode_julian">儒略歷</string>
+    <string name="calendarMode_persian">伊朗歷</string>
+    <string name="calendarMode_thaisolar">泰國陽歷</string>
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">今天</string>                  <!-- setting -->
@@ -777,8 +777,8 @@
     <!--
          CUSTOM EVENTS
     -->
-    <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
-    <string name="eventlist_dialog_title">Custom Events</string>   <!-- TODO -->
+    <string name="eventType_sun_elevation">太陽（海拔）</string>
+    <string name="eventlist_dialog_title">用戶自訂事件</string>
 
     <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
     <string name="configLabel_event_alarmitem_desc">%1$s</string>
@@ -792,52 +792,52 @@
     <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> at <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
     <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
-    <string name="configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
-    <string name="configLabel_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
-    <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>    <!-- TODO -->
+    <string name="configLabel_manageEvents">管理事件</string>  <!-- settings activity / pref -->
+    <string name="configLabel_manageEvents_summary">新增或移除用戶自訂事件。</string>
+    <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>
 
-    <string name="configAction_manageEvents">Custom Events</string>   <!-- TODO -->
-    <string name="configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_manageEvents">用戶自訂事件</string>
+    <string name="configAction_selectEvent">選擇</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addEvent">新增</string>           <!-- button (contentDescription) -->
+    <string name="configAction_editEvent">編輯</string>           <!-- button (contentDescription) -->
+    <string name="configAction_saveEvent">儲存</string>           <!-- button (contentDescription) -->
+    <string name="configAction_deleteEvent">刪除</string>           <!-- button (contentDescription) -->
+    <string name="configAction_clearEvents">清空</string>           <!-- button (contentDescription) -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
-    <string name="importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
+    <string name="importevents_toast_success">匯入 <xliff:g id="eventPlural">%s</xliff:g>。</string> <!-- toast msg -->
     <plurals name="eventPlural">
-        <item quantity="other">%d events</item>
-    </plurals>   <!-- TODO -->
+        <item quantity="other">%d 個事件</item>
+    </plurals>
 
-    <string name="editevent_dialog_id_label">ID</string>    <!-- TODO -->
-    <string name="editevent_dialog_id_hint">Event ID</string>    <!-- TODO -->
-    <string name="editevent_dialog_id_error">@string/addaction_error_id</string>    <!-- TODO -->
-    <string name="editevent_dialog_uri_hint">Event Uri</string>    <!-- TODO -->
-    <string name="editevent_dialog_showevent">Display this event within the app.</string>
-    <string name="editevent_dialog_showevent_off">This event will no longer be displayed.</string>    <!-- TODO -->
+    <string name="editevent_dialog_id_label">ID</string>
+    <string name="editevent_dialog_id_hint">事件 ID</string>
+    <string name="editevent_dialog_id_error">@string/addaction_error_id</string>
+    <string name="editevent_dialog_uri_hint">事件 Uri</string>
+    <string name="editevent_dialog_showevent">在應用中展示此事件。</string>
+    <string name="editevent_dialog_showevent_off">此事件將不再被展示。</string>
 
-    <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title --> <!-- TODO -->
-    <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title --> <!-- TODO -->
-    <string name="editevent_dialog_label_label">Label</string>    <!-- TODO -->
-    <string name="editevent_dialog_label_hint">Event Label</string>    <!-- TODO -->
-    <string name="editevent_dialog_label_error">@string/addaction_error_title</string>    <!-- TODO -->
-    <string name="editevent_dialog_label_suggested">Custom Angle</string>    <!-- TODO -->
+    <string name="editevent_dialog_title">事件</string>    <!-- 'add event' title -->
+    <string name="editevent_dialog_title1">事件</string>    <!-- 'edit event' title -->
+    <string name="editevent_dialog_label_label">標簽</string>
+    <string name="editevent_dialog_label_hint">事件標簽</string>
+    <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
+    <string name="editevent_dialog_label_suggested">用戶自訂角度</string>
 
-    <string name="editevent_dialog_angle">Angle</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_hint">-6</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_suffix">°</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_error">Angle is required!</string>    <!-- TODO -->
+    <string name="editevent_dialog_angle">角度</string>
+    <string name="editevent_dialog_angle_hint">-6</string>
+    <string name="editevent_dialog_angle_suffix">°</string>
+    <string name="editevent_dialog_angle_error">角度是必需的！</string>
 
-    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may no longer work and should be reassigned.</string>    <!-- TODO -->
-    <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
+    <string name="delevent_dialog_msg">您確定您想要刪除 %1$s（%2$s）？使用此事件的鬧鐘、通知或小工具將無法繼續運作且需要被重新指派。</string>
+    <string name="delevent_dialog_ok">刪除</string>
     <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAlarms, notifications, or widgets using these events may no longer work and should be reassigned.</string>   <!-- TODO -->
-    <string name="clearevents_dialog_ok">Clear</string>   <!-- TODO -->
+    <string name="clearevents_dialog_msg">您確定您想要清空用戶自訂事件？使用這些事件的鬧鐘、通知或小工具將無法繼續運作且需要被重新指派。</string>
+    <string name="clearevents_dialog_ok">清空</string>
     <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
-    <string name="clearevents_toast">Custom events cleared.</string>   <!-- TODO -->
+    <string name="clearevents_toast">已清空用戶自訂事件。</string>
 
 
     <!--
@@ -854,17 +854,17 @@
     <string name="configAction_sortAlarms">排序</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">鬧鐘時間</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">創建時間</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->   <!-- TODO -->
-    <string name="configAction_sortAlarms_offset">Show Offsets</string>                <!-- action button / menu item -->   <!-- TODO -->
+    <string name="configAction_sortAlarms_enabled_first">啟用第一個</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_offset">顯示偏移</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">清空</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">清空</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">設定前後補償</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">設定類型</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">設定標記</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
-    <string name="configAction_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmNote">設置筆記</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmDismissChallenge">設定解除挑战</string>         <!-- button (contentDescription) -->
+    <string name="configAction_configAlarmDismissChallenge">配置解除挑战</string>         <!-- button (contentDescription) -->
+    <string name="configAction_testAlarmDismissChallenge">测试解除挑战</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">設定位置</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmRepeat">設定重復</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">設定事件</string>         <!-- button (contentDescription) -->
@@ -891,9 +891,9 @@
 
     <string name="alarmMode_alarm">鬧鐘</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">通知</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification1">Quick Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_notification1">快速通知</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_beforeAlertTray">Before Alert:</string>               <!-- group title -->   <!-- TODO -->
+    <string name="configLabel_alarmEdit_beforeAlertTray">響起前:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_scheduleTray">日程:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">響起時:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onDismissTray">解除時:</string>               <!-- group title -->
@@ -933,17 +933,17 @@
         <item quantity="other">%d 個鬧鐘</item>
     </plurals>
 
-    <string name="configLabel_alarms_dismissChallenge">Dismiss Challenge</string>            <!-- pref title -->   <!-- TODO -->
-    <string name="alarmDismiss_none">None</string>                         <!-- alarm setting -->   <!-- TODO -->
-    <string name="alarmDismiss_none_long">No Challenge</string>            <!-- chip label -->   <!-- TODO -->
-    <string name="alarmDismiss_math">Easy Math</string>           <!-- alarm setting -->   <!-- TODO -->
+    <string name="configLabel_alarms_dismissChallenge">解除挑戰</string>            <!-- pref title -->
+    <string name="alarmDismiss_none">無</string>                         <!-- alarm setting -->
+    <string name="alarmDismiss_none_long">無挑戰</string>            <!-- chip label -->
+    <string name="alarmDismiss_math">簡單數學題</string>           <!-- alarm setting -->
 
     <string name="alarmlabel_dialog_title">標記</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">應用</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">取消</string>    <!-- button -->
     <string name="alarmlabel_hint">標記</string>        <!-- EditText hint -->
 
-    <string name="alarmnote_dialog_title">Note</string>        <!-- dialog title -->   <!-- TODO -->
+    <string name="alarmnote_dialog_title">筆記</string>        <!-- dialog title -->
 
     <string name="alarmrepeat_dialog_title">重復鬧鐘</string>        <!-- dialog title -->
     <string name="alarmrepeat_dialog_ok">應用</string>        <!-- button -->
@@ -988,19 +988,19 @@
     <string name="configLabel_alarms_timeoutAfter">在…后超時</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_autoDismissAfter">Auto-dismiss after</string>    <!-- TODO -->
+    <string name="configLabel_alarms_autoDismissAfter">在…後自動解除</string>
     <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snoozeLimit">Snooze limit</string>    <!-- TODO -->
+    <string name="configLabel_alarms_snoozeLimit">延時限製</string>
     <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
-    <string name="configLabel_alarms_snoozeLimit_none">No Limit</string>    <!-- TODO -->
+    <string name="configLabel_alarms_snoozeLimit_none">無限製</string>
 
     <string name="configLabel_alarms_snooze">延時</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
     <string name="configLabel_alarms_upcoming">在…后提醒</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
-    <string name="configLabel_alarms_upcoming_checkbox">Show alarm reminder notifications.</string>  <!-- TODO -->
+    <string name="configLabel_alarms_upcoming_checkbox">顯示鬧鐘提醒通知。</string>
 
     <string name="configLabel_alarms_fadein">逐漸增加音量</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
@@ -1021,7 +1021,7 @@
     <string name="configLabel_alarms_allRingtones_summary">顯示所有系統鈴聲（忽略鈴聲類型）。</string>
 
     <string name="no_reminder">從不</string>
-    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
+    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> 提醒</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="units_hours">
         <!--<item quantity="one">%d hour</item>-->
@@ -1088,7 +1088,7 @@
     <!-- App Setting: UI -->
     <string name="configLabel_ui">用戶介面</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">顯示</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">Custom Events</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->  <!-- TODO -->
+    <string name="configLabel_ui_fields1">用戶自訂事件</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
     <string name="configLabel_ui_misc">雜項</string>
 
     <!-- App Setting: Verbose Accessibility -->
@@ -1108,12 +1108,12 @@
     <string name="configLabel_ui_showmoon_summary">顯示月出月落的時間，月相和月光飽滿度。</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
-    <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_noon">顯示月亮正午</string>
+    <string name="configLabel_ui_showmoon_noon_summary">在月亮對話框中顯示月亮正午和月亮午夜。</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
-    <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showCrossQuarter">跨季度日</string>
+    <string name="configLabel_ui_showCrossQuarter_summary">包含至點和分點之間的中點。</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">顯示至點/分點</string>
@@ -1132,7 +1132,7 @@
     <string name="configLabel_ui_showmapbutton_summary">顯示一個打開預設地圖應用的操作欄按鈕。</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_ui_emphasizefield_text">強調字段</string>              <!-- checkbox label -->
     <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
@@ -1156,9 +1156,9 @@
     <string name="appThemes_darkTheme">暗色主題</string>
     <string name="appThemes_nightMode">亮色主題/暗色主題（夜間模式）</string>
     <string name="appThemes_systemDefault">系統預設</string>
-    <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
-    <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
-    <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
+    <string name="appThemes_systemDefault1">高對比度（系統預設）</string>
+    <string name="appThemes_darkTheme1">高對比度（暗色）</string>
+    <string name="appThemes_lightTheme1">高對比度（亮色）</string>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1168,13 +1168,13 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="configLabel_ui_textsize">Text Size</string>     <!-- TODO -->
-    <string name="configLabel_ui_textsize_summary">%s</string>     <!-- TODO -->
+    <string name="configLabel_ui_textsize">字體大小</string>
+    <string name="configLabel_ui_textsize_summary">%s</string>
 
-    <string name="textSize_small">Small</string>   <!-- TODO -->
-    <string name="textSize_normal">Normal</string>   <!-- TODO -->
-    <string name="textSize_large">Large</string>   <!-- TODO -->
-    <string name="textSize_xlarge">Extra Large</string>   <!-- TODO -->
+    <string name="textSize_small">小</string>
+    <string name="textSize_normal">正常</string>
+    <string name="textSize_large">大</string>
+    <string name="textSize_xlarge">超大</string>
     <string-array name="textSize_display">                      <!-- one-to-one with textSize_values -->
         <item>@string/textSize_small</item>
         <item>@string/textSize_normal</item>
@@ -1393,13 +1393,13 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="graph_option_grid">Grid</string>              <!-- TODO -->
-    <string name="graph_option_labels">Labels</string>          <!-- TODO -->
-    <string name="graph_option_axis">Axis</string>              <!-- TODO -->
-    <string name="graph_option_filledpath">Filled Path</string> <!-- TODO -->
-    <string name="graph_option_moon">Show Moon</string>         <!-- TODO -->
+    <string name="graph_option_grid">網格</string>
+    <string name="graph_option_labels">標簽</string>
+    <string name="graph_option_axis">軸</string>
+    <string name="graph_option_filledpath">填充路徑</string>
+    <string name="graph_option_moon">顯示月亮</string>
 
-    <string name="seekAltitude_configHint">degrees</string>   <!-- TODO -->
+    <string name="seekAltitude_configHint">角度</string>
     <string name="seekAltitude_suffix">°∠</string>
     <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>
     <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
@@ -1408,7 +1408,7 @@
 
     <!-- Dialog: Moon -->
     <string name="moon_dialog_title">@string/configAction_moon</string>
-    <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
+    <string name="moon_dialog_controls">播放控製</string>
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">新增一個鬧鐘排程</string>
@@ -1523,7 +1523,6 @@
         <item>@string/timeMode_cross_autumnal</item>
         <item>@string/timeMode_cross_winter</item>
     </string-array>
-
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">位置已被禁用，要啟用嗎？</string>
@@ -1668,13 +1667,13 @@
     <string name="app_about_media"><![CDATA[ <b>媒體:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Welcome / Initial setup -->
-    <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
-    <string name="welcome_action_prev">Back</string>    <!-- TODO -->
-    <string name="welcome_action_next">Next</string>    <!-- TODO -->
-    <string name="welcome_action_done">Finish</string>    <!-- TODO -->
-    <string name="welcome_message">@string/app_shortdesc</string>    <!-- TODO -->
-    <string name="welcome_pref_title">Welcome Screen</string>    <!-- TODO -->
-    <string name="welcome_pref_summary">Start the first launch configuration wizard.</string>    <!-- TODO -->
+    <string name="welcome_action_skip">跳過</string>
+    <string name="welcome_action_prev">返回</string>
+    <string name="welcome_action_next">繼續</string>
+    <string name="welcome_action_done">結束</string>
+    <string name="welcome_message">@string/app_shortdesc</string>
+    <string name="welcome_pref_title">歡迎屏幕</string>
+    <string name="welcome_pref_summary">開始第一次啟動配置向導。</string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">幫助</string>
@@ -1739,38 +1738,38 @@
     </string>
 
     <string name="help_general_calendarFormatPattern"><![CDATA[
-          <b>Date Format:</b> A date format pattern.<br/>
-          <br/>Available elements may differ between calendars, but usually include..<br/>
+          <b>日期格式:</b> 日期格式模式。<br/>
+          <br/>可用的元素可能因日歷而不同，但通常包含…<br/>
           <br/>
-          <b>E</b> : day of week <br/>
-          <b>d</b> : day of month <br/>
-          <b>D</b> : day of year <br/>
-          <b>F</b> : weekday in month <br/>
-          <b>M</b> : month of year <br/>
-          <b>y</b> : year of era <br/>
-          <b>G</b> : era <br/>
+          <b>E</b>: 周中日<br/>
+          <b>d</b>: 月中日<br/>
+          <b>D</b>: 年中日<br/>
+          <b>F</b>: 月中周<br/>
+          <b>M</b>: 月份<br/>
+          <b>y</b>: 年份<br/>
+          <b>G</b>: 年代<br/>
           <br/>
-    ]]></string>    <!-- TODO -->
+    ]]></string>
 
     <string name="help_general_moondialog"><![CDATA[
-          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
-          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
-          \n\nShare [Icon Share] will copy text to the clipboard.
-    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
+          \n[Icon Rising] 月出 \t\t[Icon Noon] 月亮正午
+          \n[Icon Setting] 月落 \t\t[Icon Midnight] 月亮午夜
+          \n\n分享 [Icon Share] 將復制文字到剪貼板。
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
-          <b>Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
-          <b>Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
-          <b>Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->  <!-- TODO -->
+          <b>春跨季度:</b> 冬至與春分的中點；<em>二月</em> [北半球]，或 <em>八月</em> [南半球]。<br/><br/>
+          <b>夏跨季度:</b> 春分與夏至的中點；<em>五月</em> [北半球], 或 <em>十一月</em> [南半球]。<br/><br/>
+          <b>秋跨季度:</b> 夏至與秋分的中點；<em>八月</em> [北半球], 或 <em>二月</em> [南半球]。<br/><br/>
+          <b>冬跨季度:</b> 秋分與冬至的中點；<em>十一月</em> [北半球], 或 <em>五月</em> [南半球]。<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[
-          [Icon OK] Choose a custom event.\n
-          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
-          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
-          [Icon View] Marked events are displayed by the app.
-    ]]></string>    <!-- TODO -->
+          [Icon OK] 選擇一個用戶自訂事件。\n
+          [Icon Add] 新增 [Icon Edit] 編輯或 [Icon Delete] 刪除用戶自訂事件。\n
+          \n用戶自訂事件可被應用或小工具顯示，或被用於安排鬧鐘和通知。\n
+          [Icon View] 標記的事件被應用顯示。
+    ]]></string>
 
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] 取消不進行變更。<br/>
