@@ -488,7 +488,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         if (showPosition && sun != null)
         {
             SuntimesCalculator calculator = sun.calculator();
-            SuntimesRiseSetData d = sun.dataCivil;
+            SuntimesRiseSetData d = sun.dataActual;    // TODO: configurable
 
             Calendar riseTime = (d != null ? d.sunriseCalendarToday() : null);
             SuntimesCalculator.SunPosition positionRising = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
