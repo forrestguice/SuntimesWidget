@@ -1202,6 +1202,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         card_adapter = new CardAdapter(context);
         card_adapter.setCardAdapterListener(cardAdapterListener);
+        card_adapter.initOptions(context);
 
         card_view = (RecyclerView) findViewById(R.id.info_time_flipper1);
         card_view.setHasFixedSize(true);

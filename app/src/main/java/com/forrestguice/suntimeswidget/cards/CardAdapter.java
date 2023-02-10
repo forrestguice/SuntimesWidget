@@ -93,12 +93,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return MAX_POSITIONS;
     }
 
+    public void initOptions(Context context) {
+        options.init(context);
+    }
+
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> retValue;
         data.clear();
         invalidated = false;
-        options.init(context);
+        initOptions(context);
         initData(context, TODAY_POSITION - 1);
         retValue = initData(context, TODAY_POSITION);
         initData(context, TODAY_POSITION + 1);
