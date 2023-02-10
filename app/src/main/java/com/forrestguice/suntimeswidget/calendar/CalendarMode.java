@@ -31,8 +31,11 @@ import net.time4j.calendar.ChineseCalendar;
 import net.time4j.calendar.CopticCalendar;
 import net.time4j.calendar.EthiopianCalendar;
 import net.time4j.calendar.HebrewCalendar;
+import net.time4j.calendar.IndianCalendar;
+import net.time4j.calendar.JapaneseCalendar;
 import net.time4j.calendar.JulianCalendar;
 import net.time4j.calendar.KoreanCalendar;
+import net.time4j.calendar.MinguoCalendar;
 import net.time4j.calendar.PersianCalendar;
 import net.time4j.calendar.ThaiSolarCalendar;
 import net.time4j.calendar.VietnameseCalendar;
@@ -53,8 +56,11 @@ public enum CalendarMode
     ETHIOPIAN("Ethiopian",CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
     GREGORIAN("Gregorian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
     HEBREW("Hebrew", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
+    INDIAN("Indian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_INDIAN),
+    JAPANESE("Japanese", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_JAPANESE),
     JULIAN("Julian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN),
     KOREAN("Korean", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_KOREAN),
+    MINGUO("Minguo", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_MINGUO),
     PERSIAN("Solar Hijiri", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN),
     THAISOLAR("Thai Solar", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR),
     VIETNAMESE("Vietnamese", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_VIETNAMESE);
@@ -118,6 +124,18 @@ public enum CalendarMode
                     ChronoFormatter<CopticCalendar> copticCalendar = ChronoFormatter.setUp(CopticCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
                     return copticCalendar.format(today.transform(CopticCalendar.class));    // conversion at noon
 
+                case JAPANESE:
+                    ChronoFormatter<JapaneseCalendar> japaneseCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), JapaneseCalendar.axis());
+                    return japaneseCalendar.format(today.transform(JapaneseCalendar.class));
+
+                case MINGUO:
+                    ChronoFormatter<MinguoCalendar> minguoCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), MinguoCalendar.axis());
+                    return minguoCalendar.format(today.transform(MinguoCalendar.class));
+
+                case INDIAN:
+                    ChronoFormatter<IndianCalendar> indianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), IndianCalendar.axis());
+                    return indianCalendar.format(today.transform(IndianCalendar.class));
+
                 case VIETNAMESE:
                     ChronoFormatter<VietnameseCalendar> vietnameseCalendar = ChronoFormatter.setUp(VietnameseCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
                     return vietnameseCalendar.format(today.transform(VietnameseCalendar.class));
@@ -150,8 +168,11 @@ public enum CalendarMode
         ETHIOPIAN.setDisplayString(context.getString(R.string.calendarMode_ethiopian));
         GREGORIAN.setDisplayString(context.getString(R.string.calendarMode_gregorian));
         HEBREW.setDisplayString(context.getString(R.string.calendarMode_hebrew));
+        INDIAN.setDisplayString(context.getString(R.string.calendarMode_indian));
+        JAPANESE.setDisplayString(context.getString(R.string.calendarMode_japanese));
         JULIAN.setDisplayString(context.getString(R.string.calendarMode_julian));
         KOREAN.setDisplayString(context.getString(R.string.calendarMode_korean));
+        MINGUO.setDisplayString(context.getString(R.string.calendarMode_minguo));
         PERSIAN.setDisplayString(context.getString(R.string.calendarMode_persian));
         THAISOLAR.setDisplayString(context.getString(R.string.calendarMode_thaisolar));
         VIETNAMESE.setDisplayString(context.getString(R.string.calendarMode_vietnamese));
