@@ -68,7 +68,7 @@ Widgets are resizable and include...
 * 1x1 digital clock widget that displays solar time (or a given timezone).
 
 **Date widgets:**
-* 1x1 date widget that displays the date with a given calendars (Coptic, Ethiopian, Gregorian, Hebrew, Julian, Solar Hijiri, or Thai Solar).
+* 1x1 date widget that displays the date with a given calendars (Chinese, Coptic, Ethiopian, Gregorian, Hebrew, Indian, Japanese, Julian, Korean, Minguo, Solar Hijiri, Thai Solar, or Vietnamese).
 
 **Sun widgets:**
 * 1x1 sun widget that displays the sunrise or sunset time.
