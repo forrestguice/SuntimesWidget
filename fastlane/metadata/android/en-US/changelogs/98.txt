@@ -1,0 +1,5 @@
+- adds Indian, Japanese, and Minguo calendars to the date widget.
+- adds Chinese, Korean, and Vietnamese lunisolar calendars.
+- fixes bug "widget crashes with lawnchair2" (#690).
+- fixes bug "app crash when showing moon dialog from shortcut" (#691).
+- updates translations to Simplified Chinese, and Traditional Chinese.

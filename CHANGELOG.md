@@ -1,5 +1,14 @@
 ### ~
 
+### v0.15.1 (2023-02-14)
+* adds Chinese, Indian, Japanese, Korean, Minguo, and Vietnamese calendars to the date widget (#692).
+* adds %eZ@ (azimuth), %eD@ (declination), and %eR@ (right ascension) title substitutions (#677).
+* fixes bug "app crash when showing moon dialog from shortcut" (#691).
+* fixes bug "widgets crash with lawnchair2" (#690).
+* fixes bug where the main table header displays azimuth at civil twilight instead of sunrise/sunset.
+* fixes bug where scaled text is cropped in 1x1 moon widget and 1x1 date widget.
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#688 by James Liu).
+
 ### v0.15.0 (2023-01-31)
 * adds "Welcome Dialog"; a guided introduction and initial configuration wizard (#603).
 * adds "High Contrast" app themes (#492, #615); changes default theme to "System default" (#666).
