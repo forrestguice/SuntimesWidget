@@ -27,12 +27,15 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import net.time4j.Moment;
 import net.time4j.PlainDate;
 import net.time4j.TemporalType;
+import net.time4j.calendar.ChineseCalendar;
 import net.time4j.calendar.CopticCalendar;
 import net.time4j.calendar.EthiopianCalendar;
 import net.time4j.calendar.HebrewCalendar;
 import net.time4j.calendar.JulianCalendar;
+import net.time4j.calendar.KoreanCalendar;
 import net.time4j.calendar.PersianCalendar;
 import net.time4j.calendar.ThaiSolarCalendar;
+import net.time4j.calendar.VietnameseCalendar;
 import net.time4j.format.expert.ChronoFormatter;
 import net.time4j.format.expert.PatternType;
 import net.time4j.tz.ZonalOffset;
@@ -45,13 +48,16 @@ import java.util.Calendar;
  */
 public enum CalendarMode
 {
+    CHINESE("Chinese", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_CHINESE),
     COPTIC("Coptic", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_COPTIC),
     ETHIOPIAN("Ethiopian",CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
     GREGORIAN("Gregorian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
     HEBREW("Hebrew", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
     JULIAN("Julian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN),
+    KOREAN("Korean", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_KOREAN),
     PERSIAN("Solar Hijiri", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN),
-    THAISOLAR("Thai Solar", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR);
+    THAISOLAR("Thai Solar", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR),
+    VIETNAMESE("Vietnamese", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_VIETNAMESE);
 
     private String displayString;
     private String defaultPattern;
@@ -112,12 +118,26 @@ public enum CalendarMode
                     ChronoFormatter<CopticCalendar> copticCalendar = ChronoFormatter.setUp(CopticCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
                     return copticCalendar.format(today.transform(CopticCalendar.class));    // conversion at noon
 
+                case VIETNAMESE:
+                    ChronoFormatter<VietnameseCalendar> vietnameseCalendar = ChronoFormatter.setUp(VietnameseCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    return vietnameseCalendar.format(today.transform(VietnameseCalendar.class));
+
+                case KOREAN:
+                    ChronoFormatter<KoreanCalendar> koreanCalendar = ChronoFormatter.setUp(KoreanCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    return koreanCalendar.format(today.transform(KoreanCalendar.class));
+
+                case CHINESE:
+                    ChronoFormatter<ChineseCalendar> chineseCalendar = ChronoFormatter.setUp(ChineseCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE)
+                            //.addText(ChineseCalendar.SOLAR_TERM)  // TODO: no @FormattableElement for SOLAR_TERM?
+                            .build();
+                    return chineseCalendar.format(today.transform(ChineseCalendar.class));
+
                 case GREGORIAN:
                 default:
                     SimpleDateFormat gregorian = new SimpleDateFormat(pattern, SuntimesUtils.getLocale());
                     return gregorian.format(now.getTime());
             }
-        } catch (IllegalStateException e) {    // bad pattern
+        } catch (IllegalStateException | IllegalArgumentException e) {    // bad pattern
             Log.e("CalendarMode", "formatDate: " + e);
             return "";
         }
@@ -125,12 +145,15 @@ public enum CalendarMode
 
     public static void initDisplayStrings( Context context )
     {
+        CHINESE.setDisplayString(context.getString(R.string.calendarMode_chinese));
         COPTIC.setDisplayString(context.getString(R.string.calendarMode_coptic));
         ETHIOPIAN.setDisplayString(context.getString(R.string.calendarMode_ethiopian));
         GREGORIAN.setDisplayString(context.getString(R.string.calendarMode_gregorian));
         HEBREW.setDisplayString(context.getString(R.string.calendarMode_hebrew));
         JULIAN.setDisplayString(context.getString(R.string.calendarMode_julian));
+        KOREAN.setDisplayString(context.getString(R.string.calendarMode_korean));
         PERSIAN.setDisplayString(context.getString(R.string.calendarMode_persian));
         THAISOLAR.setDisplayString(context.getString(R.string.calendarMode_thaisolar));
+        VIETNAMESE.setDisplayString(context.getString(R.string.calendarMode_vietnamese));
     }
 }

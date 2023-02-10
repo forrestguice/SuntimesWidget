@@ -40,13 +40,18 @@ public class CalendarSettings
     public static final CalendarMode PREF_DEF_CALENDAR_MODE = CalendarMode.GREGORIAN;
 
     public static final String PREF_KEY_CALENDAR_FORMATPATTERN = "calendarFormat";
+
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_CHINESE = "EEE, d. MMMM r(U)";   // TODO: review
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_COPTIC = "MMMM d, yyyy";   // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN = "MMMM d, yyyy";   // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN = "MMMM d, yyyy";
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW = "d MMMM yyyy";
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN = "MMMM d, yyyy";   // TODO
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_KOREAN = "EEE, d. MMMM r(U)";   // TODO: review
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN = "MMMM d, yyyy";     // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR = "MMMM d, yyyy";   // TODO
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_VIETNAMESE = "EEE, d. MMMM r(U)";   // TODO: review
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
