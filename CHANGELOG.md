@@ -7,6 +7,7 @@
 * fixes bug "widgets crash with lawnchair2" (#690).
 * fixes bug where the main table header displays azimuth at civil twilight instead of sunrise/sunset.
 * fixes bug where scaled text is cropped in 1x1 moon widget and 1x1 date widget.
+* updates translation to Norwegian (nb) (#693 by FTno).
 * updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#688 by James Liu).
 
 ### v0.15.0 (2023-01-31)
