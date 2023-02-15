@@ -15,6 +15,7 @@
     <color name="chip_bg_pressed">@color/chip_bg_pressed_dark</color>
     <color name="chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
 
+    <color name="nav_bg">@color/nav_bg_dark</color>
     <color name="hr">@color/hr_dark</color>
     <color name="text_disabled">@color/text_disabled_dark</color>
     <color name="text_accent">@color/text_accent_dark</color>

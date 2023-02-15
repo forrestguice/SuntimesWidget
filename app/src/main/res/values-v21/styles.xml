@@ -3,18 +3,21 @@
         <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_ref</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">@color/nav_bg</item>
     </style>
 
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_light</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">@color/nav_bg_light</item>
     </style>
 
     <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
         <item name="icActionNext">@drawable/ic_action_next_item</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">@color/nav_bg_dark</item>
     </style>
 
     <style name="SystemThemeButton" parent="Widget.AppCompat.Button.Colored">
