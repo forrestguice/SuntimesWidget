@@ -28,10 +28,10 @@
     <string name="configAction_sunDialog">Solens posisjon</string>
     <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
     <string name="configAction_worldMap">Verdenskart</string>
-    <string name="configAction_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
-    <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
-    <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
-    <string name="configAction_deselect">Clear Selection</string>                                    <!-- TODO -->
+    <string name="configAction_lineGraph">Høydegraf</string>
+    <string name="configAction_seekAltitude">Søk høyde</string>        <!-- checkbox label -->
+    <string name="configAction_search">Søk</string>        <!-- button (contentDescription) -->
+    <string name="configAction_deselect">Fjern valg</string>
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
     <string name="configAction_onlineHelp">Hjelp på nett</string>
@@ -56,7 +56,7 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Tidssonen kan være feil for dette stedet.</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%s</xliff:g>).</string>  <!-- TODO -->
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> er <xliff:g id="timeSpan">%s</xliff:g> fra lokal middeltid (<xliff:g id="locationName">%s</xliff:g>).</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> sommertid</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> tidsjevning</string>  <!-- timezone dialog label -->
 
@@ -134,8 +134,8 @@
         <item quantity="other">%1$s etter</item>
     </plurals>
 
-    <string name="offset_before_msg">%1$s før %2$s</string>       <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_after_msg">%1$s etter %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg">%1$s før %2$s</string>       <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_after_msg">%1$s etter %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
     <string name="offset_before_msg1">{0} før {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
     <string name="offset_after_msg1">{0} etter {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
@@ -253,9 +253,9 @@
     <string name="configLabel_title1">Vendbar modul</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
     <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
-    <string name="app_name_datewidget0">Date Widget</string>  <!-- TODO -->
-    <string name="app_name_clocktile">Clock Tile</string>   <!-- TODO -->
-    <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
+    <string name="app_name_datewidget0">Datomodul</string>
+    <string name="app_name_clocktile">Klokkeflis</string>
+    <string name="app_name_eventtile">Neste hendelse-flis</string>
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
@@ -294,8 +294,8 @@
     <string name="configLabel_general_observerheight">Objektskygge</string>        <!-- checkbox label -->
     <string name="configLabel_general_observerheight_summary">Vis skyggelengde fra et objekt med en høyde på <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">Day Offset</string>        <!-- edittext label -->  <!-- TODO -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
+    <string name="configLabel_general_dayOffset">Dagforskyvning</string>        <!-- edittext label -->
+    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Avansert</string>                        <!-- group title -->
@@ -355,7 +355,7 @@
     <string name="timeMode_blue8">Blåtimen (8\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_blue4_short">Blå (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Blåtimen (4\u00B0)</string>                     <!-- setting -->
-    <string name="timeMode_none">None</string>                 <!-- label -->  <!-- TODO -->
+    <string name="timeMode_none">Ingen</string>                 <!-- label -->
 
     <string name="timeMode_equinox_vernal">Vårjevndøgn</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Jevndøgn</string>       <!-- setting -->
@@ -412,33 +412,33 @@
     <string name="configLabel_general_timeMode">Modus:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Show Date</string>   <!-- group title -->   <!-- TODO -->
-    <string name="configLabel_general_calendar">Calendar</string>   <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat">Date Format:</string>          <!-- spinner label -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configAction_editCalendarFormat">Edit</string>                        <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configLabel_general_showDate">Vis dato</string>   <!-- group title -->
+    <string name="configLabel_general_calendar">Kalender</string>   <!-- group title -->
+    <string name="configLabel_general_calendarMode">Kalender:</string>          <!-- spinner label -->
+    <string name="configLabel_general_calendarFormat">Datoformat:</string>          <!-- spinner label -->
+    <string name="configLabel_general_calendarFormatPattern">Datomønster:</string>          <!-- edittext label -->
+    <string name="configHint_general_calendarFormatPattern">MMMM d, åååå</string>       <!-- edittext hint -->
+    <string name="configLabel_general_calendarFormat_custom">Tilpasset (%s)</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_yyyy">%s [år]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_MMMM">%s [måned]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_EEEE">%s [ukedag]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_MM">%s [måned]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_dd">%s [dag i måned]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_DD">%s [dag i året]</string>       <!-- spinner value -->
+    <string name="configAction_editCalendarFormat">Rediger</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Bare soloppgang</string>             <!-- setting -->
     <string name="widgetMode1x1_sunset">Bare solnedgang</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Soloppgang &amp; Solnedgang (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Soloppgang &amp; Solnedgang (2)</string>  <!-- setting -->
-    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">Soloppgang, Solnedgang, &amp; Middag</string>  <!-- setting -->
 
     <string name="widgetMode1x1_altaz">Høyde &amp; Asimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinasjon &amp; Rektasensjon</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Gjeldende avstand</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Neste apogeum eller perigeum</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode1x1_moonday">Månedøgn</string>     <!-- setting -->
     
     <string name="widgetMode3x1_lightmap_large">Lysgraf</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_medium">Lysgraf (medium)</string>     <!-- setting -->
@@ -447,7 +447,7 @@
     <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
     <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Enkelt</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Enkelt kart</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [nord]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [sør]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
@@ -525,13 +525,13 @@
     <string name="time_apparent">Tilsynelatende soltid</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
+    <string name="configAction_suggestTimeZone">Anbefalt tidssone</string>
 
     <string name="configLabel_timezone">Tidssone</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Tidssone:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->   <!-- TODO -->
+    <string name="configLabel_timezone_fromapp">Bruk appens tidssone</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Systemformat</string>          <!-- setting -->
@@ -542,13 +542,13 @@
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
-    <string name="calendarMode_coptic">Coptic</string>                      <!-- TODO -->
-    <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
-    <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
-    <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
-    <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
-    <string name="calendarMode_persian">Persian (Solar Hijiri)</string>     <!-- TODO -->
-    <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
+    <string name="calendarMode_coptic">Koptisk</string>
+    <string name="calendarMode_ethiopian">Etiopisk</string>
+    <string name="calendarMode_gregorian">Gregoriansk</string>
+    <string name="calendarMode_hebrew">Jødisk</string>
+    <string name="calendarMode_julian">Juliansk</string>
+    <string name="calendarMode_persian">Persisk (Solar Hijiri)</string>
+    <string name="calendarMode_thaisolar">Thai Solar</string>
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">I dag</string>                  <!-- setting -->
@@ -775,8 +775,8 @@
     <!--
          CUSTOM EVENTS
     -->
-    <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
-    <string name="eventlist_dialog_title">Custom Events</string>   <!-- TODO -->
+    <string name="eventType_sun_elevation">Solen (høyde)</string>
+    <string name="eventlist_dialog_title">Egendefinerte hendelser</string>
 
     <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
     <string name="configLabel_event_alarmitem_desc">%1$s</string>
@@ -785,58 +785,58 @@
     <string name="eventalias_title_tag_rising" >↑</string>
     <string name="eventalias_title_tag_setting">↓</string>
 
-    <string name="sunevent_title">Sun</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
+    <string name="sunevent_title">Solen</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
     <string name="sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
-    <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> at <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
-    <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> på <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
+    <string name="sunevent_phrase_gender">annen</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
-    <string name="configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
-    <string name="configLabel_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
+    <string name="configLabel_manageEvents">Håndter hendelser</string>  <!-- settings activity / pref -->
+    <string name="configLabel_manageEvents_summary">Legg til eller fjern egendefinerte hendelser.</string>
     <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>    <!-- TODO -->
 
-    <string name="configAction_manageEvents">Custom Events</string>   <!-- TODO -->
-    <string name="configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_manageEvents">Egendefinerte hendelser</string>
+    <string name="configAction_selectEvent">Velg</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addEvent">Legg til</string>           <!-- button (contentDescription) -->
+    <string name="configAction_editEvent">Rediger</string>           <!-- button (contentDescription) -->
+    <string name="configAction_saveEvent">Lagre</string>           <!-- button (contentDescription) -->
+    <string name="configAction_deleteEvent">Slett</string>           <!-- button (contentDescription) -->
+    <string name="configAction_clearEvents">Tøm</string>           <!-- button (contentDescription) -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
-    <string name="importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
+    <string name="importevents_toast_success">Importert <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
-        <item quantity="one">%d event</item>
-        <item quantity="other">%d events</item>
-    </plurals>   <!-- TODO -->
+        <item quantity="one">%d hendelse</item>
+        <item quantity="other">%d hendelser</item>
+    </plurals>
 
-    <string name="editevent_dialog_id_label">ID</string>    <!-- TODO -->
-    <string name="editevent_dialog_id_hint">Event ID</string>    <!-- TODO -->
+    <string name="editevent_dialog_id_label">ID</string>
+    <string name="editevent_dialog_id_hint">Hendelse-ID</string>
     <string name="editevent_dialog_id_error">@string/addaction_error_id</string>    <!-- TODO -->
     <string name="editevent_dialog_uri_hint">Event Uri</string>    <!-- TODO -->
-    <string name="editevent_dialog_showevent">Display this event within the app.</string>
-    <string name="editevent_dialog_showevent_off">This event will no longer be displayed.</string>    <!-- TODO -->
+    <string name="editevent_dialog_showevent">Vis denne hendelsen i appen.</string>
+    <string name="editevent_dialog_showevent_off">Denne hendelsen vil ikke lenger bli vist.</string>
 
-    <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title --> <!-- TODO -->
-    <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title --> <!-- TODO -->
-    <string name="editevent_dialog_label_label">Label</string>    <!-- TODO -->
-    <string name="editevent_dialog_label_hint">Event Label</string>    <!-- TODO -->
+    <string name="editevent_dialog_title">Hendelse</string>    <!-- 'add event' title -->
+    <string name="editevent_dialog_title1">Hendelse</string>    <!-- 'edit event' title -->
+    <string name="editevent_dialog_label_label">Påskrift</string>
+    <string name="editevent_dialog_label_hint">Hendelsespåskrift</string>
     <string name="editevent_dialog_label_error">@string/addaction_error_title</string>    <!-- TODO -->
-    <string name="editevent_dialog_label_suggested">Custom Angle</string>    <!-- TODO -->
+    <string name="editevent_dialog_label_suggested">Tilpasset vinkel</string>
 
-    <string name="editevent_dialog_angle">Angle</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_hint">-6</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_suffix">°</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_error">Angle is required!</string>    <!-- TODO -->
+    <string name="editevent_dialog_angle">Vinkel</string>
+    <string name="editevent_dialog_angle_hint">-6</string>
+    <string name="editevent_dialog_angle_suffix">°</string>
+    <string name="editevent_dialog_angle_error">Vinkel kreves!</string>
 
-    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may no longer work and should be reassigned.</string>    <!-- TODO -->
-    <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
+    <string name="delevent_dialog_msg">Er du sikker på at du vil slette %1$s (%2$s)?\n\nAlarmer, varsler eller moduler som bruker denne hendelsen kan stoppe å virke og bør bli tildelt på nytt.</string>
+    <string name="delevent_dialog_ok">Slett</string>
     <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAlarms, notifications, or widgets using these events may no longer work and should be reassigned.</string>   <!-- TODO -->
-    <string name="clearevents_dialog_ok">Clear</string>   <!-- TODO -->
+    <string name="clearevents_dialog_msg">Er du sikker på at du vil fjerne egendefinerte hendelser?\n\nAlarmer, varsler eller moduler som bruker disse hendelsene kan stoppe å virke og bør bli tildelt på nytt.</string>
+    <string name="clearevents_dialog_ok">Fjern</string>
     <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
-    <string name="clearevents_toast">Custom events cleared.</string>   <!-- TODO -->
+    <string name="clearevents_toast">Egendefinerte hendelser fjernet.</string>
 
 
     <!--
@@ -853,8 +853,8 @@
     <string name="configAction_sortAlarms">Sorter</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Alarmtid</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Opprettelsesdato</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->   <!-- TODO -->
-    <string name="configAction_sortAlarms_offset">Show Offsets</string>                <!-- action button / menu item -->   <!-- TODO -->
+    <string name="configAction_sortAlarms_enabled_first">Aktivert først</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_offset">Vis forskyvning</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Fjern</string>                <!-- action button / menu item -->
     <string name="configAction_clearDate">Fjern</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">Sett forskyvning før/etter</string>         <!-- button (contentDescription) -->
@@ -888,11 +888,12 @@
     <string name="alarmAction_upcomingMsg">Kommende alarm</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">Feilet i å spille av lyd!</string>         <!-- error toast -->
 
-    <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Varsel</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification1">Quick Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_notification1">Hurtigvarsel</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification2">Varsel (vedvarende)</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_beforeAlertTray">Before Alert:</string>               <!-- group title -->   <!-- TODO -->
+    <string name="configLabel_alarmEdit_beforeAlertTray">Før varsel:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_scheduleTray">Planlegg:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">På varsel:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onDismissTray">På avslåing:</string>               <!-- group title -->
@@ -934,10 +935,10 @@
         <item quantity="other">%d alarmer</item>
     </plurals>
 
-    <string name="configLabel_alarms_dismissChallenge">Dismiss Challenge</string>            <!-- pref title -->   <!-- TODO -->
-    <string name="alarmDismiss_none">None</string>                         <!-- alarm setting -->   <!-- TODO -->
-    <string name="alarmDismiss_none_long">No Challenge</string>            <!-- chip label -->   <!-- TODO -->
-    <string name="alarmDismiss_math">Easy Math</string>           <!-- alarm setting -->   <!-- TODO -->
+    <string name="configLabel_alarms_dismissChallenge">Avslåingsutfordring</string>            <!-- pref title -->
+    <string name="alarmDismiss_none">Ingen</string>                         <!-- alarm setting -->
+    <string name="alarmDismiss_none_long">Ingen utfordring</string>            <!-- chip label -->
+    <string name="alarmDismiss_math">Enkel matematikk</string>           <!-- alarm setting -->
 
     <string name="alarmlabel_dialog_title">Påskrift</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Bruk</string>        <!-- button -->
@@ -977,9 +978,9 @@
     <string name="configLabel_alarms_notifications_summary1">På låseskjerm: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Varsler er av. Alarmer kan mislykkes i å vises korrekt.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_bootcompleted">Omstart fullført</string>
+    <string name="configLabel_alarms_bootcompleted">Oppstart fullført</string>
     <string name="configLabel_alarms_bootcompleted_summary">Alarmer er automatisk planlagt på nytt noen få minutter etter omstart.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="configLabel_alarms_bootcompleted_info">Siste kjøring <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> etter omstart (tok <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="configLabel_alarms_bootcompleted_info">Siste kjøring <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> etter oppstart (tok <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
     <string name="configLabel_alarms_bootcompleted_info_never">Aldri</string>
     <string name="configLabel_alarms_bootcompleted_action_confirm">Planlegge alle alarmer og varsler på nytt?</string>
     <string name="configLabel_alarms_bootcompleted_action_message">Planlegger alarmer og varsler på nytt.</string>
@@ -990,19 +991,19 @@
     <string name="configLabel_alarms_timeoutAfter">Tidsavbrudd etter</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_autoDismissAfter">Auto-dismiss after</string>    <!-- TODO -->
+    <string name="configLabel_alarms_autoDismissAfter">Auto-avslå etter</string>
     <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snoozeLimit">Snooze limit</string>    <!-- TODO -->
+    <string name="configLabel_alarms_snoozeLimit">Snooze (slumre)-begrensning</string>
     <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
-    <string name="configLabel_alarms_snoozeLimit_none">No Limit</string>    <!-- TODO -->
+    <string name="configLabel_alarms_snoozeLimit_none">Ingen begrensning</string>
 
     <string name="configLabel_alarms_snooze">Snooze (slumre) for</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
     <string name="configLabel_alarms_upcoming">Påminnelse innen</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
-    <string name="configLabel_alarms_upcoming_checkbox">Show alarm reminder notifications.</string>  <!-- TODO -->
+    <string name="configLabel_alarms_upcoming_checkbox">Vis alarmpåminnelsesvarsler.</string>
 
     <string name="configLabel_alarms_fadein">Øk volum gradvis</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
@@ -1023,7 +1024,7 @@
     <string name="configLabel_alarms_allRingtones_summary">Vis alle systemlyder under valg (ignorer ringetonetype).</string>
 
     <string name="no_reminder">Aldri</string>
-    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
+    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> påminnelse</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="units_hours">
         <item quantity="one">%d time</item>
@@ -1091,7 +1092,7 @@
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Vis</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">Custom Events</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->  <!-- TODO -->
+    <string name="configLabel_ui_fields1">Egendefinerte hendelser</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
     <string name="configLabel_ui_misc">Diverse</string>
 
     <!-- App Setting: Verbose Accessibility -->
@@ -1111,12 +1112,12 @@
     <string name="configLabel_ui_showmoon_summary">Vis oppgang- og nedgangstider, fase og illuminasjon.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
-    <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_noon">Vis månens kulminasjon</string>
+    <string name="configLabel_ui_showmoon_noon_summary">Vis månens kulminasjon og månens nedre kulminasjon som del av månedialogen.</string>
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
-    <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showCrossQuarter_summary">Inkluder midtpunkter mellom solverv og jevndøgn.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Vis Solverv / Jevndøgn</string>
@@ -1135,7 +1136,7 @@
     <string name="configLabel_ui_showmapbutton_summary">Vis en handlingslinjeknapp som åpner standardappen for kart.</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_ui_emphasizefield_text">Framhevet felt</string>              <!-- checkbox label -->
     <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
@@ -1159,18 +1160,18 @@
     <string name="appThemes_darkTheme">Mørkt tema</string>
     <string name="appThemes_nightMode">Lyst tema / Mørkt tema (nattmodus)</string>
     <string name="appThemes_systemDefault">Systemstandard</string>
-    <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
-    <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
-    <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
+    <string name="appThemes_systemDefault1">Kontrast (systemstandard)</string>
+    <string name="appThemes_darkTheme1">Kontrast (mørk)</string>
+    <string name="appThemes_lightTheme1">Kontrast (lys)</string>
 
     <!-- App Setting: text size -->
-    <string name="configLabel_ui_textsize">Text Size</string>     <!-- TODO -->
-    <string name="configLabel_ui_textsize_summary">%s</string>     <!-- TODO -->
+    <string name="configLabel_ui_textsize">Tekststørrelse</string>
+    <string name="configLabel_ui_textsize_summary">%s</string>
 
-    <string name="textSize_small">Small</string>   <!-- TODO -->
-    <string name="textSize_normal">Normal</string>   <!-- TODO -->
-    <string name="textSize_large">Large</string>   <!-- TODO -->
-    <string name="textSize_xlarge">Extra Large</string>   <!-- TODO -->
+    <string name="textSize_small">Liten</string>
+    <string name="textSize_normal">Normal</string>
+    <string name="textSize_large">Stor</string>
+    <string name="textSize_xlarge">Ekstra stor</string>
     <string-array name="textSize_display">                      <!-- one-to-one with textSize_values -->
         <item>@string/textSize_small</item>
         <item>@string/textSize_normal</item>
@@ -1246,7 +1247,7 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Kalendere</string>   <!-- group title -->
+    <string name="configLabel_calendars">Kalendere</string>   <!-- group title for "calendars" app setting -->
     <string name="configLabel_calendars_enabled">Kalenderintegrasjon</string>
 
     <!-- App Setting: passive location mode -->
@@ -1380,13 +1381,13 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="graph_option_grid">Grid</string>              <!-- TODO -->
-    <string name="graph_option_labels">Labels</string>          <!-- TODO -->
-    <string name="graph_option_axis">Axis</string>              <!-- TODO -->
-    <string name="graph_option_filledpath">Filled Path</string> <!-- TODO -->
-    <string name="graph_option_moon">Show Moon</string>         <!-- TODO -->
+    <string name="graph_option_grid">Rutenett</string>
+    <string name="graph_option_labels">Påskrifter</string>
+    <string name="graph_option_axis">Akser</string>
+    <string name="graph_option_filledpath">Fylt bane</string>
+    <string name="graph_option_moon">Vis månen</string>
 
-    <string name="seekAltitude_configHint">degrees</string>   <!-- TODO -->
+    <string name="seekAltitude_configHint">grader</string>
     <string name="seekAltitude_suffix">°∠</string>
     <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>
     <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
@@ -1395,7 +1396,7 @@
 
     <!-- Dialog: Moon -->
     <string name="moon_dialog_title">@string/configAction_moon</string>
-    <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
+    <string name="moon_dialog_controls">Avspillingskontroller</string>
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planlegg en alarm for</string>
@@ -1524,8 +1525,8 @@
     <string name="gps_lastfix_toast_cancelled">Posisjonsoppdatering avbrutt.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying Location? -->
-    <string name="gps_keeptrying_title">Ingen posisjonsfastsettelse</string>
-    <string name="gps_keeptrying_msg">Ikke i stand til å oppnå en posisjonsfastsettelse.</string>
+    <string name="gps_keeptrying_title">Ingen posisjon</string>
+    <string name="gps_keeptrying_msg">Ikke i stand til å hente posisjon.</string>
     <string name="gps_keeptrying_ok">Fortsett å prøve</string>
     <string name="gps_keeptrying_cancel">Gi opp</string>
     <string name="gps_keeptrying_fallback">Bruk siste posisjon</string>
@@ -1634,6 +1635,7 @@
         <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
     ]]></string>
+    <string name="app_license_about">Suntimes er gratis og åpen kildekodeprogram.</string>   <!-- displayed by welcome dialog -->
     <string name="app_url"><xliff:g id="url"><![CDATA[
         <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>
@@ -1653,13 +1655,13 @@
     <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Welcome / Initial setup -->
-    <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
-    <string name="welcome_action_prev">Back</string>    <!-- TODO -->
-    <string name="welcome_action_next">Next</string>    <!-- TODO -->
-    <string name="welcome_action_done">Finish</string>    <!-- TODO -->
+    <string name="welcome_action_skip">Hopp over</string>
+    <string name="welcome_action_prev">Tilbake</string>
+    <string name="welcome_action_next">Neste</string>
+    <string name="welcome_action_done">Avslutt</string>
     <string name="welcome_message">@string/app_shortdesc</string>    <!-- TODO -->
-    <string name="welcome_pref_title">Welcome Screen</string>    <!-- TODO -->
-    <string name="welcome_pref_summary">Start the first launch configuration wizard.</string>    <!-- TODO -->
+    <string name="welcome_pref_title">Velkomstskjerm</string>
+    <string name="welcome_pref_summary">Start innstillingsveiviseren for første kjøring.</string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Hjelp</string>
@@ -1724,8 +1726,8 @@
     </string>
 
     <string name="help_general_calendarFormatPattern"><![CDATA[
-          <b>Date Format:</b> A date format pattern.<br/>
-          <br/>Available elements may differ between calendars, but usually include..<br/>
+          <b>Datoformat:</b> Et datoformatmønster.<br/>
+          <br/>Tilgjengelige elementer kan variere mellom kalendere, men inkluderer vanligvis..<br/>
           <br/>
           <b>E</b> : day of week <br/>
           <b>d</b> : day of month <br/>
@@ -1738,24 +1740,24 @@
     ]]></string>    <!-- TODO -->
 
     <string name="help_general_moondialog"><![CDATA[
-          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
-          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
-          \n\nShare [Icon Share] will copy text to the clipboard.
-    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
+          \n[Icon Rising]  måneoppgang \t\t[Icon Noon]  månens kulminasjon
+          \n[Icon Setting]  månenedgang \t\t[Icon Midnight]  månens nedre kulminasjon
+          \n\nDel [Icon Share] vil kopiere tekst til utklippstavlen.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
-          <b>Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
-          <b>Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
-          <b>Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+          <b>Spring Cross-Quarter:</b> Midtpunktet mellom vintersolverv og vårjevndøgn; <em>Februar</em> [nordlige halvkule], eller <em>August</em> [sørlige halvkule].<br/><br/>
+          <b>Summer Cross-Quarter:</b> Midtpunktet mellom vårjevndøgn og sommersolverv; <em>Mai</em> [nordlige halvkule], eller <em>November</em> [sørlige halvkule].<br/><br/>
+          <b>Autumn Cross-Quarter:</b> Midtpunktet mellom sommersolverv og høstjevndøgn; <em>August</em> [nordlige halvkule], eller <em>Februar</em> [sørlige halvkule].<br/><br/>
+          <b>Winter Cross-Quarter:</b> Midtpunktet mellom høstjevndøgn og vintersolverv; <em>November</em> [nordlige halvkule], eller <em>Mai</em> [sørlige halvkule].<br/>
     ]]></string>   <!-- help contents: cross-quarter days -->  <!-- TODO -->
 
     <string name="help_eventlist"><![CDATA[
-          [Icon OK] Choose a custom event.\n
-          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
-          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
-          [Icon View] Marked events are displayed by the app.
-    ]]></string>    <!-- TODO -->
+          [Icon OK] Velg en egendefinert hendelse.\n
+          [Icon Add] Legg til, [Icon Edit] rediger eller [Icon Delete] slett egendefinerte hendelser.\n
+          \nEgendefinerte hendelser kan bli vist av appen, av hjemmeskjermmoduler eller brukes til å planlegge alarmer og varsler.\n
+          [Icon View] Merkede hendelser er vist av appen.
+    ]]></string>
 
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] å avbryte uten å gjøre endringer.<br/>
@@ -1858,8 +1860,8 @@
           [Icon Add] Legg til et nytt tema eller [Icon Copy] kopier fra et eksisterende tema.\n
           \n
           [Icon Edit] Rediger eller [Icon Delete] slett temaer.\n
-          [Icon Default] Standardtemaer kan ikke endres.
-    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
+          [Icon Default] Standardtemaer kan ikke endres.\n
+    </string>
 
     <string name="help_calendar"><![CDATA[Lever hendelser til Kalender-appen (månefaser, solverv, jevndøgn).<br />
         <br />
@@ -1868,22 +1870,22 @@
         Denne funksjonen er nå tilgjengelig som en <a href="moreInfoLink">separat app</a>.
     ]]></string>
 
-    <string name="privacy_policy0"><![CDATA[<b>Privacy:</b><br/>Suntimes samler ikke inn, lagrer eller overfører personlige data. Inneholder <b>ingen reklame</b>, <b>ingen analyser</b>, <b>ingen sporere</b> og <b>ingen unødvendige tillatelser</b>.]]></string>
-    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes samler ikke inn, lagrer eller overfører personlige data. Inneholder <b>ingen reklame</b>, <b>ingen analyser</b>, <b>ingen sporere</b> og <b>ingen unødvendige tillatelser</b>. <br/><br/>Appen stilles inn med posisjonsdata. Denne informasjonen (og andre innstilte data brukt av appen) lagres lokalt og forlater ikke enheten.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes bruker <b>plasseringstillatelsen</b> til å bestemme gjeldende lengde- og breddegrad.<br/><br/>Denne tillatelsen er valgfri; plasseringen er manuelt innstilt som standard.]]></string>
-    <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
+    <string name="privacy_policy0"><![CDATA[<b>Personvern:</b><br/>Suntimes samler ikke inn, lagrer eller overfører personlige data. Inneholder <b>ingen reklame</b>, <b>ingen analyser</b>, <b>ingen sporere</b> og <b>ingen unødvendige tillatelser</b>.]]></string>  <!-- brief statement (welcome dialog) -->
+    <string name="privacy_policy"><![CDATA[<b>Personvern:</b><br/>Suntimes samler ikke inn, lagrer eller overfører personlige data. Inneholder <b>ingen reklame</b>, <b>ingen analyser</b>, <b>ingen sporere</b> og <b>ingen unødvendige tillatelser</b>. <br/><br/>Appen stilles inn med posisjonsdata. Denne informasjonen (og andre innstilte data brukt av appen) lagres lokalt og forlater ikke enheten.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>  <!-- full statement (about dialog) -->
+    <string name="privacy_permission_location"><![CDATA[Suntimes bruker <b>posisjonstillatelse</b> til å bestemme gjeldende lengde- og breddegrad.<br/><br/>Denne tillatelsen er valgfri; posisjonen er manuelt innstilt som standard.]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes bruker tillatelser for <b>ekstern lagring</b> til å sikkerhetskopiere/eksportere data til fil (f.eks. steder, temaer).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms bruker tillatelsen <b>ekstern lagring</b> til å avspille lyder plassert på SD-kortet.<br/><br/>Denne tillatelsen er valgfri; standardlyden avspilles hvis tilgang nektes. Denne tillatelsen behøves ikke for systemlyder (Medialagring).]]></string>
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Forespørre tillatelser nå?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorer</string>
     <string name="privacy_permissiondialog_title">Tillatelser</string>
     <string name="privacyTab">Personvern</string>
 
-    <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
-    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
-    <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
-    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
-    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
-    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+    <string name="security_dialog_title">Sikkerhetsvarsel</string>
+    <string name="security_duplicate_permissions">En tillatelse som tilhører Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ner også definert av: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="feature_not_supported_by_api">Denne funksjonen er ikke støttet av API %1$s.</string>
+    <string name="feature_not_supported_by_source">Denne funksjonen er ikke støttet av gjeldende datakilde.</string>
+    <string name="reboot_required_message">En omstart kan behøves for at endringer skal tre i kraft.</string>
+    <string name="restart_required_message">En app-omstart kan behøves for at endringer skal tre i kraft.</string>   <!-- toast; app restart may be required -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Avbryt</string>
