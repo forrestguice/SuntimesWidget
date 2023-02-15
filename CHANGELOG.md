@@ -1,10 +1,12 @@
 ### ~
 
-### v0.15.1 (2023-02-14)
+### v0.15.1 (2023-02-15)
+* adds themed icon (Android 13+).
 * adds Chinese, Indian, Japanese, Korean, Minguo, and Vietnamese calendars to the date widget (#692).
 * adds %eZ@ (azimuth), %eD@ (declination), and %eR@ (right ascension) title substitutions (#677).
 * fixes bug "app crash when showing moon dialog from shortcut" (#691).
-* fixes bug "widgets crash with lawnchair2" (#690).
+* fixes bug "widgets crash with Lawnchair" (#690).
+* fixes bug "navigation bar is white instead of black with dark theme" (#696).
 * fixes bug where the main table header displays azimuth at civil twilight instead of sunrise/sunset.
 * fixes bug where scaled text is cropped in 1x1 moon widget and 1x1 date widget.
 * updates translation to Norwegian (nb) (#693 by FTno).
