@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -107,6 +107,7 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_D
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_NOTETAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_LOCALE_MODE;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION1;
@@ -942,24 +943,18 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      */
     private void initPref_locale()
     {
-        //String key = AppSettings.PREF_KEY_LOCALE_MODE;
-        //ListPreference modePref = (ListPreference)findPreference(key);
-        //legacyPrefs.put(key, new LegacyListPref(modePref));
-
-        String key = AppSettings.PREF_KEY_LOCALE;
-        //noinspection deprecation
-        ListPreference localePref = (ListPreference)findPreference(key);
-        //legacyPrefs.put(key, new LegacyListPref(localePref));
-
-        initPref_locale(this, localePref);
+        Preference localeModePref = findPreference(AppSettings.PREF_KEY_LOCALE_MODE);
+        ListPreference localePref = (ListPreference) findPreference(AppSettings.PREF_KEY_LOCALE);
+        initPref_locale(this, localeModePref, localePref);
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_locale(PreferenceFragment fragment)
     {
-        ListPreference localePref = (ListPreference)fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
-        initPref_locale(fragment.getActivity(), localePref);
+        Preference localeModePref = fragment.findPreference(AppSettings.PREF_KEY_LOCALE_MODE);
+        ListPreference localePref = (ListPreference) fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
+        initPref_locale(fragment.getActivity(), localeModePref, localePref);
     }
-    private static void initPref_locale(Activity activity, ListPreference localePref)
+    private static void initPref_locale(final Activity activity, Preference localeModePref, ListPreference localePref)
     {
         final String[] localeDisplay = activity.getResources().getStringArray(R.array.locale_display);
         final String[] localeDisplayNative = activity.getResources().getStringArray(R.array.locale_display_native);
@@ -993,6 +988,24 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
         AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(activity);
         localePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
+
+        if (localePref != null) {
+            localePref.setOnPreferenceChangeListener(onLocaleChanged(activity, localePref));
+        }
+        if (localeModePref != null) {
+            localeModePref.setOnPreferenceChangeListener(onLocaleChanged(activity, localeModePref));
+        }
+    }
+
+    protected static Preference.OnPreferenceChangeListener onLocaleChanged(final Context context, final Preference pref)
+    {
+        return new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+                return true;
+            }
+        };
     }
 
     /**
