@@ -101,7 +101,7 @@ public class WelcomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        setResult(RESULT_CANCELED);
+        setResult(RESULT_CANCELED, getResultData());
         AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(savedInstanceState);
 
@@ -257,7 +257,7 @@ public class WelcomeActivity extends AppCompatActivity
     private void onSkip()
     {
         AppSettings.setFirstLaunch(WelcomeActivity.this, false);
-        setResult(RESULT_CANCELED);
+        setResult(RESULT_CANCELED, getResultData());
         finish();
     }
 
@@ -265,7 +265,7 @@ public class WelcomeActivity extends AppCompatActivity
     {
         saveSettings(getSupportFragmentManager(), pager.getCurrentItem());
         AppSettings.setFirstLaunch(WelcomeActivity.this, false);
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, getResultData());
         finish();
     }
 
@@ -311,6 +311,18 @@ public class WelcomeActivity extends AppCompatActivity
     {
         startActivity(new Intent(this, AboutActivity.class));
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
+
+    public void setNeedsRecreateFlag() {
+        Log.d("DEBUG", "setNeedsRecreateFlag");
+        getIntent().putExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, true);
+        setResult(RESULT_OK, getResultData());
+    }
+
+    public Intent getResultData() {
+        boolean value = getIntent().getBooleanExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, false);
+        Log.d("DEBUG", "getResultData: needsRecreate? " + value);
+        return new Intent().putExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, value);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1358,6 +1370,10 @@ public class WelcomeActivity extends AppCompatActivity
         {
             if (activity != null)
             {
+                if (activity instanceof  WelcomeActivity) {
+                    WelcomeActivity activity1 = (WelcomeActivity)activity;
+                    activity1.setNeedsRecreateFlag();
+                }
                 activity.finish();
                 activity.overridePendingTransition(R.anim.transition_restart_in, R.anim.transition_restart_out);
                 activity.startActivity(activity.getIntent()
