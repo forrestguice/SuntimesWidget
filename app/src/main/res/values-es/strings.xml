@@ -536,7 +536,13 @@
     <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
     <string name="calendarMode_persian">Persian (Solar Hijiri)</string>     <!-- TODO -->
     <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
-    
+    <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
+    <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
+    <string name="calendarMode_vietnamese">Vietnamese</string>  <!-- TODO -->
+    <string name="calendarMode_minguo">Minguo</string>  <!-- TODO -->
+    <string name="calendarMode_indian">Indian</string>  <!-- TODO -->
+    <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
+
     <string name="dateMode_current">Hoy</string>
     <string name="dateMode_custom">Definido por el usuario</string>
 

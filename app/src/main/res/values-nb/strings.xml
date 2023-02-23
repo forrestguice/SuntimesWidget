@@ -549,6 +549,12 @@
     <string name="calendarMode_julian">Juliansk</string>
     <string name="calendarMode_persian">Persisk (Solar Hijiri)</string>
     <string name="calendarMode_thaisolar">Thai Solar</string>
+    <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
+    <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
+    <string name="calendarMode_vietnamese">Vietnamese</string>  <!-- TODO -->
+    <string name="calendarMode_minguo">Minguo</string>  <!-- TODO -->
+    <string name="calendarMode_indian">Indian</string>  <!-- TODO -->
+    <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">I dag</string>                  <!-- setting -->

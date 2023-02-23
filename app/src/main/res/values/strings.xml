@@ -596,12 +596,12 @@
     <string name="calendarMode_julian">Julian</string>
     <string name="calendarMode_persian">Persian (Solar Hijiri)</string>
     <string name="calendarMode_thaisolar">Thai Solar</string>
-    <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
-    <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
-    <string name="calendarMode_vietnamese">Vietnamese</string>  <!-- TODO -->
-    <string name="calendarMode_minguo">Minguo</string>  <!-- TODO -->
-    <string name="calendarMode_indian">Indian</string>  <!-- TODO -->
-    <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
+    <string name="calendarMode_chinese">Chinese</string>
+    <string name="calendarMode_korean">Korean</string>
+    <string name="calendarMode_vietnamese">Vietnamese</string>
+    <string name="calendarMode_minguo">Minguo</string>
+    <string name="calendarMode_indian">Indian</string>
+    <string name="calendarMode_japanese">Japanese</string>
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Today</string>                  <!-- setting -->
