@@ -868,7 +868,7 @@ public class AlarmNotifications extends BroadcastReceiver
      * @return channelID
      */
     @TargetApi(26)
-    protected static String createNotificationChannel(Context context, @Nullable AlarmClockItem.AlarmType type)
+    public static String createNotificationChannel(Context context, @Nullable AlarmClockItem.AlarmType type)
     {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null)

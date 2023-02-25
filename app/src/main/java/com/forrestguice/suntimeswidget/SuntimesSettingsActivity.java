@@ -64,6 +64,8 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
@@ -2136,6 +2138,27 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             intent.addCategory(Intent.CATEGORY_DEFAULT);
             intent.setData(Uri.parse("package:" + context.getPackageName()));
         }
+        context.startActivity(intent);
+    }
+
+    private static Preference.OnPreferenceClickListener onChannelPrefsClicked(final Context context, final @NonNull AlarmClockItem.AlarmType type)    // TODO
+    {
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                openChannelSettings(context, type);
+                return false;
+            }
+        };
+    }
+
+    @TargetApi(26)
+    public static void openChannelSettings(@NonNull Context context, @NonNull AlarmClockItem.AlarmType type)
+    {
+        Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+        intent.putExtra(Settings.EXTRA_CHANNEL_ID, AlarmNotifications.createNotificationChannel(context, type));
         context.startActivity(intent);
     }
 
