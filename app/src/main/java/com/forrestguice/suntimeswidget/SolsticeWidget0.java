@@ -28,8 +28,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset1;
-import com.forrestguice.suntimeswidget.layouts.SolsticeLayout;
-import com.forrestguice.suntimeswidget.layouts.SolsticeLayout_1x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout_1x1_0;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;

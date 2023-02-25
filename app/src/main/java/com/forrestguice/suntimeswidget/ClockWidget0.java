@@ -25,8 +25,8 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
-import com.forrestguice.suntimeswidget.layouts.ClockLayout;
-import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 

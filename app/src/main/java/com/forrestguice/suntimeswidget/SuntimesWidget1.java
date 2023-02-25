@@ -29,8 +29,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**

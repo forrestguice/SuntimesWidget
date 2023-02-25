@@ -25,11 +25,8 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_1;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X3_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X3_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;

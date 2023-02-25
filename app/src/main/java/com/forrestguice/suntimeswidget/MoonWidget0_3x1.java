@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_3x1_0;
 
 public class MoonWidget0_3x1 extends MoonWidget0
 {

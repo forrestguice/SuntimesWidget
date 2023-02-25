@@ -27,10 +27,9 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x2_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_3x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 

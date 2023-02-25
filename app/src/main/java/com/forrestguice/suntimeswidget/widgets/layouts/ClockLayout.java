@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2022 Forrest Guice
+   Copyright (C) 2019-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,11 +26,12 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-public abstract class DateLayout extends SuntimesLayout
+public abstract class ClockLayout extends SuntimesLayout
 {
+
     protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
 
-    public DateLayout()
+    public ClockLayout()
     {
         initLayoutID();
     }
@@ -49,7 +50,7 @@ public abstract class DateLayout extends SuntimesLayout
      * @param appWidgetId the android widget ID to update
      * @param views the RemoteViews to apply the data to
      */
-    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)   // TODO: data
+    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
