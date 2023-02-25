@@ -1059,6 +1059,7 @@
     <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->
 
+    <string name="notificationChannelWarning">@string/notificationsWarning</string>  <!-- snackbar message -->    <!-- TODO -->
     <string name="notificationChannel_alarms_title">@string/alarmMode_alarm</string>  <!-- notification channel title -->   <!-- TODO -->
     <string name="notificationChannel_alarms_desc">@string/alarmMode_alarm</string>  <!-- notification channel title -->   <!-- TODO -->
     <string name="notificationChannel_notifications0_title">@string/alarmMode_notification</string>  <!-- notification channel title -->   <!-- TODO -->

@@ -137,6 +137,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final int REQUEST_SETTINGS = 20;
 
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
+    public static final String WARNINGID_NOTIFICATIONS_CHANNEL = "NotificationsChannelWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION = "BatteryOptimizationWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION_SONY = "BatteryOptimizationWarning_sony";
 
@@ -147,6 +148,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private BottomSheetBehavior sheetBehavior;
 
     private SuntimesWarning notificationWarning;
+    private SuntimesWarning[] notificationChannelWarning = null;   // remains null for api < 26
     private SuntimesWarning batteryOptimizationWarning = null;   // remains null for api < 23
     private SuntimesWarning batteryOptimizationWarning_sony = null;   // remains null for non-sony devices
     private List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
@@ -884,6 +886,14 @@ public class AlarmClockActivity extends AppCompatActivity
         notificationWarning = new SuntimesWarning(WARNINGID_NOTIFICATIONS);
         warnings.add(notificationWarning);
 
+        if (Build.VERSION.SDK_INT >= 26)
+        {
+            notificationChannelWarning = new SuntimesWarning[AlarmClockItem.AlarmType.values().length];
+            for (int i=0; i<notificationChannelWarning.length; i++) {
+                warnings.add(notificationChannelWarning[i] = new SuntimesWarning(WARNINGID_NOTIFICATIONS_CHANNEL + i));
+            }
+        }
+
         if (Build.VERSION.SDK_INT >= 23) {
             batteryOptimizationWarning = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION);
             warnings.add(batteryOptimizationWarning);
@@ -933,6 +943,29 @@ public class AlarmClockActivity extends AppCompatActivity
             return;
         }
 
+        if (showWarnings && notificationChannelWarning != null)
+        {
+            final AlarmClockItem.AlarmType[] types = AlarmClockItem.AlarmType.values();
+            for (int i=0; i<notificationChannelWarning.length; i++)
+            {
+                SuntimesWarning warning = notificationChannelWarning[i];
+                if (warning != null && warning.shouldShow() && !warning.wasDismissed())
+                {
+                    final int j = ((i < types.length) ? i : 0);
+                    warning.initWarning(this, addButton, getString(R.string.notificationChannelWarning));
+                    warning.getSnackbar().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View view) {
+                            SuntimesSettingsActivity.openChannelSettings(AlarmClockActivity.this, types[j]);
+                        }
+                    });
+                    warning.show();
+                    return;
+                }
+            }
+        }
+
         if (showWarnings && batteryOptimizationWarning != null
                 && batteryOptimizationWarning.shouldShow() && !batteryOptimizationWarning.wasDismissed())
         {
@@ -971,6 +1004,19 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         notificationWarning.setShouldShow(!NotificationManagerCompat.from(this).areNotificationsEnabled());
+        if (notificationChannelWarning != null)
+        {
+            AlarmClockItem.AlarmType[] types = AlarmClockItem.AlarmType.values();
+            for (int i=0; i<notificationChannelWarning.length; i++)
+            {
+                SuntimesWarning warning = notificationChannelWarning[i];
+                if (warning != null) {
+                    boolean value = AlarmSettings.isChannelMuted(this, types[i]);
+                    warning.setShouldShow(value);
+                    Log.d("DEBUG", "setShouldShow: " + value);
+                }
+            }
+        }
         if (batteryOptimizationWarning != null) {
             batteryOptimizationWarning.setShouldShow(!AlarmSettings.isIgnoringBatteryOptimizations(this));
         }
