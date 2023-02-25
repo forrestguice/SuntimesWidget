@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SuntimesLayout
 {
+    public static final int MAX_SP = 72;
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
     protected int layoutID;

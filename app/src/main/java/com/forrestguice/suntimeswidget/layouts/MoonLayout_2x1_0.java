@@ -107,7 +107,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
                 }
                 int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2] + 32)) / 2,
                         ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
-                float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
+                float maxSp = SuntimesLayout.MAX_SP;
                 float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
                 if (adjustedSizeSp[0] > timeSizeSp)
                 {

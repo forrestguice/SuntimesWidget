@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
@@ -29,7 +28,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public class SunLayout_3x1_0 extends SunLayout_2x1_0
 {
@@ -67,7 +65,7 @@ public class SunLayout_3x1_0 extends SunLayout_2x1_0
         numCols += showSolarNoon ? 1 : 0;
         int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2] + 32)) / numCols,
                                  ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
-        float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
+        float maxSp = SuntimesLayout.MAX_SP;
         return adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
     }
 

@@ -84,7 +84,7 @@ public class SunLayout_2x1_0 extends SunLayout
         numRows += showDayDelta ? 1 : 0;
         int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2] + 32)) / numCols,
                 ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
-        float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
+        float maxSp = SuntimesLayout.MAX_SP;
         return adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
     }
 

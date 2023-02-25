@@ -28,7 +28,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public abstract class ClockLayout extends SuntimesLayout
 {
-    public static final int CLOCKFACE_MAX_SP = 72;
 
     protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
 
