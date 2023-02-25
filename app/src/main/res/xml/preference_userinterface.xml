@@ -26,6 +26,26 @@
             android:widgetLayout="@layout/layout_pref_themewidget"
             android:summary="%s" />
 
+        <com.forrestguice.suntimeswidget.settings.TextSizePreference
+            android:key="app_appearance_textsize"
+            android:title="@string/configLabel_ui_textsize"
+            android:summary="@string/configLabel_ui_textsize_summary"
+            android:entries="@array/textSize_display" android:entryValues="@array/textSize_values"
+            android:defaultValue="@string/def_app_appearance_textsize" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="custom_events"
+        android:title="@string/configLabel_ui_fields1">
+
+        <Preference
+            android:key="manage_events"
+            android:title="@string/configLabel_manageEvents"
+            android:icon="?attr/icActionEvents"
+            android:summary="@string/configLabel_manageEvents_summary"
+            android:persistent="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -75,6 +95,13 @@
     <PreferenceCategory
         android:title="@string/configLabel_ui">
 
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_ui_emphasizefield"
+            android:title="@string/configLabel_ui_emphasizefield_text"
+            android:summary="@string/configLabel_ui_emphasizefield_summary"
+            android:entries="@array/emphasizefield_display" android:entryValues="@array/emphasizefield_values"
+            android:defaultValue="@string/def_app_ui_emphasizefield" />
+
         <CheckBoxPreference
             android:key="app_ui_showheader_icon"
             android:title="@string/configLabel_ui_showheader_icon"
@@ -86,6 +113,12 @@
             android:summary="@string/configLabel_ui_showheader_text_summary"
             android:entries="@array/headerText_display" android:entryValues="@array/headerText_values"
             android:defaultValue="@string/def_app_ui_showheader_text" />
+
+        <CheckBoxPreference
+            android:key="app_ui_showmapbutton"
+            android:title="@string/configLabel_ui_showmapbutton"
+            android:summary="@string/configLabel_ui_showmapbutton_summary"
+            android:defaultValue="@string/def_app_ui_showmapbutton" />
 
         <CheckBoxPreference
             android:key="app_ui_showdatasource"
@@ -104,6 +137,11 @@
             android:title="@string/configLabel_ui_showmoon"
             android:summary="@string/configLabel_ui_showmoon_summary"
             android:defaultValue="@string/def_app_ui_showmoon" />
+        <CheckBoxPreference
+            android:key="app_ui_showmoon_noon"
+            android:title="@string/configLabel_ui_showmoon_noon"
+            android:summary="@string/configLabel_ui_showmoon_noon_summary"
+            android:defaultValue="@string/def_app_ui_showmoon_noon" />
 
         <CheckBoxPreference
             android:key="app_ui_showequinox"
@@ -111,12 +149,24 @@
             android:summary="@string/configLabel_ui_showEquinox_summary"
             android:defaultValue="@string/def_app_ui_showequinox" />
 
+        <CheckBoxPreference
+            android:key="app_ui_showcrossquarter"
+            android:title="@string/configLabel_ui_showCrossQuarter"
+            android:summary="@string/configLabel_ui_showCrossQuarter_summary"
+            android:defaultValue="@string/def_app_ui_showcrossquarter" />
+
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_general_trackingmode"
             android:title="@string/configLabel_ui_solsticeTrackingMode"
             android:summary="@string/configLabel_ui_solsticeTrackingMode_summary"
             android:entries="@array/solsticeTrackingMode_display" android:entryValues="@array/solsticeTrackingMode_values"
             android:defaultValue="@string/def_appwidget_0_general_trackingmode" />
+
+        <com.forrestguice.suntimeswidget.settings.LengthPreference
+            android:key="appwidget_0_general_observerheight"
+            android:title="@string/configLabel_general_observerheight"
+            android:summary="@string/configLabel_general_observerheight_summary"
+            android:defaultValue="@string/def_appwidget_0_general_observerheight" />
 
         <CheckBoxPreference
             android:key="app_ui_showwarnings"

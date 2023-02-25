@@ -1,5 +1,182 @@
 ### ~
 
+### v0.15.1 (2023-02-15)
+* adds themed icon (Android 13+).
+* adds Chinese, Indian, Japanese, Korean, Minguo, and Vietnamese calendars to the date widget (#692).
+* adds %eZ@ (azimuth), %eD@ (declination), and %eR@ (right ascension) title substitutions (#677).
+* fixes bug "app crash when showing moon dialog from shortcut" (#691).
+* fixes bug "widgets crash with Lawnchair" (#690).
+* fixes bug "navigation bar is white instead of black with dark theme" (#696).
+* fixes bug where the main table header displays azimuth at civil twilight instead of sunrise/sunset.
+* fixes bug where scaled text is cropped in 1x1 moon widget and 1x1 date widget.
+* updates translation to Norwegian (nb) (#693 by FTno).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#688 by James Liu).
+
+### v0.15.0 (2023-01-31)
+* adds "Welcome Dialog"; a guided introduction and initial configuration wizard (#603).
+* adds "High Contrast" app themes (#492, #615); changes default theme to "System default" (#666).
+* adds "Text Size" setting; display "small", "normal", "large", or "extra-large" text (#492, #615, #622, #656).
+* adds support for "Quick Settings" tiles; show information in the settings tray; "clock tile" and "next event tile" (#399).
+* adds support for "Cross-Quarter Days" (#551); solstice and equinox midpoints.
+* adds support for custom sun elevation events. Show custom events from a widget, or use them to schedule alarms and notifications (#522, #537, #598).
+* adds "date" widget; show the date using different calendars (Coptic, Ethiopian, Gregorian, Hebrew, Julian, Solar Hijiri, Thai Solar) (#398); adds "date" option to clock widget (Gregorian).
+* adds support for "Quick Notifications" (#552); notifications are automatically dismissed after a few moments.
+* adds alarm "note"; show user-defined text as part of notifications and other UI; supports %s substitutions.
+* adds alarm "snooze limit" option; defaults to "no limit".
+* adds support for alarm challenges (and addons); dismiss alarms after solving "easy math" problems; dismiss alarms with an NFC tag (https://github.com/forrestguice/SuntimesNFC).
+* adds alarm "reminder" option (#628), and "reminder action" option; notifications may perform a custom action when dismissed.
+* enhances alarm cards; list UI now indicates state, animates sounding and snoozing states, and displays action buttons when applicable.
+* adds alarm list sort options; "Enabled First", "Show Offsets" (#611); adds "Clear Selection" button.
+* adds "Altitude Graph" to Sun Position dialog; adds 3x2 "Altitude Graph" to sun position widgets (#625).
+* adds "Seek Altitude" to Sun Position dialog (#625); jump to sunrise, sunset, noon, or user-defined sun elevation.
+* adds Moon dialog playback controls; step forward/back by 5m increments.
+* adds "lunar noon" and "lunar midnight" to Moon dialog; enhances rise/set view (swipe-able, seeks forward/back).
+* adds "moon day" widget (#345); show number of days since the new moon.
+* changes the main card to display moon illumination as a range (#384, #572).
+* adds "Emphasize Field" to User Interface settings; enlarges text displayed by main table (#622, #615).
+* removes "Set Date" dialog; replaced with "View Date" (#613); cards now seek to date instead of (re)centering.
+* enhances solstice/equinox card (swipe-able, cross-quarter dates).
+* adds 3x1 sun widget (#423); an expanded version of the 2x1 widget.
+* adds "use app time zone" widget option.
+* adds TimeZone dialog preview; replaces TimeZone dialog sort action mode with a context menu.
+* misc dialog improvements; updates to Location, Date, and TimeZone dialog layouts.
+* misc settings; "object shadow" moved from "General" to "User Interface".
+* fixes bug "sun/moon drop-downs show wrong data" (#613).
+* fixes bug "sun position is out of alignment" (#601).
+* fixes bug where already enabled alarms fail to reschedule after modifying alarm details.
+* fixes tooltip help (now available for all buttons); press and hold to display help.
+* increments alarm database version 3 -> 4; adds "note", "flags", "actionID2", and "actionID3" columns.
+* increments `CalculatorProviderContract` version 4 -> 5; adds columns for cross-quarter days, tropical year, text size, time zone mode, solar time mode, and eot.
+
+### v0.14.12 (2022-12-22)
+* adds a boot notification if battery optimization is enabled (and alarms are active).
+* fixes bug "dismiss alarm fails to remove alarm notification" (#665).
+* fixes bug when re-scheduling repeating moon phase alarms (#494; "unreliable full moon alarm").
+* fixes bug where toast messages are unreadable when using system dark mode (white text on a white background) (Android 12) (#660).
+* fixes bug in AlarmEditActivity where the UI fails to display the configured label.
+* fixes bug "alarm reminder is not shown after changing 'reminder within' setting" (#659).
+* fixes potential NPE in AlarmNotifications `updateAlarmTime_` methods when repeatingDays is null.
+* fixes potential NPE in AlarmEditActivity when alarm location is null.
+* fixes potential NPE in AlarmAddons when addon event pickers supply an invalid uri (missing provider, missing permissions).
+
+### v0.14.11 (2022-11-29)
+* adds permission REQUEST_IGNORE_BATTERY_OPTIMIZATIONS (#651) [PERMISSION]; SuntimesAlarms now makes a direct request to be added to the whitelist.
+* adds a help dialog that explains battery optimization warnings; adds online help; a revised message is shown for devices that are likely to break alarms.
+* adds data substitutions `eot` (formatted equation of time), and `eot_m` (equation of time millis) (#649).
+* adds "Boot Completed" to the Alarm Settings; shows reboot information and manually triggers "reschedule all" (#653).
+* adds a foreground service notification that is shown while rescheduling all alarms (#653).
+* changes SuntimesAlarms to reschedule all alarms after an app upgrade (ACTION_MY_PACKAGE_REPLACED), or if it detects that boot_completed has failed to run.
+* adds `suntimes.action.widgets.UPDATE_ALL` to SuntimesActivity (#649); causes app launch to also trigger a widget update.
+* adds `OPEN_SETTINGS` to widget actions; enhances the action editor with Suntimes specific action suggestions.
+* fixes bug 'alarm list shows stale values when opened immediately after reboot' (#647).
+* fixes bug 'unable to disable alarm reminder notification' (#650); adds 'never' button to preference dialog; notification can now be dismissed by swiping.
+* fixes bug in LocationDialog where the spinner is blank after canceling PlacesActivity request.
+* fixes bug in LocationDialog where location request doesn't automatically start after granting permissions.
+* fixes crash in LocationDialog when clicking "Use last position".
+* miscellaneous 2x1 sun widget fixes; scale text/icons, centers layout (#423).
+* updates translation to Norwegian (nb) (#648 by FTno).
+* updates translation to Traditional Chinese (zh_TW) (#646, #657 by James Liu).
+* updates translation to Simplified Chinese (zh_CN) (#645 by sr093906, #646, #657 by James Liu).
+
+### v0.14.10 (2022-11-08)
+* adds "abbreviated month names" widget option (#625).
+* adds a help dialog to the alarm edit activity (#628); adds "day light saving" to main help dialog.
+* fixes bug "alarms do not compensate for time zone changes" (#643).
+* fixes bug "BOOT_COMPLETED fails to reschedule stale alarms" (#641).
+* fixes bug "alarm list doesn't update after repeating alarms are dismissed" (#640).
+* fixes bug where the "light theme" is only partially applied (when system dark mode is also enabled).
+* fixes 3x1 sun position widget "scale text and icons" option; changes labels to bold for better readability (#625).
+
+### v0.14.9 (2022-10-26)
+* adds "update all" to widget actions (#625).
+* adds a warning to SuntimesAlarms when battery optimization is enabled (api23+), or STAMINA mode is enabled (sony devices only).
+* fixes app crash when the default alarm ringtone is unavailable (#634).
+* fixes wrong/missing colors when using system dark mode.
+* fixes "size of sun in 2x1 and 3x1 lightmap widgets" (#624).
+* fixes lightmap "long click" to be consistent with a normal click.
+* fixes alarm notification "dismiss" label to help improve context (#628).
+* updates build; gradle wrapper to `gradle-5.0`.
+* updates translation to Norwegian (nb) (#632 by FTno).
+* updates translation to German (de) (#631 by CSTRSK).
+* updates translation to Czech (cs) (#630 by utaxiu).
+
+### v0.14.8 (2022-09-26)
+* fixes crash when location is set to high latitudes (#623).
+* fixes appearance of location icons when using system dark mode.
+* fixes bug where the "observer height" preference sometimes displays stale values.
+* adds link to online help for widget "title substitutions".
+* updates translation to Polish and Esperanto (eo, pl) (#619 by Verdulo).
+
+### v0.14.7 (2022-08-02)
+* adds support for system dark mode (night mode).
+* adds option to show/hide the map button; fixes map icon (#573).
+* fixes app crash when changing locales (#482).
+* fixes app crash when exporting alarms (#612).
+* fixes bug "alarm import/export does not retain sorted order" (#610).
+* fixes bug "alarm list is not sorted after adding items" (#609).
+
+### v0.14.6 (2022-06-04)
+* fixes crash when changing an alarm's time/event (#605).
+* fixes bug where units setting is ignored (altitude displayed in feet) (#604); [Android Go]
+* updates translation to Czech (cs) (#606 by utaxiu).
+
+### v0.14.5 (2022-05-14)
+* fixes bug "default alarm sound fails to play" (#593); adds fallback ringtones (rtttl).
+* fixes bug "sounding/snoozing notification is unexpectedly canceled" (#594).
+* fixes bugs in alarm dialog; dialog creates items of wrong type; dialog last selection not saved.
+* fixes bug where alarm import is unable to select previously exported files (#588).
+* adds export file selection (alarms/places/themes) using Storage Access Framework (api19+) (older devices still use `ACTION_SEND`).
+* adds import warning dialog; alarm sounds and actions may revert to defaults (not retained).
+* adds widget title %substitutions; %em (event time millis), %et (formatted event time), %eT (formatted event time w/ seconds), and %eA (event angle) (#599).
+
+### v0.14.4 (2022-05-03)
+* adds import/export to SuntimesAlarms (#588); save and load alarms as JSON.
+* adds widget layouts (3x1 sun position); show the lightmap graph with reduced height (#589).
+* extends map widgets to use the dialog configuration; shared options for center/background/tint, sunlight/moonlight, location, latitudes, and graticule (#493).
+* extends the widget action dialog to suggest package/class names (#546).
+* fixes bug where widget actions that use an explicit intent fail to launch (#546).
+* fixes bug where widget action extras are not correctly applied (#546); ints omitted, longs applied as String.
+* fixes bug where the sun position dialog and map dialog animations run in the background (#582).
+* fixes bug in sun position widgets where the theme colors aren't applied; fixes default colors (#589); adds graph pointFill and pointStroke colors.
+* fixes bug where single-select menu items are displayed as checkboxes instead of radio buttons (#590).
+* fixes bug where the widget theme spinner fails to show the background preview.
+* fixes issue with 'Advanced' settings discoverability (#581).
+* fixes SuntimesAlarms intent-filter to support standard AlarmClock intents; `android.intent.action.SHOW_ALARMS`, `android.intent.action.DISMISS_ALARM` (`EXTRA_ALARM_SEARCH_MODE`), and `android.intent.action.SNOOZE_ALARM` (`android.intent.extra.alarm.SNOOZE_DURATION`); adds 'snooze alarm' and 'dismiss alarm' default actions.
+* updates translation to Polish and Esperanto (eo, pl) (#585 by Verdulo).
+* updates translation to Brazilian Portuguese (pt-br) (#587 by naoliv).
+
+### v0.14.3 (2022-04-11)
+* adds click to solar noon field; opens the lightmap dialog (#562).
+* changes click on sunrise/sunset headers; opens the lightmap dialog if configured to show azimuth (#562).
+* fixes lunar noon field; omit on days it doesn't occur (#572).
+* fixes bug "solstice dialog 'view date' menu doesn't work" (#577).
+* fixes bug where the AlarmNotifications service fails to stop (battery use in background) (#575).
+* fixes ANR when showing alarm dialog (#576); misc changes to ringtone management.
+* fixes app crash when using 'fallback to last location'.
+* fixes bug where changes made in the PlacesActivity aren't displayed by the location spinner.
+* changes action prefix to "suntimes.action"; remaps legacy actions.
+* misc layout changes (enlarged click areas); misc cleanup/refactoring.
+
+### v0.14.2 (2022-03-14)
+* fixes crash when using 'sun position' app shortcut (#567).
+* fixes bug where "search places doesn't work" (#566).
+* fixes bug where '1x1 moon widget' illumination is always displayed (fails to be hidden) (#563).
+* changes default 'time zone mode' back to `system`; reverts change from 7c288be (#565).
+* adds extras to SuntimesActivity intent; `ACTION_VIEW_SUN` and `ACTION_VIEW_WORLDMAP` now accept `EXTRA_SHOW_DATE`; `ACTION_ADD_ALARM` accepts `EXTRA_SOLAREVENT`.
+* updates translation to Norwegian (nb) (#568 by FTno).
+* updates translations to Polish (pl) and Esperanto (eo) (#571 by Verdulo).
+
+### v0.14.1 (2022-02-22)
+* fixes crash when using "current location" (#556).
+* fixes bug "lightmap for tomorrow card fails to display" (#557).
+* fixes bug "content-provider supplies the wrong time zone" (#554).
+* adds default world places; ~34 additional locations.    
+* adds 'online-help' link to actions help dialog (#489, #546).
+* changes default 'solar time' mode to Local Mean Time.
+* minor fixes to `en` translations; e.g. `en_US` and `en_CA` display 'fall equinox'.
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#553 by James Liu).
+* updates translation to Norwegian (nb) (#561 by FTno).
+
 ### v0.14.0 (2022-02-07)
 * extends add-on functionality; adds content-providers for actions, alarms, and alarm events.
 * adds support for add-on alarms; set an alarm depending on a calculation (#516); the alarm dialog displays a popup menu of add-on AlarmPickers (hidden if none).

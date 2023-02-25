@@ -23,7 +23,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="125dp"
         android:orientation="vertical" android:gravity="start"
-        android:background="?graphColor_background">
+        android:background="?dialogBackground">
 
         <TextView android:id="@+id/worldmapdialog_title" style="@style/TableHeadTextView"
             android:text="@string/worldmap_dialog_title"
@@ -74,7 +74,7 @@
             android:layout_width="48dp" android:layout_height="48dp"
             android:background="?attr/selectableItemBackground"
             android:contentDescription="@string/worldmap_dialog_action_menu"
-            android:src="?attr/icActionMap"
+            android:src="?attr/icActionWorldMap"
             app:layout_constraintEnd_toStartOf="@+id/info_time_worldmap_layout" app:layout_constraintBottom_toTopOf="@+id/media_actions"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
             style="?attr/actionOverflowButtonStyle" />
@@ -100,7 +100,7 @@
                 android:gravity="center" android:layout_gravity="center"
                 android:visibility="gone"
                 android:layout_margin="16dp"
-                android:textSize="12sp"
+                android:textSize="?attr/text_size_small"
                 android:text="@string/feature_not_supported_by_source" />
 
         </FrameLayout>
@@ -136,7 +136,8 @@
                 <TextView
                     style="@style/SunsetTimeTextView"
                     android:id="@+id/info_time_offset"
-                    android:layout_width="0dp" android:layout_weight="3" android:minWidth="50dp" android:maxWidth="60dp" android:layout_height="wrap_content"
+                    android:layout_width="0dp" android:layout_weight="3" android:minWidth="50dp" android:maxWidth="65dp" android:layout_height="wrap_content"
+                    android:minLines="2" android:maxLines="3"
                     tools:text="30m\nfrom now" android:gravity="center_horizontal" />
 
                 <ImageButton

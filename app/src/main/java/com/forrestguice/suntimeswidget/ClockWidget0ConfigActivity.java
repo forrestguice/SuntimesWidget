@@ -45,6 +45,9 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_clockwidget0));
 
+        showOptionShowDate(true);
+        // TODO: date pattern config
+
         showOptionRiseSetOrder(false);
         hideOptionUseAltitude();
         hideOptionCompareAgainst();

@@ -46,6 +46,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionShowNoon(false);
         showOptionLabels(true);
         showOptionTimeDate(true);
+        showOptionAbbrvMonth(true);
         hideOptionCompareAgainst();
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);
@@ -53,6 +54,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         showOption3x1LayoutMode(true);
         showOptionLocalizeHemisphere(true);
         //showDataSource(false);
+        showOptionDateOffset(true);
     }
 
     @Override

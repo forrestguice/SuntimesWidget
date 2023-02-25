@@ -28,9 +28,12 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/app_menubar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content" android:minHeight="?attr/actionBarSize"
+            android:paddingBottom="2dp"
             android:background="?attr/colorPrimary"
             android:theme="?attr/toolbarTheme"
+            app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
+            app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
             app:popupTheme="?attr/actionBarPopupTheme" />
 
         <LinearLayout
@@ -108,6 +111,7 @@
                     style="@style/SunsetTimeCard" android:orientation="horizontal" android:gravity="center"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_gravity="bottom"
                     android:layout_marginBottom="0dp" android:layout_marginTop="4dp"
+                    android:paddingLeft="0dp" android:paddingRight="0dp"
                     android:paddingTop="0dp" android:paddingBottom="0dp"
 
                     app:layout_constraintStart_toStartOf="parent"
@@ -139,9 +143,10 @@
             android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
             android:layout_marginBottom="6dp">
 
-            <com.forrestguice.suntimeswidget.EquinoxView
+            <com.forrestguice.suntimeswidget.equinox.EquinoxCardView
                 android:id="@+id/info_date_solsticequinox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_margin="0dp" android:padding="0dp"
                 app:minimized="true" />
 
         </LinearLayout>

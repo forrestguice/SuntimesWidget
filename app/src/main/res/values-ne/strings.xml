@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Kathmandu</string>
+    <string name="default_location_latitude">27.73078</string>     <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">85.32092</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">1400</string>         <!-- meters -->
+</resources>

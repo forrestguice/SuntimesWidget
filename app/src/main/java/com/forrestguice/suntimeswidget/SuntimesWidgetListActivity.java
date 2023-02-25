@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.widgets.DateWidget0;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,7 +106,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(icicle);
         SuntimesUtils.initDisplayStrings(this);
 
@@ -371,6 +372,10 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             return appWidgetId;
         }
 
+        public String getWidgetClass() {
+            return widgetClass;
+        }
+
         public String getConfigClass()
         {
             return configClass;
@@ -406,7 +411,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 SuntimesWidget0.class.getName(), SuntimesWidget0_2x1.class.getName(), SuntimesWidget1.class.getName(), SolsticeWidget0.class.getName(),
                 MoonWidget0.class.getName(), MoonWidget0_2x1.class.getName(), MoonWidget0_3x1.class.getName(), MoonWidget0_3x2.class.getName(),
                 SuntimesWidget2.class.getName(), SuntimesWidget2_3x1.class.getName(), SuntimesWidget2_3x2.class.getName(), SuntimesWidget2_3x3.class.getName(),
-                ClockWidget0.class.getName(), ClockWidget0_3x1.class.getName()
+                ClockWidget0.class.getName(), ClockWidget0_3x1.class.getName(), DateWidget0.class.getName()
         };
 
         public ComponentName[] getAllWidgetClasses()
@@ -414,7 +419,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             ArrayList<ComponentName> components = new ArrayList<>();
             for (WidgetListItem widget : widgets)
             {
-                ComponentName component = new ComponentName(widget.packageName, widget.widgetClass);
+                ComponentName component = new ComponentName(widget.getPackageName(), widget.getWidgetClass());
                 if (!components.contains(component)) {
                     components.add(component);
                 }
@@ -484,6 +489,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
                 SuntimesData data;
                 String widgetTitle;
+                int widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern;
                 String widgetType = getWidgetName(context, widgetClass);
                 String widgetClass0 = simpleClassName(widgetClass);
                 String configClass = info.configure.getClassName();
@@ -500,9 +506,10 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                     data = data0;
 
-                } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1")) {
+                } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1") ||  widgetClass0.equals("DateWidget0")) {
                     SuntimesClockData data0 = new SuntimesClockData(context, id);
                     widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                    widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern1;
                     data = data0;
 
                 } else {
@@ -513,7 +520,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String source = ((data == null || data.calculatorMode() == null) ? "def" : data.calculatorMode().getName());
-                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, widgetType, source);
+                String summary = context.getString(widgetSummaryResID, widgetType, source);
                 items.add(new WidgetListItem(packageName, widgetClass, id, ContextCompat.getDrawable(context, widgetIcon), title, summary, configClass));
             }
             return items;
@@ -591,6 +598,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             switch (simpleClassName(widgetClass))
             {
+                case "DateWidget0":
+                    return context.getString(R.string.configLabel_widgetList_itemTitlePattern2);
                 case "ClockWidget0": case "ClockWidget0_3x1":
                 case "MoonWidget0": case "MoonWidget0_2x1": case "MoonWidget0_3x1": case "MoonWidget0_3x2":
                 case "SuntimesWidget2": case "SuntimesWidget2_3x1": case "SuntimesWidget2_3x2": case "SuntimesWidget2_3x3":
@@ -608,6 +617,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 case "SolsticeWidget0": return context.getString(R.string.app_name_solsticewidget0);
                 case "ClockWidget0": return context.getString(R.string.app_name_clockwidget0);
                 case "ClockWidget0_3x1": return context.getString(R.string.app_name_clockwidget0) + " (3x1)";
+                case "DateWidget0": return context.getString(R.string.app_name_datewidget0);
                 case "MoonWidget0": return context.getString(R.string.app_name_moonwidget0);
                 case "MoonWidget0_2x1": return context.getString(R.string.app_name_moonwidget0) + " (2x1)";
                 case "MoonWidget0_3x1": return context.getString(R.string.app_name_moonwidget0) + " (3x1)";

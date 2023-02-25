@@ -57,7 +57,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.AlarmDialog;
@@ -96,8 +96,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";
 
-    public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.alarmclock.ALARM";
-    public static final String ACTION_ADD_NOTIFICATION = "com.forrestguice.suntimeswidget.alarmclock.ADD_NOTIFICATION";
+    public static final String ACTION_ADD_ALARM = "suntimes.action.alarmclock.ALARM";
+    public static final String ACTION_ADD_NOTIFICATION = "suntimes.action.alarmclock.ADD_NOTIFICATION";
 
     public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";
@@ -182,10 +182,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+        appThemeResID = AppSettings.setTheme(this, appTheme);
 
-        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
-        if (themeName != null) {
+        String themeName = AppSettings.getThemeOverride(this, appTheme);
+        if (themeName != null && WidgetThemes.hasValue(themeName)) {
             Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
             appThemeOverride = WidgetThemes.loadTheme(this, themeName);
         }
@@ -657,7 +657,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         if (eventDialog0 == null)
         {
             final AlarmDialog dialog = new AlarmDialog();
-            dialog.setDialogTitle((type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
+            dialog.setDialogTitle(getString((type == AlarmClockItem.AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
             initEventDialog(dialog, null);
             dialog.setType(type);
             dialog.setChoice(SolarEvents.SUNRISE.name());
@@ -692,9 +692,12 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
         if (alarm.ringtoneURI != null)
         {
-            Ringtone ringtone = RingtoneManager.getRingtone(this, ringtoneUri);
-            alarm.ringtoneName = ringtone.getTitle(this);
-            ringtone.stop();
+            if (alarm.ringtoneURI.equals(AlarmSettings.VALUE_RINGTONE_DEFAULT)) {
+                alarm.ringtoneURI = AlarmSettings.getDefaultRingtoneUri(this, type).toString();
+                alarm.ringtoneName = AlarmSettings.getDefaultRingtoneName(this, type);
+            } else {
+                alarm.ringtoneName = AlarmSettings.getRingtoneName(this, ringtoneUri);
+            }
         }
 
         alarm.setState(alarm.enabled ? AlarmState.STATE_NONE : AlarmState.STATE_DISABLED);
@@ -797,6 +800,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
 
         @Override
+        public void onRequestNote(AlarmClockItem forItem) { /*pickNote(forItem)*/ }
+
+        @Override
         public void onRequestRingtone(AlarmClockItem forItem)
         {
             pickRingtone(forItem);
@@ -806,6 +812,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         public void onRequestAction(AlarmClockItem forItem, int actionNum)
         {
             pickAction(forItem, actionNum);
+        }
+
+        @Override
+        public void onRequestDismissChallenge(AlarmClockItem forItem) {
         }
 
         @Override
@@ -919,6 +929,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         public void onRequestLabel(AlarmClockItem forItem) { /* EMPTY */ }
 
         @Override
+        public void onRequestNote(AlarmClockItem forItem) {
+        }
+
+        @Override
         public void onRequestRingtone(AlarmClockItem forItem) {
             // TODO
         }
@@ -954,6 +968,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
 
         @Override
+        public void onRequestDismissChallenge(AlarmClockItem forItem) {
+        }
+
+        @Override
         public void onRequestDialog(AlarmClockItem forItem) { /* EMPTY */ }
     };
 
@@ -964,7 +982,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
         final AlarmDialog dialog = new AlarmDialog();
-        dialog.setDialogTitle((item.type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
+        dialog.setDialogTitle(getString((item.type == AlarmClockItem.AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
         initEventDialog(dialog, item.location);
         dialog.setChoice(item.getEvent());
         dialog.setOnAcceptedListener(onSolarEventChanged);
@@ -1334,7 +1352,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.type.getDisplayString());
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, new AlarmSettings().setDefaultRingtone(this, item.type));   // setDefaultRingtone may block (potential ANR)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);

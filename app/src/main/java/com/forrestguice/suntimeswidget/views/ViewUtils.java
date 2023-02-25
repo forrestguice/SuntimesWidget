@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2019-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,10 +20,27 @@ package com.forrestguice.suntimeswidget.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Build;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.view.View;
+import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import com.forrestguice.suntimeswidget.views.Toast;
+
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import java.util.Calendar;
 
 public class ViewUtils
 {
@@ -93,4 +110,69 @@ public class ViewUtils
             }
         }
     }
+
+    public static void initPeekHeight(DialogInterface dialog, int bottomViewResId)
+    {
+        if (dialog != null) {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            if (layout != null)
+            {
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                View divider1 = bottomSheet.findViewById(bottomViewResId);
+                if (divider1 != null)
+                {
+                    Rect headerBounds = new Rect();
+                    divider1.getDrawingRect(headerBounds);
+                    layout.offsetDescendantRectToMyCoords(divider1, headerBounds);
+                    behavior.setPeekHeight(headerBounds.bottom); // + (int)getResources().getDimension(R.dimen.dialog_margin));
+
+                } else {
+                    behavior.setPeekHeight(-1);
+                }
+            }
+        }
+    }
+
+    public static void disableTouchOutsideBehavior(Dialog dialog)
+    {
+        Window window = (dialog != null ? dialog.getWindow() : null);
+        if (window != null) {
+            View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
+            decorView.setOnClickListener(null);
+        }
+    }
+
+    /**
+     * shareItem; copy event display string and formatted timestamp to the clipboard.
+     */
+    public static void shareItem(Context context, @Nullable String itemString, long itemMillis)
+    {
+        if (itemMillis != -1L)
+        {
+            Calendar itemTime = Calendar.getInstance();
+            itemTime.setTimeInMillis(itemMillis);
+            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
+
+            SuntimesUtils utils = new SuntimesUtils();
+            SuntimesUtils.initDisplayStrings(context);
+            String itemDisplay = context.getString(R.string.share_format, (itemString != null ? itemString : ""), utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            {
+                ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                if (clipboard != null) {
+                    clipboard.setPrimaryClip(ClipData.newPlainText((itemString != null ? itemString : itemDisplay), itemDisplay));
+                }
+            } else {
+                android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                if (clipboard != null) {
+                    clipboard.setText(itemDisplay);
+                }
+            }
+            Toast.makeText(context, itemDisplay, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

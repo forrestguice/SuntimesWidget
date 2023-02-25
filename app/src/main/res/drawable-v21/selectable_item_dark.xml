@@ -10,8 +10,8 @@
 
     <item>
         <selector>
-            <item android:drawable="@color/text_accent_dark" android:state_selected="true" />
-            <item android:drawable="@color/text_accent_dark" android:state_focused="true" />
+            <item android:drawable="@color/grid_selected" android:state_selected="true" />
+            <item android:drawable="@color/grid_selected" android:state_focused="true" />
         </selector>
     </item>
 </ripple>

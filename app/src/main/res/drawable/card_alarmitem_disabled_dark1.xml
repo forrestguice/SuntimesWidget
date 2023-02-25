@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:left="-4dp" android:right="-4dp">
+<item android:left="0dp" android:right="0dp">
     <shape android:shape="rectangle">
         <size android:width="22dp" android:height="22dp" />
         <solid android:color="@color/alarm_disabled_bg_dark" />
         <stroke android:width="0dp" android:color="@color/grey_900" />
-        <corners android:radius="0dp" />
+        <corners android:radius="@dimen/alarmcard_corners_disabled" />
     </shape>
 </item>
 </layer-list>

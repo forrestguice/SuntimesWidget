@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical"
-        style="@style/SunsetTimeWidget_dark"
+        style="@style/SunsetTimeWidget_dark" android:animateLayoutChanges="true"
         android:layout_marginBottom="@dimen/settingsGroup_margin"
         android:paddingLeft="5dp" android:paddingRight="5dp">
 
@@ -38,7 +38,7 @@
             <TextView android:labelFor="@+id/appwidget_location_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_location_mode"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical" android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_location_mode" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -129,6 +129,12 @@
                         android:layout_gravity="center" />
                 </FrameLayout>
 
+                <ImageButton android:id="@+id/appwidget_location_add"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    style="@android:style/Widget.ActionButton"
+                    android:src="?attr/icActionNew"
+                    android:contentDescription="@string/configAction_addPlace" />
+
                 <ImageButton android:id="@+id/appwidget_location_edit"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              style="@android:style/Widget.ActionButton"
@@ -139,14 +145,13 @@
                              style="@android:style/Widget.ActionButton"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:src="?attr/icActionSave"
-                             android:visibility="gone"
                              android:contentDescription="@string/configAction_savePlace" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/layout_details"
             android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
 
             <RelativeLayout
@@ -162,7 +167,7 @@
                     <TextView android:labelFor="@+id/appwidget_location_lat"
                               android:id="@+id/appwidget_location_lat_label"
                               android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:layout_gravity="end"
+                              android:layout_gravity="end" android:textSize="?attr/text_size_small"
                               android:text="@string/configLabel_location_lat" android:enabled="false"
                               android:layout_row="0"
                               android:layout_column="0" />
@@ -181,7 +186,7 @@
                     <TextView android:labelFor="@+id/appwidget_location_lon"
                               android:id="@+id/appwidget_location_lon_label"
                               android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:layout_gravity="end"
+                              android:layout_gravity="end" android:textSize="?attr/text_size_small"
                               android:text="@string/configLabel_location_lon" android:enabled="false"
                               android:layout_row="1"
                               android:layout_column="0" />
@@ -199,7 +204,7 @@
                     <TextView android:labelFor="@+id/appwidget_location_alt"
                         android:id="@+id/appwidget_location_alt_label"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_gravity="end"
+                        android:layout_gravity="end" android:textSize="?attr/text_size_small"
                         android:text="@string/configLabel_location_alt" android:enabled="false"
                         android:layout_row="2"
                         android:layout_column="0" />
@@ -215,7 +220,7 @@
 
                     <TextView android:id="@+id/appwidget_location_alt_units"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/units_meters" android:enabled="false"
+                        android:text="@string/units_meters" android:enabled="false" android:textSize="?attr/text_size_small"
                         android:layout_row="2"
                         android:layout_column="4" />
 

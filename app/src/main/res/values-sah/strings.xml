@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Yakutsk</string>
+    <string name="default_location_latitude">62.02538</string>         <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">129.73172</string>       <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">95</string>               <!-- meters -->
+</resources>

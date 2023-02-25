@@ -34,7 +34,7 @@
 
         </LinearLayout>
 
-        <DatePicker android:id="@+id/appwidget_date_custom"
+        <DatePicker android:id="@+id/appwidget_date_custom" android:theme="@style/DatePickerStyle"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:calendarViewShown="false" android:spinnersShown="true"
                     android:datePickerMode="spinner"

@@ -35,7 +35,7 @@
             android:paddingTop="@dimen/settingsGroup_padding">
 
             <TextView android:labelFor="@+id/appwidget_action_onTap"
-                android:layout_width="wrap_content"
+                android:layout_width="wrap_content"  android:textSize="?attr/text_size_small"
                 android:layout_height="wrap_content" android:text="@string/configLabel_action_onTap" />
 
             <Spinner android:id="@+id/appwidget_action_onTap" android:layout_width="match_parent"

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -47,7 +48,7 @@ import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
@@ -56,6 +57,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.LocationListTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -107,6 +109,15 @@ public class LocationConfigView extends LinearLayout
     }
 
     public boolean isInitialized() { return isInitialized; }
+
+    public void setFragment(Fragment f) {
+        if (getFixHelper != null) {
+            getFixHelper.setFragment(f);
+        }
+    }
+    public Fragment getFragment() {
+        return getFixHelper != null ? getFixHelper.getFragment() : null;
+    }
 
     public com.forrestguice.suntimeswidget.calculator.core.Location getLocation()
     {
@@ -206,6 +217,28 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
+     * Property: collapsed
+     */
+    private boolean collapse = false;
+    public boolean shouldCollapse() {
+        return collapse;
+    }
+    public void setShouldCollapse(boolean value) {
+        collapse = value;
+    }
+
+    /**
+     * Property: showAddButton; the view shows an add button instead of an edit button.
+     */
+    private boolean showAddButton = false;
+    public boolean showAddButton() {
+        return showAddButton;
+    }
+    public void setShowAddButton(boolean value) {
+        showAddButton = value;
+    }
+
+    /**
      * Property: auto mode allowed
      */
     private boolean autoAllowed = true;
@@ -242,6 +275,7 @@ public class LocationConfigView extends LinearLayout
                 labl_locationAlt.setEnabled(false);
                 text_locationAlt.setEnabled(false);
                 inputOverlay.setVisibility(View.VISIBLE);
+                detailsLayout.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(false);
                 text_locationName.setEnabled(false);
@@ -252,6 +286,7 @@ public class LocationConfigView extends LinearLayout
 
                 autoButtonLayout.setVisibility(View.VISIBLE);
                 button_list.setVisibility(View.GONE);
+                button_add.setVisibility(View.GONE);
                 button_edit.setVisibility(View.GONE);
                 button_save.setVisibility(View.GONE);
                 button_cancel.setVisibility(View.GONE);
@@ -266,6 +301,7 @@ public class LocationConfigView extends LinearLayout
                 labl_locationAlt.setEnabled(false);
                 text_locationAlt.setEnabled(false);
                 inputOverlay.setVisibility(View.GONE);
+                detailsLayout.setVisibility(collapse ? View.GONE : View.VISIBLE);
 
                 labl_locationName.setEnabled(false);
                 text_locationName.setEnabled(false);
@@ -275,7 +311,8 @@ public class LocationConfigView extends LinearLayout
 
                 autoButtonLayout.setVisibility(View.GONE);
                 button_list.setVisibility(View.INVISIBLE);
-                button_edit.setVisibility(View.INVISIBLE);
+                button_add.setVisibility(showAddButton ? View.INVISIBLE : View.GONE);
+                button_edit.setVisibility(showAddButton ? View.GONE : View.INVISIBLE);
                 button_save.setVisibility(View.GONE);
                 button_cancel.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
@@ -290,6 +327,7 @@ public class LocationConfigView extends LinearLayout
                 labl_locationAlt.setEnabled(true);
                 text_locationAlt.setEnabled(true);
                 inputOverlay.setVisibility(View.GONE);
+                detailsLayout.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(true);
                 text_locationName.setEnabled(true);
@@ -299,6 +337,7 @@ public class LocationConfigView extends LinearLayout
 
                 autoButtonLayout.setVisibility(View.GONE);
                 button_list.setVisibility(View.GONE);
+                button_add.setVisibility(View.GONE);
                 button_edit.setVisibility(View.GONE);
                 button_save.setVisibility(View.VISIBLE);
                 button_cancel.setVisibility(View.VISIBLE);
@@ -313,7 +352,9 @@ public class LocationConfigView extends LinearLayout
                 text_locationLat.setEnabled(false);
                 labl_locationAlt.setEnabled(false);
                 text_locationAlt.setEnabled(false);
-                inputOverlay.setVisibility(View.VISIBLE);
+
+                detailsLayout.setVisibility(collapse ? View.GONE : View.VISIBLE);
+                inputOverlay.setVisibility(detailsLayout.getVisibility() == View.VISIBLE ? View.VISIBLE : View.GONE);
 
                 labl_locationName.setEnabled(true);
                 text_locationName.setEnabled(false);
@@ -322,11 +363,15 @@ public class LocationConfigView extends LinearLayout
 
                 autoButtonLayout.setVisibility(View.GONE);
                 button_list.setVisibility(View.VISIBLE);
-                button_edit.setVisibility(View.VISIBLE);
+                button_add.setVisibility(showAddButton ? View.VISIBLE : View.GONE);
+                button_edit.setVisibility(showAddButton ? View.GONE : View.VISIBLE);
                 button_save.setVisibility(View.GONE);
                 button_cancel.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
                 break;
+        }
+        if (viewListener != null) {
+            viewListener.onModeChanged(mode);
         }
     }
 
@@ -348,8 +393,10 @@ public class LocationConfigView extends LinearLayout
     private Spinner spin_locationName;
     private EditText text_locationName;
     private View inputOverlay;
+    private View detailsLayout;
 
     private ImageButton button_list;
+    private ImageButton button_add;
     private ImageButton button_edit;
     private ImageButton button_save;
     private ImageButton button_cancel;
@@ -372,9 +419,17 @@ public class LocationConfigView extends LinearLayout
         public void updateUI(Location... locations)
         {
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
-            text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
-            text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-            text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
+            if (locations != null && locations[0] != null)
+            {
+                text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
+                text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+                text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
+
+            } else {
+                text_locationLat.setText("");
+                text_locationLon.setText("");
+                text_locationAlt.setText("");
+            }
         }
 
         @Override
@@ -498,6 +553,8 @@ public class LocationConfigView extends LinearLayout
         spin_locationName.setAdapter(getFixAdapter);
         spin_locationName.setOnItemSelectedListener(onCustomLocationSelected);
 
+        detailsLayout = findViewById(R.id.layout_details);
+
         inputOverlay = findViewById(R.id.appwidget_location_latlon_overlay);
         inputOverlay.setVisibility(View.GONE);
         inputOverlay.setOnClickListener(new OnClickListener()
@@ -523,17 +580,25 @@ public class LocationConfigView extends LinearLayout
         text_locationAltUnits = (TextView)findViewById(R.id.appwidget_location_alt_units);
 
         button_list = (ImageButton)findViewById(R.id.appwidget_location_list);
+        TooltipCompat.setTooltipText(button_list, button_list.getContentDescription());
         button_list.setOnClickListener(onListButtonClicked);
 
         button_cancel = (ImageButton)findViewById(R.id.appwidget_location_cancel);
+        TooltipCompat.setTooltipText(button_cancel, button_cancel.getContentDescription());
         button_cancel.setOnClickListener(onEditCancelButtonClicked);
 
         // custom mode: toggle edit mode
         button_edit = (ImageButton)findViewById(R.id.appwidget_location_edit);
+        TooltipCompat.setTooltipText(button_edit, button_edit.getContentDescription());
         button_edit.setOnClickListener(onEditButtonClicked);
+
+        // custom mode: toggle edit mode (add)
+        button_add = (ImageButton)findViewById(R.id.appwidget_location_add);
+        button_add.setOnClickListener(onAddButtonClicked);
 
         // custom mode: save location
         button_save = (ImageButton)findViewById(R.id.appwidget_location_save);
+        TooltipCompat.setTooltipText(button_save, button_save.getContentDescription());
         button_save.setOnClickListener(onSaveButtonClicked);
 
         // custom mode: get GPS fix
@@ -541,20 +606,15 @@ public class LocationConfigView extends LinearLayout
         progress_getfix.setVisibility(View.GONE);
 
         button_getfix = (ImageButton)findViewById(R.id.appwidget_location_getfix);
-        button_getfix.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                getFixHelper.getFix(0);
-            }
-        });
+        button_getfix.setOnClickListener(onGetFixClicked);
+        TooltipCompat.setTooltipText(button_getfix, button_getfix.getContentDescription());
 
         // auto mode: get GPS fix
         progress_auto = (ProgressBar)findViewById(R.id.appwidget_location_auto_progress);
         progress_auto.setVisibility(View.GONE);
 
         button_auto = (ImageButton)findViewById(R.id.appwidget_location_auto);
+        TooltipCompat.setTooltipText(button_auto, button_auto.getContentDescription());
         button_auto.setOnClickListener(onAutoButtonClicked);
 
         getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);    // 0; getFixUI_editMode
@@ -568,6 +628,18 @@ public class LocationConfigView extends LinearLayout
         if (hideMode) {
             setHideMode(hideMode);
         }
+    }
+
+    protected View.OnClickListener onGetFixClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            lookupLocation();
+        }
+    };
+
+    public void lookupLocation() {
+        getFixHelper.getFix(0);
     }
 
 
@@ -862,13 +934,39 @@ public class LocationConfigView extends LinearLayout
         task.execute((Object[]) null);
     }
 
+    public void clickLocationSpinner() {
+        spin_locationName.performClick();
+    }
+
     @Override
     protected void onDetachedFromWindow()
     {
+        cleanupAdapter();
+        super.onDetachedFromWindow();
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View view, int visibility)
+    {
+        super.onVisibilityChanged(view, visibility);
+        if (visibility != View.VISIBLE) {
+            cleanupAdapter();
+        }
+    }
+
+    @Override
+    public void onVisibilityAggregated(boolean isVisible)    // TODO: only called for api 24+ ?
+    {
+        super.onVisibilityAggregated(isVisible);
+        if (!isVisible) {
+            cleanupAdapter();
+        }
+    }
+
+    protected void cleanupAdapter() {
         if (getFixAdapter != null) {
             getFixAdapter.changeCursor(null);    // closes previous cursor
         }
-        super.onDetachedFromWindow();
     }
 
     /**
@@ -1039,8 +1137,7 @@ public class LocationConfigView extends LinearLayout
 
         if (!silent)
         {
-            Toast copiedMsg = Toast.makeText(context, SuntimesUtils.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG);
-            copiedMsg.show();
+            Toast.makeText(context, SuntimesUtils.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -1123,6 +1220,18 @@ public class LocationConfigView extends LinearLayout
         }
     };
 
+    /**
+     * LocationConfigViewListener
+     */
+    public static class LocationConfigViewListener
+    {
+        public void onModeChanged(LocationViewMode mode) {}
+    }
+
+    public void setViewListener(LocationConfigViewListener l) {
+        viewListener = l;
+    }
+    private LocationConfigViewListener viewListener = null;
 
     /**
      * the custom location edit button has been clicked.
@@ -1133,6 +1242,20 @@ public class LocationConfigView extends LinearLayout
         public void onClick(View view)
         {
             setMode(LocationViewMode.MODE_CUSTOM_EDIT);
+        }
+    };
+
+    /**
+     * the custom location add button has been clicked.
+     */
+    private View.OnClickListener onAddButtonClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            setMode(LocationViewMode.MODE_CUSTOM_EDIT);
+            text_locationName.selectAll();
+            text_locationName.requestFocus();
         }
     };
 

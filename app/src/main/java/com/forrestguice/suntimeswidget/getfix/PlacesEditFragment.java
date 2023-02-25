@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -96,9 +97,12 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         public void updateUI(android.location.Location... locations)
         {
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
-            text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
-            text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-            text_locationAlt.setText( altitudeDisplayString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), 0)) );
+            if (locations != null && locations[0] != null)
+            {
+                text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
+                text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+                text_locationAlt.setText( altitudeDisplayString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), 0)) );
+            }
         }
 
         @Override
@@ -190,11 +194,13 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
         ImageButton button_save = (ImageButton) content.findViewById(R.id.save_button);
         if (button_save != null) {
+            TooltipCompat.setTooltipText(button_save, button_save.getContentDescription());
             button_save.setOnClickListener(onSaveButtonClicked);
         }
 
         ImageButton button_cancel = (ImageButton) content.findViewById(R.id.cancel_button);
         if (button_cancel != null) {
+            TooltipCompat.setTooltipText(button_cancel, button_cancel.getContentDescription());
             button_cancel.setOnClickListener(onCancelButtonClicked);
         }
 
@@ -202,6 +208,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         progress_getfix.setVisibility(View.GONE);
 
         button_getfix = (ImageButton) content.findViewById(R.id.appwidget_location_getfix);
+        TooltipCompat.setTooltipText(button_getfix, button_getfix.getContentDescription());
         button_getfix.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -212,6 +219,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         });
 
         getFixHelper = new GetFixHelper(getActivity(), getFixUI_editMode);    // 0; getFixUI_editMode
+        getFixHelper.setFragment(this);
         updateGPSButtonIcons();
     }
 

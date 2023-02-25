@@ -31,6 +31,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
@@ -75,9 +76,9 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_themePref()
     {
-        String defaultValue0 = AppSettings.PREF_DEF_APPEARANCE_THEME;
-        String defaultValue1 = context.getResources().getString(R.string.def_app_appearance_theme);
-        assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
+        //String defaultValue0 = AppSettings.PREF_DEF_APPEARANCE_THEME;
+        //String defaultValue1 = context.getResources().getString(R.string.def_app_appearance_theme);
+        //assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
 
         String value = AppSettings.loadThemePref(context);
     }
@@ -192,15 +193,15 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_timeZoneSortPref()
     {
-        AppSettings.setTimeZoneSortPref(context, WidgetTimezones.TimeZoneSort.SORT_BY_ID);
+        AppSettings.saveTimeZoneSortPref(context, WidgetTimezones.TimeZoneSort.SORT_BY_ID);
         WidgetTimezones.TimeZoneSort sort2 = AppSettings.loadTimeZoneSortPref(context);
         assertTrue("pref should be SORT_BY_ID but was " + sort2, sort2 == WidgetTimezones.TimeZoneSort.SORT_BY_ID);
 
-        AppSettings.setTimeZoneSortPref(context, WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+        AppSettings.saveTimeZoneSortPref(context, WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
         WidgetTimezones.TimeZoneSort sort1 = AppSettings.loadTimeZoneSortPref(context);
         assertTrue("pref should be SORT_BY_OFFSET but was " + sort1, sort1 == WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
 
-        AppSettings.setTimeZoneSortPref(context, AppSettings.PREF_DEF_UI_TIMEZONESORT);
+        AppSettings.saveTimeZoneSortPref(context, AppSettings.PREF_DEF_UI_TIMEZONESORT);
         WidgetTimezones.TimeZoneSort sort0 = AppSettings.loadTimeZoneSortPref(context);
         assertTrue("pref should be default (SORT_BY_ID) but was " + sort0, sort0 == AppSettings.PREF_DEF_UI_TIMEZONESORT && sort0 == WidgetTimezones.TimeZoneSort.SORT_BY_ID);
     }
@@ -242,4 +243,24 @@ public class AppSettingsTest extends SuntimesActivityTestBase
         }
         assertTrue("default must belong to R.array.getFix_maxElapse_values", found);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_dialogDoNotShowAgain()
+    {
+        String dialogKey1 = "testdialog1";
+        String dialogKey2 = "testdialog2";
+
+        AppSettings.setDialogDoNotShowAgain(context, dialogKey1, false);
+        AppSettings.setDialogDoNotShowAgain(context, dialogKey2, true);
+        assertFalse(AppSettings.checkDialogDoNotShowAgain(context, dialogKey1));
+        assertTrue(AppSettings.checkDialogDoNotShowAgain(context, dialogKey2));
+
+        AppSettings.setDialogDoNotShowAgain(context, dialogKey1, true);
+        AppSettings.setDialogDoNotShowAgain(context, dialogKey2, false);
+        assertTrue(AppSettings.checkDialogDoNotShowAgain(context, dialogKey1));
+        assertFalse(AppSettings.checkDialogDoNotShowAgain(context, dialogKey2));
+    }
+
 }

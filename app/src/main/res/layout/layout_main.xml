@@ -33,9 +33,12 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/app_menubar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content" android:minHeight="?attr/actionBarSize"
+            android:paddingBottom="2dp"
             android:background="?attr/colorPrimary"
             android:theme="?attr/toolbarTheme"
+            app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
+            app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
             app:popupTheme="?attr/actionBarPopupTheme"/>
 
         <LinearLayout
@@ -125,9 +128,10 @@
                 android:layout_marginRight="@dimen/activity_margin" android:layout_marginLeft="@dimen/activity_margin"
                 android:layout_marginTop="0dp" android:layout_marginBottom="6dp">
 
-                <com.forrestguice.suntimeswidget.EquinoxView
+                <com.forrestguice.suntimeswidget.equinox.EquinoxCardView
                     android:id="@+id/info_date_solsticequinox"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_margin="0dp" android:padding="0dp"
                     app:minimized="true" />
 
             </LinearLayout>
@@ -139,6 +143,7 @@
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/activity_margin" android:layout_marginLeft="@dimen/activity_margin"
                 android:layout_marginBottom="2dp" android:layout_marginTop="0dp"
+                android:paddingLeft="0dp" android:paddingRight="0dp"
                 android:paddingTop="0dp" android:paddingBottom="0dp">
 
                 <include layout="@layout/info_time_datasource" />

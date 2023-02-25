@@ -17,7 +17,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />      <!-- needed by AlarmClock -->
 
     <uses-permission android:name="org.codeaurora.permission.POWER_OFF_ALARM" />  <!-- needed for hardware dependent 'power off' alarms -->
-    
+
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />  <!-- needed for reliable delivery of alarms and notifications -->
+
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
         android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
@@ -112,6 +114,13 @@
             </intent-filter>
         </activity>-->
 
+        <!-- Welcome Activity -->
+        <activity
+            android:name=".WelcomeActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher">
+        </activity>
+
         <!-- About Activity -->
         <activity
             android:name=".AboutActivity"
@@ -147,6 +156,15 @@
         <!-- Widget List Activity -->
         <activity
             android:name=".SuntimesWidgetListActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
+        </activity>
+
+        <!-- Event List Activity -->
+        <activity
+            android:name=".events.EventListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
             android:permission="suntimes.permission.READ_CALCULATOR"
@@ -218,6 +236,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
+            <intent-filter>
+                <action android:name="android.intent.action.SHOW_ALARMS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.DISMISS_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SNOOZE_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
 
         <!--<activity
@@ -263,7 +296,7 @@
             android:name=".alarmclock.ui.AlarmDismissActivity"
             android:label="@string/app_name_alarmclock"
             android:icon="@mipmap/ic_launcher_alarms"
-            android:launchMode="singleInstance" android:excludeFromRecents="true"
+            android:launchMode="singleTop" android:excludeFromRecents="true"
             android:taskAffinity=".alarmclock.ui.AlarmDismissActivity"
             android:exported="true">
         </activity>
@@ -272,6 +305,8 @@
         <receiver android:name=".alarmclock.AlarmNotifications">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 <!--<action android:name="android.intent.action.TIME_SET" />-->
             </intent-filter>
             <intent-filter>
@@ -285,6 +320,36 @@
                 <data android:scheme="content" />
             </intent-filter>
         </receiver>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Clock Tile                                                                  -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+        <service
+            android:name=".tiles.ClockTileService"
+            android:label="@string/app_name_clocktile"
+            android:icon="@drawable/ic_action_time"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+        <activity android:name=".tiles.ClockTileConfigActivity" />
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Event Tile                                                                  -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+        <service
+            android:name=".tiles.NextEventTileService"
+            android:label="@string/app_name_eventtile"
+            android:icon="@drawable/ic_action_timereset"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+        <activity android:name=".tiles.NextEventTileConfigActivity" />
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->
@@ -333,6 +398,32 @@
 
         <activity
             android:name=".SuntimesConfigActivity0_2x1" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget 0_3x1: Resizable (falls back to static 3x1 for api less than 14) -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".SuntimesWidget0_3x1"
+            android:label="@string/app_name_widget0"
+            android:icon="@mipmap/ic_launcher">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_WIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_sun0_3x1" />
+        </receiver>
+
+        <activity
+            android:name=".SuntimesConfigActivity0_3x1" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -663,6 +754,33 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget: Date (1x1)                                                               -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".widgets.DateWidget0"
+            android:label="@string/app_name_datewidget0"
+            android:icon="@drawable/ic_calendar">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="suntimes.DATE_WIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_date0_1x1" />
+        </receiver>
+
+        <activity
+            android:name=".widgets.DateWidget0ConfigActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
 
     </application>
 

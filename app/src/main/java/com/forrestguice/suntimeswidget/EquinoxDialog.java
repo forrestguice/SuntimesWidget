@@ -43,16 +43,17 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 
-import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
 
+@Deprecated
 public class EquinoxDialog extends BottomSheetDialogFragment
 {
     public static final String DIALOGTAG_HELP = "equinox_help";
@@ -145,7 +146,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                 BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(true);
-                WorldMapDialog.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                 return behavior;
             }
         }
@@ -161,7 +162,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                 equinoxView.post(new Runnable() {
                     @Override
                     public void run() {
-                        WorldMapDialog.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                        ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                     }
                 });
             } else Log.w("EquinoxDialog.onShow", "null context! skipping update");
@@ -210,9 +211,9 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     protected void showHelp(Context context)
     {
         String topic1 = context.getString(R.string.help_general_timeMode2);
-        String topic2 = context.getString(R.string.help_general_tropicalyear);
-        //String topic3 = context.getString(R.string.help_general_leapyear);
-        String helpContent = context.getString(R.string.help_general2, topic1, topic2);  //, topic3);
+        String topic2 = context.getString(R.string.help_general_timeMode2_1);
+        String topic3 = context.getString(R.string.help_general_tropicalyear);
+        String helpContent = context.getString(R.string.help_general3, topic1, topic2, topic3);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent);
@@ -310,7 +311,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     protected boolean showContextMenu(final Context context, View view, final WidgetSettings.SolsticeEquinoxMode mode,  final long datetime)
     {
-        PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
+        PopupMenu menu = new PopupMenu(context, view, Gravity.START);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.equinoxcontext, menu.getMenu());
         menu.setOnMenuItemClickListener(onContextMenuClick);
@@ -326,21 +327,29 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     private void updateContextMenu(Context context, PopupMenu menu, final WidgetSettings.SolsticeEquinoxMode mode, final long datetime)
     {
         Intent data = new Intent();
-        data.putExtra(WorldMapDialog.EXTRA_SHOW_DATE, datetime);
+        data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
         data.putExtra("mode", mode.name());
 
         Menu m = menu.getMenu();
-        for (int i=0; i<m.size(); i++) {
-            m.getItem(i).setIntent(data);
-        }
+        setDataToMenu(m, data);
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
         if (addonSubmenuItem != null) {
-            List<WorldMapDialog.ActivityItemInfo> addonMenuItems = WorldMapDialog.queryAddonMenuItems(context);
+            List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
                 SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
-                WorldMapDialog.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
+                MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
             } //else addonSubmenuItem.setVisible(false);
+        }
+    }
+
+    private static void setDataToMenu(Menu m, Intent data)
+    {
+        if (m != null) {
+            for (int i = 0; i < m.size(); i++) {
+                m.getItem(i).setIntent(data);
+                setDataToMenu(m.getItem(i).getSubMenu(), data);
+            }
         }
     }
 
@@ -367,7 +376,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             }
 
             Intent itemData = item.getIntent();
-            long itemTime = ((itemData != null) ? itemData.getLongExtra(WorldMapDialog.EXTRA_SHOW_DATE, -1L) : -1L);
+            long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
             WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
 
             switch (item.getItemId())
@@ -382,6 +391,13 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                 case R.id.action_sunposition:
                     if (dialogListener != null) {
                         dialogListener.onShowPosition(itemTime);
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
+
+                case R.id.action_moon:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMoonInfo(itemTime);
                         //collapseSheet(getDialog());
                     }
                     return true;
@@ -410,10 +426,10 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         }
     };
 
-    protected void shareItem(Context context, Intent itemData)
+    protected void shareItem(Context context, Intent itemData)  // TODO: refactor to use ViewUtils after v0.15.0 branches are merged
     {
         WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
-        long itemMillis = itemData != null ? itemData.getLongExtra(WorldMapDialog.EXTRA_SHOW_DATE, -1L) : -1L;
+        long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
         if (itemMode != null && itemMillis != -1L)
         {
             Calendar itemTime = Calendar.getInstance();
@@ -457,6 +473,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
+        public void onShowMoonInfo( long suggestDate ) {}
         public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified() {}
     }

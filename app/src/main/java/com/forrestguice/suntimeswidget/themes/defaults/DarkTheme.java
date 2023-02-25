@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -30,7 +31,7 @@ public class DarkTheme extends SuntimesTheme
     public static final String THEMEDEF_NAME = "dark";
     public static final String THEMEDEF_DISPLAYSTRING = "Dark";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
-    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
+    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION, ThemeBackground.DARK.name(), Color.DKGRAY);
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.DARK;
     public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_dark;
@@ -141,6 +142,8 @@ public class DarkTheme extends SuntimesTheme
         this.themeNauticalColor = ContextCompat.getColor(context, THEMEDEF_NAUTICALCOLOR_ID);
         this.themeAstroColor = ContextCompat.getColor(context, THEMEDEF_ASTROCOLOR_ID);
         this.themeNightColor = ContextCompat.getColor(context, THEMEDEF_NIGHTCOLOR_ID);
+        this.themeGraphPointFillColor = ContextCompat.getColor(context, R.color.graphColor_pointFill_dark);
+        this.themeGraphPointStrokeColor = ContextCompat.getColor(context, R.color.graphColor_pointStroke_dark);
 
         this.themeSpringColor = ContextCompat.getColor(context, THEMEDEF_SPRINGCOLOR_ID);
         this.themeSummerColor = ContextCompat.getColor(context, THEMEDEF_SUMMERCOLOR_ID);

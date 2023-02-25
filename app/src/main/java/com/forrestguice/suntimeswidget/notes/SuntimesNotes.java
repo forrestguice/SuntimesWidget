@@ -27,9 +27,12 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -76,7 +79,7 @@ public class SuntimesNotes
     {
         if (themeOverride == null)
         {
-            int[] colorAttrs = { R.attr.sunriseColor, R.attr.sunsetColor, R.attr.moonriseColor, R.attr.moonsetColor };
+            int[] colorAttrs = { R.attr.table_risingColor, R.attr.table_settingColor, R.attr.table_moonRisingColor, R.attr.table_moonSettingColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
             colorSunrise = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
@@ -155,9 +158,16 @@ public class SuntimesNotes
                 continue;
             else if (event.equals(SolarEvents.EQUINOX_SPRING) || event.equals(SolarEvents.SOLSTICE_SUMMER) || event.equals(SolarEvents.EQUINOX_AUTUMNAL) || event.equals(SolarEvents.SOLSTICE_WINTER))
                 continue;
+            else if (event.equals(SolarEvents.CROSS_SPRING) || event.equals(SolarEvents.CROSS_SUMMER) || event.equals(SolarEvents.CROSS_AUTUMNAL) || event.equals(SolarEvents.CROSS_WINTER))
+                continue;
 
-            NoteData note = createNote(event);
+            NoteData note = createNote(event.name());
             notesList.add(note);
+        }
+
+        for (String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION)) {
+            notesList.add(createNote(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING));
+            notesList.add(createNote(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING));
         }
 
         updateNotes(dataset.now());
@@ -233,14 +243,15 @@ public class SuntimesNotes
 
         if (dataset.isCalculated())
         {
-            SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, 0);
+            String currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, 0);
             int currentNote = getNoteIndex(currentNoteMode);
 
             int nextNote = 0;
-            if (currentNote < notesList.size() - 1)
+            if (currentNote < notesList.size() - 1) {
                 nextNote = currentNote + 1;
+            }
 
-            SolarEvents nextNoteMode = notesList.get(nextNote).noteMode;
+            String nextNoteMode = notesList.get(nextNote).noteMode;
             WidgetSettings.saveTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID, nextNoteMode);
 
             //Log.d("showNextNote", "... current = " + currentNote + ", next = " + nextNote + ", mode = " + nextNoteMode.name());
@@ -264,16 +275,15 @@ public class SuntimesNotes
 
         if (dataset.isCalculated())
         {
-            SolarEvents currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+            String currentNoteMode = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
             int currentNote = getNoteIndex(currentNoteMode);
 
             int prevNote = notesList.size() - 1;
-            if (currentNote > 0)
-            {
+            if (currentNote > 0) {
                 prevNote = currentNote - 1;
             }
 
-            SolarEvents prevNoteMode = notesList.get(prevNote).noteMode;
+            String prevNoteMode = notesList.get(prevNote).noteMode;
             WidgetSettings.saveTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID, prevNoteMode);
             updateNote(context, dataset.now(), NoteChangedListener.TRANSITION_PREV);
             return true;
@@ -335,184 +345,205 @@ public class SuntimesNotes
 
     /**
      * Create an empty note for a given SolarEvent.
-     * @param event the SolarEvent the note will display
+     * @param eventID the SolarEvent the note will display
      * @return a note object with icon, color, untilString, and noteString set (timestring empty).
      */
-    private NoteData createNote(SolarEvents event)
+    private NoteData createNote(String eventID)
     {
-        int[] iconAttr = { event.getIcon() };
-        TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
-        int def = R.drawable.ic_moon_rise;
-        int noteIcon = typedArray.getResourceId(0, def);
-        typedArray.recycle();
+        //Log.d("DEBUG", "createNote: " + eventID);
+        int iconStroke = colorSunriseStroke;
+        int noteIcon = R.drawable.ic_moon_rise;
+        int noteColor = colorSunrise, noteColor2 = colorSunriseStroke;
+        String untilString = prefixString(eventID, false);
+        String noteString = "";
 
-        int iconStroke;
-        int noteColor, noteColor2;
-        String untilString = prefixString(event, false);
-        String noteString;
-
-        switch (event)
+        if (SolarEvents.hasValue(eventID))
         {
-            case MOONRISE:
-                iconStroke = strokeWidthRising;
-                noteColor = noteColor2 = colorMoonrise;
-                noteString = context.getString(R.string.until_moonrise);
-                break;
+            SolarEvents event = SolarEvents.valueOf(eventID);
 
-            case MOONSET:
-                iconStroke = strokeWidthSetting;
-                noteColor = noteColor2 = colorMoonset;
-                noteString = context.getString(R.string.until_moonset);
-                break;
+            int[] iconAttr = { event.getIcon() };
+            TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
+            noteIcon = typedArray.getResourceId(0, R.drawable.ic_moon_rise);
+            typedArray.recycle();
 
-            case MOONNOON:
-                iconStroke = strokeWidthNoon;
-                noteColor = noteColor2 = colorMoonrise;
-                noteString = context.getString(R.string.until_moonnoon);
-                break;
+            switch (event)
+            {
+                case MOONRISE:
+                    iconStroke = strokeWidthRising;
+                    noteColor = noteColor2 = colorMoonrise;
+                    noteString = context.getString(R.string.until_moonrise);
+                    break;
 
-            case MOONNIGHT:
-                iconStroke = strokeWidthNoon;
-                noteColor = colorMoonset;
-                noteColor2 = colorMoonrise;
-                noteString = context.getString(R.string.until_moonnight);
-                break;
+                case MOONSET:
+                    iconStroke = strokeWidthSetting;
+                    noteColor = noteColor2 = colorMoonset;
+                    noteString = context.getString(R.string.until_moonset);
+                    break;
 
-            case MORNING_ASTRONOMICAL:
-                iconStroke = strokeWidthRising;
-                noteColor = colorSunrise;
-                noteColor2 = colorSunriseStroke;
-                noteString = context.getString(R.string.until_astroTwilight);
-                break;
-            case MORNING_NAUTICAL:
-                iconStroke = strokeWidthRising;
-                noteColor = colorSunrise;
-                noteColor2 = colorSunriseStroke;
-                noteString = context.getString(R.string.until_nauticalTwilight);
-                break;
-            case MORNING_BLUE8:
-                iconStroke = strokeWidthRising;
-                noteColor = colorSunrise;
-                noteColor2 = colorSunriseStroke;
-                noteString = context.getString(R.string.until_bluehour);
-                break;
-            case MORNING_CIVIL:
-                iconStroke = strokeWidthRising;
-                noteColor = colorSunrise;
-                noteColor2 = colorSunriseStroke;
-                noteString = context.getString(R.string.until_civilTwilight);
-                break;
-            case MORNING_BLUE4:
-                iconStroke = strokeWidthRising;
-                noteColor = colorSunrise;
-                noteColor2 = colorSunriseStroke;
-                noteString = context.getString(R.string.untilEnd_bluehour);
-                break;
-            case SUNRISE:
-                iconStroke = strokeWidthRising;
-                noteColor = colorSunrise;
-                noteColor2 = colorSunriseStroke;
-                noteString = context.getString(R.string.until_sunrise);
-                break;
-            case MORNING_GOLDEN:
-                iconStroke = strokeWidthRising;
-                noteColor = colorSunrise;
-                noteColor2 = colorSunriseStroke;
-                noteString = context.getString(R.string.untilEnd_goldhour);
-                break;
+                case MOONNOON:
+                    iconStroke = strokeWidthNoon;
+                    noteColor = noteColor2 = colorMoonrise;
+                    noteString = context.getString(R.string.until_moonnoon);
+                    break;
 
-            case NOON:
-                iconStroke = strokeWidthNoon;
-                noteColor = colorNoon;
-                noteColor2 = colorNoonStroke;
-                noteString = context.getString(R.string.until_noon);
-                break;
+                case MOONNIGHT:
+                    iconStroke = strokeWidthNoon;
+                    noteColor = colorMoonset;
+                    noteColor2 = colorMoonrise;
+                    noteString = context.getString(R.string.until_moonnight);
+                    break;
 
-            case EVENING_GOLDEN:
-                iconStroke = strokeWidthSetting;
-                noteColor = colorSunset;
-                noteColor2 = colorSunsetStroke;
-                noteString = context.getString(R.string.until_goldhour);
-                break;
-            case SUNSET:
-                iconStroke = strokeWidthSetting;
-                noteColor = colorSunset;
-                noteColor2 = colorSunsetStroke;
-                noteString = context.getString(R.string.until_sunset);
-                break;
-            case EVENING_BLUE4:
-                iconStroke = strokeWidthSetting;
-                noteColor = colorSunset;
-                noteColor2 = colorSunsetStroke;
-                noteString = context.getString(R.string.until_bluehour);
-                break;
-            case EVENING_CIVIL:
-                iconStroke = strokeWidthSetting;
-                noteColor = colorSunset;
-                noteColor2 = colorSunsetStroke;
-                noteString = context.getString(R.string.untilEnd_civilTwilight);
-                break;
-            case EVENING_BLUE8:
-                iconStroke = strokeWidthSetting;
-                noteColor = colorSunset;
-                noteColor2 = colorSunsetStroke;
-                noteString = context.getString(R.string.untilEnd_bluehour);
-                break;
-            case EVENING_NAUTICAL:
-                iconStroke = strokeWidthSetting;
-                noteColor = colorSunset;
-                noteColor2 = colorSunsetStroke;
-                noteString = context.getString(R.string.untilEnd_nauticalTwilight);
-                break;
-            case EVENING_ASTRONOMICAL:
-            default:
-                iconStroke = strokeWidthSetting;
-                noteColor = colorSunset;
-                noteColor2 = colorSunsetStroke;
-                noteString = context.getString(R.string.untilEnd_astroTwilight);
-                break;
+                case MORNING_ASTRONOMICAL:
+                    iconStroke = strokeWidthRising;
+                    noteColor = colorSunrise;
+                    noteColor2 = colorSunriseStroke;
+                    noteString = context.getString(R.string.until_astroTwilight);
+                    break;
+                case MORNING_NAUTICAL:
+                    iconStroke = strokeWidthRising;
+                    noteColor = colorSunrise;
+                    noteColor2 = colorSunriseStroke;
+                    noteString = context.getString(R.string.until_nauticalTwilight);
+                    break;
+                case MORNING_BLUE8:
+                    iconStroke = strokeWidthRising;
+                    noteColor = colorSunrise;
+                    noteColor2 = colorSunriseStroke;
+                    noteString = context.getString(R.string.until_bluehour);
+                    break;
+                case MORNING_CIVIL:
+                    iconStroke = strokeWidthRising;
+                    noteColor = colorSunrise;
+                    noteColor2 = colorSunriseStroke;
+                    noteString = context.getString(R.string.until_civilTwilight);
+                    break;
+                case MORNING_BLUE4:
+                    iconStroke = strokeWidthRising;
+                    noteColor = colorSunrise;
+                    noteColor2 = colorSunriseStroke;
+                    noteString = context.getString(R.string.untilEnd_bluehour);
+                    break;
+                case SUNRISE:
+                    iconStroke = strokeWidthRising;
+                    noteColor = colorSunrise;
+                    noteColor2 = colorSunriseStroke;
+                    noteString = context.getString(R.string.until_sunrise);
+                    break;
+                case MORNING_GOLDEN:
+                    iconStroke = strokeWidthRising;
+                    noteColor = colorSunrise;
+                    noteColor2 = colorSunriseStroke;
+                    noteString = context.getString(R.string.untilEnd_goldhour);
+                    break;
+
+                case NOON:
+                    iconStroke = strokeWidthNoon;
+                    noteColor = colorNoon;
+                    noteColor2 = colorNoonStroke;
+                    noteString = context.getString(R.string.until_noon);
+                    break;
+
+                case EVENING_GOLDEN:
+                    iconStroke = strokeWidthSetting;
+                    noteColor = colorSunset;
+                    noteColor2 = colorSunsetStroke;
+                    noteString = context.getString(R.string.until_goldhour);
+                    break;
+                case SUNSET:
+                    iconStroke = strokeWidthSetting;
+                    noteColor = colorSunset;
+                    noteColor2 = colorSunsetStroke;
+                    noteString = context.getString(R.string.until_sunset);
+                    break;
+                case EVENING_BLUE4:
+                    iconStroke = strokeWidthSetting;
+                    noteColor = colorSunset;
+                    noteColor2 = colorSunsetStroke;
+                    noteString = context.getString(R.string.until_bluehour);
+                    break;
+                case EVENING_CIVIL:
+                    iconStroke = strokeWidthSetting;
+                    noteColor = colorSunset;
+                    noteColor2 = colorSunsetStroke;
+                    noteString = context.getString(R.string.untilEnd_civilTwilight);
+                    break;
+                case EVENING_BLUE8:
+                    iconStroke = strokeWidthSetting;
+                    noteColor = colorSunset;
+                    noteColor2 = colorSunsetStroke;
+                    noteString = context.getString(R.string.untilEnd_bluehour);
+                    break;
+                case EVENING_NAUTICAL:
+                    iconStroke = strokeWidthSetting;
+                    noteColor = colorSunset;
+                    noteColor2 = colorSunsetStroke;
+                    noteString = context.getString(R.string.untilEnd_nauticalTwilight);
+                    break;
+                case EVENING_ASTRONOMICAL:
+                default:
+                    iconStroke = strokeWidthSetting;
+                    noteColor = colorSunset;
+                    noteColor2 = colorSunsetStroke;
+                    noteString = context.getString(R.string.untilEnd_astroTwilight);
+                    break;
+            }
+
+        } else {
+            boolean isRising = eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
+            String eventID0 = new String(eventID);
+            if (eventID0.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) ||
+                eventID0.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING)) {
+                eventID0 = eventID0.substring(0, eventID0.lastIndexOf("_"));
+            }
+
+            if (EventSettings.hasEvent(context, eventID0))
+            {
+                EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID0);
+                if (event != null)
+                {
+                    int[] iconAttr = { R.attr.sunriseIconLarge, R.attr.sunsetIconLarge };
+                    TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
+                    noteIcon = typedArray.getResourceId((isRising ? 0 : 1), R.drawable.ic_moon_rise);
+                    typedArray.recycle();
+
+                    iconStroke = strokeWidthSetting;
+                    noteString = event.getLabel();
+                    noteColor = noteColor2 = event.getColor();
+                }
+            }
         }
 
         SuntimesUtils.TimeDisplayText timeString = new SuntimesUtils.TimeDisplayText();
-        return new NoteData(event, timeString, untilString, noteString, noteIcon, noteColor, noteColor2, iconStroke);
+        return new NoteData(eventID, timeString, untilString, noteString, noteIcon, noteColor, noteColor2, iconStroke);
     }
 
-    private String prefixString(SolarEvents event, boolean useSince)
+    private String prefixString(String eventID, boolean useSince)
     {
         String prefix;
         if (useSince)
         {
             prefix = context.getString(R.string.since);
 
-        } else {
+        } else if (SolarEvents.hasValue(eventID)) {
+            SolarEvents event = SolarEvents.valueOf(eventID);
             switch (event)
             {
-                case MOONRISE:
-                case MOONSET:
-                case MOONNOON:
-                case MOONNIGHT:
-                case MORNING_ASTRONOMICAL:          // until
-                case MORNING_NAUTICAL:
-                case MORNING_BLUE8:
-                case EVENING_BLUE4:
-                case MORNING_CIVIL:
-                case SUNRISE:
-                case NOON:
-                case EVENING_GOLDEN:
-                case SUNSET:
+                // until
+                case MOONRISE: case MOONSET: case MOONNOON: case MOONNIGHT:
+                case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case EVENING_BLUE4: case MORNING_CIVIL:
+                case SUNRISE: case NOON: case EVENING_GOLDEN: case SUNSET:
                     prefix = context.getString(R.string.until);
                     break;
 
-                case MORNING_GOLDEN:               // until_end
-                case EVENING_CIVIL:
-                case EVENING_BLUE8:
-                case MORNING_BLUE4:
-                case EVENING_NAUTICAL:
-                case EVENING_ASTRONOMICAL:
+                // until_end
+                case MORNING_GOLDEN: case EVENING_CIVIL: case EVENING_BLUE8: case MORNING_BLUE4: case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL:
                 default:
                     prefix = context.getString(R.string.until_end);
                     break;
             }
+
+        } else {
+            prefix = context.getString(R.string.until);  // TODO
         }
         return prefix;
     }
@@ -524,102 +555,72 @@ public class SuntimesNotes
      */
     private void updateNote(NoteData note, Calendar now)
     {
-        Calendar date, dateOther;
-        switch (note.noteMode)
+        Calendar date = null, dateOther = null;
+
+        if (SolarEvents.hasValue(note.noteMode))
         {
-            case MOONRISE:
-                if (moondata == null) {
-                    return;
-                }
-                date = moondata.moonriseCalendarToday();
-                dateOther = moondata.moonriseCalendarTomorrow();
-                break;
-            case MOONSET:
-                if (moondata == null) {
-                    return;
-                }
-                date = moondata.moonsetCalendarToday();
-                dateOther = moondata.moonsetCalendarTomorrow();
-                break;
+            SolarEvents event = SolarEvents.valueOf(note.noteMode);
+            switch (event)
+            {
+                case MOONRISE:
+                    if (moondata == null) {
+                        return;
+                    }
+                    date = moondata.moonriseCalendarToday();
+                    dateOther = moondata.moonriseCalendarTomorrow();
+                    break;
+                case MOONSET:
+                    if (moondata == null) {
+                        return;
+                    }
+                    date = moondata.moonsetCalendarToday();
+                    dateOther = moondata.moonsetCalendarTomorrow();
+                    break;
 
-            case MOONNOON:
-                if (moondata == null) {
-                    return;
-                }
-                date = moondata.getLunarNoonToday();
-                dateOther = moondata.getLunarNoonTomorrow();
-                break;
-            case MOONNIGHT:
-                if (moondata == null) {
-                    return;
-                }
-                date = moondata.getLunarMidnightToday();
-                dateOther = moondata.getLunarMidnightTomorrow();
-                break;
+                case MOONNOON:
+                    if (moondata == null) {
+                        return;
+                    }
+                    date = moondata.getLunarNoonToday();
+                    dateOther = moondata.getLunarNoonTomorrow();
+                    break;
+                case MOONNIGHT:
+                    if (moondata == null) {
+                        return;
+                    }
+                    date = moondata.getLunarMidnightToday();
+                    dateOther = moondata.getLunarMidnightTomorrow();
+                    break;
 
-            case MORNING_ASTRONOMICAL:
-                date = dataset.dataAstro.sunriseCalendarToday();
-                dateOther = dataset.dataAstro.sunriseCalendarOther();
-                break;
-            case MORNING_NAUTICAL:
-                date = dataset.dataNautical.sunriseCalendarToday();
-                dateOther = dataset.dataNautical.sunriseCalendarOther();
-                break;
-            case MORNING_BLUE8:
-                date = dataset.dataBlue8.sunriseCalendarToday();
-                dateOther = dataset.dataBlue8.sunriseCalendarOther();
-                break;
-            case MORNING_CIVIL:
-                date = dataset.dataCivil.sunriseCalendarToday();
-                dateOther = dataset.dataCivil.sunriseCalendarOther();
-                break;
-            case MORNING_BLUE4:
-                date = dataset.dataBlue4.sunriseCalendarToday();
-                dateOther = dataset.dataBlue4.sunriseCalendarOther();
-                break;
-            case SUNRISE:
-                date = dataset.dataActual.sunriseCalendarToday();
-                dateOther = dataset.dataActual.sunriseCalendarOther();
-                break;
+                case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case MORNING_CIVIL: case MORNING_BLUE4:
+                case SUNRISE: case MORNING_GOLDEN: case NOON: case EVENING_GOLDEN:
+                case SUNSET: case EVENING_BLUE4: case EVENING_CIVIL: case EVENING_BLUE8: case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL:
+                default:
+                    WidgetSettings.TimeMode mode = SolarEvents.toTimeMode(event);
+                    if (mode != null)
+                    {
+                        SuntimesRiseSetData d = dataset.getData(mode.name());
+                        if (d != null) {
+                            date = (event.isRising() ? d.sunriseCalendarToday() : d.sunsetCalendarToday());
+                            dateOther = (event.isRising() ? d.sunriseCalendarOther() : d.sunsetCalendarOther());
+                        }
+                    }
+                    break;
+            }
 
-            case MORNING_GOLDEN:
-                date = dataset.dataGold.sunriseCalendarToday();
-                dateOther = dataset.dataGold.sunriseCalendarOther();
-                break;
-            case NOON:
-                date = dataset.dataNoon.sunriseCalendarToday();
-                dateOther = dataset.dataNoon.sunriseCalendarOther();
-                break;
-            case EVENING_GOLDEN:
-                date = dataset.dataGold.sunsetCalendarToday();
-                dateOther = dataset.dataGold.sunsetCalendarOther();
-                break;
+        } else {
+            String eventID = note.noteMode;
+            boolean isRising = eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
+            if (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) ||
+                    eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING)) {
+                eventID = eventID.substring(0, eventID.lastIndexOf("_"));
+            }
 
-            case SUNSET:
-                date = dataset.dataActual.sunsetCalendarToday();
-                dateOther = dataset.dataActual.sunsetCalendarOther();
-                break;
-            case EVENING_BLUE4:
-                date = dataset.dataBlue4.sunsetCalendarToday();
-                dateOther = dataset.dataBlue4.sunsetCalendarOther();
-                break;
-            case EVENING_CIVIL:
-                date = dataset.dataCivil.sunsetCalendarToday();
-                dateOther = dataset.dataCivil.sunsetCalendarOther();
-                break;
-            case EVENING_BLUE8:
-                date = dataset.dataBlue8.sunsetCalendarToday();
-                dateOther = dataset.dataBlue8.sunsetCalendarOther();
-                break;
-            case EVENING_NAUTICAL:
-                date = dataset.dataNautical.sunsetCalendarToday();
-                dateOther = dataset.dataNautical.sunsetCalendarOther();
-                break;
-            case EVENING_ASTRONOMICAL:
-            default:
-                date = dataset.dataAstro.sunsetCalendarToday();
-                dateOther = dataset.dataAstro.sunsetCalendarOther();
-                break;
+            SuntimesRiseSetData d = dataset.getData(eventID);
+            if (d != null) {
+                date = (isRising ? d.sunriseCalendarToday() : d.sunsetCalendarToday());
+                dateOther = (isRising ? d.sunriseCalendarOther() : d.sunsetCalendarOther());
+            }
         }
 
         Date eventTime = null;
@@ -682,7 +683,7 @@ public class SuntimesNotes
 
     public void updateNote(Context context, Calendar now, int transition)
     {
-        SolarEvents choice = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+        String choice = WidgetSettings.loadTimeNoteRisePref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         NoteData chosenNote = getNote(choice);
 
         if (chosenNote != null)
@@ -697,20 +698,22 @@ public class SuntimesNotes
         }
     }
 
-    public NoteData getNote(SolarEvents event)
+    public NoteData getNote(String eventID)
     {
-        int i = getNoteIndex(event);
+        //Log.d("DEBUG", "getNote: " + eventID);
+        int i = getNoteIndex(eventID);
         if (i >= 0 && i < notesList.size())
             return notesList.get(i);
         else return null;
     }
 
-    public int getNoteIndex(SolarEvents event)
+    public int getNoteIndex(String eventID)
     {
+        //Log.d("DEBUG", "getNoteIndex: " + eventID);
         for (int i=0; i< notesList.size(); i++)
         {
             NoteData note = notesList.get(i);
-            if (note.noteMode.equals(event))
+            if (note.noteMode.equals(eventID))
                 return i;
         }
         return -1;

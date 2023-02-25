@@ -131,7 +131,7 @@ public class SuntimesMoonData0 extends SuntimesData
      * @param c2 an end time (with difference from start no greater than 48 days)
      * @return the midpoint between start and end.
      */
-    protected Calendar midpoint(Calendar c1, Calendar c2)
+    public static Calendar midpoint(Calendar c1, Calendar c2)
     {
         int midpoint = (int)((c2.getTimeInMillis() - c1.getTimeInMillis()) / 2);   // int: capacity ~24 days
         Calendar retValue = (Calendar)c1.clone();

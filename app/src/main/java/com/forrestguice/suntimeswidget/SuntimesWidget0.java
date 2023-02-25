@@ -23,12 +23,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.content.Context;
@@ -39,14 +37,14 @@ import android.appwidget.AppWidgetProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
-import com.forrestguice.suntimeswidget.layouts.SunLayout;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -186,6 +184,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         return new String[] { WidgetSettings.ActionMode.ONTAP_DONOTHING.name(),
                               WidgetSettings.ActionMode.ONTAP_UPDATE.name(),
+                              WidgetSettings.ActionMode.ONTAP_UPDATE_ALL.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name() };
     }
@@ -216,6 +215,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE.name()))
         {
             updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId);
+            return true;
+        }
+
+        // OnTap: Update All
+        if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE_ALL.name()))
+        {
+            updateAllWidgets(context);
             return true;
         }
 
@@ -333,6 +339,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
+    }
+
+    public static void updateAllWidgets(Context context)
+    {
+        Intent intent = new Intent();
+        intent.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+        context.sendBroadcast(intent);
     }
 
     public void initLocale(Context context)
@@ -456,9 +469,22 @@ public class SuntimesWidget0 extends AppWidgetProvider
         SunLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
-            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SunLayout_2x1_0()
-                                                          : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
+            //int minDimen_x4 = context.getResources().getInteger(R.integer.widget_size_minWidthDp4x1);
+            int minDimen_x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
+            int minDimen_x2 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+
+            //int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            //layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SunLayout_2x1_0()
+            //                                              : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
+
+            if (mustFitWithinDp[0] >= minDimen_x3) {
+                layout = new SunLayout_3x1_0();
+            } else if (mustFitWithinDp[0] >= minDimen_x2) {
+                layout = new SunLayout_2x1_0();
+            } else {
+                layout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
+            }
+
         } else {
             layout = defLayout; // WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         }

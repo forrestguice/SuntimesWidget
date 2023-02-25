@@ -55,7 +55,7 @@
             android:id="@android:id/text2"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="?attr/textColorAlertDialogListItem"
-            android:textSize="12sp"
+            android:textSize="?attr/text_size_small"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:duplicateParentState="true"
             android:layout_marginTop="0dp" android:layout_marginBottom="8dp"

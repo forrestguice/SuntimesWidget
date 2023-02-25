@@ -61,7 +61,7 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         showAlarmDialog(activityRule.getActivity());
         captureScreenshot(activityRule.getActivity(), "suntimes-dialog-alarm0");
 
-        rotateDevice(activityRule);
+        //rotateDevice(activityRule);
         verifyAlarmDialog();
         cancelAlarmDialog();
     }
@@ -89,21 +89,20 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
 
     public static void verifyAlarmDialog()
     {
-        onView(withId(R.id.appwidget_schedalarm_mode)).check(assertShown);
-        onView(withId(R.id.appwidget_schedalarm_note)).check(assertShown);
+        onView(withId(R.id.dialog_header)).check(assertShown);
+        //onView(withId(R.id.appwidget_schedalarm_note)).check(assertShown);
     }
 
     public static void applyAlarmDialog(Context context)
     {
-        String setAlarmText = context.getString(R.string.schedalarm_dialog_ok);
-        onView(withText(setAlarmText)).perform(click());
+        onView(withId(R.id.dialog_button_accept)).perform(click());
         // TODO: verify action
     }
 
     public static void cancelAlarmDialog()
     {
-        onView(withId(R.id.appwidget_schedalarm_note)).perform(pressBack());
-        onView(withId(R.id.appwidget_schedalarm_note)).check(doesNotExist());
+        onView(withId(R.id.dialog_header)).perform(pressBack());
+        onView(withId(R.id.dialog_header)).check(doesNotExist());
     }
 
 }

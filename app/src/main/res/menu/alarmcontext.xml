@@ -18,6 +18,11 @@
             android:icon="?attr/icActionEdit"
             app:showAsAction="never" />
 
+        <item android:id="@+id/setAlarmNote"
+            android:title="@string/configAction_setAlarmNote"
+            android:icon="?attr/icActionEdit"
+            app:showAsAction="never" />
+
         <item android:id="@+id/setAlarmSound"
             android:title="@string/configAction_setAlarmSound"
             android:icon="?attr/icActionSoundEnabled"

@@ -30,8 +30,8 @@
                   android:layout_height="wrap_content" android:text="@string/configLabel_timezone" />
 
         <LinearLayout
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:paddingLeft="16dp" android:paddingRight="16dp">
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:paddingLeft="16dp" android:paddingRight="16dp" android:paddingTop="4dp">
 
             <include layout="@layout/layout_settings_timezone0" />
 

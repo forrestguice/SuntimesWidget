@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Port-au-Prince</string>
+    <string name="default_location_latitude">18.54242</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-72.33583</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>             <!-- meters -->
+</resources>

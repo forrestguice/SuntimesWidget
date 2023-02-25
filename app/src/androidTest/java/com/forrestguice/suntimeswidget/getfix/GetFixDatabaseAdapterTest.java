@@ -21,18 +21,24 @@ package com.forrestguice.suntimeswidget.getfix;
 import android.content.ContentValues;
 import android.content.Context;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 import static com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE;
 import static com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter.KEY_PLACE_COMMENT;
@@ -47,7 +53,7 @@ public class GetFixDatabaseAdapterTest
 {
     private Context mockContext;
     private GetFixDatabaseAdapter db;
-    private Location[] locations = new Location[] {
+    public static final Location[] locations = new Location[] {
             new Location("Test Loc0", "35", "-112", "0"),
             new Location("Test Loc1", "36", "-111", "1"),
             new Location("Test's Loc2", "37", "-110", "2"),    // name contains '
@@ -79,6 +85,67 @@ public class GetFixDatabaseAdapterTest
 
             int n = db.getPlaceCount();
             assertTrue("database should contain " + count + " entry (contained " + n + ")", db.getPlaceCount() == count);
+        }
+        db.close();
+    }
+
+    @Test
+    public void test_addDefaults()
+    {
+        int count = 0;
+        db.open();
+        for (Locale locale : Locale.getAvailableLocales())
+        {
+            Configuration config = new Configuration(mockContext.getResources().getConfiguration());
+            config.setLocale(locale);
+
+            Resources resources = mockContext.createConfigurationContext(config).getResources();
+            String label = resources.getString(R.string.default_location_label);
+            String lat = resources.getString(R.string.default_location_latitude);
+            String lon = resources.getString(R.string.default_location_longitude);
+            String alt = resources.getString(R.string.default_location_altitude);
+            Location location = new Location(label, lat, lon, alt);
+
+            long id = db.addPlace(location);
+            assertTrue("ID should be >= 0 (was " + id + ")", id != -1);
+            count++;
+
+            int n = db.getPlaceCount();
+            assertTrue("database should contain " + count + " entry (contained " + n + ")", db.getPlaceCount() == count);
+        }
+        db.close();
+    }
+
+    @Test
+    public void test_addLastFix()
+    {
+        int count = 0;
+        db.open();
+        for (Locale locale : Locale.getAvailableLocales())
+        {
+            Configuration config = new Configuration(mockContext.getResources().getConfiguration());
+            config.setLocale(locale);
+
+            Resources resources = mockContext.createConfigurationContext(config).getResources();
+            String lat = resources.getString(R.string.default_location_latitude);
+            String lon = resources.getString(R.string.default_location_longitude);
+            String alt = resources.getString(R.string.default_location_altitude);
+
+            Location[] locations = new Location[] {
+                    new Location(resources.getString(R.string.gps_lastfix_title_found), lat, lon, alt),
+                    new Location(resources.getString(R.string.gps_lastfix_title_searching), lat, lon, alt),
+                    new Location(resources.getString(R.string.gps_lastfix_title_set), lat, lon, alt)
+            };
+
+            for (Location location : locations)
+            {
+                long id = db.addPlace(location);
+                assertTrue("ID should be >= 0 (was " + id + ")", id != -1);
+                count++;
+
+                int n = db.getPlaceCount();
+                assertTrue("database should contain " + count + " entry (contained " + n + ")", db.getPlaceCount() == count);
+            }
         }
         db.close();
     }
