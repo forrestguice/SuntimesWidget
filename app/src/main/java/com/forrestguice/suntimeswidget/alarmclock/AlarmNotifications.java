@@ -22,6 +22,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -104,6 +105,11 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
+
+    public static final String CHANNEL_ID_ALARMS = "suntimes.channel.alarms";
+    public static final String CHANNEL_ID_NOTIFICATIONS0 = "suntimes.channel.notifications0";
+    public static final String CHANNEL_ID_NOTIFICATIONS1 = "suntimes.channel.notifications1";
+    public static final String CHANNEL_ID_MISC = "suntimes.channel.misc";
 
     public static final int NOTIFICATION_SCHEDULE_ALL_ID = -10;
     public static final int NOTIFICATION_SCHEDULE_ALL_DURATION = 4000;
@@ -857,6 +863,74 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
+     * createNotificationChannel
+     * @param type AlarmType
+     * @return channelID
+     */
+    @TargetApi(26)
+    protected static String createNotificationChannel(Context context, @Nullable AlarmClockItem.AlarmType type)
+    {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null)
+        {
+            int importance;
+            String channelID, title, desc;
+            if (type == null)
+            {
+                channelID = CHANNEL_ID_MISC;
+                title = context.getString(R.string.notificationChannel_misc_title);
+                desc = context.getString(R.string.notificationChannel_misc_desc);
+                importance = NotificationManagerCompat.IMPORTANCE_LOW;
+
+            } else {
+                switch (type)
+                {
+                    case ALARM:
+                        channelID = CHANNEL_ID_ALARMS;
+                        title = context.getString(R.string.notificationChannel_alarms_title);
+                        desc = context.getString(R.string.notificationChannel_alarms_desc);
+                        importance = NotificationManagerCompat.IMPORTANCE_MAX;
+                        break;
+
+                    case NOTIFICATION1:
+                        channelID = CHANNEL_ID_NOTIFICATIONS1;
+                        title = context.getString(R.string.notificationChannel_notifications1_title);
+                        desc = context.getString(R.string.notificationChannel_notifications1_desc);
+                        importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
+                        break;
+
+                    case NOTIFICATION:
+                    case NOTIFICATION2:
+                    default:
+                        channelID = CHANNEL_ID_NOTIFICATIONS0;
+                        title = context.getString(R.string.notificationChannel_notifications0_title);
+                        desc = context.getString(R.string.notificationChannel_notifications0_desc);
+                        importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
+                        break;
+                }
+            }
+
+            NotificationChannel channel = new NotificationChannel(channelID, title, importance);
+            channel.setDescription(desc);
+            channel.enableLights(true);
+            notificationManager.createNotificationChannel(channel);
+            return channelID;
+        }
+        return "";
+    }
+
+    public static NotificationCompat.Builder createNotificationBuilder(Context context, @Nullable AlarmClockItem alarm)
+    {
+        NotificationCompat.Builder builder;
+        if (Build.VERSION.SDK_INT >= 26) {
+            builder = new NotificationCompat.Builder(context, createNotificationChannel(context, ((alarm != null) ? alarm.type : null)));
+        } else {
+            builder = new NotificationCompat.Builder(context);
+        }
+        return builder;
+    }
+
+    /**
      * createNotification
      * @param context Context
      * @param alarm AlarmClockItem
@@ -864,7 +938,7 @@ public class AlarmNotifications extends BroadcastReceiver
      */
     public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
     {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, alarm);
         SuntimesData data = null;
 
         String eventString = alarm.getEvent();
@@ -1047,7 +1121,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Notification createProgressNotification(Context context, String title, String message)
     {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, null);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setCategory(NotificationCompat.CATEGORY_PROGRESS);
@@ -1076,7 +1150,7 @@ public class AlarmNotifications extends BroadcastReceiver
             intent = AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context);
         }
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, null);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setCategory(NotificationCompat.CATEGORY_RECOMMENDATION);
