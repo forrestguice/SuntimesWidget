@@ -1162,7 +1162,7 @@
   <string name="appThemes_lightTheme">Helles Thema</string>
   <string name="appThemes_darkTheme">Dunkles Thema</string>
   <string name="appThemes_nightMode">Helles Thema / dunkles Thema (Nachtmodus)</string>
-  <string name="appThemes_systemDefault">System Standart</string>
+  <string name="appThemes_systemDefault">System Standard</string>
   <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
   <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
   <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
