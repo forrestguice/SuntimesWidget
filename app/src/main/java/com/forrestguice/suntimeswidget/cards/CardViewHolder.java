@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2022 Forrest Guice
+    Copyright (C) 2019-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -596,6 +596,43 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             case BLUE4: return row_blue4;
             case BLUE8: return row_blue8;
             default: return null;
+        }
+    }
+
+    /**
+     * startUpdateTask
+     */
+    public void startUpdateTask()
+    {
+        //Log.d("DEBUG", "startUpdateTask: " + this);
+        if (lightmap != null) {
+            lightmap.post(updateTask);
+        }
+    }
+
+    private final Runnable updateTask = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            //Log.d("DEBUG", "updateTask: " + this);
+            if (lightmap != null)
+            {
+                lightmap.updateViews(true);
+                lightmap.postDelayed(this, UPDATE_RATE);
+            }
+        }
+    };
+    public static final int UPDATE_RATE = 30000;
+
+    /**
+     * stopUpdateTask
+     */
+    public void stopUpdateTask()
+    {
+        //Log.d("DEBUG", "stopUpdateTask: " + this);
+        if (lightmap != null) {
+            lightmap.removeCallbacks(updateTask);
         }
     }
 
