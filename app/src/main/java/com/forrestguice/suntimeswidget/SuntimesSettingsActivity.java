@@ -23,14 +23,11 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -57,21 +54,20 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
+
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsPreferenceHelper;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
-import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
-import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -92,7 +88,6 @@ import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.io.File;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -107,7 +102,6 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_D
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_NOTETAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
-import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_LOCALE_MODE;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION1;
@@ -119,7 +113,7 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermissio
  * A preferences activity for the main app;
  * @see SuntimesConfigActivity0 for widget configuration.
  */
-public class SuntimesSettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
+public class SuntimesSettingsActivity extends PreferenceActivity
 {
     public static final String LOG_TAG = "SuntimesSettings";
 
@@ -149,6 +143,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private PlacesPrefsBase placesPrefBase = null;
     private String appTheme = null;
     private static SuntimesUtils utils = new SuntimesUtils();
+    private WidgetSettingsPreferenceHelper helper;
 
     public SuntimesSettingsActivity()
     {
@@ -175,6 +170,25 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initLocale(icicle);
         initLegacyPrefs();
 
+        helper = new WidgetSettingsPreferenceHelper()
+        {
+            @Override
+            public Context getContext() {
+                return SuntimesSettingsActivity.this;
+            }
+            @Override
+            public void updateLocale() {
+                SuntimesSettingsActivity.this.updateLocale();
+            }
+            @Override
+            public void rebuildActivity() {
+                SuntimesSettingsActivity.this.rebuildActivity();
+            }
+            @Override
+            public void setNeedsRecreateFlag() {
+                SuntimesSettingsActivity.this.setNeedsRecreateFlag();
+            }
+        };
         PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(onChangedNeedingRebuild);
     }
 
@@ -347,7 +361,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         super.onResume();
         Log.d("DEBUG", "onResume");
         initLocale(null);
-        PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(this);
+        PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(helper);
 
         if (placesPrefBase != null)
         {
@@ -358,7 +372,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     @Override
     public void onPause()
     {
-        PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(this);
+        PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(helper);
         super.onPause();
     }
 
@@ -507,162 +521,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         Log.d("DEBUG", "setNeedsRecreateFlag");
         getIntent().putExtra(RECREATE_ACTIVITY, true);
         setResult(RESULT_OK, getResultData());
-    }
-
-    @SuppressWarnings("UnnecessaryReturnStatement")
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
-    {
-        Log.i(LOG_TAG, "onSharedPreferenceChanged: key: " + key);
-
-        if (key.endsWith(AppSettings.PREF_KEY_PLUGINS_ENABLESCAN))
-        {
-            SuntimesCalculatorDescriptor.reinitCalculators(this);
-            rebuildActivity();
-            return;
-        }
-
-        if (key.endsWith(AlarmSettings.PREF_KEY_ALARM_UPCOMING))
-        {
-            Log.i(LOG_TAG, "onPreferenceChanged: " + AlarmSettings.PREF_KEY_ALARM_UPCOMING + ", rescheduling alarms..");
-            context.sendBroadcast(new Intent(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, null)));
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR))
-        {
-            try {
-                // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-                // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-                String calcName = sharedPreferences.getString(key, null);
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(this, calcName);
-                WidgetSettings.saveCalculatorModePref(this, 0, descriptor);
-                CalculatorProvider.clearCachedConfig(0);
-                Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
-
-            } catch (InvalidParameterException e) {
-                Log.e(LOG_TAG, "onPreferenceChanged: Failed to persist sun calculator pref! " + e);
-            }
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_CALCULATOR + "_moon"))
-        {
-            try {
-                // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-                // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-                String calcName = sharedPreferences.getString(key, null);
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(this, calcName);
-                WidgetSettings.saveCalculatorModePref(this, 0, "moon", descriptor);
-                CalculatorProvider.clearCachedConfig(0);
-                Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
-
-            } catch (InvalidParameterException e) {
-                Log.e(LOG_TAG, "onPreferenceChanged: Failed to persist moon calculator pref! " + e);
-            }
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_LOCATION_ALTITUDE_ENABLED))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveLocationAltitudeEnabledPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE_ENABLED));
-            CalculatorProvider.clearCachedConfig(0);
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_APPEARANCE_TIMEFORMATMODE))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveTimeFormatModePref(this, 0, WidgetSettings.TimeFormatMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_APPEARANCE_TIMEFORMATMODE.name())));
-            updateLocale();
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_TRACKINGMODE))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveTrackingModePref(this, 0, WidgetSettings.TrackingMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE.name())));
-	        return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWSECONDS))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveShowSecondsPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS));
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWTIMEDATE))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveShowTimeDatePref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWTIMEDATE));
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWWEEKS))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveShowWeeksPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWWEEKS));
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWHOURS))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveShowHoursPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWHOURS));
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveLocalizeHemispherePref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_LOCALIZE_HEMISPHERE));
-            return;
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            try {
-                WidgetSettings.saveObserverHeightPref(this, 0,
-                        Float.parseFloat(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_OBSERVERHEIGHT + "")));
-            } catch (NumberFormatException e) {
-                Log.e(LOG_TAG, "onPreferenceChangeD: Failed to persist observerHeight: bad value!" + e);
-            }
-        }
-
-        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
-        {
-            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
-            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveLengthUnitsPref(this, 0, WidgetSettings.getLengthUnit(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH.name())));
-            rebuildActivity();
-            return;
-        }
-
-        if (key.endsWith(AppSettings.PREF_KEY_UI_SHOWCROSSQUARTER))
-        {
-            // adjust 'tracking level' widget pref whenever 'show cross-quarter days' app pref is toggled
-            boolean value = sharedPreferences.getBoolean(key, AppSettings.PREF_DEF_UI_SHOWCROSSQUARTER);
-            WidgetSettings.saveTrackingLevelPref(this, 0, (value ? WidgetSettings.TRACKINGLEVEL_MAX : WidgetSettings.TRACKINGLEVEL_MIN));
-            return;
-        }
-
-        if (key.endsWith(AppSettings.PREF_KEY_UI_EMPHASIZEFIELD))
-        {
-            setNeedsRecreateFlag();
-            return;
-        }
     }
 
     protected void updateLocale()
