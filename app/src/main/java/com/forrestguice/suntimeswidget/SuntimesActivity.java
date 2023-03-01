@@ -72,6 +72,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ViewFlipper;
 
@@ -1653,7 +1655,7 @@ public class SuntimesActivity extends AppCompatActivity
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
-            settingsIntent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SuntimesSettingsActivity.GeneralPrefsFragment.class.getName() );
+            settingsIntent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, GeneralPrefsFragment.class.getName() );
             settingsIntent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
 
         } else {

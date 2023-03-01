@@ -56,6 +56,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ToggleButton;
 
@@ -1059,7 +1061,7 @@ public class WelcomeActivity extends AppCompatActivity
                 batteryOptimizationButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SuntimesSettingsActivity.createBatteryOptimizationAlertDialog(context).show();
+                        AlarmPrefsFragment.createBatteryOptimizationAlertDialog(context).show();
                     }
                 });
             }

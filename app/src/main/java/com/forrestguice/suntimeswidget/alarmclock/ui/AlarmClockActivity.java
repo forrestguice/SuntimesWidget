@@ -55,6 +55,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -926,7 +928,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 @Override
                 public void onClick(View view) {
-                    SuntimesSettingsActivity.openNotificationSettings(AlarmClockActivity.this);
+                    AlarmPrefsFragment.openNotificationSettings(AlarmClockActivity.this);
                 }
             });
             notificationWarning.show();
@@ -942,7 +944,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 @Override
                 public void onClick(View view) {
-                    SuntimesSettingsActivity.createBatteryOptimizationAlertDialog(AlarmClockActivity.this).show();
+                    AlarmPrefsFragment.createBatteryOptimizationAlertDialog(AlarmClockActivity.this).show();
                 }
             });
             batteryOptimizationWarning.show();
