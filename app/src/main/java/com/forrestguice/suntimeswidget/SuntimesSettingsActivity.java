@@ -669,19 +669,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         AppSettings.initLocale(this);
 
-        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget0.class);
-        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget0_2x1.class);
-
-        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget1.class);
-
-        SuntimesWidget0.triggerWidgetUpdate(this, SolsticeWidget0.class);
-
-        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget2.class);
-        SuntimesWidget0.triggerWidgetUpdate(this, SuntimesWidget2_3x1.class);
-
-        SuntimesWidget0.triggerWidgetUpdate(this, MoonWidget0.class);
-        SuntimesWidget0.triggerWidgetUpdate(this, MoonWidget0_2x1.class);
-        SuntimesWidget0.triggerWidgetUpdate(this, MoonWidget0_3x1.class);
+        for (Class widgetClass : SuntimesWidgetListActivity.WidgetListAdapter.ALL_WIDGETS) {
+            SuntimesWidget0.triggerWidgetUpdate(this, widgetClass);
+        }
     }
 
     protected void rebuildActivity()

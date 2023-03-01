@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -407,11 +407,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     @SuppressWarnings("Convert2Diamond")
     public static class WidgetListAdapter extends ArrayAdapter<WidgetListItem>
     {
-        public static String[] ALL_WIDGETS = new String[] {
-                SuntimesWidget0.class.getName(), SuntimesWidget0_2x1.class.getName(), SuntimesWidget1.class.getName(), SolsticeWidget0.class.getName(),
-                MoonWidget0.class.getName(), MoonWidget0_2x1.class.getName(), MoonWidget0_3x1.class.getName(), MoonWidget0_3x2.class.getName(),
-                SuntimesWidget2.class.getName(), SuntimesWidget2_3x1.class.getName(), SuntimesWidget2_3x2.class.getName(), SuntimesWidget2_3x3.class.getName(),
-                ClockWidget0.class.getName(), ClockWidget0_3x1.class.getName(), DateWidget0.class.getName()
+        @SuppressWarnings("rawtypes")
+        public static Class[] ALL_WIDGETS = new Class[] {
+                SuntimesWidget0.class, SuntimesWidget0_2x1.class, SuntimesWidget1.class, SolsticeWidget0.class,
+                MoonWidget0.class, MoonWidget0_2x1.class, MoonWidget0_3x1.class, MoonWidget0_3x2.class,
+                SuntimesWidget2.class, SuntimesWidget2_3x1.class, SuntimesWidget2_3x2.class, SuntimesWidget2_3x3.class,
+                ClockWidget0.class, ClockWidget0_3x1.class, DateWidget0.class
         };
 
         public ComponentName[] getAllWidgetClasses()
@@ -585,8 +586,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
             ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
             String packageName = context.getPackageName();
-            for (String widgetClass : ALL_WIDGETS) {
-                items.addAll(createWidgetListItems(context, widgetManager, packageName, widgetClass));
+            for (Class widgetClass : ALL_WIDGETS) {
+                items.addAll(createWidgetListItems(context, widgetManager, packageName, widgetClass.getName()));
             }
             for (String uri : queryWidgetInfoProviders(context)) {
                 items.addAll(createWidgetListItems(context, uri));
