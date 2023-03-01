@@ -73,6 +73,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ViewFlipper;
@@ -814,7 +815,7 @@ public class SuntimesActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
-            boolean recreateFlag = (data != null && data.getBooleanExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, false));
+            boolean recreateFlag = (data != null && data.getBooleanExtra(SettingsActivityInterface.RECREATE_ACTIVITY, false));
             Log.d("DEBUG", "onActivityResult: " + requestCode + ":" + resultCode + " recreate? " + recreateFlag + ", hasData? " + (data != null));
 
             boolean needsRecreate = (recreateFlag    // recreate requested

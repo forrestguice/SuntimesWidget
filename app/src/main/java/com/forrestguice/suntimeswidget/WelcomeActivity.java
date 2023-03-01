@@ -57,6 +57,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ToggleButton;
@@ -317,14 +318,14 @@ public class WelcomeActivity extends AppCompatActivity
 
     public void setNeedsRecreateFlag() {
         Log.d("DEBUG", "setNeedsRecreateFlag");
-        getIntent().putExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, true);
+        getIntent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, true);
         setResult(RESULT_OK, getResultData());
     }
 
     public Intent getResultData() {
-        boolean value = getIntent().getBooleanExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, false);
+        boolean value = getIntent().getBooleanExtra(SettingsActivityInterface.RECREATE_ACTIVITY, false);
         Log.d("DEBUG", "getResultData: needsRecreate? " + value);
-        return new Intent().putExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, value);
+        return new Intent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, value);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

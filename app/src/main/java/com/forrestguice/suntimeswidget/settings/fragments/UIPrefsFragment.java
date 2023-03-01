@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
+import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
@@ -113,19 +114,19 @@ public class UIPrefsFragment extends PreferenceFragment
 
         final ActionButtonPreference tapAction_clock = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_CLOCKTAPACTION);
         initPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION);
-        loadPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION, PREF_DEF_UI_CLOCKTAPACTION, SuntimesSettingsActivity.REQUEST_TAPACTION_CLOCK);
+        loadPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION, PREF_DEF_UI_CLOCKTAPACTION, SettingsActivityInterface.REQUEST_TAPACTION_CLOCK);
 
         final ActionButtonPreference tapAction_date0 = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_DATETAPACTION);
         initPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION);
-        loadPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION, SuntimesSettingsActivity.REQUEST_TAPACTION_DATE0);
+        loadPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION, SettingsActivityInterface.REQUEST_TAPACTION_DATE0);
 
         final ActionButtonPreference tapAction_date1 = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_DATETAPACTION1);
         initPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1);
-        loadPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1, SuntimesSettingsActivity.REQUEST_TAPACTION_DATE1);
+        loadPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1, SettingsActivityInterface.REQUEST_TAPACTION_DATE1);
 
         final ActionButtonPreference tapAction_note = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_NOTETAPACTION);
         initPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION);
-        loadPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION, SuntimesSettingsActivity.REQUEST_TAPACTION_NOTE);
+        loadPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION, SettingsActivityInterface.REQUEST_TAPACTION_NOTE);
 
         final ActionButtonPreference overrideTheme_light = (ActionButtonPreference)fragment.findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
         initPref_ui_themeOverride(activity, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
@@ -246,7 +247,7 @@ public class UIPrefsFragment extends PreferenceFragment
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                activity.startActivityForResult(new Intent(activity, EventListActivity.class), SuntimesSettingsActivity.REQUEST_MANAGE_EVENTS);
+                activity.startActivityForResult(new Intent(activity, EventListActivity.class), SettingsActivityInterface.REQUEST_MANAGE_EVENTS);
                 activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 return false;
             }
@@ -344,7 +345,7 @@ public class UIPrefsFragment extends PreferenceFragment
         {
             boolean isLightTheme = key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT);
             String themeName = ((isLightTheme ? AppSettings.loadThemeLightPref(activity) : AppSettings.loadThemeDarkPref(activity)));
-            int requestCode = (isLightTheme ? SuntimesSettingsActivity.REQUEST_PICKTHEME_LIGHT : SuntimesSettingsActivity.REQUEST_PICKTHEME_DARK);
+            int requestCode = (isLightTheme ? SettingsActivityInterface.REQUEST_PICKTHEME_LIGHT : SettingsActivityInterface.REQUEST_PICKTHEME_DARK);
 
             int currentIndex = ((themeName != null) ? listPref.findIndexOfValue(themeName) : -1);
             if (currentIndex >= 0)

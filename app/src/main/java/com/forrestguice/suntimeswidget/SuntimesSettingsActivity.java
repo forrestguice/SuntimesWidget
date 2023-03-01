@@ -37,6 +37,7 @@ import android.support.annotation.StringRes;
 import android.util.Log;
 import android.util.TypedValue;
 
+import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsPreferenceHelper;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 import com.forrestguice.suntimeswidget.settings.fragments.CalendarPrefsFragment;
@@ -73,27 +74,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 {
     public static final String LOG_TAG = "SuntimesSettings";
 
-    final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
-    final static String ACTION_PREFS_ALARMCLOCK = "com.forrestguice.suntimeswidget.PREFS_ALARMCLOCK";
-    final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
-    final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
-    final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
-    final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
-
-    public static String calendarPackage = "com.forrestguice.suntimescalendars";
-    public static String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
-
-    public static final int REQUEST_HEADER = 10;
-    public static final int REQUEST_PICKTHEME_LIGHT = 20;
-    public static final int REQUEST_PICKTHEME_DARK = 30;
-    public static final int REQUEST_TAPACTION_CLOCK = 40;
-    public static final int REQUEST_TAPACTION_DATE0 = 50;
-    public static final int REQUEST_TAPACTION_DATE1 = 60;
-    public static final int REQUEST_TAPACTION_NOTE = 70;
-    public static final int REQUEST_MANAGE_EVENTS = 80;
-    public static final int REQUEST_WELCOME_SCREEN = 90;
-
-    public static final String RECREATE_ACTIVITY = "recreate_activity";
+    final static String ACTION_PREFS_GENERAL = "settings.PREFS_GENERAL";
+    final static String ACTION_PREFS_ALARMCLOCK = "settings.PREFS_ALARMCLOCK";
+    final static String ACTION_PREFS_LOCALE = "settings.PREFS_LOCALE";
+    final static String ACTION_PREFS_UI = "settings.PREFS_UI";
+    final static String ACTION_PREFS_WIDGETLIST = "settings.PREFS_WIDGETLIST";
+    final static String ACTION_PREFS_PLACES = "settings.PREFS_PLACES";
 
     private Context context;
     private PlacesPrefsFragment.PlacesPrefsBase placesPrefBase = null;
@@ -148,9 +134,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     }
 
     public Intent getResultData() {
-        boolean value = getIntent().getBooleanExtra(RECREATE_ACTIVITY, false);
+        boolean value = getIntent().getBooleanExtra(SettingsActivityInterface.RECREATE_ACTIVITY, false);
         Log.d("DEBUG", "getResultData: needsRecreate? " + value);
-        return new Intent().putExtra(RECREATE_ACTIVITY, value);
+        return new Intent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, value);
     }
 
     @Override
@@ -159,23 +145,23 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
         switch(requestCode)
         {
-            case REQUEST_HEADER:
+            case SettingsActivityInterface.REQUEST_HEADER:
                 setResult(RESULT_OK, data);
                 break;
 
-            case REQUEST_PICKTHEME_DARK:
-            case REQUEST_PICKTHEME_LIGHT:
+            case SettingsActivityInterface.REQUEST_PICKTHEME_DARK:
+            case SettingsActivityInterface.REQUEST_PICKTHEME_LIGHT:
                 onPickTheme(requestCode, resultCode, data);
                 break;
 
-            case REQUEST_TAPACTION_CLOCK:
-            case REQUEST_TAPACTION_DATE0:
-            case REQUEST_TAPACTION_DATE1:
-            case REQUEST_TAPACTION_NOTE:
+            case SettingsActivityInterface.REQUEST_TAPACTION_CLOCK:
+            case SettingsActivityInterface.REQUEST_TAPACTION_DATE0:
+            case SettingsActivityInterface.REQUEST_TAPACTION_DATE1:
+            case SettingsActivityInterface.REQUEST_TAPACTION_NOTE:
                 onPickAction(requestCode, resultCode, data);
                 break;
 
-            case REQUEST_MANAGE_EVENTS:
+            case SettingsActivityInterface.REQUEST_MANAGE_EVENTS:
                 onManageEvents(requestCode, resultCode, data);
                 break;
         }
@@ -185,12 +171,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     {
         switch(requestCode)
         {
-            case REQUEST_PICKTHEME_DARK:  return AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
-            case REQUEST_PICKTHEME_LIGHT: return AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
-            case REQUEST_TAPACTION_CLOCK: return AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
-            case REQUEST_TAPACTION_DATE0: return AppSettings.PREF_KEY_UI_DATETAPACTION;
-            case REQUEST_TAPACTION_DATE1: return AppSettings.PREF_KEY_UI_DATETAPACTION1;
-            case REQUEST_TAPACTION_NOTE:  return AppSettings.PREF_KEY_UI_NOTETAPACTION;
+            case SettingsActivityInterface.REQUEST_PICKTHEME_DARK:  return AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
+            case SettingsActivityInterface.REQUEST_PICKTHEME_LIGHT: return AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
+            case SettingsActivityInterface.REQUEST_TAPACTION_CLOCK: return AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
+            case SettingsActivityInterface.REQUEST_TAPACTION_DATE0: return AppSettings.PREF_KEY_UI_DATETAPACTION;
+            case SettingsActivityInterface.REQUEST_TAPACTION_DATE1: return AppSettings.PREF_KEY_UI_DATETAPACTION1;
+            case SettingsActivityInterface.REQUEST_TAPACTION_NOTE:  return AppSettings.PREF_KEY_UI_NOTETAPACTION;
             default: return null;
         }
     }
@@ -472,7 +458,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
     public void setNeedsRecreateFlag() {
         Log.d("DEBUG", "setNeedsRecreateFlag");
-        getIntent().putExtra(RECREATE_ACTIVITY, true);
+        getIntent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, true);
         setResult(RESULT_OK, getResultData());
     }
 
@@ -641,7 +627,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         if (resultTo != null) {
             resultTo.startActivityForResult(intent, resultRequestCode);
         } else {
-            startActivityForResult(intent, REQUEST_HEADER);
+            startActivityForResult(intent, SettingsActivityInterface.REQUEST_HEADER);
         }
     }
 

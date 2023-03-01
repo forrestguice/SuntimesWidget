@@ -44,6 +44,7 @@ import com.forrestguice.suntimeswidget.WelcomeActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -80,7 +81,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
         Log.d(SuntimesSettingsActivity.LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
         switch(requestCode)
         {
-            case SuntimesSettingsActivity.REQUEST_WELCOME_SCREEN:
+            case SettingsActivityInterface.REQUEST_WELCOME_SCREEN:
                 onWelcomeScreen(requestCode, resultCode, data);
                 break;
         }
@@ -169,7 +170,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
             {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    fragment.startActivityForResult(new Intent(fragment.getActivity(), WelcomeActivity.class), SuntimesSettingsActivity.REQUEST_WELCOME_SCREEN);
+                    fragment.startActivityForResult(new Intent(fragment.getActivity(), WelcomeActivity.class), SettingsActivityInterface.REQUEST_WELCOME_SCREEN);
                     return false;
                 }
             });

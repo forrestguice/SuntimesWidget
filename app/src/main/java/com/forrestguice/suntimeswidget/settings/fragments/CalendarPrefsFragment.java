@@ -40,13 +40,16 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class CalendarPrefsFragment extends PreferenceFragment
 {
+    public static String calendarPackage = "com.forrestguice.suntimescalendars";
+    public static String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
         Intent calendarIntent = new Intent();
-        calendarIntent.setComponent(new ComponentName(SuntimesSettingsActivity.calendarPackage, SuntimesSettingsActivity.calendarActivity));
+        calendarIntent.setComponent(new ComponentName(calendarPackage, calendarActivity));
         calendarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         try {
