@@ -448,9 +448,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
                     || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME) || key.equals(PREF_KEY_APPEARANCE_THEME_DARK) || key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT))
             {
-                //Log.d("SettingsActivity", "Locale change detected; restarting activity");
+                //Log.d("SettingsActivity", "theme/locale change detected; restarting activity");
                 setNeedsRecreateFlag();
-                updateLocale();
+                if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)) {
+                    updateLocale();
+                }
                 rebuildActivity();
             }
         }
