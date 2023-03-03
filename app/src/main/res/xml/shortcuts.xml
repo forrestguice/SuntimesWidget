@@ -45,6 +45,7 @@
     </shortcut>
 
 
+    <!--<shortcut
         android:shortcutId="shortcut_themelist"
         android:enabled="true"
         android:icon="@drawable/ic_shortcut_themes"
@@ -56,7 +57,7 @@
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.forrestguice.suntimeswidget"
             android:targetClass="com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity" />
-    </shortcut>
+    </shortcut>-->
 
     <shortcut
         android:shortcutId="shortcut_widgetlist"
