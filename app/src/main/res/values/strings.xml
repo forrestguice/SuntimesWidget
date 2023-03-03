@@ -59,6 +59,10 @@
     <string name="shortcut_themelist_long">@string/configLabel_widgetThemeList</string>
     <string name="shortcut_themelist_disabled">@string/configLabel_widgetThemeList</string>
 
+    <string name="shortcut_worldmap_short">@string/configAction_worldMap</string>
+    <string name="shortcut_worldmap_long">@string/configAction_worldMap</string>
+    <string name="shortcut_worldmap_disabled">@string/configAction_worldMap</string>
+
     <string name="shortcut_alarmclock_addalarm_short">@string/alarmMode_alarm</string>
     <string name="shortcut_alarmclock_addalarm_long">@string/alarmMode_alarm</string>
     <string name="shortcut_alarmclock_addalarm_disabled">@string/alarmMode_alarm</string>

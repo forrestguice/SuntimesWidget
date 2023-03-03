@@ -11,7 +11,7 @@
         android:shortcutDisabledMessage="@string/shortcut_mooninfo_disabled">
 
         <intent
-            android:action="com.forrestguice.suntimeswidget.VIEW_MOON"
+            android:action="suntimes.action.VIEW_MOON"
             android:targetPackage="com.forrestguice.suntimeswidget"
             android:targetClass="com.forrestguice.suntimeswidget.SuntimesActivity" />
     </shortcut>
@@ -25,12 +25,26 @@
         android:shortcutDisabledMessage="@string/shortcut_suninfo_disabled">
 
         <intent
-            android:action="com.forrestguice.suntimeswidget.VIEW_SUN"
+            android:action="suntimes.action.VIEW_SUN"
             android:targetPackage="com.forrestguice.suntimeswidget"
             android:targetClass="com.forrestguice.suntimeswidget.SuntimesActivity" />
     </shortcut>
 
     <shortcut
+        android:shortcutId="shortcut_worldmap"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_worldmap"
+        android:shortcutShortLabel="@string/shortcut_worldmap_short"
+        android:shortcutLongLabel="@string/shortcut_worldmap_long"
+        android:shortcutDisabledMessage="@string/shortcut_worldmap_disabled">   <!-- TODO: icon -->
+
+        <intent
+            android:action="suntimes.action.VIEW_WORLDMAP"
+            android:targetPackage="com.forrestguice.suntimeswidget"
+            android:targetClass="com.forrestguice.suntimeswidget.SuntimesActivity" />
+    </shortcut>
+
+
         android:shortcutId="shortcut_themelist"
         android:enabled="true"
         android:icon="@drawable/ic_shortcut_themes"
