@@ -16,7 +16,7 @@
     <string name="configAction_mapLocation">展示地圖</string>
     <string name="configAction_mapLocation_chooser">地圖顯示方式</string>
     <string name="configAction_mapLocation_noapp">未找到地圖應用</string>
-    <string name="configAction_showCalendar">日歷</string>
+    <string name="configAction_showCalendar">日曆</string>
     <string name="configAction_setAlarm">設定鬧鐘</string>
     <string name="configAction_setTimeZone">設定時區</string>
     <string name="configAction_setDate">設定日期</string>
@@ -416,8 +416,8 @@
 
     <!-- Widget Setting: calendar -->
     <string name="configLabel_general_showDate">顯示日期</string>   <!-- group title -->
-    <string name="configLabel_general_calendar">日歷</string>   <!-- group title -->
-    <string name="configLabel_general_calendarMode">日歷:</string>          <!-- spinner label -->
+    <string name="configLabel_general_calendar">日曆</string>   <!-- group title -->
+    <string name="configLabel_general_calendarMode">日曆:</string>          <!-- spinner label -->
     <string name="configLabel_general_calendarFormat">日期格式:</string>          <!-- spinner label -->
     <string name="configLabel_general_calendarFormatPattern">日期模式:</string>          <!-- edittext label -->
     <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->
@@ -545,19 +545,19 @@
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
-    <string name="calendarMode_coptic">科普特歷</string>
-    <string name="calendarMode_ethiopian">埃塞俄比亞歷</string>
-    <string name="calendarMode_gregorian">公歷</string>
-    <string name="calendarMode_hebrew">希伯來歷</string>
-    <string name="calendarMode_julian">儒略歷</string>
-    <string name="calendarMode_persian">伊朗歷</string>
-    <string name="calendarMode_thaisolar">泰國陽歷</string>
-    <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
-    <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
-    <string name="calendarMode_vietnamese">Vietnamese</string>  <!-- TODO -->
-    <string name="calendarMode_minguo">Minguo</string>  <!-- TODO -->
-    <string name="calendarMode_indian">Indian</string>  <!-- TODO -->
-    <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
+    <string name="calendarMode_coptic">科普特曆</string>
+    <string name="calendarMode_ethiopian">埃塞俄比亞曆</string>
+    <string name="calendarMode_gregorian">公曆</string>
+    <string name="calendarMode_hebrew">希伯來曆</string>
+    <string name="calendarMode_julian">儒略曆</string>
+    <string name="calendarMode_persian">伊朗曆</string>
+    <string name="calendarMode_thaisolar">泰國陽曆</string>
+    <string name="calendarMode_chinese">農曆</string>
+    <string name="calendarMode_korean">朝鮮曆</string>
+    <string name="calendarMode_vietnamese">越南曆</string>
+    <string name="calendarMode_minguo">民國曆</string>
+    <string name="calendarMode_indian">印度曆</string>
+    <string name="calendarMode_japanese">和曆</string>
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">今天</string>                  <!-- setting -->
@@ -1199,7 +1199,7 @@
     <string name="configActionDesc_nextNote">顯示下一個便簽</string>
     <string name="configActionDesc_prevNote">顯示上一個便簽</string>
     <string name="configActionDesc_resetNote">復原便簽</string>
-    <string name="configActionDesc_showCalendar">顯示日歷應用</string>
+    <string name="configActionDesc_showCalendar">顯示日曆應用</string>
     <string name="configActionDesc_mapLocation">在地圖上展示位置</string>
     <string name="configActionDesc_setAlarm">設定鬧鐘</string>
     <string name="configActionDesc_worldMap">世界地圖對話窗</string>
@@ -1265,8 +1265,8 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">日歷</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">日歷集成</string>
+    <string name="configLabel_calendars">日曆</string>   <!-- group title -->
+    <string name="configLabel_calendars_enabled">日曆集成</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">被動位置</string>
@@ -1745,7 +1745,7 @@
 
     <string name="help_general_calendarFormatPattern"><![CDATA[
           <b>日期格式:</b> 日期格式模式。<br/>
-          <br/>可用的元素可能因日歷而不同，但通常包含…<br/>
+          <br/>可用的元素可能因日曆而不同，但通常包含…<br/>
           <br/>
           <b>E</b>: 周中日<br/>
           <b>d</b>: 月中日<br/>
@@ -1764,10 +1764,10 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>春跨季度:</b> 冬至與春分的中點；<em>二月</em> [北半球]，或 <em>八月</em> [南半球]。<br/><br/>
-          <b>夏跨季度:</b> 春分與夏至的中點；<em>五月</em> [北半球], 或 <em>十一月</em> [南半球]。<br/><br/>
-          <b>秋跨季度:</b> 夏至與秋分的中點；<em>八月</em> [北半球], 或 <em>二月</em> [南半球]。<br/><br/>
-          <b>冬跨季度:</b> 秋分與冬至的中點；<em>十一月</em> [北半球], 或 <em>五月</em> [南半球]。<br/>
+          <b>春跨季度:</b> 冬至與春分的中點；<em>二月</em>[北半球]，或 <em>八月</em>[南半球]。<br/><br/>
+          <b>夏跨季度:</b> 春分與夏至的中點；<em>五月</em>[北半球], 或 <em>十一月</em>[南半球]。<br/><br/>
+          <b>秋跨季度:</b> 夏至與秋分的中點；<em>八月</em>[北半球], 或 <em>二月</em>[南半球]。<br/><br/>
+          <b>冬跨季度:</b> 秋分與冬至的中點；<em>十一月</em>[北半球], 或 <em>五月</em>[南半球]。<br/>
     ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[
@@ -1859,7 +1859,7 @@
 
     <string name="help_calendar"><![CDATA[向 Calendar 應用程式提供事件（月相、至點和分點）。<br />
         <br />
-        <u><b><font color="#ff9900">日歷權限於 v0.10.0 被移除。</font></b></u><br />
+        <u><b><font color="#ff9900">日曆權限於 v0.10.0 被移除。</font></b></u><br />
         <br />
         此功能現在作為<a href="moreInfoLink">單獨的應用程式</a>使用
     ]]></string>
