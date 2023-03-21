@@ -68,13 +68,13 @@ public class AlarmLabelDialog extends DialogFragment
         getArguments().putString("helpTag", helpTag);
     }
     public CharSequence helpContent() {
-        return getArguments().getCharSequence("helpContent", "");
+        return getArguments().getCharSequence("helpContent");
     }
     public String helpUrl() {
-        return getArguments().getString("helpUrl", null);
+        return getArguments().getString("helpUrl");
     }
     public String helpTag() {
-        return getArguments().getString("helpTag", null);
+        return getArguments().getString("helpTag");
     }
     public boolean showHelp() {
         return getArguments().getBoolean("showHelp", false);
@@ -179,8 +179,9 @@ public class AlarmLabelDialog extends DialogFragment
 
     protected void showHelpDialog()
     {
+        CharSequence helpContent = helpContent();
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(helpContent());
+        helpDialog.setContent(helpContent != null ? helpContent : "");
         helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
         helpDialog.setNeutralButtonListener(new View.OnClickListener() {
             @Override
