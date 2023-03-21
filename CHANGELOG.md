@@ -1,5 +1,18 @@
 ### ~
 
+### v0.15.2 (2023-03-20)
+* adds themed alarms icon (Android 13+); updates shortcut icons (adaptive).
+* adds "quick notification" alarm shortcut; adds "world map" app shortcut; removes "themes" shortcut.
+* adds help to the "alarm note" dialog (supports substitutions).
+* adds a warning message when overriding the locale; "the app may need to be restarted before changes take full effect".
+* fixes bug where overriding the locale is not immediately applied to existing widgets.
+* fixes bug where changes to settings from the WelcomeActivity are not applied until after the app is restarted.
+* fixes bug "sun position doesn't update on main screen" (#695).
+* fixes bug "broken 2x1 sun widget preview".
+* misc refactoring (reorganizes WidgetLayout and SettingsActivity classes).
+* fixes spelling error in translation to German (de) (#698 by Das-Nichts).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#700 by James Liu).
+
 ### v0.15.1 (2023-02-15)
 * adds themed icon (Android 13+).
 * adds Chinese, Indian, Japanese, Korean, Minguo, and Vietnamese calendars to the date widget (#692).
