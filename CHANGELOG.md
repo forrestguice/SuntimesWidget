@@ -3,6 +3,7 @@
 ### v0.15.2 (2023-03-20)
 * adds themed alarms icon (Android 13+); updates shortcut icons (adaptive).
 * adds "quick notification" alarm shortcut; adds "world map" app shortcut; removes "themes" shortcut.
+* adds help to the "alarm note" dialog (supports substitutions).
 * adds a warning message when overriding the locale; "the app may need to be restarted before changes take full effect".
 * fixes bug where overriding the locale is not immediately applied to existing widgets.
 * fixes bug where changes to settings from the WelcomeActivity are not applied until after the app is restarted.
