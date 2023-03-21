@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020-2022 Forrest Guice
+    Copyright (C) 2020-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -100,6 +100,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
     private static final String DIALOGTAG_HELP = "alarmhelp";
+
+    protected static final String HELPTAG_SUBSTITUTIONS = "help_substitutions";
 
     private AlarmEditDialog editor;
     private AppSettings.LocaleInfo localeInfo;
@@ -958,9 +960,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
      */
     protected void pickNote(@NonNull AlarmClockItem item)
     {
-        AlarmLabelDialog dialog = new AlarmLabelDialog();    // TODO: multi-line
+        AlarmLabelDialog dialog = new AlarmLabelDialog();
         dialog.setDialogTitle(getString(R.string.alarmnote_dialog_title));
         dialog.setMultiLine(true);
+        dialog.setShowHelp(true, SuntimesUtils.fromHtml(getString(R.string.help_appearance_title)), getString(R.string.help_substitutions_url), HELPTAG_SUBSTITUTIONS);
         dialog.setAccentColor(colorAlarmEnabled);
         dialog.setLabel(item.note);
         dialog.setOnAcceptedListener(onNoteChanged);
