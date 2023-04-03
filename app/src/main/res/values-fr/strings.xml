@@ -117,7 +117,7 @@
     <string name="until_end">jusqu\'à la fin</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. plural applies to time component (next line) -->
-        <item quantity="one">à</item>
+        <item quantity="one" xliff:ignore="ImpliedQuantity">à</item>
         <item quantity="other">à</item>
     </plurals>
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. plural applies to time component (next line) -->
@@ -1138,7 +1138,7 @@
     <string name="configLabel_ui_showbluehour">Heure bleue</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightThemeNote de réinitialisation">Thème clair</string>
+    <string name="appThemes_lightTheme">Thème clair</string>
     <string name="appThemes_darkTheme">Thème sombre</string>
     <string name="appThemes_nightMode">Automatique (jour/nuit)</string>
     <string name="appThemes_systemDefault">Système</string>
@@ -1181,7 +1181,7 @@
     <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
     <string name="configActionDesc_alarmList">Liste d\'alarmes</string>
     <string name="configActionDesc_themeList">Liste de thèmes</string>
-    <string name="configActionDesc_actionList">Liste d'actions</string>
+    <string name="configActionDesc_actionList">Liste d\'actions</string>
     <string name="configActionDesc_widgetList">Liste de widgets</string>
     <string name="configActionDesc_nextSunrise">Afficher le prochain lever de soleil</string>
     <string name="configActionDesc_nextSunset">Afficher le prochain coucher de soleil</string>
@@ -1638,7 +1638,7 @@
     <string name="welcome_action_next">Suivant</string>
     <string name="welcome_action_done">Terminer</string>
     <string name="welcome_message">@string/app_shortdesc</string>
-    <string name="welcome_pref_title">Écran d'accueil</string>
+    <string name="welcome_pref_title">Écran d\'accueil</string>
     <string name="welcome_pref_summary">Démarrer l\'assistant de configuration au premier lancement.</string>
 
     <!-- Dialog: Help -->
