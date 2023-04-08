@@ -24,11 +24,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -42,12 +44,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmOffsetDialog;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -55,6 +60,10 @@ public class EditEventDialog extends EditBottomSheetDialog
 {
     public static final String ARG_DIALOGMODE = "dialogMode";
     public static final String ARG_MODIFIED = "isModified";
+
+    private static final String DIALOGTAG_OFFSET = "eventoffset";
+
+    public static SuntimesUtils utils = new SuntimesUtils();
 
     public EditEventDialog()
     {
@@ -154,6 +163,14 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     }
 
+    /* Event Offset */
+    protected void setOffset(int millis) {
+        getArguments().putInt("offset", millis);
+    }
+    protected int getOffset() {
+        return getArguments().getInt("offset", 0);
+    }
+
     /* isShown */
     protected Boolean shown = false;
     public boolean getEventIsShown() {
@@ -183,7 +200,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         updateViews(getActivity(), type);
     }
 
-    protected TextView text_label;
+    protected TextView text_label, text_offset;
     protected EditText edit_eventID, edit_label, edit_uri, edit_uri1;
     protected ColorChooser choose_color;
     protected CheckBox check_shown;
@@ -216,6 +233,8 @@ public class EditEventDialog extends EditBottomSheetDialog
     @Override
     protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
+        SuntimesUtils.initDisplayStrings(context);
+
         edit_eventID = (EditText) dialogContent.findViewById(R.id.edit_event_id);
         if (edit_eventID != null)
         {
@@ -279,6 +298,12 @@ public class EditEventDialog extends EditBottomSheetDialog
             edit_angle.addTextChangedListener(angleWatcher);
         }
 
+        text_offset = (TextView) dialogContent.findViewById(R.id.edit_event_offset);
+        View chip_offset = dialogContent.findViewById(R.id.chip_event_offset);
+        if (chip_offset != null) {
+            chip_offset.setOnClickListener(onPickOffset);
+        }
+
         if (eventID == null) {
             eventID = EventSettings.suggestEventID(context);
         }
@@ -318,12 +343,23 @@ public class EditEventDialog extends EditBottomSheetDialog
         switch (type)
         {
             case SUN_ELEVATION:
-                if (edit_angle != null)
+                int angle = 0;
+                AlarmEventProvider.SunElevationEvent event0 = null;
+                if (uri != null) {
+                    event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                }
+                if (edit_angle != null && event0 != null) {
+                    setAngle(angle = event0.getAngle());
+                }
+
+                int offset = ((event0 != null) ? event0.getOffset() : 0);
+                setOffset(offset);
+                if (text_offset != null)
                 {
-                    if (uri != null) {
-                        AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment());
-                        setAngle(event0.getAngle());
-                    }
+                    String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
+                    text_offset.setText((offset != 0)
+                            ? context.getResources().getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), angle, offsetText)
+                            : getResources().getQuantityString(R.plurals.offset_at_plural, angle));
                 }
                 break;
 
@@ -333,6 +369,43 @@ public class EditEventDialog extends EditBottomSheetDialog
                 break;
         }
     }
+
+    private final View.OnClickListener onPickOffset = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            if (Build.VERSION.SDK_INT >= 11)
+            {
+                AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
+                offsetDialog.setShowDays(false);
+                offsetDialog.setOffset(getOffset());
+                offsetDialog.setOnAcceptedListener(onOffsetChanged);
+                offsetDialog.show(getChildFragmentManager(), DIALOGTAG_OFFSET);
+
+            }  else {
+                Toast.makeText(getActivity(), getString(R.string.feature_not_supported_by_api, Integer.toString(Build.VERSION.SDK_INT)), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
+            }
+        }
+    };
+    private final DialogInterface.OnClickListener onOffsetChanged = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            FragmentManager fragments = getChildFragmentManager();
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+            if (offsetDialog != null)
+            {
+                int offset = (int)offsetDialog.getOffset();
+                String eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, offset, null);
+                String eventUri = AlarmAddon.getEventCalcUri(AUTHORITY, eventID);
+                setOffset(offset);
+                setEventUri(eventUri);
+                setIsModified(true);
+                updateViews(getActivity());
+            }
+        }
+    };
 
     @Override
     protected boolean validateInput() {
@@ -421,8 +494,10 @@ public class EditEventDialog extends EditBottomSheetDialog
         public void afterTextChanged(Editable s) {
             try {
                 int angle = Integer.parseInt(s.toString());
-                setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, AlarmEventProvider.SunElevationEvent.NAME_PREFIX + angle));
+                String eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, getOffset(), null);
+                setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
                 setIsModified(true);
+
             } catch (NumberFormatException e) {
                 Log.e("EditEventDialog", "not an angle: " + e);
             }
