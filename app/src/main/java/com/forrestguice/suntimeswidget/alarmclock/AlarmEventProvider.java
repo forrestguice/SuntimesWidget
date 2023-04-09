@@ -670,7 +670,7 @@ public class AlarmEventProvider extends ContentProvider
     @Nullable
     public static Calendar updateAlarmTime_sunElevationEvent(Context context, @NonNull SunElevationEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        SuntimesRiseSetData sunData = getData_sunElevationEvent(context, event.getAngle(), location);
+        SuntimesRiseSetData sunData = getData_sunElevationEvent(context, event.getAngle(), event.getOffset(), location);
 
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime;
@@ -681,7 +681,6 @@ public class AlarmEventProvider extends ContentProvider
         eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
         if (eventTime != null)
         {
-            eventTime.add(Calendar.MILLISECOND, event.getOffset());
             eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
@@ -704,7 +703,6 @@ public class AlarmEventProvider extends ContentProvider
             eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
             if (eventTime != null)
             {
-                eventTime.add(Calendar.MILLISECOND, event.getOffset());
                 eventTime.set(Calendar.SECOND, 0);
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
@@ -713,11 +711,12 @@ public class AlarmEventProvider extends ContentProvider
         return eventTime;
     }
 
-    private static SuntimesRiseSetData getData_sunElevationEvent(Context context, int angle, @NonNull Location location)
+    private static SuntimesRiseSetData getData_sunElevationEvent(Context context, int angle, int offset, @NonNull Location location)
     {
         SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
         sunData.setLocation(location);
         sunData.setAngle(angle);
+        sunData.setOffset(offset);
         sunData.setTodayIs(Calendar.getInstance());
         return sunData;
     }
