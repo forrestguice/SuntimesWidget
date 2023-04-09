@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -90,6 +90,7 @@ public class SuntimesRiseSetData extends SuntimesData
             EventSettings.EventAlias alias = ((WidgetSettings.EventAliasTimeMode) dataMode).getEvent();
             AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
             this.angle = (event == null ? null : event.getAngle());
+            this.offset = (event == null ? 0 : event.getOffset());
         }
         WidgetSettings.TimeMode mode = dataMode.getTimeMode();
         this.timeMode = ((mode != null) ? mode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE);
@@ -107,6 +108,17 @@ public class SuntimesRiseSetData extends SuntimesData
     }
     public void setAngle( int value ) {
         angle = value;
+    }
+
+    /**
+     * property: offset
+     */
+    protected int offset = 0;
+    public void setOffset(int millis) {
+        offset = millis;
+    }
+    public int getOffset() {
+        return offset;
     }
 
     /**
@@ -254,6 +266,7 @@ public class SuntimesRiseSetData extends SuntimesData
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.offset = other.offset;
 
         this.sunriseCalendarToday = other.sunriseCalendarToday();
         this.sunsetCalendarToday = other.sunsetCalendarToday();
@@ -404,6 +417,13 @@ public class SuntimesRiseSetData extends SuntimesData
                     sunsetCalendarOther = calculator.getOfficialSunsetCalendarForDate(otherCalendar);
                     break;
             }
+        }
+
+        if (offset != 0) {
+            sunriseCalendarToday.add(Calendar.MILLISECOND, offset);
+            sunsetCalendarToday.add(Calendar.MILLISECOND, offset);
+            sunriseCalendarOther.add(Calendar.MILLISECOND, offset);
+            sunsetCalendarOther.add(Calendar.MILLISECOND, offset);
         }
 
         dayLengthToday = determineDayLength(sunriseCalendarToday, sunsetCalendarToday);

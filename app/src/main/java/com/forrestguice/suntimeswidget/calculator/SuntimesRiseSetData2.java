@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -158,6 +158,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.offset = other.offset;
 
         this.dayLengthToday = other.dayLengthToday();
         this.dayLengthOther = other.dayLengthOther();
@@ -247,6 +248,10 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
             {
                 sunrise[i] = calculator.getSunriseCalendarForDate(calendar[i], angle);
                 sunset[i] = calculator.getSunsetCalendarForDate(calendar[i], angle);
+                if (offset != 0) {
+                    sunrise[i].add(Calendar.MILLISECOND, offset);
+                    sunset[i].add(Calendar.MILLISECOND, offset);
+                }
                 continue;
             }
 
@@ -291,6 +296,10 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
                     sunrise[i] = calculator.getOfficialSunriseCalendarForDate(calendar[i]);
                     sunset[i] = calculator.getOfficialSunsetCalendarForDate(calendar[i]);
                     break;
+            }
+            if (offset != 0) {
+                sunrise[i].add(Calendar.MILLISECOND, offset);
+                sunset[i].add(Calendar.MILLISECOND, offset);
             }
         }
 
