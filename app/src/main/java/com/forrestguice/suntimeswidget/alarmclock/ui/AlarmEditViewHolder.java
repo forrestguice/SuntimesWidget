@@ -348,7 +348,6 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         edit_label.setOnClickListener(null);
         edit_note.setOnClickListener(null);
         chip_offset.setOnClickListener(null);
-        chip_offset.setOnClickListener(null);
         chip_event.setOnClickListener(null);
         chip_location.setOnClickListener(null);
         chip_repeat.setOnClickListener(null);
