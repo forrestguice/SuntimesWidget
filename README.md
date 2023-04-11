@@ -180,7 +180,7 @@ Libraries used:
 
 German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, <u>xnumad</u>, and <u>CSTRSK</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
-French translation by <u>Jej</u>, <u>Aloha</u> and <u>ldmpub</u>.<br/>
+French translation by <u>Jej</u>, <u>Aloha</u>, <u>ldmpub</u>, and <u>grenagit</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>
 Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u> and <u><a href=https://github.com/gnusuari0>gnusuari0</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>

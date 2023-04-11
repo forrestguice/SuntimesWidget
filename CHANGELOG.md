@@ -1,5 +1,8 @@
 ### ~
 
+### v0.15.2 (2023-04-10)
+* updates translation to French (fr) (#702 by grenagit).
+
 ### v0.15.2 (2023-03-20)
 * adds themed alarms icon (Android 13+); updates shortcut icons (adaptive).
 * adds "quick notification" alarm shortcut; adds "world map" app shortcut; removes "themes" shortcut.
