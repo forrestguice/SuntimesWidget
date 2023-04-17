@@ -102,11 +102,11 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: sun angle (overrides time mode)
      */
-    protected Integer angle = null;
-    public Integer angle() {
+    protected Double angle = null;
+    public Double angle() {
         return angle;
     }
-    public void setAngle( int value ) {
+    public void setAngle( double value ) {
         angle = value;
     }
 

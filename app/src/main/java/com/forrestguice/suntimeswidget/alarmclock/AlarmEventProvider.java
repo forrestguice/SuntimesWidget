@@ -540,14 +540,14 @@ public class AlarmEventProvider extends ContentProvider
         public static final String SUFFIX_RISING = "r";
         public static final String SUFFIX_SETTING = "s";
 
-        public ElevationEvent(int angle, int offset, boolean rising) {
+        public ElevationEvent(double angle, int offset, boolean rising) {
             this.angle = angle;
             this.offset = offset;
             this.rising = rising;
         }
 
-        protected int angle;
-        public int getAngle() {
+        protected double angle;
+        public double getAngle() {
             return angle;
         }
 
@@ -579,7 +579,7 @@ public class AlarmEventProvider extends ContentProvider
     {
         public static final String NAME_PREFIX = "SUN_";
 
-        public SunElevationEvent(int angle, int offset, boolean rising) {
+        public SunElevationEvent(double angle, int offset, boolean rising) {
             super(angle, offset, rising);
         }
 
@@ -600,7 +600,7 @@ public class AlarmEventProvider extends ContentProvider
         protected String getEventSummary(Context context)
         {
             SuntimesUtils utils = new SuntimesUtils();
-            String angle = utils.formatAsElevation(getAngle(), 0).toString();
+            String angle = utils.formatAsElevation(getAngle(), 1).toString();
             if (offset == 0) {
                 return offsetDisplay(context) + context.getString(R.string.sunevent_summary_format, context.getString(R.string.sunevent_title), angle.toString());
             } else {
@@ -615,7 +615,7 @@ public class AlarmEventProvider extends ContentProvider
             {
                 SuntimesUtils.initDisplayStrings(context);
                 String offsetDisplay = utils.timeDeltaLongDisplayString(0, offset, false).getValue();
-                return context.getResources().getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), angle, offsetDisplay);
+                return context.getResources().getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int)angle, offsetDisplay);
             } else return "";
         }
 
@@ -631,7 +631,7 @@ public class AlarmEventProvider extends ContentProvider
         protected String getEventName(Context context) {
             return getEventName(angle, offset, rising);
         }
-        public static String getEventName(int angle, int offset, @Nullable Boolean rising) {
+        public static String getEventName(double angle, int offset, @Nullable Boolean rising) {
             String name = NAME_PREFIX
                     + angle
                     + ((offset != 0) ? "|" + (int)Math.ceil(offset / 1000d / 60d) : "");
@@ -646,13 +646,14 @@ public class AlarmEventProvider extends ContentProvider
         {
             if (isElevationEvent(eventName))
             {
-                int angle, offsetMinutes = 0;
+                double angle;
+                int offsetMinutes = 0;
                 boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
                 try {
                     String contentString = eventName.substring(4, eventName.length() - (hasSuffix ? 1 : 0));
                     String[] contentParts = contentString.split("\\|");
 
-                    angle = Integer.parseInt(contentParts[0]);
+                    angle = Double.parseDouble(contentParts[0]);
                     if (contentParts.length > 1) {
                         offsetMinutes = Integer.parseInt(contentParts[1]);
                     }
@@ -711,7 +712,7 @@ public class AlarmEventProvider extends ContentProvider
         return eventTime;
     }
 
-    private static SuntimesRiseSetData getData_sunElevationEvent(Context context, int angle, int offset, @NonNull Location location)
+    private static SuntimesRiseSetData getData_sunElevationEvent(Context context, double angle, int offset, @NonNull Location location)
     {
         SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
         sunData.setLocation(location);
