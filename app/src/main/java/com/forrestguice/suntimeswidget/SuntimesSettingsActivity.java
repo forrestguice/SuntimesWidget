@@ -225,13 +225,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         }
     }
 
-    private void onManageEvents(int requestCode, int resultCode, Intent data)
+    private void onManageEvents(int requestCode, int resultCode, @Nullable Intent data)
     {
-        boolean adapterModified = data.getBooleanExtra(ActionListActivity.ADAPTER_MODIFIED, false);
+        boolean adapterModified = ((data != null) && data.getBooleanExtra(ActionListActivity.ADAPTER_MODIFIED, false));
 
         if (resultCode == RESULT_OK)
         {
-            String eventID = data.getStringExtra(EventListActivity.SELECTED_EVENTID);
+            String eventID = ((data != null) ? data.getStringExtra(EventListActivity.SELECTED_EVENTID) : null);
             if (eventID != null) {
                 EventSettings.setShown(context, eventID, true);
                 adapterModified = true;
