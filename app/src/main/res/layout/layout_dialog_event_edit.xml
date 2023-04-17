@@ -104,7 +104,7 @@
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:minWidth="50dp"
                     android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                    android:hint="@string/editevent_dialog_angle_hint" android:inputType="numberSigned"
+                    android:hint="@string/editevent_dialog_angle_hint" android:inputType="numberSigned|numberDecimal"
                     android:paddingLeft="5dp" android:paddingRight="5dp"
                     android:gravity="end|right"
                     android:layout_gravity="center_vertical" />

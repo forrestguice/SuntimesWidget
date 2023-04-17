@@ -206,13 +206,13 @@ public class EditEventDialog extends EditBottomSheetDialog
     protected CheckBox check_shown;
 
     @SuppressLint("SetTextI18n")
-    protected void setAngle(int value ) {
+    protected void setAngle(double value ) {
         angle = value;
         if (edit_angle != null) {
-            edit_angle.setText(Integer.toString(angle));
+            edit_angle.setText(Double.toString(angle));
         }
     }
-    private int angle = 0;
+    private double angle = 0;
     protected EditText edit_angle;
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
@@ -343,7 +343,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         switch (type)
         {
             case SUN_ELEVATION:
-                int angle = 0;
+                double angle = 0;
                 AlarmEventProvider.SunElevationEvent event0 = null;
                 if (uri != null) {
                     event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment());
@@ -358,8 +358,8 @@ public class EditEventDialog extends EditBottomSheetDialog
                 {
                     String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
                     text_offset.setText((offset != 0)
-                            ? context.getResources().getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), angle, offsetText)
-                            : getResources().getQuantityString(R.plurals.offset_at_plural, angle));
+                            ? context.getResources().getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int)angle, offsetText)
+                            : getResources().getQuantityString(R.plurals.offset_at_plural, (int)angle));
                 }
                 break;
 
@@ -441,7 +441,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     protected boolean validateInput_angle()
     {
         try {
-            int angle = Integer.parseInt(edit_angle.getText().toString());
+            double angle = Double.parseDouble(edit_angle.getText().toString());
             if (angle < MIN_ANGLE || angle > MAX_ANGLE) {
                 edit_angle.setError(getContext().getString(R.string.editevent_dialog_angle_error));
                 return false;
@@ -453,8 +453,8 @@ public class EditEventDialog extends EditBottomSheetDialog
         edit_angle.setError(null);
         return true;
     }
-    public static final int MIN_ANGLE = -90;
-    public static final int MAX_ANGLE = 90;
+    public static final double MIN_ANGLE = -90;
+    public static final double MAX_ANGLE = 90;
 
     private final TextWatcher labelWatcher = new TextWatcher() {
         @Override
@@ -493,7 +493,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void afterTextChanged(Editable s) {
             try {
-                int angle = Integer.parseInt(s.toString());
+                double angle = Double.parseDouble(s.toString());
                 String eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, getOffset(), null);
                 setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
                 setIsModified(true);
