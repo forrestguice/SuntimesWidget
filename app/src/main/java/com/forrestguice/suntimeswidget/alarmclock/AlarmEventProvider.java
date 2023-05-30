@@ -172,9 +172,16 @@ public class AlarmEventProvider extends ContentProvider
 
                 // list all custom events
                 List<EventSettings.EventAlias> events1 = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
-                for (EventSettings.EventAlias event : events1) {
-                    retValue.addRow(createRow(context, event, true, columns, selection, selectionArgs));
-                    retValue.addRow(createRow(context, event, false, columns, selection, selectionArgs));
+                for (EventSettings.EventAlias event : events1)
+                {
+                    Object[] row1 = createRow(context, event, true, columns, selection, selectionArgs);
+                    if (row1 != null) {
+                        retValue.addRow(row1);
+                    }
+                    Object[] row2 = createRow(context, event, false, columns, selection, selectionArgs);
+                    if (row2 != null) {
+                        retValue.addRow(row2);
+                    }
                  }
 
             } else {
@@ -208,7 +215,7 @@ public class AlarmEventProvider extends ContentProvider
             return;
         }
 
-        switch(type)
+        switch (type)
         {
             case DATE:
                 try {
@@ -227,7 +234,10 @@ public class AlarmEventProvider extends ContentProvider
                 }
                 boolean rising = suffix.equals(ElevationEvent.SUFFIX_RISING);
                 EventSettings.EventAlias alias = EventSettings.loadEvent(context, aliasID);
-                retValue.addRow(createRow(context, alias, rising, columns, selection, selectionArgs));
+                Object[] row = createRow(context, alias, rising, columns, selection, selectionArgs);
+                if (row != null) {
+                    retValue.addRow(row);
+                }
                 break;
 
             case SUN_ELEVATION:
@@ -310,12 +320,20 @@ public class AlarmEventProvider extends ContentProvider
     /**
      * createRow( EventAlias )
      */
+    @Nullable
     private Object[] createRow(@NonNull Context context, EventSettings.EventAlias event, boolean rising, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
         Uri uri = Uri.parse(event.getUri() + (rising ? ElevationEvent.SUFFIX_RISING : ElevationEvent.SUFFIX_SETTING));
         Cursor cursor = context.getContentResolver().query(uri, columns, selection, selectionArgs, null);
         if (cursor != null) {
             cursor.moveToFirst();
+        }
+
+        if (cursor != null && cursor.isAfterLast())
+        {
+            Log.w("AlarmEventProvider", "null result for " + event.getID());
+            cursor.close();
+            return null;
         }
 
         Object[] row = new Object[columns.length];
