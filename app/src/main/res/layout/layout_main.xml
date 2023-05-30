@@ -60,10 +60,10 @@
                     android:paddingLeft="8dp" android:paddingRight="8dp"
                     android:paddingBottom="8dp"
                     app:layout_constraintHorizontal_chainStyle="spread"
-                    app:layout_constraintBottom_toBottomOf="@+id/noteframe"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/noteframe"
-                    app:layout_constraintTop_toTopOf="@+id/noteframe">
+                    app:layout_constraintEnd_toStartOf="@+id/noteframe">
 
                     <include layout="@layout/info_time_now"/>
 
