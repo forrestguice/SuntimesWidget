@@ -60,28 +60,29 @@
                     android:paddingLeft="8dp" android:paddingRight="8dp"
                     android:paddingBottom="8dp"
                     app:layout_constraintHorizontal_chainStyle="spread"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/noteframe"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/noteframe">
+                    app:layout_constraintEnd_toStartOf="@+id/noteframe"
+                    app:layout_constraintTop_toTopOf="@+id/noteframe">
 
                     <include layout="@layout/info_time_now"/>
 
                 </LinearLayout>
 
                 <!-- Flipper: Note -->
-                <ScrollView
+                <FrameLayout
                     android:id="@+id/noteframe"
-                    android:layout_width="0dp" android:layout_height="0dp"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
                     app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintTop_toTopOf="@+id/layout_clock"
-                    app:layout_constraintBottom_toBottomOf="@+id/layout_clock"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/layout_clock"
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <ViewFlipper
                         android:id="@+id/info_note_flipper"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal" android:paddingTop="8dp"
+                        android:layout_gravity="center" android:gravity="center"
                         android:background="?attr/selectableItemBackground">
 
                         <LinearLayout android:id="@+id/info_time_note1"
@@ -96,7 +97,7 @@
 
                     </ViewFlipper>
 
-                </ScrollView>
+                </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
