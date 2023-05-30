@@ -212,6 +212,15 @@ public class EditEventDialog extends EditBottomSheetDialog
             edit_angle.setText(Double.toString(angle));
         }
     }
+    @Nullable
+    public Double getAngle() {
+        try {
+            return Double.parseDouble(edit_angle.getText().toString());
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
     private double angle = 0;
     protected EditText edit_angle;
 
@@ -397,6 +406,12 @@ public class EditEventDialog extends EditBottomSheetDialog
             if (offsetDialog != null)
             {
                 int offset = (int)offsetDialog.getOffset();
+
+                Double angle = getAngle();
+                if (angle == null) {
+                    angle = EditEventDialog.this.angle;
+                }
+
                 String eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, offset, null);
                 String eventUri = AlarmAddon.getEventCalcUri(AUTHORITY, eventID);
                 setOffset(offset);
