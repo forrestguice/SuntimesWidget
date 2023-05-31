@@ -42,6 +42,11 @@
     <dimen name="xlargetext_size_huge">40sp</dimen>
     <dimen name="xlargetext_size_enormous">60sp</dimen>
 
+    <dimen name="small_actionbar_size">48sp</dimen>    <!-- action bar minimum height -->
+    <dimen name="normal_actionbar_size">54sp</dimen>
+    <dimen name="large_actionbar_size">64sp</dimen>
+    <dimen name="xlarge_actionbar_size">68sp</dimen>
+
     <integer name="widget_size_minWidthDp4x1">250</integer>
     <dimen name="widget_size_minWidth4x1">250dp</dimen>
 
