@@ -174,6 +174,7 @@
         <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
 
     </style>
     <style name="AppTheme.System" parent="AppThemeBase.System">
@@ -189,6 +190,7 @@
         <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
         <item name="text_size_huge">@dimen/smalltext_size_huge</item>
         <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
     </style>
     <style name="AppTheme.System.Large" parent="AppTheme.System">
         <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
@@ -199,6 +201,7 @@
         <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/largetext_size_huge</item>
         <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
     </style>
     <style name="AppTheme.System.XLarge" parent="AppTheme.System">
         <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
@@ -209,6 +212,7 @@
         <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
         <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
     <!-- Theme: Light (left-to-right) -->
@@ -381,6 +385,7 @@
         <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
@@ -398,6 +403,7 @@
         <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
         <item name="text_size_huge">@dimen/smalltext_size_huge</item>
         <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
     </style>
     <style name="AppTheme.Light.Large" parent="AppTheme.Light">
         <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
@@ -408,6 +414,7 @@
         <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/largetext_size_huge</item>
         <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
     </style>
     <style name="AppTheme.Light.XLarge" parent="AppTheme.Light">
         <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
@@ -418,6 +425,7 @@
         <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
         <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
     <!-- Theme: Dark (left-to-right) -->
@@ -590,6 +598,7 @@
         <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
@@ -607,6 +616,7 @@
         <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
         <item name="text_size_huge">@dimen/smalltext_size_huge</item>
         <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
     </style>
     <style name="AppTheme.Dark.Large" parent="AppTheme.Dark">
         <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
@@ -617,6 +627,7 @@
         <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/largetext_size_huge</item>
         <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
     </style>
     <style name="AppTheme.Dark.XLarge" parent="AppTheme.Dark">
         <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
@@ -627,6 +638,7 @@
         <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
         <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
     <style name="ThemeOverlay.Suntimes.BottomSheetDialog" parent="ThemeOverlay.AppCompat.Dialog">
@@ -665,6 +677,7 @@
         <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
     </style>
     <style name="AppTheme.System1.Small" parent="AppTheme.System1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -675,6 +688,7 @@
         <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
         <item name="text_size_huge">@dimen/smalltext_size_huge</item>
         <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
     </style>
     <style name="AppTheme.System1.Large" parent="AppTheme.System1">
         <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
@@ -685,6 +699,7 @@
         <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/largetext_size_huge</item>
         <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
     </style>
     <style name="AppTheme.System1.XLarge" parent="AppTheme.System1">
         <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
@@ -695,6 +710,7 @@
         <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
         <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
     <!-- Contrast Light Theme -->
@@ -729,6 +745,7 @@
         <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
     </style>
     <style name="AppTheme.Light1.Small" parent="AppTheme.Light1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -739,6 +756,7 @@
         <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
         <item name="text_size_huge">@dimen/smalltext_size_huge</item>
         <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
     </style>
     <style name="AppTheme.Light1.Large" parent="AppTheme.Light1">
         <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
@@ -749,6 +767,7 @@
         <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/largetext_size_huge</item>
         <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
     </style>
     <style name="AppTheme.Light1.XLarge" parent="AppTheme.Light1">
         <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
@@ -759,6 +778,7 @@
         <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
         <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
     <!-- Contrast Dark Theme -->
@@ -793,6 +813,7 @@
         <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
     </style>
     <style name="AppTheme.Dark1.Small" parent="AppTheme.Dark1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -803,6 +824,7 @@
         <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
         <item name="text_size_huge">@dimen/smalltext_size_huge</item>
         <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
     </style>
     <style name="AppTheme.Dark1.Large" parent="AppTheme.Dark1">
         <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
@@ -813,6 +835,7 @@
         <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/largetext_size_huge</item>
         <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
     </style>
     <style name="AppTheme.Dark1.XLarge" parent="AppTheme.Dark1">
         <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
@@ -823,6 +846,7 @@
         <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
         <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
         <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
     <!-- view styles -->
