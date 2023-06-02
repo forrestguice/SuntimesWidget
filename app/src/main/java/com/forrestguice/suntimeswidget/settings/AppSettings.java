@@ -383,6 +383,21 @@ public class AppSettings
         return context.getResources().getBoolean(R.bool.is_rtl);
     }
 
+    /**
+     * Is the current device a television? This implies limited features.
+     */
+    public static boolean isTelevision(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 21) {
+            return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LEANBACK);
+
+        } else if (Build.VERSION.SDK_INT >= 13) {
+            UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+            return (uiModeManager != null && (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION));
+
+        } else return false;
+    }
+
     public static void saveTimeZoneSortPref(Context context, WidgetTimezones.TimeZoneSort sortMode )
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
