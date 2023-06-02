@@ -300,7 +300,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Aspekto</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Etoso</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_mode">Aspekto</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Baskuli inter aranĝoj por plenigi disponeblan spacon</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleText">Skali tekstojn kaj bildsimbolojn</string>  <!-- checkbox label -->
@@ -350,6 +350,7 @@
     <string name="timeMode_cross_spring_short">Printemp-mezo</string>       <!-- setting -->
     <string name="timeMode_cross_autumnal">Mezo de aŭtuno</string>  <!-- setting -->
     <string name="timeMode_cross_autumnal_short">Aŭtun-mezo</string>     <!-- setting -->
+    <string name="timeMode_cross_summer">Somer-mezo</string>     <!-- setting -->
     <string name="timeMode_cross_summer_short">Somer-mezo</string>     <!-- setting -->
     <string name="timeMode_cross_winter">Mezo de vintro</string>    <!-- setting -->
     <string name="timeMode_cross_winter_short">Vintr-mezo</string>     <!-- setting -->
@@ -695,8 +696,8 @@
     <string name="configLabel_themeColorMoonset">Koloro de lunsubiro</string>  <!-- color label -->
     <string name="configLabel_themeColorMoonWaxing">Koloro de kreskanta</string> <!-- color label -->
     <string name="configLabel_themeColorMoonWaning">Koloro de malkreskanta</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Koloro de Plenluno</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">Koloro de Novluno</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Koloro de plenluno</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Koloro de novluno</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1142,14 +1143,20 @@
     <string name="configLabel_ui_showbluehour">Blua horo</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">hela</string>
-    <string name="appThemes_darkTheme">malhela</string>
+    <string name="appThemes_lightTheme">Hela etoso</string>
+    <string name="appThemes_darkTheme">Malhela etoso</string>
     <string name="appThemes_nightMode">hela / malhela (dum nokta reĝimo)</string>
     <string name="appThemes_systemDefault">laŭ operaciumo</string>
     <string name="appThemes_systemDefault1">kontrasta (laŭ operaciumo)</string>
     <string name="appThemes_darkTheme1">kontrasta (malhela)</string>
     <string name="appThemes_lightTheme1">kontrasta (hela)</string>
-hela
+    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>hela</item>
+        <item>malhela</item>
+        <item>@string/appThemes_nightMode</item>
+        <item>@string/appThemes_systemDefault</item>
+    </string-array>
+
     <!-- App Setting: text size -->
     <string name="configLabel_ui_textsize">Grando de teksto</string>
     <string name="configLabel_ui_textsize_summary">%s</string>
