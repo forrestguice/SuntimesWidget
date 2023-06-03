@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -181,6 +181,31 @@ public class GetFixHelper
                 Log.e("GetFixHelper", "unable to fallback to last location ... Permissions! we don't have them.. checkPermissions should be called before calling this method. " + e);
             }
         } else Log.w("GetFixHelper", "unable to fallback to last location ... LocationManager is null!");
+    }
+
+    public static android.location.Location lastKnownLocation(Context context)
+    {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null)
+        {
+            try {
+                android.location.Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                if (location == null) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location == null) {
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+                }
+                return location;
+
+            } catch (SecurityException e) {
+                Log.e("lastKnownLocation", "Permissions! we don't have them.. checkPermissions should be called before calling this method. " + e);
+                return null;
+            }
+        } else {
+            Log.w("lastKnownLocation", "LocationManager is null!");
+            return null;
+        }
     }
 
     /**

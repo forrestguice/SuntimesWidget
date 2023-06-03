@@ -1,5 +1,5 @@
 /**
- Copyright (C) 2014-2018 Forrest Guice
+ Copyright (C) 2014-2023 Forrest Guice
  This file is part of SuntimesWidget.
 
  SuntimesWidget is free software: you can redistribute it and/or modify
@@ -79,6 +79,10 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     @Override
     public void onDataSetChanged()
     {
+        if (SuntimesWidget0.isCurrentLocationMode(context, appWidgetId)) {
+            SuntimesWidget0.updateLocationToLastKnown(context, appWidgetId);
+        }
+
         ArrayList<SuntimesRiseSetData> dataset0 = new ArrayList<SuntimesRiseSetData>();
         int viewCount0 = 1;
 
