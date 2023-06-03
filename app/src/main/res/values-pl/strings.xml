@@ -1633,8 +1633,8 @@
     <string name="app_name_widget2">Pozycja Słońca</string>
     <string name="app_name_clockwidget0">Czasy Słońca: zegar</string>
     <string name="app_name_datewidget0">Data</string>
-    <string name="app_name_clocktile">Kahelek zegara</string>
-    <string name="app_name_eventtile">Kahelek następnego zdarzenia</string>
+    <string name="app_name_clocktile">Kafelek zegara</string>
+    <string name="app_name_eventtile">Kafelek następnego zdarzenia</string>
     <string name="app_name_solsticewidget0">Czasy Słońca: przesilenia</string>
     <string name="app_name_moonwidget0">Czasy Słońca: Księżyc</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
@@ -1773,7 +1773,7 @@
           <b>Przesilenie zimowe:</b> początek astronomicznej zimy. Ma miejsce w <em>grudniu</em> na półkuli północnej i w <em>czerwcu</em> na pólkuli południowej.<br/>
     ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
-          <b>Rok tropiczny (zwrotnikowy):</b> pełny cykl wczystkich pór roku. Długość <em>roku tropicznego</em> jest mierzona od jednej <em>równonocy wiosennej</em> do następnej. Trwa średnio <em>≈365,24&nbsp;dni</em>, a dokładna długość zmienia się każdego roku (maksymalnie o 30&nbsp;minut).<br/>
+          <b>Rok tropiczny (zwrotnikowy):</b> pełny cykl wszystkich pór roku. Długość <em>roku tropicznego</em> jest mierzona od jednej <em>równonocy wiosennej</em> do następnej. Trwa średnio <em>≈365,24&nbsp;dni</em>, a dokładna długość zmienia się każdego roku (maksymalnie o 30&nbsp;minut).<br/>
     ]]></string>
 
 <string name="help_general_solartime"><![CDATA[
@@ -1875,7 +1875,7 @@
         <![CDATA[
         Aplikacja Czasy Słońca korzysta z zewnętrznych bibliotek do wykonywania obliczeń astronomicznych.<br/>
         <br/>
-        Ustawienie <b>Źródła danych</b> umożliwia wybór spośród kilku bibliotek (lub algorytmów oferowanych przez te biblioteki). Domyślnm wyborem jest <b>time4a-time4j</b>.<br/>
+        Ustawienie <b>Źródła danych</b> umożliwia wybór spośród kilku bibliotek (lub algorytmów oferowanych przez te biblioteki). Domyślnym wyborem jest <b>time4a-time4j</b>.<br/>
         <br/>
         Ustawienie to wpływa na szybkość i dokładność obliczeń, i może ograniczyć dostępne funkcje. <br/>
         <br/>
