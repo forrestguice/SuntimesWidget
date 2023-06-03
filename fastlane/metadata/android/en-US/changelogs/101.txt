@@ -1,0 +1,6 @@
+- adds support for Android TV.
+- adds "current location" mode to widgets.
+- enhances custom events (decimal angles, offsets).
+- improves layout when using "large" or "extra large" text.
+
+
