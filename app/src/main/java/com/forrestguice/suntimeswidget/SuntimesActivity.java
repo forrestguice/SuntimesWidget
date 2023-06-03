@@ -1315,6 +1315,12 @@ public class SuntimesActivity extends AppCompatActivity
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
         SuntimesUtils.forceActionBarIcons(menu);
+
+        MenuItem alarmItem = menu.findItem(R.id.action_alarm);
+        if (alarmItem != null) {
+            alarmItem.setVisible(!AppSettings.isTelevision(SuntimesActivity.this));    // alarms disabled on tvs (not supported)
+        }
+
         return super.onPrepareOptionsPanel(view, menu);
     }
 

@@ -24,6 +24,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -337,7 +338,12 @@ public class AlarmPrefsFragment extends PreferenceFragment
             intent.addCategory(Intent.CATEGORY_DEFAULT);
             intent.setData(Uri.parse("package:" + context.getPackageName()));
         }
-        context.startActivity(intent);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.e(SuntimesSettingsActivity.LOG_TAG, "Failed to open notification settings! " + e);
+            Toast.makeText(context, e.getClass().getSimpleName() + "!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private static Preference.OnPreferenceClickListener onVolumesPrefsClicked(final Context context)
@@ -356,7 +362,12 @@ public class AlarmPrefsFragment extends PreferenceFragment
     {
         Intent intent = new Intent();
         intent.setAction("android.settings.SOUND_SETTINGS");
-        context.startActivity(intent);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.e(SuntimesSettingsActivity.LOG_TAG, "Failed to open sound settings! " + e);
+            Toast.makeText(context, e.getClass().getSimpleName() + "!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
