@@ -878,6 +878,8 @@
     <string name="alarmAction_upcomingMsg">Alarmo baldaŭas</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">Fiaskis ludi sonon!</string>         <!-- error toast -->
 
+    <string name="configLabel_alarmQuick_notification">Rapida sciigo</string>               <!-- group title -->-->
+
     <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification1">rapida sciigo</string>                <!-- alarm type (setting) -->
