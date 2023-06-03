@@ -1,6 +1,6 @@
 ### ~
 
-### v0.15.2 (2023-04-10)
+### v0.15.3 (2023-04-10)
 * updates translation to French (fr) (#702 by grenagit).
 
 ### v0.15.2 (2023-03-20)
