@@ -27,7 +27,7 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.7.0
+ * @version 1.7.1
  */
 public interface SuntimesCalculator
 {
@@ -37,7 +37,7 @@ public interface SuntimesCalculator
     int FEATURE_GOLDBLUE = 30;    // feature: gold, blue hour times (1.3.0)
     int FEATURE_MOON = 40;        // feature: moonrise, moonset, phase, illumination (1.3.0)
     int FEATURE_POSITION = 50;    // feature: sun, moon position (elevation, azimuth, etc) (1.4.0)
-    int FEATURE_RISESET1 = 60;    // feature: rise/set @angle times (1.7.0)
+    int FEATURE_RISESET1 = 60;    // feature: rise/set @angle times (1.7.0, 1.7.1)
 
     //
     // 1.0.0 sunrise, sunset, noon, twilight times
@@ -377,7 +377,7 @@ public interface SuntimesCalculator
      * @return time for sunrise at give angle
      * @since 1.7.0 FEATURE_RISESET1
      */
-    Calendar getSunriseCalendarForDate( Calendar date, int angle );
+    Calendar getSunriseCalendarForDate( Calendar date, double angle );
 
     /**
      * SunsetCalendarForDate
@@ -386,6 +386,6 @@ public interface SuntimesCalculator
      * @return time for sunset at give angle
      * @since 1.7.0 FEATURE_RISESET1
      */
-    Calendar getSunsetCalendarForDate( Calendar date, int angle );
+    Calendar getSunsetCalendarForDate( Calendar date, double angle );
 
 }

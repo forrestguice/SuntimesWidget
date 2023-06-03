@@ -80,6 +80,17 @@
         <LinearLayout android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:layout_marginBottom="12dp"
             android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
 
+            <FrameLayout android:id="@+id/chip_event_offset" android:contentDescription="@string/configAction_setAlarmOffset"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:orientation="horizontal" android:gravity="start|center_vertical">
+
+                <TextView
+                    android:id="@+id/edit_event_offset" style="@style/ChipText" android:gravity="center"
+                    android:layout_width="wrap_content" android:layout_height="match_parent" android:minWidth="100dp"
+                    tools:text="at" />
+
+            </FrameLayout>
+
             <LinearLayout android:orientation="horizontal"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center_vertical">
@@ -93,7 +104,7 @@
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:minWidth="50dp"
                     android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                    android:hint="@string/editevent_dialog_angle_hint" android:inputType="numberSigned"
+                    android:hint="@string/editevent_dialog_angle_hint" android:inputType="numberSigned|numberDecimal"
                     android:paddingLeft="5dp" android:paddingRight="5dp"
                     android:gravity="end|right"
                     android:layout_gravity="center_vertical" />

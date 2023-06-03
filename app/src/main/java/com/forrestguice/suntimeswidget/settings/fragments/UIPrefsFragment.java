@@ -166,7 +166,7 @@ public class UIPrefsFragment extends PreferenceFragment
 
             final CheckBoxPreference pref = new CheckBoxPreference(context);
             pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
-            pref.setOrder((event != null ? event.getAngle() : 0));
+            pref.setOrder((event != null ? (int)event.getAngle() : 0));
             pref.setTitle(alias.getLabel());
             pref.setSummary(alias.getSummary(context));
             pref.setPersistent(false);

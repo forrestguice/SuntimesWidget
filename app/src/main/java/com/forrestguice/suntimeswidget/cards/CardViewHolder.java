@@ -757,7 +757,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         public LinearLayout[] layout_labels = new LinearLayout[resID_labels.length];
         public LinearLayout[] layout_rising = new LinearLayout[layout_labels.length];
         public LinearLayout[] layout_setting = new LinearLayout[layout_labels.length];
-        public ArrayList<ArrayList<Integer>> angleList = new ArrayList<ArrayList<Integer>>();
+        public ArrayList<ArrayList<Double>> angleList = new ArrayList<ArrayList<Double>>();
 
         public CustomRows(View view, CardAdapter.CardAdapterOptions options)
         {
@@ -765,7 +765,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 layout_labels[i] = (LinearLayout) view.findViewById(resID_labels[i]);
                 layout_rising[i] = (LinearLayout) view.findViewById(resID_rising[i]);
                 layout_setting[i] = (LinearLayout) view.findViewById(resID_setting[i]);
-                angleList.add(new ArrayList<Integer>());
+                angleList.add(new ArrayList<Double>());
             }
             hideAll();
         }
@@ -800,10 +800,10 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             {
                 case SUN_ELEVATION:
                     AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
-                    int angle = (event0 != null ? event0.getAngle() : 0);
+                    double angle = (event0 != null ? event0.getAngle() : 0);
                     int i = getLayoutForAngle(angle);
 
-                    ArrayList<Integer> angles = angleList.get(i);
+                    ArrayList<Double> angles = angleList.get(i);
                     int j = getPositionForAngle(angles, angle);
                     angles.add(j, angle);
 
@@ -882,7 +882,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             return view;
         }
 
-        public int getPositionForAngle(ArrayList<Integer> angles, int angle) {
+        public int getPositionForAngle(ArrayList<Double> angles, double angle) {
             for (int j = 0; j < angles.size(); j++) {
                 if (angle <= angles.get(j)) {
                     return j;
@@ -891,7 +891,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             return angles.size();
         }
 
-        public int getLayoutForAngle(int angle) {
+        public int getLayoutForAngle(double angle) {
             if (angle >= 6) {
                 return 7;
             } else if (angle >= 0) {

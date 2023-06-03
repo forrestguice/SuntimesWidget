@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2021 Forrest Guice
+    Copyright (C) 2021-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,15 +19,12 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.ContentProvider;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -175,9 +172,16 @@ public class AlarmEventProvider extends ContentProvider
 
                 // list all custom events
                 List<EventSettings.EventAlias> events1 = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
-                for (EventSettings.EventAlias event : events1) {
-                    retValue.addRow(createRow(context, event, true, columns, selection, selectionArgs));
-                    retValue.addRow(createRow(context, event, false, columns, selection, selectionArgs));
+                for (EventSettings.EventAlias event : events1)
+                {
+                    Object[] row1 = createRow(context, event, true, columns, selection, selectionArgs);
+                    if (row1 != null) {
+                        retValue.addRow(row1);
+                    }
+                    Object[] row2 = createRow(context, event, false, columns, selection, selectionArgs);
+                    if (row2 != null) {
+                        retValue.addRow(row2);
+                    }
                  }
 
             } else {
@@ -211,7 +215,7 @@ public class AlarmEventProvider extends ContentProvider
             return;
         }
 
-        switch(type)
+        switch (type)
         {
             case DATE:
                 try {
@@ -230,7 +234,10 @@ public class AlarmEventProvider extends ContentProvider
                 }
                 boolean rising = suffix.equals(ElevationEvent.SUFFIX_RISING);
                 EventSettings.EventAlias alias = EventSettings.loadEvent(context, aliasID);
-                retValue.addRow(createRow(context, alias, rising, columns, selection, selectionArgs));
+                Object[] row = createRow(context, alias, rising, columns, selection, selectionArgs);
+                if (row != null) {
+                    retValue.addRow(row);
+                }
                 break;
 
             case SUN_ELEVATION:
@@ -313,12 +320,20 @@ public class AlarmEventProvider extends ContentProvider
     /**
      * createRow( EventAlias )
      */
+    @Nullable
     private Object[] createRow(@NonNull Context context, EventSettings.EventAlias event, boolean rising, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
         Uri uri = Uri.parse(event.getUri() + (rising ? ElevationEvent.SUFFIX_RISING : ElevationEvent.SUFFIX_SETTING));
         Cursor cursor = context.getContentResolver().query(uri, columns, selection, selectionArgs, null);
         if (cursor != null) {
             cursor.moveToFirst();
+        }
+
+        if (cursor != null && cursor.isAfterLast())
+        {
+            Log.w("AlarmEventProvider", "null result for " + event.getID());
+            cursor.close();
+            return null;
         }
 
         Object[] row = new Object[columns.length];
@@ -543,14 +558,20 @@ public class AlarmEventProvider extends ContentProvider
         public static final String SUFFIX_RISING = "r";
         public static final String SUFFIX_SETTING = "s";
 
-        public ElevationEvent(int angle, boolean rising) {
+        public ElevationEvent(double angle, int offset, boolean rising) {
             this.angle = angle;
+            this.offset = offset;
             this.rising = rising;
         }
 
-        protected int angle;
-        public int getAngle() {
+        protected double angle;
+        public double getAngle() {
             return angle;
+        }
+
+        protected int offset;            // milliseconds
+        public int getOffset() {
+            return offset;
         }
 
         protected boolean rising;
@@ -576,22 +597,17 @@ public class AlarmEventProvider extends ContentProvider
     {
         public static final String NAME_PREFIX = "SUN_";
 
-        public SunElevationEvent(int angle, boolean rising) {
-            super(angle, rising);
-        }
-
-        @Override
-        protected String getEventName(Context context) {        // e.g. SUN_-10r (sun elevation @ -10 degrees (rising))
-            return NAME_PREFIX + angle + (rising ? SUFFIX_RISING : SUFFIX_SETTING);
+        public SunElevationEvent(double angle, int offset, boolean rising) {
+            super(angle, offset, rising);
         }
 
         @Override
         protected String getEventTitle(Context context) {
-            return context.getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+            return offsetDisplay(context) + context.getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
         }
         @Override
         protected String getEventPhrase(Context context) {
-            return context.getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+            return offsetDisplay(context) + context.getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
         }
         @Override
         protected String getEventGender(Context context) {
@@ -599,32 +615,73 @@ public class AlarmEventProvider extends ContentProvider
         }
 
         @Override
-        protected String getEventSummary(Context context) {
+        protected String getEventSummary(Context context)
+        {
             SuntimesUtils utils = new SuntimesUtils();
-            String angle = utils.formatAsElevation(getAngle(), 0).toString();
-            return context.getString(R.string.sunevent_summary_format, context.getString(R.string.sunevent_title), angle.toString());
+            String angle = utils.formatAsElevation(getAngle(), 1).toString();
+            if (offset == 0) {
+                return offsetDisplay(context) + context.getString(R.string.sunevent_summary_format, context.getString(R.string.sunevent_title), angle.toString());
+            } else {
+                return context.getString(R.string.sunevent_summary_format1, offsetDisplay(context), context.getString(R.string.sunevent_title), angle.toString());
+            }
+        }
+
+        private static final SuntimesUtils utils = new SuntimesUtils();
+        public String offsetDisplay(Context context)
+        {
+            if (offset != 0)
+            {
+                SuntimesUtils.initDisplayStrings(context);
+                String offsetDisplay = utils.timeDeltaLongDisplayString(0, offset, false).getValue();
+                return context.getResources().getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int)angle, offsetDisplay);
+            } else return "";
         }
 
         public static boolean isElevationEvent(String eventName) {
             return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
         }
+
+        /**
+         * @return e.g. SUN_-10r     (@ -10 degrees (rising)),
+         *              SUN_-10|-300000r  (5m before @ 10 degrees (rising))
+         */
+        @Override
+        protected String getEventName(Context context) {
+            return getEventName(angle, offset, rising);
+        }
+        public static String getEventName(double angle, int offset, @Nullable Boolean rising) {
+            String name = NAME_PREFIX
+                    + angle
+                    + ((offset != 0) ? "|" + (int)Math.ceil(offset / 1000d / 60d) : "");
+            if (rising != null) {
+                name += (rising ? SUFFIX_RISING : SUFFIX_SETTING);
+            }
+            return name;
+        }
+
         @Nullable
         public static SunElevationEvent valueOf(String eventName)
         {
             if (isElevationEvent(eventName))
             {
-                int angle;
+                double angle;
+                int offsetMinutes = 0;
                 boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
                 try {
-                    String angleString = eventName.substring(4, eventName.length() - (hasSuffix ? 1 : 0));
-                    angle = Integer.parseInt(angleString);
+                    String contentString = eventName.substring(4, eventName.length() - (hasSuffix ? 1 : 0));
+                    String[] contentParts = contentString.split("\\|");
+
+                    angle = Double.parseDouble(contentParts[0]);
+                    if (contentParts.length > 1) {
+                        offsetMinutes = Integer.parseInt(contentParts[1]);
+                    }
 
                 } catch (Exception e) {
                     Log.e("ElevationEvent", "createEvent: bad angle: " + e);
                     return null;
                 }
                 boolean rising = eventName.endsWith(SUFFIX_RISING);
-                return new SunElevationEvent(angle, rising);
+                return new SunElevationEvent(angle, (offsetMinutes * 60 * 1000), rising);
             } else return null;
         }
     }
@@ -632,7 +689,7 @@ public class AlarmEventProvider extends ContentProvider
     @Nullable
     public static Calendar updateAlarmTime_sunElevationEvent(Context context, @NonNull SunElevationEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        SuntimesRiseSetData sunData = getData_sunElevationEvent(context, event.getAngle(), location);
+        SuntimesRiseSetData sunData = getData_sunElevationEvent(context, event.getAngle(), event.getOffset(), location);
 
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime;
@@ -673,11 +730,12 @@ public class AlarmEventProvider extends ContentProvider
         return eventTime;
     }
 
-    private static SuntimesRiseSetData getData_sunElevationEvent(Context context, int angle, @NonNull Location location)
+    private static SuntimesRiseSetData getData_sunElevationEvent(Context context, double angle, int offset, @NonNull Location location)
     {
         SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
         sunData.setLocation(location);
         sunData.setAngle(angle);
+        sunData.setOffset(offset);
         sunData.setTodayIs(Calendar.getInstance());
         return sunData;
     }
