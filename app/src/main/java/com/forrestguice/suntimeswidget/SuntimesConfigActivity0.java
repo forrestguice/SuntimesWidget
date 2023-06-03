@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -655,8 +655,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         locationConfig = (LocationConfigView) findViewById(R.id.appwidget_location_config);
         if (locationConfig != null)
         {
-            locationConfig.setAutoAllowed(false);
-            locationConfig.setHideMode(true);
+            locationConfig.setAutoAllowed(true);
+            locationConfig.setHideMode(false);
             locationConfig.init(this, false, this.appWidgetId);
             locationConfig.setOnListButtonClicked(new View.OnClickListener() {
                 @Override
@@ -889,6 +889,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     locationConfig.setMode(isChecked ? LocationConfigView.LocationViewMode.MODE_DISABLED : LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+                    locationConfig.setAutoAllowed(!isChecked);
+                    locationConfig.setHideMode(isChecked, true);
                     if (isChecked) {
                         locationConfig.updateViews(WidgetSettings.loadLocationPref(context, 0));
                     } else {
