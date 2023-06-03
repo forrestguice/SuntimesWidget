@@ -887,6 +887,8 @@
     <string name="alarmAction_upcomingMsg">Nadchodzący alarm</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">Nie udało się odtworzyć dźwięku!</string>         <!-- error toast -->
 
+    <string name="configLabel_alarmQuick_notification">Szybkie powiadomienie</string>               <!-- group title -->-->-->
+
     <string name="alarmMode_alarm">alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">powiadomienie</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification1">szybkie powiadomienie</string>                <!-- alarm type (setting) -->
@@ -1640,6 +1642,7 @@
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
+    <string name="app_license_about">Aplikacja Czasy Słońca jest wolnym i otwartoźródłowym oprogramowaniem.</string>   <!-- displayed by welcome dialog -->-->
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2022 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
 
     <string name="app_legal2"><![CDATA[<b>Tłumaczenia na:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>

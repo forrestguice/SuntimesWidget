@@ -359,19 +359,19 @@
     <string name="timeMode_moon_new">Nova Luno</string>                                  <!-- setting -->
     <string name="timeMode_moon_new_short">Novluno</string>                              <!-- setting -->
     <string name="timeMode_moon_waxingcrescent_short">Kreskanta (&lt;50%)</string>      <!-- label -->
-    <string name="timeMode_moon_waxingcrescent">Kreskanta antaŭ-Lunduono</string>        <!-- label -->
-    <string name="timeMode_moon_firstquarter">Kreskanta Lunduono</string>                <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent">Kreskanta antaŭ-lunduono</string>        <!-- label -->
+    <string name="timeMode_moon_firstquarter">Kreskanta lunduono</string>                <!-- setting -->
     <string name="timeMode_moon_firstquarter_short">Unua kvarono</string>                <!-- setting -->
     <string name="timeMode_moon_waxinggibbous_short">Kreskanta (&gt;50%)</string>       <!-- label -->
-    <string name="timeMode_moon_waxinggibbous">Kreskanta post-Lunduono</string>          <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Kreskanta post-lunduono</string>          <!-- label -->
     <string name="timeMode_moon_full">Plena Luno</string>                                <!-- setting -->
     <string name="timeMode_moon_full_short">Plenluno</string>                            <!-- setting -->
     <string name="timeMode_moon_waninggibbous_short">Malkreskanta (&gt;50%)</string>    <!-- label -->
-    <string name="timeMode_moon_waninggibbous">Malkreskanta antaŭ-Lunduono</string>      <!-- label -->
-    <string name="timeMode_moon_thirdquarter">Malkreskanta Lunduono</string>             <!-- setting -->
+    <string name="timeMode_moon_waninggibbous">Malkreskanta antaŭ-lunduono</string>      <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Malkreskanta lunduono</string>             <!-- setting -->
     <string name="timeMode_moon_thirdquarter_short">Tria kvarono</string>                <!-- setting -->
     <string name="timeMode_moon_waningcrescent_short">Malkreskanta (&lt;50%)</string>   <!-- label -->
-    <string name="timeMode_moon_waningcrescent">Malkreskanta post-Lunduono</string>      <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Malkreskanta post-lunduono</string>      <!-- label -->
 
     <string name="timeMode_moon_super">Granda Luno</string>               <!-- label -->
     <string name="timeMode_moon_micro">Malgranda Luno</string>               <!-- label -->
@@ -1365,9 +1365,9 @@
         <item>lunleviĝo</item>
         <item>lunsubiro</item>
         <item>nova Luno</item>
-        <item>kreskanta Lunduono</item>
+        <item>kreskanta lunduono</item>
         <item>plena Luno</item>
-        <item>malkreskanta Lunduono</item>
+        <item>malkreskanta lunduono</item>
         <item>printempa tagnoktegaleco</item>
         <item>somera sunekstremo</item>
         <item>aŭtuna tagnoktegaleco</item>
@@ -1398,9 +1398,9 @@
         <item>lunleviĝo</item>
         <item>lunsubiro</item>
         <item>nova Luno</item>
-        <item>kreskanta Lunduono</item>
+        <item>kreskanta lunduono</item>
         <item>plena Luno</item>
-        <item>malkreskanta Lunduono</item>
+        <item>malkreskanta lunduono</item>
         <item>printempa tagnoktegaleco</item>
         <item>somera sunekstremo</item>
         <item>aŭtuna tagnoktegaleco</item>
@@ -1620,6 +1620,7 @@
         <b>Subteno:</b> vizitu la
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
     ]]></string>
+    <string name="app_license_about">La aplikaĵo Suntempoj estas libera kaj malfermkoda programaro.</string>   <!-- displayed by welcome dialog -->-->
     <string name="app_legal1"><![CDATA[
         Aŭtorrajto &#169 2014-2023 Forrest GUICE <br />
         Fontkodo disponebla laŭ la permesilo GPLv3.
@@ -1681,7 +1682,7 @@
          <br/>
          <b>Lunaj fenestraĵoj:</b> <br/>
                 • <b>%i</b> – prilumeco (ekz. 25%) <br/>
-                • <b>%M</b> – lunfazo (ekz. kreskanta post‑Lunduono) <br/>
+                • <b>%M</b> – lunfazo (ekz. kreskanta post‑lunduono) <br/>
                 • <b>%o</b> – kioma okazaĵo (ekz. antaŭa/sekva, hodiaŭa) <br/>
          <br/>
          <b>Solsticaj fenestraĵoj:</b> <br/>
