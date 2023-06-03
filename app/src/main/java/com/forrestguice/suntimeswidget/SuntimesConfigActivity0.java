@@ -889,6 +889,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     locationConfig.setMode(isChecked ? LocationConfigView.LocationViewMode.MODE_DISABLED : LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+                    locationConfig.setAutoAllowed(!isChecked);
+                    locationConfig.setHideMode(isChecked, true);
                     if (isChecked) {
                         locationConfig.updateViews(WidgetSettings.loadLocationPref(context, 0));
                     } else {

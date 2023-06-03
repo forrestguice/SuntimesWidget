@@ -199,10 +199,13 @@ public class LocationConfigView extends LinearLayout
     {
         return hideMode;
     }
-    public void setHideMode(boolean value)
+    public void setHideMode(boolean value) {
+        setHideMode(value, false);
+    }
+    public void setHideMode(boolean value, boolean forceUpdate)
     {
         hideMode = value;
-        if (hideMode)
+        if (hideMode || forceUpdate)
         {
             View locationModeLayout = findViewById(R.id.appwidget_location_mode_layout);
             if (locationModeLayout != null) {
