@@ -75,7 +75,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/alarmMode_notification1"
+        android:title="@string/configLabel_alarmQuick_notification"
         android:key="app_alarms_category2">
 
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
