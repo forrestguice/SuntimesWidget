@@ -1,12 +1,14 @@
 ### ~
 
-### v0.15.4 (2023-06-02)
+### v0.15.4 (2023-06-03)
 * adds support for Android TV.
 * adds "current location" mode to widgets (#707); widgets use the "last known" location from any provider.
 * enhances custom events to support an offset in minutes (#537).
 * enhances custom events to accept angle as decimal (#704).
 * fixes a bug where the "lunar noon" and "lunar midnight" notes are displayed when the option is disabled.
 * fixes cropping in ActionBar when using "large" or "extra large" text, and other layout improvements.
+* fixes bug where the "3x1 sun widget" doesn't appear in the widget list (#711); adds 3x1 sun widget preview image.
+* updates translation to Polish and Esperanto (eo, pl) (#712 by Verdulo).
 
 ### v0.15.3 (2023-04-10)
 * updates translation to French (fr) (#702 by grenagit).
