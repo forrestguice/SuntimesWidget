@@ -409,7 +409,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         @SuppressWarnings("rawtypes")
         public static Class[] ALL_WIDGETS = new Class[] {
-                SuntimesWidget0.class, SuntimesWidget0_2x1.class, SuntimesWidget1.class, SolsticeWidget0.class,
+                SuntimesWidget0.class, SuntimesWidget0_2x1.class, SuntimesWidget0_3x1.class, SuntimesWidget1.class, SolsticeWidget0.class,
                 MoonWidget0.class, MoonWidget0_2x1.class, MoonWidget0_3x1.class, MoonWidget0_3x2.class,
                 SuntimesWidget2.class, SuntimesWidget2_3x1.class, SuntimesWidget2_3x2.class, SuntimesWidget2_3x3.class,
                 ClockWidget0.class, ClockWidget0_3x1.class, DateWidget0.class
