@@ -1770,7 +1770,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_riseSetOrder.setSelection(riseSetOrder.ordinal());
 
         // load: showNoon
-        boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
+        boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId, getDefaultShowSolarNoon());
         checkbox_showNoon.setChecked(showNoon);
 
         // load: showSeconds
@@ -1817,6 +1817,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // load: date offset
         loadDateOffset(context);
+    }
+
+    public boolean getDefaultShowSolarNoon() {
+        return WidgetSettings.PREF_DEF_GENERAL_SHOWNOON;
     }
 
     public boolean getDefaultLocationFromApp() {

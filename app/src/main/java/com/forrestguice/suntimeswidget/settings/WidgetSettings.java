@@ -2917,11 +2917,14 @@ public class WidgetSettings
         prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, showNoon);
         prefs.apply();
     }
-    public static boolean loadShowNoonPref(Context context, int appWidgetId)
+    public static boolean loadShowNoonPref(Context context, int appWidgetId) {
+        return loadShowNoonPref(context, appWidgetId, PREF_DEF_GENERAL_SHOWNOON);
+    }
+    public static boolean loadShowNoonPref(Context context, int appWidgetId, boolean defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, PREF_DEF_GENERAL_SHOWNOON);
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, defaultValue);
     }
     public static void deleteShowNoonPref(Context context, int appWidgetId)
     {
