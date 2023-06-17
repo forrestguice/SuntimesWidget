@@ -41,7 +41,7 @@
             android:key="app_alarms_snoozeMillis"
             android:title="@string/configLabel_alarms_snooze"
             android:summary="@string/configLabel_alarms_snooze_summary"
-            app:mode="minutes" app:minValue="2"
+            app:mode="minutes" app:minValue="@integer/minAlarmSnoozeMinutes" app:maxValue="@integer/maxAlarmSnoozeMinutes"
             android:defaultValue="@string/def_app_alarms_snooze" />
 
         <com.forrestguice.suntimeswidget.settings.IntegerPickerPreference
@@ -49,7 +49,7 @@
             android:title="@string/configLabel_alarms_snoozeLimit"
             android:summary="@string/configLabel_alarms_snoozeLimit_summary"
             app:zeroValueText="@string/configLabel_alarms_snoozeLimit_none"
-            app:minValue="0" app:maxValue="5"
+            app:minValue="0" app:maxValue="@integer/maxAlarmSnoozeLimit"
             android:defaultValue="@string/def_app_alarms_snoozeLimit" />
 
         <!--<com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
@@ -83,7 +83,8 @@
             android:title="@string/configLabel_alarms_autoDismissAfter"
             android:summary="@string/configLabel_alarms_autoDismissAfter_summary"
             android:defaultValue="@string/def_app_alarms_autodismiss"
-            app:mode="seconds" app:minValue="5" />
+            app:mode="seconds" app:minValue="@integer/minAlarmAutoDismissSeconds"
+            app:maxValue="@integer/maxAlarmAutoDismissSeconds" />
 
     </PreferenceCategory>
 

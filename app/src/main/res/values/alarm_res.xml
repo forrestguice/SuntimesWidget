@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="minAlarmReminderHours">0</integer>
+    <integer name="maxAlarmSnoozeLimit">5</integer>
+    <integer name="minAlarmSnoozeMinutes">2</integer>
+    <integer name="maxAlarmSnoozeMinutes">120</integer>
+    <integer name="minAlarmAutoDismissSeconds">5</integer>
+    <integer name="maxAlarmAutoDismissSeconds">300</integer>
 
     <integer name="anim_alarmitem_sounding_fadeIn_duration">250</integer>    <!-- Sounding -->
     <integer name="anim_alarmitem_sounding_fadeOut_duration">500</integer>
