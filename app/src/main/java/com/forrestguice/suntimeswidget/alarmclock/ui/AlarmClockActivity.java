@@ -1049,6 +1049,10 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
+            case R.id.action_bedtime:
+                showBedtime();
+                return true;
+
             case R.id.action_settings:
                 showSettings();
                 return true;
@@ -1116,6 +1120,16 @@ public class AlarmClockActivity extends AppCompatActivity
             deselectButton.setVisibility(View.INVISIBLE);
         }
     };
+
+    /**
+     * showBedtime
+     */
+    protected void showBedtime()
+    {
+        Intent settingsIntent = new Intent(this, AlarmBedtimeActivity.class);
+        startActivity(settingsIntent);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
 
     /**
      * showSettings
