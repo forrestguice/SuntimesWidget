@@ -1185,6 +1185,12 @@
     <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
+         BEDTIME
+    -->
+    <string name="configLabel_bedtime">Bedtime</string>              <!-- group title -->   <!-- TODO -->
+
+
+    <!--
          APP SETTINGS
     -->
 
@@ -2380,6 +2386,10 @@
           \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
           [Icon View] Marked events are displayed by the app.
     ]]></string>
+
+    <string name="help_alarms_bedtime"><![CDATA[
+          TODO
+    ]]></string>  <!-- TODO -->
 
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] to cancel without making changes.<br/>
