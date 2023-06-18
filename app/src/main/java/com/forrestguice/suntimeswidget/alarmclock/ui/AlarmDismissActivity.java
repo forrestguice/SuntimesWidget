@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -340,6 +340,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         textColor = ContextCompat.getColor(context, a.getResourceId(6, android.R.color.secondary_text_dark));
         timeColor = titleColor = ContextCompat.getColor(context, a.getResourceId(7, android.R.color.primary_text_dark));
         a.recycle();
+
+        pulseSoundingDuration = getResources().getInteger(R.integer.anim_alarmscreen_sounding_pulse_duration);
+        pulseSnoozingDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_pulse_duration);
 
         if (appThemeOverride != null)
         {

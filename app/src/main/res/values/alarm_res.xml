@@ -7,6 +7,9 @@
     <integer name="minAlarmAutoDismissSeconds">5</integer>
     <integer name="maxAlarmAutoDismissSeconds">300</integer>
 
+    <integer name="anim_alarmscreen_sounding_pulse_duration">4000</integer>
+    <integer name="anim_alarmscreen_snoozing_pulse_duration">6000</integer>
+
     <integer name="anim_alarmitem_sounding_fadeIn_duration">250</integer>    <!-- Sounding -->
     <integer name="anim_alarmitem_sounding_fadeOut_duration">500</integer>
     <integer name="anim_alarmitem_sounding0_duration">1750</integer>
