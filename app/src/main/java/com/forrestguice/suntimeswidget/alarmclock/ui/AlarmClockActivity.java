@@ -55,6 +55,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -1126,7 +1127,7 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void showBedtime()
     {
-        Intent settingsIntent = new Intent(this, AlarmBedtimeActivity.class);
+        Intent settingsIntent = new Intent(this, BedtimeActivity.class);
         startActivity(settingsIntent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }

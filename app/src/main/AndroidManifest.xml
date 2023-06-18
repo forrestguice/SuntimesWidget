@@ -322,7 +322,7 @@
             android:exported="true">
         </activity>
 
-        <activity android:name=".alarmclock.ui.AlarmBedtimeActivity"
+        <activity android:name=".alarmclock.ui.bedtime.BedtimeActivity"
             android:label="@string/configLabel_bedtime"
             android:icon="@mipmap/ic_launcher_alarms"
             android:taskAffinity=".alarmclock.ui.AlarmClockActivity" />

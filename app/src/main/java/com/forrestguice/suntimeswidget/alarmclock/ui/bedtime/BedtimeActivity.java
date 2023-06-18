@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 
-package com.forrestguice.suntimeswidget.alarmclock.ui;
+package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -44,6 +44,7 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -54,7 +55,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 /**
  * AlarmBedtimeActivity
  */
-public class AlarmBedtimeActivity extends AppCompatActivity
+public class BedtimeActivity extends AppCompatActivity
 {
     public static final String TAG = "BedtimeActivity";
 
@@ -66,7 +67,7 @@ public class AlarmBedtimeActivity extends AppCompatActivity
 
     private AppSettings.LocaleInfo localeInfo;
 
-    public AlarmBedtimeActivity() {
+    public BedtimeActivity() {
         super();
     }
 
