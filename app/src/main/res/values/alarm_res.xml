@@ -9,6 +9,8 @@
 
     <integer name="anim_alarmscreen_sounding_pulse_duration">4000</integer>
     <integer name="anim_alarmscreen_snoozing_pulse_duration">6000</integer>
+    <integer name="anim_alarmscreen_snoozing_dimming_duration">1000</integer>
+    <integer name="anim_alarmscreen_snoozing_screenon_duration">5000</integer>
 
     <integer name="anim_alarmitem_sounding_fadeIn_duration">250</integer>    <!-- Sounding -->
     <integer name="anim_alarmitem_sounding_fadeOut_duration">500</integer>

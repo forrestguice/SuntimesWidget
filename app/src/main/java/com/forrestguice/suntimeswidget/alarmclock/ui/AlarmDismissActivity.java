@@ -37,6 +37,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.ArgbEvaluator;
@@ -48,6 +49,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -120,6 +122,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private int pulseSnoozingDuration = 6000;
     private int pulseSnoozingColor_start, pulseSnoozingColor_end;
 
+    private int snoozingDimmingDuration, snoozingScreenOnDuration;
 
     public AlarmDismissActivity()
     {
@@ -281,7 +284,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             try {
                 Log.d(TAG, "onResume: " + data);
                 setAlarmID(this, ContentUris.parseId(data), onLoaded);
-                screenOn();
+                if (!isInteractive()) {
+                    screenOn();
+                }
 
             } catch (NumberFormatException e) {
                 Log.e(TAG, "onResume: invalid data uri! canceling...");
@@ -343,6 +348,8 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
         pulseSoundingDuration = getResources().getInteger(R.integer.anim_alarmscreen_sounding_pulse_duration);
         pulseSnoozingDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_pulse_duration);
+        snoozingDimmingDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_dimming_duration);
+        snoozingScreenOnDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_screenon_duration);
 
         if (appThemeOverride != null)
         {
@@ -355,13 +362,12 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
-    private View.OnClickListener onSnoozeClicked = new View.OnClickListener()
+    private final View.OnClickListener onSnoozeClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
             if (alarm != null) {
-                Log.d(TAG, "onSnoozeClicked");
                 snoozeAlarm(AlarmDismissActivity.this);
             }
         }
@@ -452,10 +458,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 float dimScreenValue = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;
                 boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
                 if (needsTransition) {
-                    animateBrightness(dimScreenValue, 1000);
+                    animateBrightness(dimScreenValue, snoozingDimmingDuration);
                 } else {
                     setBrightness(dimScreenValue);
                 }
+                allowScreenOffAfterDelay(snoozingScreenOnDuration);
             }
 
         } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
@@ -741,12 +748,35 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     }
     private boolean hardwareButtonPressed = false;
 
+    public boolean isInteractive()
+    {
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        if (pm != null) {
+            return pm.isInteractive();
+        } else return false;
+    }
+
     private void screenOn()
     {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON   // BUG: turning the screen on this way works once (first time) .. after an alarm snoozes (and the device falls back asleep) this won't work the second time
                 //| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON            // a potential workaround is to keep the screen on ... but this might consume noticeable battery.
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+    }
+
+    private void allowScreenOff()
+    {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+    private void allowScreenOffAfterDelay(long delay)
+    {
+        snoozeButton.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                allowScreenOff();
+            }
+        }, delay);
     }
 
     public AlarmDismissInterface.AlarmDismissChallenge getDismissChallenge(Context context, AlarmSettings.DismissChallenge setting)
