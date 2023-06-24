@@ -543,7 +543,7 @@
     <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
     <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
     <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
-    <string name="calendarMode_persian">Persian (Solar Hijiri)</string>     <!-- TODO -->
+    <string name="calendarMode_persian">Persian (Solar Hijri)</string>     <!-- TODO -->
     <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
     <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
     <string name="calendarMode_korean">Korean</string>  <!-- TODO -->

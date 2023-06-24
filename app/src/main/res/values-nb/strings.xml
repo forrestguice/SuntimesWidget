@@ -547,7 +547,7 @@
     <string name="calendarMode_gregorian">Gregoriansk</string>
     <string name="calendarMode_hebrew">Jødisk</string>
     <string name="calendarMode_julian">Juliansk</string>
-    <string name="calendarMode_persian">Persisk (Solar Hijiri)</string>
+    <string name="calendarMode_persian">Persisk (Solar Hijri)</string>
     <string name="calendarMode_thaisolar">Thai Solar</string>
     <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
     <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
