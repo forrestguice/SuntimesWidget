@@ -534,6 +534,8 @@
     <string name="calendarMode_ethiopian">Etiopa</string>
     <string name="calendarMode_gregorian">Gregoria</string>
     <string name="calendarMode_hebrew">Juda (Hebrea)</string>
+    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
     <string name="calendarMode_julian">Julia</string>
     <string name="calendarMode_persian">Persa (Irana)</string>
     <string name="calendarMode_thaisolar">Tajlanda suna</string>

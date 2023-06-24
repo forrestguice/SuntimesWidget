@@ -588,6 +588,8 @@
     <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
     <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
     <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
+    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
     <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
     <string name="calendarMode_persian">Persian (Solar Hijri)</string>     <!-- TODO -->
     <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->

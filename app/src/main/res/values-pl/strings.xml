@@ -541,6 +541,8 @@
     <string name="calendarMode_ethiopian">etiopski</string>
     <string name="calendarMode_gregorian">gregoriański</string>
     <string name="calendarMode_hebrew">żydowski</string>
+    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
     <string name="calendarMode_julian">juliański</string>
     <string name="calendarMode_persian">perski (irański)</string>
     <string name="calendarMode_thaisolar">tajski solarny</string>
