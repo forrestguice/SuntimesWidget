@@ -1,5 +1,5 @@
 /**
- Copyright (C) 2022 Forrest Guice
+ Copyright (C) 2022-2023 Forrest Guice
  This file is part of SuntimesWidget.
 
  SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ import net.time4j.calendar.ChineseCalendar;
 import net.time4j.calendar.CopticCalendar;
 import net.time4j.calendar.EthiopianCalendar;
 import net.time4j.calendar.HebrewCalendar;
+import net.time4j.calendar.HijriCalendar;
 import net.time4j.calendar.IndianCalendar;
 import net.time4j.calendar.JapaneseCalendar;
 import net.time4j.calendar.JulianCalendar;
@@ -56,6 +57,8 @@ public enum CalendarMode
     ETHIOPIAN("Ethiopian",CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
     GREGORIAN("Gregorian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
     HEBREW("Hebrew", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
+    HIJRI_DIYANET("Hijri (Turkish)", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HIJRI_DIYANET),
+    HIJRI_UMALQURA("Hijri (Umm al-Qura)", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HIJRI_UMALQURA),
     INDIAN("Indian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_INDIAN),
     JAPANESE("Japanese", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_JAPANESE),
     JULIAN("Julian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN),
@@ -116,6 +119,16 @@ public enum CalendarMode
                     ChronoFormatter<HebrewCalendar> hebrewCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), HebrewCalendar.axis());
                     return hebrewCalendar.format(today.transform(HebrewCalendar.class));
 
+                case HIJRI_DIYANET:
+                    ChronoFormatter<HijriCalendar> hijriCalendar0 = ChronoFormatter.setUp(HijriCalendar.class, SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build()
+                            .withCalendarVariant(HijriCalendar.VARIANT_DIYANET);
+                    return hijriCalendar0.format(today.transform(HijriCalendar.class, HijriCalendar.VARIANT_DIYANET));
+
+                case HIJRI_UMALQURA:
+                    ChronoFormatter<HijriCalendar> hijriCalendar1 = ChronoFormatter.setUp(HijriCalendar.class, SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build()
+                            .withCalendarVariant(HijriCalendar.VARIANT_UMALQURA);
+                    return hijriCalendar1.format(today.transform(HijriCalendar.class, HijriCalendar.VARIANT_UMALQURA));
+
                 case JULIAN:
                     ChronoFormatter<JulianCalendar> julianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR, SuntimesUtils.getLocale(), JulianCalendar.axis());
                     return julianCalendar.format(today.transform(JulianCalendar.class));
@@ -168,6 +181,8 @@ public enum CalendarMode
         ETHIOPIAN.setDisplayString(context.getString(R.string.calendarMode_ethiopian));
         GREGORIAN.setDisplayString(context.getString(R.string.calendarMode_gregorian));
         HEBREW.setDisplayString(context.getString(R.string.calendarMode_hebrew));
+        HIJRI_DIYANET.setDisplayString(context.getString(R.string.calendarMode_hijri_diyanet));
+        HIJRI_UMALQURA.setDisplayString(context.getString(R.string.calendarMode_hijri_umalqura));
         INDIAN.setDisplayString(context.getString(R.string.calendarMode_indian));
         JAPANESE.setDisplayString(context.getString(R.string.calendarMode_japanese));
         JULIAN.setDisplayString(context.getString(R.string.calendarMode_julian));
