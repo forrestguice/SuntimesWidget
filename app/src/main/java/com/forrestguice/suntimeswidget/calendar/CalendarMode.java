@@ -168,7 +168,7 @@ public enum CalendarMode
                     SimpleDateFormat gregorian = new SimpleDateFormat(pattern, SuntimesUtils.getLocale());
                     return gregorian.format(now.getTime());
             }
-        } catch (IllegalStateException | IllegalArgumentException e) {    // bad pattern
+        } catch (ArithmeticException | IllegalStateException | IllegalArgumentException e) {    // bad pattern or out-of-range
             Log.e("CalendarMode", "formatDate: " + e);
             return "";
         }
