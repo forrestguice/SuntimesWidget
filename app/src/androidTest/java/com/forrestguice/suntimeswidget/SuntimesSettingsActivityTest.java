@@ -39,6 +39,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -412,7 +413,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         formatPref.check(assertEnabled);
 
         WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-        String modeSummary = String.format(SuntimesSettingsActivity.timeFormatPrefSummary(mode, context), mode.getDisplayString());
+        String modeSummary = String.format(GeneralPrefsFragment.timeFormatPrefSummary(mode, context), mode.getDisplayString());
         DataInteraction formatPref_text = formatPref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(modeSummary)));
         formatPref_text.check(assertShown);
     }
