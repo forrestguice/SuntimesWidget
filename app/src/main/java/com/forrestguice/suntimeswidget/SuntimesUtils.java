@@ -806,10 +806,9 @@ public class SuntimesUtils
         Calendar now = Calendar.getInstance();
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showTime, showSeconds, abbreviate);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate)
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate)
     {
-        if (cal == null || context == null)
-        {
+        if (cal == null) {
             return new TimeDisplayText(strTimeNone);
         }
 
