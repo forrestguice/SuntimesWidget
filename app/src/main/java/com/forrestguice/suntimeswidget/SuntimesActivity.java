@@ -2014,14 +2014,10 @@ public class SuntimesActivity extends AppCompatActivity
     protected void updateTimeViews(Context context)
     {
         Calendar now = dataset.now();
-        //Log.d("DEBUG", "" + now.getTimeZone());
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);
-
-        // TODO: commented during refactor ..restore this update
-        //lightmap.updateViews(false);
     }
 
     protected void seekNextNote(String eventID)
