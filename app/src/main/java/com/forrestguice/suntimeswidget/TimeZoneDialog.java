@@ -185,12 +185,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             case SOLAR_TIME:
                 item = (spinner_solartime != null) ? ((WidgetTimezones.TimeZoneItem) spinner_solartime.getSelectedItem()) : null;
                 tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
-                return WidgetTimezones.getTimeZone(tzID, longitude);
+                return WidgetTimezones.getTimeZone(tzID, longitude, calculator);
 
             case CUSTOM_TIMEZONE:
                 item = (spinner_timezone != null) ? ((WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem()) : null;
                 tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
-                return WidgetTimezones.getTimeZone(tzID, longitude);
+                return WidgetTimezones.getTimeZone(tzID, longitude, calculator);
 
             case CURRENT_TIMEZONE:
             default: return TimeZone.getDefault();

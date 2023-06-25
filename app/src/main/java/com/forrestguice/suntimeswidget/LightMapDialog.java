@@ -1402,7 +1402,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
         TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
-                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble());
+                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
         Calendar mapTime = Calendar.getInstance(tz);
 
         mapTime.setTimeInMillis(mapTimeMillis);

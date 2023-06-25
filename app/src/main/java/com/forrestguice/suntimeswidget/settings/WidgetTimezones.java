@@ -83,13 +83,13 @@ public class WidgetTimezones
     }
     public static final double WARNING_TOLERANCE_HOURS = 3;
 
-    public static TimeZone getTimeZone(String tzId, @Nullable Double longitude)
+    public static TimeZone getTimeZone(String tzId, @Nullable Double longitude, @Nullable SuntimesCalculator calculator)
     {
         if (longitude == null) {
             longitude = 0.0;
         }
         switch (tzId) {
-            case ApparentSolarTime.TIMEZONEID: return new ApparentSolarTime(longitude, tzId);
+            case ApparentSolarTime.TIMEZONEID: return new ApparentSolarTime(longitude, tzId, calculator);
             case LocalMeanTime.TIMEZONEID: case SiderealTime.TZID_LMST: return new LocalMeanTime(longitude, tzId);
             case SiderealTime.TZID_GMST: return new LocalMeanTime(0, tzId);
             case TZID_SYSTEM: case TZID_SUNTIMES: return TimeZone.getDefault();
@@ -273,7 +273,7 @@ public class WidgetTimezones
             super(longitude, name);
         }
 
-        public ApparentSolarTime(double longitude, String name, SuntimesCalculator calculator)
+        public ApparentSolarTime(double longitude, String name, @Nullable SuntimesCalculator calculator)
         {
             super(longitude, name);
             this.calculator = calculator;

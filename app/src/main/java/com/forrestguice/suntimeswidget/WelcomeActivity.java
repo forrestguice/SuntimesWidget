@@ -969,7 +969,7 @@ public class WelcomeActivity extends AppCompatActivity
                     if (!foundItem)
                     {
                         tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
-                        TimeZone tz = WidgetTimezones.getTimeZone(tzID, longitude);
+                        TimeZone tz = WidgetTimezones.getTimeZone(tzID, longitude, null);  // TODO: calculator
                         if (WidgetTimezones.isProbablyNotLocal(tz, longitude, now.getTime()))
                         {
                             if (recommendations != null && recommendations[0] != null) {
