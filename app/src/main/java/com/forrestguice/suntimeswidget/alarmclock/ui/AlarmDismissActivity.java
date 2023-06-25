@@ -751,8 +751,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     public boolean isInteractive()
     {
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
-        if (pm != null) {
-            return pm.isInteractive();
+        if (pm != null)
+        {
+            if (Build.VERSION.SDK_INT >= 20) {
+                return pm.isInteractive();
+            } else return false;
         } else return false;
     }
 
