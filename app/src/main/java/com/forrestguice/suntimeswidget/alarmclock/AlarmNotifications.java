@@ -2120,6 +2120,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
         Calendar eventTime = null;
+        boolean modifyHourMinute = true;
         String eventID = item.getEvent();
         SolarEvents event = SolarEvents.valueOf(eventID, null);
         ArrayList<Integer> repeatingDays = (item.repeatingDays != null ? item.repeatingDays : AlarmClockItem.everyday());
@@ -2132,6 +2133,7 @@ public class AlarmNotifications extends BroadcastReceiver
             eventTime = updateAlarmTime_addonEvent(context.getContentResolver(), eventID, item.location, item.offset, item.repeating, repeatingDays, now);
 
         } else {
+            modifyHourMinute = false;    // "clock time" alarms should leave "hour" and "minute" values untouched
             eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.timezone, item.location, item.offset, item.repeating, repeatingDays, now);
         }
 
@@ -2142,8 +2144,10 @@ public class AlarmNotifications extends BroadcastReceiver
 
         if (modifyItem)
         {
-            item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
-            item.minute = eventTime.get(Calendar.MINUTE);
+            if (modifyHourMinute) {
+                item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
+                item.minute = eventTime.get(Calendar.MINUTE);
+            }
             item.timestamp = eventTime.getTimeInMillis();
             item.modified = true;
         }
