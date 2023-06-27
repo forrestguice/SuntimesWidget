@@ -24,20 +24,12 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
@@ -79,26 +71,4 @@ public class WidgetTimezonesTest extends SuntimesActivityTestBase
         task.execute(WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
     }
 
-    @Test
-    public void test_timezone_apparentSolarTime1()
-    {
-        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory((Context)null, Time4ASimpleSuntimesCalculator.getDescriptor());
-        SuntimesCalculator calculator = factory.createCalculator(new Location("test","35", "-112"), TimeZone.getDefault());
-        TimeZone timezone0 = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time (Test 0)", calculator);
-        for (int i=0; i<1; i++) {
-            test_timezone(timezone0, 16, 20, 0);
-        }
-    }
-
-    protected void test_timezone(TimeZone timezone, int hour, int minute, int second)
-    {
-        Calendar calendar = Calendar.getInstance(timezone);
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND, second);
-
-        assertEquals(calendar.get(Calendar.HOUR_OF_DAY), hour);
-        assertEquals(calendar.get(Calendar.MINUTE), minute);
-        assertEquals(calendar.get(Calendar.SECOND), second);
-    }
 }

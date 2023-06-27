@@ -284,6 +284,9 @@ public class WidgetTimezones
         {
             this.calculator = calculator;
         }
+        protected SuntimesCalculator getCalculator() {
+            return calculator;
+        }
 
         @Override
         public int getOffset(int era, int year, int month, int day, int dayOfWeek, int milliseconds)
