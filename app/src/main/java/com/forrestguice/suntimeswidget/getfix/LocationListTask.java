@@ -74,9 +74,9 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         if (cursor != null)
         {
             int selectedIndex = GetFixDatabaseAdapter.findPlaceByName(selected.getLabel(), cursor);
-            if (selectedIndex < 0)
-                Log.w("LocationListTask", "Place selection not found! " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
-            else Log.d("LocationListTask", "Place selection: " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
+            if (selectedIndex < 0) {
+                Log.w("LocationListTask", "Place selection not found! " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" + selectedPlaceAlt + "]");
+            } // else Log.d("LocationListTask", "Place selection: " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
 
             result = new LocationListTaskResult(cursor, selectedIndex);
         }
