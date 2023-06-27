@@ -478,75 +478,91 @@ public class WidgetActions
         }
 
         String[] extras = extraString.split("&");
-        for (String extra : extras)
+        for (String extra : extras) {
+            applyExtra(context, intent, extra, data);
+        }
+    }
+
+    public static void applyExtra(Context context, Intent intent, String extra, @Nullable SuntimesData data)
+    {
+        String[] pair = extra.split("=");
+        if (pair.length == 2)
         {
-            String[] pair = extra.split("=");
-            if (pair.length == 2)
+            String key = pair[0];
+            String value = pair[1];
+
+            char c = value.charAt(0);
+            boolean isNumeric = (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'|| c == '8' || c == '9');
+            if (isNumeric)
             {
-                String key = pair[0];
-                String value = pair[1];
-
-                char c = value.charAt(0);
-                boolean isNumeric = (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'|| c == '8' || c == '9');
-                if (isNumeric)
+                if (value.endsWith("L") || value.endsWith("l"))
                 {
-                    if (value.endsWith("L") || value.endsWith("l"))
-                    {
-                        try {
-                            intent.putExtra(key, Long.parseLong(value.substring(0, value.length()-1)));  // long
-                            Log.i(TAG, "applyExtras: applied " + extra + " (long)");
+                    try {
+                        intent.putExtra(key, Long.parseLong(value.substring(0, value.length()-1)));  // long
+                        Log.i(TAG, "applyExtras: applied " + extra + " (long)");
 
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (long)");
-                        }
+                    } catch (NumberFormatException e) {
+                        intent.putExtra(key, value);  // string
+                        Log.w(TAG, "applyExtras: fallback " + extra + " (long)");
+                    }
 
-                    } else if (value.endsWith("D") || value.endsWith("d")) {
-                        try {
-                            intent.putExtra(key, Double.parseDouble(value));  // double
-                            Log.i(TAG, "applyExtras: applied " + extra + " (double)");
+                } else if (value.endsWith("D") || value.endsWith("d")) {
+                    try {
+                        intent.putExtra(key, Double.parseDouble(value));  // double
+                        Log.i(TAG, "applyExtras: applied " + extra + " (double)");
 
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (double)");
-                        }
+                    } catch (NumberFormatException e) {
+                        intent.putExtra(key, value);  // string
+                        Log.w(TAG, "applyExtras: fallback " + extra + " (double)");
+                    }
 
-                    } else if (value.endsWith("F") || value.endsWith("f")) {
-                        try {
-                            intent.putExtra(key, Float.parseFloat(value));  // float
-                            Log.i(TAG, "applyExtras: applied " + extra + " (float)");
+                } else if (value.endsWith("F") || value.endsWith("f")) {
+                    try {
+                        intent.putExtra(key, Float.parseFloat(value));  // float
+                        Log.i(TAG, "applyExtras: applied " + extra + " (float)");
 
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (float)");
-                        }
-
-                    } else {
-                        try {
-                            intent.putExtra(key, Integer.parseInt(value));  // int
-                            Log.i(TAG, "applyExtras: applied " + extra + " (int)");
-
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (int)");
-                        }
+                    } catch (NumberFormatException e) {
+                        intent.putExtra(key, value);  // string
+                        Log.w(TAG, "applyExtras: fallback " + extra + " (float)");
                     }
 
                 } else {
-                    String lowerCase = value.toLowerCase(Locale.getDefault());
-                    if (lowerCase.equals("true") || lowerCase.equals("false")) {
-                        intent.putExtra(key, lowerCase.equals("true"));  // boolean
-                        Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");
+                    try {
+                        intent.putExtra(key, Integer.parseInt(value));  // int
+                        Log.i(TAG, "applyExtras: applied " + extra + " (int)");
 
-                    } else {
-                        intent.putExtra(key, displayStringForPattern(context, value, data));    // string (may contain % patterns)
-                        Log.i(TAG, "applyExtras: applied " + extra + " (String)");
+                    } catch (NumberFormatException e) {
+                        intent.putExtra(key, value);  // string
+                        Log.w(TAG, "applyExtras: fallback " + extra + " (int)");
                     }
                 }
 
             } else {
-                Log.w(TAG, "applyExtras: skipping " + extra);
+                String lowerCase = value.toLowerCase(Locale.getDefault());
+                if (lowerCase.equals("true") || lowerCase.equals("false")) {
+                    intent.putExtra(key, lowerCase.equals("true"));  // boolean
+                    Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");
+
+                } else {
+                    if (value.contains("%"))
+                    {
+                        String v = displayStringForPattern(context, value, data);
+                        if (!v.contains("%")) {
+                            applyExtra(context, intent, key + "=" + v, data);    // recursive call
+
+                        } else {
+                            intent.putExtra(key, v);
+                            Log.w(TAG, "applyExtras: applied " + extra + " (String) (incomplete substitution)");
+                        }
+                    } else {
+                        intent.putExtra(key, value);
+                        Log.i(TAG, "applyExtras: applied " + extra + " (String)");
+                    }
+                }
             }
+
+        } else {
+            Log.w(TAG, "applyExtras: skipping " + extra);
         }
     }
 
