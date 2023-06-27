@@ -26,9 +26,15 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -458,8 +464,7 @@ public class WidgetActions
         //Log.d(TAG, "applyData: " + dataString + " (" + mimeType + ") [" + data + "] to " + intent);
         if (intent != null && dataString != null && !dataString.trim().isEmpty())
         {
-            SuntimesUtils utils = new SuntimesUtils();
-            Uri dataUri = Uri.parse(Uri.decode(utils.displayStringForTitlePattern(context, dataString, data)));
+            Uri dataUri = Uri.parse(Uri.decode(displayStringForPattern(context, dataString, data)));
             if (mimeType != null && !mimeType.trim().isEmpty()) {
                 intent.setDataAndType(dataUri, mimeType);
             } else intent.setData(dataUri);
@@ -472,7 +477,6 @@ public class WidgetActions
             return;
         }
 
-        SuntimesUtils utils = new SuntimesUtils();
         String[] extras = extraString.split("&");
         for (String extra : extras)
         {
@@ -535,7 +539,7 @@ public class WidgetActions
                         Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");
 
                     } else {
-                        intent.putExtra(key, utils.displayStringForTitlePattern(context, value, data));  // string (may contain % patterns)
+                        intent.putExtra(key, displayStringForPattern(context, value, data));    // string (may contain % patterns)
                         Log.i(TAG, "applyExtras: applied " + extra + " (String)");
                     }
                 }
@@ -543,6 +547,27 @@ public class WidgetActions
             } else {
                 Log.w(TAG, "applyExtras: skipping " + extra);
             }
+        }
+    }
+
+    public static String displayStringForPattern(Context context, String pattern, SuntimesData data)
+    {
+        SuntimesUtils utils = new SuntimesUtils();
+
+        if (data instanceof SuntimesRiseSetData) {    // cast to most specific type                 // TODO: a better way to handle this..
+            return utils.displayStringForTitlePattern(context, pattern, (SuntimesRiseSetData) data);
+
+        } else if (data instanceof SuntimesClockData) {
+            return utils.displayStringForTitlePattern(context, pattern, (SuntimesClockData) data);
+
+        } else if (data instanceof SuntimesMoonData) {
+            return utils.displayStringForTitlePattern(context, pattern, (SuntimesMoonData) data);
+
+        } else if (data instanceof SuntimesEquinoxSolsticeData) {
+            return utils.displayStringForTitlePattern(context, pattern, (SuntimesMoonData) data);
+
+        } else {
+            return utils.displayStringForTitlePattern(context, pattern, data);
         }
     }
 
