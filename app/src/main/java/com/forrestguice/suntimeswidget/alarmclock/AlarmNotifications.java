@@ -2475,6 +2475,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         Calendar alarmTime = Calendar.getInstance(timezone);
         Calendar eventTime = Calendar.getInstance(timezone);
+        eventTime.setTimeInMillis(now.getTimeInMillis());
 
         eventTime.set(Calendar.SECOND, 0);
         if (hour >= 0 && hour < 24) {
