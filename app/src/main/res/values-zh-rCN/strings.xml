@@ -549,8 +549,8 @@
     <string name="calendarMode_ethiopian">埃塞俄比亚历</string>
     <string name="calendarMode_gregorian">公历</string>
     <string name="calendarMode_hebrew">希伯来历</string>
-    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
-    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_diyanet">伊斯兰历（土耳其）</string>
+    <string name="calendarMode_hijri_umalqura">伊斯兰历（乌姆库拉）</string>
     <string name="calendarMode_julian">儒略历</string>
     <string name="calendarMode_persian">伊朗历</string>
     <string name="calendarMode_thaisolar">泰国阳历</string>
