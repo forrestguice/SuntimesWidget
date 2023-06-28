@@ -14,7 +14,7 @@
     -->
     <string name="configAction_refreshLocation">Refresh</string>
     <string name="configAction_addLocation">Location</string>
-    <string name="configAction_mapLocation">Show Map</string>
+    <string name="configAction_mapLocation">Map</string>
     <string name="configAction_mapLocation_chooser">View location using</string>
     <string name="configAction_mapLocation_noapp">Unable to find map application!</string>
     <string name="configAction_showCalendar">Calendar</string>
@@ -1486,7 +1486,7 @@
         <item>@string/app_name</item>
         <item>@string/app_name</item>
 
-        <item>@string/app_name_alarmclock</item>
+        <item>@string/configLabel_alarmClock</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
