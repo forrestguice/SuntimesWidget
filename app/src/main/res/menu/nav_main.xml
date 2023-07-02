@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!--<item android:title="Suntimes">
+        <menu> -->
+            <group android:checkableBehavior="none">
+
+                <item android:id="@+id/action_suntimes"
+                    android:icon="@drawable/ic_action_suntimes"
+                    android:title="@string/app_name" />
+
+                <item
+                    android:id="@+id/action_alarms"
+                    android:icon="@drawable/ic_action_alarms"
+                    android:title="@string/configLabel_alarmClock" />
+
+                <item
+                    android:id="@+id/action_settings"
+                    android:icon="@drawable/ic_action_settings"
+                    android:title="@string/configAction_settings" />
+
+                <item
+                    android:id="@+id/action_about"
+                    android:icon="@drawable/ic_action_about"
+                    android:title="@string/configAction_aboutWidget" />
+
+            </group>
+    <!--</menu>
+    </item>-->
+
+</menu>
