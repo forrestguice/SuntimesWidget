@@ -1,5 +1,14 @@
 ### ~
 
+### v0.15.5 (2023-07-01)
+* adds Hijri calendar to the date widget (#714).
+* fixes bug where alarms using Apparent Solar Time drift over time (#715).
+* fixes bug where app dialogs display Apparent Solar Time with reduced accuracy.
+* fixes bug where actions fail to apply all available %substitutions.
+* fixes bug where actions fail to apply the correct `extra type` to %substitutions.
+* increases max snooze from 59 to 120 minutes; increases max "auto dismiss" from 59 to 300 seconds.
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#716 by James Liu).
+
 ### v0.15.4 (2023-06-03)
 * adds support for Android TV.
 * adds "current location" mode to widgets (#707); widgets use the "last known" location from any provider.
