@@ -107,6 +107,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         appTheme = AppSettings.loadThemePref(this);
         AppSettings.setTheme(this, appTheme);
 
+        mapLegacyFragments();    // replace any legacy fragment identifiers before calling onCreate
         super.onCreate(icicle);
         initLocale(icicle);
         initLegacyPrefs();
@@ -131,6 +132,24 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             }
         };
         PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(onChangedNeedingRebuild);
+    }
+
+    protected void mapLegacyFragments()
+    {
+        if (Build.VERSION.SDK_INT >= 11)
+        {
+            Intent intent = getIntent();
+            if (intent.hasExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT))
+            {
+                String fragment = intent.getStringExtra(EXTRA_SHOW_FRAGMENT);
+                String legacyPattern = getPackageName() + ".SuntimesSettingsActivity$";
+                if (fragment != null && fragment.startsWith(legacyPattern))
+                {
+                    String pattern = getPackageName() + ".settings.fragments.";
+                    intent.putExtra(EXTRA_SHOW_FRAGMENT, fragment.replace(legacyPattern, pattern));
+                }
+            }
+        }
     }
 
     public Intent getResultData() {
