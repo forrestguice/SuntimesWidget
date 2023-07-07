@@ -361,14 +361,14 @@
     <string name="timeMode_solstice_winter">Zimowe przesilenie</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Przesilenie</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">Półmetek wiosny</string>      <!-- setting -->
-    <string name="timeMode_cross_spring_short">Półmetek wiosny</string>       <!-- setting -->
-    <string name="timeMode_cross_autumnal">Półmetek jesieni</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal_short">Półmetek jesieni</string>     <!-- setting -->
-    <string name="timeMode_cross_summer">Półmetek lata</string>    <!-- setting -->
-    <string name="timeMode_cross_summer_short">Półmetek lata</string>     <!-- setting -->
-    <string name="timeMode_cross_winter">Półmetek zimy</string>    <!-- setting -->
-    <string name="timeMode_cross_winter_short">Półmetek zimy</string>     <!-- setting --> 
+    <string name="timeMode_cross_midwinter">Półmetek wiosny</string>      <!-- setting -->  <!-- TODO; "Spring Cross-Quarter" to either "Imbolc (Cross-Quarter), or "Mid-Winter (Cross-Quarter)" -->
+    <string name="timeMode_cross_midwinter_short">Półmetek wiosny</string>       <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midsummer">Półmetek jesieni</string>  <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midsummer_short">Półmetek jesieni</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midspring">Półmetek lata</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midspring_short">Półmetek lata</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midautumnal">Półmetek zimy</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midautumnal_short">Półmetek zimy</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="timeMode_moon">Księżyc</string>                               <!-- label -->
     <string name="timeMode_moon_new">Nów</string>                               <!-- setting -->
@@ -1445,10 +1445,10 @@
         <item>przesilenie zimowe</item>
         <item>górowanie Księżyca</item>
         <item>dołowanie Księżyca</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>świt astronomiczny</item>
@@ -1478,10 +1478,10 @@
         <item>przesilenie zimowe</item>
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>świt astronomiczny</item>
@@ -1511,10 +1511,10 @@
         <item>przesilenie zimowe</item>
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

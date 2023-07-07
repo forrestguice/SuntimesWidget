@@ -369,14 +369,14 @@
     <string name="timeMode_solstice_winter">冬至</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">冬至</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">春跨季度</string>      <!-- setting -->
-    <string name="timeMode_cross_spring_short">跨季度</string>       <!-- setting -->
-    <string name="timeMode_cross_autumnal">秋跨季度</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal_short">跨季度</string>     <!-- setting -->
-    <string name="timeMode_cross_summer">夏跨季度</string>    <!-- setting -->
-    <string name="timeMode_cross_summer_short">跨季度</string>     <!-- setting -->
-    <string name="timeMode_cross_winter">冬跨季度</string>    <!-- setting -->
-    <string name="timeMode_cross_winter_short">跨季度</string>     <!-- setting -->
+    <string name="timeMode_cross_midwinter">春跨季度</string>      <!-- setting -->  <!-- TODO; "Spring Cross-Quarter" to either "Imbolc (Cross-Quarter), or "Mid-Winter (Cross-Quarter)" -->
+    <string name="timeMode_cross_midwinter_short">跨季度</string>       <!-- setting -->
+    <string name="timeMode_cross_midsummer">秋跨季度</string>  <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midsummer_short">跨季度</string>     <!-- setting -->
+    <string name="timeMode_cross_midspring">夏跨季度</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midspring_short">跨季度</string>     <!-- setting -->
+    <string name="timeMode_cross_midautumnal">冬跨季度</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midautumnal_short">跨季度</string>     <!-- setting -->
 
     <string name="timeMode_moon">月光</string>                               <!-- label -->
     <string name="timeMode_moon_new">新月</string>                               <!-- setting -->
@@ -1460,10 +1460,10 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>天文曙光</item>
@@ -1493,10 +1493,10 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>天文曙光</item>
@@ -1526,10 +1526,10 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

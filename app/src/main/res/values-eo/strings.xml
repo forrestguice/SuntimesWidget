@@ -346,14 +346,14 @@
     <string name="timeMode_solstice_winter">Vintra sunekstremo</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstico</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">Mezo de printempo</string>      <!-- setting -->
-    <string name="timeMode_cross_spring_short">Printemp-mezo</string>       <!-- setting -->
-    <string name="timeMode_cross_autumnal">Mezo de aŭtuno</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal_short">Aŭtun-mezo</string>     <!-- setting -->
-    <string name="timeMode_cross_summer">Somer-mezo</string>     <!-- setting -->
-    <string name="timeMode_cross_summer_short">Somer-mezo</string>     <!-- setting -->
-    <string name="timeMode_cross_winter">Mezo de vintro</string>    <!-- setting -->
-    <string name="timeMode_cross_winter_short">Vintr-mezo</string>     <!-- setting -->
+    <string name="timeMode_cross_midwinter">Mezo de printempo</string>      <!-- setting -->  <!-- TODO; "Spring Cross-Quarter" to either "Imbolc (Cross-Quarter), or "Mid-Winter (Cross-Quarter)" -->
+    <string name="timeMode_cross_midwinter_short">Printemp-mezo</string>       <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midsummer">Mezo de aŭtuno</string>  <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midsummer_short">Aŭtun-mezo</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midspring">Somer-mezo</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midspring_short">Somer-mezo</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midautumnal">Mezo de vintro</string>    <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midautumnal_short">Vintr-mezo</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="timeMode_moon">Luno</string>                                          <!-- label -->
     <string name="timeMode_moon_new">Nova Luno</string>                                  <!-- setting -->
