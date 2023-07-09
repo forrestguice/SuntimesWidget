@@ -1715,10 +1715,10 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Mezo de kalendara vintro:</b> mezpunkto inter vintra sunekstremo kaj printempa tegnoktegaleco; okazas en <em>Februaro</em> sur la norda duonsfero kaj en <em>Aŭgusto</em> sur la suda duonsfero. Koincidas kun la vika festo Imbolko.<br/><br/>
-          <b>Mezo de kalendara printempo:</b> mezpunkto inter printempa tagnoktegaleco kaj somera sunekstremo; okazas en <em>Majo</em> sur la norda duonsfero kaj en <em>Novembro</em> sur la suda duonsfero. Koincidas kun la vika festo Belteno.<br/><br/>
-          <b>Mezo de kalendara somero:</b> mezpunkto inter somera sunekstremo kaj aŭtuna tagnoktegaleco; okazas en <em>Aŭgusto</em> sur la norda duonsfero kaj en <em>Februaro</em> sur la suda duonsfero. Koincidas kun la vika festo Lunaso.<br/><br/>
-          <b>Mezo de kalendara aŭtuno:</b> mezpunkto inter aŭtuna tagnoktegaleco kaj vintra sunekstremo; okazas en <em>Novembro</em> sur la norda duonsfero kaj en <em>Majo</em> sur la suda duonsfero. Koincidas kun la vika festo Saveno.<br/>
+          <b>Mezo de astronomia vintro:</b> mezpunkto inter vintra sunekstremo kaj printempa tegnoktegaleco; okazas en <em>Februaro</em> sur la norda duonsfero kaj en <em>Aŭgusto</em> sur la suda duonsfero. Koincidas kun la vika festo Imbolko.<br/><br/>
+          <b>Mezo de astronomia printempo:</b> mezpunkto inter printempa tagnoktegaleco kaj somera sunekstremo; okazas en <em>Majo</em> sur la norda duonsfero kaj en <em>Novembro</em> sur la suda duonsfero. Koincidas kun la vika festo Belteno.<br/><br/>
+          <b>Mezo de astronomia somero:</b> mezpunkto inter somera sunekstremo kaj aŭtuna tagnoktegaleco; okazas en <em>Aŭgusto</em> sur la norda duonsfero kaj en <em>Februaro</em> sur la suda duonsfero. Koincidas kun la vika festo Lunaso.<br/><br/>
+          <b>Mezo de astronomia aŭtuno:</b> mezpunkto inter aŭtuna tagnoktegaleco kaj vintra sunekstremo; okazas en <em>Novembro</em> sur la norda duonsfero kaj en <em>Majo</em> sur la suda duonsfero. Koincidas kun la vika festo Saveno.<br/>
     ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[
