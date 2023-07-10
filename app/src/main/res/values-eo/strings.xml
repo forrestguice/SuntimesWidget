@@ -346,14 +346,14 @@
     <string name="timeMode_solstice_winter">Vintra sunekstremo</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstico</string>     <!-- setting -->
 
-    <string name="timeMode_cross_midwinter">Mezo de printempo</string>      <!-- setting -->  <!-- TODO; "Spring Cross-Quarter" to either "Imbolc (Cross-Quarter), or "Mid-Winter (Cross-Quarter)" -->
-    <string name="timeMode_cross_midwinter_short">Printemp-mezo</string>       <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_midsummer">Mezo de aŭtuno</string>  <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_midsummer_short">Aŭtun-mezo</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_midspring">Somer-mezo</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_midspring_short">Somer-mezo</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_midautumnal">Mezo de vintro</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_midautumnal_short">Vintr-mezo</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midwinter">Mezo de vintro</string>      <!-- setting -->
+    <string name="timeMode_cross_midwinter_short">Imbolko</string>       <!-- setting -->
+    <string name="timeMode_cross_midsummer">Mezo de somero</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer_short">Lunaso</string>     <!-- setting -->
+    <string name="timeMode_cross_midspring">Mezo de printempo</string>     <!-- setting -->
+    <string name="timeMode_cross_midspring_short">Belteno</string>     <!-- setting -->
+    <string name="timeMode_cross_midautumnal">Mezo de aŭtuno</string>    <!-- setting -->
+    <string name="timeMode_cross_midautumnal_short">Saveno</string>     <!-- setting -->
 
     <string name="timeMode_moon">Luno</string>                                          <!-- label -->
     <string name="timeMode_moon_new">Nova Luno</string>                                  <!-- setting -->
@@ -534,8 +534,8 @@
     <string name="calendarMode_ethiopian">Etiopa</string>
     <string name="calendarMode_gregorian">Gregoria</string>
     <string name="calendarMode_hebrew">Juda (Hebrea)</string>
-    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
-    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_diyanet">Islama (turka)</string>
+    <string name="calendarMode_hijri_umalqura">Islama (Umm al-Qura)</string>
     <string name="calendarMode_julian">Julia</string>
     <string name="calendarMode_persian">Persa (Irana)</string>
     <string name="calendarMode_thaisolar">Tajlanda suna</string>
@@ -1715,10 +1715,10 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Mezo de printempo:</b> mezpunkto inter vintra sunekstremo kaj printempa tegnoktegaleco; okazas en <em>Februaro</em> sur la norda duonsfero kaj en <em>Aŭgusto</em> sur la suda duonsfero.<br/><br/>
-          <b>Mezo de somero:</b> mezpunkto inter printempa tagnoktegaleco kaj somera sunekstremo; okazas en <em>Majo</em> sur la norda duonsfero kaj en <em>Novembro</em> sur la suda duonsfero.<br/><br/>
-          <b>Mezo de aŭtuno:</b> mezpunkto inter somera sunekstremo kaj aŭtuna tagnoktegaleco; okazas en <em>Aŭgusto</em> sur la norda duonsfero kaj en <em>Februaro</em> sur la suda duonsfero.<br/><br/>
-          <b>Mezo de vintro:</b> mezpunkto inter aŭtuna tagnoktegaleco kaj vintra sunekstremo; okazas en <em>Novembro</em> sur la norda duonsfero kaj en <em>Majo</em> sur la suda duonsfero.<br/>
+          <b>Mezo de astronomia vintro:</b> mezpunkto inter vintra sunekstremo kaj printempa tegnoktegaleco; okazas en <em>Februaro</em> sur la norda duonsfero kaj en <em>Aŭgusto</em> sur la suda duonsfero. Koincidas kun la vika festo Imbolko.<br/><br/>
+          <b>Mezo de astronomia printempo:</b> mezpunkto inter printempa tagnoktegaleco kaj somera sunekstremo; okazas en <em>Majo</em> sur la norda duonsfero kaj en <em>Novembro</em> sur la suda duonsfero. Koincidas kun la vika festo Belteno.<br/><br/>
+          <b>Mezo de astronomia somero:</b> mezpunkto inter somera sunekstremo kaj aŭtuna tagnoktegaleco; okazas en <em>Aŭgusto</em> sur la norda duonsfero kaj en <em>Februaro</em> sur la suda duonsfero. Koincidas kun la vika festo Lunaso.<br/><br/>
+          <b>Mezo de astronomia aŭtuno:</b> mezpunkto inter aŭtuna tagnoktegaleco kaj vintra sunekstremo; okazas en <em>Novembro</em> sur la norda duonsfero kaj en <em>Majo</em> sur la suda duonsfero. Koincidas kun la vika festo Saveno.<br/>
     ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[
