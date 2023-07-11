@@ -4,4 +4,5 @@
     <string name="default_location_latitude">44.03198</string>     <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">87.80816</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">862</string>         <!-- meters -->
+    <string name="default_timezone">Asia/Urumqi</string>         <!-- tzid -->
 </resources>

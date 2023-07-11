@@ -5,6 +5,7 @@
     <string name="default_location_latitude">41.9099</string>      <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">12.3959</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">79</string>         <!-- meters -->
+    <string name="default_timezone">Europe/Rome</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 

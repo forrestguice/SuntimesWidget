@@ -4,6 +4,7 @@
     <string name="default_location_latitude">53.1324</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">23.1592</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">139</string>        <!-- meters -->
+    <string name="default_timezone">Etc/GMT+2</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 

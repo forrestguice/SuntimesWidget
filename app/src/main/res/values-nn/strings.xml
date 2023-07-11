@@ -5,6 +5,7 @@
     <string name="default_location_latitude">60.38713</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">5.32006</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>           <!-- meters -->
+    <string name="default_timezone">Etc/GMT+2</string>         <!-- tzid -->
 
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>.<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 

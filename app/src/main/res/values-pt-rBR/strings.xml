@@ -6,6 +6,7 @@
     <string name="default_location_longitude">-46.8754</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">815</string>         <!-- meters -->
     <string name="default_units_length">METRIC</string>         <!-- METRIC, IMPERIAL, USC -->
+    <string name="default_timezone">America/Sao_Paulo</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 

@@ -6,7 +6,6 @@
     <string name="default_location_longitude">2.1769</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">31</string>         <!-- meters -->
 
-
     <!-- MAIN ACTIVITY -->
 
     <!-- Action Bar

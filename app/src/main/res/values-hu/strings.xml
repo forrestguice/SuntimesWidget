@@ -5,6 +5,7 @@
     <string name="default_location_latitude">47.4811</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">18.9902</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">225</string>         <!-- meters -->
+    <string name="default_timezone">Europe/Budapest</string>         <!-- tzid -->
 
 <!-- MAIN ACTIVITY -->
 

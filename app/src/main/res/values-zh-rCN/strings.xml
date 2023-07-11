@@ -5,6 +5,7 @@
     <string name="default_location_latitude">39.9042</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">116.4074</string>  <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>          <!-- meters -->
+    <string name="default_timezone">Asia/Beijing</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 

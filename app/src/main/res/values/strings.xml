@@ -6,6 +6,7 @@
     <string name="default_location_longitude">-74.02619</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>         <!-- meters -->
     <string name="default_units_length">METRIC</string>         <!-- METRIC, IMPERIAL, USC -->
+    <string name="default_timezone">America/New_York</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 

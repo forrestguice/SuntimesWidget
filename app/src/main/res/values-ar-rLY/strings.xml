@@ -4,4 +4,5 @@
     <string name="default_location_latitude">32.89500</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">13.18431</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">81</string>           <!-- meters -->
+    <string name="default_timezone">Africa/Tripoli</string>         <!-- tzid -->
 </resources>

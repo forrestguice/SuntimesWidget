@@ -5,6 +5,7 @@
     <string name="default_location_latitude">52.2319</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">21.0067</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">143</string>         <!-- meters -->
+    <string name="default_timezone">Europe/Warsaw</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 

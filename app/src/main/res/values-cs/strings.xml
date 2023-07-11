@@ -6,6 +6,7 @@
     <string name="default_location_longitude">14.3255</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">361</string>         <!-- meters -->
     <string name="default_units_length">METRIC</string>
+    <string name="default_timezone">Europe/Prague</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 

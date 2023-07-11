@@ -4,4 +4,5 @@
     <string name="default_location_latitude">16.79525</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">96.15955</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">23</string>          <!-- meters -->
+
 </resources>

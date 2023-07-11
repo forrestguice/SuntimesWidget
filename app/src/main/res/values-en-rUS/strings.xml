@@ -6,6 +6,7 @@
     <string name="default_location_longitude">-111.94580</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">385</string>           <!-- meters -->
     <string name="default_units_length">IMPERIAL</string>                <!-- METRIC, IMPERIAL, USC -->
+    <string name="default_timezone">America/Phoenix</string>        <!-- tzid -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
