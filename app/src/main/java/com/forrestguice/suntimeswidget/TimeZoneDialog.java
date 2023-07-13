@@ -991,6 +991,49 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         ViewUtils.disableTouchOutsideBehavior(getDialog());
     }
 
+    public String timeZoneRecommendation(String label, double longitude)
+    {
+        Calendar now = Calendar.getInstance();
+        Log.d("DEBUG", "longitude label: " + label);
+
+        boolean foundItem = false;
+        String tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
+        WidgetTimezones.TimeZoneItemAdapter adapter = getTimeZoneItemAdapter();
+        WidgetTimezones.TimeZoneItem[] recommendations = null;
+        if (adapter != null)
+        {
+            if (label != null)
+            {
+                WidgetTimezones.TimeZoneItem[] items = adapter.values();
+                for (WidgetTimezones.TimeZoneItem item : items)
+                {
+                    if (item.getID().contains(label) || item.getDisplayString().contains(label)) {
+                        tzID = item.getID();
+                        foundItem = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!foundItem) {
+                recommendations = adapter.findItems(longitude);
+            }
+        }
+
+        if (!foundItem)
+        {
+            tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
+            TimeZone tz = WidgetTimezones.getTimeZone(tzID, longitude, null);  // TODO: calculator
+            if (WidgetTimezones.isProbablyNotLocal(tz, longitude, now.getTime()))
+            {
+                if (recommendations != null && recommendations[0] != null) {
+                    tzID = recommendations[0].getID();
+                }
+            }
+        }
+        return tzID;
+    }
+
     private TimeZoneDialogListener dialogListener = null;
     public void setDialogListener(TimeZoneDialogListener listener) {
         dialogListener = listener;

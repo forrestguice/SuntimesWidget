@@ -930,54 +930,14 @@ public class WelcomeActivity extends AppCompatActivity
             public void onNothingSelected(AdapterView<?> parent) {}
         };
 
-        private View.OnClickListener timeZoneSuggestButtonListener = new View.OnClickListener() {
+        private final View.OnClickListener timeZoneSuggestButtonListener = new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
                 TimeZoneDialog tzConfig = getTimeZoneDialog();
-                if (tzConfig != null)
-                {
-                    Calendar now = Calendar.getInstance();
-                    double longitude = getLongitude();
-                    String label = getLongitudeLabel();
-                    Log.d("DEBUG", "longitude label: " + label);
-
-                    boolean foundItem = false;
-                    String tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
-                    WidgetTimezones.TimeZoneItemAdapter adapter = tzConfig.getTimeZoneItemAdapter();
-                    WidgetTimezones.TimeZoneItem[] recommendations = null;
-                    if (adapter != null)
-                    {
-                        if (label != null)
-                        {
-                            WidgetTimezones.TimeZoneItem[] items = adapter.values();
-                            for (WidgetTimezones.TimeZoneItem item : items)
-                            {
-                                if (item.getID().contains(label) || item.getDisplayString().contains(label)) {
-                                    tzID = item.getID();
-                                    foundItem = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (!foundItem) {
-                            recommendations = adapter.findItems(longitude);
-                        }
-                    }
-
-                    if (!foundItem)
-                    {
-                        tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
-                        TimeZone tz = WidgetTimezones.getTimeZone(tzID, longitude, null);  // TODO: calculator
-                        if (WidgetTimezones.isProbablyNotLocal(tz, longitude, now.getTime()))
-                        {
-                            if (recommendations != null && recommendations[0] != null) {
-                                tzID = recommendations[0].getID();
-                            }
-                        }
-                    }
-                    tzConfig.setCustomTimeZone(tzID);
+                if (tzConfig != null) {
+                    tzConfig.setCustomTimeZone(tzConfig.timeZoneRecommendation(getLongitudeLabel(), getLongitude()));
                 }
             }
         };
