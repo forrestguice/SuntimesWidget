@@ -486,7 +486,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (timezoneDialog != null)
         {
             timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
-            timezoneDialog.setLongitude(dataset.location().getLongitudeAsDouble());
+            timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
             timezoneDialog.setCalculator(dataset.calculator());
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
             timezoneDialog.setOnCanceledListener(onCancelTimeZone);
@@ -1533,7 +1533,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         TimeZoneDialog timezoneDialog = new TimeZoneDialog();
         timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
-        timezoneDialog.setLongitude(dataset.location().getLongitudeAsDouble());
+        timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
         timezoneDialog.setTimeFormatMode(WidgetSettings.loadTimeFormatModePref(SuntimesActivity.this, 0));
         timezoneDialog.setCalculator(dataset.calculator());
         timezoneDialog.setOnAcceptedListener(onConfigTimeZone);

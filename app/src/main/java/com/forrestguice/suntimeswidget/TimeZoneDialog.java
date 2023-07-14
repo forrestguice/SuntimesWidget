@@ -79,6 +79,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public static final String KEY_SOLARTIME_MODE = "solartimeMode";
     public static final String KEY_NOW = "paramNow";
     public static final String KEY_LONGITUDE = "paramLongitude";
+    public static final String KEY_LONGITUDE_LABEL = "paramLongitudeLabel";
     public static final String KEY_TIMEFORMAT_MODE = "timeformatMode";
 
     private static final String DIALOGTAG_HELP = "timezone_help";
@@ -127,12 +128,18 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         this.now = now;
     }
 
-    private double longitude = 0;
-    public void setLongitude( double longitude )
+    public void setLongitude( String label, double longitude )
     {
-        this.longitude = longitude;
+        getArguments().putDouble(KEY_LONGITUDE, longitude);
+        getArguments().putString(KEY_LONGITUDE_LABEL, label);
         updatePreview(getActivity());
         onSelectionChanged();
+    }
+    public double getLongitude() {
+        return getArguments().getDouble(KEY_LONGITUDE, 0);
+    }
+    public String getLongitudeLabel() {
+        return getArguments().getString(KEY_LONGITUDE_LABEL, null);
     }
 
     public void setTimeFormatMode(WidgetSettings.TimeFormatMode mode) {
@@ -186,12 +193,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             case SOLAR_TIME:
                 item = (spinner_solartime != null) ? ((WidgetTimezones.TimeZoneItem) spinner_solartime.getSelectedItem()) : null;
                 tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
-                return WidgetTimezones.getTimeZone(tzID, longitude, calculator);
+                return WidgetTimezones.getTimeZone(tzID, getLongitude(), calculator);
 
             case CUSTOM_TIMEZONE:
                 item = (spinner_timezone != null) ? ((WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem()) : null;
                 tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
-                return WidgetTimezones.getTimeZone(tzID, longitude, calculator);
+                return WidgetTimezones.getTimeZone(tzID, getLongitude(), calculator);
 
             case CURRENT_TIMEZONE:
             default: return TimeZone.getDefault();
@@ -611,7 +618,18 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
-        public boolean onMenuItemClick(MenuItem item)
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId())
+            {
+                case R.id.suggestTz:
+                    setCustomTimeZone(timeZoneRecommendation(getLongitudeLabel(), getLongitude()));
+                    return true;
+
+                default:
+                    return onSortItemClick(item);
+            }
+        }
+        private boolean onSortItemClick(MenuItem item)
         {
             Context context = getContext();
             if (context == null) {
@@ -793,8 +811,6 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         long nowMillis = bundle.getLong(KEY_NOW, Calendar.getInstance().getTimeInMillis());
         now = Calendar.getInstance();
         now.setTimeInMillis(nowMillis);
-
-        longitude = bundle.getDouble(KEY_LONGITUDE);
     }
 
     /**
@@ -857,9 +873,6 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         if (now != null) {
             bundle.putLong(KEY_NOW, now.getTimeInMillis());
         }
-
-        // save: longitude
-        bundle.putDouble(KEY_LONGITUDE, longitude);
 
         // save: timeformatmode
         bundle.putString(KEY_TIMEFORMAT_MODE, getTimeFormatMode().name());

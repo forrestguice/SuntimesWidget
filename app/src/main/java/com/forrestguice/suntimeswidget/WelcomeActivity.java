@@ -874,7 +874,7 @@ public class WelcomeActivity extends AppCompatActivity
 
             TimeZoneDialog tzConfig = getTimeZoneDialog();
             if (tzConfig != null) {
-                tzConfig.setLongitude(getLongitude());
+                tzConfig.setLongitude(getLongitudeLabel(), getLongitude());
                 tzConfig.updatePreview(context);
             }
         }
