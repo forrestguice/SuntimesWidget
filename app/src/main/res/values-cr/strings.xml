@@ -5,6 +5,6 @@
     <string name="default_location_latitude">46.8579</string>     <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-71.4861</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">213</string>         <!-- meters -->
-    <string name="default_timezone">EST</string>         <!-- tzid -->
+    <string name="default_timezone">America/Toronto</string>         <!-- tzid -->
 
 </resources>

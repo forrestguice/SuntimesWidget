@@ -4,5 +4,5 @@
     <string name="default_location_latitude">14.09372</string>     <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-87.2016</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">990</string>          <!-- meters -->
-    <string name="default_timezone">CST</string>         <!-- tzid -->
+    <string name="default_timezone">America/Chicago</string>         <!-- tzid -->
 </resources>
