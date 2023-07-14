@@ -1017,11 +1017,17 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 int i_comma = label0.lastIndexOf(",");
                 if (i_comma >= 0)
                 {
-                    labels.add(label0.substring(i_comma).replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "")
-                            .trim().replaceAll(" ", "_"));    // 2, comma (left side)
+                    String left = label0.substring(i_comma).replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "")
+                            .trim().replaceAll(" ", "_");
+                    if (left.length() >= 4) {
+                        labels.add(left);    // 2, comma (left side)
+                    }
 
-                    labels.add(label0.substring(0, i_comma).replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "")
-                            .trim().replaceAll(" ", "_"));    // 3, comma (right side)
+                    String right = label0.substring(0, i_comma).replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "")
+                            .trim().replaceAll(" ", "_");
+                    if (right.length() >= 4) {
+                        labels.add(right);    // 3, comma (right side)
+                    }
                 }
 
                 WidgetTimezones.TimeZoneItem[] items = adapter.values();
