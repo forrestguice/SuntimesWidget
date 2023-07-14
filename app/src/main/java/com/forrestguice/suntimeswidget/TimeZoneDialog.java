@@ -1054,7 +1054,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 if (recommendations != null && recommendations[0] != null)
                 {
                     tzID = recommendations[0].getID();
-                    double offsetHr = recommendations[0].getOffsetHr();
+                    double offsetHr = recommendations[0].getRawOffsetHr();
                     if (offsetHr == 0) {
                         tzID = "Etc/GMT";
 
