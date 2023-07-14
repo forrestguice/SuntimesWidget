@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -1004,13 +1005,37 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         {
             if (label != null)
             {
-                WidgetTimezones.TimeZoneItem[] items = adapter.values();
-                for (WidgetTimezones.TimeZoneItem item : items)
+                ArrayList<String> labels = new ArrayList<>();
+                String label0 = Normalizer.normalize(label, Normalizer.Form.NFD);    // isolate all accents/glyphs
+                label0 = label0.replaceAll("\\p{M}", "");          // and remove them; e.g. Rīga -> Riga
+                String label1 = label0.replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "");
+
+                labels.add(label1.trim().replaceAll(" ", "_"));    // 0, entire label
+                labels.add(label1.replaceAll("City", "")           // 1, omit "City", e.g. Panama City, New York City, Guatemala City, etc
+                        .trim().replaceAll(" ", "_"));
+
+                int i_comma = label0.lastIndexOf(",");
+                if (i_comma >= 0)
                 {
-                    if (item.getID().contains(label) || item.getDisplayString().contains(label)) {
-                        tzID = item.getID();
-                        foundItem = true;
-                        break;
+                    labels.add(label0.substring(i_comma).replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "")
+                            .trim().replaceAll(" ", "_"));    // 2, comma (left side)
+
+                    labels.add(label0.substring(0, i_comma).replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "")
+                            .trim().replaceAll(" ", "_"));    // 3, comma (right side)
+                }
+
+                WidgetTimezones.TimeZoneItem[] items = adapter.values();
+                outer_loop:
+                for (int i=0; i<labels.size(); i++)
+                {
+                    for (WidgetTimezones.TimeZoneItem item : items)
+                    {
+                        if (item.getID().endsWith(labels.get(i)))
+                        {
+                            tzID = item.getID();
+                            foundItem = true;
+                            break outer_loop;
+                        }
                     }
                 }
             }
@@ -1026,8 +1051,24 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             TimeZone tz = WidgetTimezones.getTimeZone(tzID, longitude, null);  // TODO: calculator
             if (WidgetTimezones.isProbablyNotLocal(tz, longitude, now.getTime()))
             {
-                if (recommendations != null && recommendations[0] != null) {
+                if (recommendations != null && recommendations[0] != null)
+                {
                     tzID = recommendations[0].getID();
+                    double offsetHr = recommendations[0].getOffsetHr();
+                    if (offsetHr == 0) {
+                        tzID = "Etc/GMT";
+
+                    } else {
+                        for (int i=0; i<recommendations.length; i++)
+                        {
+                            String recommendation = recommendations[i].getID();
+                            if (recommendation.startsWith("Etc/GMT"))
+                            {
+                                tzID = recommendations[i].getID();
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
