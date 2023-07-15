@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
@@ -923,7 +924,7 @@ public class WidgetTimezones
                 TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
                 double rawOffsetHr = timezone.getRawOffset() / (double)(1000 * 60 * 60);
                 double offsetHr = timezone.getOffset(today.getTime()) / (double)(1000 * 60 * 60);
-                String displayName = timezone.getDisplayName(timezone.inDaylightTime(today), TimeZone.LONG, Locale.getDefault(Locale.Category.DISPLAY));
+                String displayName = timezone.getDisplayName(timezone.inDaylightTime(today), TimeZone.LONG, SuntimesUtils.getLocale());
                 timezones.add(new TimeZoneItem(timezone.getID(), displayName, offsetHr, rawOffsetHr));
             }
 

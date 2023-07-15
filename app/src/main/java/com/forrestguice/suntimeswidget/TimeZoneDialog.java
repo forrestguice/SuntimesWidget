@@ -139,7 +139,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         return getArguments().getDouble(KEY_LONGITUDE, 0);
     }
     public String getLongitudeLabel() {
-        return getArguments().getString(KEY_LONGITUDE_LABEL, null);
+        return getArguments().getString(KEY_LONGITUDE_LABEL);
     }
 
     public void setTimeFormatMode(WidgetSettings.TimeFormatMode mode) {
