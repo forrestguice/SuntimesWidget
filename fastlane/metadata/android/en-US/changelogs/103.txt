@@ -1,0 +1,4 @@
+- improves time zone defaults, and time zone recommendations.
+- changes labels for cross-quarter days; Imbolc, Beltane, Lughnasadh, Samhain.
+- updates translation to Polish and Esperanto.
+- updates translation to Brazilian Portuguese,
