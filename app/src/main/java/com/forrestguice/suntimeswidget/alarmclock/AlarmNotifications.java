@@ -953,7 +953,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
                     notificationIcon = R.drawable.ic_action_snooze;
                     builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_snoozing));
-                    builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
+                    //builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
                     builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), alarm.hasDismissChallenge(context) ? pendingDismissWithChallenge : pendingDismiss);
                     if (Build.VERSION.SDK_INT < 16) {
                         builder.setContentIntent(alarm.hasDismissChallenge(context) ? pendingDismissWithChallenge : pendingDismiss);    // action buttons require expanded notifications (api 16+)
