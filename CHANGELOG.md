@@ -1,5 +1,16 @@
 ### ~
 
+### v0.15.6 (2023-07-21)
+* improves time zone defaults (localized default values).
+* improves time zone recommendations; fixes recommendation when place names contain spaces or special characters.
+* adds "recommend time zone" action to time zone dialog.
+* fixes time zone list to show the correct display name and offset when day light saving is applied.
+* fixes app crash when addons attempt to open settings with an invalid fragment.
+* changes labels for cross-quarter days (#719); Imbolc, Beltane, Lughnasadh, Samhain.
+* changes snooze notification so that it no longer triggers fullscreen intent (#724).
+* updates translation to Polish and Esperanto (eo, pl) (#722 by Verdulo).
+* updates translation to Brazilian Portuguese (pt-br) (#721 by naoliv).
+
 ### v0.15.5 (2023-07-01)
 * adds Hijri calendar to the date widget (#714).
 * fixes bug where alarms using Apparent Solar Time drift over time (#715).
