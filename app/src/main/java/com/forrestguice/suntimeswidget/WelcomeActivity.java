@@ -342,10 +342,11 @@ public class WelcomeActivity extends AppCompatActivity
         {
             switch (position)
             {
-                case 5: return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
-                case 4: return WelcomeAlarmsFragment.newInstance();
-                case 3: return WelcomeTimeZoneFragment.newInstance(WelcomeActivity.this);
-                case 2: return WelcomeLocationFragment.newInstance();
+                case 6: return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
+                case 5: return WelcomeAlarmsFragment.newInstance();
+                case 4: return WelcomeTimeZoneFragment.newInstance(WelcomeActivity.this);
+                case 3: return WelcomeLocationFragment.newInstance();
+                case 2: return WelcomeUserInterfaceFragment.newInstance();
                 case 1: return WelcomeAppearanceFragment.newInstance();
                 case 0: default: return WelcomeFirstPageFragment.newInstance();
             }
@@ -1368,6 +1369,94 @@ public class WelcomeActivity extends AppCompatActivity
             AppSettings.saveThemeDarkPref(context, darkThemeID);
             AppSettings.saveTextSizePref(context, textSize);
             AppSettings.setThemePref(context, themeID);
+            return true;
+        }
+    }
+
+    /**
+     * WelcomeUserInterfaceFragment
+     */
+    public static class WelcomeUserInterfaceFragment extends WelcomeFragment
+    {
+        public WelcomeUserInterfaceFragment() {}
+
+        public static WelcomeUserInterfaceFragment newInstance()
+        {
+            WelcomeUserInterfaceFragment fragment = new WelcomeUserInterfaceFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_ui);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        protected CheckBox check_astro, check_nautical, check_civil, check_noon;
+        protected CheckBox check_blue, check_gold;
+        protected CheckBox check_crossquarter;
+
+        @Override
+        public void initViews(Context context, View view)
+        {
+            super.initViews(context, view);
+            check_astro = (CheckBox) view.findViewById(R.id.check_show_astro);
+            check_nautical = (CheckBox) view.findViewById(R.id.check_show_nautical);
+            check_civil = (CheckBox) view.findViewById(R.id.check_show_civil);
+            check_noon = (CheckBox) view.findViewById(R.id.check_show_noon);
+            check_gold = (CheckBox) view.findViewById(R.id.check_show_gold);
+            check_blue = (CheckBox) view.findViewById(R.id.check_show_blue);
+            check_crossquarter = (CheckBox) view.findViewById(R.id.check_show_crossquarter);
+            loadSettings(context);
+        }
+
+        protected void loadSettings(Context context)
+        {
+            boolean[] fields = AppSettings.loadShowFieldsPref(context);
+            if (check_astro != null) {
+                check_astro.setChecked(fields[AppSettings.FIELD_ASTRO]);
+            }
+            if (check_nautical != null) {
+                check_nautical.setChecked(fields[AppSettings.FIELD_NAUTICAL]);
+            }
+            if (check_civil != null) {
+                check_civil.setChecked(fields[AppSettings.FIELD_CIVIL]);
+            }
+            if (check_noon != null) {
+                check_noon.setChecked(fields[AppSettings.FIELD_NOON]);
+            }
+            if (check_gold != null) {
+                check_gold.setChecked(fields[AppSettings.FIELD_GOLD]);
+            }
+            if (check_blue != null) {
+                check_blue.setChecked(fields[AppSettings.FIELD_BLUE]);
+            }
+            if (check_crossquarter != null) {
+                check_crossquarter.setChecked(AppSettings.loadShowCrossQuarterPref(context));
+            }
+        }
+
+        @Override
+        public boolean saveSettings(Context context)
+        {
+            if (check_astro != null) {
+                AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_ASTRO, check_astro.isChecked());
+            }
+            if (check_nautical != null) {
+                AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_NAUTICAL, check_nautical.isChecked());
+            }
+            if (check_civil != null) {
+                AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_CIVIL, check_civil.isChecked());
+            }
+            if (check_noon != null) {
+                AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_NOON, check_noon.isChecked());
+            }
+            if (check_gold != null) {
+                AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_GOLD, check_gold.isChecked());
+            }
+            if (check_blue != null) {
+                AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_BLUE, check_blue.isChecked());
+            }
+            if (check_crossquarter != null) {
+                AppSettings.saveShowCrossQuarterPref(context, check_crossquarter.isChecked());
+            }
             return true;
         }
     }
