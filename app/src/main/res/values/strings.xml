@@ -1217,7 +1217,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Show Moon</string>
-    <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>
+    <string name="configLabel_ui_showmoon_summary">Show moon rise and set times, phase, and illumination.</string>   <!-- TODO: update to include "moon" at start of summary; the summary may be displayed with a checkbox on its own -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>
