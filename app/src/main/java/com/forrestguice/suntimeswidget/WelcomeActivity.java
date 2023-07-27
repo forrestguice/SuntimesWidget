@@ -1389,9 +1389,9 @@ public class WelcomeActivity extends AppCompatActivity
             return fragment;
         }
 
-        protected CheckBox check_astro, check_nautical, check_civil, check_noon;
-        protected CheckBox check_blue, check_gold;
-        protected CheckBox check_crossquarter;
+        protected CheckBox check_moon;
+        protected CheckBox check_astro, check_nautical, check_civil, check_noon, check_blue, check_gold;
+        protected CheckBox check_solstice, check_crossquarter;
 
         @Override
         public void initViews(Context context, View view)
@@ -1404,7 +1404,67 @@ public class WelcomeActivity extends AppCompatActivity
             check_gold = (CheckBox) view.findViewById(R.id.check_show_gold);
             check_blue = (CheckBox) view.findViewById(R.id.check_show_blue);
             check_crossquarter = (CheckBox) view.findViewById(R.id.check_show_crossquarter);
+            check_moon = (CheckBox) view.findViewById(R.id.check_show_moon);
+
+            check_solstice = (CheckBox) view.findViewById(R.id.check_show_solstice);
+            if (check_solstice != null) {
+                check_solstice.setOnCheckedChangeListener(onCheckedChanged_showSolstice);
+            }
+
+            Button button_defaults = (Button) view.findViewById(R.id.button_defaults);
+            if (button_defaults != null) {
+                button_defaults.setOnClickListener(onClick_restoreDefaults);
+            }
+
             loadSettings(context);
+        }
+
+        private final View.OnClickListener onClick_restoreDefaults = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadDefaults(getActivity());
+            }
+        };
+
+        private final CompoundButton.OnCheckedChangeListener onCheckedChanged_showSolstice = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (check_crossquarter != null) {
+                    check_crossquarter.setEnabled(isChecked);
+                }
+            }
+        };
+
+        protected void loadDefaults(Context context)
+        {
+            boolean[] fields = AppSettings.loadShowFields(AppSettings.PREF_DEF_UI_SHOWFIELDS);
+            if (check_astro != null) {
+                check_astro.setChecked(fields[AppSettings.FIELD_ASTRO]);
+            }
+            if (check_nautical != null) {
+                check_nautical.setChecked(fields[AppSettings.FIELD_NAUTICAL]);
+            }
+            if (check_civil != null) {
+                check_civil.setChecked(fields[AppSettings.FIELD_CIVIL]);
+            }
+            if (check_noon != null) {
+                check_noon.setChecked(fields[AppSettings.FIELD_NOON]);
+            }
+            if (check_gold != null) {
+                check_gold.setChecked(fields[AppSettings.FIELD_GOLD]);
+            }
+            if (check_blue != null) {
+                check_blue.setChecked(fields[AppSettings.FIELD_BLUE]);
+            }
+            if (check_solstice != null) {
+                check_solstice.setChecked(AppSettings.PREF_DEF_UI_SHOWEQUINOX);
+            }
+            if (check_crossquarter != null) {
+                check_crossquarter.setChecked(AppSettings.PREF_DEF_UI_SHOWCROSSQUARTER);
+            }
+            if (check_moon != null) {
+                check_moon.setChecked(AppSettings.PREF_DEF_UI_SHOWMOON);
+            }
         }
 
         protected void loadSettings(Context context)
@@ -1428,8 +1488,14 @@ public class WelcomeActivity extends AppCompatActivity
             if (check_blue != null) {
                 check_blue.setChecked(fields[AppSettings.FIELD_BLUE]);
             }
+            if (check_solstice != null) {
+                check_solstice.setChecked(AppSettings.loadShowEquinoxPref(context));
+            }
             if (check_crossquarter != null) {
                 check_crossquarter.setChecked(AppSettings.loadShowCrossQuarterPref(context));
+            }
+            if (check_moon != null) {
+                check_moon.setChecked(AppSettings.loadShowMoonPref(context));
             }
         }
 
@@ -1454,8 +1520,14 @@ public class WelcomeActivity extends AppCompatActivity
             if (check_blue != null) {
                 AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_BLUE, check_blue.isChecked());
             }
+            if (check_solstice != null) {
+                AppSettings.saveShowEquinoxPref(context, check_solstice.isChecked());
+            }
             if (check_crossquarter != null) {
                 AppSettings.saveShowCrossQuarterPref(context, check_crossquarter.isChecked());
+            }
+            if (check_moon != null) {
+                AppSettings.saveShowMoonPref(context, check_moon.isChecked());
             }
             return true;
         }

@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:gravity="center"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:paddingBottom="48dp">
+    android:paddingBottom="48dp" android:background="?attr/dialogBackgroundAlt">
 
     <LinearLayout android:id="@+id/header"
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -74,19 +74,35 @@
                 android:textSize="?attr/text_size_small"
                 android:text="@string/timeMode_golden" />
 
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+                android:background="?attr/hrColor" />
 
-            <TextView android:visibility="gone"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:gravity="start" android:layout_gravity="start"
-                android:layout_marginTop="16dp" android:layout_marginBottom="8dp"
-                android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="?attr/text_size_large"
-                android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
-                android:text="@string/configAction_options" />
-
-            <CheckBox android:id="@+id/check_show_crossquarter" android:layout_marginTop="16dp"
+            <CheckBox android:id="@+id/check_show_moon"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
-                android:text="@string/configLabel_ui_showCrossQuarter" />
+                android:text="@string/configLabel_ui_showmoon_summary" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+                android:background="?attr/hrColor" />
+
+            <CheckBox android:id="@+id/check_show_solstice"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small"
+                android:text="@string/configLabel_ui_showEquinox_summary" />
+
+            <CheckBox android:id="@+id/check_show_crossquarter"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small"
+                android:text="@string/configLabel_ui_showCrossQuarter_summary" />
+
+
+            <Button android:id="@+id/button_defaults" android:visibility="visible"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_gravity="end" android:layout_marginTop="24dp"
+                android:text="@string/configAction_restoreDefaults" />
 
         </LinearLayout>
 
