@@ -7,6 +7,11 @@
         android:key="app_alarms_category">
 
         <Preference
+            android:key="app_alarms_autostart" android:persistent="false"
+            android:title="@string/configLabel_alarms_autostart"
+            android:summary="@string/configLabel_alarms_autostart_on" />
+
+        <Preference
             android:key="app_alarms_batterytopt" android:persistent="false"
             android:title="@string/configLabel_alarms_optWhiteList"
             android:summary="@string/configLabel_alarms_optWhiteList_unlisted" />

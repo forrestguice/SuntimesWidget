@@ -621,6 +621,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         Preference batteryOptimization = findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
         PreferenceCategory alarmsCategory = (PreferenceCategory)findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
         AlarmPrefsFragment.removePrefFromCategory(batteryOptimization, alarmsCategory);
+
+        Preference autostart = findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
+        AlarmPrefsFragment.removePrefFromCategory(autostart, alarmsCategory);
     }
 
     //////////////////////////////////////////////////

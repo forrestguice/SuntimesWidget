@@ -42,7 +42,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -59,6 +58,7 @@ import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 public class AlarmSettings
 {
     public static final String PREF_KEY_ALARM_CATEGORY = "app_alarms_category";
+    public static final String PREF_KEY_ALARM_AUTOSTART = "app_alarms_autostart";
     public static final String PREF_KEY_ALARM_BATTERYOPT = "app_alarms_batterytopt";
     public static final String PREF_KEY_ALARM_NOTIFICATIONS = "app_alarms_notifications";
     public static final String PREF_KEY_ALARM_VOLUMES = "app_alarms_volumes";
@@ -524,6 +524,56 @@ public class AlarmSettings
     }
     public static boolean isSony() {
         return "sony".equalsIgnoreCase(Build.MANUFACTURER);
+    }
+
+    /**
+     * https://dontkillmyapp.com/xiomi
+     * @return true autostart is disabled (xiomi devices only)
+     */
+    public static boolean isAutostartDisabled(Context context)
+    {
+        if (isXiomi()) {
+            return (XiomiAutostartDetect.getAutostartState_xiomi(context) == XiomiAutostartDetect.STATE_DISABLED);
+        } else return false;
+    }
+    public static boolean hasAutostartSettings(Context context) {
+        return isXiomi();
+    }
+    public static void openAutostartSettings(Context context)
+    {
+        if (isXiomi())
+        {
+            try {
+                context.startActivity(AlarmSettings.getAutostartSettingsIntent_xiomi(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e("AlarmSettings", "Failed to launch autostart settings Intent: " + e);
+            }
+        }
+    }
+
+    public static Intent getAutostartSettingsIntent_xiomi(Context context) {
+        return new Intent().setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
+    }
+    public static boolean isXiomi() {
+        return "xiomi".equalsIgnoreCase(Build.MANUFACTURER);
+    }
+
+    public static CharSequence autostartMessage(Context context)
+    {
+        if (AlarmSettings.isAutostartDisabled(context))
+        {
+            int[] colorAttrs = { R.attr.tagColor_warning };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
+            typedArray.recycle();
+
+            String disabledString = context.getString(R.string.configLabel_alarms_autostart_off);
+            String summaryString = context.getString(R.string.configLabel_alarms_autostart_summary, disabledString);
+            return SuntimesUtils.createColorSpan(null, summaryString, disabledString, colorWarning);
+
+        } else {
+            return context.getString(R.string.configLabel_alarms_autostart_summary, context.getString(R.string.configLabel_alarms_autostart_on));
+        }
     }
 
     public static CharSequence batteryOptimizationMessage(Context context)
