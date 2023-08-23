@@ -109,6 +109,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final int NOTIFICATION_SCHEDULE_ALL_DURATION = 4000;
 
     public static final int NOTIFICATION_BATTERYOPT_WARNING_ID = -20;
+    public static final int NOTIFICATION_AUTOSTART_WARNING_ID = -30;
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -1066,16 +1067,8 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
-    public static Notification createBatteryOptWarningNotification(Context context)
+    public static NotificationCompat.Builder warningNotificationBuilder(Context context)
     {
-        String message = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive  : R.string.configLabel_alarms_optWhiteList_unlisted)
-                + "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
-
-        Intent intent = AlarmSettings.getRequestIgnoreBatteryOptimizationSettingsIntent(context);
-        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
-            intent = AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context);
-        }
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
@@ -1084,10 +1077,41 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setOngoing(false);
         builder.setOnlyAlertOnce(true);
         builder.setContentTitle(context.getString(R.string.app_name_alarmclock));
-        builder.setContentText(message);
         builder.setSmallIcon(R.drawable.ic_action_warning);
         builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_warning));
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        return builder;
+    }
+
+    public static Notification createAutostartWarningNotification(Context context)
+    {
+        NotificationCompat.Builder builder = warningNotificationBuilder(context);
+        String message = context.getString(R.string.autostartWarning).replaceAll("\\[w\\]", "").trim();
+        builder.setContentText(message);
+
+        Intent intent = AlarmSettings.getAutostartSettingsIntent(context);
+        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingView);
+
+        NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
+        style.setBigContentTitle(context.getString(R.string.app_name_alarmclock));
+        style.bigText(message);
+        builder.setStyle(style);
+
+        return builder.build();
+    }
+
+    public static Notification createBatteryOptWarningNotification(Context context)
+    {
+        NotificationCompat.Builder builder = warningNotificationBuilder(context);
+        String message = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive  : R.string.configLabel_alarms_optWhiteList_unlisted)
+                + "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
+        builder.setContentText(message);
+
+        Intent intent = AlarmSettings.getRequestIgnoreBatteryOptimizationSettingsIntent(context);
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
+            intent = AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context);
+        }
 
         PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingView);
@@ -1368,13 +1392,17 @@ public class AlarmNotifications extends BroadcastReceiver
                                             @Override
                                             public void run()
                                             {
+                                                Context context = getApplicationContext();
                                                 sendBroadcast(getFullscreenBroadcast(null));
                                                 if (ids.length > 0) {    // show warning if alarms where rescheduled
-                                                    if (!AlarmSettings.isIgnoringBatteryOptimizations(getApplicationContext())) {
-                                                        notifications.showNotification(getApplicationContext(), createBatteryOptWarningNotification(getApplicationContext()), NOTIFICATION_BATTERYOPT_WARNING_ID);
+                                                    if (!AlarmSettings.isIgnoringBatteryOptimizations(context)) {
+                                                        notifications.showNotification(context, createBatteryOptWarningNotification(context), NOTIFICATION_BATTERYOPT_WARNING_ID);
+                                                    }
+                                                    if (AlarmSettings.hasAutostartSettings(context) && AlarmSettings.isAutostartDisabled(context)) {
+                                                        notifications.showNotification(context, createAutostartWarningNotification(context), NOTIFICATION_AUTOSTART_WARNING_ID);
                                                     }
                                                 }
-                                                notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
+                                                notifications.dismissNotification(context, NOTIFICATION_SCHEDULE_ALL_ID);
                                                 notifications.stopSelf(startId);
                                             }
                                         }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));

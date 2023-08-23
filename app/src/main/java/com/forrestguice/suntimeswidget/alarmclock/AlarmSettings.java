@@ -541,14 +541,21 @@ public class AlarmSettings
     }
     public static void openAutostartSettings(Context context)
     {
-        if (isXiomi())
-        {
+        Intent intent = getAutostartSettingsIntent(context);
+        if (intent != null) {
             try {
-                context.startActivity(AlarmSettings.getAutostartSettingsIntent_xiomi(context));
+                context.startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 Log.e("AlarmSettings", "Failed to launch autostart settings Intent: " + e);
             }
-        }
+        } else Log.e("AlarmSettings", "Failed to launch autostart settings Intent: null");
+    }
+
+    @Nullable
+    public static Intent getAutostartSettingsIntent(Context context) {
+        if (isXiomi()) {
+            return getAutostartSettingsIntent_xiomi(context);
+        } else return null;
     }
 
     public static Intent getAutostartSettingsIntent_xiomi(Context context) {
