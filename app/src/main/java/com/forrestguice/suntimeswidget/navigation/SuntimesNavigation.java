@@ -28,7 +28,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -53,8 +52,9 @@ public class SuntimesNavigation
         init(activity, menuBar);
     }
 
-    public SuntimesNavigation(Activity activity, Toolbar menuBar)
+    public SuntimesNavigation(Activity activity, Toolbar menuBar, int menuItemID)
     {
+        this.menuItemID = menuItemID;
         init(activity, menuBar);
     }
 
@@ -72,6 +72,7 @@ public class SuntimesNavigation
 
         navigation = (NavigationView) activity.findViewById(R.id.app_navigation);
         if (navigation != null) {
+            navigation.setCheckedItem(menuItemID);
             navigation.setNavigationItemSelectedListener(onNavigationItemSelectedListener0);
         }
     }
@@ -92,7 +93,7 @@ public class SuntimesNavigation
     }
 
     private int menuItemID = -1;
-    public void setIgnoreMenuItemID(int id) {
+    public void setCurrentMenuItemID(int id) {
         menuItemID = id;
     }
 
@@ -184,23 +185,9 @@ public class SuntimesNavigation
             drawer.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    clearSelection();
+                    navigation.setCheckedItem(menuItemID);
                 }
             }, 500);
-        }
-    }
-
-    public void clearSelection()
-    {
-        Menu menu = navigation.getMenu();    // (re)select current item before closing drawer
-        if (menu != null)
-        {
-            for (int i=0; i<menu.size(); i++) {
-                MenuItem item = menu.getItem(i);
-                if (item != null) {
-                    item.setChecked(false);
-                }
-            }
         }
     }
 

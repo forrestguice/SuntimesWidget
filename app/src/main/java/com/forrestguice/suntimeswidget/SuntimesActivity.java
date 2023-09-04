@@ -960,8 +960,7 @@ public class SuntimesActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         
-        navigation = new SuntimesNavigation(this, menuBar);
-        navigation.setIgnoreMenuItemID(R.id.action_suntimes);
+        navigation = new SuntimesNavigation(this, menuBar, R.id.action_suntimes);
     }
 
     private void initMisc(final Context context)

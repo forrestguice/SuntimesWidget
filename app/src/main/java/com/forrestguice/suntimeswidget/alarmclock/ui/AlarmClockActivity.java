@@ -641,8 +641,7 @@ public class AlarmClockActivity extends AppCompatActivity
             }
         }
 
-        navigation = new SuntimesNavigation(this, menuBar);
-        navigation.setIgnoreMenuItemID(R.id.action_alarms);
+        navigation = new SuntimesNavigation(this, menuBar, R.id.action_alarms);
 
         addButton = (FloatingActionButton) findViewById(R.id.btn_add);
 
