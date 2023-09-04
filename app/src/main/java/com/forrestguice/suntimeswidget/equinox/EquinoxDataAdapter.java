@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -200,14 +201,14 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     protected Integer selected_position = null;
 
     private View.OnClickListener onMenuClick(final View v, final int position, final WidgetSettings.SolsticeEquinoxMode selection, final long selectionTime) {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (adapterListener != null) {
                     adapterListener.onMenuClick(v, position, selection, selectionTime);
                 }
             }
-        };
+        });
     }
 
     public int highlightNote(Context context)

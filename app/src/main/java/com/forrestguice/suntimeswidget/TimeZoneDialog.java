@@ -350,26 +350,26 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
 
         final ImageButton button_solartime_help = (ImageButton) dialogContent.findViewById(R.id.appwidget_solartime_help);
-        button_solartime_help.setOnClickListener(new View.OnClickListener() {
+        button_solartime_help.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HelpDialog helpDialog = new HelpDialog();
                 helpDialog.setContent(getString(R.string.help_general_solartime));
                 helpDialog.show(getFragmentManager(), DIALOGTAG_HELP);
             }
-        });
+        }));
 
         button_sort_timezones = (ImageButton) dialogContent.findViewById(R.id.sort_timezones);
         if (button_sort_timezones != null)
         {
             TooltipCompat.setTooltipText(button_sort_timezones, button_sort_timezones.getContentDescription());
-            button_sort_timezones.setOnClickListener(new View.OnClickListener() {
+            button_sort_timezones.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //triggerTimeZoneActionMode(v);
                     showTimeZoneSortMenu(getContext(), v);
                 }
-            });
+            }));
         }
 
         layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
@@ -935,12 +935,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     };
 
-    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogCancelClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getDialog().cancel();
         }
-    };
+    });
 
     @Override
     public void onCancel(DialogInterface dialog)
@@ -950,7 +950,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     }
 
-    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -964,7 +964,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 }
             }
         }
-    };
+    });
 
     private boolean validateInput()
     {

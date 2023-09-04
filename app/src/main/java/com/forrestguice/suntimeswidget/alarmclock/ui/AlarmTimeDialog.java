@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
@@ -233,23 +234,23 @@ public class AlarmTimeDialog extends DialogFragment
         public void onNothingSelected(AdapterView<?> parent) {}
     };
 
-    private View.OnClickListener onLocationClicked = new View.OnClickListener() {
+    private final View.OnClickListener onLocationClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (listener != null) {
                 listener.onLocationClick(AlarmTimeDialog.this);
             }
         }
-    };
+    });
 
-    private View.OnClickListener onDateClicked = new View.OnClickListener() {
+    private final View.OnClickListener onDateClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (listener != null) {
                 listener.onDateClick(AlarmTimeDialog.this);
             }
         }
-    };
+    });
 
     protected void updateViews(Context context)
     {

@@ -75,6 +75,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -286,12 +287,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
 
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
-        utcTime.setOnClickListener(new View.OnClickListener() {
+        utcTime.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimeZoneMenu(context, v);
             }
-        });
+        }));
 
         offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
         empty = (TextView)dialogView.findViewById(R.id.txt_empty);
@@ -335,12 +336,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         modeButton = (ImageButton)dialogView.findViewById(R.id.map_modemenu);
         if (modeButton != null) {
-            modeButton.setOnClickListener(new View.OnClickListener() {
+            modeButton.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showMapModeMenu(context, modeButton);
                 }
-            });
+            }));
         }
 
         /**radioGroup = dialogView.findViewById(R.id.radio_group);
@@ -1315,21 +1316,21 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateMediaButtons();
     }
 
-    private View.OnClickListener menuClickListener = new View.OnClickListener()
+    private final View.OnClickListener menuClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showContextMenu(getContext(), dialogTitle);
         }
-    };
+    });
 
-    private View.OnClickListener speedClickListener = new View.OnClickListener()
+    private final View.OnClickListener speedClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showSpeedMenu(getContext(), v);
         }
-    };
+    });
 
     private View.OnClickListener nextClickListener = new View.OnClickListener()
     {

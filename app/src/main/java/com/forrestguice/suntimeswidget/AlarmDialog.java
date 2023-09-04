@@ -78,6 +78,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -431,7 +432,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onMoreButtonClicked = new View.OnClickListener() {
+    private View.OnClickListener onMoreButtonClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v)
         {
@@ -463,7 +464,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
             popup.setOnMenuItemClickListener(onMoreMenuClick);
             popup.show();
         }
-    };
+    });
     private List<AlarmAddon.EventPickerInfo> alarmPickers = null;
 
     private PopupMenu.OnMenuItemClickListener onMoreMenuClick = new PopupMenu.OnMenuItemClickListener()
@@ -709,14 +710,14 @@ public class AlarmDialog extends BottomSheetDialogFragment
         return AlarmListDialog.createAlarm(getActivity(), AlarmClockItem.AlarmType.ALARM, "", getChoice(), getLocation(), -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(getActivity()), AlarmSettings.getDefaultRingtoneUri(getActivity(), AlarmClockItem.AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(getActivity(), AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
-    private View.OnClickListener onLocationClicked = new View.OnClickListener() {
+    private final View.OnClickListener onLocationClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (listener != null) {
                 listener.onLocationClick(AlarmDialog.this);
             }
         }
-    };
+    });
 
     public static boolean updateLocationLabel(Context context, TextView text_location, Location location)
     {
