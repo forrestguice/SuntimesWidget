@@ -107,8 +107,8 @@
     <integer name="anim_slidein_fade_duration">700</integer>
     <integer name="anim_slidein_move_duration">700</integer>
 
-    <integer name="anim_fadein_duration">1750</integer>
-    <integer name="anim_fadeout_duration">700</integer>
+    <integer name="anim_fadein_duration">750</integer>
+    <integer name="anim_fadeout_duration">50</integer>
     <item name="anim_slideout_fade_fromalpha" format="float" type="dimen">1.0</item>
     <item name="anim_slideout_fade_toalpha" format="float" type="dimen">0.1</item>
     <integer name="anim_slideout_fade_duration">700</integer>
