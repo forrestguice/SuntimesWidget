@@ -8,9 +8,9 @@
             android:icon="@drawable/ic_action_suntimes"
             android:title="@string/app_name" />
 
-        <item android:id="@+id/action_worldclock"
+        <!--<item android:id="@+id/action_worldclock"
             android:icon="@drawable/ic_action_time"
-            android:title="@string/configLabel_worldClock" />
+            android:title="@string/configLabel_worldClock" />-->
 
         <item
             android:id="@+id/action_alarms"
