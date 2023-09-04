@@ -73,6 +73,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -189,6 +190,7 @@ public class SuntimesActivity extends AppCompatActivity
     private int appThemeResID;
     private SuntimesTheme appThemeOverride = null;
     private AppSettings.LocaleInfo localeInfo;
+    private SuntimesNavigation navigation;
 
     private GetFixHelper getFixHelper;
 
@@ -952,6 +954,9 @@ public class SuntimesActivity extends AppCompatActivity
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
+        
+        navigation = new SuntimesNavigation(this, menuBar);
+        navigation.setIgnoreMenuItemID(R.id.action_alarms);
     }
 
     private void initMisc(final Context context)
