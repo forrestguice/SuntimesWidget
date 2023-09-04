@@ -19,13 +19,16 @@
 package com.forrestguice.suntimeswidget.navigation;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -39,6 +42,9 @@ import java.lang.ref.WeakReference;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesNavigation
 {
+    private static int anim_in = R.anim.fade_in;
+    private static int anim_out = R.anim.fade_in;
+
     private WeakReference<Activity> activityRef;
 
     public SuntimesNavigation(Activity activity)
@@ -111,29 +117,50 @@ public class SuntimesNavigation
                 }
             }
 
-            Activity activity = activityRef.get();
+            final Activity activity = activityRef.get();
             if (activity != null)
             {
+                closeNavigationDrawer();
                 switch (item.getItemId())
                 {
                     case R.id.action_suntimes:
-                        showSuntimes(activity);
-                        closeNavigationDrawer();
+                        activity.getWindow().getDecorView().postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showSuntimes(activity);
+                                    }
+                                }, 250);
                         return true;
 
                     case R.id.action_alarms:
-                        showSuntimesAlarms(activity);
-                        closeNavigationDrawer();
+                        activity.getWindow().getDecorView().postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showSuntimesAlarms(activity);
+                                    }
+                                }, 250);
                         return true;
 
                     case R.id.action_settings:
-                        showSettings(activity);
-                        closeNavigationDrawer();
+                        activity.getWindow().getDecorView().postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showSettings(activity);
+                                    }
+                                }, 250);
                         return true;
 
                     case R.id.action_about:
-                        showAbout(activity);
-                        closeNavigationDrawer();
+                        activity.getWindow().getDecorView().postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showAbout(activity);
+                                    }
+                                }, 250);
                         return true;
 
                     default: return false;
@@ -150,44 +177,72 @@ public class SuntimesNavigation
 
     public void closeNavigationDrawer()
     {
-        if (drawer != null) {
+        if (drawer != null)
+        {
+            drawer.clearFocus();
             drawer.closeDrawers();
+            drawer.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    clearSelection();
+                }
+            }, 500);
+        }
+    }
+
+    public void clearSelection()
+    {
+        Menu menu = navigation.getMenu();    // (re)select current item before closing drawer
+        if (menu != null)
+        {
+            for (int i=0; i<menu.size(); i++) {
+                MenuItem item = menu.getItem(i);
+                if (item != null) {
+                    item.setChecked(false);
+                }
+            }
         }
     }
 
     protected void overridePendingTransition(@NonNull Activity activity)
     {
-        activity.overridePendingTransition(R.anim.transition_swap_in, R.anim.transition_swap_out);
+        if (Build.VERSION.SDK_INT < 16) {   // 16+ uses ActivityOptions instead
+            activity.overridePendingTransition(anim_in, anim_out);
+        }
     }
 
-    public void showSuntimes(@NonNull Activity activity)
+    public ActivityOptions getActivityOptions(@NonNull Activity activity) {
+        return ActivityOptions.makeCustomAnimation(activity, anim_in, anim_out);
+    }
+
+    public void showSuntimes(@NonNull final Activity activity)
     {
         Intent intent = new Intent(activity, SuntimesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(intent);
+        activity.startActivity(intent, getActivityOptions(activity).toBundle());
         overridePendingTransition(activity);
     }
 
-    public void showSuntimesAlarms(@NonNull Activity activity)
+    public void showSuntimesAlarms(@NonNull final Activity activity)
     {
         Intent intent = new Intent(activity, AlarmClockActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(intent);
+        activity.startActivity(intent, getActivityOptions(activity).toBundle());
         overridePendingTransition(activity);
     }
 
     public static final int REQUEST_SETTINGS = 2200;
     public void showSettings(@NonNull Activity activity)
     {
-        Intent settingsIntent = new Intent(activity, SuntimesSettingsActivity.class);
-        activity.startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+        Intent intent = new Intent(activity, SuntimesSettingsActivity.class);
+        activity.startActivityForResult(intent,  REQUEST_SETTINGS, getActivityOptions(activity).toBundle());
         overridePendingTransition(activity);
     }
 
     public void showAbout(@NonNull Activity activity)
     {
         Intent about = new Intent(activity, AboutActivity.class);
-        activity.startActivity(about);
+        activity.startActivity(about, getActivityOptions(activity).toBundle());
         overridePendingTransition(activity);
     }
 
