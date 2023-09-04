@@ -9,6 +9,7 @@
 		android:layout_gravity="start"
 		android:fitsSystemWindows="false"
 		app:headerLayout="@layout/nav_header_main"
+		app:itemTextAppearance="@style/NavDrawerTextAppearance"
 		app:menu="@menu/nav_main" />
 
 </merge>

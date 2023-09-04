@@ -62,9 +62,9 @@
           android:title="@string/configAction_help"
           app:showAsAction="never" />
 
-    <item android:id="@+id/action_about"
+    <!--<item android:id="@+id/action_about"
           android:icon="?attr/icActionAbout"
           android:title="@string/configAction_aboutWidget"
-          app:showAsAction="never" />
+          app:showAsAction="never" />-->
 
 </menu>

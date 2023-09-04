@@ -15,11 +15,11 @@
             app:showAsAction="never"
              android:orderInCategory="998" />-->
 
-        <item android:id="@+id/action_about"
+        <!--<item android:id="@+id/action_about"
             android:icon="?attr/icActionAbout"
             android:title="@string/configAction_aboutWidget"
             app:showAsAction="never"
-            android:orderInCategory="999" />
+            android:orderInCategory="999" />-->
 
     </group>
 </menu>

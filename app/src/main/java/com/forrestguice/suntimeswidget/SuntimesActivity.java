@@ -954,9 +954,14 @@ public class SuntimesActivity extends AppCompatActivity
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         
         navigation = new SuntimesNavigation(this, menuBar);
-        navigation.setIgnoreMenuItemID(R.id.action_alarms);
+        navigation.setIgnoreMenuItemID(R.id.action_suntimes);
     }
 
     private void initMisc(final Context context)
