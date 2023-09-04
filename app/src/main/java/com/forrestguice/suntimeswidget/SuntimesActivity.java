@@ -106,6 +106,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.reflect.Method;
 
@@ -486,7 +487,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (timezoneDialog != null)
         {
             timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
-            timezoneDialog.setLongitude(dataset.location().getLongitudeAsDouble());
+            timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
             timezoneDialog.setCalculator(dataset.calculator());
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
             timezoneDialog.setOnCanceledListener(onCancelTimeZone);
@@ -961,14 +962,14 @@ public class SuntimesActivity extends AppCompatActivity
         if (txt_datasource != null)
         {
             txt_datasource.setClickable(true);
-            txt_datasource.setOnClickListener(new View.OnClickListener()
+            txt_datasource.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
                 {
                     showGeneralSettings();
                 }
-            });
+            }));
             txt_datasource.setOnLongClickListener(new View.OnLongClickListener()
             {
                 @Override
@@ -986,7 +987,7 @@ public class SuntimesActivity extends AppCompatActivity
         layout_altitude = findViewById(R.id.layout_altitude);
         if (layout_altitude != null)
         {
-            layout_altitude.setOnClickListener(new View.OnClickListener()
+            layout_altitude.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
@@ -998,7 +999,7 @@ public class SuntimesActivity extends AppCompatActivity
                     setUpdateAlarms(SuntimesActivity.this);
                     updateViews(SuntimesActivity.this);
                 }
-            });
+            }));
         }
     }
     
@@ -1178,14 +1179,14 @@ public class SuntimesActivity extends AppCompatActivity
 
         card_equinoxSolstice = (EquinoxCardView) findViewById(R.id.info_date_solsticequinox);
         card_equinoxSolstice.setMinimized(true);
-        card_equinoxSolstice.setOnClickListener( new View.OnClickListener()
+        card_equinoxSolstice.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 showEquinoxDialog();
             }
-        });
+        }));
         card_equinoxSolstice.setOnLongClickListener( new View.OnLongClickListener()
         {
             @Override
@@ -1284,13 +1285,13 @@ public class SuntimesActivity extends AppCompatActivity
         });
     }
 
-    private View.OnClickListener onMoonriseClick = new View.OnClickListener()
+    private View.OnClickListener onMoonriseClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showMoonDialog();
         }
-    };
+    });
     private View.OnLongClickListener onMoonriseLongClick = new View.OnLongClickListener()
     {
         @Override
@@ -1533,7 +1534,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         TimeZoneDialog timezoneDialog = new TimeZoneDialog();
         timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
-        timezoneDialog.setLongitude(dataset.location().getLongitudeAsDouble());
+        timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
         timezoneDialog.setTimeFormatMode(WidgetSettings.loadTimeFormatModePref(SuntimesActivity.this, 0));
         timezoneDialog.setCalculator(dataset.calculator());
         timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
@@ -2233,23 +2234,23 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
-    View.OnClickListener onTimeZoneClick = new View.OnClickListener()
+    protected View.OnClickListener onTimeZoneClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
         {
             configTimeZone();
         }
-    };
+    });
 
-    View.OnClickListener onClockClick = new View.OnClickListener()
+    protected View.OnClickListener onClockClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
         {
             onTapAction(AppSettings.loadClockTapActionPref(SuntimesActivity.this), "onClockClick");
         }
-    };
+    });
 
     private void onTapAction( String actionID, String caller )
     {

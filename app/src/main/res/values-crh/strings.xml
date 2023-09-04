@@ -4,4 +4,5 @@
     <string name="default_location_latitude">44.61195</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">33.49049</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">100</string>         <!-- meters -->
+    <string name="default_timezone">Europe/Simferopol</string>         <!-- tzid -->
 </resources>

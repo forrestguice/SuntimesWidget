@@ -266,12 +266,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onMenuClicked = new View.OnClickListener() {
+    private final View.OnClickListener onMenuClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showOverflowMenu(getContext(), v);
         }
-    };
+    });
 
     private void themeViews(Context context)
     {

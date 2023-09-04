@@ -52,6 +52,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
@@ -439,106 +440,106 @@ public class AlarmEditDialog extends DialogFragment
 
     private View.OnClickListener showAlarmTypeMenu()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAlarmTypeMenu(getActivity(), item, v);
             }
-        };
+        });
     }
 
     private View.OnClickListener showOverflowMenu()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showOverflowMenu(getActivity(), item, v);
             }
-        };
+        });
     }
 
     private View.OnClickListener pickLabel()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestLabel(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickNote()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestNote(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickOffset()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestOffset(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickEvent()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestSolarEvent(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickLocation()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestLocation(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickRepeating()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestRepetition(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickRingtone()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestRingtone(item);
                 }
             }
-        };
+        });
     }
 
     public void triggerPreviewOffset() {
@@ -640,26 +641,26 @@ public class AlarmEditDialog extends DialogFragment
 
     private View.OnClickListener pickAction(final int actionNum)
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestAction(item, actionNum);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickDismissChallenge()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestDismissChallenge(item);
                 }
             }
-        };
+        });
     }
 
     private CompoundButton.OnCheckedChangeListener pickReminder()

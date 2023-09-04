@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
@@ -53,6 +54,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class WidgetTimezones
@@ -440,13 +442,21 @@ public class WidgetTimezones
     {
         private final String timeZoneID;
         private final String displayString;
-        private final double offsetHr;
+        private final double offsetHr, rawOffsetHr;
 
         public TimeZoneItem(String timeZoneID, String displayString, double offsetHr)
         {
             this.timeZoneID = timeZoneID;
             this.displayString = displayString;
+            this.offsetHr = this.rawOffsetHr = offsetHr;
+        }
+
+        public TimeZoneItem(String timeZoneID, String displayString, double offsetHr, double rawOffsetHr)
+        {
+            this.timeZoneID = timeZoneID;
+            this.displayString = displayString;
             this.offsetHr = offsetHr;
+            this.rawOffsetHr = rawOffsetHr;
         }
 
         public String getID()
@@ -461,12 +471,17 @@ public class WidgetTimezones
 
         public double getOffsetHr()
         {
-            return offsetHr;
+            return offsetHr;   // offset today
         }
 
         public String getOffsetString()
         {
             return offsetHr + "";
+        }
+
+        public double getRawOffsetHr()
+        {
+            return rawOffsetHr;
         }
 
         public String toString()
@@ -565,8 +580,7 @@ public class WidgetTimezones
             primaryText.setText(String.format(line1, timezone.getID()));
 
             TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
-            if (secondaryText != null)
-            {
+            if (secondaryText != null) {
                 secondaryText.setText(String.format(line2, timezone.getOffsetString(), timezone.getDisplayString()));
             }
 
@@ -576,7 +590,7 @@ public class WidgetTimezones
                 if (colorize)
                 {
                     GradientDrawable d = (GradientDrawable) icon.getBackground().mutate();
-                    d.setColor(getColorForTimeZoneOffset(timezone.getOffsetHr()));
+                    d.setColor(getColorForTimeZoneOffset(timezone.getRawOffsetHr()));
                     d.invalidateSelf();
                     icon.setVisibility(View.VISIBLE);
 
@@ -631,7 +645,7 @@ public class WidgetTimezones
             double nearest = Double.POSITIVE_INFINITY;
             for (TimeZoneItem item : items)
             {
-                double d = Math.abs(lonOffsetHr - item.getOffsetHr());
+                double d = Math.abs(lonOffsetHr - item.getRawOffsetHr());
                 if (d <= nearest) {
                     if (d < nearest) {
                         nearest = d;
@@ -901,14 +915,17 @@ public class WidgetTimezones
                 sortBy = sorts[0];
             }
 
+            Date today = new Date();
             ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
             String[] allTimezoneValues = TimeZone.getAvailableIDs();
             //noinspection ForLoopReplaceableByForEach
             for (int i = 0; i < allTimezoneValues.length; i++)
             {
                 TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
-                double offsetHr = timezone.getRawOffset() / (double)(1000 * 60 * 60);
-                timezones.add(new TimeZoneItem(timezone.getID(), timezone.getDisplayName(), offsetHr));
+                double rawOffsetHr = timezone.getRawOffset() / (double)(1000 * 60 * 60);
+                double offsetHr = timezone.getOffset(today.getTime()) / (double)(1000 * 60 * 60);
+                String displayName = timezone.getDisplayName(timezone.inDaylightTime(today), TimeZone.LONG, SuntimesUtils.getLocale());
+                timezones.add(new TimeZoneItem(timezone.getID(), displayName, offsetHr, rawOffsetHr));
             }
 
             if (sortBy != null)

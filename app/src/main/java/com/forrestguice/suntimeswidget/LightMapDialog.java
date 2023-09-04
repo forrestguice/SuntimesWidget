@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -278,12 +279,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
         graphView = (LineGraphView)dialogView.findViewById(R.id.info_time_graph);
         sunTime = (TextView)dialogView.findViewById(R.id.info_time_solar);
         if (sunTime != null) {
-            sunTime.setOnClickListener(new View.OnClickListener() {
+            sunTime.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showTimeZoneMenu(getContext(), v);
                 }
-            });
+            }));
         }
         offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
 
@@ -472,20 +473,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
             stopMap(true);
         }
     };
-    private View.OnClickListener menuClickListener = new View.OnClickListener()
+    private final View.OnClickListener menuClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showContextMenu(getContext(), v);
         }
-    };
-    private View.OnClickListener speedClickListener = new View.OnClickListener()
+    });
+    private final View.OnClickListener speedClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showSpeedMenu(getContext(), v);
         }
-    };
+    });
     private View.OnClickListener nextClickListener = new View.OnClickListener()
     {
         @Override
@@ -863,7 +864,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onSunriseLayoutClick =  new View.OnClickListener()
+    private final View.OnClickListener onSunriseLayoutClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(@NonNull View v)
@@ -873,8 +874,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 seekSunrise(context);
             }
         }
-    };
-    private View.OnClickListener onSunsetLayoutClick =  new View.OnClickListener()
+    });
+    private final View.OnClickListener onSunsetLayoutClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(@NonNull View v)
@@ -884,8 +885,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 seekSunset(context);
             }
         }
-    };
-    private View.OnClickListener onNoonLayoutClick =  new View.OnClickListener()
+    });
+    private final View.OnClickListener onNoonLayoutClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(@NonNull View v)
@@ -895,9 +896,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 seekNoon(context);
             }
         }
-    };
+    });
 
-    private View.OnClickListener onAltitudeLayoutClick =  new View.OnClickListener()
+    private final View.OnClickListener onAltitudeLayoutClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(@NonNull View v)
@@ -907,7 +908,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 showSeekAltitudePopup(context, v);
             }
         }
-    };
+    });
 
     private PopupWindow seekAltitudePopup = null;
     protected void showSeekAltitudePopup(@NonNull final Context context, @NonNull View v)
@@ -1025,7 +1026,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return datetime;
     }
 
-    private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
+    private final View.OnClickListener onShadowLayoutClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(@NonNull View v)
@@ -1035,7 +1036,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 showShadowObjHeightPopup(context, v);
             }
         }
-    };
+    });
     protected void showShadowObjHeightPopup(@NonNull final Context context, @NonNull View v)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);

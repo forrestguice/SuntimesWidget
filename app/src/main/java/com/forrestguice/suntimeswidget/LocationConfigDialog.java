@@ -404,12 +404,12 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     };
 
-    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogCancelClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getDialog().cancel();
         }
-    };
+    });
 
     @Override
     public void onCancel(DialogInterface dialog)
@@ -421,7 +421,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     }
 
-    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -446,7 +446,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
                 }
             }
         }
-    };
+    });
 
     private void expandSheet(DialogInterface dialog)
     {

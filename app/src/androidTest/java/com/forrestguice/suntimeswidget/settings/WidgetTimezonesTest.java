@@ -60,11 +60,11 @@ public class WidgetTimezonesTest extends SuntimesActivityTestBase
 
                 int i_ist = result.ordinal("Asia/Kolkata");  // "Indian Standard Time" (+5:30)
                 assertTrue(i_ist >= 0);
-                assertTrue(result.getItem(i_ist).getOffsetHr() == 5.5);
+                assertTrue(result.getItem(i_ist).getRawOffsetHr() == 5.5);
 
                 int i_npt = result.ordinal("Asia/Katmandu");  // "Nepal Time" (+5:45)
                 assertTrue(i_npt >= 0);
-                assertTrue(result.getItem(i_npt).getOffsetHr() == 5.75);
+                assertTrue(result.getItem(i_npt).getRawOffsetHr() == 5.75);
                 assertTrue(i_npt > i_ist);
             }
         });

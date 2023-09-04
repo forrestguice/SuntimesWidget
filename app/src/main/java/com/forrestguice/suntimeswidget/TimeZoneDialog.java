@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -78,6 +79,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public static final String KEY_SOLARTIME_MODE = "solartimeMode";
     public static final String KEY_NOW = "paramNow";
     public static final String KEY_LONGITUDE = "paramLongitude";
+    public static final String KEY_LONGITUDE_LABEL = "paramLongitudeLabel";
     public static final String KEY_TIMEFORMAT_MODE = "timeformatMode";
 
     private static final String DIALOGTAG_HELP = "timezone_help";
@@ -126,12 +128,18 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         this.now = now;
     }
 
-    private double longitude = 0;
-    public void setLongitude( double longitude )
+    public void setLongitude( String label, double longitude )
     {
-        this.longitude = longitude;
+        getArguments().putDouble(KEY_LONGITUDE, longitude);
+        getArguments().putString(KEY_LONGITUDE_LABEL, label);
         updatePreview(getActivity());
         onSelectionChanged();
+    }
+    public double getLongitude() {
+        return getArguments().getDouble(KEY_LONGITUDE, 0);
+    }
+    public String getLongitudeLabel() {
+        return getArguments().getString(KEY_LONGITUDE_LABEL);
     }
 
     public void setTimeFormatMode(WidgetSettings.TimeFormatMode mode) {
@@ -185,12 +193,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             case SOLAR_TIME:
                 item = (spinner_solartime != null) ? ((WidgetTimezones.TimeZoneItem) spinner_solartime.getSelectedItem()) : null;
                 tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
-                return WidgetTimezones.getTimeZone(tzID, longitude, calculator);
+                return WidgetTimezones.getTimeZone(tzID, getLongitude(), calculator);
 
             case CUSTOM_TIMEZONE:
                 item = (spinner_timezone != null) ? ((WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem()) : null;
                 tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
-                return WidgetTimezones.getTimeZone(tzID, longitude, calculator);
+                return WidgetTimezones.getTimeZone(tzID, getLongitude(), calculator);
 
             case CURRENT_TIMEZONE:
             default: return TimeZone.getDefault();
@@ -342,26 +350,26 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
 
         final ImageButton button_solartime_help = (ImageButton) dialogContent.findViewById(R.id.appwidget_solartime_help);
-        button_solartime_help.setOnClickListener(new View.OnClickListener() {
+        button_solartime_help.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HelpDialog helpDialog = new HelpDialog();
                 helpDialog.setContent(getString(R.string.help_general_solartime));
                 helpDialog.show(getFragmentManager(), DIALOGTAG_HELP);
             }
-        });
+        }));
 
         button_sort_timezones = (ImageButton) dialogContent.findViewById(R.id.sort_timezones);
         if (button_sort_timezones != null)
         {
             TooltipCompat.setTooltipText(button_sort_timezones, button_sort_timezones.getContentDescription());
-            button_sort_timezones.setOnClickListener(new View.OnClickListener() {
+            button_sort_timezones.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //triggerTimeZoneActionMode(v);
                     showTimeZoneSortMenu(getContext(), v);
                 }
-            });
+            }));
         }
 
         layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
@@ -610,7 +618,18 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
-        public boolean onMenuItemClick(MenuItem item)
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId())
+            {
+                case R.id.suggestTz:
+                    setCustomTimeZone(timeZoneRecommendation(getLongitudeLabel(), getLongitude()));
+                    return true;
+
+                default:
+                    return onSortItemClick(item);
+            }
+        }
+        private boolean onSortItemClick(MenuItem item)
         {
             Context context = getContext();
             if (context == null) {
@@ -792,8 +811,6 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         long nowMillis = bundle.getLong(KEY_NOW, Calendar.getInstance().getTimeInMillis());
         now = Calendar.getInstance();
         now.setTimeInMillis(nowMillis);
-
-        longitude = bundle.getDouble(KEY_LONGITUDE);
     }
 
     /**
@@ -857,9 +874,6 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             bundle.putLong(KEY_NOW, now.getTimeInMillis());
         }
 
-        // save: longitude
-        bundle.putDouble(KEY_LONGITUDE, longitude);
-
         // save: timeformatmode
         bundle.putString(KEY_TIMEFORMAT_MODE, getTimeFormatMode().name());
     }
@@ -921,12 +935,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     };
 
-    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogCancelClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getDialog().cancel();
         }
-    };
+    });
 
     @Override
     public void onCancel(DialogInterface dialog)
@@ -936,7 +950,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     }
 
-    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -950,7 +964,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 }
             }
         }
-    };
+    });
 
     private boolean validateInput()
     {
@@ -989,6 +1003,95 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     {
         super.onActivityCreated(savedInstanceState);
         ViewUtils.disableTouchOutsideBehavior(getDialog());
+    }
+
+    public String timeZoneRecommendation(String label, double longitude)
+    {
+        Calendar now = Calendar.getInstance();
+        Log.d("DEBUG", "longitude label: " + label);
+
+        boolean foundItem = false;
+        String tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
+        WidgetTimezones.TimeZoneItemAdapter adapter = getTimeZoneItemAdapter();
+        WidgetTimezones.TimeZoneItem[] recommendations = null;
+        if (adapter != null)
+        {
+            if (label != null)
+            {
+                ArrayList<String> labels = new ArrayList<>();
+                String label0 = Normalizer.normalize(label, Normalizer.Form.NFD);    // isolate all accents/glyphs
+                label0 = label0.replaceAll("\\p{M}", "");          // and remove them; e.g. Rīga -> Riga
+                String label1 = label0.replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "");
+
+                labels.add(label1.trim().replaceAll(" ", "_"));    // 0, entire label
+                labels.add(label1.replaceAll("City", "")           // 1, omit "City", e.g. Panama City, New York City, Guatemala City, etc
+                        .trim().replaceAll(" ", "_"));
+
+                int i_comma = label0.lastIndexOf(",");
+                if (i_comma >= 0)
+                {
+                    String left = label0.substring(i_comma).replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "")
+                            .trim().replaceAll(" ", "_");
+                    if (left.length() >= 4) {
+                        labels.add(left);    // 2, comma (left side)
+                    }
+
+                    String right = label0.substring(0, i_comma).replaceAll(",", "").replaceAll("\\.", "").replaceAll(":", "").replaceAll(";", "")
+                            .trim().replaceAll(" ", "_");
+                    if (right.length() >= 4) {
+                        labels.add(right);    // 3, comma (right side)
+                    }
+                }
+
+                WidgetTimezones.TimeZoneItem[] items = adapter.values();
+                outer_loop:
+                for (int i=0; i<labels.size(); i++)
+                {
+                    for (WidgetTimezones.TimeZoneItem item : items)
+                    {
+                        if (item.getID().endsWith(labels.get(i)))
+                        {
+                            tzID = item.getID();
+                            foundItem = true;
+                            break outer_loop;
+                        }
+                    }
+                }
+            }
+
+            if (!foundItem) {
+                recommendations = adapter.findItems(longitude);
+            }
+        }
+
+        if (!foundItem)
+        {
+            tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
+            TimeZone tz = WidgetTimezones.getTimeZone(tzID, longitude, null);  // TODO: calculator
+            if (WidgetTimezones.isProbablyNotLocal(tz, longitude, now.getTime()))
+            {
+                if (recommendations != null && recommendations[0] != null)
+                {
+                    tzID = recommendations[0].getID();
+                    double offsetHr = recommendations[0].getRawOffsetHr();
+                    if (offsetHr == 0) {
+                        tzID = "Etc/GMT";
+
+                    } else {
+                        for (int i=0; i<recommendations.length; i++)
+                        {
+                            String recommendation = recommendations[i].getID();
+                            if (recommendation.startsWith("Etc/GMT"))
+                            {
+                                tzID = recommendations[i].getID();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return tzID;
     }
 
     private TimeZoneDialogListener dialogListener = null;

@@ -5,6 +5,7 @@
     <string name="default_location_latitude">25.0330</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">121.5654</string>  <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>          <!-- meters -->
+    <string name="default_timezone">Asia/Taipei</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 
@@ -369,14 +370,14 @@
     <string name="timeMode_solstice_winter">冬至</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">冬至</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">春跨季度</string>      <!-- setting -->
-    <string name="timeMode_cross_spring_short">跨季度</string>       <!-- setting -->
-    <string name="timeMode_cross_autumnal">秋跨季度</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal_short">跨季度</string>     <!-- setting -->
-    <string name="timeMode_cross_summer">夏跨季度</string>    <!-- setting -->
-    <string name="timeMode_cross_summer_short">跨季度</string>     <!-- setting -->
-    <string name="timeMode_cross_winter">冬跨季度</string>    <!-- setting -->
-    <string name="timeMode_cross_winter_short">跨季度</string>     <!-- setting -->
+    <string name="timeMode_cross_midwinter">聖布里吉德節 (Imbolc)</string>      <!-- setting -->
+    <string name="timeMode_cross_midwinter_short">跨季節</string>       <!-- setting -->
+    <string name="timeMode_cross_midsummer">拉馬斯節 (Lughnasadh)</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer_short">跨季節</string>     <!-- setting -->
+    <string name="timeMode_cross_midspring">貝爾丹節 (Beltane)</string>    <!-- setting --> 
+    <string name="timeMode_cross_midspring_short">跨季節</string>     <!-- setting -->
+    <string name="timeMode_cross_midautumnal">夏末節 (Samhain)</string>    <!-- setting -->
+    <string name="timeMode_cross_midautumnal_short">跨季節</string>     <!-- setting -->
 
     <string name="timeMode_moon">月光</string>                               <!-- label -->
     <string name="timeMode_moon_new">新月</string>                               <!-- setting -->
@@ -1120,7 +1121,7 @@
     <string name="configLabel_ui_showmoon_noon_summary">在月亮對話框中顯示月亮正午和月亮午夜。</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">跨季度日</string>
+    <string name="configLabel_ui_showCrossQuarter">跨季節日</string>
     <string name="configLabel_ui_showCrossQuarter_summary">包含至點和分點之間的中點。</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
@@ -1460,10 +1461,10 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>天文曙光</item>
@@ -1493,10 +1494,10 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>天文曙光</item>
@@ -1526,10 +1527,10 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1766,10 +1767,10 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>春跨季度:</b> 冬至與春分的中點；<em>二月</em>[北半球]，或 <em>八月</em>[南半球]。<br/><br/>
-          <b>夏跨季度:</b> 春分與夏至的中點；<em>五月</em>[北半球], 或 <em>十一月</em>[南半球]。<br/><br/>
-          <b>秋跨季度:</b> 夏至與秋分的中點；<em>八月</em>[北半球], 或 <em>二月</em>[南半球]。<br/><br/>
-          <b>冬跨季度:</b> 秋分與冬至的中點；<em>十一月</em>[北半球], 或 <em>五月</em>[南半球]。<br/>
+          <b>春跨季節:</b> 冬至與春分的中點；<em>二月</em>[北半球]，或 <em>八月</em>[南半球]。<br/><br/>
+          <b>夏跨季節:</b> 春分與夏至的中點；<em>五月</em>[北半球], 或 <em>十一月</em>[南半球]。<br/><br/>
+          <b>秋跨季節:</b> 夏至與秋分的中點；<em>八月</em>[北半球], 或 <em>二月</em>[南半球]。<br/><br/>
+          <b>冬跨季節:</b> 秋分與冬至的中點；<em>十一月</em>[北半球], 或 <em>五月</em>[南半球]。<br/>
     ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[

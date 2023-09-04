@@ -5,5 +5,6 @@
     <string name="default_location_latitude">40.1533</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">44.4185</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">865</string>         <!-- meters -->
+    <string name="default_timezone">Asia/Yerevan</string>         <!-- tzid -->
 
 </resources>

@@ -659,12 +659,12 @@ public class MoonDialog extends BottomSheetDialogFragment
         moonriseset.setShowLunarNoon(!value);
     }
 
-    private final View.OnClickListener onMenuClicked = new View.OnClickListener() {
+    private final View.OnClickListener onMenuClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showOverflowMenu(getActivity(), v);
         }
-    };
+    });
 
     /**
      * Overflow Menu

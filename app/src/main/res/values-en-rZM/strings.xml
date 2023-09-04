@@ -5,5 +5,6 @@
     <string name="default_location_latitude">-15.4167</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">28.2036</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">1262</string>         <!-- meters -->
+    <string name="default_timezone">Africa/Lusaka</string>         <!-- tzid -->
 
 </resources>

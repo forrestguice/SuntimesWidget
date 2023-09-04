@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -355,12 +356,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     }
 
     private View.OnClickListener onDateClick(final int position) {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onDateClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onDateLongClick(final int position) {
         return new View.OnLongClickListener() {
@@ -371,12 +372,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onSunriseHeaderClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onSunriseHeaderClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onSunriseHeaderLongClick(final int position)
     {
@@ -388,12 +389,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onSunsetHeaderClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onSunsetHeaderClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onSunsetHeaderLongClick(final int position)
     {
@@ -405,12 +406,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onNoonHeaderClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onNoonHeaderClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onNoonHeaderLongClick(final int position)
     {
@@ -422,12 +423,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onMoonHeaderClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onMoonHeaderClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onMoonHeaderLongClick(final int position)
     {
@@ -439,12 +440,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onLightmapClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onLightmapClick(CardAdapter.this, position);
             }
-        };
+            });
     }
     private View.OnLongClickListener onLightmapLongClick(final int position)
     {
@@ -456,30 +457,30 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onNextClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //adapterListener.onNextClick(CardAdapter.this, position);
                 onCenterClick(position).onClick(v);
             }
-        };
+        });
     }
     private View.OnClickListener onPrevClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //adapterListener.onPrevClick(CardAdapter.this, position);
                 onCenterClick(position).onClick(v);
             }
-        };
+        });
     }
     private View.OnClickListener onCenterClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onCenterClick(CardAdapter.this, position);
             }
-        };
+        });
     }
 
     /**

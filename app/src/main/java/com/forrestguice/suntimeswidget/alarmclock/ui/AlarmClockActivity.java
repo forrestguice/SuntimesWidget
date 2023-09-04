@@ -141,6 +141,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION = "BatteryOptimizationWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION_SONY = "BatteryOptimizationWarning_sony";
+    public static final String WARNINGID_AUTOSTART= "AutostartWarning";
 
     private AlarmListDialog list;
 
@@ -152,7 +153,8 @@ public class AlarmClockActivity extends AppCompatActivity
     private SuntimesWarning notificationWarning;
     private SuntimesWarning batteryOptimizationWarning = null;   // remains null for api < 23
     private SuntimesWarning batteryOptimizationWarning_sony = null;   // remains null for non-sony devices
-    private List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
+    private SuntimesWarning autostartWarning = null;    // remains null for non-xiomi devices
+    private final List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
 
     private AppSettings.LocaleInfo localeInfo;
 
@@ -904,6 +906,12 @@ public class AlarmClockActivity extends AppCompatActivity
             warnings.add(batteryOptimizationWarning_sony);
         }
 
+        if (AlarmSettings.isXiomi())
+        {
+            autostartWarning = new SuntimesWarning(WARNINGID_AUTOSTART);
+            warnings.add(autostartWarning);
+        }
+
         restoreWarnings(savedState);
     }
     private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
@@ -966,6 +974,21 @@ public class AlarmClockActivity extends AppCompatActivity
             return;
         }
 
+        if (showWarnings && autostartWarning != null
+                && autostartWarning.shouldShow() && !autostartWarning.wasDismissed())
+        {
+            autostartWarning.initWarning(this, addButton, getString(R.string.autostartWarning));
+            autostartWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_autostart), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    AlarmSettings.openAutostartSettings(AlarmClockActivity.this);
+                }
+            });
+            autostartWarning.show();
+            return;
+        }
+
         // no warnings shown; clear previous (stale) messages
         for (SuntimesWarning warning : warnings) {
             warning.dismiss();
@@ -985,6 +1008,9 @@ public class AlarmClockActivity extends AppCompatActivity
         }
         if (batteryOptimizationWarning_sony != null) {
             batteryOptimizationWarning_sony.setShouldShow(AlarmSettings.isSonyStaminaModeEnabled(this));
+        }
+        if (autostartWarning != null) {
+            autostartWarning.setShouldShow(AlarmSettings.isAutostartDisabled(this));
         }
         showWarnings();
     }
