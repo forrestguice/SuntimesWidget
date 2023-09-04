@@ -724,7 +724,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         menu.show();
         return true;
     }
-    private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -741,7 +741,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             }
             return (tzID != null);
         }
-    };
+    });
 
     protected boolean showMapModeMenu(final Context context, View view)
     {
@@ -759,7 +759,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_mapmode.setChecked(true);
         }
     }
-    private PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -784,7 +784,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected boolean showSpeedMenu(final Context context, View view)
     {
@@ -810,7 +810,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -838,7 +838,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected boolean showContextMenu(final Context context, View view)
     {
@@ -1127,7 +1127,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -1251,7 +1251,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     public static final int SEEK_STEPSIZE_5m = 5;
 

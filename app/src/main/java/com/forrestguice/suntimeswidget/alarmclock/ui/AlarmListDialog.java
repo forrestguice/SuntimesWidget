@@ -90,6 +90,7 @@ import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -1374,7 +1375,7 @@ public class AlarmListDialog extends DialogFragment
             PopupMenu menu = new PopupMenu(context, buttonView);
             MenuInflater inflater = menu.getMenuInflater();
             inflater.inflate(R.menu.alarmcontext1, menu.getMenu());
-            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
             {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem)
@@ -1389,7 +1390,7 @@ public class AlarmListDialog extends DialogFragment
                             return false;
                     }
                 }
-            });
+            }));
 
             SuntimesUtils.forceActionBarIcons(menu.getMenu());
             menu.show();
@@ -1401,7 +1402,7 @@ public class AlarmListDialog extends DialogFragment
             MenuInflater inflater = menu.getMenuInflater();
             inflater.inflate(R.menu.alarmtype, menu.getMenu());
 
-            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
             {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem)
@@ -1422,7 +1423,7 @@ public class AlarmListDialog extends DialogFragment
                             return changeAlarmType(context, position, AlarmClockItem.AlarmType.ALARM);
                     }
                 }
-            });
+            }));
 
             SuntimesUtils.forceActionBarIcons(menu.getMenu());
             menu.show();

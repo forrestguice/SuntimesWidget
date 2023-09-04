@@ -90,6 +90,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
@@ -1251,7 +1252,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void prepareTimeModeMenu(Context context, Menu menu) {
     }
 
-    protected PopupMenu.OnMenuItemClickListener onTimeModeMenuClicked = new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenu.OnMenuItemClickListener onTimeModeMenuClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
@@ -1270,7 +1271,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     return false;
             }
         }
-    };
+    });
 
     protected void showTimeModeHelp()
     {
@@ -1434,7 +1435,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         menu.show();
         return true;
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -1461,7 +1462,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             sortActionBase.init(context, spinner_timezone);
             return sortActionBase.onActionItemClicked(item.getItemId());
         }
-    };
+    });
 
     /**
      *

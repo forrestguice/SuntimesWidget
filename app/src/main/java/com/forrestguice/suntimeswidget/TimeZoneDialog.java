@@ -615,7 +615,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             item.setChecked(value);
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
@@ -658,7 +658,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             sortActionBase.init(context, spinner_timezone);
             return sortActionBase.onActionItemClicked(item.getItemId());
         }
-    };
+    });
 
     /**
      * trigger the time zone ActionMode
