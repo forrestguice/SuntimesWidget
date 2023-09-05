@@ -1,0 +1,2 @@
+- adds a warning to SuntimesAlarms when the "Autostart" setting is disabled (Xiomi devices only).
+- updates translations to Simplified Chinese, and Traditional Chinese.
