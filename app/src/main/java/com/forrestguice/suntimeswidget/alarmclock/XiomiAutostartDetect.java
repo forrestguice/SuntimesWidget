@@ -74,7 +74,11 @@ public class XiomiAutostartDetect
         Object resultObj;
         try {
             resultObj = method.invoke(null, context, context.getPackageName());
-        } catch (IllegalAccessException | InvocationTargetException e) {
+
+        } catch (IllegalAccessException e) {
+            Log.e("AutostartDetect", "failed to call method! " + e);
+            return STATE_NO_INFO;
+        } catch (InvocationTargetException e) {
             Log.e("AutostartDetect", "failed to call method! " + e);
             return STATE_NO_INFO;
         }
