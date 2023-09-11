@@ -520,7 +520,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
 
 
-    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -621,7 +621,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     private void updateContextMenu(Context context, PopupMenu popupMenu)
     {
@@ -702,7 +702,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -732,7 +732,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected boolean showTimeZoneMenu(Context context, View view)
     {
@@ -741,7 +741,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         menu.show();
         return true;
     }
-    private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -756,7 +756,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 return (tzID != null);
             } else return false;
         }
-    };
+    });
 
     private void updateMediaButtons()
     {

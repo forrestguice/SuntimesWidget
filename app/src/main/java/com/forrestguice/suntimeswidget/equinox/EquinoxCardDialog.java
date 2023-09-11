@@ -465,7 +465,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         });
     }
 
-    private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -488,7 +488,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -549,7 +549,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     };
 
-    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -601,7 +601,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected void shareItem(Context context, Intent itemData)
     {

@@ -467,7 +467,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     });
     private List<AlarmAddon.EventPickerInfo> alarmPickers = null;
 
-    private PopupMenu.OnMenuItemClickListener onMoreMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onMoreMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -497,7 +497,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 return false;
             }
         }
-    };
+    });
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)

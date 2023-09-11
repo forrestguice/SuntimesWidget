@@ -1,5 +1,12 @@
 ### ~
 
+### v0.15.7 (2023-09-10)
+* adds a warning to SuntimesAlarms when the "Autostart" setting is disabled (Xiomi devices only) (#730).
+* fixes bug "time refreshes aren't happening properly" (#705).
+* fixes bug where the update loop continues running in the background after the activity is no longer visible.
+* fixes bugs where rapidly clicking triggers actions more than once (throttled click listeners).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#728 by James Liu).
+
 ### v0.15.6 (2023-07-21)
 * improves time zone defaults (localized default values).
 * improves time zone recommendations; fixes recommendation when place names contain spaces or special characters.

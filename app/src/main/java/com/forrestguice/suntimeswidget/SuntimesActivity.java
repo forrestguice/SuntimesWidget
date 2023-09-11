@@ -770,12 +770,32 @@ public class SuntimesActivity extends AppCompatActivity
     public void onStop()
     {
         //Log.d("DEBUG", "onStop");
+        if (card_view != null)
+        {
+            //Log.d("DEBUG", "onStop: setLayoutManager: null");
+            t_card_position = card_layout.findFirstVisibleItemPosition();
+            card_view.setLayoutManager(null);
+        }
+
         unregisterReceivers(SuntimesActivity.this);
         unsetUpdateAlarms(SuntimesActivity.this);
 
         stopTimeTask();
         getFixHelper.cancelGetFix();
         super.onStop();
+    }
+    private int t_card_position = CardAdapter.TODAY_POSITION;
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        if (card_view != null)
+        {
+            card_view.setLayoutManager(card_layout);
+            card_view.scrollToPosition(t_card_position);
+            //Log.d("DEBUG", "onRestart: setLayoutManager: position " + t_card_position);
+        }
     }
 
     /**

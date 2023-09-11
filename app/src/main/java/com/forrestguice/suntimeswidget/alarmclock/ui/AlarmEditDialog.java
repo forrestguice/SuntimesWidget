@@ -315,7 +315,7 @@ public class AlarmEditDialog extends DialogFragment
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.alarmtype, menu.getMenu());
 
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -337,7 +337,7 @@ public class AlarmEditDialog extends DialogFragment
                 notifyItemChanged();
                 return true;
             }
-        });
+        }));
 
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
@@ -360,7 +360,7 @@ public class AlarmEditDialog extends DialogFragment
             }
         }
 
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -375,7 +375,7 @@ public class AlarmEditDialog extends DialogFragment
                         return false;
                 }
             }
-        });
+        }));
 
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
