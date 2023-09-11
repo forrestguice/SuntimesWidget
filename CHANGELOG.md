@@ -1,8 +1,10 @@
 ### ~
 
-### v0.15.7 (2023-09-05)
+### v0.15.7 (2023-09-10)
 * adds a warning to SuntimesAlarms when the "Autostart" setting is disabled (Xiomi devices only) (#730).
-* fixes bugs where rapidly clicking triggers an action more than once (throttled click listeners).
+* fixes bug "time refreshes aren't happening properly" (#705).
+* fixes bug where the update loop continues running in the background after the activity is no longer visible.
+* fixes bugs where rapidly clicking triggers actions more than once (throttled click listeners).
 * updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#728 by James Liu).
 
 ### v0.15.6 (2023-07-21)
