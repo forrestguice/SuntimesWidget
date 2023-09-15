@@ -388,7 +388,9 @@
         </receiver>
         
         <activity
-            android:name=".SuntimesConfigActivity0" >
+            android:name=".SuntimesConfigActivity0"
+            android:taskAffinity=".SuntimesConfigActivity0"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -414,7 +416,9 @@
         </receiver>
 
         <activity
-            android:name=".SuntimesConfigActivity0_2x1" >
+            android:name=".SuntimesConfigActivity0_2x1"
+            android:taskAffinity=".SuntimesConfigActivity0_2x1"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -440,7 +444,9 @@
         </receiver>
 
         <activity
-            android:name=".SuntimesConfigActivity0_3x1" >
+            android:name=".SuntimesConfigActivity0_3x1"
+            android:taskAffinity=".SuntimesConfigActivity0_3x1"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -475,7 +481,9 @@
 
         <!-- Widget 1 Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity1" >
+            android:name=".SuntimesConfigActivity1"
+            android:taskAffinity=".SuntimesConfigActivity1"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -502,7 +510,9 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2" >
+            android:name=".SuntimesConfigActivity2"
+            android:taskAffinity=".SuntimesConfigActivity2"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -529,7 +539,9 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2_3x1" >
+            android:name=".SuntimesConfigActivity2_3x1"
+            android:taskAffinity=".SuntimesConfigActivity2_3x1"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -556,7 +568,9 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2_3x2" >
+            android:name=".SuntimesConfigActivity2_3x2"
+            android:taskAffinity=".SuntimesConfigActivity2_3x2"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -583,7 +597,9 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2_3x3" >
+            android:name=".SuntimesConfigActivity2_3x3"
+            android:taskAffinity=".SuntimesConfigActivity2_3x3"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -610,7 +626,9 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SolsticeWidget0ConfigActivity" >
+            android:name=".SolsticeWidget0ConfigActivity"
+            android:taskAffinity=".SolsticeWidget0ConfigActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -636,7 +654,9 @@
         </receiver>
 
         <activity
-            android:name=".MoonWidget0ConfigActivity" >
+            android:name=".MoonWidget0ConfigActivity"
+            android:taskAffinity=".MoonWidget0ConfigActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -662,7 +682,9 @@
         </receiver>
 
         <activity
-            android:name=".MoonWidget0ConfigActivity_2x1" >
+            android:name=".MoonWidget0ConfigActivity_2x1"
+            android:taskAffinity=".MoonWidget0ConfigActivity_2x1"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -688,7 +710,9 @@
         </receiver>
 
         <activity
-            android:name=".MoonWidget0ConfigActivity_3x1" >
+            android:name=".MoonWidget0ConfigActivity_3x1"
+            android:taskAffinity=".MoonWidget0ConfigActivity_3x1"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -714,7 +738,9 @@
         </receiver>-->
 
         <!--<activity
-            android:name=".MoonWidget0ConfigActivity_3x2" >
+            android:name=".MoonWidget0ConfigActivity_3x2"
+            android:taskAffinity=".MoonWidget0ConfigActivity_3x2"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -740,7 +766,9 @@
         </receiver>
 
         <activity
-            android:name=".ClockWidget0ConfigActivity" >
+            android:name=".ClockWidget0ConfigActivity"
+            android:taskAffinity=".ClockWidget0ConfigActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -766,7 +794,9 @@
         </receiver>
 
         <activity
-            android:name=".ClockWidget0ConfigActivity_3x1" >
+            android:name=".ClockWidget0ConfigActivity_3x1"
+            android:taskAffinity=".ClockWidget0ConfigActivity_3x1"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -792,7 +822,9 @@
         </receiver>
 
         <activity
-            android:name=".widgets.DateWidget0ConfigActivity">
+            android:name=".widgets.DateWidget0ConfigActivity"
+            android:taskAffinity=".widgets.DateWidget0ConfigActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

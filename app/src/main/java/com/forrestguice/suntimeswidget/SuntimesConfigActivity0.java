@@ -2931,4 +2931,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     }
 
+    @Override
+    public void finish() {
+        finishAndRemoveTask();
+    }
+
 }
