@@ -45,12 +45,14 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.worldclock.WorldClockDialog;
 
 /**
  * AlarmBedtimeActivity
@@ -65,7 +67,9 @@ public class BedtimeActivity extends AppCompatActivity
 
     private static final String DIALOGTAG_HELP = "helpDialog";
 
+    private BedtimeDialog list;
     private AppSettings.LocaleInfo localeInfo;
+    private SuntimesNavigation navigation;
 
     public BedtimeActivity() {
         super();
@@ -283,8 +287,18 @@ public class BedtimeActivity extends AppCompatActivity
             }
         }
 
+        navigation = new SuntimesNavigation(this, menuBar, R.id.action_bedtime);
+
+        list = (BedtimeDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
+        list.setAdapterListener(dialogListener);
+
         // TODO
     }
+
+    private BedtimeItemAdapter.AdapterListener dialogListener = new BedtimeItemAdapter.AdapterListener()
+    {
+        // TODO
+    };
 
     protected void updateViews(Context context) {
     }
@@ -325,7 +339,7 @@ public class BedtimeActivity extends AppCompatActivity
                 return true;
 
             case R.id.action_about:
-                showAbout();
+                navigation.showAbout(this);
                 return true;
 
             case android.R.id.home:
@@ -372,14 +386,6 @@ public class BedtimeActivity extends AppCompatActivity
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(getString(R.string.help_alarms_bedtime));
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-    }
-
-    protected void showAbout()
-    {
-        Intent about = new Intent(this, AboutActivity.class);
-        about.putExtra(AboutActivity.EXTRA_ICONID, R.drawable.ic_suntimesalarms);
-        startActivity(about);
-        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     protected void onSettingsResult(int resultCode, Intent data)
