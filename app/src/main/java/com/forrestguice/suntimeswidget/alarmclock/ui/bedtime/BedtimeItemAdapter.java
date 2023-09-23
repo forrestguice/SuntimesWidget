@@ -43,6 +43,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         items.clear();
         items.add(new BedtimeItem(BedtimeItem.ItemType.SLEEP_CYCLE));
         items.add(new BedtimeItem(BedtimeItem.ItemType.WAKEUP_ALARM));
+        items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME));
         items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME_REMINDER));
         items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME_NOW));
     }
@@ -135,7 +136,8 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
             case SLEEP_CYCLE: return new BedtimeViewHolder.AlarmBedtimeViewHolder_SleepCycle(view);
             case BEDTIME_NOW: return new BedtimeViewHolder.AlarmBedtimeViewHolder_BedtimeNow(view);
             case WAKEUP_ALARM: return new BedtimeViewHolder.AlarmBedtimeViewHolder_Wakeup(view);
-            case BEDTIME_REMINDER: return new BedtimeViewHolder.BedtimeViewHolder_BedtimeNotification(view);
+            case BEDTIME: return new BedtimeViewHolder.BedtimeViewHolder_Bedtime(view);
+            case BEDTIME_REMINDER: return new BedtimeViewHolder.BedtimeViewHolder_BedtimeReminder(view);
             case NONE: default: return new BedtimeViewHolder.BedtimeViewHolder_Welcome(view);
         }
     }
@@ -147,7 +149,8 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
             case SLEEP_CYCLE: return BedtimeViewHolder.AlarmBedtimeViewHolder_SleepCycle.getLayoutResID();
             case BEDTIME_NOW: return BedtimeViewHolder.AlarmBedtimeViewHolder_BedtimeNow.getLayoutResID();
             case WAKEUP_ALARM: return BedtimeViewHolder.AlarmBedtimeViewHolder_Wakeup.getLayoutResID();
-            case BEDTIME_REMINDER: return BedtimeViewHolder.BedtimeViewHolder_BedtimeNotification.getLayoutResID();
+            case BEDTIME: return BedtimeViewHolder.BedtimeViewHolder_Bedtime.getLayoutResID();
+            case BEDTIME_REMINDER: return BedtimeViewHolder.BedtimeViewHolder_BedtimeReminder.getLayoutResID();
             case NONE: default: return BedtimeViewHolder.BedtimeViewHolder_Welcome.getLayoutResID();
         }
     }

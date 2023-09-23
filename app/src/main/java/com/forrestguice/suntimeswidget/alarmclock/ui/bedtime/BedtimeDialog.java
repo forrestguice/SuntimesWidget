@@ -40,13 +40,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
@@ -214,6 +211,10 @@ public class BedtimeDialog extends DialogFragment
                         showAddAlarmDialog(getActivity());
                         break;
 
+                    case BEDTIME:  // TODO
+                        Toast.makeText(getActivity(), "TODO3", Toast.LENGTH_SHORT).show();
+                        break;
+
                     case BEDTIME_REMINDER:  // TODO
                         Toast.makeText(getActivity(), "TODO3", Toast.LENGTH_SHORT).show();
                         break;
@@ -242,8 +243,12 @@ public class BedtimeDialog extends DialogFragment
                         showAlarmEditActivity(BedtimeSettings.loadAlarmID(getActivity(), BedtimeSettings.SLOT_WAKEUP_ALARM), null, REQUEST_EDIT_WAKEUP, false);
                         break;
 
-                    case BEDTIME_REMINDER:
+                    case BEDTIME:
                         showAlarmEditActivity(BedtimeSettings.loadAlarmID(getActivity(), BedtimeSettings.SLOT_BEDTIME_NOTIFY), null, REQUEST_EDIT_BEDTIME, false);
+                        break;
+
+                    case BEDTIME_REMINDER:
+                        Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();    // TODO
                         break;
 
                     default:

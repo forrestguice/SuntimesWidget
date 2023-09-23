@@ -37,6 +37,7 @@ public class BedtimeItem
         NONE,
         SLEEP_CYCLE,
         WAKEUP_ALARM,
+        BEDTIME,
         BEDTIME_REMINDER,
         BEDTIME_NOW;
         private ItemType() {

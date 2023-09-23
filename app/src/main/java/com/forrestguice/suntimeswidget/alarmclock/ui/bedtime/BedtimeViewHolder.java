@@ -292,11 +292,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     }
 
     /**
-     * BedtimeNotify
+     * Bedtime
      */
-    public static final class BedtimeViewHolder_BedtimeNotification extends AlarmBedtimeViewHolder_AlarmItem
+    public static final class BedtimeViewHolder_Bedtime extends AlarmBedtimeViewHolder_AlarmItem
     {
-        public BedtimeViewHolder_BedtimeNotification(View view) {
+        public BedtimeViewHolder_Bedtime(View view) {
             super(view);
         }
 
@@ -344,6 +344,44 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 if (button_edit != null) {
                     button_edit.setVisibility(View.INVISIBLE);
                 }
+            }
+        }
+    }
+
+    /**
+     * BedtimeReminder
+     */
+    public static final class BedtimeViewHolder_BedtimeReminder extends AlarmBedtimeViewHolder_AlarmItem
+    {
+        public BedtimeViewHolder_BedtimeReminder(View view) {
+            super(view);
+        }
+
+        public static int getLayoutResID() {
+            return R.layout.layout_listitem_bedtime_reminder;    // TODO
+        }
+
+        @Override
+        public void bindDataToHolder(Context context, @Nullable BedtimeItem item) {
+            super.bindDataToHolder(context, item);
+        }
+
+        @Override
+        protected Long getAlarmID(Context context) {
+            return null;
+        }
+
+        @Override
+        protected void attachClickListeners(final Context context, @Nullable BedtimeItem item) {
+            super.attachClickListeners(context, item);
+        }
+
+        @Override
+        protected void updateViews()
+        {
+            super.updateViews();
+            if (text_label != null) {
+                text_label.setText("Show a reminder 20m before bedtime.");    // TODO: i18n
             }
         }
     }
