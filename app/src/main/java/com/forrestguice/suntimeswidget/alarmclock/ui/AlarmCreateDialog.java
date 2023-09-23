@@ -97,6 +97,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     public static final String EXTRA_PREVIEW_OFFSET = "previewOffset";
     public static final String EXTRA_BUTTON_ALARMLIST = "showAlarmListButton";
+    public static final String EXTRA_BUTTON_DATESELECT = "showDateSelectButton";
+    public static final String EXTRA_ALLOW_SELECT_TYPE = "allowSelectType";
+    public static final String EXTRA_BUTTON_TZSLECT = "showTimeZoneButton";
 
     public static final String DIALOG_LOCATION = "locationDialog";
     public static final String DIALOG_DATE = "dateDialog";
@@ -310,6 +313,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         AlarmTimeDialog fragment = new AlarmTimeDialog();
         fragment.setDate(getDate());
+        fragment.setShowDateButton(showDateSelectButton());
+        fragment.setShowTimeZoneSelect(showTimeZoneSelectButton());
         fragment.setTime(getHour(), getMinute());
         fragment.setTimeZone(getTimeZone());
         fragment.setLocation(getLocation());
@@ -437,6 +442,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.ALARM ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
         }
         if (spin_type != null) {
+            spin_type.setEnabled(allowSelectType());
             spin_type.setSelection(alarmType.ordinal(), false);
         }
 
@@ -798,6 +804,27 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     }
     public void setShowAlarmListButton(boolean value) {
         getArguments().putBoolean(EXTRA_BUTTON_ALARMLIST, value);
+    }
+
+    public boolean showDateSelectButton() {
+        return getArguments().getBoolean(EXTRA_BUTTON_DATESELECT, true);
+    }
+    public void setShowDateSelectButton(boolean value) {
+        getArguments().putBoolean(EXTRA_BUTTON_DATESELECT, value);
+    }
+
+    public boolean showTimeZoneSelectButton() {
+        return getArguments().getBoolean(EXTRA_BUTTON_TZSLECT, true);
+    }
+    public void setShowTimeZoneSelectButton(boolean value) {
+        getArguments().putBoolean(EXTRA_BUTTON_TZSLECT, value);
+    }
+
+    public boolean allowSelectType() {
+        return getArguments().getBoolean(EXTRA_ALLOW_SELECT_TYPE, true);
+    }
+    public void setAllowSelectType(boolean value) {
+        getArguments().putBoolean(EXTRA_ALLOW_SELECT_TYPE, value);
     }
 
     public int getMode() {
