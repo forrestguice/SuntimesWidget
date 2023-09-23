@@ -450,7 +450,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     CharSequence sleepCycleCountDisplay = SuntimesUtils.createBoldSpan(null, displayString1, sleepCycleCountString);
 
                     String sleepCycleString = utils.timeDeltaLongDisplayString(sleepCycleMs);
-                    String displayString = "A sleep cycle is " + sleepCycleString;  // TODO
+                    String displayString = "of " + sleepCycleString;  // TODO
                     CharSequence sleepCycleDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepCycleString);
                     text_sleepcycle.setText(sleepCycleCountDisplay + "\n" + sleepCycleDisplay);    // TODO
                 }

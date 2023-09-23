@@ -19,15 +19,15 @@ package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,11 +40,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmRepeatDialog;
@@ -117,8 +120,19 @@ public class BedtimeDialog extends DialogFragment
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
+        restoreDialogs(getActivity());
+    }
+
+    protected void restoreDialogs(Context context)
+    {
+        FragmentManager fragments = getChildFragmentManager();
+        AlarmCreateDialog addAlarmDialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOG_ADD_ALARM);
+        if (addAlarmDialog != null) {
+            addAlarmDialog.setOnAcceptedListener(onAddAlarmDialogAccept);
+        }
     }
 
     @Override
@@ -127,9 +141,9 @@ public class BedtimeDialog extends DialogFragment
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
-            //case REQUEST_ADDALARM:
-            //    onEditAlarmResult(resultCode, data, true);
-            //    break;
+            case REQUEST_ADD_WAKEUP:
+                onEditAlarmResult(resultCode, data, true, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
+                break;
 
             case REQUEST_EDIT_WAKEUP:
                 onEditAlarmResult(resultCode, data, false, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
@@ -197,7 +211,7 @@ public class BedtimeDialog extends DialogFragment
                         break;
 
                     case WAKEUP_ALARM:
-                        triggerBedtimeNow(getActivity(), item);   // TODO
+                        showAddAlarmDialog(getActivity());
                         break;
 
                     case BEDTIME_REMINDER:  // TODO
@@ -432,7 +446,7 @@ public class BedtimeDialog extends DialogFragment
         return true;
     }
 
-    protected boolean updateAlarmItem(final long rowID, final AlarmClockItem toItem)
+    protected boolean mirrorAlarmItem(final long rowID, final AlarmClockItem toItem)
     {
         if (rowID == BedtimeSettings.ID_NONE) {
             return false;
@@ -451,6 +465,8 @@ public class BedtimeDialog extends DialogFragment
                     bedtimeItem.location = toItem.location;
                     bedtimeItem.hour = toItem.hour;
                     bedtimeItem.minute = toItem.minute;
+                    bedtimeItem.repeating = toItem.repeating;
+                    bedtimeItem.setRepeatingDays(toItem.getRepeatingDays());
                     bedtimeItem.modified = true;
 
                     AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(getActivity(), false, false);
@@ -483,7 +499,7 @@ public class BedtimeDialog extends DialogFragment
                     {
                         super.onFinished(result, items);
                         long rowID = BedtimeSettings.loadAlarmID(getActivity(), pairedSlot);
-                        if (!updateAlarmItem(rowID, items[0])) {
+                        if (!mirrorAlarmItem(rowID, items[0])) {
                             adapter.notifyDataSetChanged();
                         }
                     }
@@ -492,5 +508,62 @@ public class BedtimeDialog extends DialogFragment
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static final String DIALOG_ADD_ALARM = "dialog_add_alarm";
+
+    protected void showAddAlarmDialog(final Context context)
+    {
+        AlarmCreateDialog dialog = new AlarmCreateDialog();
+        FragmentManager fragments = getChildFragmentManager();
+        dialog.setAlarmType(AlarmClockItem.AlarmType.ALARM);
+        dialog.setAllowSelectType(false);
+        dialog.setShowDateSelectButton(false);
+        dialog.setShowTimeZoneSelectButton(false);
+        dialog.setShowAlarmListButton(false);
+        // TODO: locked/disabled events
+        dialog.setOnAcceptedListener(onAddAlarmDialogAccept);
+        dialog.show(fragments, DIALOG_ADD_ALARM);
+    }
+
+    private final DialogInterface.OnClickListener onAddAlarmDialogAccept = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
+            Activity context = getActivity();
+            FragmentManager fragments = getChildFragmentManager();
+            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOG_ADD_ALARM);
+            if (dialog != null)
+            {
+                Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show();    // TODO
+                AlarmClockItem.AlarmType type = dialog.getAlarmType();
+                Location location = dialog.getLocation();
+
+                /*
+                switch (dialog.getMode())
+                {
+                    case 1:
+                        int hour = dialog.getHour();
+                        int minutes = dialog.getMinute();
+                        String timezone = dialog.getTimeZone();
+                        AlarmClockActivity.scheduleAlarm(context, type, "", null, location, hour, minutes, timezone);   // TODO: label
+                        break;
+
+                    case 0:
+                    default:
+                        String eventString = dialog.getEvent();
+                        AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, getContentResolver());
+                        String alarmLabel = eventString != null ? context.getString(R.string.schedalarm_labelformat2, eventItem.getTitle()) : "";
+                        if (eventString != null) {
+                            AlarmClockActivity.scheduleAlarm(context, type, alarmLabel, eventString, location);
+                        }
+                        break;
+                }*/
+            }
+        }
+    };
 
 }
