@@ -42,6 +42,7 @@ import android.view.ViewGroup;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
@@ -127,8 +128,11 @@ public class BedtimeDialog extends DialogFragment
     {
         FragmentManager fragments = getChildFragmentManager();
         AlarmCreateDialog addAlarmDialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOG_ADD_ALARM);
-        if (addAlarmDialog != null) {
-            addAlarmDialog.setOnAcceptedListener(onAddAlarmDialogAccept);
+        if (addAlarmDialog != null)
+        {
+            int position = adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM);
+            BedtimeItem item = (position >= 0 && position < adapter.getItemCount()) ? adapter.getItem(position) : null;
+            addAlarmDialog.setOnAcceptedListener(onAddAlarmDialogAccept(DIALOG_ADD_ALARM, BedtimeSettings.SLOT_WAKEUP_ALARM, item));
         }
     }
 
@@ -208,7 +212,7 @@ public class BedtimeDialog extends DialogFragment
                         break;
 
                     case WAKEUP_ALARM:
-                        showAddAlarmDialog(getActivity());
+                        showAddAlarmDialog(getActivity(), item);
                         break;
 
                     case BEDTIME:  // TODO
@@ -284,13 +288,13 @@ public class BedtimeDialog extends DialogFragment
         float numSleepCycles = BedtimeSettings.loadPrefSleepCycleCount(context);
         long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
         long sleepTotalMs = (long)(numSleepCycles * sleepCycleMs);
+        final long bedtime_offset = -sleepTotalMs + (1000 * 60);
         int sleepMinutes = (int)(sleepTotalMs / (1000 * 60));
 
         Calendar wakeup = Calendar.getInstance();
         wakeup.add(Calendar.MINUTE, sleepMinutes);
         final int wakeup_hour = wakeup.get(Calendar.HOUR_OF_DAY);
         final int wakeup_minute = wakeup.get(Calendar.MINUTE);
-        final long bedtime_offset = -sleepTotalMs + (1000 * 60);
 
         /*Calendar bedtime = Calendar.getInstance();
         bedtime.setTimeInMillis(wakeup.getTimeInMillis());
@@ -451,9 +455,9 @@ public class BedtimeDialog extends DialogFragment
         return true;
     }
 
-    protected boolean mirrorAlarmItem(final long rowID, final AlarmClockItem toItem)
+    protected boolean mirrorAlarmItem(final Long rowID, final AlarmClockItem toItem)
     {
-        if (rowID == BedtimeSettings.ID_NONE) {
+        if (rowID == null || rowID == BedtimeSettings.ID_NONE) {
             return false;
         }
 
@@ -483,6 +487,9 @@ public class BedtimeDialog extends DialogFragment
                         }
                     });
                     task.execute(bedtimeItem);
+
+                } else {
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -503,7 +510,7 @@ public class BedtimeDialog extends DialogFragment
                     public void onFinished(Boolean result, @Nullable final AlarmClockItem[] items)
                     {
                         super.onFinished(result, items);
-                        long rowID = BedtimeSettings.loadAlarmID(getActivity(), pairedSlot);
+                        Long rowID = BedtimeSettings.loadAlarmID(getActivity(), pairedSlot);
                         if (!mirrorAlarmItem(rowID, items[0])) {
                             adapter.notifyDataSetChanged();
                         }
@@ -519,56 +526,55 @@ public class BedtimeDialog extends DialogFragment
 
     private static final String DIALOG_ADD_ALARM = "dialog_add_alarm";
 
-    protected void showAddAlarmDialog(final Context context)
+    protected void showAddAlarmDialog(final Context context, BedtimeItem item)
     {
         AlarmCreateDialog dialog = new AlarmCreateDialog();
         FragmentManager fragments = getChildFragmentManager();
-        dialog.setAlarmType(AlarmClockItem.AlarmType.ALARM);
-        dialog.setAllowSelectType(false);
-        dialog.setShowDateSelectButton(false);
-        dialog.setShowTimeZoneSelectButton(false);
-        dialog.setShowAlarmListButton(false);
+
+        dialog.setShowDateSelectButton(false);      // hide date selection
+        dialog.setShowTimeZoneSelectButton(false);  // hide time zone selection
+        dialog.setShowAlarmListButton(false);       // hide list button
+        dialog.setAllowSelectType(false);           // disable type selector
+        dialog.setLabelOverride("Wake up");         // override type labels    // TODO: i18n
+        dialog.setAlarmType(AlarmClockItem.AlarmType.ALARM);    // restrict type to alarms only
         // TODO: locked/disabled events
-        dialog.setOnAcceptedListener(onAddAlarmDialogAccept);
+
+        dialog.setOnAcceptedListener(onAddAlarmDialogAccept(DIALOG_ADD_ALARM, BedtimeSettings.SLOT_WAKEUP_ALARM, item));
         dialog.show(fragments, DIALOG_ADD_ALARM);
     }
 
-    private final DialogInterface.OnClickListener onAddAlarmDialogAccept = new DialogInterface.OnClickListener()
+    private final DialogInterface.OnClickListener onAddAlarmDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
     {
-        @Override
-        public void onClick(DialogInterface d, int which)
+        return new DialogInterface.OnClickListener()
         {
-            Activity context = getActivity();
-            FragmentManager fragments = getChildFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOG_ADD_ALARM);
-            if (dialog != null)
+            @Override
+            public void onClick(DialogInterface d, int which)
             {
-                Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show();    // TODO
-                AlarmClockItem.AlarmType type = dialog.getAlarmType();
-                Location location = dialog.getLocation();
-
-                /*
-                switch (dialog.getMode())
+                FragmentManager fragments = getChildFragmentManager();
+                AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(dialogTag);
+                if (dialog != null)
                 {
-                    case 1:
-                        int hour = dialog.getHour();
-                        int minutes = dialog.getMinute();
-                        String timezone = dialog.getTimeZone();
-                        AlarmClockActivity.scheduleAlarm(context, type, "", null, location, hour, minutes, timezone);   // TODO: label
-                        break;
+                    AlarmClockItem alarmItem = createBedtimeAlarmItem(getActivity(), item, dialog.getHour(), dialog.getMinute(), dialog.getOffset());
+                    alarmItem.type = dialog.getAlarmType();
+                    alarmItem.location = dialog.getLocation();
 
-                    case 0:
-                    default:
+                    if (dialog.getMode() == 0)
+                    {
                         String eventString = dialog.getEvent();
-                        AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, getContentResolver());
-                        String alarmLabel = eventString != null ? context.getString(R.string.schedalarm_labelformat2, eventItem.getTitle()) : "";
                         if (eventString != null) {
-                            AlarmClockActivity.scheduleAlarm(context, type, alarmLabel, eventString, location);
+                            alarmItem.setEvent(eventString);
                         }
-                        break;
-                }*/
+                    }
+                    scheduleBedtimeAlarmItem(getActivity(), slot, alarmItem, item, true);
+
+                    float numSleepCycles = BedtimeSettings.loadPrefSleepCycleCount(getActivity());
+                    long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(getActivity());
+                    long sleepTotalMs = (long)(numSleepCycles * sleepCycleMs);
+                    final long bedtime_offset = -sleepTotalMs + (1000 * 60);
+                    triggerBedtimeAt(getActivity(), item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, alarmItem.hour, alarmItem.minute, bedtime_offset);
+                }
             }
-        }
-    };
+        };
+    }
 
 }
