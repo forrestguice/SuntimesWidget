@@ -94,6 +94,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -475,6 +476,7 @@ public class AlarmListDialog extends DialogFragment
         alarm.setEvent(date != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(date)) : event);   // TODO: event on date
         alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
         alarm.repeating = false;
+        alarm.repeatingDays = new ArrayList<>(repetitionDays);
         alarm.vibrate = vibrate;
 
         alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);

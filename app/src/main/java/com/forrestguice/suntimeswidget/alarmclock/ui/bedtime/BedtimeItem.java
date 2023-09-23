@@ -35,8 +35,10 @@ public class BedtimeItem
     public static enum ItemType
     {
         NONE,
+        SLEEP_CYCLE,
         WAKEUP_ALARM,
-        BEDTIME_NOTIFICATION;
+        BEDTIME_REMINDER,
+        BEDTIME_NOW;
         private ItemType() {
         }
     }

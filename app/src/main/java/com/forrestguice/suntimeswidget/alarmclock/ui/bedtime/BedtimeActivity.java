@@ -189,11 +189,8 @@ public class BedtimeActivity extends AppCompatActivity
         }
     };
 
-    protected void onAlarmItemUpdated(long alarmID)
-    {
-        // TODO
-        //list.reloadAdapter((alarmID != -1 ? alarmID : null));
-        //Log.d("DEBUG", "adapter reloaded: " + alarmID);
+    protected void onAlarmItemUpdated(long alarmID) {
+        list.reloadAdapter();
     }
 
     @Override
@@ -297,7 +294,13 @@ public class BedtimeActivity extends AppCompatActivity
 
     private BedtimeItemAdapter.AdapterListener dialogListener = new BedtimeItemAdapter.AdapterListener()
     {
-        // TODO
+        @Override
+        public void onItemAction(BedtimeItem item) {
+        }
+
+        @Override
+        public void onItemConfigure(BedtimeItem item) {
+        }
     };
 
     protected void updateViews(Context context) {

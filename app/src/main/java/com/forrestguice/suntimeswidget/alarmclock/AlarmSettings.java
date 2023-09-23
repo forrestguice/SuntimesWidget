@@ -309,7 +309,7 @@ public class AlarmSettings
     }
 
     @TargetApi(10)
-    private static long loadStringPrefAsLong(SharedPreferences prefs, String key, long defaultValue)
+    public static long loadStringPrefAsLong(SharedPreferences prefs, String key, long defaultValue)
     {
         try {
             return Long.parseLong(prefs.getString(key, defaultValue + ""));

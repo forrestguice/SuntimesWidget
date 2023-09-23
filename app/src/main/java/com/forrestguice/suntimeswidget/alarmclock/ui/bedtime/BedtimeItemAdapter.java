@@ -18,26 +18,33 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
 {
-    protected ArrayList<BedtimeItem> items;
+    protected ArrayList<BedtimeItem> items = new ArrayList<>();
+    protected WeakReference<Context> contextRef;
 
-    public BedtimeItemAdapter() {
+    public BedtimeItemAdapter(Context context)
+    {
+        contextRef = new WeakReference<>(context);
         initItems();
     }
 
     protected void initItems() {
-        items = new ArrayList<>();
-        items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME_NOTIFICATION));  // 0
-        items.add(new BedtimeItem(BedtimeItem.ItemType.WAKEUP_ALARM));          // 1
+        items.clear();
+        items.add(new BedtimeItem(BedtimeItem.ItemType.SLEEP_CYCLE));
+        items.add(new BedtimeItem(BedtimeItem.ItemType.WAKEUP_ALARM));
+        items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME_REMINDER));
+        items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME_NOW));
     }
 
     @Nullable
@@ -53,6 +60,51 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void moveItem(int position, int toPosition)
+    {
+        if (position >= 0 && position < items.size())
+        {
+            BedtimeItem item = items.get(position);
+            if (toPosition >= 0 && position < items.size())
+            {
+                if (toPosition < position) {
+                    items.remove(position);
+                    items.add(toPosition, item);
+                } else {
+                    items.add(toPosition, item);
+                    items.remove(position);
+                }
+                notifyItemMoved(position, toPosition);
+            }
+        }
+    }
+
+    public int findItemPosition(BedtimeItem.ItemType type)
+    {
+        for (int i=0; i<items.size(); i++)
+        {
+            BedtimeItem item0 = getItem(i);
+            if (item0 != null
+                    && item0.getItemType() == type) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int findItemPosition(BedtimeItem item)
+    {
+        for (int i=0; i<items.size(); i++)
+        {
+            BedtimeItem item0 = getItem(i);
+            if (item0 != null
+                    && item0.getItemType() == item.getItemType()) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -80,8 +132,10 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         View view = layout.inflate(getLayoutResID(type), parent, false);
         switch (type)
         {
-            case WAKEUP_ALARM: return new BedtimeViewHolder.AlarmBedtimeViewHolder_Wakupe(view);
-            case BEDTIME_NOTIFICATION: return new BedtimeViewHolder.BedtimeViewHolder_BedtimeNotification(view);
+            case SLEEP_CYCLE: return new BedtimeViewHolder.AlarmBedtimeViewHolder_SleepCycle(view);
+            case BEDTIME_NOW: return new BedtimeViewHolder.AlarmBedtimeViewHolder_BedtimeNow(view);
+            case WAKEUP_ALARM: return new BedtimeViewHolder.AlarmBedtimeViewHolder_Wakeup(view);
+            case BEDTIME_REMINDER: return new BedtimeViewHolder.BedtimeViewHolder_BedtimeNotification(view);
             case NONE: default: return new BedtimeViewHolder.BedtimeViewHolder_Welcome(view);
         }
     }
@@ -90,8 +144,10 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
     {
         switch (type)
         {
-            case WAKEUP_ALARM: return BedtimeViewHolder.AlarmBedtimeViewHolder_Wakupe.getLayoutResID();
-            case BEDTIME_NOTIFICATION: return BedtimeViewHolder.BedtimeViewHolder_BedtimeNotification.getLayoutResID();
+            case SLEEP_CYCLE: return BedtimeViewHolder.AlarmBedtimeViewHolder_SleepCycle.getLayoutResID();
+            case BEDTIME_NOW: return BedtimeViewHolder.AlarmBedtimeViewHolder_BedtimeNow.getLayoutResID();
+            case WAKEUP_ALARM: return BedtimeViewHolder.AlarmBedtimeViewHolder_Wakeup.getLayoutResID();
+            case BEDTIME_REMINDER: return BedtimeViewHolder.BedtimeViewHolder_BedtimeNotification.getLayoutResID();
             case NONE: default: return BedtimeViewHolder.BedtimeViewHolder_Welcome.getLayoutResID();
         }
     }
@@ -99,12 +155,48 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
     @Override
     public void onBindViewHolder(BedtimeViewHolder holder, int position)
     {
-        holder.bindDataToHolder(getItem(position));
-        holder.attachClickListeners();
+        Context context = contextRef.get();
+        final BedtimeItem item = getItem(position);
+        holder.bindDataToHolder(context, item);
+        attachClickListeners(context, holder, item);
+    }
+
+    protected void attachClickListeners(final Context context, final BedtimeViewHolder holder, final BedtimeItem item)
+    {
+        holder.attachClickListeners(context, item);
+
+        View actionView = holder.getActionView();
+        if (actionView != null)
+        {
+            actionView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    if (adapterListener != null ) {
+                        adapterListener.onItemAction(item);
+                    }
+                }
+            });
+        }
+
+        View configActionView = holder.getConfigureActionView();
+        if (configActionView != null)
+        {
+            configActionView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    if (adapterListener != null ) {
+                        adapterListener.onItemConfigure(item);
+                    }
+                }
+            });
+        }
     }
 
     @Override
-    public void onViewRecycled(BedtimeViewHolder holder) {
+    public void onViewRecycled(BedtimeViewHolder holder)
+    {
         holder.detachClickListeners();
     }
 
@@ -117,5 +209,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
      * AdapterListener
      */
     public interface AdapterListener {
+        void onItemAction(BedtimeItem item);
+        void onItemConfigure(BedtimeItem item);
     }
 }
