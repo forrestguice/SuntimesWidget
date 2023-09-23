@@ -31,6 +31,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -776,7 +777,11 @@ public class WidgetActions
         SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true),
         SNOOZE_ALARM("Suntimes Alarms", "Snooze", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
         DISMISS_ALARM("Suntimes Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
-        UPDATE_WIDGETS("Suntimes", "Update widgets", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true);
+        UPDATE_WIDGETS("Suntimes", "Update widgets", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+
+        TRIGGER_BEDTIME("Bedtime", "Trigger bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),   // TODO
+        DISMISS_BEDTIME("Bedtime", "Dismiss bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),   // TODO
+        ;
 
         private String title, desc;
         private String[] tags;
@@ -844,6 +849,16 @@ public class WidgetActions
 
                     switch (action)
                     {
+                        case TRIGGER_BEDTIME:
+                            launchString = BedtimeActivity.class.getName();
+                            launchAction = BedtimeActivity.ACTION_BEDTIME;
+                            break;
+
+                        case DISMISS_BEDTIME:
+                            launchString = BedtimeActivity.class.getName();
+                            launchAction = BedtimeActivity.ACTION_BEDTIME_DISMISS;
+                            break;
+
                         case SNOOZE_ALARM:
                             launchString = null;
                             launchAction = AlarmClockActivity.ACTION_SNOOZE_ALARM;
@@ -875,7 +890,8 @@ public class WidgetActions
 
                         case OPEN_ACTION_LIST:
                             launchExtras = ActionListActivity.PARAM_NOSELECT + "=true";
-                            launchString = ActionListActivity.class.getName(); break;
+                            launchString = ActionListActivity.class.getName();
+                            break;
 
                         case OPEN_THEME_LIST:
                             launchExtras = WidgetThemeListActivity.PARAM_NOSELECT + "=true";

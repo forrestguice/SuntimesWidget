@@ -52,6 +52,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.worldclock.WorldClockDialog;
 
 /**
@@ -60,6 +61,9 @@ import com.forrestguice.suntimeswidget.worldclock.WorldClockDialog;
 public class BedtimeActivity extends AppCompatActivity
 {
     public static final String TAG = "BedtimeActivity";
+
+    public static final String ACTION_BEDTIME = "suntimes.action.BEDTIME";
+    public static final String ACTION_BEDTIME_DISMISS = "suntimes.action.DISMISS_BEDTIME";
 
     private static final String EXTRA_SHOWBACK = AlarmClockActivity.EXTRA_SHOWBACK;
 
@@ -203,8 +207,6 @@ public class BedtimeActivity extends AppCompatActivity
 
     protected void handleIntent(Intent intent)
     {
-        Context context = this;
-
         String param_action = intent.getAction();
         intent.setAction(null);
 
@@ -213,10 +215,12 @@ public class BedtimeActivity extends AppCompatActivity
 
         if (param_action != null)
         {
-            // TODO
-            /*if (param_action.equals(ACTION_SET_ALARM)) {
-                handleIntent_setAlarm(context, intent);
-            }*/
+            if (param_action.equals(ACTION_BEDTIME)) {
+                handleIntent_bedtime(this, intent);
+
+            } else if (param_action.equalsIgnoreCase(ACTION_BEDTIME_DISMISS)) {
+                handleIntent_bedtimeDismiss(this, intent);
+            }
 
         } else {
             if (param_data != null) {
@@ -224,6 +228,16 @@ public class BedtimeActivity extends AppCompatActivity
                 //list.notifyAlarmUpdated(ContentUris.parseId(param_data));
             }
         }
+    }
+
+    protected void handleIntent_bedtime(Context context, Intent intent)
+    {
+        Toast.makeText(context, "bedtime trigger received", Toast.LENGTH_SHORT).show();    // TODO
+    }
+
+    protected void handleIntent_bedtimeDismiss(Context context, Intent intent)
+    {
+        Toast.makeText(context, "bedtime dismiss received", Toast.LENGTH_SHORT).show();    // TODO
     }
 
     @SuppressLint("ResourceType")

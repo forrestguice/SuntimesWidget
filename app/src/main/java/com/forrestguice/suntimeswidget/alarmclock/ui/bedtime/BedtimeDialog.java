@@ -42,7 +42,6 @@ import android.view.ViewGroup;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
@@ -51,6 +50,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmRepeatDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -312,7 +312,7 @@ public class BedtimeDialog extends DialogFragment
         if (alarmID == BedtimeSettings.ID_NONE)
         {
             AlarmClockItem alarmItem = (slot.equals(BedtimeSettings.SLOT_BEDTIME_NOTIFY))
-                    ? createBedtimeReminderItem(context, item, hour, minute, offset) : createBedtimeAlarmItem(context, item, hour, minute, offset);
+                    ? createBedtimeEventItem(context, item, hour, minute, offset) : createBedtimeAlarmItem(context, item, hour, minute, offset);
             scheduleBedtimeAlarmItem(context, slot, alarmItem, item, true);
 
         } else {
@@ -325,7 +325,7 @@ public class BedtimeDialog extends DialogFragment
                     boolean addAlarm = (alarmItem == null);
                     if (addAlarm) {
                         alarmItem = (slot.equals(BedtimeSettings.SLOT_BEDTIME_NOTIFY))
-                                ? createBedtimeReminderItem(context, item, hour, minute, offset) : createBedtimeAlarmItem(context, item, hour, minute, offset);
+                                ? createBedtimeEventItem(context, item, hour, minute, offset) : createBedtimeAlarmItem(context, item, hour, minute, offset);
                     }
                     if (alarmItem.hour != hour || alarmItem.minute != minute || alarmItem.offset != offset) {
                         alarmItem.hour = hour;
@@ -391,7 +391,7 @@ public class BedtimeDialog extends DialogFragment
         return alarmItem;
     }
 
-    protected AlarmClockItem createBedtimeReminderItem(final Context context, @Nullable final BedtimeItem item, int hour, int minute, long offset)
+    protected AlarmClockItem createBedtimeEventItem(final Context context, @Nullable final BedtimeItem item, int hour, int minute, long offset)
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
         AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.NOTIFICATION,
@@ -401,6 +401,8 @@ public class BedtimeDialog extends DialogFragment
 
         alarmItem.offset = offset;
         alarmItem.repeating = true;
+        alarmItem.actionID0 = WidgetActions.SuntimesAction.TRIGGER_BEDTIME.name();
+        alarmItem.actionID1 = WidgetActions.SuntimesAction.DISMISS_BEDTIME.name();
         alarmItem.enabled = true;
         AlarmNotifications.updateAlarmTime(context, alarmItem);
         return alarmItem;
