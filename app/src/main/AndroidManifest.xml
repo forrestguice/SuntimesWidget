@@ -23,6 +23,8 @@
 
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />  <!-- needed for reliable delivery of alarms and notifications -->
 
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />  <!-- needed by Bedtime to trigger do-not-disturb -->
+
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
         android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
@@ -162,6 +164,7 @@
             android:icon="@mipmap/ic_launcher"
             android:permission="suntimes.permission.READ_CALCULATOR"
             android:exported="true">
+            android:launchMode="singleTask">
         </activity>
 
         <!-- Places Activity -->
