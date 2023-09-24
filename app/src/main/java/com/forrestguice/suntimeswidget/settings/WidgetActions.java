@@ -31,6 +31,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
@@ -850,13 +851,15 @@ public class WidgetActions
                     switch (action)
                     {
                         case TRIGGER_BEDTIME:
-                            launchString = BedtimeActivity.class.getName();
-                            launchAction = BedtimeActivity.ACTION_BEDTIME;
+                            launchType = LaunchType.BROADCAST;
+                            launchString = null;
+                            launchAction = AlarmNotifications.ACTION_BEDTIME;
                             break;
 
                         case DISMISS_BEDTIME:
-                            launchString = BedtimeActivity.class.getName();
-                            launchAction = BedtimeActivity.ACTION_BEDTIME_DISMISS;
+                            launchType = LaunchType.BROADCAST;
+                            launchString = null;
+                            launchAction = AlarmNotifications.ACTION_BEDTIME_DISMISS;
                             break;
 
                         case SNOOZE_ALARM:

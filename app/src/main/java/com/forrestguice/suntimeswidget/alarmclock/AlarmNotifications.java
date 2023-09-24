@@ -59,6 +59,9 @@ import android.support.v7.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
+
+import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -101,6 +104,9 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
     public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
     public static final String ACTION_UPDATE_UI = "suntimeswidget.alarm.ui.update";
+
+    public static final String ACTION_BEDTIME = "suntimeswidget.alarm.start_bedtime";              // enable bedtime mode
+    public static final String ACTION_BEDTIME_DISMISS = "suntimeswidget.alarm.dismiss_bedtime";    // disable bedtime mode
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
@@ -1462,6 +1468,14 @@ public class AlarmNotifications extends BroadcastReceiver
                         notifications.stopSelf(startId);
                         // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
 
+                    } else if (ACTION_BEDTIME.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME");
+                        triggerBedtimeMode(getApplicationContext(), true);
+
+                    } else if (ACTION_BEDTIME_DISMISS.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME_DISMISS");
+                        triggerBedtimeMode(getApplicationContext(), false);
+
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
                         Log.d(TAG, "ACTION_DELETE: clear all");
                         AlarmNotifications.stopAlert();
@@ -1497,6 +1511,25 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             return START_STICKY;
+        }
+
+        public static void triggerBedtimeMode(Context context, boolean value)
+        {
+            BedtimeSettings.setBedtimeModeActive(context, value);
+            if (BedtimeSettings.loadPrefBedtimeDoNotDisturb(context))
+            {
+                if (Build.VERSION.SDK_INT >= 23)
+                {
+                    NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    if (notifications != null && BedtimeSettings.hasDoNotDisturbPermission(context))
+                    {
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            BedtimeSettings.setAutomaticZenRule(context, true);
+                        }
+                        BedtimeSettings.triggerDoNotDisturb(context, value);
+                    }
+                }
+            }
         }
 
         private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener_clocktime(final int startId)

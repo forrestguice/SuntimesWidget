@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
 import android.annotation.SuppressLint;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -52,7 +51,6 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.views.Toast;
 
 /**
  * AlarmBedtimeActivity
@@ -60,9 +58,6 @@ import com.forrestguice.suntimeswidget.views.Toast;
 public class BedtimeActivity extends AppCompatActivity
 {
     public static final String TAG = "BedtimeActivity";
-
-    public static final String ACTION_BEDTIME = "suntimes.action.BEDTIME";
-    public static final String ACTION_BEDTIME_DISMISS = "suntimes.action.DISMISS_BEDTIME";
 
     private static final String EXTRA_SHOWBACK = AlarmClockActivity.EXTRA_SHOWBACK;
 
@@ -212,12 +207,12 @@ public class BedtimeActivity extends AppCompatActivity
         Uri param_data = intent.getData();
         intent.setData(null);
 
-        if (param_action != null)
+        /*if (param_action != null)
         {
-            if (param_action.equals(ACTION_BEDTIME)) {
+            if (param_action.equals(AlarmNotifications.ACTION_BEDTIME)) {
                 handleIntent_bedtime(this, intent);
 
-            } else if (param_action.equalsIgnoreCase(ACTION_BEDTIME_DISMISS)) {
+            } else if (param_action.equalsIgnoreCase(AlarmNotifications.ACTION_BEDTIME_DISMISS)) {
                 handleIntent_bedtimeDismiss(this, intent);
             }
 
@@ -226,39 +221,19 @@ public class BedtimeActivity extends AppCompatActivity
                 // TODO
                 //list.notifyAlarmUpdated(ContentUris.parseId(param_data));
             }
-        }
+        }*/
     }
 
-    protected void handleIntent_bedtime(Context context, Intent intent)
+    /*protected void handleIntent_bedtime(Context context, Intent intent)
     {
-        Toast.makeText(context, "bedtime trigger received", Toast.LENGTH_SHORT).show();    // TODO
-        triggerBedtimeMode(context, true);
+        Toast.makeText(context, "bedtime trigger received", Toast.LENGTH_SHORT).show();
+        AlarmNotifications.NotificationService.triggerBedtimeMode(context, true);
     }
-
     protected void handleIntent_bedtimeDismiss(Context context, Intent intent)
     {
-        Toast.makeText(context, "bedtime dismiss received", Toast.LENGTH_SHORT).show();    // TODO
-        triggerBedtimeMode(context, false);
-    }
-
-    protected void triggerBedtimeMode(Context context, boolean value)
-    {
-        BedtimeSettings.setBedtimeModeActive(context, value);
-        if (BedtimeSettings.loadPrefBedtimeDoNotDisturb(context))
-        {
-            if (Build.VERSION.SDK_INT >= 23)
-            {
-                NotificationManager notifications = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                if (notifications != null && BedtimeSettings.hasDoNotDisturbPermission(this))
-                {
-                    if (Build.VERSION.SDK_INT >= 24) {
-                        BedtimeSettings.setAutomaticZenRule(context, true);
-                    }
-                    BedtimeSettings.triggerDoNotDisturb(context, value);
-                }
-            }
-        }
-    }
+        Toast.makeText(context, "bedtime dismiss received", Toast.LENGTH_SHORT).show();
+        AlarmNotifications.NotificationService.triggerBedtimeMode(context, false);
+    }*/
 
     @SuppressLint("ResourceType")
     private void initLocale(Context context)
@@ -369,7 +344,7 @@ public class BedtimeActivity extends AppCompatActivity
         {
             case R.id.action_permission:
                 //BedtimeSettings.startDoNotDisturbAccessActivity(BedtimeActivity.this);
-                triggerBedtimeMode(this, true);
+                AlarmNotifications.NotificationService.triggerBedtimeMode(this, true);
                 return true;
 
             case R.id.action_settings:
