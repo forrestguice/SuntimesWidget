@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -39,7 +40,6 @@ import android.view.View;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -53,7 +53,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.Toast;
-import com.forrestguice.suntimeswidget.worldclock.WorldClockDialog;
 
 /**
  * AlarmBedtimeActivity
@@ -233,11 +232,32 @@ public class BedtimeActivity extends AppCompatActivity
     protected void handleIntent_bedtime(Context context, Intent intent)
     {
         Toast.makeText(context, "bedtime trigger received", Toast.LENGTH_SHORT).show();    // TODO
+        triggerBedtimeMode(context, true);
     }
 
     protected void handleIntent_bedtimeDismiss(Context context, Intent intent)
     {
         Toast.makeText(context, "bedtime dismiss received", Toast.LENGTH_SHORT).show();    // TODO
+        triggerBedtimeMode(context, false);
+    }
+
+    protected void triggerBedtimeMode(Context context, boolean value)
+    {
+        BedtimeSettings.setBedtimeModeActive(context, value);
+        if (BedtimeSettings.loadPrefBedtimeDoNotDisturb(context))
+        {
+            if (Build.VERSION.SDK_INT >= 23)
+            {
+                NotificationManager notifications = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                if (notifications != null && BedtimeSettings.hasDoNotDisturbPermission(this))
+                {
+                    if (Build.VERSION.SDK_INT >= 24) {
+                        BedtimeSettings.setAutomaticZenRule(context, true);
+                    }
+                    BedtimeSettings.triggerDoNotDisturb(context, value);
+                }
+            }
+        }
     }
 
     @SuppressLint("ResourceType")
@@ -347,6 +367,11 @@ public class BedtimeActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
+            case R.id.action_permission:
+                //BedtimeSettings.startDoNotDisturbAccessActivity(BedtimeActivity.this);
+                triggerBedtimeMode(this, true);
+                return true;
+
             case R.id.action_settings:
                 showSettings();
                 return true;

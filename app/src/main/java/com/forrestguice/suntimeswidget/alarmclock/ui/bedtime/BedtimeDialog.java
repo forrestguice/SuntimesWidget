@@ -153,6 +153,10 @@ public class BedtimeDialog extends DialogFragment
 
             case REQUEST_EDIT_BEDTIME:
                 onEditAlarmResult(resultCode, data, false, BedtimeSettings.SLOT_WAKEUP_ALARM);
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    AlarmClockItem item = data.getParcelableExtra(AlarmEditActivity.EXTRA_ITEM);
+                    BedtimeSettings.setAutomaticZenRule(getActivity(), item.enabled && BedtimeSettings.loadPrefBedtimeDoNotDisturb(getActivity()));
+                }
                 break;
         }
     }
@@ -303,11 +307,12 @@ public class BedtimeDialog extends DialogFragment
         final int bedtime_hour = bedtime.get(Calendar.HOUR_OF_DAY);
         final int bedtime_minute = bedtime.get(Calendar.MINUTE);*/
 
-        triggerBedtimeAt(context, item, BedtimeSettings.SLOT_WAKEUP_ALARM, wakeup_hour, wakeup_minute, 0);
-        triggerBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, wakeup_hour, wakeup_minute, bedtime_offset);
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_WAKEUP_ALARM, wakeup_hour, wakeup_minute, 0);
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, wakeup_hour, wakeup_minute, bedtime_offset);
+        BedtimeSettings.setAutomaticZenRule(getActivity(), BedtimeSettings.loadPrefBedtimeDoNotDisturb(getActivity()));
     }
 
-    protected void triggerBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, final int hour, final int minute, final long offset)
+    protected void configureBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, final int hour, final int minute, final long offset)
     {
         long alarmID = BedtimeSettings.loadAlarmID(getActivity(), slot);
         if (alarmID == BedtimeSettings.ID_NONE)
@@ -359,7 +364,7 @@ public class BedtimeDialog extends DialogFragment
                         BedtimeSettings.saveAlarmID(getActivity(), slot, alarmItem.rowID);
                         getActivity().sendBroadcast( AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_RESCHEDULE, alarmItem.getUri()) );
                         Toast.makeText(context, "Modified alarm scheduled: " + slot, Toast.LENGTH_SHORT).show();                        // TODO
-                        adapter.moveItem(adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM), 0);
+                        //adapter.moveItem(adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM), 0);
                     }
                 });
                 task.execute(alarmItem);
@@ -575,7 +580,7 @@ public class BedtimeDialog extends DialogFragment
                     long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(getActivity());
                     long sleepTotalMs = (long)(numSleepCycles * sleepCycleMs);
                     final long bedtime_offset = -sleepTotalMs + (1000 * 60);
-                    triggerBedtimeAt(getActivity(), item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, alarmItem.hour, alarmItem.minute, bedtime_offset);
+                    configureBedtimeAt(getActivity(), item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, alarmItem.hour, alarmItem.minute, bedtime_offset);
                 }
             }
         };

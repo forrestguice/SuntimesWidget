@@ -121,6 +121,9 @@ public class BedtimeSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+
     public static boolean hasDoNotDisturbPermission(Context context)
     {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -131,72 +134,101 @@ public class BedtimeSettings
         } else return true;
     }
 
-    @TargetApi(23)
     public static void startDoNotDisturbAccessActivity(Context context)
     {
-        Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
-        context.startActivity(intent);
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+            context.startActivity(intent);
+        }
     }
 
-    @TargetApi(24)
-    public static void setAutomaticZenRule(Context context, boolean enabled)
+    public static String getAutomaticZenRuleName(Context context) {
+        return "Bedtime (Suntimes)";           // TODO: i18n
+    }
+    public static Uri getAutomaticZenRuleCondition(Context context) {
+        return Uri.parse("condition://id");    // TODO
+    }
+
+    /**
+     * @param enabled true set rule enabled, false set rule disabled
+     * @return ruleID
+     */
+    public static String setAutomaticZenRule(Context context, boolean enabled)
     {
         NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notifications != null && hasDoNotDisturbPermission(context))
         {
             if (Build.VERSION.SDK_INT >= 24)
             {
-                //clearAutomaticZenRules();
+                String ruleId;
                 AutomaticZenRule rule;
                 Map<String, AutomaticZenRule> rules = notifications.getAutomaticZenRules();
                 if (rules.size() > 0)
                 {
-                    String ruleId = rules.keySet().toArray(new String[0])[0];
+                    ruleId = rules.keySet().toArray(new String[0])[0];
                     rule = rules.get(ruleId);
                     if (rule.isEnabled() != enabled)
                     {
                         rule.setEnabled(enabled);
                         notifications.updateAutomaticZenRule(ruleId, rule);
-                        Log.d("BedtimeSettings", "Updated AutomaticZenRule (bedtime) " + ruleId + " (" + enabled + ")");
+                        Log.d("BedtimeSettings", "Updated AutomaticZenRule " + ruleId + " (" + enabled + ")");
                     }
 
                 } else {
-                    String ruleName = "Bedtime (Suntimes)";           // TODO: i18n
-                    Uri conditionId = Uri.parse("condition://id");    // TODO
+                    String ruleName = getAutomaticZenRuleName(context);
+                    Uri conditionId = getAutomaticZenRuleCondition(context);
                     ComponentName componentName = new ComponentName(context, BedtimeConditionService.class);
                     rule = new AutomaticZenRule(ruleName, componentName, conditionId, NotificationManager.INTERRUPTION_FILTER_ALARMS, enabled);
-                    String ruleId = notifications.addAutomaticZenRule(rule);
-                    Log.d("BedtimeSettings", "Added AutomaticZenRule (bedtime) " + ruleId + " (" + enabled + ")");
+                    ruleId = notifications.addAutomaticZenRule(rule);
+                    Log.d("BedtimeSettings", "Added AutomaticZenRule " + ruleId + " (" + enabled + ")");
+                }
+                return ruleId;
+            }
+            return null;
+        }
+        return null;
+    }
+
+    public static void clearAutomaticZenRules(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 24)
+        {
+            NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notifications != null && hasDoNotDisturbPermission(context))
+            {
+                Map<String, AutomaticZenRule> rules = notifications.getAutomaticZenRules();
+                for (String id : rules.keySet()) {
+                    notifications.removeAutomaticZenRule(id);
                 }
             }
         }
     }
 
-    @TargetApi(24)
-    public static void clearAutomaticZenRules(Context context)
+    public static void triggerDoNotDisturb(Context context, boolean value)
     {
-        NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notifications != null && hasDoNotDisturbPermission(context))
+        if (Build.VERSION.SDK_INT >= 24)
         {
-            Map<String, AutomaticZenRule> rules = notifications.getAutomaticZenRules();
-            for (String id : rules.keySet()) {
-                notifications.removeAutomaticZenRule(id);
+            /*if (Build.VERSION.SDK_INT >= 29)
+            {
+                NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (notifications != null && hasDoNotDisturbPermission(context)){
+                    // TODO: use api29+ NotificationManager method to change AutomaticZenRule condition
+                }
+            } else {
+                // TODO: trigger BedtimeConditionService
+            }*/
+
+        } else if (Build.VERSION.SDK_INT >= 23) {
+            NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notifications != null && hasDoNotDisturbPermission(context))
+            try {
+                int policy = (value ? NotificationManager.INTERRUPTION_FILTER_ALARMS : NotificationManager.INTERRUPTION_FILTER_ALL);
+                notifications.setInterruptionFilter(policy);    // do-not-disturb requires `android.permission.ACCESS_NOTIFICATION_POLICY`
+            } catch (SecurityException e) {
+                Log.w("BedtimeSettings", "Failed to toggle do-not-disturb! " + e);
             }
         }
-    }
-
-    @TargetApi(24)
-    public static void triggerAutomaticZenRule(Context context, boolean value)
-    {
-        /*if (Build.VERSION.SDK_INT >= 29)
-        {
-            NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (notifications != null && hasDoNotDisturbPermission(context)){
-                // TODO
-            }
-        } else {
-            // TODO
-        }*/
     }
 
 }

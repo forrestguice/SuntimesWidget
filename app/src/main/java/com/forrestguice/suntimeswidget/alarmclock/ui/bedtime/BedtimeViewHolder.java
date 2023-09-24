@@ -333,8 +333,10 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             {
                 check_dnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                    {
                         BedtimeSettings.savePrefBedtimeDoNotDisturb(context, isChecked);
+                        BedtimeSettings.setAutomaticZenRule(context, switch_enabled.isChecked() && isChecked);
                         updateViews_dndWarning();
                     }
                 });
