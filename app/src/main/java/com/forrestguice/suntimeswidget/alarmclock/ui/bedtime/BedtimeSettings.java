@@ -17,12 +17,21 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
+import android.annotation.TargetApi;
+import android.app.AutomaticZenRule;
+import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+
+import java.util.Map;
 
 /**
  * AlarmSettings
@@ -39,6 +48,33 @@ public class BedtimeSettings
 
     public static final String PREF_KEY_SLEEPCYCLE_COUNT = "app_alarms_sleepCycleCount";
     public static final float PREF_DEF_SLEEPCYCLE_COUNT = 5;
+
+    public static final String PREF_KEY_BEDTIME_DND = "app_bedtime_dnd";
+    public static final boolean PREF_DEF_BEDTIME_DND = false;
+
+    public static final String PREF_KEY_BEDTIME_ACTIVE = "app_bedtime_active";
+    public static boolean isBedtimeModeActive(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_BEDTIME_ACTIVE, false);
+    }
+    public static void setBedtimeModeActive(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_BEDTIME_ACTIVE, value);
+        prefs.apply();
+    }
+
+    public static boolean loadPrefBedtimeDoNotDisturb(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_BEDTIME_DND, PREF_DEF_BEDTIME_DND);
+    }
+    public static void savePrefBedtimeDoNotDisturb(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_BEDTIME_DND, value);
+        prefs.apply();
+    }
 
     public static long loadPrefSleepCycleMs(Context context)
     {
@@ -83,6 +119,84 @@ public class BedtimeSettings
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.remove(PREF_KEY_BEDTIME_ALARM_ID + "_" + slot);
         prefs.apply();
+    }
+
+    public static boolean hasDoNotDisturbPermission(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notifications != null) {
+                return notifications.isNotificationPolicyAccessGranted();
+            } else return true;
+        } else return true;
+    }
+
+    @TargetApi(23)
+    public static void startDoNotDisturbAccessActivity(Context context)
+    {
+        Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+        context.startActivity(intent);
+    }
+
+    @TargetApi(24)
+    public static void setAutomaticZenRule(Context context, boolean enabled)
+    {
+        NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notifications != null && hasDoNotDisturbPermission(context))
+        {
+            if (Build.VERSION.SDK_INT >= 24)
+            {
+                //clearAutomaticZenRules();
+                AutomaticZenRule rule;
+                Map<String, AutomaticZenRule> rules = notifications.getAutomaticZenRules();
+                if (rules.size() > 0)
+                {
+                    String ruleId = rules.keySet().toArray(new String[0])[0];
+                    rule = rules.get(ruleId);
+                    if (rule.isEnabled() != enabled)
+                    {
+                        rule.setEnabled(enabled);
+                        notifications.updateAutomaticZenRule(ruleId, rule);
+                        Log.d("BedtimeSettings", "Updated AutomaticZenRule (bedtime) " + ruleId + " (" + enabled + ")");
+                    }
+
+                } else {
+                    String ruleName = "Bedtime (Suntimes)";           // TODO: i18n
+                    Uri conditionId = Uri.parse("condition://id");    // TODO
+                    ComponentName componentName = new ComponentName(context, BedtimeConditionService.class);
+                    rule = new AutomaticZenRule(ruleName, componentName, conditionId, NotificationManager.INTERRUPTION_FILTER_ALARMS, enabled);
+                    String ruleId = notifications.addAutomaticZenRule(rule);
+                    Log.d("BedtimeSettings", "Added AutomaticZenRule (bedtime) " + ruleId + " (" + enabled + ")");
+                }
+            }
+        }
+    }
+
+    @TargetApi(24)
+    public static void clearAutomaticZenRules(Context context)
+    {
+        NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notifications != null && hasDoNotDisturbPermission(context))
+        {
+            Map<String, AutomaticZenRule> rules = notifications.getAutomaticZenRules();
+            for (String id : rules.keySet()) {
+                notifications.removeAutomaticZenRule(id);
+            }
+        }
+    }
+
+    @TargetApi(24)
+    public static void triggerAutomaticZenRule(Context context, boolean value)
+    {
+        /*if (Build.VERSION.SDK_INT >= 29)
+        {
+            NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notifications != null && hasDoNotDisturbPermission(context)){
+                // TODO
+            }
+        } else {
+            // TODO
+        }*/
     }
 
 }
