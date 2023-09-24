@@ -39,6 +39,7 @@
                     android:layout_gravity="center_vertical|bottom|end"
                     android:text="" tools:text="p.m." />
             </LinearLayout>
+
         </LinearLayout>
 
         <FrameLayout

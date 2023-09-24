@@ -122,6 +122,7 @@ public class BedtimeDialog extends DialogFragment
     {
         super.onResume();
         restoreDialogs(getActivity());
+        adapter.notifyDataSetChanged();
     }
 
     protected void restoreDialogs(Context context)
@@ -403,6 +404,7 @@ public class BedtimeDialog extends DialogFragment
         alarmItem.repeating = true;
         alarmItem.actionID0 = WidgetActions.SuntimesAction.TRIGGER_BEDTIME.name();
         alarmItem.actionID1 = WidgetActions.SuntimesAction.DISMISS_BEDTIME.name();
+        alarmItem.vibrate = false;
         alarmItem.enabled = true;
         AlarmNotifications.updateAlarmTime(context, alarmItem);
         return alarmItem;

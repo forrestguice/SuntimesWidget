@@ -22,8 +22,10 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
@@ -257,16 +259,15 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
         protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context)
         {
-            return new CompoundButton.OnCheckedChangeListener()
-            {
+            return new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    enableAlarm(context, getAlarmItem(), isChecked);
+                    toggleAlarm(context, getAlarmItem(), isChecked);
                 }
             };
         }
 
-        public void enableAlarm(final Context context, @Nullable final AlarmClockItem item, final boolean enabled)
+        public void toggleAlarm(final Context context, @Nullable final AlarmClockItem item, final boolean enabled)
         {
             if (item != null)
             {
@@ -296,8 +297,18 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
      */
     public static final class BedtimeViewHolder_Bedtime extends AlarmBedtimeViewHolder_AlarmItem
     {
-        public BedtimeViewHolder_Bedtime(View view) {
+        protected CheckBox check_dnd;
+        protected View layout_dndWarning;
+        protected TextView text_dndWarning;
+        protected Button button_dndWarning;
+
+        public BedtimeViewHolder_Bedtime(View view)
+        {
             super(view);
+            check_dnd = (CheckBox) view.findViewById(R.id.check_dnd);
+            layout_dndWarning = view.findViewById(R.id.dndwarning_layout);
+            text_dndWarning = (TextView) view.findViewById(R.id.dndwarning_text);
+            button_dndWarning = (Button) view.findViewById(R.id.dndwarning_button);
         }
 
         public static int getLayoutResID() {
@@ -315,14 +326,69 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected void attachClickListeners(final Context context, @Nullable BedtimeItem item) {
+        protected void attachClickListeners(final Context context, @Nullable BedtimeItem item)
+        {
             super.attachClickListeners(context, item);
+            if (check_dnd != null)
+            {
+                check_dnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        BedtimeSettings.savePrefBedtimeDoNotDisturb(context, isChecked);
+                        updateViews_dndWarning();
+                    }
+                });
+            }
+            if (button_dndWarning != null)
+            {
+                button_dndWarning.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BedtimeSettings.startDoNotDisturbAccessActivity(context);
+                    }
+                });
+            }
+        }
+
+        public void toggleAlarm(final Context context, @Nullable final AlarmClockItem item, final boolean enabled)
+        {
+            super.toggleAlarm(context, item, enabled);
+            BedtimeSettings.setAutomaticZenRule(context, enabled && BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
+        }
+
+        @Override
+        protected void detachClickListeners()
+        {
+            super.detachClickListeners();
+            if (check_dnd != null) {
+                check_dnd.setOnCheckedChangeListener(null);
+            }
+            if (button_dndWarning != null) {
+                button_dndWarning.setOnClickListener(null);
+            }
+        }
+
+        protected void updateViews_dndWarning()
+        {
+            boolean showDndWarning = (check_dnd != null && check_dnd.isChecked() && !BedtimeSettings.hasDoNotDisturbPermission(contextRef.get()));
+            if (layout_dndWarning != null) {
+                layout_dndWarning.setVisibility(showDndWarning ? View.VISIBLE : View.GONE);
+            }
+            if (text_dndWarning != null) {
+                text_dndWarning.setText(showDndWarning ? SuntimesUtils.fromHtml(contextRef.get().getString(R.string.privacy_permission_dnd)) : "");
+            }
         }
 
         @Override
         protected void updateViews()
         {
             super.updateViews();
+
+            if (check_dnd != null) {
+                check_dnd.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(contextRef.get()));
+            }
+            updateViews_dndWarning();
+
             if (getAlarmItem() != null)
             {
                 if (text_label != null) {

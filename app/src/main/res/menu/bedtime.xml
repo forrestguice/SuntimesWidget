@@ -3,6 +3,11 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
+        <item android:id="@+id/action_permission"
+            android:icon="?attr/icActionSettings"
+            android:title="Check Permissions"
+            app:showAsAction="never" />  <!-- TODO -->
+
         <item android:id="@+id/action_settings"
             android:icon="?attr/icActionSettings"
             android:title="@string/configAction_settings"

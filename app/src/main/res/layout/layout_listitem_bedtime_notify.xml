@@ -39,6 +39,40 @@
                     android:layout_gravity="center_vertical|bottom|end"
                     android:text="" tools:text="p.m." />
             </LinearLayout>
+
+            <View android:background="?attr/hrColor"
+                android:layout_marginTop="12dp" android:layout_marginBottom="8dp"
+                android:layout_width="match_parent" android:layout_height="1dp" />
+
+            <CheckBox android:id="@+id/check_reminder"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small"
+                android:text="Reminder 15m before bedtime" />
+
+            <CheckBox android:id="@+id/check_dnd"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small"
+                android:text="'Do Not Disturb' at bedtime" />
+
+            <LinearLayout android:id="@+id/dndwarning_layout" android:visibility="visible"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="vertical" android:layout_marginTop="4dp">
+
+                <TextView android:id="@+id/dndwarning_text"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textSize="?attr/text_size_small"
+                    android:drawableStart="?attr/icActionWarning" android:gravity="center_vertical"
+                    tools:text="@string/privacy_permission_dnd" />
+
+                <Button android:id="@+id/dndwarning_button"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:textSize="?attr/text_size_small"
+                    android:gravity="center_vertical" android:layout_gravity="end"
+                    android:text="Allow Access" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <FrameLayout
