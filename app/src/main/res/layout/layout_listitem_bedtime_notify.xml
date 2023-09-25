@@ -16,10 +16,10 @@
 
             <TextView android:id="@+id/text_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:drawableStart="?attr/icActionNotification" android:gravity="center_vertical"
+                android:drawableStart="?attr/icActionBedtime" android:gravity="center_vertical"
                 android:drawablePadding="8dp"
                 android:textSize="?attr/text_size_small"
-                android:text="Bedtime notification set to" />
+                android:text="Bedtime set to" />
 
             <LinearLayout
                 android:id="@+id/text_time_layout"
@@ -43,11 +43,6 @@
             <View android:background="?attr/hrColor"
                 android:layout_marginTop="12dp" android:layout_marginBottom="8dp"
                 android:layout_width="match_parent" android:layout_height="1dp" />
-
-            <CheckBox android:id="@+id/check_reminder"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small"
-                android:text="Reminder 15m before bedtime" />
 
             <CheckBox android:id="@+id/check_dnd"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"

@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <Button android:id="@+id/button_bedtime_now"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="I'm going to bed now ..." />
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp" android:layout_marginBottom="4dp">
+
+        <LinearLayout android:id="@+id/layout_header"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:src="@drawable/ic_alarm_snooze_huge" />   <!-- TODO -->
+
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Bedtime mode is currently active." />
+
+        </LinearLayout>
+
+        <Button android:id="@+id/button_bedtime_now" android:visibility="gone"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="Bedtime right now" />
+
+        <Button android:id="@+id/button_bedtime_dismiss"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="Dismiss" />
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -39,13 +39,14 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         initItems();
     }
 
-    protected void initItems() {
+    protected void initItems()
+    {
         items.clear();
+        items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME_NOW));
         items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME));
-        //items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME_REMINDER));
+        items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME_REMINDER));
         items.add(new BedtimeItem(BedtimeItem.ItemType.SLEEP_CYCLE));
         items.add(new BedtimeItem(BedtimeItem.ItemType.WAKEUP_ALARM));
-        items.add(new BedtimeItem(BedtimeItem.ItemType.BEDTIME_NOW));
     }
 
     @Nullable

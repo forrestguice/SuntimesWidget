@@ -19,11 +19,11 @@
                 android:gravity="center_vertical"
                 android:textSize="?attr/text_size_small"
                 android:drawablePadding="8dp" android:drawableStart="?attr/icActionNotification1"
-                tools:text="Show a reminder 15m before bedtime." />
+                tools:text="Reminder notification 15m before bedtime." />
 
         </LinearLayout>
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginEnd="8dp" android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
@@ -39,11 +39,19 @@
                 app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
                 android:scaleType="center"
                 app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
                 android:visibility="gone"
                 android:contentDescription="@string/configAction_settings" />
 
-        </FrameLayout>
+            <android.support.design.widget.FloatingActionButton android:id="@+id/button_edit"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
+                android:scaleType="center"
+                android:src="?attr/icActionEdit" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+                android:contentDescription="@string/configAction_editAlarm" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
