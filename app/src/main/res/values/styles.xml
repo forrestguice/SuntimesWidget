@@ -113,6 +113,7 @@
         <item name="icActionTime">@drawable/ic_action_time_ref</item>
         <item name="icActionDst">@drawable/ic_weather_sunny_ref</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_ref</item>
+        <item name="icActionBedtime">@drawable/ic_action_bedtime_ref</item>
         <item name="icActionCalendar">@drawable/ic_calendar_ref</item>
         <item name="icActionNotification">@drawable/ic_action_notification_ref</item>
         <item name="icActionNotification1">@drawable/ic_action_notification1_ref</item>
@@ -325,6 +326,7 @@
         <item name="icActionTime">@drawable/ic_action_time_light</item>
         <item name="icActionDst">@drawable/ic_weather_sunny_light</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
+        <item name="icActionBedtime">@drawable/ic_action_bedtime_light</item>
         <item name="icActionCalendar">@drawable/ic_calendar_light</item>
         <item name="icActionNotification">@drawable/ic_action_notification_light</item>
         <item name="icActionNotification1">@drawable/ic_action_notification1_light</item>
@@ -539,6 +541,7 @@
         <item name="icActionTime">@drawable/ic_action_time</item>
         <item name="icActionDst">@drawable/ic_weather_sunny</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms</item>
+        <item name="icActionBedtime">@drawable/ic_action_bedtime</item>
         <item name="icActionCalendar">@drawable/ic_calendar</item>
         <item name="icActionNotification">@drawable/ic_action_notification</item>
         <item name="icActionNotification1">@drawable/ic_action_notification1</item>
