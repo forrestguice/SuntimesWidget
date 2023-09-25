@@ -22,7 +22,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -34,10 +34,8 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
-import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -269,26 +267,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
         public void toggleAlarm(final Context context, @Nullable final AlarmClockItem item, final boolean enabled)
         {
-            if (item != null)
-            {
-                item.alarmtime = 0;
-                item.enabled = enabled;
-                item.modified = true;
-
-                AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
-                enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
-                {
-                    @Override
-                    public void onFinished(Boolean result, AlarmClockItem item)
-                    {
-                        if (result) {
-                            context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
-                                    : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
-                        }
-                    }
-                });
-                enableTask.execute(item);
-            }
+            BedtimeAlarmHelper.toggleAlarmItem(context, item, enabled);
         }
     }
 
@@ -436,7 +415,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
         @Override
         protected Long getAlarmID(Context context) {
-            return null;
+            return BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
         }
 
         @Override
@@ -445,11 +424,36 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
+        protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context) {
+            return new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    BedtimeSettings.savePrefBedtimeReminder(context, isChecked);
+                    BedtimeAlarmHelper.setBedtimeReminder_withReminderItem(context, getAlarmItem(), isChecked);
+                }
+            };
+        }
+
+        @Override
         protected void updateViews()
         {
             super.updateViews();
-            if (text_label != null) {
-                text_label.setText("Show a reminder 20m before bedtime.");    // TODO: i18n
+
+            AlarmClockItem item = getAlarmItem();
+            if (switch_enabled != null) {
+                switch_enabled.setVisibility(View.VISIBLE);
+            }
+            if (button_edit != null) {
+                button_edit.setVisibility(item != null ? View.VISIBLE : View.GONE);
+            }
+            if (text_label != null)
+            {
+                String label = "Show a reminder 15m before bedtime";    // TODO: i18n
+                if (item != null) {
+                    label = "Show a reminder " + utils.timeDeltaLongDisplayString(item.offset) + " before bedtime";    // TODO
+                }
+                text_label.setText(label);
             }
         }
     }
@@ -550,15 +554,17 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
                     float sleepCycleCount = BedtimeSettings.loadPrefSleepCycleCount(context);
 
-                    String sleepCycleCountString = sleepCycleCount + "";
-                    String hoursString = utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount));
-                    String displayString1 = "Sleep for " + sleepCycleCountString + " cycles (" + hoursString + ")" ;   // TODO
-                    CharSequence sleepCycleCountDisplay = SuntimesUtils.createBoldSpan(null, displayString1, sleepCycleCountString);
-
+                    String sleepCycleCountString = String.format(SuntimesUtils.getLocale(), "%.0f", sleepCycleCount);
                     String sleepCycleString = utils.timeDeltaLongDisplayString(sleepCycleMs);
-                    String displayString = "of " + sleepCycleString;  // TODO
-                    CharSequence sleepCycleDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepCycleString);
-                    text_sleepcycle.setText(sleepCycleCountDisplay + "\n" + sleepCycleDisplay);    // TODO
+                    String hoursString = utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount));
+
+                    String displayString = "Bedtime for " + hoursString
+                            + " (" + sleepCycleCountString + " cycles of " + sleepCycleString + ")";  // TODO
+
+                    SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepCycleString);
+                    sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, sleepCycleCountString);
+                    sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, hoursString);
+                    text_sleepcycle.setText(sleepTimeDisplay);
                 }
 
             } else {
@@ -592,12 +598,16 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
      */
     public static final class AlarmBedtimeViewHolder_BedtimeNow extends BedtimeViewHolder
     {
-        protected Button actionButton;
+        protected Button nowButton;
+        protected Button dismissButton;
+        protected View headerLayout;
 
         public AlarmBedtimeViewHolder_BedtimeNow(View view)
         {
             super(view);
-            actionButton = (Button)view.findViewById(R.id.button_bedtime_now);
+            nowButton = (Button)view.findViewById(R.id.button_bedtime_now);
+            dismissButton = (Button)view.findViewById(R.id.button_bedtime_dismiss);
+            headerLayout = view.findViewById(R.id.layout_header);
         }
 
         public static int getLayoutResID() {
@@ -605,23 +615,59 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         public View getActionView() {
-            return actionButton;
+            return nowButton;
         }
 
         @Override
-        public void bindDataToHolder(Context context, @Nullable BedtimeItem item) {
+        public void bindDataToHolder(Context context, @Nullable BedtimeItem item)
+        {
+            if (item != null)
+            {
+                boolean isActive = BedtimeSettings.isBedtimeModeActive(context);
+                if (headerLayout != null) {
+                    headerLayout.setVisibility(isActive ? View.VISIBLE : View.GONE);
+                }
+                if (nowButton != null) {
+                    nowButton.setVisibility(isActive ? View.GONE : View.VISIBLE);
+                }
+                if (dismissButton != null) {
+                    dismissButton.setVisibility(isActive ? View.VISIBLE : View.GONE);
+                }
+            } else {
+                if (headerLayout != null) {
+                    headerLayout.setVisibility(View.GONE);
+                }
+                if (nowButton != null) {
+                    nowButton.setVisibility(View.GONE);
+                }
+                if (dismissButton != null) {
+                    dismissButton.setVisibility(View.GONE);
+                }
+            }
         }
 
         @Override
-        protected void attachClickListeners(final Context context, final @Nullable BedtimeItem item) {
+        protected void attachClickListeners(final Context context, final @Nullable BedtimeItem item)
+        {
+            if (dismissButton != null) {
+                dismissButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BedtimeAlarmHelper.dismissBedtimeEvent(context);
+                    }
+                });
+            }
         }
 
         @Override
         protected void detachClickListeners()
         {
             super.detachClickListeners();
-            if (actionButton != null) {
-                actionButton.setOnClickListener(null);
+            if (nowButton != null) {
+                nowButton.setOnClickListener(null);
+            }
+            if (dismissButton != null) {
+                dismissButton.setOnClickListener(null);
             }
         }
 
