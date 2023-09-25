@@ -41,6 +41,7 @@ public class BedtimeSettings
     public static final String PREF_KEY_BEDTIME_ALARM_ID = "app_bedtime_alarmid";
     public static final String SLOT_WAKEUP_ALARM = "wakeup";
     public static final String SLOT_BEDTIME_NOTIFY = "notify";
+    public static final String SLOT_BEDTIME_REMINDER = "reminder";
     public static final long ID_NONE = -1;
 
     public static final String PREF_KEY_SLEEPCYCLE_LENGTH = "app_alarms_sleepCycleMillis";
@@ -51,6 +52,9 @@ public class BedtimeSettings
 
     public static final String PREF_KEY_BEDTIME_DND = "app_bedtime_dnd";
     public static final boolean PREF_DEF_BEDTIME_DND = false;
+
+    public static final String PREF_KEY_BEDTIME_REMINDER = "app_bedtime_reminder";
+    public static final boolean PREF_DEF_BEDTIME_REMINDER = false;
 
     public static final String PREF_KEY_BEDTIME_ACTIVE = "app_bedtime_active";
     public static boolean isBedtimeModeActive(Context context)
@@ -73,6 +77,17 @@ public class BedtimeSettings
     {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putBoolean(PREF_KEY_BEDTIME_DND, value);
+        prefs.apply();
+    }
+
+    public static boolean loadPrefBedtimeReminder(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_BEDTIME_REMINDER, PREF_DEF_BEDTIME_REMINDER);
+    }
+    public static void savePrefBedtimeReminder(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_BEDTIME_REMINDER, value);
         prefs.apply();
     }
 
