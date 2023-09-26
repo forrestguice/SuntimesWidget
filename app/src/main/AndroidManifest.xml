@@ -337,6 +337,16 @@
             </intent-filter>-->
         </activity>
 
+        <service
+            android:name=".tiles.BedtimeTileService"
+            android:label="@string/configLabel_bedtime"
+            android:icon="@drawable/ic_action_bedtime"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+
         <service android:name=".alarmclock.ui.bedtime.BedtimeConditionService"
             android:label="@string/configLabel_bedtime"
             android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
