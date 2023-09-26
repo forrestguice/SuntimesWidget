@@ -674,6 +674,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             }
         });
         task.execute(item);
+        returnItem(item);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
