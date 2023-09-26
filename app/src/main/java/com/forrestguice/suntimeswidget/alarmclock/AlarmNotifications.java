@@ -1529,6 +1529,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                 }
             }
+            context.sendBroadcast(getFullscreenBroadcast(null));
         }
 
         private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener_clocktime(final int startId)
