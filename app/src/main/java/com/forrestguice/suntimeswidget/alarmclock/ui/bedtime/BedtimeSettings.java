@@ -61,6 +61,9 @@ public class BedtimeSettings
     public static final String PREF_KEY_BEDTIME_REMINDER = "app_bedtime_reminder";
     public static final boolean PREF_DEF_BEDTIME_REMINDER = false;
 
+    public static final String PREF_KEY_BEDTIME_REMINDER_OFFSET = "app_bedtime_reminder_offset";
+    public static final long PREF_DEF_BEDTIME_REMINDER_OFFSET = -1000 * 60 * 15;    // 15m before
+
     public static final String PREF_KEY_BEDTIME_ACTIVE = "app_bedtime_active";
     public static boolean isBedtimeModeActive(Context context)
     {
@@ -93,6 +96,16 @@ public class BedtimeSettings
     {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putBoolean(PREF_KEY_BEDTIME_REMINDER, value);
+        prefs.apply();
+    }
+
+    public static long loadPrefBedtimeReminderOffset(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getLong(PREF_KEY_BEDTIME_REMINDER_OFFSET, PREF_DEF_BEDTIME_REMINDER_OFFSET);
+    }
+    public static void savePrefReminderOffset(Context context, long value) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putLong(PREF_KEY_BEDTIME_REMINDER_OFFSET, value);
         prefs.apply();
     }
 
