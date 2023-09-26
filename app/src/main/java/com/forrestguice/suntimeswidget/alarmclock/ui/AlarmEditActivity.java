@@ -321,7 +321,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         returnItem(item);
     }
 
-    protected void returnItem(AlarmClockItem item)
+    /**
+     * returns an AlarmClockItem; calls finish.
+     * @param item the modified item this activity will return, or null if item was deleted
+     */
+    protected void returnItem(@Nullable AlarmClockItem item)
     {
         editor.saveSettings(AlarmEditActivity.this);
         Intent intent = getIntent();
@@ -620,8 +624,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
        return new DialogInterface.OnClickListener()
        {
            public void onClick(DialogInterface dialog, int whichButton) {
-               setResult(AlarmEditActivity.RESULT_CANCELED);
-               supportFinishAfterTransition();
+               returnItem(null);
                sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmEditActivity.this, AlarmNotifications.ACTION_DELETE, item.getUri()));
            }
        };
