@@ -96,7 +96,8 @@ public class BedtimeActivity extends AppCompatActivity
     public void onStart()
     {
         super.onStart();
-        registerReceiver(updateBroadcastReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter());
+        registerReceiver(generalUpdateBroadcastReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter(false));
+        registerReceiver(itemUpdateBroadcastReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter());
     }
 
     @Override
@@ -116,7 +117,8 @@ public class BedtimeActivity extends AppCompatActivity
     @Override
     public void onStop()
     {
-        unregisterReceiver(updateBroadcastReceiver);
+        unregisterReceiver(generalUpdateBroadcastReceiver);
+        unregisterReceiver(itemUpdateBroadcastReceiver);
         super.onStop();
     }
 
@@ -166,7 +168,7 @@ public class BedtimeActivity extends AppCompatActivity
         }
     }
 
-    private final BroadcastReceiver updateBroadcastReceiver = new BroadcastReceiver()
+    private final BroadcastReceiver itemUpdateBroadcastReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -180,8 +182,25 @@ public class BedtimeActivity extends AppCompatActivity
                 if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
                     if (data != null) {
                         onAlarmItemUpdated(ContentUris.parseId(data));
+                    }
+                } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
+            } else Log.e(TAG, "updateReceiver.onReceive: null action!");
+        }
+    };
 
-                    } else Log.e(TAG, "updateReceiver.onReceive: null data!");
+    private final BroadcastReceiver generalUpdateBroadcastReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            Uri data = intent.getData();
+            Log.d(TAG, "updateReceiver.onReceive: " + data + " :: " + action);
+
+            if (action != null)
+            {
+                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
+                    list.getAdapter().notifyDataSetChanged();
                 } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
             } else Log.e(TAG, "updateReceiver.onReceive: null action!");
         }
