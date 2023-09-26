@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmRepeatDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -43,14 +44,41 @@ public class BedtimeAlarmHelper
 {
     public static void dismissBedtimeEvent(final Context context)
     {
-        long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
+        final long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            Uri eventUri = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, rowID);
-            context.sendBroadcast( AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, eventUri) );
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            {
+                @Override
+                public void onLoadFinished(List<AlarmClockItem> result)
+                {
+                    if (result != null && result.size() > 0)
+                    {
+                        AlarmClockItem item = result.get(0);
+                        if (item != null)
+                        {
+                            boolean isSounding = (item.getState() == AlarmState.STATE_SOUNDING);
+                            boolean hasBedtimeAction = WidgetActions.SuntimesAction.DISMISS_BEDTIME.name().equals(item.actionID1);
 
+                            if (isSounding)
+                            {
+                                context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, item.getUri()));
+                                if (!hasBedtimeAction) {
+                                    context.sendBroadcast(new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS));
+                                }
+                            } else {
+                                context.sendBroadcast(new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS));
+                            }
+                        } else {
+                            context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS) );
+                        }
+                    } else {
+                        context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS) );
+                    }
+                }
+            });
         } else {
-            context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS) );   // notification not set; call dismiss directly
+            context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS) );
         }
     }
 
@@ -150,7 +178,7 @@ public class BedtimeAlarmHelper
     public static void setBedtimeReminder_withReminderItem(final Context context, @Nullable final AlarmClockItem reminderItem, final boolean enabled)
     {
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
-        if (rowID != BedtimeSettings.ID_NONE)
+        if (rowID != BedtimeSettings.ID_NONE && enabled)
         {
             BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
             {
@@ -165,6 +193,11 @@ public class BedtimeAlarmHelper
         }
     }
 
+    public static void setBedtimeReminder_withEventInfo(final Context context, final int hour, final int minute, final long offset, final boolean enabled)
+    {
+        AlarmClockItem eventItem = (enabled ? BedtimeAlarmHelper.createBedtimeEventItem(context, null, hour, minute, offset) : null);
+        setBedtimeReminder_withEventItem(context, eventItem, enabled);
+    }
     public static void setBedtimeReminder_withEventItem(final Context context, @Nullable final AlarmClockItem eventItem, final boolean enabled)
     {
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
@@ -187,20 +220,20 @@ public class BedtimeAlarmHelper
     {
         if (eventItem != null)
         {
-            long defaultOffset = -1000 * 60 * 15;   // TODO
+            long reminderOffset = BedtimeSettings.loadPrefBedtimeReminderOffset(context);
             final boolean addReminder = (reminderItem == null);
             long existingOffset = (reminderItem != null ? reminderItem.offset : 0);
 
             if (reminderItem == null) {
                 Log.d("DEBUG", "creating new reminder item");
-                reminderItem = BedtimeAlarmHelper.createBedtimeReminderItem(context, null, eventItem.hour, eventItem.minute, eventItem.offset + defaultOffset);
+                reminderItem = BedtimeAlarmHelper.createBedtimeReminderItem(context, null, eventItem.hour, eventItem.minute, eventItem.offset + reminderOffset);
             } else Log.d("DEBUG", "existing reminder item");
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(eventItem.timestamp + eventItem.offset);
             reminderItem.hour = calendar.get(Calendar.HOUR_OF_DAY);
             reminderItem.minute = calendar.get(Calendar.MINUTE);
-            reminderItem.offset = (existingOffset != 0) ? existingOffset : defaultOffset;
+            reminderItem.offset = (existingOffset != 0) ? existingOffset : reminderOffset;
             reminderItem.alarmtime = 0;
             reminderItem.enabled = enabled;
             reminderItem.modified = true;
@@ -219,14 +252,25 @@ public class BedtimeAlarmHelper
             });
 
         } else {
-            Log.d("DEBUG", "setReminder: bedtime is not scheduled");
-            if (reminderItem != null)
-            {
-                Log.d("DEBUG", "deleting existing reminder " + reminderItem.rowID);
-                BedtimeSettings.clearAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
-                context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, reminderItem.getUri()));
-            }
+            clearBedtimeReminder(context);
         }
     }
+
+    public static void clearBedtimeReminder(Context context)
+    {
+        long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
+        clearBedtimeReminder(context, rowID);
+    }
+    public static void clearBedtimeReminder(Context context, long rowID)
+    {
+        if (rowID != BedtimeSettings.ID_NONE)
+        {
+            Log.d("DEBUG", "deleting existing reminder " + rowID);
+            Uri uri = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, rowID);
+            BedtimeSettings.clearAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
+            context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, uri));
+        }
+    }
+
 
 }
