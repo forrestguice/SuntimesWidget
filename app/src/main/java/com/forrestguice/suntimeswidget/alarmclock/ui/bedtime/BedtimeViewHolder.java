@@ -449,11 +449,10 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
             if (text_label != null)
             {
-                String label = "Show a reminder 15m before bedtime";    // TODO: i18n
-                if (item != null) {
-                    label = "Show a reminder " + utils.timeDeltaLongDisplayString(item.offset) + " before bedtime";    // TODO
-                }
-                text_label.setText(label);
+                String offsetString = utils.timeDeltaLongDisplayString(item != null ? item.offset : BedtimeSettings.loadPrefBedtimeReminderOffset(contextRef.get()));
+                String labelString ="Show a reminder " + offsetString + " before bedtime";    // TODO: i18n
+                CharSequence labelDisplay = SuntimesUtils.createBoldSpan(null, labelString, offsetString);
+                text_label.setText(labelDisplay);
             }
         }
     }
@@ -558,8 +557,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     String sleepCycleString = utils.timeDeltaLongDisplayString(sleepCycleMs);
                     String hoursString = utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount));
 
-                    String displayString = "Bedtime for " + hoursString
-                            + " (" + sleepCycleCountString + " cycles of " + sleepCycleString + ")";  // TODO
+                    String displayString = "Sleep for " + hoursString
+                            + " (" + sleepCycleCountString + " sleep cycles of " + sleepCycleString + ")";  // TODO
 
                     SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepCycleString);
                     sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, sleepCycleCountString);
