@@ -18,12 +18,18 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
+import android.annotation.TargetApi;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.service.notification.Condition;
 import android.service.notification.ConditionProviderService;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class BedtimeConditionService extends ConditionProviderService
 {
@@ -44,9 +50,10 @@ public class BedtimeConditionService extends ConditionProviderService
     public IBinder onBind(Intent intent) {
         return new LocalBinder();
     }
-    protected class LocalBinder extends Binder {
-        BedtimeConditionService getService() {
+    public class LocalBinder extends Binder {
+        public BedtimeConditionService getService() {
             return BedtimeConditionService.this;
         }
     }
+
 }

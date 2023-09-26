@@ -23,14 +23,19 @@ import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.service.notification.Condition;
+import android.service.notification.ConditionProviderService;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 
+import java.lang.ref.WeakReference;
 import java.util.Map;
 
 /**
@@ -161,8 +166,8 @@ public class BedtimeSettings
     public static String getAutomaticZenRuleName(Context context) {
         return "Bedtime (Suntimes)";           // TODO: i18n
     }
-    public static Uri getAutomaticZenRuleCondition(Context context) {
-        return Uri.parse("condition://id");    // TODO
+    public static Uri getAutomaticZenRuleCondition() {
+        return Uri.parse("condition://bedtime");
     }
 
     /**
@@ -192,7 +197,7 @@ public class BedtimeSettings
 
                 } else {
                     String ruleName = getAutomaticZenRuleName(context);
-                    Uri conditionId = getAutomaticZenRuleCondition(context);
+                    Uri conditionId = getAutomaticZenRuleCondition();
                     ComponentName componentName = new ComponentName(context, BedtimeConditionService.class);
                     rule = new AutomaticZenRule(ruleName, componentName, conditionId, NotificationManager.INTERRUPTION_FILTER_ALARMS, enabled);
                     ruleId = notifications.addAutomaticZenRule(rule);
@@ -222,17 +227,8 @@ public class BedtimeSettings
 
     public static void triggerDoNotDisturb(Context context, boolean value)
     {
-        if (Build.VERSION.SDK_INT >= 24)
-        {
-            /*if (Build.VERSION.SDK_INT >= 29)
-            {
-                NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                if (notifications != null && hasDoNotDisturbPermission(context)){
-                    // TODO: use api29+ NotificationManager method to change AutomaticZenRule condition
-                }
-            } else {
-                // TODO: trigger BedtimeConditionService
-            }*/
+        if (Build.VERSION.SDK_INT >= 24) {
+            triggerBedtimeAutomaticZenRule(context, value);
 
         } else if (Build.VERSION.SDK_INT >= 23) {
             NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -245,5 +241,43 @@ public class BedtimeSettings
             }
         }
     }
+
+    @TargetApi(24)
+    public static void triggerBedtimeAutomaticZenRule(final Context context, boolean value)
+    {
+        Intent intent = new Intent(context, BedtimeConditionService.class);
+        BedtimeServiceConnection dndService = new BedtimeServiceConnection(context, value);
+        context.bindService(intent, dndService, Context.BIND_AUTO_CREATE);
+    }
+
+    @TargetApi(24)
+    public static class BedtimeServiceConnection implements ServiceConnection
+    {
+        private boolean value = false;
+        private final WeakReference<Context> contextRef;
+
+        public BedtimeServiceConnection(Context context, boolean value) {
+            contextRef = new WeakReference<>(context);
+            this.value = value;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {}
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service)
+        {
+            BedtimeConditionService.LocalBinder binder = (BedtimeConditionService.LocalBinder) service;
+            ConditionProviderService conditionProviderService = binder.getService();
+            if (conditionProviderService != null)
+            {
+                Log.d("DEBUG", "onServiceConnected, setting dnd to value=" + value);
+                String conditionSummary = "TODO:summary";
+                Condition condition = new Condition(BedtimeSettings.getAutomaticZenRuleCondition(), conditionSummary, (value ? Condition.STATE_TRUE : Condition.STATE_FALSE));
+                conditionProviderService.notifyCondition(condition);
+                contextRef.get().unbindService(this);
+            }
+        }
+    };
 
 }

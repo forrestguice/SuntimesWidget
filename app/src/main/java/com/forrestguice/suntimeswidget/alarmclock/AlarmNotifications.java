@@ -60,7 +60,6 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
 
-import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
