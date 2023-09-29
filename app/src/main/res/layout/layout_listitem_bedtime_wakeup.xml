@@ -40,6 +40,48 @@
                     android:text="" tools:text="p.m." />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:gravity="end">
+
+                <LinearLayout android:id="@+id/layout_more"
+                    android:layout_width="wrap_content" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="bottom|end">
+
+                    <View android:background="?attr/hrColor"
+                        android:layout_marginTop="12dp" android:layout_marginBottom="4dp"
+                        android:layout_width="match_parent" android:layout_height="1dp" />
+
+                    <LinearLayout android:id="@+id/layout_status"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_gravity="bottom|end">
+
+                        <TextView android:id="@+id/status_sound"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_gravity="bottom" android:layout_marginEnd="8dp"
+                            android:drawableStart="?attr/icActionSoundEnabled" android:gravity="center_vertical"
+                            android:maxEms="9" android:maxLines="2" android:ellipsize="end"
+                            android:textSize="?attr/text_size_small" tools:text="Pixie Dust" />
+
+                        <ImageView android:id="@+id/status_silent"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp" android:layout_marginEnd="8dp"
+                            android:src="?attr/icActionSoundDisabled"
+                            android:contentDescription="@string/alarmOption_ringtone_none" />
+
+                        <ImageView android:id="@+id/status_vibrate"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp" android:layout_marginEnd="8dp"
+                            android:src="?attr/icActionVibrationEnabled"
+                            android:contentDescription="@string/alarmOption_vibrate" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <FrameLayout
@@ -57,7 +99,7 @@
                 app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
                 android:scaleType="center"
                 android:src="?attr/icActionNew" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 android:contentDescription="@string/configAction_addAlarm" />
 
             <android.support.design.widget.FloatingActionButton android:id="@+id/button_edit"
@@ -65,7 +107,7 @@
                 app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
                 android:scaleType="center"
                 android:src="?attr/icActionEdit" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 android:contentDescription="@string/configAction_editAlarm" />
 
         </FrameLayout>

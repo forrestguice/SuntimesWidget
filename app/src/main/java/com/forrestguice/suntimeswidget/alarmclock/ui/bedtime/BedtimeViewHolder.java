@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
 import android.content.Context;
+import android.provider.AlarmClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -106,6 +108,12 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected TextView text_time;
         protected TextView text_time_suffix;
         protected Switch switch_enabled;
+
+        protected View layout_more;
+        protected TextView status_sound;
+        protected ImageView status_silent;
+        protected ImageView status_vibrate;
+
         protected FloatingActionButton button_add;
         protected FloatingActionButton button_edit;
         protected WeakReference<Context> contextRef;
@@ -120,6 +128,10 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             text_time = (TextView) view.findViewById(R.id.text_time);
             text_time_suffix = (TextView) view.findViewById(R.id.text_time_suffix);
             switch_enabled = (Switch) view.findViewById(R.id.switch_enabled);
+            layout_more = view.findViewById(R.id.layout_more);
+            status_sound = (TextView) view.findViewById(R.id.status_sound);
+            status_silent = (ImageView) view.findViewById(R.id.status_silent);
+            status_vibrate = (ImageView) view.findViewById(R.id.status_vibrate);
             button_add = (FloatingActionButton) view.findViewById(R.id.button_add);
             button_edit = (FloatingActionButton) view.findViewById(R.id.button_edit);
         }
@@ -244,12 +256,36 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         button_edit.setVisibility(View.VISIBLE);
                     }
 
+                    boolean hasSound = (item != null && item.ringtoneURI != null);
+                    if (status_sound != null)
+                    {
+                        status_sound.setText(hasSound ? item.ringtoneName : "");
+                        status_sound.setContentDescription(contextRef.get().getString(R.string.alarmOption_ringtone_ringtone));
+                        status_sound.setVisibility(hasSound ? View.VISIBLE : View.GONE);
+                    }
+                    if (status_silent != null) {
+                        status_silent.setVisibility(hasSound ? View.GONE : View.VISIBLE);
+                    }
+                    if (status_vibrate != null) {
+                        status_vibrate.setVisibility(item != null && item.vibrate ? View.VISIBLE : View.GONE);
+                    }
+
                 } else {
                     if (text_time_layout != null) {
                         text_time_layout.setVisibility(View.GONE);
                     }
                     if (switch_enabled != null) {
                         switch_enabled.setVisibility(View.INVISIBLE);
+                    }
+                    if (status_sound != null) {
+                        status_sound.setText("");
+                        status_sound.setVisibility(View.GONE);
+                    }
+                    if (status_silent != null) {
+                        status_silent.setVisibility(View.GONE);
+                    }
+                    if (status_vibrate != null) {
+                        status_vibrate.setVisibility(View.GONE);
                     }
                 }
             }
@@ -441,6 +477,9 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             super.updateViews();
 
             AlarmClockItem item = getAlarmItem();
+            if (layout_more != null) {
+                layout_more.setVisibility(item != null ? View.VISIBLE : View.GONE);
+            }
             if (switch_enabled != null) {
                 switch_enabled.setVisibility(View.VISIBLE);
             }
@@ -489,7 +528,13 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected void updateViews()
         {
             super.updateViews();
-            if (getAlarmItem() != null)
+
+            AlarmClockItem item = getAlarmItem();
+            if (layout_more != null) {
+                layout_more.setVisibility(item != null ? View.VISIBLE : View.GONE);
+            }
+
+            if (item != null)
             {
                 if (text_label != null) {
                     text_label.setText("Wake up at");    // TODO: i18n
@@ -558,7 +603,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     String hoursString = utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount));
 
                     String displayString = "Sleep for " + hoursString
-                            + " (" + sleepCycleCountString + " sleep cycles of " + sleepCycleString + ")";  // TODO
+                            + "\n" + sleepCycleCountString + " sleep cycles of " + sleepCycleString;  // TODO
 
                     SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepCycleString);
                     sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, sleepCycleCountString);

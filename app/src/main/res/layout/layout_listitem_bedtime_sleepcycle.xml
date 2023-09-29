@@ -20,14 +20,14 @@
                 android:gravity="center_vertical"
                 android:textSize="?attr/text_size_small"
                 android:drawablePadding="8dp" android:drawableStart="?attr/icActionTime"
-                tools:text="Each sleep cycle is 1h 30m" />
+                tools:text="Each sleep cycle\n is 1h 30m" />
 
         </LinearLayout>
 
         <FrameLayout
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginEnd="8dp" android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
+            android:layout_marginEnd="8dp" android:layout_marginTop="8dp" android:layout_marginBottom="4dp">
 
             <android.support.design.widget.FloatingActionButton android:id="@+id/button_configure"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
                 android:scaleType="center"
                 app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 android:contentDescription="@string/configAction_settings" />
 
         </FrameLayout>
