@@ -166,6 +166,7 @@
     <attr name="checkFavorite" format="reference" />
     <attr name="checkAltitude" format="reference" />
     <attr name="checkVibrate" format="reference" />
+    <attr name="checkDnd" format="reference" />
     <attr name="checkVisibility" format="reference" />
     <attr name="checkReminder" format="reference" />
 

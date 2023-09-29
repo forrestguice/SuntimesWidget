@@ -92,6 +92,7 @@
     <drawable name="check_favorite_ref">@drawable/check_favorite_light</drawable>
     <drawable name="check_altitude_ref">@drawable/check_altitude_light</drawable>
     <drawable name="check_vibrate_ref">@drawable/check_vibrate_light</drawable>
+    <drawable name="check_dnd_ref">@drawable/check_dnd_light</drawable>
     <drawable name="check_visible_ref">@drawable/check_visible_light</drawable>
     <drawable name="check_reminder_ref">@drawable/check_reminder_light</drawable>
 

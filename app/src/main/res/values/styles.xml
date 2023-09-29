@@ -165,6 +165,7 @@
         <item name="checkFavorite">@drawable/check_favorite_ref</item>
         <item name="checkAltitude">@drawable/check_altitude_ref</item>
         <item name="checkVibrate">@drawable/check_vibrate_ref</item>
+        <item name="checkDnd">@drawable/check_dnd_ref</item>
         <item name="checkVisibility">@drawable/check_visible_ref</item>
         <item name="checkReminder">@drawable/check_reminder_ref</item>
 
@@ -378,6 +379,7 @@
         <item name="checkFavorite">@drawable/check_favorite_light</item>
         <item name="checkAltitude">@drawable/check_altitude_light</item>
         <item name="checkVibrate">@drawable/check_vibrate_light</item>
+        <item name="checkDnd">@drawable/check_dnd_light</item>
         <item name="checkVisibility">@drawable/check_visible_light</item>
         <item name="checkReminder">@drawable/check_reminder_light</item>
 
@@ -593,6 +595,7 @@
         <item name="checkFavorite">@drawable/check_favorite_dark</item>
         <item name="checkAltitude">@drawable/check_altitude_dark</item>
         <item name="checkVibrate">@drawable/check_vibrate_dark</item>
+        <item name="checkDnd">@drawable/check_dnd_dark</item>
         <item name="checkVisibility">@drawable/check_visible_dark</item>
         <item name="checkReminder">@drawable/check_reminder_dark</item>
 
