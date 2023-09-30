@@ -31,6 +31,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.service.notification.Condition;
 import android.service.notification.ConditionProviderService;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
@@ -47,6 +48,7 @@ public class BedtimeSettings
     public static final String SLOT_WAKEUP_ALARM = "wakeup";
     public static final String SLOT_BEDTIME_NOTIFY = "notify";
     public static final String SLOT_BEDTIME_REMINDER = "reminder";
+    public static final String[] ALL_SLOTS = new String[] { SLOT_WAKEUP_ALARM, SLOT_BEDTIME_NOTIFY, SLOT_BEDTIME_REMINDER };
     public static final long ID_NONE = -1;
 
     public static final String PREF_KEY_SLEEPCYCLE_LENGTH = "app_alarms_sleepCycleMillis";
@@ -160,9 +162,29 @@ public class BedtimeSettings
         prefs.remove(PREF_KEY_BEDTIME_ALARM_ID + "_" + slot);
         prefs.apply();
     }
+    @Nullable
+    public static String clearAlarmID(Context context, @Nullable Long alarmID)
+    {
+        if (alarmID != null) {
+            for (String slot : ALL_SLOTS) {
+                if (alarmID == loadAlarmID(context, slot)) {
+                    clearAlarmID(context, slot);
+                    return slot;
+                }
+            }
+        }
+        return null;
+    }
+    public static void clearAlarmIDs(Context context)
+    {
+        for (String slot : ALL_SLOTS) {
+            clearAlarmID(context, slot);
+        }
+    }
     public static boolean hasAlarmID(Context context, String slot) {
         return (loadAlarmID(context, slot) != ID_NONE);
     }
+
 
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
