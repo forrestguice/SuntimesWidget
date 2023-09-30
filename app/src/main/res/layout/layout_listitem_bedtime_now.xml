@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <LinearLayout
@@ -15,23 +15,39 @@
 
             <ImageView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:src="@drawable/ic_bedtime_96dp" />   <!-- TODO -->
+                android:src="@drawable/ic_bedtime_96dp" />
 
-            <TextView
+            <TextView android:id="@+id/text_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Bedtime mode is currently active." />
+                tools:text="Bedtime mode is currently active." />
 
         </LinearLayout>
 
-        <Button android:id="@+id/button_bedtime_now" android:visibility="gone"
+        <LinearLayout android:id="@+id/layout_controls"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless"
-            android:text="Bedtime right now" />
+            android:orientation="vertical" android:layout_gravity="end">
 
-        <Button android:id="@+id/button_bedtime_dismiss"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:text="Dismiss" />
+            <Button android:id="@+id/button_bedtime_now" android:visibility="gone"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless"
+                android:text="Bedtime right now" />
+
+            <Button android:id="@+id/button_bedtime_pause"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:text="@string/configAction_pauseBedtime" />
+
+            <Button android:id="@+id/button_bedtime_resume" android:visibility="gone"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:text="@string/configAction_resumeBedtime" />
+
+            <Button android:id="@+id/button_bedtime_dismiss"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:text="@string/configAction_dismissBedtime" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
