@@ -52,15 +52,26 @@ public class BedtimeTileService extends SuntimesTileService
     protected void updateTile(Context context)
     {
         Tile tile = getQsTile();
-        tile.setLabel(context.getString(R.string.configLabel_bedtime));
-        tile.setIcon(Icon.createWithResource(this, R.drawable.ic_action_bedtime));
+        String label = context.getString(R.string.configLabel_bedtime);
+        switch (BedtimeSettings.getBedtimeState(context))
+        {
+            case BedtimeSettings.STATE_BEDTIME_ACTIVE:
+                label += " (Active)";    // TODO
+                break;
+            case BedtimeSettings.STATE_BEDTIME_PAUSED:
+                label += " (Paused)";    // TODO
+                break;
+        }
+        tile.setLabel(label);
+        tile.setIcon(Icon.createWithResource(context, R.drawable.ic_action_bedtime));
         super.updateTile(context);    // calls updateTileState
     }
 
     @Override
     protected Tile updateTileState(Context context, Tile tile)
     {
-        tile.setState(BedtimeSettings.isBedtimeModeActive(context) ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
+        boolean tileEnabled = (BedtimeSettings.hasAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY)) || BedtimeSettings.isBedtimeModeActive(context);
+        tile.setState(tileEnabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
         return tile;
     }
 

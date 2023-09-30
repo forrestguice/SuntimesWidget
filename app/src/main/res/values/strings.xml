@@ -1188,8 +1188,19 @@
          BEDTIME
     -->
     <string name="configLabel_bedtime">Bedtime</string>              <!-- group title -->   <!-- TODO -->
-    <string name="configAction_setBedtime">Set Bedtime</string>
 
+    <string name="configAction_setBedtime">Set Bedtime</string>                     <!-- TODO -->
+    <string name="configAction_pauseBedtime">Pause</string>                         <!-- TODO -->
+    <string name="configAction_resumeBedtime">Resume</string>                       <!-- TODO -->
+    <string name="configAction_dismissBedtime">Dismiss</string>                     <!-- TODO -->
+
+    <string name="msg_bedtime_active">Bedtime mode is currently active.</string>              <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_paused">Bedtime mode is currently paused.</string>              <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_set">Bedtime at</string>                                        <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_notset">Bedtime is not set.</string>                            <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_reminder">Show a reminder %1$s before bedtime</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->   <!-- TODO -->
+    <string name="msg_bedtime_wakeup_set">Wake up at</string>                                 <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_wakeup_notset">Wake up time is not set.</string>                <!-- textview text -->   <!-- TODO -->
 
     <!--
          APP SETTINGS

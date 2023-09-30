@@ -20,16 +20,12 @@ package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.provider.AlarmClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
@@ -439,7 +435,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 if (item != null)
                 {
                     if (text_label != null) {
-                        text_label.setText("Bedtime at");    // TODO: i18n
+                        text_label.setText(context.getString(R.string.msg_bedtime_set));
                     }
                     if (button_add != null) {
                         button_add.setVisibility(View.GONE);
@@ -449,7 +445,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     }
                 } else {
                     if (text_label != null) {
-                        text_label.setText("Bedtime is not set.");    // TODO: i18n
+                        text_label.setText(context.getString(R.string.msg_bedtime_notset));
                     }
                     if (button_add != null) {
                         button_add.setVisibility(View.VISIBLE);
@@ -457,6 +453,16 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     if (button_edit != null) {
                         button_edit.setVisibility(View.INVISIBLE);
                     }
+                }
+            } else {
+                if (text_label != null) {
+                    text_label.setText("");
+                }
+                if (button_add != null) {
+                    button_add.setVisibility(View.GONE);
+                }
+                if (button_edit != null) {
+                    button_edit.setVisibility(View.INVISIBLE);
                 }
             }
         }
@@ -472,7 +478,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         public static int getLayoutResID() {
-            return R.layout.layout_listitem_bedtime_reminder;    // TODO
+            return R.layout.layout_listitem_bedtime_reminder;
         }
 
         @Override
@@ -519,10 +525,17 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
             if (text_label != null)
             {
-                String offsetString = utils.timeDeltaLongDisplayString(item != null ? item.offset : BedtimeSettings.loadPrefBedtimeReminderOffset(contextRef.get()));
-                String labelString ="Show a reminder " + offsetString + " before bedtime";    // TODO: i18n
-                CharSequence labelDisplay = SuntimesUtils.createBoldSpan(null, labelString, offsetString);
-                text_label.setText(labelDisplay);
+                Context context = contextRef.get();
+                if (context != null)
+                {
+                    String offsetString = utils.timeDeltaLongDisplayString(item != null ? item.offset : BedtimeSettings.loadPrefBedtimeReminderOffset(contextRef.get()));
+                    String labelString = context.getString(R.string.msg_bedtime_reminder, offsetString);
+                    CharSequence labelDisplay = SuntimesUtils.createBoldSpan(null, labelString, offsetString);
+                    text_label.setText(labelDisplay);
+
+                } else {
+                    text_label.setText("");
+                }
             }
         }
     }
@@ -560,6 +573,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             super.updateViews();
 
+            Context context = contextRef.get();
             AlarmClockItem item = getAlarmItem();
             if (layout_more != null) {
                 layout_more.setVisibility(item != null ? View.VISIBLE : View.GONE);
@@ -568,7 +582,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (item != null)
             {
                 if (text_label != null) {
-                    text_label.setText("Wake up at");    // TODO: i18n
+                    text_label.setText(context != null ? context.getString(R.string.msg_bedtime_wakeup_set) : "");
                 }
                 if (button_add != null) {
                     button_add.setVisibility(View.GONE);
@@ -579,7 +593,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
             } else {
                 if (text_label != null) {
-                    text_label.setText("Wake up time is not set.");    // TODO: i18n
+                    text_label.setText(context != null ? context.getString(R.string.msg_bedtime_wakeup_notset) : "");
                 }
                 if (button_add != null) {
                     button_add.setVisibility(View.VISIBLE);
@@ -674,15 +688,21 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     public static final class AlarmBedtimeViewHolder_BedtimeNow extends BedtimeViewHolder
     {
         protected Button nowButton;
+        protected Button pauseButton;
+        protected Button resumeButton;
         protected Button dismissButton;
         protected View headerLayout;
+        protected TextView label;
 
         public AlarmBedtimeViewHolder_BedtimeNow(View view)
         {
             super(view);
-            nowButton = (Button)view.findViewById(R.id.button_bedtime_now);
-            dismissButton = (Button)view.findViewById(R.id.button_bedtime_dismiss);
+            nowButton = (Button) view.findViewById(R.id.button_bedtime_now);
+            pauseButton = (Button) view.findViewById(R.id.button_bedtime_pause);
+            resumeButton = (Button) view.findViewById(R.id.button_bedtime_resume);
+            dismissButton = (Button) view.findViewById(R.id.button_bedtime_dismiss);
             headerLayout = view.findViewById(R.id.layout_header);
+            label = (TextView) view.findViewById(R.id.text_label);
         }
 
         public static int getLayoutResID() {
@@ -699,8 +719,12 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (item != null)
             {
                 boolean isActive = BedtimeSettings.isBedtimeModeActive(context);
+                boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
                 if (headerLayout != null) {
                     headerLayout.setVisibility(isActive ? View.VISIBLE : View.GONE);
+                }
+                if (label != null) {
+                    label.setText((!isActive ? "" : context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active)));
                 }
                 if (nowButton != null) {
                     nowButton.setVisibility(isActive ? View.GONE : View.VISIBLE);
@@ -708,15 +732,30 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 if (dismissButton != null) {
                     dismissButton.setVisibility(isActive ? View.VISIBLE : View.GONE);
                 }
+                if (pauseButton != null) {
+                    pauseButton.setVisibility(isActive && !isPaused ? View.VISIBLE : View.GONE);
+                }
+                if (resumeButton != null) {
+                    resumeButton.setVisibility(isActive && isPaused ? View.VISIBLE : View.GONE);
+                }
             } else {
                 if (headerLayout != null) {
                     headerLayout.setVisibility(View.GONE);
+                }
+                if (label != null) {
+                    label.setText("");
                 }
                 if (nowButton != null) {
                     nowButton.setVisibility(View.GONE);
                 }
                 if (dismissButton != null) {
                     dismissButton.setVisibility(View.GONE);
+                }
+                if (pauseButton != null) {
+                    pauseButton.setVisibility(View.GONE);
+                }
+                if (resumeButton != null) {
+                    resumeButton.setVisibility(View.GONE);
                 }
             }
         }
@@ -732,6 +771,22 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     }
                 });
             }
+            if (pauseButton != null) {
+                pauseButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BedtimeAlarmHelper.pauseBedtimeEvent(context);
+                    }
+                });
+            }
+            if (resumeButton != null) {
+                resumeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BedtimeAlarmHelper.resumeBedtimeEvent(context);
+                    }
+                });
+            }
         }
 
         @Override
@@ -743,6 +798,12 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
             if (dismissButton != null) {
                 dismissButton.setOnClickListener(null);
+            }
+            if (pauseButton != null) {
+                pauseButton.setOnClickListener(null);
+            }
+            if (resumeButton != null) {
+                resumeButton.setOnClickListener(null);
             }
         }
 

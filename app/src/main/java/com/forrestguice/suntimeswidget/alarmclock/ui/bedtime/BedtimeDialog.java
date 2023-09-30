@@ -157,9 +157,7 @@ public class BedtimeDialog extends DialogFragment
                 {
                     public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {
                         if (result && items != null && items.length > 0) {
-                            if (BedtimeSettings.hasAlarmID(getActivity(), BedtimeSettings.SLOT_BEDTIME_NOTIFY)) {
-                                offerModifyBedtimeFromWakeup(getActivity());
-                            }
+                            offerModifyBedtimeFromWakeup(getActivity());
                         }
                     }
                 });
@@ -192,9 +190,7 @@ public class BedtimeDialog extends DialogFragment
                             boolean showReminder = BedtimeSettings.loadPrefBedtimeReminder(getActivity());
                             BedtimeAlarmHelper.setBedtimeReminder_withEventItem(getActivity(),items[0], showReminder);
 
-                            if (BedtimeSettings.hasAlarmID(getActivity(), BedtimeSettings.SLOT_WAKEUP_ALARM)) {
-                                offerModifyWakeupFromBedtime(getActivity());
-                            }
+                            offerModifyWakeupFromBedtime(getActivity());
                         }
                     }
                 });
@@ -325,7 +321,6 @@ public class BedtimeDialog extends DialogFragment
 
     protected void triggerBedtimeNow(final Context context, @Nullable final BedtimeItem item)
     {
-        Toast.makeText(context, "triggering bedtime now..", Toast.LENGTH_SHORT).show();                        // TODO
         long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
         final long bedtime_offset = -sleepTotalMs + (1000 * 60);
         int sleepMinutes = (int)(sleepTotalMs / (1000 * 60));
@@ -418,6 +413,7 @@ public class BedtimeDialog extends DialogFragment
                     ? BedtimeAlarmHelper.createBedtimeEventItem(context, item, hour, minute, offset)
                     : BedtimeAlarmHelper.createBedtimeAlarmItem(context, item, hour, minute, offset);
             alarmItem.enabled = enabled;
+            alarmItem.modified = true;
             scheduleBedtimeAlarmItem(context, slot, alarmItem, item, true);
 
         } else {
@@ -463,12 +459,12 @@ public class BedtimeDialog extends DialogFragment
                         BedtimeSettings.saveAlarmID(getActivity(), slot, alarmItem.rowID);
                         getActivity().sendBroadcast( AlarmNotifications.getFullscreenBroadcast(alarmItem.getUri()) );
                         getActivity().sendBroadcast( AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_RESCHEDULE, alarmItem.getUri()) );
-                        Log.d("DEBUG", "Modified alarm scheduled: " + slot);
+                        Log.d("DEBUG", "Modified alarm scheduled: " + slot + ", enabled: " + alarmItem.enabled);
                     }
                 });
             } else {
                 getActivity().sendBroadcast( AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_RESCHEDULE, alarmItem.getUri()) );
-                Log.d("DEBUG", "Existing alarm (re)scheduled: " + slot);
+                Log.d("DEBUG", "Existing alarm (re)scheduled: " + slot + ", enabled: " + alarmItem.enabled);
             }
         } else {
             BedtimeSettings.clearAlarmID(context, slot);
@@ -719,13 +715,7 @@ public class BedtimeDialog extends DialogFragment
                         }
                     }
                     scheduleBedtimeAlarmItem(getActivity(), slot, alarmItem, item, true);
-                    
-                    long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(getActivity());
-                    final long bedtime_offset = -sleepTotalMs + (1000 * 60);
-                    configureBedtimeAt(getActivity(), item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, alarmItem.hour, alarmItem.minute, bedtime_offset, true, true);
-
-                    boolean showReminder = BedtimeSettings.loadPrefBedtimeReminder(getActivity());
-                    BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(getActivity(), alarmItem.hour, alarmItem.minute, bedtime_offset, showReminder);
+                    offerModifyBedtimeFromWakeup(getActivity());
                 }
             }
         };

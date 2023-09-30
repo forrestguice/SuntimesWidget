@@ -42,6 +42,13 @@ import java.util.List;
 @SuppressWarnings("Convert2Diamond")
 public class BedtimeAlarmHelper
 {
+    public static void pauseBedtimeEvent(final Context context) {
+        context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_PAUSE) );
+    }
+    public static void resumeBedtimeEvent(final Context context) {
+        context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_RESUME) );
+    }
+
     public static void dismissBedtimeEvent(final Context context)
     {
         final long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);

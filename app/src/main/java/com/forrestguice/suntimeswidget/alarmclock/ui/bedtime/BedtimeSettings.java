@@ -66,17 +66,34 @@ public class BedtimeSettings
     public static final String PREF_KEY_BEDTIME_REMINDER_OFFSET = "app_bedtime_reminder_offset";
     public static final long PREF_DEF_BEDTIME_REMINDER_OFFSET = -1000 * 60 * 15;    // 15m before
 
-    public static final String PREF_KEY_BEDTIME_ACTIVE = "app_bedtime_active";
-    public static boolean isBedtimeModeActive(Context context)
-    {
+    public static final int STATE_BEDTIME_INACTIVE = 0;
+    public static final int STATE_BEDTIME_ACTIVE = 1;
+    public static final int STATE_BEDTIME_PAUSED = 2;
+
+    public static final String PREF_KEY_BEDTIME_STATE = "app_bedtime_state";
+    public static int getBedtimeState(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PREF_KEY_BEDTIME_ACTIVE, false);
+        return prefs.getInt(PREF_KEY_BEDTIME_STATE, STATE_BEDTIME_INACTIVE);
     }
-    public static void setBedtimeModeActive(Context context, boolean value)
+    public static void setBedtimeState(Context context, int value)
     {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        prefs.putBoolean(PREF_KEY_BEDTIME_ACTIVE, value);
+        prefs.putInt(PREF_KEY_BEDTIME_STATE, value);
         prefs.apply();
+    }
+
+    /**
+     * @return true when not STATE_INACTIVE
+     */
+    public static boolean isBedtimeModeActive(Context context)
+    {
+        int state = getBedtimeState(context);
+        return (state == STATE_BEDTIME_ACTIVE || state == STATE_BEDTIME_PAUSED);
+    }
+    public static boolean isBedtimeModePaused(Context context)
+    {
+        int state = getBedtimeState(context);
+        return (state == STATE_BEDTIME_PAUSED);
     }
 
     public static boolean loadPrefBedtimeDoNotDisturb(Context context) {

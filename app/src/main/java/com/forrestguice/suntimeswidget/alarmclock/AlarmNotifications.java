@@ -105,6 +105,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_UPDATE_UI = "suntimeswidget.alarm.ui.update";
 
     public static final String ACTION_BEDTIME = "suntimeswidget.alarm.start_bedtime";              // enable bedtime mode
+    public static final String ACTION_BEDTIME_PAUSE = "suntimeswidget.alarm.pause_bedtime";        // pause bedtime mode
+    public static final String ACTION_BEDTIME_RESUME = "suntimeswidget.alarm.resume_bedtime";      // resume bedtime mode
     public static final String ACTION_BEDTIME_DISMISS = "suntimeswidget.alarm.dismiss_bedtime";    // disable bedtime mode
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
@@ -1471,6 +1473,14 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "ACTION_BEDTIME");
                         triggerBedtimeMode(getApplicationContext(), true);
 
+                    } else if (ACTION_BEDTIME_PAUSE.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME_PAUSE");
+                        pauseBedtimeMode(getApplicationContext());
+
+                    } else if (ACTION_BEDTIME_RESUME.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME_RESUME");
+                        resumeBedtimeMode(getApplicationContext());
+
                     } else if (ACTION_BEDTIME_DISMISS.equals(action)) {
                         Log.d(TAG, "ACTION_BEDTIME_DISMISS");
                         triggerBedtimeMode(getApplicationContext(), false);
@@ -1514,7 +1524,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         public static void triggerBedtimeMode(Context context, boolean value)
         {
-            BedtimeSettings.setBedtimeModeActive(context, value);
+            BedtimeSettings.setBedtimeState(context, (value ? BedtimeSettings.STATE_BEDTIME_ACTIVE : BedtimeSettings.STATE_BEDTIME_INACTIVE));
             if (BedtimeSettings.loadPrefBedtimeDoNotDisturb(context))
             {
                 if (Build.VERSION.SDK_INT >= 23)
@@ -1530,6 +1540,28 @@ public class AlarmNotifications extends BroadcastReceiver
                 }
             }
             context.sendBroadcast(getFullscreenBroadcast(null));
+        }
+        public static void pauseBedtimeMode(Context context)
+        {
+            if (BedtimeSettings.isBedtimeModeActive(context))
+            {
+                BedtimeSettings.setBedtimeState(context, BedtimeSettings.STATE_BEDTIME_PAUSED);
+                if (Build.VERSION.SDK_INT >= 24) {
+                    BedtimeSettings.triggerDoNotDisturb(context, false);
+                }
+                context.sendBroadcast(getFullscreenBroadcast(null));
+            }
+        }
+        public static void resumeBedtimeMode(Context context)
+        {
+            if (BedtimeSettings.isBedtimeModePaused(context))
+            {
+                BedtimeSettings.setBedtimeState(context, BedtimeSettings.STATE_BEDTIME_ACTIVE);
+                if (Build.VERSION.SDK_INT >= 24) {
+                    BedtimeSettings.triggerDoNotDisturb(context, true);
+                }
+                context.sendBroadcast(getFullscreenBroadcast(null));
+            }
         }
 
         private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener_clocktime(final int startId)
