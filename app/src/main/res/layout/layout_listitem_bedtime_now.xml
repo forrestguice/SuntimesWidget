@@ -15,7 +15,7 @@
 
             <ImageView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:src="@drawable/ic_alarm_snooze_huge" />   <!-- TODO -->
+                android:src="@drawable/ic_bedtime_96dp" />   <!-- TODO -->
 
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"

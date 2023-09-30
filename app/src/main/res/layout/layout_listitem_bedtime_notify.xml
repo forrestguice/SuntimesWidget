@@ -42,7 +42,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical" android:layout_gravity="end">
 
                 <View android:background="?attr/hrColor"
                     android:layout_marginTop="12dp" android:layout_marginBottom="8dp"
@@ -51,7 +51,7 @@
                 <CheckBox android:id="@+id/check_dnd"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:textSize="?attr/text_size_small"
-                    android:text="'Do Not Disturb' at bedtime"
+                    android:text="Do Not Disturb"
                     android:paddingStart="8dp" android:button="?attr/checkDnd" />
 
             </LinearLayout>
