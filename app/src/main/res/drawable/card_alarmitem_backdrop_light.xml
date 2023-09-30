@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 <item>
     <shape android:shape="rectangle">
-        <solid android:color="@color/alarm_enabled_bg_light" />
-        <corners android:radius="@dimen/alarmcard_corners_enabled" />
+        <solid android:color="@color/card_bg_contrast_light" />
+        <corners android:radius="@dimen/clockcard_corners" />
     </shape>
 </item>
 </layer-list>
