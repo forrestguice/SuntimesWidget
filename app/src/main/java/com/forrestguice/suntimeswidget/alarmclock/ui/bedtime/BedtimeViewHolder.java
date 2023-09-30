@@ -18,10 +18,18 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.provider.AlarmClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
@@ -228,6 +236,12 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             Context context = contextRef.get();
             if (context != null)
             {
+                int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor };
+                TypedArray a = context.obtainStyledAttributes(attrs);
+                int colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled));
+                @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_primary_dark));
+                a.recycle();
+
                 AlarmClockItem item = getAlarmItem();
                 if (item != null)
                 {
@@ -236,11 +250,18 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     alarmTime.setTimeInMillis(item.timestamp + item.offset);
                     SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
 
+                    if (text_label != null)
+                    {
+                        Drawable d = DrawableCompat.wrap(text_label.getCompoundDrawablesRelative()[0].mutate());
+                        DrawableCompat.setTint(d, item.enabled ? colorOn : colorOff);
+                    }
                     if (text_time != null) {
                         text_time.setText(timeText.getValue());
+                        //text_time.setTextColor(item.enabled ? colorOn : colorOff);
                     }
                     if (text_time_suffix != null) {
                         text_time_suffix.setText(timeText.getSuffix());
+                        //text_time_suffix.setTextColor(item.enabled ? colorOn : colorOff);
                     }
                     if (text_time_layout != null) {
                         text_time_layout.setVisibility(View.VISIBLE);
@@ -271,6 +292,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     }
 
                 } else {
+                    if (text_label != null)
+                    {
+                        Drawable d = DrawableCompat.wrap(text_label.getCompoundDrawablesRelative()[0].mutate());
+                        DrawableCompat.setTint(d, colorOff);
+                    }
                     if (text_time_layout != null) {
                         text_time_layout.setVisibility(View.GONE);
                     }
@@ -400,32 +426,37 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected void updateViews()
         {
             super.updateViews();
-
-            if (check_dnd != null) {
-                check_dnd.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(contextRef.get()));
-            }
-            updateViews_dndWarning();
-
-            if (getAlarmItem() != null)
+            Context context = contextRef.get();
+            if (context != null)
             {
-                if (text_label != null) {
-                    text_label.setText("Bedtime at");    // TODO: i18n
+                if (check_dnd != null) {
+                    check_dnd.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
+                    check_dnd.setEnabled(!BedtimeSettings.isBedtimeModeActive(context));
                 }
-                if (button_add != null) {
-                    button_add.setVisibility(View.GONE);
-                }
-                if (button_edit != null) {
-                    button_edit.setVisibility(View.VISIBLE);
-                }
-            } else {
-                if (text_label != null) {
-                    text_label.setText("Bedtime is not set.");    // TODO: i18n
-                }
-                if (button_add != null) {
-                    button_add.setVisibility(View.VISIBLE);
-                }
-                if (button_edit != null) {
-                    button_edit.setVisibility(View.INVISIBLE);
+                updateViews_dndWarning();
+
+                AlarmClockItem item = getAlarmItem();
+                if (item != null)
+                {
+                    if (text_label != null) {
+                        text_label.setText("Bedtime at");    // TODO: i18n
+                    }
+                    if (button_add != null) {
+                        button_add.setVisibility(View.GONE);
+                    }
+                    if (button_edit != null) {
+                        button_edit.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    if (text_label != null) {
+                        text_label.setText("Bedtime is not set.");    // TODO: i18n
+                    }
+                    if (button_add != null) {
+                        button_add.setVisibility(View.VISIBLE);
+                    }
+                    if (button_edit != null) {
+                        button_edit.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         }

@@ -115,14 +115,14 @@ public class BedtimeAlarmHelper
     public static AlarmClockItem createBedtimeEventItem(final Context context, @Nullable final BedtimeItem item, int hour, int minute, long offset)
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
-        AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.NOTIFICATION,
+        AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.NOTIFICATION1,
                 "Bedtime",    // TODO: i18n
                 null, location, -1, hour, minute, null,
                 false, null, null, AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
         alarmItem.offset = offset;
         alarmItem.repeating = true;
         alarmItem.actionID0 = WidgetActions.SuntimesAction.TRIGGER_BEDTIME.name();
-        alarmItem.actionID1 = WidgetActions.SuntimesAction.DISMISS_BEDTIME.name();
+        //alarmItem.actionID1 = WidgetActions.SuntimesAction.DISMISS_BEDTIME.name();
         alarmItem.enabled = true;
         AlarmNotifications.updateAlarmTime(context, alarmItem);
         return alarmItem;

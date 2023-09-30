@@ -1188,6 +1188,7 @@
          BEDTIME
     -->
     <string name="configLabel_bedtime">Bedtime</string>              <!-- group title -->   <!-- TODO -->
+    <string name="configAction_setBedtime">Set Bedtime</string>
 
 
     <!--
@@ -2388,7 +2389,9 @@
     ]]></string>
 
     <string name="help_alarms_bedtime"><![CDATA[
-          TODO
+           [Icon Bedtime] Bedtime is a scheduled notification that puts your phone into Do Not Disturb during sleep hours.\n\n
+           Show a [Icon Reminder] reminder before bedtime, and schedule a [Icon Alarm] wake up alarm for the next morning.\n\n
+           Either bedtime or wakeup time can be scheduled around a desired amount of sleep [Icon Sleep].
     ]]></string>  <!-- TODO -->
 
     <string name="help_alarms_edit"><![CDATA[

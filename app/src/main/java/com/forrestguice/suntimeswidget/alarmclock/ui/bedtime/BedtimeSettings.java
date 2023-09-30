@@ -109,6 +109,13 @@ public class BedtimeSettings
         prefs.apply();
     }
 
+    public static long totalSleepTimeMs(Context context)
+    {
+        float numSleepCycles = BedtimeSettings.loadPrefSleepCycleCount(context);
+        long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
+        return (long)(numSleepCycles * sleepCycleMs);
+    }
+
     public static long loadPrefSleepCycleMs(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -152,6 +159,9 @@ public class BedtimeSettings
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.remove(PREF_KEY_BEDTIME_ALARM_ID + "_" + slot);
         prefs.apply();
+    }
+    public static boolean hasAlarmID(Context context, String slot) {
+        return (loadAlarmID(context, slot) != ID_NONE);
     }
 
     ///////////////////////////////////////////////////////////////////////////
