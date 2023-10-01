@@ -19,9 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 
 public class BedtimeItem
 {
@@ -41,15 +38,6 @@ public class BedtimeItem
 
     public Long getAlarmID(Context context) {
         return ((slot != null) ? BedtimeSettings.loadAlarmID(context, getSlot()) : null);
-    }
-
-    protected AlarmClockItem alarmItem = null;
-    @Nullable
-    public AlarmClockItem getAlarmItem() {
-        return alarmItem;
-    }
-    public void setAlarmItem(@Nullable AlarmClockItem item) {
-        alarmItem = item;
     }
 
     public String slot = null;

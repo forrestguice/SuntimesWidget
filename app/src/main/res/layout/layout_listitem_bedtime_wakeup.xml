@@ -28,26 +28,12 @@
                 android:minWidth="125dp" android:layout_gravity="center"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
-                <TextSwitcher android:id="@+id/text_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        style="@style/ClockTextView"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:text="" android:textSize="?attr/text_size_huge" android:textStyle="bold"
-                        tools:text="12:00" />
-
-                    <TextView
-                        style="@style/ClockTextView"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:text="" android:textSize="?attr/text_size_huge" android:textStyle="bold"
-                        tools:text="12:00" />
-
-                </TextSwitcher>
-
+                <TextView android:id="@+id/text_time"
+                    style="@style/ClockTextView"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="" android:textSize="?attr/text_size_huge" android:textStyle="bold"
+                    tools:text="12:00" />
 
                 <TextView android:id="@+id/text_time_suffix" style="@style/ClockSuffixTextView"
                     android:layout_gravity="center_vertical|bottom|end"

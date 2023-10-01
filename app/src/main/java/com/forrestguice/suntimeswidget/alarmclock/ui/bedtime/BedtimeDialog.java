@@ -468,7 +468,9 @@ public class BedtimeDialog extends DialogFragment
                     public void onFinished(Boolean result, AlarmClockItem alarmItem)
                     {
                         BedtimeSettings.saveAlarmID(getActivity(), slot, alarmItem.rowID);
-                        getActivity().sendBroadcast( AlarmNotifications.getFullscreenBroadcast(alarmItem.getUri()) );
+                        //if (!alarmItem.enabled) {
+                            getActivity().sendBroadcast(AlarmNotifications.getFullscreenBroadcast(alarmItem.getUri()));
+                        //}
                         getActivity().sendBroadcast( AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_RESCHEDULE, alarmItem.getUri()) );
                         Log.d("DEBUG", "Modified alarm scheduled: " + slot + ", enabled: " + alarmItem.enabled);
                     }
@@ -574,8 +576,12 @@ public class BedtimeDialog extends DialogFragment
                     @Override
                     public void onFinished(Boolean result, @Nullable final AlarmClockItem[] items)
                     {
+                        int position = adapter.findItemPosition(getActivity(), item.rowID);
+                        if (position >= 0) {
+                            adapter.notifyItemChanged(position);
+                        }
                         BedtimeAlarmHelper.scheduleAlarmItem(getActivity(), item, item.enabled);
-                        adapter.notifyDataSetChanged();
+
                         if (onSaved != null) {
                             onSaved.onFinished(result, items);
                         }

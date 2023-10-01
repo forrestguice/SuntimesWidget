@@ -216,10 +216,8 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
     }
 
     @Override
-    public void onViewRecycled(BedtimeViewHolder holder)
-    {
-        holder.clearViews();
-        holder.detachClickListeners();
+    public void onViewRecycled(BedtimeViewHolder holder) {
+        holder.onRecycled();
     }
 
     protected AdapterListener adapterListener = null;
