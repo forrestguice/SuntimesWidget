@@ -28,6 +28,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -180,9 +181,7 @@ public class BedtimeActivity extends AppCompatActivity
             if (action != null)
             {
                 if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
-                    if (data != null) {
-                        onAlarmItemUpdated(ContentUris.parseId(data));
-                    }
+                    onAlarmItemUpdated(ContentUris.parseId(data));
                 } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
             } else Log.e(TAG, "updateReceiver.onReceive: null action!");
         }
@@ -200,14 +199,29 @@ public class BedtimeActivity extends AppCompatActivity
             if (action != null)
             {
                 if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
-                    list.getAdapter().notifyDataSetChanged();
+                    onAlarmItemUpdated(null);
                 } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
             } else Log.e(TAG, "updateReceiver.onReceive: null action!");
         }
     };
 
-    protected void onAlarmItemUpdated(long alarmID) {
-        list.reloadAdapter();
+    protected void onAlarmItemUpdated(@Nullable Long alarmID)
+    {
+        BedtimeItemAdapter adapter = list.getAdapter();
+        if (adapter != null)
+        {
+            if (alarmID != null)
+            {
+                int position = adapter.findItemPosition(this, alarmID);
+                if (position >= 0) {
+                    list.notifyItemChanged(position);
+                }
+            } else {
+                list.notifyItemChanged(0);
+            }
+        } else {
+            list.reloadAdapter();
+        }
     }
 
     @Override

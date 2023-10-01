@@ -34,6 +34,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -100,12 +101,22 @@ public class BedtimeDialog extends DialogFragment
         //list.addItemDecoration(itemDecoration);
         list.setAdapter(adapter);
 
+        SimpleItemAnimator animator = (SimpleItemAnimator) list.getItemAnimator();
+        animator.setChangeDuration(0);
+
         if (savedState != null) {
             loadSettings(savedState);
         }
 
         reloadAdapter();
         return content;
+    }
+
+    public void notifyItemChanged(int position)
+    {
+        if (adapter != null) {
+            adapter.notifyItemChanged(position);
+        }
     }
 
     @Override
