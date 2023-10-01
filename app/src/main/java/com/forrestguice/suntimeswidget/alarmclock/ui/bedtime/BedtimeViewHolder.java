@@ -108,8 +108,6 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
      */
     public static abstract class AlarmBedtimeViewHolder_AlarmItem extends BedtimeViewHolder
     {
-        protected abstract Long getAlarmID(Context context);
-
         protected TextView text_label;
         protected View text_time_layout;
         protected TextSwitcher text_time;
@@ -166,7 +164,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             contextRef = new WeakReference<>(context);
             clearViews();
-            loadAlarmItem(context, getAlarmID(context));
+            loadAlarmItem(context, item.getAlarmID(context));
         }
 
         protected void loadAlarmItem(Context context, @Nullable Long rowID, AlarmListDialog.AlarmListTask.AlarmListTaskListener taskListener)
@@ -361,11 +359,6 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected Long getAlarmID(Context context) {
-            return BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
-        }
-
-        @Override
         protected void attachClickListeners(final Context context, @Nullable BedtimeItem item)
         {
             super.attachClickListeners(context, item);
@@ -490,11 +483,6 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected Long getAlarmID(Context context) {
-            return BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
-        }
-
-        @Override
         protected void attachClickListeners(final Context context, @Nullable BedtimeItem item) {
             super.attachClickListeners(context, item);
         }
@@ -554,11 +542,6 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
         public static int getLayoutResID() {
             return R.layout.layout_listitem_bedtime_wakeup;
-        }
-
-        @Override
-        protected Long getAlarmID(Context context) {
-            return BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_WAKEUP_ALARM);
         }
 
         @Override
