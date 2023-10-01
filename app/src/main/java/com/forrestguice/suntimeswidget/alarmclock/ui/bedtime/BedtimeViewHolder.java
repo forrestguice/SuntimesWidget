@@ -55,11 +55,15 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 {
     protected SuntimesUtils utils = new SuntimesUtils();
 
-    public BedtimeViewHolder(View view) {
+    public BedtimeViewHolder(View view)
+    {
         super(view);
+        clearViews();
     }
 
-    public abstract void bindDataToHolder(Context context, @Nullable BedtimeItem item);
+    public void bindDataToHolder(Context context, @Nullable BedtimeItem item) {
+        updateViews(context, item);
+    }
 
     protected void attachClickListeners(Context context, @Nullable BedtimeItem item) {}
     protected void detachClickListeners()
@@ -74,6 +78,9 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             configActionView.setOnClickListener(null);
         }
     }
+
+    protected void clearViews() {}
+    protected void updateViews(Context context, BedtimeItem item) {}
 
     @Nullable
     public View getActionView() {
@@ -96,11 +103,6 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         public static int getLayoutResID() {
             return R.layout.layout_listitem_alarmclock2;   // TODO
         }
-
-        @Override
-        public void bindDataToHolder(Context context, @Nullable BedtimeItem item) {
-            // TODO
-        }
     }
 
     /**
@@ -121,7 +123,6 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
         protected FloatingActionButton button_add;
         protected FloatingActionButton button_edit;
-        protected WeakReference<Context> contextRef;
 
         protected CompoundButton.OnCheckedChangeListener onSwitchChanged;
 
@@ -176,7 +177,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 listTask.execute(rowID);
 
             } else {
-                updateViews();
+                updateViews(context);
             }
         }
         protected void loadAlarmItem(final Context context, Long rowID)
@@ -190,7 +191,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     if (result != null && result.size() > 0) {
                         setAlarmItem(result.get(0));
                     }
-                    updateViews();
+                    updateViews(context);
                 }
             });
         }
@@ -199,7 +200,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected void attachClickListeners(final Context context, @Nullable BedtimeItem item)
         {
             if (switch_enabled != null) {
-                switch_enabled.setOnCheckedChangeListener(onSwitchChanged = onSwitchChanged(context));
+                switch_enabled.setOnCheckedChangeListener(onSwitchChanged = onSwitchChanged(context, item));
             }
         }
 
@@ -218,6 +219,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
         }
 
+        @Override
         protected void clearViews()
         {
             /*if (text_time != null) {
@@ -228,9 +230,14 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }*/
         }
 
-        protected void updateViews()
+        @Override
+        protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
-            Context context = contextRef.get();
+            if (item == null) {
+                clearViews();
+                return;
+            }
+
             if (context != null)
             {
                 int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor };
@@ -239,18 +246,18 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_primary_dark));
                 a.recycle();
 
-                AlarmClockItem item = getAlarmItem();
-                if (item != null)
+                AlarmClockItem alarmItem = item.getAlarmItem();
+                if (alarmItem != null)
                 {
-                    AlarmNotifications.updateAlarmTime(context, item);
+                    AlarmNotifications.updateAlarmTime(context, alarmItem);
                     Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
-                    alarmTime.setTimeInMillis(item.timestamp + item.offset);
+                    alarmTime.setTimeInMillis(alarmItem.timestamp + alarmItem.offset);
                     SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
 
                     if (text_label != null)
                     {
                         Drawable d = DrawableCompat.wrap(text_label.getCompoundDrawablesRelative()[0].mutate());
-                        DrawableCompat.setTint(d, item.enabled ? colorOn : colorOff);
+                        DrawableCompat.setTint(d, alarmItem.enabled ? colorOn : colorOff);
                     }
                     if (text_time != null) {
                         text_time.setText(timeText.getValue());
@@ -266,7 +273,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     if (switch_enabled != null)
                     {
                         switch_enabled.setOnCheckedChangeListener(null);
-                        switch_enabled.setChecked(item.enabled);
+                        switch_enabled.setChecked(alarmItem.enabled);
                         switch_enabled.setOnCheckedChangeListener(onSwitchChanged);
                         switch_enabled.setVisibility(View.VISIBLE);
                     }
@@ -274,18 +281,18 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         button_edit.setVisibility(View.VISIBLE);
                     }
 
-                    boolean hasSound = (item != null && item.ringtoneURI != null);
+                    boolean hasSound = (alarmItem.ringtoneURI != null);
                     if (status_sound != null)
                     {
-                        status_sound.setText(hasSound ? item.ringtoneName : "");
-                        status_sound.setContentDescription(contextRef.get().getString(R.string.alarmOption_ringtone_ringtone));
+                        status_sound.setText(hasSound ? alarmItem.ringtoneName : "");
+                        status_sound.setContentDescription(context.getString(R.string.alarmOption_ringtone_ringtone));
                         status_sound.setVisibility(hasSound ? View.VISIBLE : View.GONE);
                     }
                     if (status_silent != null) {
                         status_silent.setVisibility(hasSound ? View.GONE : View.VISIBLE);
                     }
                     if (status_vibrate != null) {
-                        status_vibrate.setVisibility(item != null && item.vibrate ? View.VISIBLE : View.GONE);
+                        status_vibrate.setVisibility(alarmItem.vibrate ? View.VISIBLE : View.GONE);
                     }
 
                 } else {
@@ -314,7 +321,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
         }
 
-        protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context)
+        protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context, final BedtimeItem item)
         {
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -354,11 +361,6 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        public void bindDataToHolder(Context context, @Nullable BedtimeItem item) {
-            super.bindDataToHolder(context, item);
-        }
-
-        @Override
         protected void attachClickListeners(final Context context, @Nullable BedtimeItem item)
         {
             super.attachClickListeners(context, item);
@@ -370,7 +372,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     {
                         BedtimeSettings.savePrefBedtimeDoNotDisturb(context, isChecked);
                         BedtimeSettings.setAutomaticZenRule(context, switch_enabled.isChecked() && isChecked);
-                        updateViews_dndWarning();
+                        updateViews_dndWarning(context);
                     }
                 });
             }
@@ -403,32 +405,31 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
         }
 
-        protected void updateViews_dndWarning()
+        protected void updateViews_dndWarning(Context context)
         {
-            boolean showDndWarning = (check_dnd != null && check_dnd.isChecked() && !BedtimeSettings.hasDoNotDisturbPermission(contextRef.get()));
+            boolean showDndWarning = (check_dnd != null && check_dnd.isChecked() && !BedtimeSettings.hasDoNotDisturbPermission(context));
             if (layout_dndWarning != null) {
                 layout_dndWarning.setVisibility(showDndWarning ? View.VISIBLE : View.GONE);
             }
             if (text_dndWarning != null) {
-                text_dndWarning.setText(showDndWarning ? SuntimesUtils.fromHtml(contextRef.get().getString(R.string.privacy_permission_dnd)) : "");
+                text_dndWarning.setText(showDndWarning ? SuntimesUtils.fromHtml(context.getString(R.string.privacy_permission_dnd)) : "");
             }
         }
 
         @Override
-        protected void updateViews()
+        protected void updateViews(Context context, BedtimeItem item)
         {
-            super.updateViews();
-            Context context = contextRef.get();
+            super.updateViews(context, item);
             if (context != null)
             {
                 if (check_dnd != null) {
                     check_dnd.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
-                    check_dnd.setEnabled(!BedtimeSettings.isBedtimeModeActive(context));
+                    //check_dnd.setEnabled(!BedtimeSettings.isBedtimeModeActive(context));
                 }
-                updateViews_dndWarning();
+                updateViews_dndWarning(context);
 
-                AlarmClockItem item = getAlarmItem();
-                if (item != null)
+                AlarmClockItem alarmItem = item.getAlarmItem();
+                if (alarmItem != null)
                 {
                     if (text_label != null) {
                         text_label.setText(context.getString(R.string.msg_bedtime_set));
@@ -478,48 +479,42 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        public void bindDataToHolder(Context context, @Nullable BedtimeItem item) {
-            super.bindDataToHolder(context, item);
-        }
-
-        @Override
         protected void attachClickListeners(final Context context, @Nullable BedtimeItem item) {
             super.attachClickListeners(context, item);
         }
 
         @Override
-        protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context) {
+        protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context, final BedtimeItem item) {
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     BedtimeSettings.savePrefBedtimeReminder(context, isChecked);
-                    BedtimeAlarmHelper.setBedtimeReminder_withReminderItem(context, getAlarmItem(), isChecked);
+                    BedtimeAlarmHelper.setBedtimeReminder_withReminderItem(context, item.getAlarmItem(), isChecked);
                 }
             };
         }
 
         @Override
-        protected void updateViews()
+        protected void updateViews(Context context, BedtimeItem item)
         {
-            super.updateViews();
+            super.updateViews(context, item);
 
-            AlarmClockItem item = getAlarmItem();
+            AlarmClockItem alarmItem = item.getAlarmItem();
             if (layout_more != null) {
-                layout_more.setVisibility(item != null ? View.VISIBLE : View.GONE);
+                layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
             }
             if (switch_enabled != null) {
                 switch_enabled.setVisibility(View.VISIBLE);
             }
             if (button_edit != null) {
-                button_edit.setVisibility(item != null ? View.VISIBLE : View.GONE);
+                button_edit.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
             }
             if (text_label != null)
             {
-                Context context = contextRef.get();
                 if (context != null)
                 {
-                    String offsetString = utils.timeDeltaLongDisplayString(item != null ? item.offset : BedtimeSettings.loadPrefBedtimeReminderOffset(contextRef.get()));
+                    String offsetString = utils.timeDeltaLongDisplayString(alarmItem != null ? alarmItem.offset : BedtimeSettings.loadPrefBedtimeReminderOffset(context));
                     String labelString = context.getString(R.string.msg_bedtime_reminder, offsetString);
                     CharSequence labelDisplay = SuntimesUtils.createBoldSpan(null, labelString, offsetString);
                     text_label.setText(labelDisplay);
@@ -545,27 +540,21 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        public void bindDataToHolder(Context context, @Nullable BedtimeItem item) {
-            super.bindDataToHolder(context, item);
-        }
-
-        @Override
         protected void attachClickListeners(final Context context, @Nullable BedtimeItem item) {
             super.attachClickListeners(context, item);
         }
 
         @Override
-        protected void updateViews()
+        protected void updateViews(Context context, BedtimeItem item)
         {
-            super.updateViews();
+            super.updateViews(context, item);
 
-            Context context = contextRef.get();
-            AlarmClockItem item = getAlarmItem();
+            AlarmClockItem alarmItem = item.getAlarmItem();
             if (layout_more != null) {
-                layout_more.setVisibility(item != null ? View.VISIBLE : View.GONE);
+                layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
             }
 
-            if (item != null)
+            if (alarmItem != null)
             {
                 if (text_label != null) {
                     text_label.setText(context != null ? context.getString(R.string.msg_bedtime_wakeup_set) : "");
@@ -620,7 +609,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        public void bindDataToHolder(Context context, @Nullable BedtimeItem item)
+        protected void updateViews(Context context, BedtimeItem item)
         {
             if (item != null)
             {
@@ -647,6 +636,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
         }
 
+        @Override
         protected void clearViews()
         {
             if (text_sleepcycle != null) {
@@ -701,7 +691,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        public void bindDataToHolder(Context context, @Nullable BedtimeItem item)
+        protected void updateViews(Context context, BedtimeItem item)
         {
             if (item != null)
             {
@@ -726,24 +716,31 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     resumeButton.setVisibility(isActive && isPaused ? View.VISIBLE : View.GONE);
                 }
             } else {
-                if (headerLayout != null) {
-                    headerLayout.setVisibility(View.GONE);
-                }
-                if (label != null) {
-                    label.setText("");
-                }
-                if (nowButton != null) {
-                    nowButton.setVisibility(View.GONE);
-                }
-                if (dismissButton != null) {
-                    dismissButton.setVisibility(View.GONE);
-                }
-                if (pauseButton != null) {
-                    pauseButton.setVisibility(View.GONE);
-                }
-                if (resumeButton != null) {
-                    resumeButton.setVisibility(View.GONE);
-                }
+                clearViews();
+            }
+        }
+
+        @Override
+        protected void clearViews()
+        {
+            super.clearViews();
+            if (headerLayout != null) {
+                headerLayout.setVisibility(View.GONE);
+            }
+            if (label != null) {
+                label.setText("");
+            }
+            if (nowButton != null) {
+                nowButton.setVisibility(View.GONE);
+            }
+            if (dismissButton != null) {
+                dismissButton.setVisibility(View.GONE);
+            }
+            if (pauseButton != null) {
+                pauseButton.setVisibility(View.GONE);
+            }
+            if (resumeButton != null) {
+                resumeButton.setVisibility(View.GONE);
             }
         }
 
