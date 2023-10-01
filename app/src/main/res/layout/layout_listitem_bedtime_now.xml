@@ -3,31 +3,49 @@
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-        android:layout_marginTop="4dp" android:layout_marginBottom="4dp">
+        android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+        android:animateLayoutChanges="true">
 
         <LinearLayout android:id="@+id/layout_header"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
 
             <ImageView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:src="@drawable/ic_bedtime_96dp" />
+                android:src="@drawable/ic_bedtime_96dp"
+                android:contentDescription="@string/configLabel_bedtime" />
 
-            <TextView android:id="@+id/text_label"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                tools:text="Bedtime mode is currently active." />
+            <TextSwitcher android:id="@+id/text_label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textSize="?attr/text_size_medium"
+                    tools:text="Bedtime mode is currently paused." />
+
+                <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textSize="?attr/text_size_medium"
+                    tools:text="Bedtime mode is currently active." />
+
+            </TextSwitcher>
 
         </LinearLayout>
 
         <LinearLayout android:id="@+id/layout_controls"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_gravity="end">
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal" android:layout_gravity="end"
+            android:animateLayoutChanges="true">
 
-            <Button android:id="@+id/button_bedtime_now" android:visibility="gone"
+            <Button android:id="@+id/button_bedtime_now"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless"
                 android:text="Bedtime right now" />
@@ -37,7 +55,7 @@
                 android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:text="@string/configAction_pauseBedtime" />
 
-            <Button android:id="@+id/button_bedtime_resume" android:visibility="gone"
+            <Button android:id="@+id/button_bedtime_resume"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:text="@string/configAction_resumeBedtime" />

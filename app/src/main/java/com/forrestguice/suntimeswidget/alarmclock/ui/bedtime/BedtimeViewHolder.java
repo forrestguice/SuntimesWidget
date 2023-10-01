@@ -28,6 +28,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,7 +36,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -109,7 +112,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
         protected TextView text_label;
         protected View text_time_layout;
-        protected TextView text_time;
+        protected TextSwitcher text_time;
         protected TextView text_time_suffix;
         protected Switch switch_enabled;
 
@@ -129,7 +132,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             super(view);
             text_label = (TextView) view.findViewById(R.id.text_label);
             text_time_layout = view.findViewById(R.id.text_time_layout);
-            text_time = (TextView) view.findViewById(R.id.text_time);
+            text_time = (TextSwitcher) view.findViewById(R.id.text_time);
             text_time_suffix = (TextView) view.findViewById(R.id.text_time_suffix);
             switch_enabled = (Switch) view.findViewById(R.id.switch_enabled);
             layout_more = view.findViewById(R.id.layout_more);
@@ -692,7 +695,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected Button resumeButton;
         protected Button dismissButton;
         protected View headerLayout;
-        protected TextView label;
+        protected TextSwitcher label;
 
         public AlarmBedtimeViewHolder_BedtimeNow(View view)
         {
@@ -702,7 +705,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             resumeButton = (Button) view.findViewById(R.id.button_bedtime_resume);
             dismissButton = (Button) view.findViewById(R.id.button_bedtime_dismiss);
             headerLayout = view.findViewById(R.id.layout_header);
-            label = (TextView) view.findViewById(R.id.text_label);
+
+            label = (TextSwitcher) view.findViewById(R.id.text_label);
         }
 
         public static int getLayoutResID() {
