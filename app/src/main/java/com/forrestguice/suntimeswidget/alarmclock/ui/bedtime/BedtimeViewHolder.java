@@ -142,14 +142,6 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             button_edit = (FloatingActionButton) view.findViewById(R.id.button_edit);
         }
 
-        protected AlarmClockItem alarmItem = null;
-        public AlarmClockItem getAlarmItem() {
-            return alarmItem;
-        }
-        public void setAlarmItem(AlarmClockItem item) {
-            alarmItem = item;
-        }
-
         @Nullable
         public View getActionView() {
             return button_add;
@@ -163,12 +155,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         @Override
         public void bindDataToHolder(Context context, @Nullable BedtimeItem item)
         {
-            contextRef = new WeakReference<>(context);
             clearViews();
-            loadAlarmItem(context, item.getAlarmID(context));
+            loadAlarmItem(context, item);
         }
 
-        protected void loadAlarmItem(Context context, @Nullable Long rowID, AlarmListDialog.AlarmListTask.AlarmListTaskListener taskListener)
+        protected void loadAlarmItem(Context context, BedtimeItem item, @Nullable Long rowID, AlarmListDialog.AlarmListTask.AlarmListTaskListener taskListener)
         {
             if (rowID != null && rowID != BedtimeSettings.ID_NONE)
             {
@@ -177,23 +168,26 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 listTask.execute(rowID);
 
             } else {
-                updateViews(context);
+                updateViews(context, item);
             }
         }
-        protected void loadAlarmItem(final Context context, Long rowID)
+        protected void loadAlarmItem(final Context context, @Nullable final BedtimeItem item)
         {
-            setAlarmItem(null);
-            loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            if (item != null)
             {
-                @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                item.setAlarmItem(null);
+                loadAlarmItem(context, item, item.getAlarmID(context), new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
                 {
-                    if (result != null && result.size() > 0) {
-                        setAlarmItem(result.get(0));
+                    @Override
+                    public void onLoadFinished(List<AlarmClockItem> result)
+                    {
+                        if (result != null && result.size() > 0) {
+                            item.setAlarmItem(result.get(0));
+                        }
+                        updateViews(context, item);
                     }
-                    updateViews(context);
-                }
-            });
+                });
+            }
         }
 
         @Override
@@ -326,7 +320,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    toggleAlarm(context, getAlarmItem(), isChecked);
+                    toggleAlarm(context, item.getAlarmItem(), isChecked);
                 }
             };
         }
