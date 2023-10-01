@@ -83,6 +83,23 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         }
     }
 
+    public void notifyAllItemsChanged() {
+        notifyItemRangeChanged(0, items.size());
+    }
+
+    public int findItemPosition(Context context, long alarmId)
+    {
+        for (int i=0; i<items.size(); i++)
+        {
+            BedtimeItem item0 = getItem(i);
+            Long itemAlarmID = ((item0 != null) ? item0.getAlarmID(context) : null);
+            if (itemAlarmID != null && itemAlarmID == alarmId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public int findItemPosition(BedtimeItem.ItemType type)
     {
         for (int i=0; i<items.size(); i++)
