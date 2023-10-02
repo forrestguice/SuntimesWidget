@@ -180,8 +180,11 @@ public class BedtimeActivity extends AppCompatActivity
 
             if (action != null)
             {
-                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
-                    onAlarmItemUpdated(ContentUris.parseId(data));
+                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI))
+                {
+                    boolean alarmDeleted = intent.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
+                    onAlarmItemUpdated(ContentUris.parseId(data), alarmDeleted);
+
                 } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
             } else Log.e(TAG, "updateReceiver.onReceive: null action!");
         }
@@ -198,20 +201,24 @@ public class BedtimeActivity extends AppCompatActivity
 
             if (action != null)
             {
-                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
-                    onAlarmItemUpdated(null);
+                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI))
+                {
+                    boolean alarmsCleared = intent.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
+                    onAlarmItemUpdated(null, alarmsCleared);
                 } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
             } else Log.e(TAG, "updateReceiver.onReceive: null action!");
         }
     };
 
-    protected void onAlarmItemUpdated(@Nullable Long alarmID)
+    protected void onAlarmItemUpdated(@Nullable Long alarmID, boolean deleted)
     {
         BedtimeItemAdapter adapter = list.getAdapter();
         if (adapter != null)
         {
             if (alarmID != null)
             {
+                Log.d("DEBUG", "onAlarmItemUpdated: " + alarmID + ", deleted? " + deleted);
+
                 int position = adapter.findItemPosition(this, alarmID);
                 if (position >= 0) {
                     list.notifyItemChanged(position);
