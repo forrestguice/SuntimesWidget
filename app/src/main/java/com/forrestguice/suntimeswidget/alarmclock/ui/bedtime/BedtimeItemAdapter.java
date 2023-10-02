@@ -92,8 +92,10 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         for (int i=0; i<items.size(); i++)
         {
             BedtimeItem item0 = getItem(i);
-            Long itemAlarmID = ((item0 != null) ? item0.getAlarmID(context) : null);
-            if (itemAlarmID != null && itemAlarmID == alarmId) {
+            Long itemAlarmID0 = ((item0 != null) ? item0.cachedAlarmID() : null);
+            Long itemAlarmID1 = ((item0 != null) ? item0.getAlarmID(context) : null);
+            if ((itemAlarmID0 != null && itemAlarmID0 == alarmId)
+                    || (itemAlarmID1 != null && itemAlarmID1 == alarmId)){
                 return i;
             }
         }
