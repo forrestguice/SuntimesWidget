@@ -18,11 +18,9 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -137,6 +135,7 @@ public class BedtimeDialog extends DialogFragment
     {
         super.onResume();
         restoreDialogs(getActivity());
+        adapter.reloadAlarmClockItems(getActivity());
         adapter.notifyDataSetChanged();
     }
 
@@ -524,7 +523,7 @@ public class BedtimeDialog extends DialogFragment
         return true;
     }
 
-    protected boolean mirrorAlarmItem(final Long rowID, final AlarmClockItem toItem)
+    /*protected boolean mirrorAlarmItem(final Long rowID, final AlarmClockItem toItem)
     {
         if (rowID == null || rowID == BedtimeSettings.ID_NONE) {
             return false;
@@ -562,7 +561,7 @@ public class BedtimeDialog extends DialogFragment
             }
         });
         return true;
-    }
+    }*/
 
     protected void onEditAlarmResult(int resultCode, Intent data, boolean isNewAlarm, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener onSaved)
     {
@@ -576,9 +575,17 @@ public class BedtimeDialog extends DialogFragment
                     @Override
                     public void onFinished(Boolean result, @Nullable final AlarmClockItem[] items)
                     {
-                        int position = adapter.findItemPosition(getActivity(), item.rowID);
-                        if (position >= 0) {
-                            adapter.notifyItemChanged(position);
+                        if (result)
+                        {
+                            final int position = adapter.findItemPosition(getActivity(), item.rowID);
+                            if (position >= 0)
+                            {
+                                BedtimeItem bedtimeItem = adapter.getItem(position);
+                                if (bedtimeItem != null) {
+                                    bedtimeItem.setAlarmItem(item);
+                                }
+                                adapter.notifyItemChanged(position);
+                            }
                         }
                         BedtimeAlarmHelper.scheduleAlarmItem(getActivity(), item, item.enabled);
 

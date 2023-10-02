@@ -143,14 +143,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             button_edit = (FloatingActionButton) view.findViewById(R.id.button_edit);
         }
 
-        protected AlarmClockItem alarmItem = null;
-        @Nullable
-        public AlarmClockItem getAlarmItem() {
-            return alarmItem;
-        }
-        public void setAlarmItem(@Nullable AlarmClockItem item) {
-            alarmItem = item;
-        }
+
 
         @Nullable
         public View getActionView() {
@@ -170,22 +163,23 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 return;
             }
 
-            setAlarmItem(null);
+            /*item.setAlarmItem(null);
             loadAlarmItem(context, item, item.getAlarmID(context), new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
             {
                 @Override
                 public void onLoadFinished(List<AlarmClockItem> result)
                 {
                     if (result != null && result.size() > 0) {
-                        setAlarmItem(result.get(0));
+                        item.setAlarmItem(result.get(0));
                     }
                     updateViews(context, item);
                 }
-            });
+            });*/
+            updateViews(context, item);
         }
         protected void onRecycled() {
             super.onRecycled();
-            setAlarmItem(null);
+            //setAlarmItem(null);
         }
 
         protected void loadAlarmItem(Context context, BedtimeItem item, @Nullable Long rowID, AlarmListDialog.AlarmListTask.AlarmListTaskListener taskListener)
@@ -271,7 +265,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_primary_dark));
                 a.recycle();
 
-                AlarmClockItem alarmItem = getAlarmItem();
+                AlarmClockItem alarmItem = item.getAlarmItem();
                 if (alarmItem != null)
                 {
                     AlarmNotifications.updateAlarmTime(context, alarmItem);
@@ -351,7 +345,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    toggleAlarm(context, getAlarmItem(), isChecked);
+                    toggleAlarm(context, item.getAlarmItem(), isChecked);
                 }
             };
         }
@@ -453,7 +447,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 }
                 updateViews_dndWarning(context);
 
-                AlarmClockItem alarmItem = getAlarmItem();
+                AlarmClockItem alarmItem = item.getAlarmItem();
                 if (alarmItem != null)
                 {
                     if (text_label != null) {
@@ -515,7 +509,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     BedtimeSettings.savePrefBedtimeReminder(context, isChecked);
-                    BedtimeAlarmHelper.setBedtimeReminder_withReminderItem(context, getAlarmItem(), isChecked);
+                    BedtimeAlarmHelper.setBedtimeReminder_withReminderItem(context, item.getAlarmItem(), isChecked);
                 }
             };
         }
@@ -525,7 +519,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             super.updateViews(context, item);
 
-            AlarmClockItem alarmItem = getAlarmItem();
+            AlarmClockItem alarmItem = item.getAlarmItem();
             if (layout_more != null) {
                 layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
             }
@@ -574,7 +568,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             super.updateViews(context, item);
 
-            AlarmClockItem alarmItem = getAlarmItem();
+            AlarmClockItem alarmItem = item.getAlarmItem();
             if (layout_more != null) {
                 layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
             }

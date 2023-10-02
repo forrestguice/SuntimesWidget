@@ -25,8 +25,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
 {
@@ -176,12 +180,32 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(BedtimeViewHolder holder, int position)
+    public void onBindViewHolder(final BedtimeViewHolder holder, int position)
     {
         Context context = contextRef.get();
         final BedtimeItem item = getItem(position);
+        if (item != null && item.getAlarmItem() == null)
+        {
+            item.loadAlarmItem(context, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            {
+                @Override
+                public void onLoadFinished(List<AlarmClockItem> result)
+                {
+                    super.onLoadFinished(result);
+                    notifyItemChanged(holder.getAdapterPosition());
+                }
+            });
+        }
         holder.bindDataToHolder(context, item);
         attachClickListeners(context, holder, item);
+    }
+
+    protected void reloadAlarmClockItems(Context context)
+    {
+        for (BedtimeItem item : items) {
+            item.loadAlarmItem(context, null);
+        }
+        notifyAllItemsChanged();
     }
 
     protected void attachClickListeners(final Context context, final BedtimeViewHolder holder, final BedtimeItem item)

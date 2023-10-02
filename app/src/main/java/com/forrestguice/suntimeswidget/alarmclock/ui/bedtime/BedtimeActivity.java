@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
@@ -52,6 +53,8 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.util.List;
 
 /**
  * AlarmBedtimeActivity
@@ -205,6 +208,7 @@ public class BedtimeActivity extends AppCompatActivity
                 {
                     boolean alarmsCleared = intent.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
                     onAlarmItemUpdated(null, alarmsCleared);
+
                 } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
             } else Log.e(TAG, "updateReceiver.onReceive: null action!");
         }
@@ -217,10 +221,24 @@ public class BedtimeActivity extends AppCompatActivity
         {
             if (alarmID != null)
             {
-                int position = adapter.findItemPosition(this, alarmID);
-                if (position >= 0) {
-                    Log.d("DEBUG", "onAlarmItemUpdated: " + alarmID + ", deleted? " + deleted + ", position " + position);
-                    list.notifyItemChanged(position);
+                final int position = adapter.findItemPosition(this, alarmID);
+                BedtimeItem item = (position >= 0 ? adapter.getItem(position) : null);
+                if (item != null)
+                {
+                    //Log.d("DEBUG", "onAlarmItemUpdated: " + alarmID + ", deleted? " + deleted + ", position " + position);
+                    if (deleted) {
+                        item.setAlarmItem(null);
+                        list.notifyItemChanged(position);
+                        return;
+                    }
+                    item.loadAlarmItem(this, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+                    {
+                        @Override
+                        public void onLoadFinished(List<AlarmClockItem> result) {
+                            super.onLoadFinished(result);
+                            list.notifyItemChanged(position);
+                        }
+                    });
                 }
             } else {
                 list.notifyItemChanged(0);

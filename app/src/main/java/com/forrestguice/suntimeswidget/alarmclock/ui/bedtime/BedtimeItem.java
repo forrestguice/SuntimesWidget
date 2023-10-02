@@ -19,6 +19,13 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+
+import java.util.List;
 
 public class BedtimeItem
 {
@@ -44,6 +51,36 @@ public class BedtimeItem
         return alarmId;
     }
 
+    protected AlarmClockItem alarmItem = null;
+    @Nullable
+    public AlarmClockItem getAlarmItem() {
+        return alarmItem;
+    }
+    public void setAlarmItem(@Nullable AlarmClockItem item) {
+        alarmItem = item;
+    }
+    protected void loadAlarmItem(Context context, final AlarmListDialog.AlarmListTask.AlarmListTaskListener onItemLoaded)
+    {
+        setAlarmItem(null);
+        final Long alarmId = getAlarmID(context);
+        if (alarmId != null && alarmId != BedtimeSettings.ID_NONE)
+        {
+            BedtimeAlarmHelper.loadAlarmItem(context, alarmId, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            {
+                @Override
+                public void onLoadFinished(List<AlarmClockItem> result)
+                {
+                    if (result != null && result.size() > 0) {
+                        setAlarmItem(result.get(0));
+                    }
+                    if (onItemLoaded != null) {
+                        onItemLoaded.onLoadFinished(result);
+                    }
+                }
+            });
+        }
+    }
+
     public String slot = null;
     public String getSlot() {
         return slot;
@@ -66,4 +103,5 @@ public class BedtimeItem
         private ItemType() {
         }
     }
+
 }
