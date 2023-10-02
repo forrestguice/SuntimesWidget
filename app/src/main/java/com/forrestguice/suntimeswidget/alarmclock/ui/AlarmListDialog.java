@@ -1122,9 +1122,9 @@ public class AlarmListDialog extends DialogFragment
             }
 
             detachClickListeners(holder);
-            holder.bindData(context, items.get(position));
+            holder.bindData(context, item);
             holder.startBackgroundAnimation(context);
-            attachClickListeners(holder, position);
+            attachClickListeners(holder, item.rowID);
         }
 
         @Override
@@ -1152,38 +1152,37 @@ public class AlarmListDialog extends DialogFragment
             holder.stopBackgroundAnimation(contextRef.get());
         }
 
-        private void attachClickListeners(@NonNull final AlarmListDialogItem holder, final int position)
+        private void attachClickListeners(@NonNull final AlarmListDialogItem holder, final long rowId)
         {
             if (holder.card != null) {
-                holder.card.setOnClickListener(itemClickListener(position, holder));
-                //holder.card.setOnLongClickListener(itemLongClickListener(position));
+                holder.card.setOnClickListener(itemClickListener(rowId, holder));
             }
             if (holder.overflow != null) {
-                holder.overflow.setOnClickListener(overflowMenuListener(position));
+                holder.overflow.setOnClickListener(overflowMenuListener(rowId));
             }
             if (holder.typeButton != null) {
-                holder.typeButton.setOnClickListener(typeMenuListener(position, holder.typeButton));
+                holder.typeButton.setOnClickListener(typeMenuListener(rowId, holder.typeButton));
             }
             if (holder.button_delete != null) {
-                holder.button_delete.setOnClickListener(deleteButtonListener(position));
+                holder.button_delete.setOnClickListener(deleteButtonListener(rowId));
             }
             if (holder.button_dismiss != null) {
-                holder.button_dismiss.setOnClickListener(dismissButtonListener(position));
+                holder.button_dismiss.setOnClickListener(dismissButtonListener(rowId));
             }
             if (holder.button_snooze != null) {
-                holder.button_snooze.setOnClickListener(snoozeButtonListener(position));
+                holder.button_snooze.setOnClickListener(snoozeButtonListener(rowId));
             }
             if (holder.text_note != null) {
-                holder.text_note.setOnClickListener(noteListener(position, holder));
+                holder.text_note.setOnClickListener(noteListener(rowId, holder));
             }
 
             if (Build.VERSION.SDK_INT >= 14) {
                 if (holder.switch_enabled != null) {
-                    holder.switch_enabled.setOnCheckedChangeListener(alarmEnabledListener(position));
+                    holder.switch_enabled.setOnCheckedChangeListener(alarmEnabledListener(rowId));
                 }
             } else {
                 if (holder.check_enabled != null) {
-                    holder.check_enabled.setOnCheckedChangeListener(alarmEnabledListener(position));
+                    holder.check_enabled.setOnCheckedChangeListener(alarmEnabledListener(rowId));
                 }
             }
         }
@@ -1224,56 +1223,66 @@ public class AlarmListDialog extends DialogFragment
             }
         }
 
-        private View.OnClickListener itemClickListener(final int position, final AlarmListDialogItem holder)
+        private View.OnClickListener itemClickListener(final long rowId, final AlarmListDialogItem holder)
         {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
-                    if (listener != null) {
-                        listener.onItemClicked(items.get(position), holder);
+                    AlarmClockItem item = getItem(rowId);
+                    if (listener != null && item != null) {
+                        listener.onItemClicked(item, holder);
                     }
-                    setSelectedIndex(position);
+                    setSelectedRowID(rowId);
                 }
             };
         }
 
-        private View.OnLongClickListener itemLongClickListener(final int position)
+        private View.OnLongClickListener itemLongClickListener(final long rowId)
         {
             return new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v)
                 {
-                    setSelectedIndex(position);
-                    if (listener != null) {
-                        return listener.onItemLongClicked(items.get(position));
+                    setSelectedRowID(rowId);
+                    AlarmClockItem item = getItem(rowId);
+                    if (listener != null && item != null) {
+                        return listener.onItemLongClicked(item);
                     } else return true;
                 }
             };
         }
 
-        private View.OnClickListener overflowMenuListener(final int position)
+        private View.OnClickListener overflowMenuListener(final long rowId)
         {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setSelectedIndex(position);
-                    showOverflowMenu(contextRef.get(), position, v);
+                    setSelectedRowID(rowId);
+                    Context context = contextRef.get();
+                    if (context != null) {
+                        showOverflowMenu(context, rowId, v);
+                    }
                 }
             };
         }
 
-        private View.OnClickListener deleteButtonListener(final int position)
+        private View.OnClickListener deleteButtonListener(final long rowId)
         {
             return new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    AlarmEditDialog.confirmDeleteAlarm(contextRef.get(), items.get(position), onDeleteConfirmed(contextRef.get(), items.get(position)));
+                public void onClick(View v)
+                {
+                    Context context = contextRef.get();
+                    AlarmClockItem item = getItem(rowId);
+                    if (context != null && item != null) {
+                        AlarmEditDialog.confirmDeleteAlarm(context, item, onDeleteConfirmed(context, item));
+                    }
                 }
             };
         }
 
-        private View.OnClickListener dismissButtonListener(final int position)
+        private View.OnClickListener dismissButtonListener(final long rowId)
         {
             return new View.OnClickListener() {
                 @Override
@@ -1281,79 +1290,87 @@ public class AlarmListDialog extends DialogFragment
                     Context context = v.getContext();
                     if (context != null)
                     {
-                        AlarmClockItem alarm = items.get(position);
-                        if (alarm.hasDismissChallenge(context)) {
+                        AlarmClockItem alarm = getItem(rowId);
+                        if (alarm != null && alarm.hasDismissChallenge(context)) {
                             context.startActivity(AlarmNotifications.getFullscreenIntent(context, alarm.getUri()).setAction(AlarmDismissActivity.ACTION_DISMISS));
                         } else {
-                            context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, alarm.getUri()));
+                            context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, AlarmClockItem.getUri(rowId)));
                         }
                     }
                 }
             };
         }
 
-        private View.OnClickListener snoozeButtonListener(final int position)
+        private View.OnClickListener snoozeButtonListener(final long rowId)
         {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
                     if (context != null) {
-                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SNOOZE, items.get(position).getUri()));
+                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SNOOZE, AlarmClockItem.getUri(rowId)));
                     }
                 }
             };
         }
 
-        private View.OnClickListener noteListener(final int position, final AlarmListDialogItem view)
-        {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onItemNoteClicked(items.get(position), view);
-                    }
-                }
-            };
-        }
-
-        private View.OnClickListener editButtonListener(final int position, final AlarmListDialogItem holder)
-        {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setSelectedIndex(position);
-                    if (listener != null) {
-                        listener.onItemClicked(items.get(position), holder);
-                    }
-                }
-            };
-        }
-
-        private View.OnClickListener typeMenuListener(final int position, View v)
+        private View.OnClickListener noteListener(final long rowId, final AlarmListDialogItem view)
         {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
-                    if (position == getSelectedIndex())
-                    {
-                        AlarmClockItem item = items.get(position);
-                        if (item != null && !item.enabled) {
-                            showAlarmTypeMenu(contextRef.get(), position, v);
-                        }
-                    } else setSelectedIndex(position);
+                    AlarmClockItem item = getItem(rowId);
+                    if (listener != null && item != null) {
+                        listener.onItemNoteClicked(item, view);
+                    }
                 }
             };
         }
 
-        private CompoundButton.OnCheckedChangeListener alarmEnabledListener(final int position)
+        private View.OnClickListener editButtonListener(final long rowId, final AlarmListDialogItem holder)
+        {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setSelectedRowID(rowId);
+                    AlarmClockItem item = getItem(rowId);
+                    if (listener != null && item != null) {
+                        listener.onItemClicked(item, holder);
+                    }
+                }
+            };
+        }
+
+        private View.OnClickListener typeMenuListener(final long rowId, View v)
+        {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    if (rowId == getSelectedRowID())
+                    {
+                        Context context = contextRef.get();
+                        AlarmClockItem item = getItem(rowId);
+                        if (context != null && item != null && !item.enabled) {
+                            showAlarmTypeMenu(context, rowId, v);
+                        }
+                    } else setSelectedRowID(rowId);
+                }
+            };
+        }
+
+        private CompoundButton.OnCheckedChangeListener alarmEnabledListener(final long rowId)
         {
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    setSelectedIndex(position);
-                    enableAlarm(contextRef.get(), position, isChecked);
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    setSelectedRowID(rowId);
+                    Context context = contextRef.get();
+                    if (context != null) {
+                        enableAlarm(context, rowId, isChecked);
+                    }
                 }
             };
         }
@@ -1370,7 +1387,7 @@ public class AlarmListDialog extends DialogFragment
 
         ///
 
-        protected void showOverflowMenu(Context context, final int position, final View buttonView)
+        protected void showOverflowMenu(final Context context, final long rowId, final View buttonView)
         {
             PopupMenu menu = new PopupMenu(context, buttonView);
             MenuInflater inflater = menu.getMenuInflater();
@@ -1383,7 +1400,10 @@ public class AlarmListDialog extends DialogFragment
                     switch (menuItem.getItemId())
                     {
                         case R.id.action_delete:
-                            AlarmEditDialog.confirmDeleteAlarm(contextRef.get(), items.get(position), onDeleteConfirmed(contextRef.get(), items.get(position)));
+                            AlarmClockItem item = getItem(rowId);
+                            if (item != null) {
+                                AlarmEditDialog.confirmDeleteAlarm(context, item, onDeleteConfirmed(context, item));
+                            }
                             return true;
 
                         default:
@@ -1396,7 +1416,7 @@ public class AlarmListDialog extends DialogFragment
             menu.show();
         }
 
-        protected void showAlarmTypeMenu(final Context context, final int position, final View buttonView)
+        protected void showAlarmTypeMenu(final Context context, final long rowId, final View buttonView)
         {
             PopupMenu menu = new PopupMenu(context, buttonView);
             MenuInflater inflater = menu.getMenuInflater();
@@ -1410,17 +1430,17 @@ public class AlarmListDialog extends DialogFragment
                     switch (menuItem.getItemId())
                     {
                         case R.id.alarmTypeNotification:
-                            return changeAlarmType(context, position, AlarmClockItem.AlarmType.NOTIFICATION);
+                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION);
 
                         case R.id.alarmTypeNotification1:
-                            return changeAlarmType(context, position, AlarmClockItem.AlarmType.NOTIFICATION1);
+                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION1);
 
                         case R.id.alarmTypeNotification2:
-                            return changeAlarmType(context, position, AlarmClockItem.AlarmType.NOTIFICATION2);
+                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION2);
 
                         case R.id.alarmTypeAlarm:
                         default:
-                            return changeAlarmType(context, position, AlarmClockItem.AlarmType.ALARM);
+                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.ALARM);
                     }
                 }
             }));
@@ -1429,10 +1449,10 @@ public class AlarmListDialog extends DialogFragment
             menu.show();
         }
 
-        protected boolean changeAlarmType(Context context, final int position, AlarmClockItem.AlarmType type)
+        protected boolean changeAlarmType(Context context, final long rowId, AlarmClockItem.AlarmType type)
         {
-            AlarmClockItem item = items.get(position);
-            if (item.type != type)
+            AlarmClockItem item = getItem(rowId);
+            if (item != null && item.type != type)
             {
                 Log.d("AlarmList", "alarmTypeMenu: alarm type is changed: " + type);
                 if (item.enabled)
@@ -1447,7 +1467,7 @@ public class AlarmListDialog extends DialogFragment
                     item.setState(AlarmState.STATE_NONE);
 
                     AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
-                    task.setTaskListener(changeAlarmTypeTaskListener(position));
+                    task.setTaskListener(changeAlarmTypeTaskListener(rowId));
                     task.execute(item);
                     return true;
                 }
@@ -1455,19 +1475,24 @@ public class AlarmListDialog extends DialogFragment
             Log.w("AlarmList", "alarmTypeMenu: alarm type is unchanged");
             return false;
         }
-        private AlarmDatabaseAdapter.AlarmItemTaskListener changeAlarmTypeTaskListener(final int position)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener changeAlarmTypeTaskListener(final long rowId)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener() {
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item) {
-                    notifyItemChanged(position);
+                    notifyItemChanged(getIndex(rowId));
                 }
             };
         }
 
-        public void enableAlarm(final Context context, final int position, final boolean enabled)
+        public void enableAlarm(final Context context, final long rowId, final boolean enabled)
         {
-            AlarmClockItem item = items.get(position);
+            AlarmClockItem item = getItem(rowId);
+            if (item == null) {
+                Log.w("AlarmListDialog", "enableAlarm: null item!");
+                return;
+            }
+
             item.alarmtime = 0;
             item.enabled = enabled;
             item.modified = true;
@@ -1478,16 +1503,16 @@ public class AlarmListDialog extends DialogFragment
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
-                    if (result) {
+                    if (result && item != null) {
                         context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
                                                        : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
                         if (!enabled) {
                             AlarmNotifications.updateAlarmTime(context, item);
                         }
-                        notifyItemChanged(position);
+                        notifyItemChanged(getIndex(rowId));
 
                         if (listener != null) {
-                            listener.onAlarmToggled(items.get(position), enabled);
+                            listener.onAlarmToggled(item, enabled);
                         }
 
                     } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
