@@ -381,8 +381,13 @@ public class AlarmEditDialog extends DialogFragment
         menu.show();
     }
 
-    public static void confirmDeleteAlarm(final Context context, final AlarmClockItem item, DialogInterface.OnClickListener onDeleteConfirmed)
+    public static void confirmDeleteAlarm(@Nullable final Context context, @Nullable final AlarmClockItem item, DialogInterface.OnClickListener onDeleteConfirmed)
     {
+        if (context == null || item == null) {
+            Log.w("AlarmEditDialog", "confirmDeleteAlarm: null context or item! confirmation message was not shown.");
+            return;
+        }
+
         int[] attrs = { R.attr.icActionDelete };
         TypedArray a = context.obtainStyledAttributes(attrs);
         int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
