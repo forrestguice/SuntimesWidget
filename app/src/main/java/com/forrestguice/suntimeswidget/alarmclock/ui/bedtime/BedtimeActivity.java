@@ -217,10 +217,9 @@ public class BedtimeActivity extends AppCompatActivity
         {
             if (alarmID != null)
             {
-                Log.d("DEBUG", "onAlarmItemUpdated: " + alarmID + ", deleted? " + deleted);
-
                 int position = adapter.findItemPosition(this, alarmID);
                 if (position >= 0) {
+                    Log.d("DEBUG", "onAlarmItemUpdated: " + alarmID + ", deleted? " + deleted + ", position " + position);
                     list.notifyItemChanged(position);
                 }
             } else {

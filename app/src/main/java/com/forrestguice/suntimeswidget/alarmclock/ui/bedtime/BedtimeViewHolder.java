@@ -170,6 +170,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 return;
             }
 
+            setAlarmItem(null);
             loadAlarmItem(context, item, item.getAlarmID(context), new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
             {
                 @Override
@@ -227,12 +228,31 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected void clearViews()
         {
             super.clearViews();
-            /*if (text_time != null) {
+            if (text_time != null) {
                 text_time.setText("");
             }
             if (text_time_suffix != null) {
                 text_time_suffix.setText("");
-            }*/
+            }
+            if (status_sound != null) {
+                status_sound.setText("");
+                status_sound.setVisibility(View.GONE);
+            }
+            if (status_silent != null) {
+                status_silent.setVisibility(View.GONE);
+            }
+            if (status_vibrate != null) {
+                status_vibrate.setVisibility(View.GONE);
+            }
+            if (button_edit != null) {
+                button_edit.hide();
+            }
+            if (switch_enabled != null) {
+                switch_enabled.setVisibility(View.INVISIBLE);
+            }
+            if (text_time_layout != null) {
+                text_time_layout.setVisibility(View.GONE);
+            }
         }
 
         @Override
