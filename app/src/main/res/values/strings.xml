@@ -1202,6 +1202,10 @@
     <string name="msg_bedtime_wakeup_set">Wake up at</string>                                 <!-- textview text -->   <!-- TODO -->
     <string name="msg_bedtime_wakeup_notset">Wake up time is not set.</string>                <!-- textview text -->   <!-- TODO -->
 
+    <string name="configLabel_bedtime_tile_normal">Bedtime</string>             <!-- Quick Settings Tile labels --> <!-- TODO -->
+    <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>    <!-- TODO -->
+    <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>    <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->

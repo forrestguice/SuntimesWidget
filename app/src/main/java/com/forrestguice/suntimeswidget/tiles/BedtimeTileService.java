@@ -22,10 +22,16 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Icon;
 import android.service.quicksettings.Tile;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeAlarmHelper;
 import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
+
+import java.util.List;
 
 @TargetApi(24)
 public class BedtimeTileService extends SuntimesTileService
@@ -51,27 +57,50 @@ public class BedtimeTileService extends SuntimesTileService
     @Override
     protected void updateTile(Context context)
     {
-        Tile tile = getQsTile();
-        String label = context.getString(R.string.configLabel_bedtime);
+        String label;
         switch (BedtimeSettings.getBedtimeState(context))
         {
             case BedtimeSettings.STATE_BEDTIME_ACTIVE:
-                label += " (Active)";    // TODO
+                label = context.getString(R.string.configLabel_bedtime_tile_active);
                 break;
             case BedtimeSettings.STATE_BEDTIME_PAUSED:
-                label += " (Paused)";    // TODO
+                label = context.getString(R.string.configLabel_bedtime_tile_paused);
+                break;
+            default:
+                label = context.getString(R.string.configLabel_bedtime_tile_normal);
                 break;
         }
+
+        Tile tile = getQsTile();
         tile.setLabel(label);
         tile.setIcon(Icon.createWithResource(context, R.drawable.ic_action_bedtime));
         super.updateTile(context);    // calls updateTileState
     }
 
     @Override
-    protected Tile updateTileState(Context context, Tile tile)
+    protected Tile updateTileState(final Context context, final Tile tile)
     {
-        boolean tileEnabled = (BedtimeSettings.hasAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY)) || BedtimeSettings.isBedtimeModeActive(context);
-        tile.setState(tileEnabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
+        if (BedtimeSettings.isBedtimeModeActive(context)) {
+            tile.setState(Tile.STATE_ACTIVE);
+            return tile;
+        }
+
+        tile.setState(Tile.STATE_INACTIVE);
+        long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
+        if (rowID != BedtimeSettings.ID_NONE)
+        {
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            {
+                @Override
+                public void onLoadFinished(List<AlarmClockItem> result)
+                {
+                    AlarmClockItem item = ((result != null && result.size() > 0) ? result.get(0) : null);
+                    tile.setState((item != null && item.enabled) ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
+                    tile.updateTile();
+                }
+            });
+            return tile;
+        }
         return tile;
     }
 
