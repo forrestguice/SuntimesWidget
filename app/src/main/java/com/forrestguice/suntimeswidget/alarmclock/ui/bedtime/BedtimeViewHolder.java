@@ -503,13 +503,18 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context, final BedtimeItem item) {
+        protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context, final BedtimeItem item)
+        {
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     BedtimeSettings.savePrefBedtimeReminder(context, isChecked);
-                    BedtimeAlarmHelper.setBedtimeReminder_withReminderItem(context, item.getAlarmItem(), isChecked);
+                    if (isChecked) {
+                        BedtimeAlarmHelper.setBedtimeReminder_withReminderItem(context, item.getAlarmItem(), true);
+                    } else {
+                        toggleAlarm(context, item.getAlarmItem(), false);
+                    }
                 }
             };
         }
@@ -520,9 +525,9 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             super.updateViews(context, item);
 
             AlarmClockItem alarmItem = item.getAlarmItem();
-            if (layout_more != null) {
-                layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
-            }
+            //if (layout_more != null) {
+            //    layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
+            //}
             if (switch_enabled != null) {
                 switch_enabled.setVisibility(View.VISIBLE);
             }

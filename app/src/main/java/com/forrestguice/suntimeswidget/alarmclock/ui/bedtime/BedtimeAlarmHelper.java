@@ -191,8 +191,8 @@ public class BedtimeAlarmHelper
             {
                 public void onLoadFinished(List<AlarmClockItem> result)
                 {
-                    AlarmClockItem eventItem = ((result != null && result.size() > 0) ? result.get(0) : null);
-                    BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, eventItem, enabled);
+                    AlarmClockItem bedtimeItem = ((result != null && result.size() > 0) ? result.get(0) : null);
+                    BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, bedtimeItem, enabled);
                 }
             });
         } else {
@@ -202,7 +202,8 @@ public class BedtimeAlarmHelper
 
     public static void setBedtimeReminder_withEventInfo(final Context context, final int hour, final int minute, final long offset, final boolean enabled)
     {
-        AlarmClockItem eventItem = (enabled ? BedtimeAlarmHelper.createBedtimeEventItem(context, null, hour, minute, offset) : null);
+        //AlarmClockItem eventItem = (enabled ? BedtimeAlarmHelper.createBedtimeEventItem(context, null, hour, minute, offset) : null);   // to also clear reminder when disabled
+        AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, hour, minute, offset);
         setBedtimeReminder_withEventItem(context, eventItem, enabled);
     }
     public static void setBedtimeReminder_withEventItem(final Context context, @Nullable final AlarmClockItem eventItem, final boolean enabled)
