@@ -262,7 +262,8 @@ public class BedtimeDialog extends DialogFragment
                 switch (item.getItemType())
                 {
                     case BEDTIME_NOW:
-                        triggerBedtimeNow(getActivity(), item);
+                        //triggerBedtimeNow(getActivity(), item);
+                        AlarmNotifications.NotificationService.triggerBedtimeMode(getActivity(), true);
                         break;
 
                     case WAKEUP_ALARM:
