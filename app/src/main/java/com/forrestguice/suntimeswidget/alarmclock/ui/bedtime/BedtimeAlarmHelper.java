@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
@@ -93,7 +94,7 @@ public class BedtimeAlarmHelper
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
         AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.ALARM,
-                "Wake up",    // TODO: i18n
+                context.getString(R.string.configLabel_bedtime_alarm_wakeup),
                 null, location, -1, hour, minute, null,
                 AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmClockItem.AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(context, AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
 
@@ -109,7 +110,7 @@ public class BedtimeAlarmHelper
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
         AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.NOTIFICATION1,
-                "Bedtime Reminder",    // TODO: i18n
+                context.getString(R.string.configLabel_bedtime_alarm_reminder),
                 null, location, -1, hour, minute, null,
                 AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmClockItem.AlarmType.NOTIFICATION1), AlarmSettings.getDefaultRingtoneName(context, AlarmClockItem.AlarmType.NOTIFICATION1), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
         alarmItem.offset = offset;
@@ -123,7 +124,7 @@ public class BedtimeAlarmHelper
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
         AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.NOTIFICATION1,
-                "Bedtime",    // TODO: i18n
+                context.getString(R.string.configLabel_bedtime_alarm_notify),
                 null, location, -1, hour, minute, null,
                 false, null, null, AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
         alarmItem.offset = offset;

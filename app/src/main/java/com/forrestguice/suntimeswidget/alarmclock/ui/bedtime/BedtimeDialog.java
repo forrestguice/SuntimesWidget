@@ -608,8 +608,8 @@ public class BedtimeDialog extends DialogFragment
     protected void offerModifyBedtimeFromWakeup(final Context context)
     {
         String sleepHours = utils.timeDeltaLongDisplayString(-1 * BedtimeSettings.totalSleepTimeMs(context));
-        String messageString = "Set the bedtime to " + sleepHours + " before wake up time?";        // TODO
-        CharSequence message = SuntimesUtils.createBoldSpan(null, messageString, sleepHours);
+        String messageString = context.getString(R.string.prompt_bedtime_setFrom_wakeup, sleepHours);
+        CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
         Snackbar snackbar = Snackbar.make(getList(), message, 7000);
         snackbar.setAction(context.getString(R.string.configAction_setBedtime), new View.OnClickListener()
@@ -644,8 +644,8 @@ public class BedtimeDialog extends DialogFragment
     protected void offerModifyWakeupFromBedtime(final Context context)
     {
         String sleepHours = utils.timeDeltaLongDisplayString(BedtimeSettings.totalSleepTimeMs(context));
-        String messageString = "Set the wake up alarm to " + sleepHours + " after bedtime?";        // TODO
-        CharSequence message = SuntimesUtils.createBoldSpan(null, messageString, sleepHours);
+        String messageString = context.getString(R.string.prompt_bedtime_setFrom_bedtime, sleepHours);
+        CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
         Snackbar snackbar = Snackbar.make(getList(), message, 7000);
         snackbar.setAction(context.getString(R.string.configAction_setAlarm), new View.OnClickListener()

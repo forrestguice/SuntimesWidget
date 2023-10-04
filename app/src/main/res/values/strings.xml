@@ -1189,22 +1189,32 @@
     -->
     <string name="configLabel_bedtime">Bedtime</string>              <!-- group title -->   <!-- TODO -->
 
+    <string name="configAction_startBedtime">Turn on now</string>                   <!-- TODO -->
     <string name="configAction_setBedtime">Set Bedtime</string>                     <!-- TODO -->
     <string name="configAction_pauseBedtime">Pause</string>                         <!-- TODO -->
     <string name="configAction_resumeBedtime">Resume</string>                       <!-- TODO -->
     <string name="configAction_dismissBedtime">Dismiss</string>                     <!-- TODO -->
 
-    <string name="msg_bedtime_active">Bedtime mode is currently active.</string>              <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_paused">Bedtime mode is currently paused.</string>              <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_set">Bedtime at</string>                                        <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_active">Bedtime mode is active.</string>              <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_paused">Bedtime mode is paused.</string>              <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_set">Bedtime at</string>                                        <!-- textview text (next line shows time) -->   <!-- TODO -->
     <string name="msg_bedtime_notset">Bedtime is not set.</string>                            <!-- textview text -->   <!-- TODO -->
     <string name="msg_bedtime_reminder">Show a reminder %1$s before bedtime</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->   <!-- TODO -->
-    <string name="msg_bedtime_wakeup_set">Wake up at</string>                                 <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_wakeup_set">Wake up at</string>                                 <!-- textview text (next line shows time) -->   <!-- TODO -->
     <string name="msg_bedtime_wakeup_notset">Wake up time is not set.</string>                <!-- textview text -->   <!-- TODO -->
+
+    <string name="configLabel_bedtime_alarm_notify">Bedtime</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
+    <string name="configLabel_bedtime_alarm_reminder">Bedtime Reminder</string>    <!-- AlarmItem label for reminder notification --> <!-- TODO -->
+    <string name="configLabel_bedtime_alarm_wakeup">Wake up</string>             <!-- AlarmItem label for wake up alarm --> <!-- TODO -->
 
     <string name="configLabel_bedtime_tile_normal">Bedtime</string>             <!-- Quick Settings Tile labels --> <!-- TODO -->
     <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>    <!-- TODO -->
     <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>    <!-- TODO -->
+
+    <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->    <!-- TODO -->
+
+    <string name="prompt_bedtime_setFrom_wakeup">Set the bedtime to %s before wake up time?</string>    <!-- snackbar message -->    <!-- TODO -->
+    <string name="prompt_bedtime_setFrom_bedtime">Set the wake up alarm to %s after bedtime?</string>    <!-- snackbar message -->    <!-- TODO -->
 
     <!--
          APP SETTINGS

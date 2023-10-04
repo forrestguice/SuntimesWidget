@@ -92,7 +92,7 @@ public class BedtimeConditionService extends ConditionProviderService
     protected void notifyCondition(boolean value)
     {
         Log.d("DEBUG", "BedtimeConditionService :: notifyCondition: " + value);
-        String conditionSummary = value ? "TODO:value:" + value : "";    // TODO
+        String conditionSummary = value ? getString(R.string.msg_bedtime_active) : "";
         notifyCondition( BedtimeConditionService.createAutomaticZenRuleCondition(conditionSummary, value) );
     }
 
@@ -109,7 +109,7 @@ public class BedtimeConditionService extends ConditionProviderService
     }
 
     public static String getAutomaticZenRuleName(Context context) {
-        return "Bedtime (Suntimes)";           // TODO: i18n
+        return context.getString(R.string.configLabel_bedtime_zenrule_name);
     }
     public static Uri getAutomaticZenRuleConditionId() {
         return Uri.parse("condition://id");

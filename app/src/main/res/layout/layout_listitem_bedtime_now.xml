@@ -48,7 +48,7 @@
             <Button android:id="@+id/button_bedtime_now"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="end" style="@style/Widget.AppCompat.Button.Borderless"
-                android:text="Bedtime right now" />
+                android:text="@string/configAction_startBedtime" />
 
             <Button android:id="@+id/button_bedtime_pause"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
