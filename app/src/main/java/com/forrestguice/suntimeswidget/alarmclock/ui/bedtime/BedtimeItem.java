@@ -59,7 +59,7 @@ public class BedtimeItem
     public void setAlarmItem(@Nullable AlarmClockItem item) {
         alarmItem = item;
     }
-    protected void loadAlarmItem(Context context, final AlarmListDialog.AlarmListTask.AlarmListTaskListener onItemLoaded)
+    protected boolean loadAlarmItem(Context context, final AlarmListDialog.AlarmListTask.AlarmListTaskListener onItemLoaded)
     {
         setAlarmItem(null);
         final Long alarmId = getAlarmID(context);
@@ -78,6 +78,13 @@ public class BedtimeItem
                     }
                 }
             });
+            return true;
+
+        } else {
+            if (onItemLoaded != null) {
+                onItemLoaded.onLoadFinished(null);
+            }
+            return false;
         }
     }
 

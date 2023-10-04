@@ -21,11 +21,13 @@ package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 
 import java.lang.ref.WeakReference;
@@ -72,9 +74,9 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
     {
         if (position >= 0 && position < items.size())
         {
-            BedtimeItem item = items.get(position);
-            if (toPosition >= 0 && position < items.size())
+            if (toPosition >= 0 && toPosition < items.size())
             {
+                BedtimeItem item = items.get(position);
                 if (toPosition < position) {
                     items.remove(position);
                     items.add(toPosition, item);
@@ -189,10 +191,10 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
             item.loadAlarmItem(context, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
-                {
-                    super.onLoadFinished(result);
-                    notifyItemChanged(holder.getAdapterPosition());
+                public void onLoadFinished(List<AlarmClockItem> result) {
+                    if (result != null && result.size() > 0) {
+                        notifyItemChanged(holder.getAdapterPosition());
+                    }
                 }
             });
         }
@@ -200,12 +202,33 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         attachClickListeners(context, holder, item);
     }
 
-    protected void reloadAlarmClockItems(Context context)
+    protected void reloadAlarmClockItems(final Context context)
     {
-        for (BedtimeItem item : items) {
-            item.loadAlarmItem(context, null);
+        /*final Long[] ids = new Long[items.size()];
+        for (int i=0; i<items.size(); i++) {
+            ids[i] = (long) i;
         }
-        notifyAllItemsChanged();
+        final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener()
+        {
+            @Override
+            public void onObservedAll() {
+                //Log.d("DEBUG", "reloadAlarmClockItems :: onObservedAll");
+                //notifyDataSetChanged();
+            }
+        });*/
+
+        for (int i=0; i<items.size(); i++)
+        {
+            final long id = i;
+            BedtimeItem item = items.get(i);
+            item.loadAlarmItem(context, new AlarmListDialog.AlarmListTask.AlarmListTaskListener() {
+                public void onLoadFinished(List<AlarmClockItem> result)
+                {
+                    //observer.notify(id);
+                    notifyItemChanged((int)id);
+                }
+            });
+        }
     }
 
     protected void attachClickListeners(final Context context, final BedtimeViewHolder holder, final BedtimeItem item)
