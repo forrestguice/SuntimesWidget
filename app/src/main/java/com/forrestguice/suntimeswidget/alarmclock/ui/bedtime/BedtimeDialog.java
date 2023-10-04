@@ -21,6 +21,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +31,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -607,6 +610,11 @@ public class BedtimeDialog extends DialogFragment
 
     protected void offerModifyBedtimeFromWakeup(final Context context)
     {
+        int[] attrs = { R.attr.text_accentColor };
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        int accentColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
+        a.recycle();
+
         String sleepHours = utils.timeDeltaLongDisplayString(-1 * BedtimeSettings.totalSleepTimeMs(context));
         String messageString = context.getString(R.string.prompt_bedtime_setFrom_wakeup, sleepHours);
         CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
@@ -621,28 +629,15 @@ public class BedtimeDialog extends DialogFragment
         });
         SuntimesUtils.themeSnackbar(context, snackbar, null);
         snackbar.show();
-
-        /*int[] attrs = { R.attr.icActionBedtime };
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        int iconResID = a.getResourceId(0, R.drawable.ic_action_bedtime);
-        a.recycle();
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setIcon(iconResID);
-        dialog.setMessage(message);
-        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {    // TODO
-            public void onClick(DialogInterface dialog, int which) {}
-        });
-        dialog.setPositiveButton("Set Bedtime", new DialogInterface.OnClickListener() {    // TODO
-            public void onClick(DialogInterface dialog, int which) {
-                configBedtimeFromWakeup(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.BEDTIME)));
-            }
-        });
-        dialog.show();*/
     }
 
     protected void offerModifyWakeupFromBedtime(final Context context)
     {
+        int[] attrs = { R.attr.text_accentColor };
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        int accentColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
+        a.recycle();
+
         String sleepHours = utils.timeDeltaLongDisplayString(BedtimeSettings.totalSleepTimeMs(context));
         String messageString = context.getString(R.string.prompt_bedtime_setFrom_bedtime, sleepHours);
         CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
@@ -657,25 +652,6 @@ public class BedtimeDialog extends DialogFragment
         });
         SuntimesUtils.themeSnackbar(context, snackbar, null);
         snackbar.show();
-
-        /*int[] attrs = { R.attr.icActionAlarm };
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        int iconResID = a.getResourceId(0, R.drawable.ic_action_alarms);
-        a.recycle();
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setIcon(iconResID);
-        dialog.setMessage(message);
-        dialog.setNegativeButton("Leave it", new DialogInterface.OnClickListener() {    // TODO
-            public void onClick(DialogInterface dialog, int which) {}
-        });
-        dialog.setPositiveButton("Set Alarm", new DialogInterface.OnClickListener()    // TODO
-        {
-            public void onClick(DialogInterface dialog, int which) {
-                configWakeupFromBedtime(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM)));
-            }
-        });
-        dialog.show();*/
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
