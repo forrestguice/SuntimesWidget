@@ -31,27 +31,25 @@ import android.service.notification.Condition;
 import android.service.notification.ConditionProviderService;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
+
 public class BedtimeConditionService extends ConditionProviderService
 {
     public static final String ACTION_BEDTIME_UPDATE = "suntimeswidget.alarm.update_bedtime";
     public static final String ACTION_BEDTIME_STOP = "suntimeswidget.alarm.stop_bedtime";
     protected static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
 
-    protected boolean connected = false;
-
     @Override
     public void onConnected() {
         Log.d("DEBUG", "BedtimeConditionService :: onConnected");
-        connected = true;
         registerReceiver(receiver, getReceiverIntentFilter(), REQUIRED_PERMISSION, null);
     }
 
     @Override
     public void onDestroy()
     {
-        super.onDestroy();
         Log.d("DEBUG", "BedtimeConditionService :: onDestroy");
-        connected = false;
+        super.onDestroy();
         unregisterReceiver(receiver);
     }
 
@@ -71,7 +69,7 @@ public class BedtimeConditionService extends ConditionProviderService
             }
         }
     };
-    protected IntentFilter getReceiverIntentFilter()
+    private static IntentFilter getReceiverIntentFilter()
     {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_BEDTIME_UPDATE);
