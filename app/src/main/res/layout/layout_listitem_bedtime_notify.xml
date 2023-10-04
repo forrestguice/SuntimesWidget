@@ -58,12 +58,13 @@
 
             <LinearLayout android:id="@+id/dndwarning_layout" android:visibility="visible"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:orientation="vertical" android:layout_marginTop="4dp">
+                android:orientation="vertical" android:layout_marginTop="12dp">
 
                 <TextView android:id="@+id/dndwarning_text"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:textSize="?attr/text_size_small"
                     android:drawableStart="?attr/icActionWarning" android:gravity="center_vertical"
+                    android:drawablePadding="8dp"
                     tools:text="@string/privacy_permission_dnd" />
 
                 <Button android:id="@+id/dndwarning_button"
