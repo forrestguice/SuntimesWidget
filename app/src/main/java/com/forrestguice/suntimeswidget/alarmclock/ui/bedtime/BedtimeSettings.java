@@ -51,11 +51,20 @@ public class BedtimeSettings
     public static final String[] ALL_SLOTS = new String[] { SLOT_WAKEUP_ALARM, SLOT_BEDTIME_NOTIFY, SLOT_BEDTIME_REMINDER };
     public static final long ID_NONE = -1;
 
-    public static final String PREF_KEY_SLEEPCYCLE_LENGTH = "app_alarms_sleepCycleMillis";
+    public static final String PREF_KEY_SLEEPCYCLE_LENGTH = "app_bedtime_sleepCycleMillis";
     public static final int PREF_DEF_SLEEPCYCLE_LENGTH = 1000 * 60 * 90;  // 90 min
 
-    public static final String PREF_KEY_SLEEPCYCLE_COUNT = "app_alarms_sleepCycleCount";
+    public static final String PREF_KEY_SLEEPCYCLE_COUNT = "app_bedtime_sleepCycleCount";
     public static final float PREF_DEF_SLEEPCYCLE_COUNT = 5;
+
+    public static final String PREF_KEY_SLEEP_OFFSET = "app_bedtime_sleep_offset";
+    public static final int PREF_DEF_SLEEP_OFFSET = 1000 * 60 * 30;  // 30 min
+
+    public static final String PREF_KEY_SLEEP_USE_SLEEPCYCLE = "app_bedtime_sleep_use_sleepcycle";
+    public static final boolean PREF_DEF_SLEEP_USE_SLEEPCYCLE = true;
+
+    public static final String PREF_KEY_SLEEP_LENGTH = "app_bedtime_sleep";
+    public static final int PREF_DEF_SLEEP_LENGTH = 1000 * 60 * 60 * 6;  // 6h
 
     public static final String PREF_KEY_BEDTIME_DND = "app_bedtime_dnd";
     public static final boolean PREF_DEF_BEDTIME_DND = false;
@@ -130,9 +139,17 @@ public class BedtimeSettings
 
     public static long totalSleepTimeMs(Context context)
     {
-        float numSleepCycles = BedtimeSettings.loadPrefSleepCycleCount(context);
-        long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
-        return (long)(numSleepCycles * sleepCycleMs);
+        long offset = BedtimeSettings.loadPrefSleepOffsetMs(context);
+        boolean useSleepCycle = BedtimeSettings.loadPrefUseSleepCycle(context);
+        if (useSleepCycle)
+        {
+            float numSleepCycles = BedtimeSettings.loadPrefSleepCycleCount(context);
+            long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
+            return (long)(numSleepCycles * sleepCycleMs) + offset;
+
+        } else {
+            return BedtimeSettings.loadPrefSleepMs(context) + offset;
+        }
     }
 
     public static long loadPrefSleepCycleMs(Context context)
@@ -160,6 +177,47 @@ public class BedtimeSettings
         prefs.putFloat(PREF_KEY_SLEEPCYCLE_COUNT, value);
         prefs.apply();
     }
+
+    public static boolean loadPrefUseSleepCycle(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_SLEEP_USE_SLEEPCYCLE, PREF_DEF_SLEEP_USE_SLEEPCYCLE);
+    }
+    public static void savePrefUseSleepCycle(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_SLEEP_USE_SLEEPCYCLE, value);
+        prefs.apply();
+    }
+
+    public static long loadPrefSleepMs(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_SLEEP_LENGTH, PREF_DEF_SLEEP_LENGTH);
+        } else return AlarmSettings.loadStringPrefAsLong(prefs, PREF_KEY_SLEEP_LENGTH, PREF_DEF_SLEEP_LENGTH);
+    }
+    public static void savePrefSleepMs(Context context, long value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putLong(PREF_KEY_SLEEP_LENGTH, value);
+        prefs.apply();
+    }
+
+    public static long loadPrefSleepOffsetMs(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_SLEEP_OFFSET, PREF_DEF_SLEEP_OFFSET);
+        } else return AlarmSettings.loadStringPrefAsLong(prefs, PREF_KEY_SLEEP_OFFSET, PREF_DEF_SLEEP_OFFSET);
+    }
+    public static void savePrefSleepOffsetMs(Context context, long value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putLong(PREF_KEY_SLEEP_OFFSET, value);
+        prefs.apply();
+    }
+
 
     public static long loadAlarmID(Context context, String slot)
     {
