@@ -145,6 +145,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
      */
     public static abstract class AlarmBedtimeViewHolder_AlarmItem extends BedtimeViewHolder
     {
+        protected View card;
         protected TextView text_label;
         protected View text_time_layout;
         protected TextView text_time;
@@ -164,6 +165,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         public AlarmBedtimeViewHolder_AlarmItem(View view)
         {
             super(view);
+            card = view.findViewById(R.id.card);
             text_label = (TextView) view.findViewById(R.id.text_label);
             text_time_layout = view.findViewById(R.id.text_time_layout);
             text_time = (TextView) view.findViewById(R.id.text_time);
@@ -176,8 +178,6 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             button_add = (FloatingActionButton) view.findViewById(R.id.button_add);
             button_edit = (FloatingActionButton) view.findViewById(R.id.button_edit);
         }
-
-
 
         @Nullable
         public View getActionView() {
@@ -283,6 +283,19 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
         }
 
+        protected void setCardBackground(Context context, int resId)
+        {
+            if (card != null)
+            {
+                Drawable background = ContextCompat.getDrawable(context, resId).mutate();
+                if (Build.VERSION.SDK_INT >= 16) {
+                    card.setBackground(background);
+                } else {
+                    card.setBackgroundDrawable(background);
+                }
+            }
+        }
+
         @Override
         protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
@@ -293,15 +306,20 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
             if (context != null)
             {
-                int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor };
+                int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor,
+                        R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
                 TypedArray a = context.obtainStyledAttributes(attrs);
-                int colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled));
+                @SuppressLint("ResourceType") int colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled));
                 @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_primary_dark));
+                @SuppressLint("ResourceType") int cardBgOn = a.getResourceId(2, R.drawable.card_alarmitem_enabled_dark);
+                @SuppressLint("ResourceType") int cardBgOff = a.getResourceId(3, R.drawable.card_alarmitem_disabled_dark);
                 a.recycle();
 
                 AlarmClockItem alarmItem = item.getAlarmItem();
                 if (alarmItem != null)
                 {
+                    setCardBackground(context, alarmItem.enabled ? cardBgOn : cardBgOff);
+
                     AlarmNotifications.updateAlarmTime(context, alarmItem);
                     Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
                     alarmTime.setTimeInMillis(alarmItem.timestamp + alarmItem.offset);
@@ -349,6 +367,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     }
 
                 } else {
+                    setCardBackground(context, cardBgOff);
                     if (text_label != null)
                     {
                         Drawable d = DrawableCompat.wrap(text_label.getCompoundDrawablesRelative()[0].mutate());
