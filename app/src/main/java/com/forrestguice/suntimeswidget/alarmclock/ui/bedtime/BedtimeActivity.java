@@ -402,8 +402,8 @@ public class BedtimeActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.action_permission:
-                //BedtimeSettings.startDoNotDisturbAccessActivity(BedtimeActivity.this);
-                AlarmNotifications.NotificationService.triggerBedtimeMode(this, true);
+                BedtimeSettings.startDoNotDisturbAccessActivity(BedtimeActivity.this);
+                //AlarmNotifications.NotificationService.triggerBedtimeMode(this, true);
                 return true;
 
             case R.id.action_settings:
