@@ -22,12 +22,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -64,6 +66,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     protected void onRecycled() {
         clearViews();
         detachClickListeners();
+        updateTask = null;
     }
 
     protected void attachClickListeners(Context context, @Nullable BedtimeItem item) {}
@@ -91,6 +94,37 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     public View getConfigureActionView() {
         return null;
     }
+
+    protected Runnable updateTask = null;
+    protected void setUpdateTask(@Nullable Runnable value)
+    {
+        boolean wasRunning = taskIsRunning;
+        if (updateTask != null) {
+            stopUpdateTask();
+        }
+        updateTask = value;
+
+        if (wasRunning && value != null) {
+            startUpdateTask();
+        }
+    }
+
+    public void startUpdateTask()
+    {
+        if (itemView != null && updateTask != null) {
+            itemView.removeCallbacks(updateTask);
+            itemView.post(updateTask);
+            taskIsRunning = true;
+        }
+    }
+    public void stopUpdateTask()
+    {
+        if (itemView != null && updateTask != null) {
+            itemView.removeCallbacks(updateTask);
+            taskIsRunning = false;
+        }
+    }
+    private boolean taskIsRunning = false;
 
     /**
      * Welcome
@@ -693,6 +727,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected Button dismissButton;
         protected View headerLayout;
         protected TextSwitcher label;
+        protected TextSwitcher note;
 
         public AlarmBedtimeViewHolder_BedtimeNow(View view)
         {
@@ -704,18 +739,64 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             headerLayout = view.findViewById(R.id.layout_header);
 
             label = (TextSwitcher) view.findViewById(R.id.text_label);
+            note = (TextSwitcher) view.findViewById(R.id.text_note);
         }
 
         public static int getLayoutResID() {
             return R.layout.layout_listitem_bedtime_now;
         }
 
+        public void bindDataToHolder(final Context context, final @Nullable BedtimeItem item)
+        {
+            super.bindDataToHolder(context, item);
+            if (item != null)
+            {
+                setUpdateTask(updateTask(context, item));
+                startUpdateTask();
+            }
+        }
+
+        protected Runnable updateTask(final Context context, final BedtimeItem item)
+        {
+            return new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    Log.d("DEBUG", "updateTask: tick");
+                    if (note != null && updateNote(context, item)) {
+                        note.postDelayed(this, UPDATE_RATE);
+                    }
+                }
+            };
+        }
+        public static final int UPDATE_RATE = 3000;
+
         public View getActionView() {
             return nowButton;
         }
 
+        protected boolean updateNote(Context context, BedtimeItem item)
+        {
+            AlarmClockItem bedtime = item.getAlarmItem();
+            if (bedtime != null && bedtime.enabled)
+            {
+                Calendar now = Calendar.getInstance();
+                AlarmNotifications.updateAlarmTime(context, bedtime, now, true);
+                String deltaString = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), bedtime.timestamp + bedtime.offset).getValue();
+                String noteString = "Bedtime in " + deltaString;    // TODO
+                CharSequence noteDisplay = SuntimesUtils.createBoldSpan(null, noteString, deltaString);
+                note.setText(noteDisplay);
+                return true;
+
+            } else {
+                note.setText("");
+                return false;
+            }
+        }
+
         @Override
-        protected void updateViews(Context context, BedtimeItem item)
+        protected void updateViews(final Context context, final BedtimeItem item)
         {
             if (item != null)
             {
@@ -726,6 +807,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 }
                 if (label != null) {
                     label.setText((!isActive ? "" : context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active)));
+                }
+                if (note != null)
+                {
+                    note.setVisibility(isActive ? View.INVISIBLE : View.VISIBLE);
+                    updateNote(context, item);
                 }
                 if (nowButton != null) {
                     nowButton.setVisibility(isActive ? View.GONE : View.VISIBLE);
@@ -753,6 +839,9 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
             if (label != null) {
                 label.setText("");
+            }
+            if (note != null) {
+                note.setText("");
             }
             if (nowButton != null) {
                 nowButton.setVisibility(View.GONE);

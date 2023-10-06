@@ -199,6 +199,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
             });
         }
         holder.bindDataToHolder(context, item);
+        holder.startUpdateTask();
         attachClickListeners(context, holder, item);
     }
 
@@ -267,6 +268,20 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
     @Override
     public void onViewRecycled(BedtimeViewHolder holder) {
         holder.onRecycled();
+    }
+
+    @Override
+    public void onViewAttachedToWindow(BedtimeViewHolder holder)
+    {
+        super.onViewAttachedToWindow(holder);
+        holder.startUpdateTask();
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(BedtimeViewHolder holder)
+    {
+        super.onViewDetachedFromWindow(holder);
+        holder.stopUpdateTask();
     }
 
     protected AdapterListener adapterListener = null;
