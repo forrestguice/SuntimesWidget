@@ -73,6 +73,7 @@ public class BedtimeDialog extends DialogFragment
 
     protected RecyclerView list;
     protected BedtimeItemAdapter adapter;
+    protected LinearLayoutManager layout;
     protected SuntimesUtils utils = new SuntimesUtils();
 
     @Override
@@ -98,7 +99,7 @@ public class BedtimeDialog extends DialogFragment
         adapter.setAdapterListener(adapterListener);
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
-        list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        list.setLayoutManager(layout = new LinearLayoutManager(getActivity()));
         //list.addItemDecoration(itemDecoration);
         list.setAdapter(adapter);
 
@@ -134,9 +135,21 @@ public class BedtimeDialog extends DialogFragment
     }
 
     @Override
+    public void onStop()
+    {
+        super.onStop();
+        if (list != null) {
+            list.setLayoutManager(null);
+        }
+    }
+
+    @Override
     public void onResume()
     {
         super.onResume();
+        if (list != null) {
+            list.setLayoutManager(layout);
+        }
         restoreDialogs(getActivity());
         adapter.reloadAlarmClockItems(getActivity());
     }
