@@ -151,8 +151,11 @@ public class BedtimeDialog extends DialogFragment
             list.setLayoutManager(layout);
         }
         restoreDialogs(getActivity());
-        adapter.reloadAlarmClockItems(getActivity());
+        if (onResume_refreshData) {
+            adapter.reloadAlarmClockItems(getActivity());
+        } else onResume_refreshData = true;
     }
+    protected boolean onResume_refreshData = true;
 
     protected void restoreDialogs(Context context)
     {
@@ -170,6 +173,7 @@ public class BedtimeDialog extends DialogFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        onResume_refreshData = false;
         switch (requestCode)
         {
             case REQUEST_ADD_WAKEUP:
@@ -219,6 +223,10 @@ public class BedtimeDialog extends DialogFragment
                         }
                     }
                 });
+                break;
+
+            default:
+                onResume_refreshData = true;
                 break;
         }
     }
@@ -593,14 +601,18 @@ public class BedtimeDialog extends DialogFragment
                     {
                         if (result)
                         {
-                            final int position = adapter.findItemPosition(getActivity(), item.rowID);
-                            if (position >= 0)
+                            Integer[] positions = adapter.findItemPositions(getActivity(), item.rowID);
+                            for (int position : positions)
                             {
-                                BedtimeItem bedtimeItem = adapter.getItem(position);
-                                if (bedtimeItem != null) {
-                                    bedtimeItem.setAlarmItem(item);
+                                Log.d("DEBUG", "onEditAlarmResult :: " + position);
+                                if (position >= 0)
+                                {
+                                    BedtimeItem bedtimeItem = adapter.getItem(position);
+                                    if (bedtimeItem != null) {
+                                        bedtimeItem.setAlarmItem(item);
+                                    }
+                                    adapter.notifyItemChanged(position);
                                 }
-                                adapter.notifyItemChanged(position);
                             }
                         }
                         BedtimeAlarmHelper.scheduleAlarmItem(getActivity(), item, item.enabled);
@@ -612,7 +624,7 @@ public class BedtimeDialog extends DialogFragment
                 });
             } else {
                 if (onSaved != null) {    // data may contain null item if EditActivity deleted its entry
-                    onSaved.onFinished(true, new AlarmClockItem[] { item });
+                    onSaved.onFinished(true, new AlarmClockItem[] { null });
                 }
             }
         } else {
