@@ -221,25 +221,29 @@ public class BedtimeActivity extends AppCompatActivity
         {
             if (alarmID != null)
             {
-                final int position = adapter.findItemPosition(this, alarmID);
-                BedtimeItem item = (position >= 0 ? adapter.getItem(position) : null);
-                if (item != null)
+                Integer[] positions = adapter.findItemPositions(BedtimeActivity.this, alarmID);
+                for (final int position : positions)
                 {
-                    //Log.d("DEBUG", "onAlarmItemUpdated: " + alarmID + ", deleted? " + deleted + ", position " + position);
-                    if (deleted) {
-                        item.setAlarmItem(null);
-                        list.notifyItemChanged(position);
-                        return;
-                    }
-                    item.loadAlarmItem(this, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+                    BedtimeItem item = (position >= 0 ? adapter.getItem(position) : null);
+                    if (item != null)
                     {
-                        @Override
-                        public void onLoadFinished(List<AlarmClockItem> result) {
-                            super.onLoadFinished(result);
+                        //Log.d("DEBUG", "onAlarmItemUpdated: " + alarmID + ", deleted? " + deleted + ", position " + position);
+                        if (deleted) {
+                            item.setAlarmItem(null);
                             list.notifyItemChanged(position);
+                            continue;
                         }
-                    });
+                        item.loadAlarmItem(this, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+                        {
+                            @Override
+                            public void onLoadFinished(List<AlarmClockItem> result) {
+                                super.onLoadFinished(result);
+                                list.notifyItemChanged(position);
+                            }
+                        });
+                    }
                 }
+
             } else {
                 list.notifyItemChanged(0);
             }
@@ -354,11 +358,9 @@ public class BedtimeActivity extends AppCompatActivity
 
         list = (BedtimeDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
         list.setAdapterListener(dialogListener);
-
-        // TODO
     }
 
-    private BedtimeItemAdapter.AdapterListener dialogListener = new BedtimeItemAdapter.AdapterListener()
+    private final BedtimeItemAdapter.AdapterListener dialogListener = new BedtimeItemAdapter.AdapterListener()
     {
         @Override
         public void onItemAction(BedtimeItem item) {
