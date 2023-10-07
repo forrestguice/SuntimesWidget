@@ -18,19 +18,27 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -744,7 +752,9 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected Button pauseButton;
         protected Button resumeButton;
         protected Button dismissButton;
+        protected View frameLayout;
         protected View headerLayout;
+        protected ImageView icon;
         protected TextSwitcher label;
         protected TextSwitcher note;
 
@@ -756,8 +766,10 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             resumeButton = (Button) view.findViewById(R.id.button_bedtime_resume);
             dismissButton = (Button) view.findViewById(R.id.button_bedtime_dismiss);
             headerLayout = view.findViewById(R.id.layout_header);
+            frameLayout = view.findViewById(R.id.layout_frame);
 
             label = (TextSwitcher) view.findViewById(R.id.text_label);
+            icon = (ImageView) view.findViewById(R.id.icon_label);
             note = (TextSwitcher) view.findViewById(R.id.text_note);
         }
 
@@ -782,7 +794,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 @Override
                 public void run()
                 {
-                    Log.d("DEBUG", "updateTask: tick");
+                    //Log.d("DEBUG", "updateTask: tick");
                     if (note != null && updateNote(context, item)) {
                         note.postDelayed(this, UPDATE_RATE);
                     }
@@ -803,7 +815,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 Calendar now = Calendar.getInstance();
                 AlarmNotifications.updateAlarmTime(context, bedtime, now, true);
                 String deltaString = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), bedtime.timestamp + bedtime.offset).getValue();
-                String noteString = "Bedtime in " + deltaString;    // TODO
+                String noteString = context.getString(R.string.msg_bedtime_note, deltaString);
                 CharSequence noteDisplay = SuntimesUtils.createBoldSpan(null, noteString, deltaString);
                 note.setText(noteDisplay);
                 return true;
@@ -814,22 +826,114 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
         }
 
+        protected static void setTextColor(@NonNull TextSwitcher textSwitcher, int color)
+        {
+            View[] views = new View[] { textSwitcher.getChildAt(0), textSwitcher.getChildAt(1) };
+            for (View view : views) {
+                if (view instanceof TextView) {
+                    TextView textView = (TextView) view;
+                    textView.setTextColor(color);
+                }
+            }
+        }
+        @Nullable
+        protected static ColorStateList getTextColors(@NonNull TextSwitcher textSwitcher)
+        {
+            View[] views = new View[] { textSwitcher.getChildAt(0), textSwitcher.getChildAt(1) };
+            for (View view : views) {
+                if (view instanceof TextView) {
+                    TextView textView = (TextView) view;
+                    return textView.getTextColors();    // return first match
+                }
+            }
+            return null;
+        }
+        protected static int getTextColor(@NonNull TextSwitcher textSwitcher)
+        {
+            View[] views = new View[] { textSwitcher.getChildAt(0), textSwitcher.getChildAt(1) };
+            for (View view : views) {
+                if (view instanceof TextView) {
+                    TextView textView = (TextView) view;
+                    return textView.getCurrentTextColor();
+                }
+            }
+            return Color.WHITE;    // TODO
+        }
+
+        protected static ValueAnimator animateColorChange(final ImageView view, int colorTo, int colorFrom, long duration)
+        {
+            ValueAnimator animation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+            animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    ImageViewCompat.setImageTintList(view, ColorStateList.valueOf((Integer) animation.getAnimatedValue()));
+                }
+            });
+            animation.setDuration(duration);
+            return animation;
+        }
+        protected static ValueAnimator animateColorChange(final TextView text, int colorTo, int colorFrom, long duration)
+        {
+            ValueAnimator animation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+            animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    text.setTextColor((Integer) animation.getAnimatedValue());
+                }
+            });
+            animation.setDuration(duration);
+            return animation;
+        }
+        protected static ValueAnimator animateColorChange(final TextSwitcher text, int colorTo, int colorFrom, long duration)
+        {
+            ValueAnimator animation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+            animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    setTextColor(text, (Integer) animation.getAnimatedValue());
+                }
+            });
+            animation.setDuration(duration);
+            return animation;
+        }
+
         @Override
         protected void updateViews(final Context context, final BedtimeItem item)
         {
             if (item != null)
             {
-                boolean isActive = BedtimeSettings.isBedtimeModeActive(context);
-                boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
+                int[] attrs = { R.attr.text_disabledColor, R.attr.text_primaryColor };
+                TypedArray a = context.obtainStyledAttributes(attrs);
+                @SuppressLint("ResourceType") final int colorOn = ContextCompat.getColor(icon.getContext(), a.getResourceId(0, R.color.text_disabled_dark));
+                @SuppressLint("ResourceType") final int colorOff = ContextCompat.getColor(icon.getContext(), a.getResourceId(1, R.color.text_primary_dark));
+                a.recycle();
+
+                final boolean isActive = BedtimeSettings.isBedtimeModeActive(context);
+                final boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
+                int colorTo = ((isActive && !isPaused) ? colorOn : colorOff);
+                int colorFrom = ((isActive && !isPaused) ? colorOff : colorOn);
+
+                if (frameLayout != null)
+                {
+                    ViewGroup.LayoutParams params = frameLayout.getLayoutParams();
+                    params.height = (isActive ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT);
+                    frameLayout.setLayoutParams(params);
+                }
                 if (headerLayout != null) {
                     headerLayout.setVisibility(isActive ? View.VISIBLE : View.GONE);
                 }
                 if (label != null) {
-                    label.setText((!isActive ? "" : context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active)));
+                    label.setText(SuntimesUtils.fromHtml(!isActive ? "" : context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active)));
+                    //animateColorChange(label, colorTo, colorFrom, 1500).start();    // TODO: duration from resource
+                    //label.setVisibility(isActive ? View.VISIBLE : View.GONE);
+                    setTextColor(label, colorTo);
                 }
-                if (note != null)
-                {
-                    note.setVisibility(isActive ? View.INVISIBLE : View.VISIBLE);
+                if (icon != null ) {
+                    //animateColorChange(icon, colorTo, colorFrom, 1500).start();    // TODO: duration from resource
+                    ImageViewCompat.setImageTintList(icon, ColorStateList.valueOf(colorTo));
+                }
+                if (note != null) {
+                    note.setVisibility(isActive ? View.GONE : View.VISIBLE);
                     updateNote(context, item);
                 }
                 if (nowButton != null) {
@@ -856,9 +960,18 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (headerLayout != null) {
                 headerLayout.setVisibility(View.GONE);
             }
+            if (frameLayout != null)
+            {
+                ViewGroup.LayoutParams params = frameLayout.getLayoutParams();
+                params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                frameLayout.setLayoutParams(params);
+            }
             if (label != null) {
                 label.setText("");
             }
+            /*if (icon != null ) {
+                ImageViewCompat.setImageTintList(icon, ColorStateList.valueOf(color));
+            }*/
             if (note != null) {
                 note.setText("");
             }
