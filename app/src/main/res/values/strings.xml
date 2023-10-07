@@ -1202,6 +1202,7 @@
     <string name="msg_bedtime_reminder">Show a reminder %1$s before bedtime</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->   <!-- TODO -->
     <string name="msg_bedtime_wakeup_set">Wake up at</string>                                 <!-- textview text (next line shows time) -->   <!-- TODO -->
     <string name="msg_bedtime_wakeup_notset">Wake up time is not set.</string>                <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_note">Bedtime in %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->   <!-- TODO -->
 
     <string name="configLabel_bedtime_alarm_notify">Bedtime</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
     <string name="configLabel_bedtime_alarm_reminder">Bedtime Reminder</string>    <!-- AlarmItem label for reminder notification --> <!-- TODO -->
