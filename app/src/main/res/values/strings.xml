@@ -1217,6 +1217,9 @@
     <string name="prompt_bedtime_setFrom_wakeup">Set the bedtime to %s before wake up time?</string>    <!-- snackbar message -->    <!-- TODO -->
     <string name="prompt_bedtime_setFrom_bedtime">Set the wake up alarm to %s after bedtime?</string>    <!-- snackbar message -->    <!-- TODO -->
 
+    <string name="configActionDesc_triggerBedtime">Turn on bedtime mode</string>  <!-- TODO -->
+    <string name="configActionDesc_dismissBedtime">Turn off bedtime mode</string>  <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->
@@ -1632,6 +1635,8 @@
         <item>@string/configLabel_alarmClock</item>
         <item>@string/configLabel_alarmClock</item>
         <item>@string/app_name</item>
+        <item>@string/configLabel_bedtime</item>
+        <item>@string/configLabel_bedtime</item>
     </string-array>
     <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1668,6 +1673,8 @@
         <item>@string/configActionDesc_alarmSnooze</item>
         <item>@string/configActionDesc_alarmDismiss</item>
         <item>@string/configActionDesc_updateWidgets</item>
+        <item>@string/configActionDesc_triggerBedtime</item>
+        <item>@string/configActionDesc_dismissBedtime</item>
     </string-array>
 
     <!-- App Setting: time zone sort modes -->

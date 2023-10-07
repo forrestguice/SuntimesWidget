@@ -780,8 +780,8 @@ public class WidgetActions
         DISMISS_ALARM("Suntimes Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
         UPDATE_WIDGETS("Suntimes", "Update widgets", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
-        TRIGGER_BEDTIME("Bedtime", "Trigger bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),   // TODO
-        DISMISS_BEDTIME("Bedtime", "Dismiss bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),   // TODO
+        TRIGGER_BEDTIME("Bedtime", "Turn on bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        DISMISS_BEDTIME("Bedtime", "Turn off bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
         ;
 
         private String title, desc;
