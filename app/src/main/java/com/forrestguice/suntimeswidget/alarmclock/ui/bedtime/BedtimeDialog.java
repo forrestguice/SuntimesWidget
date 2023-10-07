@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -100,8 +99,10 @@ public class BedtimeDialog extends DialogFragment
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
         list.setLayoutManager(layout = new LinearLayoutManager(getActivity()));
+        list.addOnScrollListener(onListScrolled);
         //list.addItemDecoration(itemDecoration);
         list.setAdapter(adapter);
+
 
         SimpleItemAnimator animator = (SimpleItemAnimator) list.getItemAnimator();
         animator.setChangeDuration(0);
@@ -231,6 +232,35 @@ public class BedtimeDialog extends DialogFragment
         }
     }
 
+
+    /**
+     * OnScrollListener
+     */
+    private final RecyclerView.OnScrollListener onListScrolled = new RecyclerView.OnScrollListener()
+    {
+        private int lastCompletelyVisibleItemPosition;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        {
+            if (listener != null)
+            {
+                int position = layout.findLastCompletelyVisibleItemPosition();
+                if (position != lastCompletelyVisibleItemPosition) {
+                    lastCompletelyVisibleItemPosition = position;
+                    listener.onScrolled(recyclerView, lastCompletelyVisibleItemPosition);
+                }
+            }
+            super.onScrolled(recyclerView, dx, dy);
+        }
+    };
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -272,7 +302,7 @@ public class BedtimeDialog extends DialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected BedtimeItemAdapter.AdapterListener listener;
+    protected DialogListener listener;
     protected BedtimeItemAdapter.AdapterListener adapterListener = new BedtimeItemAdapter.AdapterListener()
     {
         @Override
@@ -337,8 +367,13 @@ public class BedtimeDialog extends DialogFragment
         }
     };
 
-    public void setAdapterListener(BedtimeItemAdapter.AdapterListener listener) {
+    public void setDialogListener(DialogListener listener) {
         this.listener = listener;
+    }
+
+    public interface DialogListener extends BedtimeItemAdapter.AdapterListener
+    {
+        void onScrolled(RecyclerView recyclerView, int firstCompletelyVisibleItemPosition);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
@@ -30,8 +32,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -72,9 +76,12 @@ public class BedtimeActivity extends AppCompatActivity
 
     private static final String DIALOGTAG_HELP = "helpDialog";
 
+    protected Toolbar menubar;
     private BedtimeDialog list;
     private AppSettings.LocaleInfo localeInfo;
     private SuntimesNavigation navigation;
+
+    protected int actionBar_background0, actionBar_background1;
 
     public BedtimeActivity() {
         super();
@@ -344,8 +351,8 @@ public class BedtimeActivity extends AppCompatActivity
     {
         SuntimesUtils.initDisplayStrings(context);
 
-        Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
-        setSupportActionBar(menuBar);
+        menubar = (Toolbar) findViewById(R.id.app_menubar);
+        setSupportActionBar(menubar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
         {
@@ -357,22 +364,59 @@ public class BedtimeActivity extends AppCompatActivity
             }
         }
 
-        navigation = new SuntimesNavigation(this, menuBar, R.id.action_bedtime);
+        navigation = new SuntimesNavigation(this, menubar, R.id.action_bedtime);
+
+        TypedArray a = obtainStyledAttributes(new int[] { R.attr.dialogBackground, R.attr.dialogBackgroundAlt });
+        actionBar_background0 = ContextCompat.getColor(this, a.getResourceId(0, R.color.dialog_bg));
+        actionBar_background1 = ContextCompat.getColor(this, a.getResourceId(1, R.color.dialog_bg_alt));
+        a.recycle();
+
+        int menubarColor = BedtimeSettings.isBedtimeModeActive(getApplicationContext()) ? actionBar_background0 : actionBar_background1;
+        menubar.setBackgroundColor(menubarColor);
 
         list = (BedtimeDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
-        list.setAdapterListener(dialogListener);
+        list.setDialogListener(dialogListener(menubarColor));
     }
 
-    private final BedtimeItemAdapter.AdapterListener dialogListener = new BedtimeItemAdapter.AdapterListener()
+    private BedtimeDialog.DialogListener dialogListener(final int initialColor)
     {
-        @Override
-        public void onItemAction(BedtimeItem item) {
-        }
+        return new BedtimeDialog.DialogListener()
+        {
+            private int backgroundColor = initialColor;
 
-        @Override
-        public void onItemConfigure(BedtimeItem item) {
-        }
-    };
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int lastCompletelyVisibleItemPosition)
+            {
+                if (menubar != null)
+                {
+                    int from = backgroundColor;
+                    backgroundColor = ((lastCompletelyVisibleItemPosition == 0) ? actionBar_background0 : actionBar_background1);
+                    if (from != backgroundColor)
+                    {
+                        ValueAnimator animation = ValueAnimator.ofObject(new ArgbEvaluator(), from, backgroundColor);
+                        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animator) {
+                                menubar.setBackgroundColor((Integer) animator.getAnimatedValue());
+                            }
+                        });
+
+                        animation.setDuration(getResources().getInteger(R.integer.anim_fadein_duration));
+                        animation.setStartDelay(0);
+                        animation.start();
+                    }
+                }
+            }
+
+            @Override
+            public void onItemAction(BedtimeItem item) {
+            }
+
+            @Override
+            public void onItemConfigure(BedtimeItem item) {
+            }
+        };
+    }
 
     protected void updateViews(Context context) {
     }
