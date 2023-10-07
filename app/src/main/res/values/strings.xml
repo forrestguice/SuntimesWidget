@@ -1190,10 +1190,10 @@
     <string name="configLabel_bedtime">Bedtime</string>              <!-- group title -->   <!-- TODO -->
 
     <string name="configAction_startBedtime">Turn on now</string>                   <!-- TODO -->
+    <string name="configAction_dismissBedtime">Turn off now</string>                     <!-- TODO -->
     <string name="configAction_setBedtime">Set Bedtime</string>                     <!-- TODO -->
     <string name="configAction_pauseBedtime">Pause</string>                         <!-- TODO -->
     <string name="configAction_resumeBedtime">Resume</string>                       <!-- TODO -->
-    <string name="configAction_dismissBedtime">Dismiss</string>                     <!-- TODO -->
 
     <string name="msg_bedtime_active">Bedtime mode is active.</string>              <!-- textview text -->   <!-- TODO -->
     <string name="msg_bedtime_paused">Bedtime mode is paused.</string>              <!-- textview text -->   <!-- TODO -->
@@ -2415,8 +2415,8 @@
     ]]></string>
 
     <string name="help_alarms_bedtime"><![CDATA[
-           [Icon Bedtime] Bedtime is a scheduled notification that puts your phone into Do Not Disturb during sleep hours.\n\n
-           Show a [Icon Reminder] reminder before bedtime, and schedule a [Icon Alarm] wake up alarm for the next morning.\n\n
+           [Icon Bedtime] Bedtime is a scheduled <b>Do Not Disturb</b> mode that is active during sleep hours.<br/><br/>
+           Show a reminder [Icon Reminder] before bedtime, and schedule a wake up alarm [Icon Alarm] for the next morning.<br/><br/>
            Either bedtime or wakeup time can be scheduled around a desired amount of sleep [Icon Sleep].
     ]]></string>  <!-- TODO -->
 

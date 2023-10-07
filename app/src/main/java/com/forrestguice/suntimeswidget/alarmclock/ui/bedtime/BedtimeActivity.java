@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -411,7 +414,7 @@ public class BedtimeActivity extends AppCompatActivity
                 return true;
 
             case R.id.action_help:
-                showHelp();
+                showHelp(this);
                 return true;
 
             case R.id.action_about:
@@ -457,10 +460,28 @@ public class BedtimeActivity extends AppCompatActivity
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
-    protected void showHelp()
+    @SuppressLint("ResourceType")
+    protected void showHelp(Context context)
     {
+        int iconSize = (int) context.getResources().getDimension(R.dimen.helpIcon_size);
+        int[] iconAttrs = { R.attr.icActionBedtime, R.attr.icActionNotification1, R.attr.icActionAlarm };
+        TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
+        ImageSpan bedtimeIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_bedtime), iconSize, iconSize, 0);
+        ImageSpan reminderIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_notification1), iconSize, iconSize, 0);
+        ImageSpan alarmIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_alarms), iconSize, iconSize, 0);
+        typedArray.recycle();
+
+        SuntimesUtils.ImageSpanTag[] helpTags = {
+                new SuntimesUtils.ImageSpanTag("[Icon Bedtime]", bedtimeIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Reminder]", reminderIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon Alarm]", alarmIcon),
+        };
+
+        CharSequence helpString = SuntimesUtils.fromHtml(context.getString(R.string.help_alarms_bedtime));
+        SpannableStringBuilder helpSpan = SuntimesUtils.createSpan(context, helpString, helpTags);
+
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(getString(R.string.help_alarms_bedtime));
+        helpDialog.setContent(helpSpan);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
