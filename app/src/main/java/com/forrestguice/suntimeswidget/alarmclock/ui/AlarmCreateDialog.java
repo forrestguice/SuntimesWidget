@@ -103,6 +103,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final String EXTRA_ALLOW_SELECT_TYPE = "allowSelectType";
     public static final String EXTRA_BUTTON_TZSLECT = "showTimeZoneButton";
     public static final String EXTRA_LABEL_OVERRIDE = "overrideLabel";
+    public static final String EXTRA_PREVIEW_TIME = "previewTime";
 
     public static final String DIALOG_LOCATION = "locationDialog";
     public static final String DIALOG_DATE = "dateDialog";
@@ -444,6 +445,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         item.offset = getOffset();
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
 
+        boolean showPreview = showTimePreview();
+
         if (text_title != null) {
             text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.ALARM ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
         }
@@ -454,14 +457,16 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         if (text_offset != null) {
             text_offset.setText(isSchedulable ? AlarmEditViewHolder.displayOffset(context, item) : "");
+            text_offset.setVisibility(showPreview ? View.VISIBLE : View.GONE);
         }
         if (text_time != null) {
             text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, previewOffset()) : "");
+            text_time.setVisibility(showPreview ? View.VISIBLE : View.GONE);
         }
         if (text_date != null)
         {
             text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item, previewOffset()) : "");
-            text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
+            text_date.setVisibility(showTimePreview() && isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
         }
         if (text_note != null) {    // TODO: periodic update
             text_note.setText(AlarmEditViewHolder.displayAlarmNote(context, item, isSchedulable));
@@ -853,6 +858,17 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public void setShowDateSelectButton(boolean value)
     {
         getArguments().putBoolean(EXTRA_BUTTON_DATESELECT, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+
+    public boolean showTimePreview() {
+        return getArguments().getBoolean(EXTRA_PREVIEW_TIME, true);
+    }
+    public void setShowTimePreview(boolean value)
+    {
+        getArguments().putBoolean(EXTRA_PREVIEW_TIME, value);
         if (isAdded()) {
             updateViews(getActivity());
         }
