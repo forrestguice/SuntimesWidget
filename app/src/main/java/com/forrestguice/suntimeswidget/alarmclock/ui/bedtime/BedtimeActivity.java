@@ -409,11 +409,11 @@ public class BedtimeActivity extends AppCompatActivity
             }
 
             @Override
-            public void onItemAction(BedtimeItem item) {
+            public void onItemAction(BedtimeViewHolder holder, BedtimeItem item) {
             }
 
             @Override
-            public void onItemConfigure(BedtimeItem item) {
+            public void onItemConfigure(BedtimeViewHolder holder, BedtimeItem item) {
             }
         };
     }

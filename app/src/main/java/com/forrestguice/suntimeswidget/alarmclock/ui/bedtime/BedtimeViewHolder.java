@@ -822,6 +822,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
             } else {
                 note.setText("");
+                note.setVisibility(View.GONE);
                 return false;
             }
         }
@@ -974,6 +975,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }*/
             if (note != null) {
                 note.setText("");
+                note.setVisibility(View.GONE);
             }
             if (nowButton != null) {
                 nowButton.setVisibility(View.GONE);

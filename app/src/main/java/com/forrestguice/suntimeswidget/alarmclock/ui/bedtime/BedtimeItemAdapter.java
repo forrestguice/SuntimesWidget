@@ -263,7 +263,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
                 @Override
                 public void onClick(View v) {
                     if (adapterListener != null ) {
-                        adapterListener.onItemAction(item);
+                        adapterListener.onItemAction(holder, item);
                     }
                 }
             });
@@ -277,7 +277,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
                 @Override
                 public void onClick(View v) {
                     if (adapterListener != null ) {
-                        adapterListener.onItemConfigure(item);
+                        adapterListener.onItemConfigure(holder, item);
                     }
                 }
             });
@@ -312,7 +312,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
      * AdapterListener
      */
     public interface AdapterListener {
-        void onItemAction(BedtimeItem item);
-        void onItemConfigure(BedtimeItem item);
+        void onItemAction(BedtimeViewHolder holder, BedtimeItem item);
+        void onItemConfigure(BedtimeViewHolder holder, BedtimeItem item);
     }
 }
