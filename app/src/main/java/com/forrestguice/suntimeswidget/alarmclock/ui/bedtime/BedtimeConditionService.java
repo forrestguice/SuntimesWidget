@@ -110,16 +110,17 @@ public class BedtimeConditionService extends ConditionProviderService
         return context.getString(R.string.configLabel_bedtime_zenrule_name);
     }
     public static Uri getAutomaticZenRuleConditionId() {
-        return Uri.parse("condition://id");
+        return Uri.parse("condition://bedtime");
     }
 
     @TargetApi(24)
     public static AutomaticZenRule createAutomaticZenRule(Context context, boolean enabled)
     {
+        int filter = NotificationManager.INTERRUPTION_FILTER_PRIORITY;   // NotificationManager.INTERRUPTION_FILTER_ALARMS    // TODO: configurable
         String ruleName = getAutomaticZenRuleName(context);
         Uri conditionId = getAutomaticZenRuleConditionId();
         ComponentName componentName = new ComponentName(context, BedtimeConditionService.class);
-        return new AutomaticZenRule(ruleName, componentName, conditionId, NotificationManager.INTERRUPTION_FILTER_ALARMS, enabled);
+        return new AutomaticZenRule(ruleName, componentName, conditionId, filter, enabled);
     }
 
     @TargetApi(24)
