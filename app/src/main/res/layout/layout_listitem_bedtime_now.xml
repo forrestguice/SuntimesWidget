@@ -49,7 +49,7 @@
             android:orientation="horizontal" android:layout_gravity="center" android:gravity="center_vertical"
             android:animateLayoutChanges="true">
 
-            <TextSwitcher android:id="@+id/text_note" android:visibility="gone"
+            <TextSwitcher android:id="@+id/text_note" android:visibility="visible"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|start"
                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp">
@@ -58,12 +58,14 @@
                     android:layout_width="wrap_content" android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="?attr/text_size_medium" android:maxLines="2" android:ellipsize="marquee"
+                    android:drawableStart="?attr/icActionBedtime" android:drawablePadding="8dp"
                     tools:text="Bedtime in 8h 29m." />
 
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="?attr/text_size_medium" android:maxLines="2" android:ellipsize="marquee"
+                    android:drawableStart="?attr/icActionBedtime" android:drawablePadding="8dp"
                     tools:text="Bedtime in 8h 30m." />
 
             </TextSwitcher>
