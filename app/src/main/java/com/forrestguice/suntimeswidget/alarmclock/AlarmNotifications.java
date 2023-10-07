@@ -118,6 +118,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final int NOTIFICATION_BATTERYOPT_WARNING_ID = -20;
     public static final int NOTIFICATION_AUTOSTART_WARNING_ID = -30;
 
+    public static final int NOTIFICATION_BEDTIME_ACTIVE_ID = -1000;
+
     private static SuntimesUtils utils = new SuntimesUtils();
 
     /**
@@ -1045,6 +1047,34 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+    public static Notification createBedtimeModeNotification(Context context)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setDefaults(Notification.DEFAULT_LIGHTS);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setCategory(NotificationCompat.CATEGORY_STATUS);
+        builder.setAutoCancel(false);
+        builder.setOngoing(true);
+        builder.setContentTitle(context.getString(R.string.configLabel_bedtime));
+        builder.setSmallIcon(R.drawable.ic_action_bedtime_light);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.setOnlyAlertOnce(false);
+
+        boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
+        builder.setContentText(context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active));
+
+        if (isPaused) {
+            PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, new Intent(AlarmNotifications.ACTION_BEDTIME_RESUME), PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(R.drawable.ic_action_bedtime, context.getString(R.string.configAction_resumeBedtime), pendingResume);
+        } else {
+            PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, new Intent(AlarmNotifications.ACTION_BEDTIME_PAUSE), PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(R.drawable.ic_action_pause, context.getString(R.string.configAction_pauseBedtime), pendingPause);
+        }
+
+        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS), 0);
+        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.configAction_dismissBedtime), pendingDismiss);
+        return builder.build();
+    }
 
     public static Notification createProgressNotification(Context context) {
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock), "");
@@ -1525,6 +1555,11 @@ public class AlarmNotifications extends BroadcastReceiver
         public static void triggerBedtimeMode(Context context, boolean value)
         {
             BedtimeSettings.setBedtimeState(context, (value ? BedtimeSettings.STATE_BEDTIME_ACTIVE : BedtimeSettings.STATE_BEDTIME_INACTIVE));
+
+            if (value) {
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+            } else dismissNotification(context, NOTIFICATION_BEDTIME_ACTIVE_ID);
+
             if (BedtimeSettings.loadPrefBedtimeDoNotDisturb(context))
             {
                 if (Build.VERSION.SDK_INT >= 23)
@@ -1546,6 +1581,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (BedtimeSettings.isBedtimeModeActive(context))
             {
                 BedtimeSettings.setBedtimeState(context, BedtimeSettings.STATE_BEDTIME_PAUSED);
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
                 if (Build.VERSION.SDK_INT >= 24) {
                     BedtimeSettings.triggerDoNotDisturb(context, false);
                 }
@@ -1557,6 +1593,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (BedtimeSettings.isBedtimeModePaused(context))
             {
                 BedtimeSettings.setBedtimeState(context, BedtimeSettings.STATE_BEDTIME_ACTIVE);
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
                 if (Build.VERSION.SDK_INT >= 24) {
                     BedtimeSettings.triggerDoNotDisturb(context, true);
                 }
