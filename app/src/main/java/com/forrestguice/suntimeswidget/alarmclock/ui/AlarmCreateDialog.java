@@ -19,7 +19,6 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -75,7 +74,6 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmCreateDialog extends BottomSheetDialogFragment
@@ -104,6 +102,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final String EXTRA_BUTTON_TZSLECT = "showTimeZoneButton";
     public static final String EXTRA_LABEL_OVERRIDE = "overrideLabel";
     public static final String EXTRA_PREVIEW_TIME = "previewTime";
+    public static final String EXTRA_SHOW_TABS = "showTabs";
 
     public static final String DIALOG_LOCATION = "locationDialog";
     public static final String DIALOG_DATE = "dateDialog";
@@ -435,6 +434,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             return;
         }
         detachListeners();
+
+        tabs.setVisibility(showTabs() ? View.VISIBLE : View.GONE);
+        //if (!allowPickEvent() && tabs.getTabCount() > 1) {
+            //tabs.removeTabAt(0);
+        //}
 
         if (btn_alarms != null) {
             btn_alarms.setVisibility(showAlarmListButton() ? View.VISIBLE : View.GONE);
@@ -869,6 +873,17 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public void setShowTimePreview(boolean value)
     {
         getArguments().putBoolean(EXTRA_PREVIEW_TIME, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+
+    public boolean showTabs() {
+        return getArguments().getBoolean(EXTRA_SHOW_TABS, true);
+    }
+    public void setShowTabs(boolean value)
+    {
+        getArguments().putBoolean(EXTRA_SHOW_TABS, value);
         if (isAdded()) {
             updateViews(getActivity());
         }

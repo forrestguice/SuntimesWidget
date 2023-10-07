@@ -407,11 +407,15 @@ public class BedtimeDialog extends DialogFragment
 
     protected void configBedtimeToDate(final Context context, BedtimeItem item, Calendar bedtime, boolean modifyEnabled, boolean enabled)
     {
-        final int bedtime_hour = bedtime.get(Calendar.HOUR_OF_DAY);
-        final int bedtime_minute = bedtime.get(Calendar.MINUTE);
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, bedtime_hour, bedtime_minute, 0, modifyEnabled, enabled);
+        final int hour = bedtime.get(Calendar.HOUR_OF_DAY);
+        final int minute = bedtime.get(Calendar.MINUTE);
+        configBedtimeToDate(context, item, hour, minute, modifyEnabled, enabled);
+    }
+    protected void configBedtimeToDate(final Context context, BedtimeItem item, int hour, int minute, boolean modifyEnabled, boolean enabled)
+    {
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, hour, minute, 0, modifyEnabled, enabled);
         BedtimeSettings.setAutomaticZenRule(getActivity(), BedtimeSettings.loadPrefBedtimeDoNotDisturb(getActivity()));
-        BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, bedtime_hour, bedtime_minute, 0, BedtimeSettings.loadPrefBedtimeReminder(context));
+        BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, hour, minute, 0, BedtimeSettings.loadPrefBedtimeReminder(context));
     }
 
     protected void configBedtimeFromWakeup(final Context context, @Nullable final BedtimeItem item)
@@ -718,16 +722,57 @@ public class BedtimeDialog extends DialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static final String DIALOG_ADD_BEDTIME = "dialog_add_bedtime";
+
     protected void showAddBedtimeDialog(final Context context, BedtimeItem item)
     {
-        // TODO: offer choice between configure to wakeup or a set time
         long wakeupId = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_WAKEUP_ALARM);
         if (wakeupId != BedtimeSettings.ID_NONE) {
+            // TODO: offer choice between configure to wakeup or a set time
             configBedtimeFromWakeup(context, item);
 
         } else {
-            Toast.makeText(context, "TODO: bedtime time dialog", Toast.LENGTH_SHORT).show();   // TODO
+            AlarmCreateDialog dialog = new AlarmCreateDialog();
+            FragmentManager fragments = getChildFragmentManager();
+
+            dialog.setAlarmTime(22, 30, null);    // TODO: default bedtime
+            dialog.setShowTabs(false);            // hide solar events tab
+            dialog.setShowTimePreview(false);           // hide time preview
+            dialog.setShowDateSelectButton(false);      // hide date selection
+            dialog.setShowTimeZoneSelectButton(false);  // hide time zone selection
+            dialog.setShowAlarmListButton(false);       // hide list button
+            dialog.setAllowSelectType(false);           // disable type selector
+            dialog.setLabelOverride(context.getString(R.string.configLabel_bedtime_alarm_notify));         // override type labels
+            dialog.setAlarmType(AlarmClockItem.AlarmType.NOTIFICATION1);    // restrict type to notification
+
+            dialog.setOnAcceptedListener(onAddBedtimeDialogAccept(DIALOG_ADD_BEDTIME, BedtimeSettings.SLOT_BEDTIME_NOTIFY, item));
+            dialog.show(fragments, DIALOG_ADD_BEDTIME);
         }
+    }
+
+    private final DialogInterface.OnClickListener onAddBedtimeDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
+    {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface d, int which)
+            {
+                FragmentManager fragments = getChildFragmentManager();
+                AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(dialogTag);
+                if (dialog != null)
+                {
+                    //AlarmClockItem alarmItem = BedtimeAlarmHelper.createBedtimeEventItem(getActivity(), item, dialog.getHour(), dialog.getMinute(), dialog.getOffset());
+                    //alarmItem.type = dialog.getAlarmType();
+                    //alarmItem.location = dialog.getLocation();
+                    //Calendar bedtime = Calendar.getInstance();
+                    //bedtime.setTimeInMillis(alarmItem.timestamp + alarmItem.offset);
+
+                    configBedtimeToDate(getActivity(), item, dialog.getHour(), dialog.getMinute(), true, true);
+                    //scheduleBedtimeAlarmItem(getActivity(), slot, alarmItem, item, true);
+                    offerModifyWakeupFromBedtime(getActivity());
+                }
+            }
+        };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -740,11 +785,12 @@ public class BedtimeDialog extends DialogFragment
         AlarmCreateDialog dialog = new AlarmCreateDialog();
         FragmentManager fragments = getChildFragmentManager();
 
+        dialog.setShowTimePreview(false);           // hide time preview
         dialog.setShowDateSelectButton(false);      // hide date selection
         dialog.setShowTimeZoneSelectButton(false);  // hide time zone selection
         dialog.setShowAlarmListButton(false);       // hide list button
         dialog.setAllowSelectType(false);           // disable type selector
-        dialog.setLabelOverride("Wake up");         // override type labels    // TODO: i18n
+        dialog.setLabelOverride(context.getString(R.string.configLabel_bedtime_alarm_wakeup));         // override type labels
         dialog.setAlarmType(AlarmClockItem.AlarmType.ALARM);    // restrict type to alarms only
         // TODO: locked/disabled events
 
