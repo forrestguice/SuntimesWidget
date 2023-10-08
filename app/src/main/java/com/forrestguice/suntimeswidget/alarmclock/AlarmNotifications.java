@@ -2078,7 +2078,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids) {
-                            context.startActivity(getAlarmListIntent(context, item.rowID));         // open the alarm list
+                            //context.startActivity(getAlarmListIntent(context, item.rowID));         // open the alarm list
                             context.sendBroadcast(getFullscreenBroadcast(item.getUri()));           // dismiss fullscreen activity
                             notifications.dismissNotification(context, (int)item.rowID);
                             notifications.stopSelf(startId);
@@ -2101,10 +2101,14 @@ public class AlarmNotifications extends BroadcastReceiver
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, itemID)));     // dismiss fullscreen activity
-                            Intent alarmListIntent = getAlarmListIntent(context, itemID);
-                            alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
-                            context.startActivity(alarmListIntent);                                                                             // open the alarm list
+                            Intent updateIntent = getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, itemID));
+                            updateIntent.putExtra(ACTION_DELETE, true);    // signal item was deleted
+                            context.sendBroadcast(updateIntent);     // dismiss fullscreen activity, update list UIs
+
+                            //Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                            //alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                            //context.startActivity(alarmListIntent);                                                                             // open the alarm list
+
                             notifications.dismissNotification(context, itemID.intValue());
                             notifications.stopSelf(startId);
                         }
@@ -2126,10 +2130,14 @@ public class AlarmNotifications extends BroadcastReceiver
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            context.sendBroadcast(getFullscreenBroadcast(null));     // dismiss fullscreen activity
-                            Intent alarmListIntent = getAlarmListIntent(context, itemID);
-                            alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
-                            context.startActivity(alarmListIntent);                                 // open the alarm list
+                            Intent updateIntent = getFullscreenBroadcast(null);
+                            updateIntent.putExtra(ACTION_DELETE, true);
+                            context.sendBroadcast(updateIntent);     // dismiss fullscreen activity, update list UIs
+
+                            //Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                            //alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                            //context.startActivity(alarmListIntent);                                 // open the alarm list
+
                             notifications.dismissNotifications(context);
                             notifications.stopSelf();
                         }

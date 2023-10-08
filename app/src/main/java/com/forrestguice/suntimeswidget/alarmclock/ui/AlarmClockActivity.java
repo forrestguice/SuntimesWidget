@@ -189,6 +189,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         super.onStart();
         registerReceiver(updateBroadcastReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter());
+        registerReceiver(updateBroadcastReceiver1, AlarmNotifications.getUpdateBroadcastIntentFilter(false));
     }
 
     @Override
@@ -215,6 +216,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public void onDestroy()
     {
         unregisterReceiver(updateBroadcastReceiver);
+        unregisterReceiver(updateBroadcastReceiver1);
         super.onDestroy();
     }
 
@@ -280,7 +282,34 @@ public class AlarmClockActivity extends AppCompatActivity
                         list.reloadAdapter((alarmID != null && alarmID != -1 ? alarmID : null));
                         Log.d("DEBUG", "adapter reloaded: " + alarmID);
 
+                        boolean wasDeleted = intent.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
+                        if (wasDeleted) {
+                            list.notifyAlarmDeleted(alarmID);
+                        }
+
                     } else Log.e(TAG, "updateReceiver.onReceive: null data!");
+                } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
+            } else Log.e(TAG, "updateReceiver.onReceive: null action!");
+        }
+    };
+
+    private final BroadcastReceiver updateBroadcastReceiver1 = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            Log.d(TAG, "updateReceiver.onReceive1: " + action);
+
+            if (action != null)
+            {
+                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI))
+                {
+                    boolean wasCleared = intent.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
+                    if (wasCleared) {
+                        list.notifyAlarmsCleared();
+                    }
+
                 } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
             } else Log.e(TAG, "updateReceiver.onReceive: null action!");
         }
