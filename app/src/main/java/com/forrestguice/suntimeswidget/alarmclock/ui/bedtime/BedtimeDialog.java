@@ -174,7 +174,7 @@ public class BedtimeDialog extends DialogFragment
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResult(int requestCode, int resultCode, final Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
         onResume_refreshData = false;
@@ -189,8 +189,12 @@ public class BedtimeDialog extends DialogFragment
                 onEditAlarmResult(resultCode, data, false, new AlarmDatabaseAdapter.AlarmItemTaskListener()
                 {
                     public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {
-                        if (result && items != null && items.length > 0) {
-                            offerModifyBedtimeFromWakeup(getActivity());
+                        if (result && items != null && items.length > 0)
+                        {
+                            boolean wasDeleted = data.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
+                            if (!wasDeleted) {
+                                offerModifyBedtimeFromWakeup(getActivity());
+                            }
                         }
                     }
                 });
@@ -223,7 +227,10 @@ public class BedtimeDialog extends DialogFragment
                             boolean showReminder = BedtimeSettings.loadPrefBedtimeReminder(getActivity());
                             BedtimeAlarmHelper.setBedtimeReminder_withEventItem(getActivity(),items[0], showReminder);
 
-                            offerModifyWakeupFromBedtime(getActivity());
+                            boolean wasDeleted = data.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
+                            if (!wasDeleted) {
+                                offerModifyWakeupFromBedtime(getActivity());
+                            }
                         }
                     }
                 });

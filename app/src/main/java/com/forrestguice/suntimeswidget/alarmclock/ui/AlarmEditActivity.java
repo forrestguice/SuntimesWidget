@@ -330,6 +330,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         editor.saveSettings(AlarmEditActivity.this);
         Intent intent = getIntent();
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
+        if (item == null) {
+            intent.putExtra(AlarmNotifications.ACTION_DELETE, true);
+        }
         setResult(Activity.RESULT_OK, intent);
         supportFinishAfterTransition();
     }
