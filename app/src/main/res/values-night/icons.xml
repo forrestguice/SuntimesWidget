@@ -39,6 +39,7 @@
     <drawable name="ic_action_timeline_ref">@drawable/ic_action_timeline</drawable>
     <drawable name="ic_action_time_ref">@drawable/ic_action_time</drawable>
     <drawable name="ic_weather_sunny_ref">@drawable/ic_weather_sunny</drawable>
+    <drawable name="ic_action_dnd_ref">@drawable/ic_action_dnd</drawable>
     <drawable name="ic_action_alarms_ref">@drawable/ic_action_alarms</drawable>
     <drawable name="ic_action_bedtime_ref">@drawable/ic_action_bedtime</drawable>
     <drawable name="ic_calendar_ref">@drawable/ic_calendar</drawable>
