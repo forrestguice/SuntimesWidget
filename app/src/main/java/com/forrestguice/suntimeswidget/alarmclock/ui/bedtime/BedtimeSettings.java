@@ -69,6 +69,11 @@ public class BedtimeSettings
     public static final String PREF_KEY_BEDTIME_DND = "app_bedtime_dnd";
     public static final boolean PREF_DEF_BEDTIME_DND = false;
 
+    public static final int DND_FILTER_PRIORITY = 2;
+    public static final int DND_FILTER_ALARMS = 4;
+    public static final String PREF_KEY_BEDTIME_DND_FILTER = "app_bedtime_dnd_filter";
+    public static final int PREF_DEF_BEDTIME_DND_FILTER = DND_FILTER_PRIORITY;
+
     public static final String PREF_KEY_BEDTIME_REMINDER = "app_bedtime_reminder";
     public static final boolean PREF_DEF_BEDTIME_REMINDER = false;
 
@@ -113,6 +118,17 @@ public class BedtimeSettings
     {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putBoolean(PREF_KEY_BEDTIME_DND, value);
+        prefs.apply();
+    }
+
+    public static int loadPrefBedtimeDoNotDisturbFilter(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getInt(PREF_KEY_BEDTIME_DND_FILTER, PREF_DEF_BEDTIME_DND_FILTER);
+    }
+    public static void savePrefBedtimeDoNotDisturbFilter(Context context, int value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putInt(PREF_KEY_BEDTIME_DND_FILTER, value);
         prefs.apply();
     }
 
@@ -301,11 +317,20 @@ public class BedtimeSettings
                 {
                     ruleId = rules.keySet().toArray(new String[0])[0];
                     rule = rules.get(ruleId);
-                    if (rule.isEnabled() != enabled)
-                    {
+                    boolean modified = false;
+
+                    int filter = BedtimeConditionService.getAutomaticZenRuleFilter(context);
+                    if (rule.getInterruptionFilter() != filter) {
+                        rule.setInterruptionFilter(filter);
+                        modified = true;
+                    }
+                    if (rule.isEnabled() != enabled) {
                         rule.setEnabled(enabled);
+                        modified = true;
+                    }
+                    if (modified) {
                         notifications.updateAutomaticZenRule(ruleId, rule);
-                        Log.d("BedtimeSettings", "Updated AutomaticZenRule " + ruleId + " (" + enabled + ")");
+                        Log.d("BedtimeSettings", "Updated AutomaticZenRule " + ruleId + " (" + enabled + ": " + filter + ")");
                     }
 
                 } else {

@@ -116,11 +116,23 @@ public class BedtimeConditionService extends ConditionProviderService
     @TargetApi(24)
     public static AutomaticZenRule createAutomaticZenRule(Context context, boolean enabled)
     {
-        int filter = NotificationManager.INTERRUPTION_FILTER_PRIORITY;   // NotificationManager.INTERRUPTION_FILTER_ALARMS    // TODO: configurable
+        int filter = getAutomaticZenRuleFilter(context);
         String ruleName = getAutomaticZenRuleName(context);
         Uri conditionId = getAutomaticZenRuleConditionId();
         ComponentName componentName = new ComponentName(context, BedtimeConditionService.class);
         return new AutomaticZenRule(ruleName, componentName, conditionId, filter, enabled);
+    }
+
+    @TargetApi(23)
+    public static int getAutomaticZenRuleFilter(Context context)
+    {
+        int filter;
+        int filterSetting = BedtimeSettings.loadPrefBedtimeDoNotDisturbFilter(context);
+        switch (filterSetting) {
+            case BedtimeSettings.DND_FILTER_ALARMS: filter = NotificationManager.INTERRUPTION_FILTER_ALARMS; break;
+            case BedtimeSettings.DND_FILTER_PRIORITY: default: filter = NotificationManager.INTERRUPTION_FILTER_PRIORITY; break;
+        }
+        return filter;
     }
 
     @TargetApi(24)

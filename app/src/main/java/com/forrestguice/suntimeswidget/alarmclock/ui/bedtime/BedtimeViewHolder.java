@@ -34,9 +34,12 @@ import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.ImageViewCompat;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -53,6 +56,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 
 import java.util.Calendar;
 import java.util.List;
@@ -440,19 +444,34 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             return R.layout.layout_listitem_bedtime_notify;
         }
 
+        private CompoundButton.OnCheckedChangeListener onDndCheckChanged = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                check_dnd.setChecked(!isChecked);
+            }
+        };
+
         @Override
         protected void attachClickListeners(final Context context, @Nullable BedtimeItem item)
         {
             super.attachClickListeners(context, item);
             if (check_dnd != null)
             {
-                check_dnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                /*check_dnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                     {
-                        BedtimeSettings.savePrefBedtimeDoNotDisturb(context, isChecked);
-                        BedtimeSettings.setAutomaticZenRule(context, switch_enabled.isChecked() && isChecked);
-                        updateViews_dndWarning(context);
+                        check_dnd.setChecked(!isChecked);
+                        //BedtimeSettings.savePrefBedtimeDoNotDisturb(context, isChecked);
+                        //BedtimeSettings.setAutomaticZenRule(context, switch_enabled.isChecked() && isChecked);
+                        //updateViews_dndWarning(context);
+                    }
+                });*/
+                check_dnd.setOnCheckedChangeListener(onDndCheckChanged);
+                check_dnd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDndMenu(context, v);
                     }
                 });
             }
@@ -473,6 +492,71 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             BedtimeSettings.setAutomaticZenRule(context, enabled && BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
         }
 
+        protected void showDndMenu(final Context context, View view)
+        {
+            PopupMenu.OnMenuItemClickListener menuClickListener = new PopupMenu.OnMenuItemClickListener()
+            {
+                @Override
+                public boolean onMenuItemClick(MenuItem item)
+                {
+                    switch (item.getItemId())
+                    {
+                        case R.id.action_dnd_alarms:
+                            BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_ALARMS);
+                            BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
+                            BedtimeSettings.setAutomaticZenRule(context, true);
+                            updateView_dnd(context);
+                            return true;
+
+                        case R.id.action_dnd_priority:
+                            BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_PRIORITY);
+                            BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
+                            BedtimeSettings.setAutomaticZenRule(context, true);
+                            updateView_dnd(context);
+                            return true;
+
+                        case R.id.action_dnd_disable:
+                        default:
+                            BedtimeSettings.savePrefBedtimeDoNotDisturb(context, false);
+                            BedtimeSettings.setAutomaticZenRule(context, false);
+                            updateView_dnd(context);
+                            return true;
+                    }
+                }
+            };
+
+            PopupMenu popupMenu = PopupMenuCompat.createMenu(context, view, R.menu.bedtime_dnd, menuClickListener, null);
+            Menu menu = popupMenu.getMenu();
+            boolean dnd = BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
+            if (dnd)
+            {
+                int filter = BedtimeSettings.loadPrefBedtimeDoNotDisturbFilter(context);
+                switch (filter)
+                {
+                    case BedtimeSettings.DND_FILTER_ALARMS:
+                        MenuItem dndAlarmsItem = menu.findItem(R.id.action_dnd_alarms);
+                        if (dndAlarmsItem != null) {
+                            dndAlarmsItem.setChecked(true);
+                        }
+                        break;
+
+                    case BedtimeSettings.DND_FILTER_PRIORITY:
+                        MenuItem dndPriorityItem = menu.findItem(R.id.action_dnd_priority);
+                        if (dndPriorityItem != null) {
+                            dndPriorityItem.setChecked(true);
+                        }
+                        break;
+                }
+
+            } else {
+                MenuItem dndDisabledItem = menu.findItem(R.id.action_dnd_disable);
+                if (dndDisabledItem != null) {
+                    dndDisabledItem.setChecked(true);
+                }
+            }
+            popupMenu.show();
+        }
+
         @Override
         protected void detachClickListeners()
         {
@@ -483,6 +567,16 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (button_dndWarning != null) {
                 button_dndWarning.setOnClickListener(null);
             }
+        }
+
+        protected  void updateView_dnd(Context context)
+        {
+            if (check_dnd != null) {
+                check_dnd.setOnCheckedChangeListener(null);
+                check_dnd.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
+                check_dnd.setOnCheckedChangeListener(onDndCheckChanged);
+            }
+            updateViews_dndWarning(context);
         }
 
         protected void updateViews_dndWarning(Context context)
@@ -502,11 +596,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             super.updateViews(context, item);
             if (context != null)
             {
-                if (check_dnd != null) {
-                    check_dnd.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
-                    //check_dnd.setEnabled(!BedtimeSettings.isBedtimeModeActive(context));
-                }
-                updateViews_dndWarning(context);
+                updateView_dnd(context);
 
                 AlarmClockItem alarmItem = item.getAlarmItem();
                 if (alarmItem != null)
