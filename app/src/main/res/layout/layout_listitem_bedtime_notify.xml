@@ -96,7 +96,7 @@
                 android:scaleType="center"
                 android:src="?attr/icActionNew" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:contentDescription="@string/configAction_addAlarm" />
+                android:contentDescription="@string/configAction_setBedtime" />
 
             <android.support.design.widget.FloatingActionButton android:id="@+id/button_edit"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
