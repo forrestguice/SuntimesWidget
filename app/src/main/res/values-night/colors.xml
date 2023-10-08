@@ -6,6 +6,7 @@
     <color name="dialog_frame">@color/dialog_frame_dark</color>
     <color name="dialog_bg">@color/dialog_bg_dark</color>
     <color name="dialog_bg_alt">@color/dialog_bg_alt_dark</color>
+    <color name="popupmenu_bg">@color/popupmenu_bg_dark</color>
     <color name="card_bg">@color/card_bg_dark</color>
     <color name="card_bg_trans">@color/card_bg_darktrans</color>
     <color name="chip_bg_disabled">@color/chip_bg_disabled_dark</color>

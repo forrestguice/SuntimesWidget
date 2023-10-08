@@ -10,6 +10,7 @@
         <item name="dialogFrame">@color/dialog_frame</item>
         <item name="dialogBackground">@color/dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt</item>
+        <item name="popupMenuBackground">@drawable/popupmenu_frame_ref</item>
         <item name="widgetBackground">@drawable/widget_bg_ref</item>
         <item name="settingsCardBackground">@drawable/widget_bg_ref</item>
         <item name="timeCardBackground">@color/card_bg</item>
@@ -175,6 +176,7 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
 
     </style>
     <style name="AppTheme.System" parent="AppThemeBase.System">
@@ -389,6 +391,8 @@
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
+        <item name="popupMenuBackground">@drawable/popupmenu_frame_light</item>
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
@@ -602,6 +606,8 @@
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
+        <item name="popupMenuBackground">@drawable/popupmenu_frame_dark</item>
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
     <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
         <item name="icActionNext">@drawable/ic_action_next_item</item>
@@ -1154,6 +1160,10 @@
     </style>
     <style name="DatePickerStyle">
         <item name="android:textSize">?attr/text_size_medium</item>
+    </style>
+
+    <style name="PopupMenuStyle" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">?attr/popupMenuBackground</item>
     </style>
 
     <style name="ToastTextAppearance">

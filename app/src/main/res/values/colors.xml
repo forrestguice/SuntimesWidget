@@ -22,6 +22,7 @@
     <color name="dialog_frame">@color/dialog_frame_light</color>
     <color name="dialog_bg">@color/dialog_bg_light</color>
     <color name="dialog_bg_alt">@color/dialog_bg_light</color>
+    <color name="popupmenu_bg">@color/popupmenu_bg_light</color>
     <color name="card_bg">@color/card_bg_light</color>
     <color name="card_bg_trans">@color/card_bg_lighttrans</color>
     <color name="chip_bg_disabled">@color/chip_bg_disabled_light</color>
@@ -129,6 +130,7 @@
     <color name="dialog_frame_dark">@color/grey_800</color>
     <color name="dialog_bg_dark">@color/grey_850</color>
     <color name="dialog_bg_alt_dark">@color/grey_900</color>
+    <color name="popupmenu_bg_dark">@color/grey_900</color>
     <color name="card_bg_dark">@color/grey_800</color>
     <color name="card_bg_darktrans">#aa212121</color>
     <color name="chip_bg_disabled_dark">@color/grey_500</color>
@@ -162,6 +164,7 @@
     <color name="dialog_frame_light">@android:color/white</color>
     <color name="dialog_bg_light">@color/grey_50</color>
     <color name="dialog_bg_alt_light">@color/grey_300</color>
+    <color name="popupmenu_bg_light">@color/grey_50</color>
     <color name="card_bg_light">@android:color/white</color>
     <color name="card_bg_lighttrans">#aaffffff</color>
     <color name="chip_bg_disabled_light">@color/grey_500</color>
