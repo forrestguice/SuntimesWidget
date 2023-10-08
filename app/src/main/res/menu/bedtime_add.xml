@@ -4,18 +4,21 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/action_bedtime_set"
-            android:title="Set bedtime"
+            android:title="@string/configAction_setBedtime"
             app:showAsAction="never"
+            android:icon="?attr/icActionTime"
             android:orderInCategory="1" />
 
         <item android:id="@+id/action_bedtime_from_wakeup"
-            android:title="Set bedtime from alarm"
+            android:title="@string/configAction_setBedtime_fromAlarm"
             app:showAsAction="never"
+            android:icon="?attr/icActionAlarm"
             android:orderInCategory="2" />
 
         <item android:id="@+id/action_bedtime_now"
-            android:title="Set bedtime to now"
+            android:title="@string/configAction_setBedtime_toNow"
             app:showAsAction="never"
+            android:icon="?attr/icActionTime"
             android:orderInCategory="3" />
 
     </group>
