@@ -321,7 +321,9 @@ public class BedtimeDialog extends DialogFragment
                         break;
 
                     case WAKEUP_ALARM:
-                        showAddAlarmDialog(getActivity(), item);
+                        if (BedtimeSettings.hasAlarmID(getActivity(), BedtimeSettings.SLOT_BEDTIME_NOTIFY)) {
+                            showAddAlarmMenu(getActivity(), holder.getActionView(), item);
+                        } else showAddAlarmDialog(getActivity(), item);
                         break;
 
                     case BEDTIME:
@@ -812,6 +814,32 @@ public class BedtimeDialog extends DialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static final String DIALOG_ADD_ALARM = "dialog_add_alarm";
+
+    protected void showAddAlarmMenu(final Context context, final View v, final BedtimeItem item)
+    {
+        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.action_wakeup_set:
+                        showAddAlarmDialog(getActivity(), item);
+                        return true;
+
+                    case R.id.action_wakeup_from_bedtime:
+                        configWakeupFromBedtime(context, item);
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        };
+        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.bedtime_wakeup_add, onMenuItemClickListener, null);
+        popup.show();
+    }
 
     protected void showAddAlarmDialog(final Context context, BedtimeItem item)
     {

@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
-        <item android:id="@+id/action_bedtime_set"
+        <item android:id="@+id/action_wakeup_set"
             android:title="@string/configAction_setWakeUp"
             app:showAsAction="never"
-            android:icon="?attr/icActionTime"
+            android:icon="?attr/icActionAlarm"
             android:orderInCategory="1" />
 
-        <item android:id="@+id/action_bedtime_from_wakeup"
+        <item android:id="@+id/action_wakeup_from_bedtime"
             android:title="@string/configAction_setWakeUp_fromBedtime"
             app:showAsAction="never"
-            android:icon="?attr/icActionBedtime"
+            android:icon="?attr/icActionAlarm"
             android:orderInCategory="2" />
 
     </group>
