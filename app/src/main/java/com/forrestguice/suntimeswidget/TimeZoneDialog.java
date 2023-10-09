@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -415,7 +415,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     }
 
     public static final int UPDATE_RATE = 3000;
-    private Runnable updateTask = new Runnable()
+    private final Runnable updateTask = new Runnable()
     {
         @Override
         public void run()
@@ -463,9 +463,9 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
     private void updateExtras(Context context, boolean solarTime, Object item0)
     {
+        WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
         if (solarTime)
         {
-            WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
             if (item != null && item.getID().equals(WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME.getID()))
             {
                 int eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis(), calculator);
@@ -473,7 +473,6 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             } else updateExtrasLabel(null);
 
         } else {
-            WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
             if (item != null)
             {
                 TimeZone timezone = TimeZone.getTimeZone(item.getID());
@@ -489,7 +488,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     /**
      * onSolarTimeSelected
      */
-    private AdapterView.OnItemSelectedListener onSolarTimeSelected = new AdapterView.OnItemSelectedListener()
+    private final AdapterView.OnItemSelectedListener onSolarTimeSelected = new AdapterView.OnItemSelectedListener()
     {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -509,7 +508,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     /**
      * onTimeZoneSelected
      */
-    private AdapterView.OnItemSelectedListener onTimeZoneSelected = new AdapterView.OnItemSelectedListener()
+    private final AdapterView.OnItemSelectedListener onTimeZoneSelected = new AdapterView.OnItemSelectedListener()
     {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -529,16 +528,14 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     /**
      * onTimeZoneModeSelected
      */
-    private Spinner.OnItemSelectedListener onTimeZoneModeSelected = new Spinner.OnItemSelectedListener()
+    private final Spinner.OnItemSelectedListener onTimeZoneModeSelected = new Spinner.OnItemSelectedListener()
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             spinner_timezone.setOnItemSelectedListener(null);
             spinner_solartime.setOnItemSelectedListener(null);
 
-            final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
-            WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
-
+            WidgetSettings.TimezoneMode timezoneMode = (WidgetSettings.TimezoneMode) parent.getSelectedItem();
             boolean useSolarTime = (timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
             if (useSolarTime)
                 spinner_solartime.setOnItemSelectedListener(onSolarTimeSelected);
@@ -903,7 +900,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()
+    private final WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()
     {
         @Override
         public void onStart()
