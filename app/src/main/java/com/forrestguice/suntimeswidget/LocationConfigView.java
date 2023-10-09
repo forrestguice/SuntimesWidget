@@ -154,12 +154,8 @@ public class LocationConfigView extends LinearLayout
         return new com.forrestguice.suntimeswidget.calculator.core.Location(name, latitude, longitude, altitude, units == WidgetSettings.LengthUnit.METRIC);
     }
 
-    public WidgetSettings.LocationMode getLocationMode()
-    {
-        final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
-        //noinspection UnnecessaryLocalVariable
-        WidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
-        return locationMode;
+    public WidgetSettings.LocationMode getLocationMode() {
+        return (WidgetSettings.LocationMode) spinner_locationMode.getSelectedItem();
     }
 
     /**
@@ -406,7 +402,7 @@ public class LocationConfigView extends LinearLayout
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
-    private GetFixUI getFixUI_editMode = new GetFixUI()
+    private final GetFixUI getFixUI_editMode = new GetFixUI()
     {
         @Override
         public void enableUI(boolean value)
@@ -471,7 +467,7 @@ public class LocationConfigView extends LinearLayout
 
     private ImageButton button_auto;
     private ProgressBar progress_auto;
-    private GetFixUI getFixUI_autoMode = new GetFixUI()
+    private final GetFixUI getFixUI_autoMode = new GetFixUI()
     {
         @Override
         public void enableUI(boolean value)
@@ -1147,13 +1143,12 @@ public class LocationConfigView extends LinearLayout
     /**
      * the location mode (auto, custom) has been selected from a spinner.
      */
-    private Spinner.OnItemSelectedListener onLocationModeSelected = new Spinner.OnItemSelectedListener()
+    private final Spinner.OnItemSelectedListener onLocationModeSelected = new Spinner.OnItemSelectedListener()
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
-            WidgetSettings.LocationMode locationMode = locationModes[parent.getSelectedItemPosition()];
-            //Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
+            WidgetSettings.LocationMode locationMode = (WidgetSettings.LocationMode) parent.getItemAtPosition(position);
+            Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
 
             LocationViewMode dialogMode;
             if (locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION)
@@ -1183,7 +1178,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * a custom location has been selected from a spinner.
      */
-    private Spinner.OnItemSelectedListener onCustomLocationSelected = new Spinner.OnItemSelectedListener()
+    private final Spinner.OnItemSelectedListener onCustomLocationSelected = new Spinner.OnItemSelectedListener()
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
@@ -1198,7 +1193,7 @@ public class LocationConfigView extends LinearLayout
         public void onNothingSelected(AdapterView<?> parent) {}
     };
 
-    private View.OnClickListener onListButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onListButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
@@ -1213,7 +1208,7 @@ public class LocationConfigView extends LinearLayout
         onListButtonClickListener = listener;
     }
 
-    private View.OnClickListener onEditCancelButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onEditCancelButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
@@ -1239,7 +1234,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * the custom location edit button has been clicked.
      */
-    private View.OnClickListener onEditButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onEditButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
@@ -1251,7 +1246,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * the custom location add button has been clicked.
      */
-    private View.OnClickListener onAddButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onAddButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
@@ -1265,7 +1260,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * the custom location save button has been clicked.
      */
-    private View.OnClickListener onSaveButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onSaveButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
@@ -1298,7 +1293,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * the auto location button has been clicked.
      */
-    private View.OnClickListener onAutoButtonClicked = new OnClickListener()
+    private final View.OnClickListener onAutoButtonClicked = new OnClickListener()
     {
         @Override
         public void onClick(View view)
