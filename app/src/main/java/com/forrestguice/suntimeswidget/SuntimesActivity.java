@@ -169,6 +169,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     public static final String WARNINGID_DATE = "Date";
     public static final String WARNINGID_TIMEZONE = "Timezone";
+    public static final String WARNINGID_LOCATION_PERMISSION = "LocationPermission";
 
     private static final String DIALOGTAG_TIMEZONE = "timezone";
     private static final String DIALOGTAG_ALARM = "alarm";
@@ -239,6 +240,7 @@ public class SuntimesActivity extends AppCompatActivity
     private boolean showWarnings = false;
     private SuntimesWarning timezoneWarning;
     private SuntimesWarning dateWarning;
+    private SuntimesWarning locationPermissionWarning;
     private List<SuntimesWarning> warnings;
 
     private boolean verboseAccessibility = AppSettings.PREF_DEF_ACCESSIBILITY_VERBOSE;
@@ -950,14 +952,16 @@ public class SuntimesActivity extends AppCompatActivity
     {
         timezoneWarning = new SuntimesWarning(WARNINGID_TIMEZONE);
         dateWarning = new SuntimesWarning(WARNINGID_DATE);
+        locationPermissionWarning = new SuntimesWarning(WARNINGID_LOCATION_PERMISSION);
 
         warnings = new ArrayList<SuntimesWarning>();
         warnings.add(timezoneWarning);
         warnings.add(dateWarning);
+        warnings.add(locationPermissionWarning);
 
         restoreWarnings(savedState);
     }
-    private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
+    private final SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
         @Override
         public void onShowNextWarning() {
             showWarnings();
@@ -1498,7 +1502,12 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void refreshLocation()
     {
-        getFixHelper.getFix();
+        if (!getFixHelper.getFix())
+        {
+            locationPermissionWarning.wasDismissed = false;   // ignore previous dismissal
+            locationPermissionWarning.setShouldShow(true);    // and show this warning again
+            showWarnings();
+        }
     }
 
     /**
@@ -1824,10 +1833,15 @@ public class SuntimesActivity extends AppCompatActivity
         showWarnings = AppSettings.loadShowWarningsPref(this);
         dateWarning.setShouldShow(false);
         timezoneWarning.setShouldShow(false);
+        locationPermissionWarning.setShouldShow(false);
 
         WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(context, 0);
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         String locationTitle = (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
+
+        if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
+            locationPermissionWarning.setShouldShow(!GetFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions
+        }
 
         SpannableString locationSubtitle;
         String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
@@ -1959,6 +1973,20 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void showWarnings()
     {
+        if (showWarnings && locationPermissionWarning.shouldShow() && !locationPermissionWarning.wasDismissed())
+        {
+            locationPermissionWarning.initWarning(this, card_view, getString(R.string.locationPermissionWarning));
+            locationPermissionWarning.getSnackbar().setAction(getString(R.string.configAction_appDetails), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    AppSettings.openAppDetails(SuntimesActivity.this);
+                }
+            });
+            locationPermissionWarning.show();
+            return;
+        }
+
         if (showWarnings && timezoneWarning.shouldShow() && !timezoneWarning.wasDismissed())
         {
             timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning));
@@ -1992,6 +2020,7 @@ public class SuntimesActivity extends AppCompatActivity
         // no warnings shown; clear previous (stale) messages
         timezoneWarning.dismiss();
         dateWarning.dismiss();
+        locationPermissionWarning.dismiss();
     }
 
     /**

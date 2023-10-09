@@ -37,6 +37,7 @@
     <string name="configAction_moon">Moon</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_onlineHelp">Online Help</string>
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">More</string>
     <string name="configAction_options">Options</string>
     <string name="configAction_settings">Settings</string>
@@ -549,6 +550,8 @@
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Current (last known)</string>  <!-- setting -->
     <string name="locationMode_custom">User Defined</string>           <!-- setting -->
+
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
 
     <string name="configLabel_location">Location</string>               <!-- group title -->
     <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
