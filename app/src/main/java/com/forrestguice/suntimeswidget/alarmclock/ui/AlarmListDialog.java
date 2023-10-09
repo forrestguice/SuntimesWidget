@@ -1817,9 +1817,10 @@ public class AlarmListDialog extends DialogFragment
                     if (tint == null) {    // re-tint uncolored icons
                         EventIcons.tintDrawable(eventIcon, item.enabled ? color_on : color_off);
                     }
-                    text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, item.timezone));
-                    text_event.setCompoundDrawables(eventIcon, null, null, null);
+                    view.text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, item.timezone));
+                    view.text_event.setCompoundDrawables(eventIcon, null, null, null);
                 }
+                view.text_event.setVisibility(item.getEvent() == null && item.timezone == null ? View.GONE : View.VISIBLE);
             }
 
             // time
