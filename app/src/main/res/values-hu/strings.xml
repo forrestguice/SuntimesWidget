@@ -225,15 +225,15 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->  <!-- TODO -->
+    <string name="configAction_restoreDefaults">Visszaállítás alapértelmezettre</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
     <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
     <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Widget hozzáadás</string>                   <!-- Button: Add -->
-    <string name="configAction_reconfigWidget_short">Újrakonfigurál</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_addWidget">Widget hozzáadása</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">Újrakonfigurálás</string>       <!-- Button: Reconfigure -->
     <string name="configAction_reconfigWidget">Widget újrakonfigurálása</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->      <!-- TODO -->
     <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->  <!-- TODO -->
@@ -242,111 +242,111 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Általános beállítások</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
+    <string name="configLabel_general">Általános</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
     <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->  <!-- TODO -->
-    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label --> <!-- TODO -->
-    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
+    <string name="configLabel_general_calculator_sun">Nap adatforrás</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Hold adatforrás</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_help">Adatforrások</string>    <!-- preference title / help button text -->
 
-    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_timeFormatMode">Időformátum:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_altitude_enabled">Magasság használata</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Alkalmazzon magasság alapú finomításokat.</string>        <!-- checkbox label -->
+    
+    <string name="configLabel_general_localize_hemisphere">Félgömb alapú lokalizáció</string>        <!-- checkbox label -->
+    <string name="configLabel_general_localize_hemisphere_summary">Félgömb alapú lokalizáció alkalmazása (évszakcímkék, holdfázis ikonok).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_lengthUnits">Mértékegységek</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_showSeconds">Mutassa a másodperceket</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">Mutassa minden időnél a másodperceket is.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showSeconds">Show seconds</string>        <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_showTimeDate">Mutassa az időt (dátummal együtt)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">A dátumok megjelenítésekor mutassa az időt is.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showAbbrMonth">Rövidített hónapoknevek</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showAbbrMonth_summary">A hónapok rövidített neveinek megjelenítése a dátumok megjelenítésekor.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
-    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_general_showWeeks">Hetek mutatása</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">A 7 napnál hosszabb időintervallumok hetekre osztása (pl. 15 nap lesz 2 hét 1 nap).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showHours">Órák mutatása</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">Mutassa az órákat és a perceket egy napnál hosszabb időintervallumoknál.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_observerheight">Objektum árnyékok</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary">Egy objektum által vetett árnyékok hosszának megjelenítése <xliff:g id="value" example="1 meter">%1$s</xliff:g> magassággal.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
-
-    <string name="configLabel_general_dayOffset">Day Offset</string>        <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_general_dayOffset">Nap eltolás</string>        <!-- edittext label -->
     <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced</string>                        <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_experimental">Experimental</string>                <!-- group title --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
+    <string name="configLabel_advanced">Haladó</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Kísérleti</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">Adatforrás bővítmények</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">Harmadik féltől származó bővítmények keresése és letöltése.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_widgetlayout">Elrendezés</string>           <!-- group title -->
     <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
-        <item>Top-Left</item>
-        <item>Top</item>
-        <item>Top-Right</item>
-        <item>Left</item>
-        <item>Center</item>
-        <item>Right</item>
-        <item>Bottom-Left</item>
-        <item>Bottom</item>
-        <item>Bottom-Right</item>
-    </string-array>  <!-- TODO -->
+        <item>Balra fent</item>
+        <item>Fent</item>
+        <item>Jobb fent</item>
+        <item>Balra</item>
+        <item>Középen</item>
+        <item>Jobbra</item>
+        <item>Balra lent</item>
+        <item>Lent</item>
+        <item>Jobbra lent</item>
+    </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Megjelenés beállításai</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance">Megjelenés</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
+    <string name="configLabel_appearance_mode">Megjelenés</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Téma:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Kitölti a rendelkezésre álló helyet (átméretezhető)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
-    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_showTitle">Mutassa a címkét</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_titleText">Címke:</string>              <!-- edittext label -->
+    <string name="configLabel_appearance_allowResize">Elrendezés cseréje a rendelkezésre álló hely kitöltéséhez</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="configLabel_appearance_scaleText">Szövegek és ikonok méretezése</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleBase">Egész cella kitöltése</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_gravity">Igazítás:</string>  <!-- spinner label -->
+    <string name="configLabel_appearance_showLabels">Címkék mutatása</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">Cím mutatása</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_titleText">Cím:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO -->
-    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO -->
-    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO -->
+    <string name="configLabel_general_riseSetOrder">Sorrend:</string>     <!-- label -->
+    <string name="risesetorder_today">Ma</string>                    <!-- setting -->
+    <string name="risesetorder_lastnext">Utolsó / Következő</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Dél</string>                    <!-- setting -->
     <string name="timeMode_noon">Nap zenitje</string>                    <!-- setting -->
     <string name="timeMode_official_short">Valós</string>              <!-- setting -->
     <string name="timeMode_official">Valós idő</string>               <!-- setting -->
-    <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
-    <string name="timeMode_civil">Civil szürkület</string>               <!-- setting -->
-    <string name="timeMode_nautical_short">Hajózási</string>            <!-- setting -->
-    <string name="timeMode_nautical">Hajózási szürkület</string>         <!-- setting -->
+    <string name="timeMode_civil_short">Polgári</string>                  <!-- setting -->
+    <string name="timeMode_civil">Polgári szürkület</string>               <!-- setting -->
+    <string name="timeMode_nautical_short">Navigációs</string>            <!-- setting -->
+    <string name="timeMode_nautical">Navigációs szürkület</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Csillagászati</string>    <!-- setting -->
     <string name="timeMode_astronomical">Csillagászati szürkület</string> <!-- setting -->
     <string name="timeMode_night">Éjjel</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Nappal</string>                       <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_golden_short">Golden</string>                <!-- setting --> <!-- TODO -->
-    <string name="timeMode_golden">Golden Hour</string>                 <!-- setting --> <!-- TODO -->
-    <string name="timeMode_blue8_short">Blue (8\u00B0)</string>                    <!-- setting --> <!-- TODO -->
-    <string name="timeMode_blue8">Blue Hour (8\u00B0)</string>                     <!-- setting --> <!-- TODO -->
-    <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting --> <!-- TODO -->
-    <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting --> <!-- TODO -->
-    <string name="timeMode_none">None</string>                 <!-- label -->  <!-- TODO -->
+    <string name="timeMode_golden_short">Arany</string>                <!-- setting -->
+    <string name="timeMode_golden">Arany óra</string>                 <!-- setting -->
+    <string name="timeMode_blue8_short">Kék (8\u00B0)</string>                    <!-- setting --> 
+    <string name="timeMode_blue8">Kék óra (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">Kék (4\u00B0)</string>                    <!-- setting --> 
+    <string name="timeMode_blue4">Kék óra (4\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_none">Nincs</string>                 <!-- label -->
 
-    <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_equinox_vernal">Tavaszi nap-éj egyenlőség</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">Nap-éj egyenlőség</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Őszi nap-éj egyenlőség</string>  <!-- setting --> 
+    <string name="timeMode_equinox_autumnal_short">Nap-éj egyenlőség</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">Nyári napforduló</string>    <!-- setting --> 
+    <string name="timeMode_solstice_summer_short">Napforduló</string>     <!-- setting --> 
+    <string name="timeMode_solstice_winter">Téli napforduló</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">Napforduló</string>     <!-- setting --> 
 
     <string name="timeMode_cross_midwinter">Imbolc (Cross-Quarter)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   <!-- TODO -->
     <string name="timeMode_cross_midwinter_short">Cross-Quarter</string>       <!-- setting -->    <!-- TODO -->
@@ -357,70 +357,70 @@
     <string name="timeMode_cross_midautumnal">Samhain (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
     <string name="timeMode_cross_midautumnal_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
 
-    <string name="timeMode_moon">Moon</string>                               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_full">Full Moon</string>                             <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->  <!-- TODO -->
-    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->  <!-- TODO -->
-
-    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->    <!-- TODO -->
-    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->    <!-- TODO -->
-    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon">Hold</string>                               <!-- label --> 
+    <string name="timeMode_moon_new">Újhold</string>                               <!-- setting --> 
+    <string name="timeMode_moon_new_short">Új</string>                              <!-- setting -->  
+    <string name="timeMode_moon_waxingcrescent_short">Növekvő holdsarló</string>               <!-- label -->  
+    <string name="timeMode_moon_waxingcrescent">Növekvő holdsarló</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">Első negyed</string>                 <!-- setting --> 
+    <string name="timeMode_moon_firstquarter_short">Első negyed</string>           <!-- setting --> 
+    <string name="timeMode_moon_waxinggibbous_short">Növekvő hold</string>               <!-- label -->  
+    <string name="timeMode_moon_waxinggibbous">Növekvő hold</string>                     <!-- label -->  
+    <string name="timeMode_moon_full">Telihold</string>                             <!-- setting --> 
+    <string name="timeMode_moon_full_short">Telihold</string>                            <!-- setting -->  
+    <string name="timeMode_moon_waninggibbous_short">Fogyó hold</string>               <!-- label --> 
+    <string name="timeMode_moon_waninggibbous">Fogyó hold</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Utolsó negyed</string>                 <!-- setting --> 
+    <string name="timeMode_moon_thirdquarter_short">Utolsó negyed</string>           <!-- setting --> 
+    <string name="timeMode_moon_waningcrescent_short">Fogyó holdsarló</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Fogyó holdsarló</string>                     <!-- label -->
+    
+    <string name="timeMode_moon_super">Szuperhold</string>               <!-- label --> 
+    <string name="timeMode_moon_micro">Mikrohold</string>               <!-- label --> 
+    <string name="timeMode_moon_superfull">Szupertelihold</string>                             <!-- setting -->  
     <!--<string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>-->     <!-- label -->
-    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_supernew">Szuperújhold</string>                             <!-- setting -->  
     <!--<string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>-->     <!-- label -->
-    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_microfull">Mikrotelihold</string>                             <!-- setting --> 
     <!--<string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
-    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_micronew">Mikroújhold</string>                             <!-- setting -->   
     <!--<string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
 
     <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
     <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
-    <string name="label_apogee">Apogee</string>      <!-- TODO -->
-    <string name="label_perigee">Perigee</string>    <!-- TODO -->
+    <string name="label_apogee">Földtávol</string>   
+    <string name="label_perigee">Földközel</string> 
 
     <string name="configLabel_general_timeMode">Mód:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Show Date</string>   <!-- group title -->   <!-- TODO -->
-    <string name="configLabel_general_calendar">Calendar</string>   <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat">Date Format:</string>          <!-- spinner label -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_showDate">Dátum mutatása</string>   <!-- group title -->
+    <string name="configLabel_general_calendar">Naptár</string>   <!-- group title -->  
+    <string name="configLabel_general_calendarMode">Naptár:</string>          <!-- spinner label -->  
+    <string name="configLabel_general_calendarFormat">Dátumformátum:</string>          <!-- spinner label -->
+    <string name="configLabel_general_calendarFormatPattern">Egyéni formátum:</string>          <!-- edittext label -->
+    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint --> 
+    <string name="configLabel_general_calendarFormat_custom">Egyéni (%s)</string>       <!-- spinner value -->  
     <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configAction_editCalendarFormat">Edit</string>                        <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_editCalendarFormat">Szerkesztés</string>                        <!-- button (contentDescription) -->  
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Csak napkelte</string>             <!-- setting -->
     <string name="widgetMode1x1_sunset">Csak napnyugta</string>               <!-- setting -->
     <string name="widgetMode1x1_both_1">Napkelte &amp; napnyugta (1)</string>  <!-- setting -->
     <string name="widgetMode1x1_both_2">Napkelte &amp; napnyugta (2)</string>  <!-- setting -->
-    <string name="widgetMode3x1_sunrise_sunset_noon">Sunrise, Sunset, &amp; Noon</string>  <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">Napkelte, Napnyugta, &amp; Dél</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode1x1_moonday">Moon Day</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode1x1_altaz">Magasság &amp; Azimut</string>     <!-- setting --> 
+    <string name="widgetMode1x1_decright">Deklináció &amp; Rektaszcenzió</string>     <!-- setting --> 
+    <string name="widgetMode1x1_distance">Jelenlegi távolság</string>     <!-- setting -->
+    <string name="widgetMode1x1_apsis">Következő földtávol vagy földközel</string>     <!-- setting --> 
+    <string name="widgetMode1x1_moonday">Holdnap</string>     <!-- setting -->
 
     <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
@@ -429,20 +429,20 @@
     <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
     <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Alap</string>  <!-- setting --> 
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Poláris [Észak]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Poláris [Dél]</string>     <!-- setting --> 
+    <string name="widgetMode_sunPosMap_bluemarble">Kék üveggolyó</string>    <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
 
     <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
     <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
 
-    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->   <!-- TODO -->
-    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode1x1_moonriseset">Holdkelte &amp; holdnyugta</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Holdfázis &amp; megvilágitás</string>     <!-- setting -->  
+    <string name="widgetMode1x1_moonphase">Csak holdfázis</string>     <!-- setting --> 
+    <string name="widgetMode1x1_moonillum">Csak megvilágítás</string>     <!-- setting --> 
+    <string name="widgetMode1x1_moonphasenext">Következő nagy fázis</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
@@ -452,18 +452,18 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ne tegyen semmit</string>           <!-- setting -->
-    <string name="actionMode_update">Update Widget</string>           <!-- setting -->  <!-- TODO -->
-    <string name="actionMode_update_all">Update All Widgets</string>           <!-- setting -->  <!-- TODO -->
-    <string name="actionMode_config">Újrakonfigurája a Widget-et</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Indítsa az alkalmazást</string>      <!-- setting -->
-    <string name="actionMode_flipToNextItem">Váltson a nézetek közt</string>      <!-- setting -->
+    <string name="actionMode_update">Widget frissítése</string>           <!-- setting -->
+    <string name="actionMode_update_all">Minden widget frissítése</string>           <!-- setting -->
+    <string name="actionMode_config">Widget konfigurálása</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Alkalmazás megnyitása</string>      <!-- setting -->
+    <string name="actionMode_flipToNextItem">Nézetek közötti váltás</string>      <!-- setting -->
 
     <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
     <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
     <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
 
-    <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
-    <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <string name="expandMore">Több</string>  <!-- contentDescription --> 
+    <string name="expandLess">Kevesebb</string>  <!-- contentDescription --> 
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
@@ -472,48 +472,48 @@
     <string name="configLabel_action_onClockTap">Órára kattintva</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Jegyzetre kattintva</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Dátumra kattintva</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">On Date Long Press</string>   <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_action_onDateTap1">Dátumra hosszan kattintva</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Jelenlegi (utolsó ismert)</string>  <!-- setting -->
     <string name="locationMode_custom">Felhasználó által megadott</string>           <!-- setting -->
 
-    <string name="configLabel_location">Hely beállításai</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
+    <string name="configLabel_location">Hely</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Mód:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Szélesség:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">decimális fok</string>      <!-- edittext hint -->
     <string name="configLabel_location_lon">Hosszúság:</string>                          <!-- edittext label -->
     <string name="configHint_location_lon">decimális fok</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->   <!-- TODO -->
+    <string name="configLabel_location_alt">Magasság:</string>                          <!-- edittext label --> 
     <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
     <string name="configLabel_location_name">Név:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(opcionális)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
-    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
+    <string name="configHint_location_name0">Helységnév</string>                  <!-- edittext hint --> 
+    <string name="configLabel_location_fromapp">Használja az alkalmazás tartózkodási helyét</string>                  <!-- checkbox text -->
 
     <string name="configAction_getFix">Mutasd a helyet</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Szerkeszt</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">Ment</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Szoláris idő</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="timezoneMode_standard">Időrendszer</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Zónaidő</string>               <!-- setting -->
     <string name="timezoneMode_custom">Felhasználó által megadott</string>                    <!-- setting -->
 
-    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
-    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
-    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
+    <string name="time_lmst">Sziderikus idő</string>                  <!-- timezone label -->  
+    <string name="time_gmst">Greenwich sziderikus idő</string>              <!-- timezone label --> 
+    <string name="time_utc">Egyezményes koordinált világidő</string>            <!-- timezone label --> 
     <string name="time_localMean">Helyi idő</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Valódi szoláris idő</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
+    <string name="configAction_suggestTimeZone">Időzóna ajánlása</string> 
 
-    <string name="configLabel_timezone">Időzóna beállítások:</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
+    <string name="configLabel_timezone">Időzóna:</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Mód:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Időzóna:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Szoláris idő:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
-    <string name="configLabel_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->   <!-- TODO -->
+    <string name="configLabel_timezone_fromapp">Használja az alkalmazás időzónáját</string>                  <!-- checkbox text --> 
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Idő megjelenítése</string>          <!-- setting -->
@@ -524,21 +524,21 @@
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
-    <string name="calendarMode_coptic">Coptic</string>                      <!-- TODO -->
-    <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
-    <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
-    <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
-    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
+    <string name="calendarMode_coptic">Kopt</string>                     
+    <string name="calendarMode_ethiopian">Etióp</string>               
+    <string name="calendarMode_gregorian">Gergely</string>               
+    <string name="calendarMode_hebrew">Héber</string>                      
+    <string name="calendarMode_hijri_diyanet">Hijri (Török)</string>   
     <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
-    <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
-    <string name="calendarMode_persian">Persian (Solar Hijri)</string>     <!-- TODO -->
-    <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
-    <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
-    <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
-    <string name="calendarMode_vietnamese">Vietnamese</string>  <!-- TODO -->
+    <string name="calendarMode_julian">Julián</string>                      
+    <string name="calendarMode_persian">Perzsa (Szoláris Hijri)</string>  
+    <string name="calendarMode_thaisolar">Thai szoláris</string>               
+    <string name="calendarMode_chinese">Kínai</string>  
+    <string name="calendarMode_korean">Koreai</string>
+    <string name="calendarMode_vietnamese">Vietnámi</string> 
     <string name="calendarMode_minguo">Minguo</string>  <!-- TODO -->
-    <string name="calendarMode_indian">Indian</string>  <!-- TODO -->
-    <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
+    <string name="calendarMode_indian">Indiai</string> 
+    <string name="calendarMode_japanese">Japán</string> 
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Mai nap</string>                  <!-- setting -->
@@ -552,19 +552,19 @@
     <string name="compareMode_yesterday">Tegnap</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Holnap</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Hasonlítsa össze:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison">Összehasonlítás mutatása</string>  <!-- checkbox label --> 
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
-    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting --> <!-- TODO -->
-    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->  <!-- TODO -->
-    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->  <!-- TODO -->
+    <string name="trackingMode_recent">Legutóbbi esemény</string>                   <!-- setting -->   
+    <string name="trackingMode_closest">Legközelebbi esemény</string>                 <!-- setting --> 
+    <string name="trackingMode_soonest">Közelgő esemény</string>                <!-- setting -->  
+    <string name="configLabel_general_trackingMode">Követés:</string>            <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_timeMode_override">Követés felülírja a módot</string>     <!-- checkbox label -->  
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label --> <!-- TODO -->
 
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
@@ -627,13 +627,13 @@
     <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
-    <string name="configLabel_widgetThemeList">Widget Themes</string>
-    <string name="configLabel_widgetThemeListSelect">Select a theme</string>
-    <string name="configAction_addTheme">Add</string>           <!-- button (contentDescription) -->
-    <string name="configAction_selectTheme">Select</string>     <!-- button (contentDescription) -->
-    <string name="configAction_editTheme">Szerkeszt</string>         <!-- button (contentDescription) -->
-    <string name="configAction_deleteTheme">Törlése</string>     <!-- button (contentDescription) -->
-    <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) -->
+    <string name="configLabel_widgetThemeList">Widget témák</string>
+    <string name="configLabel_widgetThemeListSelect">Téma kiválasztása</string>
+    <string name="configAction_addTheme">Hozzáadás</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectTheme">Kiválasztás</string>     <!-- button (contentDescription) -->
+    <string name="configAction_editTheme">Szerkesztés</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">Törlés</string>     <!-- button (contentDescription) -->
+    <string name="configAction_copyTheme">Másolás</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
@@ -761,8 +761,8 @@
     <!--
          CUSTOM EVENTS
     -->
-    <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
-    <string name="eventlist_dialog_title">Custom Events</string>   <!-- TODO -->
+    <string name="eventType_sun_elevation">Nap (magasság)</string>
+    <string name="eventlist_dialog_title">Egyéni események</string>
 
     <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
     <string name="configLabel_event_alarmitem_desc">%1$s</string>
@@ -1640,13 +1640,13 @@
     <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
 
     <!-- Dialog: Welcome / Initial setup -->
-    <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
-    <string name="welcome_action_prev">Back</string>    <!-- TODO -->
-    <string name="welcome_action_next">Next</string>    <!-- TODO -->
-    <string name="welcome_action_done">Finish</string>    <!-- TODO -->
+    <string name="welcome_action_skip">Kihagyás</string>   
+    <string name="welcome_action_prev">Vissza</string>  
+    <string name="welcome_action_next">Következő</string>   
+    <string name="welcome_action_done">Kész</string>   
     <string name="welcome_message">@string/app_shortdesc</string>    <!-- TODO -->
-    <string name="welcome_pref_title">Welcome Screen</string>    <!-- TODO -->
-    <string name="welcome_pref_summary">Start the first launch configuration wizard.</string>    <!-- TODO -->
+    <string name="welcome_pref_title">Kezdőképernyő</string> 
+    <string name="welcome_pref_summary">Az első indítási konfigurációs varázsló indítása.</string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Segítség</string>
