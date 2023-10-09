@@ -408,13 +408,14 @@ public class BedtimeDialog extends DialogFragment
 
         Calendar wakeup = Calendar.getInstance();
         wakeup.add(Calendar.MINUTE, sleepMinutes);
-        final int wakeup_hour = wakeup.get(Calendar.HOUR_OF_DAY);
-        final int wakeup_minute = wakeup.get(Calendar.MINUTE);
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_WAKEUP_ALARM, wakeup_hour, wakeup_minute, 0, true, true);
+        //final int wakeup_hour = wakeup.get(Calendar.HOUR_OF_DAY);
+        //final int wakeup_minute = wakeup.get(Calendar.MINUTE);
+        //configureBedtimeAt(context, item, BedtimeSettings.SLOT_WAKEUP_ALARM, wakeup_hour, wakeup_minute, 0, true, true);
 
         Calendar bedtime = Calendar.getInstance();
         bedtime.setTimeInMillis(wakeup.getTimeInMillis() + bedtime_offset);
         configBedtimeToDate(context, item, bedtime, true, true);
+        offerModifyWakeupFromBedtime(getActivity());
     }
 
     protected void configBedtimeToDate(final Context context, BedtimeItem item, Calendar bedtime, boolean modifyEnabled, boolean enabled)
