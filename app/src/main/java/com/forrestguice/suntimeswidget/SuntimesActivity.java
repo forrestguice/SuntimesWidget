@@ -496,7 +496,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "TimeZoneDialog listeners restored.");
         }
 
-        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        final LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null)
         {
             locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
@@ -518,6 +518,18 @@ public class SuntimesActivity extends AppCompatActivity
             seekDateDialog.setTimezone(dataset.timezone());
             seekDateDialog.setOnAcceptedListener(onSeekDate(seekDateDialog));
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
+        }
+
+        if ((WidgetSettings.loadLocationModePref(this, 0) == WidgetSettings.LocationMode.CURRENT_LOCATION)
+                && AppSettings.lastAutoLocationIsStale(SuntimesActivity.this))
+        {
+            card_view.post(new Runnable()
+            {
+                @Override
+                public void run() {
+                    getFixHelper.getFix();
+                }
+            });
         }
     }
 
@@ -1087,6 +1099,7 @@ public class SuntimesActivity extends AppCompatActivity
                     if (result != null)
                     {
                         com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
+                        AppSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
                         WidgetSettings.saveLocationPref(SuntimesActivity.this, 0, location);
 
                     } else {
