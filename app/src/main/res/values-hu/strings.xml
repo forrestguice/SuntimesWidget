@@ -17,27 +17,27 @@
     <string name="configAction_mapLocation">Mutasd térképen</string>
     <string name="configAction_mapLocation_chooser">Hely megtekintése a következővel</string>
     <string name="configAction_mapLocation_noapp">A térképalkalmazás nem található.</string>
-    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Naptár</string>
     <string name="configAction_setAlarm">Emlékeztető beállítása</string>
     <string name="configAction_setTimeZone">Időzóna beállítása</string>
     <string name="configAction_setDate">Dátum beállítása</string>
     <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
-    <string name="configAction_share">Share</string>    <!-- TODO -->
+    <string name="configAction_share">Megosztás</string>
     <string name="configAction_export">Exportálása</string>
-    <string name="configAction_import">Import</string>    <!-- TODO -->
-    <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
-    <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
-    <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
-    <string name="configAction_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
-    <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
-    <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
-    <string name="configAction_deselect">Clear Selection</string>                                    <!-- TODO -->
-    <string name="configAction_moon">Moon</string>                            <!-- TODO -->
+    <string name="configAction_import">Importálás</string>
+    <string name="configAction_sunDialog">Nap helyzete</string>
+    <string name="configAction_equinoxDialog">Napforduló / N-É egyenlőség</string>
+    <string name="configAction_worldMap">Világtérkép</string>
+    <string name="configAction_lineGraph">Magasság</string>
+    <string name="configAction_seekAltitude">Magasság beállítása</string>        <!-- checkbox label -->
+    <string name="configAction_search">Keresés</string>        <!-- button (contentDescription) -->
+    <string name="configAction_deselect">Kijelölés törlése</string>
+    <string name="configAction_moon">Hold</string>
     <string name="configAction_help">Segítség</string>
-    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
-    <string name="configAction_overflow">More</string>  <!-- TODO -->
-    <string name="configAction_options">Options</string>   <!-- TODO -->
+    <string name="configAction_onlineHelp">Online segítség</string>
+    <string name="configAction_overflow">Több</string>
+    <string name="configAction_options">Testreszabás</string>   <!-- TODO -->
     <string name="configAction_settings">Beállítások</string>
     <string name="configAction_aboutWidget">Rólunk</string>
 
@@ -46,8 +46,8 @@
     -->
     <string name="nextDay">Következő nap</string>
     <string name="prevDay">Előző nap</string>
-    <string name="nextYear">Next Year</string>        <!-- TODO -->
-    <string name="prevYear">Previous Year</string>        <!-- TODO -->
+    <string name="nextYear">Jövő év</string>
+    <string name="prevYear">Előző év</string>
 
     <!-- Warnings -->
     <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->  <!-- TODO -->
@@ -56,9 +56,9 @@
          The time zone field that appears below the clock (main activity).
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Az időzóna elképzelhető hogy nem a helynek megfelelő.</string>  <!-- snackbar message -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Lehetséges, hogy az időzóna nem megfelelő ehhez a helyhez.</string>  <!-- snackbar message -->
     <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%s</xliff:g>).</string>  <!-- TODO -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Daylight Saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Nyári időszámítás</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
 
     <!-- Field: date
@@ -68,7 +68,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> A beállított dátum és a mai dátum eltérnek.</string>  <!-- snackbar message -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> A dátum a mai naptól eltérő napra van beállítva.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_today">Múlt</string>
@@ -76,7 +76,7 @@
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Tegnap</string>
-    <string name="today">Mai nap</string>
+    <string name="today">Ma</string>
     <string name="tomorrow">Holnap</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
@@ -88,10 +88,10 @@
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> napkeltétől napnyugtáig</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> nappal hossza</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
-    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
+    <string name="timeMode_tropical_year">Szoláris év</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- "50% illuminated" .. used in 2x1 widget --> <!-- TODO -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> megvilágított</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
     <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
     <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>   <!-- TODO: review -->
@@ -100,8 +100,8 @@
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
     -->
-    <string name="delta_day_tomorrow">A holnap lesz</string>
-    <string name="delta_day_yesterday">A tegnap volt</string>
+    <string name="delta_day_tomorrow">A holnapi nap lesz</string>
+    <string name="delta_day_yesterday">A tegnapi nap volt</string>
     <string name="delta_day_shorter">-el rövidebb</string>
     <string name="delta_day_longer">-el hosszabb</string>
 
@@ -141,44 +141,44 @@
          The note body text; appears next to the prefix (layout/info_time_note.xml)
     -->
     <string name="until_astroTwilight">csillagászati szürkületig</string>
-    <string name="until_civilTwilight">civil szürkületig</string>
-    <string name="until_nauticalTwilight">hajózási szürkületig</string>
+    <string name="until_civilTwilight">polgári szürkületig</string>
+    <string name="until_nauticalTwilight">navigációs szürkületig</string>
     <string name="until_sunrise">napkeltéig</string>
     <string name="until_noon">nap zenitjéig</string>
     <string name="until_sunset">napnyugtáig</string>
-    <string name="untilEnd_civilTwilight">civil szürkület végéig</string>
-    <string name="untilEnd_nauticalTwilight">hajózási szürkület végéig</string>
+    <string name="untilEnd_civilTwilight">polgári szürkület végéig</string>
+    <string name="untilEnd_nauticalTwilight">navigációs szürkület végéig</string>
     <string name="untilEnd_astroTwilight">csillagászati szürkület végéig</string>
-    <string name="until_goldhour">golden hour</string> <!-- TODO -->
-    <string name="untilEnd_goldhour">golden hour</string> <!-- TODO -->
-    <string name="until_bluehour">blue hour</string> <!-- TODO -->
-    <string name="untilEnd_bluehour">blue hour</string> <!-- TODO -->
-    <string name="until_moonrise">moonrise</string> <!-- TODO -->
-    <string name="until_moonset">moonset</string>  <!-- TODO -->
-    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
-    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
+    <string name="until_goldhour">arany óráig</string>
+    <string name="untilEnd_goldhour">arany óra végéig</string>
+    <string name="until_bluehour">kék óráig</string>
+    <string name="untilEnd_bluehour">kék óra végéig</string>
+    <string name="until_moonrise">holdkeltéig</string>
+    <string name="until_moonset">holdnyugtáig</string>
+    <string name="until_moonnoon">holdbéli délig</string>
+    <string name="until_moonnight">holdbéli éjfélig</string>
 
     <!-- Table -->
     <string name="sunrise">Napkelte</string>                             <!-- contentDescription -->
     <string name="sunrise_short">Napkelte</string>                          <!-- table title -->
     <string name="sunset">Napnyugta</string>                               <!-- contentDescription -->
     <string name="sunset_short">Napnyugta</string>                            <!-- table title -->
-    <string name="moonrise">Moonrise</string>                             <!-- contentDescription -->  <!-- TODO -->
-    <string name="moonrise_short">Moonrise</string>                             <!-- table title -->  <!-- TODO -->
-    <string name="moonset">Moonset</string>                             <!-- contentDescription -->  <!-- TODO -->
-    <string name="moonset_short">Moonset</string>                             <!-- table title -->  <!-- TODO -->
-
+    <string name="moonrise">Holdkelte</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">Holdkelte</string>                             <!-- table title -->
+    <string name="moonset">Holdnyugta</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Holdnyugta</string>                             <!-- table title -->
+    
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">év</string>    <!-- e.g. 1y -->
-    <string name="delta_weeks">w</string>    <!-- e.g. 2w -->  <!-- TODO -->
+    <string name="delta_weeks">hét</string>    <!-- e.g. 2w -->
     <string name="delta_days">nap</string>     <!-- e.g. 1d -->
     <string name="delta_hours">óra</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">perc</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">mp</string>  <!-- e.g. 4s -->
 
-    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  from now</string>  <!-- e.g. 15d 23h from now -->  <!-- TODO -->
-    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  ago</string>         <!-- e.g. 1y 15d 12h ago -->  <!-- TODO -->
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  múlva</string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  óta</string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">nem megjeleníthető</string>  <!-- no time / time does not occur -->
@@ -190,36 +190,36 @@
     <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
-    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+    <string name="lengthUnits_metric">Metrikus</string>
+    <string name="lengthUnits_imperial">Angolszász</string>
 
-    <string name="units_feet">feet</string>   <!-- TODO -->
-    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <string name="units_feet">láb</string>
+    <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
-        <item quantity="one">%s foot</item>
-        <item quantity="other">%s feet</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%s láb</item>
+        <item quantity="other">%s láb</item>
+    </plurals>
 
-    <string name="units_miles">miles</string>    <!-- TODO -->
-    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <string name="units_miles">mérföld</string>
+    <string name="units_miles_short">mi</string>
     <plurals name="units_miles_long">
-        <item quantity="one">%s mile</item>
-        <item quantity="other">%s miles</item>
-    </plurals>                                     <!-- TODO -->
+        <item quantity="one">%s mérföld</item>
+        <item quantity="other">%s mérföld</item>
+    </plurals>
 
-    <string name="units_meters">meters</string>  <!-- TODO -->
-    <string name="units_meters_short">m</string>  <!-- TODO -->
+    <string name="units_meters">méter</string>
+    <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
-        <item quantity="one">%s meter</item>
-        <item quantity="other">%s meters</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%s méter</item>
+        <item quantity="other">%s méter</item>
+    </plurals>
 
-    <string name="units_kilometers">kilometers</string>    <!-- TODO -->
-    <string name="units_kilometers_short">km</string>    <!-- TODO -->
+    <string name="units_kilometers">kilóméter</string>
+    <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
-        <item quantity="one">%s kilometer</item>
-        <item quantity="other">%s kilometers</item>
-    </plurals>                                            <!-- TODO -->
+        <item quantity="one">%s kilóméter</item>
+        <item quantity="other">%s kilóméter</item>
+    </plurals>
 
     <!--
          WIDGET CONFIG
