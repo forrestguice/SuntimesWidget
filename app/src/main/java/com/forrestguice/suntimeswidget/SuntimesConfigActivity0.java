@@ -2933,7 +2933,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     @Override
     public void finish() {
-        finishAndRemoveTask();
+        if (Build.VERSION.SDK_INT >= 21) {
+            finishAndRemoveTask();
+        } else {
+            super.finish();
+        }
     }
 
 }
