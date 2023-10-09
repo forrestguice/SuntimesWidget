@@ -263,6 +263,7 @@ public class LocationConfigView extends LinearLayout
             getFixHelper.cancelGetFix();
         }
 
+        LocationViewMode previousMode = this.mode;
         this.mode = mode;
         switch (mode)
         {
@@ -367,6 +368,11 @@ public class LocationConfigView extends LinearLayout
                 button_save.setVisibility(View.GONE);
                 button_cancel.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
+
+                if (previousMode == LocationViewMode.MODE_AUTO) {
+                    text_locationName.setText(myParent.getString(R.string.gps_lastfix_title_cached));
+                    populateLocationList();
+                }
                 break;
         }
         if (viewListener != null) {
