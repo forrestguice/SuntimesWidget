@@ -773,7 +773,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
         customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId, (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE ? SLOT_CUSTOM0 : ""));
-        WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+        String tzID = (getTimeZoneMode() == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE ? TimeZone.getDefault().getID() : customTimezoneID);
+        WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, tzID);
 
         WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
         spinner_solartime.setSelection(solartimeMode.ordinal());
@@ -917,7 +918,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             super.onFinished(result);
             spinner_timezone_adapter = result;
             spinner_timezone.setAdapter(spinner_timezone_adapter);
-            WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+            String tzID = (getTimeZoneMode() == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE ? TimeZone.getDefault().getID() : customTimezoneID);
+            WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, tzID);
             btn_accept.setEnabled(validateInput());
             progress_timezone.setVisibility(View.GONE);
             startUpdateTask();
