@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+<LinearLayout
+    android:background="?attr/dialogBackgroundAlt"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/appwidget_location_name_layout"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="top">
+
+        <LinearLayout android:id="@+id/appwidget_location_controlPanel0"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="top">
+
+            <ImageButton android:id="@+id/cancel_button" style="@style/ActionButton"
+                android:layout_width="wrap_content" android:layout_height="48dp"
+                android:src="?attr/icActionBack"
+                android:contentDescription="@string/dialog_cancel" />
+
+        </LinearLayout>
+
+        <EditText android:id="@+id/appwidget_location_name"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+            android:hint="@string/configHint_location_name0" android:inputType="text"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:layout_gravity="center_vertical" />
+
+        <LinearLayout android:id="@+id/appwidget_location_controlPanel1"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="top">
+
+            <ImageButton android:id="@+id/save_button" style="@style/ActionButton"
+                android:layout_width="wrap_content" android:layout_height="48dp"
+                android:src="?attr/icActionSave"
+                android:contentDescription="@string/configAction_savePlace" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_view_place" />
+
+            <View
+                android:id="@+id/appwidget_location_latlon_overlay"
+                android:layout_width="50dp" android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:layout_alignLeft="@id/appwidget_location_latlon" android:layout_alignStart="@id/appwidget_location_latlon"
+                android:layout_alignRight="@id/appwidget_location_latlon" android:layout_alignEnd="@id/appwidget_location_latlon"
+                android:layout_alignBottom="@id/appwidget_location_latlon"
+                android:layout_alignTop="@id/appwidget_location_latlon"/>
+
+        </RelativeLayout>
+
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" android:layout_gravity="top">
+
+            <ViewFlipper android:id="@+id/view_flip2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <FrameLayout android:id="@+id/getFixProgress"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+                    <ImageButton android:id="@+id/appwidget_location_getfix"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:src="?attr/icActionGPS_searching"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/configAction_getFix" />
+
+                    <ProgressBar
+                        android:id="@+id/appwidget_location_getfixprogress"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+
+                <LinearLayout android:id="@+id/getFixProgress_gone"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+            </ViewFlipper>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>
