@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="welcomeIcon_size">64dp</dimen>
+    <dimen name="welcomeIndicator_size">24px</dimen>
+    <dimen name="welcomeActivity_margin">4dp</dimen>
+</resources>

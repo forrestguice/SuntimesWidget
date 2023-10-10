@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="128dp" android:layout_height="128dp" android:layout_margin="8dp"
+            android:layout_width="@dimen/welcomeIcon_size" android:layout_height="@dimen/welcomeIcon_size" android:layout_margin="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_place_128dp" android:tint="?attr/colorControlHighlight"
             tools:ignore="ContentDescription" />
@@ -29,75 +29,6 @@
 
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/content_layout"
-        android:orientation="vertical" android:gravity="center"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon_layout"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout android:orientation="vertical" android:layout_gravity="end"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
-            android:layout_marginBottom="32dp">
-
-            <FrameLayout
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:animateLayoutChanges="true">
-
-                <Button android:id="@+id/button_build_places" android:visibility="visible"
-                    android:layout_height="wrap_content" android:layout_width="wrap_content"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_gravity="end"
-                    android:text="@string/configLabel_places_build" />
-
-                <ProgressBar android:id="@+id/progress_build_places" android:visibility="invisible"
-                    android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_gravity="center" />
-
-            </FrameLayout>
-
-            <Button android:id="@+id/button_lookup_location" android:visibility="visible"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_gravity="end"
-                android:text="@string/configAction_getFix" />
-
-            <Button android:id="@+id/button_import_places" android:visibility="visible"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_gravity="end" android:text="@string/configAction_importAlarms" />
-
-
-        </LinearLayout>
-
-        <View android:layout_width="match_parent" style="@style/SunsetTimeHorizontalRule"
-            android:layout_marginLeft="16dp" android:layout_marginRight="16dp" />
-
-        <fragment
-            android:layout_height="wrap_content" android:layout_width="match_parent"
-            app:hideHeader="true" app:hideFooter="true" app:hideTitle="true" app:hideMode="true"
-            app:collapse="true" app:showAddButton="true"
-            android:name="com.forrestguice.suntimeswidget.LocationConfigDialog"
-            android:tag="LocationConfigDialog" />
-
-        <LinearLayout android:id="@+id/layout_permissions"
-            android:orientation="vertical"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp" android:layout_marginRight="16dp">
-
-            <View android:layout_width="match_parent" style="@style/SunsetTimeHorizontalRule" />
-
-            <TextView
-                android:id="@+id/text0"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:gravity="start" android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
-                android:text="@string/privacy_permission_location" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <include layout="@layout/layout_welcome_location_content" />
 
 </android.support.constraint.ConstraintLayout>

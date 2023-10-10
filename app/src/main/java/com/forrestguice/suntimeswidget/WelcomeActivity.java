@@ -234,7 +234,7 @@ public class WelcomeActivity extends AppCompatActivity
         for (int i=0; i<indicators.length; i++)
         {
             indicators[i] = new TextView(this);
-            indicators[i].setTextSize(36);
+            indicators[i].setTextSize(getResources().getDimensionPixelSize(R.dimen.welcomeIndicator_size));
             indicators[i].setTextColor((i == position) ? activeColor : inactiveColor);
             indicators[i].setText("\u2022");
         }

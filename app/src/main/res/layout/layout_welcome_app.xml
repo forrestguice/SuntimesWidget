@@ -14,7 +14,9 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="128dp" android:layout_height="128dp" android:layout_margin="8dp"
+            android:layout_width="@dimen/welcomeIcon_size" android:layout_height="@dimen/welcomeIcon_size"
+            android:layout_marginTop="16dp" android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_action_suntimes_huge"
             tools:ignore="ContentDescription" />
