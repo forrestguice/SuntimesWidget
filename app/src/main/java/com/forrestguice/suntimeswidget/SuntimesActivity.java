@@ -1131,7 +1131,8 @@ public class SuntimesActivity extends AppCompatActivity
                 if (mapItem != null)
                 {
                     boolean showMapButton = AppSettings.loadShowMapButtonPref(this);
-                    int showAsAction = (showMapButton ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER);
+                    boolean hideItems = getResources().getBoolean(R.bool.is_watch);
+                    int showAsAction = (showMapButton ? (hideItems ? MenuItem.SHOW_AS_ACTION_NEVER : MenuItem.SHOW_AS_ACTION_IF_ROOM) : MenuItem.SHOW_AS_ACTION_NEVER);
                     mapItem.setShowAsAction(showAsAction);
                 }
             }
