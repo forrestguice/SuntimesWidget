@@ -1172,6 +1172,12 @@
         <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
+    <style name="AboutToolbarStyle">
+        <item name="android:visibility">visible</item>
+    </style>
+    <style name="AboutTabStyle">
+        <item name="android:visibility">visible</item>
+    </style>
 
     <style name="WelcomeTextSizeGroup">
         <item name="android:orientation">horizontal</item>
@@ -1179,4 +1185,5 @@
         <item name="android:layout_marginEnd">32dp</item>
         <item name="android:layout_marginBottom">24dp</item>
     </style>
+
 </resources>
