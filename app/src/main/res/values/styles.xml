@@ -1186,4 +1186,8 @@
         <item name="android:layout_marginBottom">24dp</item>
     </style>
 
+    <style name="DialogTitleStyle" parent="TableHeadTextView0">        <!-- rise/set header text -->
+        <item name="android:textSize">?attr/text_size_large</item>
+    </style>
+
 </resources>

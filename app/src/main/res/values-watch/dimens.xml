@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="activity_margin">2dp</dimen>
+    <dimen name="dialog_margin">2dp</dimen>
     <dimen name="aboutIcon_size">64dp</dimen>
     <dimen name="welcomeIcon_size">64dp</dimen>
     <dimen name="welcomeIndicator_size">24px</dimen>
