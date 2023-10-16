@@ -14,20 +14,20 @@
     -->
     <string name="configAction_refreshLocation">Frissít</string>
     <string name="configAction_addLocation">Hely</string>
-    <string name="configAction_mapLocation">Mutasd térképen</string>
+    <string name="configAction_mapLocation">Térkép megnyitása</string>
     <string name="configAction_mapLocation_chooser">Hely megtekintése a következővel</string>
     <string name="configAction_mapLocation_noapp">A térképalkalmazás nem található.</string>
     <string name="configAction_showCalendar">Naptár</string>
     <string name="configAction_setAlarm">Emlékeztető beállítása</string>
     <string name="configAction_setTimeZone">Időzóna beállítása</string>
     <string name="configAction_setDate">Dátum beállítása</string>
-    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
-    <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
+    <string name="configAction_viewDate">Dátum átállítása</string>
+    <string name="configAction_viewDateWith">Dátum átállítása</string>
     <string name="configAction_share">Megosztás</string>
-    <string name="configAction_export">Exportálása</string>
+    <string name="configAction_export">Exportálás</string>
     <string name="configAction_import">Importálás</string>
     <string name="configAction_sunDialog">Nap helyzete</string>
-    <string name="configAction_equinoxDialog">Napforduló / N-É egyenlőség</string>
+    <string name="configAction_equinoxDialog">Napford. / N-É egyenl.</string>
     <string name="configAction_worldMap">Világtérkép</string>
     <string name="configAction_lineGraph">Magasság</string>
     <string name="configAction_seekAltitude">Magasság beállítása</string>        <!-- checkbox label -->
@@ -491,9 +491,9 @@
     <string name="configHint_location_name0">Helységnév</string>                  <!-- edittext hint --> 
     <string name="configLabel_location_fromapp">Használja az alkalmazás tartózkodási helyét</string>                  <!-- checkbox text -->
 
-    <string name="configAction_getFix">Mutasd a helyet</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Szerkeszt</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Ment</string>         <!-- button (contentDescription) -->
+    <string name="configAction_getFix">Hely mutatása</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">Szerkesztés</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">Mentés</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
     <string name="timezoneMode_standard">Időrendszer</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
@@ -567,62 +567,62 @@
     <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label --> <!-- TODO -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_id">Azonosító:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_launch">Kategória:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
+    <string name="configLabel_action_launch_package">Csomag:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_package" />               <!-- edittext label -->
-    <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_action_launch_action">Action:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_action">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_data">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configHint_action_launch_title">Művelet neve</string>                 <!-- edittext hint -->
+    <string name="configHint_action_launch_desc">Rövid leírás</string>                 <!-- edittext hint -->
+    <string name="configLabel_action_launch_type">Típus:</string>                 <!-- spinner label -->
+    <string name="configLabel_action_launch_action">Művelet:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_action">&lt;nincs&gt;</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_data">Adat:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_data">&lt;nincs&gt;</string> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_datatype">szöveg</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_extras">Extrák:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
     <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
     <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
-    <string name="configLabel_action_item_none">No Action</string>  <!-- TODO -->
+    <string name="configLabel_action_item_none">Nincs művelet</string>
 
-    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
-    <string name="addaction_error_title">Display string must not be empty.</string>  <!-- TODO -->
-    <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string> <!-- TODO -->
+    <string name="addaction_custname">egyéni<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_custtitle">Egyéni művelet <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_error_id">Az azonosító mező nem lehet üres (és nem tartalmazhat szóközöket).</string>
+    <string name="addaction_error_title">A név mező nem lehet üres.</string>
+    <string name="addaction_error_exists">Ez az azonosító már foglalt. Ez a művelet felül lesz írva.</string>
 
-    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
-    <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
-    <string name="delaction_dialog_ok">Törlése</string>
-    <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg">Biztos hogy törölni akarod ezt? %1$s (%2$s)?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg1">Beépített műveletek nem törölhetők.\n\nVisszaállítás alapértelmezettre?</string>
+    <string name="delaction_dialog_ok">Törlés</string>
+    <string name="delaction_dialog_ok1">Visszaállítás</string>
     <string name="delaction_dialog_cancel">Mégse</string>
 
-    <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
-    <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
+    <string name="clearactions_dialog_msg">Biztos hogy visszaállítod a műveleteket alapértelmezettre?\n\nMinden egyéni művelet törlésre kerül.</string>
+    <string name="clearactions_dialog_ok">Törlés</string>
     <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
-    <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
+    <string name="clearactions_toast">Műveletek visszaállítva alapértelmezettre.</string>
 
-    <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
-    <string name="saveaction_dialog_ok">Save</string>    <!-- TODO -->
+    <string name="saveaction_dialog_title">Művelet hozzáadása</string>
+    <string name="saveaction_dialog_ok">Mentés</string>
     <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
-    <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
-    <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
+    <string name="saveaction_dialog_suggest">Ajánlás</string>
+    <string name="saveaction_toast">Művelet elmentve: \"%1$s\" (%2$s).</string>
+    
+    <string name="loadaction_dialog_title">Műveletek</string>
+    <string name="loadaction_toast">Művelet betöltve: \"%1$s\".</string>
 
-    <string name="loadaction_dialog_title">Actions</string>    <!-- TODO -->
-    <string name="loadaction_toast">Loaded action \"%1$s\".</string>    <!-- TODO -->
+    <string name="startaction_failed_toast">Nem sikerült elindítani ezt: %s!</string>         <!-- error toast -->
 
-    <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->  <!-- TODO -->
-
-    <string name="configAction_addAction">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_editAction">Szerkeszt</string>           <!-- button (contentDescription) -->
-    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_saveAction">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteAction">Törlése</string>         <!-- button (contentDescription) -->
-    <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addAction">Hozzáadás</string>           <!-- button (contentDescription) -->
+    <string name="configAction_editAction">Szerkesztés</string>           <!-- button (contentDescription) -->
+    <string name="configAction_testAction">Kipróbálás</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAction">Mentés</string>         <!-- button (contentDescription) -->
+    <string name="configAction_loadAction">Betöltés</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteAction">Törlés</string>         <!-- button (contentDescription) -->
+    <string name="configAction_clearActions">Visszaállítás</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
     <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
@@ -639,123 +639,123 @@
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
-    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) --> <!-- TODO -->
+    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (másolat)</string>                            <!-- copied theme name (display string) -->
 
-    <string name="addtheme_toast_success">Added <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->  <!-- TODO -->
-    <string name="edittheme_toast_success">Saved <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->  <!-- TODO -->
-    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->  <!-- TODO -->
+    <string name="addtheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> hozzáadva.</string>          <!-- toast msg -->
+    <string name="edittheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> mentve.</string>         <!-- toast msg -->
+    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> törölve.</string> <!-- toast msg -->
 
-    <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->  <!-- TODO -->
-    <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->  <!-- TODO -->
-    <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->  <!-- TODO -->
-    <string name="edittheme_error_textsize_min">Size must be an integer &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) --> <!-- TODO -->
-    <string name="edittheme_error_textsize_max">Size must be an integer &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->  <!-- TODO -->
-    <string name="edittheme_flag_default">default</string>  <!-- content description -->  <!-- TODO -->
+    <string name="edittheme_error_themeName_empty">Az azonosítónak egyedinek kell lennie (kötelező).</string>        <!-- error hint (themeName empty) -->
+    <string name="edittheme_error_themeName_unique">Az azonosítónak egyedinek kell lennie (már foglalt).</string>  <!-- error hint (themeName taken) -->
+    <string name="edittheme_error_displaytext">A név mező nem lehet üres.</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_textsize_min">A méretnek &gt;= <xliff:g id="minSize">%1$s</xliff:g> kell lennie.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">A méretnek &lt;= <xliff:g id="maxSize">%1$s</xliff:g> kell lennie.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">alapértelmezett</string>  <!-- content description -->
 
-    <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title --> <!-- TODO -->
-    <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg --> <!-- TODO -->
-    <string name="deletetheme_dialog_ok">Törlése</string>        <!-- button -->
+    <string name="deletetheme_dialog_title">Téma törlése</string>        <!-- dialog title -->
+    <string name="deletetheme_dialog_message">Biztos benne hogy törli a(z) <xliff:g id="themeName">%1$s</xliff:g> témát?</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_ok">Törlés</string>        <!-- button -->
     <string name="deletetheme_dialog_cancel">Mégse</string>    <!-- button -->
 
-    <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text --> <!-- TODO -->
-    <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->  <!-- TODO -->
-    <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_chooseColor">Choose Color</string> <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configLabel_widgetThemeAdd">Téma hozzáadása</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">Téma szerkesztése</string>   <!-- title text -->
+    <string name="configAction_saveTheme">Mentés</string>           <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">Szín választása</string> <!-- button (contentDescription) -->
 
-    <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->  <!-- TODO -->
-    <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->  <!-- TODO -->
-    <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background --> <!-- TODO -->
-    <string name="configLabel_themeBackground_color">Color</string>      <!-- custom background -->  <!-- TODO -->
-    <string name="configLabel_themeColorBackground">Color:</string>      <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeBackgroundId">Alap:</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackground_light">Világos</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">Sötét</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_trans">Átlátszó</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">Egyéni szín</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Szín:</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Title</string>     <!-- color label -->  <!-- TODO -->
-    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->  <!-- TODO -->
+    <string name="configLabel_themeColorTitle">Cím</string>     <!-- color label -->
+    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Text</string>       <!-- color label -->  <!-- TODO -->
-    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->  <!-- TODO -->
+    <string name="configLabel_themeColorText">Szöveg</string>       <!-- color label -->
+    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Spring Color</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorSummer">Summer Color</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorFall">Fall Color</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorWinter">Winter Color</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorSpring">Tavasz színe</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Nyár színe</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Ősz színe</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Tél színe</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorAccent">Kiemelés</string> <!-- color label -->
+    <string name="configLabel_themeColorAction">Művelet</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->          <!-- TODO -->
-    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMapBackground">Víz</string> <!-- color label -->
+    <string name="configLabel_themeColorMapForeground">Szárazföld</string> <!-- color label -->
+    <string name="configLabel_themeColorMapSunShadow">Árnyék</string> <!-- color label -->
+    <string name="configLabel_themeColorMapMoonHighlight">Kiemelés</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Moonrise</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorMoonset">Moonset</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorMoonWaxing">Waxing</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonWaning">Waning</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonFull">Full</string> <!-- color label --> <!-- TODO -->
-    <string name="configLabel_themeColorMoonNew">New</string> <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorMoonrise">Holdkelte</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Holdnyugta</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Növekvő</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Fogyó</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Teli</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Új</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Sunrise</string> <!-- color label -->  <!-- TODO -->
-    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->  <!-- TODO -->
+    <string name="configLabel_themeColorSunrise">Napkelte</string> <!-- color label -->
+    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Sunset</string>   <!-- color label -->  <!-- TODO -->
-    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->  <!-- TODO -->
+    <string name="configLabel_themeColorSunset">Napnyugta</string>   <!-- color label -->
+    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Noon</string>      <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorNoon">Dél</string>      <!-- color label -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Fill</string>         <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorFill">Kitöltés</string>         <!-- color label --> 
     <!--<string name="configHint_themeColorFill">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Border</string>         <!-- color label --> <!-- TODO -->
+    <string name="configLabel_themeColorBorder">Körvonal</string>         <!-- color label -->
     <!--<string name="configHint_themeColorBorder">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Border Width (rise/set):</string>  <!-- size label --> <!-- TODO -->
+    <string name="configLabel_themeBorderWidthRiseSet">Körvonal vastagsága (kelte/nyugta):</string>  <!-- size label -->
     <!--<string name="configHint_themeBorderWidthRiseSet">2</string>-->                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">Border Width (noon):</string>         <!-- size label --> <!-- TODO -->
+    <string name="configLabel_themeBorderWidthNoon">Körvonal vastagsága (dél):</string>         <!-- size label -->
     <!--<string name="configHint_themeBorderWidthNoon">3</string>-->
 
-    <string name="configLabel_themeColorSuffix">Suffix Color</string>   <!-- color label --> <!-- TODO -->
-    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint --> <!-- TODO -->
+    <string name="configLabel_themeColorSuffix">Utótag színe</string>   <!-- color label -->
+    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint --> 
 
-    <string name="configLabel_themeColorTime">Text Color2</string>      <!-- color label --> <!-- TODO -->
-    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint --> <!-- TODO -->
+    <string name="configLabel_themeColorTime">Szöveg2 színe</string>      <!-- color label -->
+    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeSizeTitle">Név mérete:</string>  <!-- edit label -->
+    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint --> 
 
-    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_themeBoldTitle">Félkövér</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeText">Text Size:</string>    <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeSizeText">Szöveg mérete:</string>    <!-- edit label --> 
+    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint --> 
 
-    <string name="configLabel_themeSizeTime">Time Size:</string>    <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeSizeTime">Idő mérete:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_themeBoldTime">Félkövér</string>          <!-- checkbox label -->
+    
+    <string name="configLabel_themeSizeSuffix">Utótag mérete:</string> <!-- edit label --> 
+    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themePadding">Belső margó:</string>            <!-- edit label -->
+    <string name="configHint_themePadding">[balra, fent, jobbra, lent]</string> <!-- edit hint -->
 
-    <string name="configLabel_themePadding">Padding:</string>            <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeID">Azonosító:</string>                      <!-- edit label -->
+    <string name="configHint_themeID">A téma azonosítója</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeID">ID:</string>                      <!-- edit label --> <!-- TODO -->
-    <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint --> <!-- TODO -->
+    <string name="configLabel_themeName">Cím:</string>               <!-- edit label -->
+    <string name="configHint_themeName">A téma címe</string>                   <!-- edit hint -->
 
-    <string name="configLabel_themeName">Display:</string>               <!-- edit label -->  <!-- TODO -->
-    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->  <!-- TODO -->
+    <string name="widgetLabel_azimuth">Azimut</string>                   <!-- label --> 
+    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">Magasság</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">Mag</string>               <!-- label -->
 
-    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->  <!-- TODO -->
-
-    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->  <!-- TODO -->
-    <string name="widgetLabel_distance">Distance</string>           <!-- label -->    <!-- TODO -->
+    <string name="widgetLabel_rightAscension">Rektaszcenzió</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">rekta</string>    <!-- label -->
+    <string name="widgetLabel_declination">Deklináció</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">Dek</string>           <!-- label --> 
+    <string name="widgetLabel_distance">Távolság</string>           <!-- label -->
 
 
     <!--
@@ -771,58 +771,58 @@
     <string name="eventalias_title_tag_rising" >↑</string>
     <string name="eventalias_title_tag_setting">↓</string>
 
-    <string name="sunevent_title">Sun</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
+    <string name="sunevent_title">Nap</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
     <string name="sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
     <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> at <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
-    <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="sunevent_phrase_gender">egyéb</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
-    <string name="configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
-    <string name="configLabel_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
+    <string name="configLabel_manageEvents">Események kezelése</string>  <!-- settings activity / pref --> 
+    <string name="configLabel_manageEvents_summary">Egyéni események hozzáadása és törlése.</string> 
     <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>    <!-- TODO -->
 
-    <string name="configAction_manageEvents">Custom Events</string>   <!-- TODO -->
-    <string name="configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_manageEvents">Egyéni események</string>
+    <string name="configAction_selectEvent">Kiválasztás</string>           <!-- button (contentDescription) --> 
+    <string name="configAction_addEvent">Hozzáadás</string>           <!-- button (contentDescription) -->
+    <string name="configAction_editEvent">Szerkesztés</string>           <!-- button (contentDescription) -->
+    <string name="configAction_saveEvent">Mentés</string>           <!-- button (contentDescription) -->  
+    <string name="configAction_deleteEvent">Törlés</string>           <!-- button (contentDescription) --> 
+    <string name="configAction_clearEvents">Minden törlése</string>           <!-- button (contentDescription) -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
-    <string name="importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
+    <string name="importevents_toast_success"><xliff:g id="eventPlural">%s</xliff:g> importálva.</string> <!-- toast msg -->
     <plurals name="eventPlural">
-        <item quantity="one">%d event</item>
-        <item quantity="other">%d events</item>
-    </plurals>   <!-- TODO -->
+        <item quantity="one">%d esemény</item>
+        <item quantity="other">%d események</item>
+    </plurals>
 
-    <string name="editevent_dialog_id_label">ID</string>    <!-- TODO -->
-    <string name="editevent_dialog_id_hint">Event ID</string>    <!-- TODO -->
+    <string name="editevent_dialog_id_label">Azonosító</string>
+    <string name="editevent_dialog_id_hint">Az esemény azonosítója</string>  
     <string name="editevent_dialog_id_error">@string/addaction_error_id</string>    <!-- TODO -->
-    <string name="editevent_dialog_uri_hint">Event Uri</string>    <!-- TODO -->
-    <string name="editevent_dialog_showevent">Display this event within the app.</string>
-    <string name="editevent_dialog_showevent_off">This event will no longer be displayed.</string>    <!-- TODO -->
+    <string name="editevent_dialog_uri_hint">Esemény Uri</string>
+    <string name="editevent_dialog_showevent">Az esemény mutatva lesz az alkalmazásban.</string>
+    <string name="editevent_dialog_showevent_off">Az esemény nem lesz mutatva az alkalmazásban.</string>
 
-    <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title --> <!-- TODO -->
-    <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title --> <!-- TODO -->
-    <string name="editevent_dialog_label_label">Label</string>    <!-- TODO -->
-    <string name="editevent_dialog_label_hint">Event Label</string>    <!-- TODO -->
+    <string name="editevent_dialog_title">Esemény</string>    <!-- 'add event' title --> 
+    <string name="editevent_dialog_title1">Esemény</string>    <!-- 'edit event' title -->
+    <string name="editevent_dialog_label_label">Név</string>   
+    <string name="editevent_dialog_label_hint">Az esemény neve</string>    
     <string name="editevent_dialog_label_error">@string/addaction_error_title</string>    <!-- TODO -->
-    <string name="editevent_dialog_label_suggested">Custom Angle</string>    <!-- TODO -->
+    <string name="editevent_dialog_label_suggested">Egyéni szög</string>
+    
+    <string name="editevent_dialog_angle">Szög</string> 
+    <string name="editevent_dialog_angle_hint">-6</string>   
+    <string name="editevent_dialog_angle_suffix">°</string>    
+    <string name="editevent_dialog_angle_error">A szög megadása kötelező!</string>
 
-    <string name="editevent_dialog_angle">Angle</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_hint">-6</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_suffix">°</string>    <!-- TODO -->
-    <string name="editevent_dialog_angle_error">Angle is required!</string>    <!-- TODO -->
-
-    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may no longer work and should be reassigned.</string>    <!-- TODO -->
-    <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
+    <string name="delevent_dialog_msg">Biztos benne, hogy törölni szeretné a(z) %1$s (%2$s) eseményt?\n\nElőfordulhat, hogy az eseményt használó riasztások, értesítések vagy modulok már nem fognak működni, ezért újból hozzá kell adni őket.</string>
+    <string name="delevent_dialog_ok">Törlés</string>
     <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAlarms, notifications, or widgets using these events may no longer work and should be reassigned.</string>   <!-- TODO -->
-    <string name="clearevents_dialog_ok">Clear</string>   <!-- TODO -->
+    <string name="clearevents_dialog_msg">Biztos benne, hogy törölni szeretné az egyéni eseményeket?\n\nElőfordulhat, hogy az eseményt használó riasztások, értesítések vagy modulok már nem fognak működni, ezért újból hozzá kell adni őket.</string>
+    <string name="clearevents_dialog_ok">Törlés</string>
     <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
-    <string name="clearevents_toast">Custom events cleared.</string>   <!-- TODO -->
+    <string name="clearevents_toast">Egyéni események törölve.</string>
 
 
     <!--
