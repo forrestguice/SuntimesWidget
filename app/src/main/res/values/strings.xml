@@ -2017,8 +2017,9 @@
     <string name="gps_dialog_cancel">No</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Set Position</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_set">Configured Position</string>               <!-- may appear as place name when location set by intent -->   <!-- TODO: changed from "Set Position" to "Configured Position" -->
     <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by lookup -->
+    <string name="gps_lastfix_title_cached">Previous Position</string>            <!-- TODO -->
     <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while lookup in progress -->
     <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after failing to get a location -->
     <string name="gps_lastfix_toast_cancelled">Location update cancelled.</string> <!-- displayed briefly when location refresh cancelled -->
