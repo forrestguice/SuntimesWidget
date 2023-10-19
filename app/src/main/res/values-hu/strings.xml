@@ -12,7 +12,7 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">Frissít</string>
+    <string name="configAction_refreshLocation">Frissítés</string>
     <string name="configAction_addLocation">Hely</string>
     <string name="configAction_mapLocation">Térkép megnyitása</string>
     <string name="configAction_mapLocation_chooser">Hely megtekintése a következővel</string>
@@ -37,9 +37,9 @@
     <string name="configAction_help">Segítség</string>
     <string name="configAction_onlineHelp">Online segítség</string>
     <string name="configAction_overflow">Több</string>
-    <string name="configAction_options">Testreszabás</string>   <!-- TODO -->
+    <string name="configAction_options">Testreszabás</string>
     <string name="configAction_settings">Beállítások</string>
-    <string name="configAction_aboutWidget">Rólunk</string>
+    <string name="configAction_aboutWidget">Névjegy</string>
 
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
@@ -50,16 +50,16 @@
     <string name="prevYear">Előző év</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->  <!-- TODO -->
+    <string name="spanTag_warning">Figyelmeztetés!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Lehetséges, hogy az időzóna nem megfelelő ehhez a helyhez.</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%s</xliff:g>).</string>  <!-- TODO -->
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> <xliff:g id="timeSpan">%s</xliff:g> eltér a helyi középidőtől (<xliff:g id="locationName">%s</xliff:g>).</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Nyári időszámítás</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> idő egyenlete</string>  <!-- timezone dialog label -->  <!-- TODO -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -129,13 +129,13 @@
         <item quantity="other">%1$s after</item>
     </plurals>  <!-- TODO -->
 
-    <string name="offset_before_msg">%1$s before %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO -->
-    <string name="offset_after_msg">%1$s after %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO -->
+    <string name="offset_before_msg">%1$s %2$s előtt</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->  
+    <string name="offset_after_msg">%1$s %2$s után</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->  
     <string name="offset_before_msg1">{0} before {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO -->
     <string name="offset_after_msg1">{0} after {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO -->
 
-    <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) -->  <!-- TODO -->
-    <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
+    <string name="offset_button_before">előtte</string>    <!-- button label; [1h] [5m] [before] (-) --> 
+    <string name="offset_button_after">utána</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
@@ -155,8 +155,8 @@
     <string name="untilEnd_bluehour">kék óra végéig</string>
     <string name="until_moonrise">holdkeltéig</string>
     <string name="until_moonset">holdnyugtáig</string>
-    <string name="until_moonnoon">holdbéli délig</string>
-    <string name="until_moonnight">holdbéli éjfélig</string>
+    <string name="until_moonnoon">holdi délig</string>
+    <string name="until_moonnight">holdi éjfélig</string>
 
     <!-- Table -->
     <string name="sunrise">Napkelte</string>                             <!-- contentDescription -->
@@ -227,8 +227,8 @@
 
     <string name="configAction_restoreDefaults">Visszaállítás alapértelmezettre</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
-    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
+    <string name="configLabel_tagDefault">[alapértelmezett]</string>               
+    <string name="configLabel_tagPlugin">[bővítmény]</string>              
     <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
@@ -236,13 +236,13 @@
     <string name="configAction_reconfigWidget_short">Újrakonfigurálás</string>       <!-- Button: Reconfigure -->
     <string name="configAction_reconfigWidget">Widget újrakonfigurálása</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->      <!-- TODO -->
-    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->  <!-- TODO -->
+    <string name="configLabel_title1">Fordítható Widget</string>                 <!-- used as title when adding --> 
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->  <!-- TODO -->
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding --> <!-- TODO -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Általános</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
+    <string name="configLabel_general">Általános</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Nap adatforrás</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Hold adatforrás</string>         <!-- preference label -->
@@ -301,10 +301,10 @@
     </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Megjelenés</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
+    <string name="configLabel_appearance">Megjelenés</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Megjelenés</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Téma:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Elrendezés cseréje a rendelkezésre álló hely kitöltéséhez</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="configLabel_appearance_allowResize">Elrendezés cseréje a rendelkezésre álló hely kitöltéséhez</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleText">Szövegek és ikonok méretezése</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleBase">Egész cella kitöltése</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">Igazítás:</string>  <!-- spinner label -->
@@ -348,14 +348,14 @@
     <string name="timeMode_solstice_winter">Téli napforduló</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Napforduló</string>     <!-- setting --> 
 
-    <string name="timeMode_cross_midwinter">Imbolc (Cross-Quarter)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   <!-- TODO -->
-    <string name="timeMode_cross_midwinter_short">Cross-Quarter</string>       <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midsummer">Lughnasadh (Cross-Quarter)</string>  <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midsummer_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midspring">Beltane (Cross-Quarter)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->   <!-- TODO -->
-    <string name="timeMode_cross_midspring_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midautumnal">Samhain (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midautumnal_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midwinter">Imbolc (keresztnegyed)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   
+    <string name="timeMode_cross_midwinter_short">Keresztnegyed</string>       <!-- setting -->  
+    <string name="timeMode_cross_midsummer">Lughnasadh (keresztnegyed)</string>  <!-- setting -->   
+    <string name="timeMode_cross_midsummer_short">Keresztnegyed</string>     <!-- setting -->   
+    <string name="timeMode_cross_midspring">Beltane (keresztnegyed)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer --> 
+    <string name="timeMode_cross_midspring_short">Keresztnegyed</string>     <!-- setting -->   
+    <string name="timeMode_cross_midautumnal">Samhain (keresztnegyed)</string>    <!-- setting -->   
+    <string name="timeMode_cross_midautumnal_short">Keresztnegyed</string>     <!-- setting -->   
 
     <string name="timeMode_moon">Hold</string>                               <!-- label --> 
     <string name="timeMode_moon_new">Újhold</string>                               <!-- setting --> 
@@ -401,12 +401,12 @@
     <string name="configLabel_general_calendarFormatPattern">Egyéni formátum:</string>          <!-- edittext label -->
     <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint --> 
     <string name="configLabel_general_calendarFormat_custom">Egyéni (%s)</string>       <!-- spinner value -->  
-    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_yyyy">%s [év]</string>       <!-- spinner value -->   
+    <string name="configLabel_general_calendarFormat_MMMM">%s [hónap]</string>       <!-- spinner value -->   
+    <string name="configLabel_general_calendarFormat_EEEE">%s [hét napja]</string>       <!-- spinner value -->  
+    <string name="configLabel_general_calendarFormat_MM">%s [hónap]</string>       <!-- spinner value --> 
+    <string name="configLabel_general_calendarFormat_dd">%s [hónap napja]</string>       <!-- spinner value --> 
+    <string name="configLabel_general_calendarFormat_DD">%s [év napja]</string>       <!-- spinner value -->  
     <string name="configAction_editCalendarFormat">Szerkesztés</string>                        <!-- button (contentDescription) -->  
 
     <!-- Widget Setting: layout mode -->
@@ -416,15 +416,15 @@
     <string name="widgetMode1x1_both_2">Napkelte &amp; napnyugta (2)</string>  <!-- setting -->
     <string name="widgetMode3x1_sunrise_sunset_noon">Napkelte, Napnyugta, &amp; Dél</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Magasság &amp; Azimut</string>     <!-- setting --> 
+    <string name="widgetMode1x1_altaz">Magasság &amp; Tetőpont</string>     <!-- setting --> 
     <string name="widgetMode1x1_decright">Deklináció &amp; Rektaszcenzió</string>     <!-- setting --> 
     <string name="widgetMode1x1_distance">Jelenlegi távolság</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Következő földtávol vagy földközel</string>     <!-- setting --> 
     <string name="widgetMode1x1_moonday">Holdnap</string>     <!-- setting -->
 
-    <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_large">Fénytérkép</string>     <!-- setting --> 
+    <string name="widgetMode3x1_lightmap_medium">Fénytérkép (közepes)</string>     <!-- setting --> 
+    <string name="widgetMode3x1_lightmap_small">Fénytérkép (kicsi)</string>     <!-- setting --> 
 
     <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
     <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
@@ -433,10 +433,10 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">Poláris [Észak]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Poláris [Dél]</string>     <!-- setting --> 
     <string name="widgetMode_sunPosMap_bluemarble">Kék üveggolyó</string>    <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Egyenlőtávú azimutális</string>     <!-- setting -->
 
-    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
-    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
+    <string name="worldmap_projection_equirectangular">Egyenlőtávú négyszögletes</string>
+    <string name="worldmap_projection_equiazimuthal">Egyenlőtávú azimutális</string>  
 
     <string name="widgetMode1x1_moonriseset">Holdkelte &amp; holdnyugta</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Holdfázis &amp; megvilágitás</string>     <!-- setting -->  
@@ -451,16 +451,16 @@
     <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
-    <string name="actionMode_doNothing">Ne tegyen semmit</string>           <!-- setting -->
+    <string name="actionMode_doNothing">Nincs művelet</string>           <!-- setting -->
     <string name="actionMode_update">Widget frissítése</string>           <!-- setting -->
     <string name="actionMode_update_all">Minden widget frissítése</string>           <!-- setting -->
     <string name="actionMode_config">Widget konfigurálása</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Alkalmazás megnyitása</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Nézetek közötti váltás</string>      <!-- setting -->
 
-    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_activity">Tevékenység</string>           <!-- setting --> 
+    <string name="launchType_broadcast">Sugárzás</string>           <!-- setting --> 
+    <string name="launchType_service">Szolgáltatás</string>           <!-- setting -->
 
     <string name="expandMore">Több</string>  <!-- contentDescription --> 
     <string name="expandLess">Kevesebb</string>  <!-- contentDescription --> 
@@ -478,7 +478,7 @@
     <string name="locationMode_current">Jelenlegi (utolsó ismert)</string>  <!-- setting -->
     <string name="locationMode_custom">Felhasználó által megadott</string>           <!-- setting -->
 
-    <string name="configLabel_location">Hely</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
+    <string name="configLabel_location">Hely</string>               <!-- group title -->
     <string name="configLabel_location_mode">Mód:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Szélesség:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">decimális fok</string>      <!-- edittext hint -->
@@ -496,7 +496,7 @@
     <string name="configAction_savePlace">Mentés</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Időrendszer</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="timezoneMode_standard">Időrendszer</string>                       <!-- setting -->
     <string name="timezoneMode_current">Zónaidő</string>               <!-- setting -->
     <string name="timezoneMode_custom">Felhasználó által megadott</string>                    <!-- setting -->
 
@@ -509,10 +509,10 @@
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="configAction_suggestTimeZone">Időzóna ajánlása</string> 
 
-    <string name="configLabel_timezone">Időzóna:</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
+    <string name="configLabel_timezone">Időzóna:</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mód:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Időzóna:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Szoláris idő:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="configLabel_timezone_standard">Időrendszer:</string>                   <!-- spinner label -->
     <string name="configLabel_timezone_fromapp">Használja az alkalmazás időzónáját</string>                  <!-- checkbox text --> 
 
     <!-- Widget Setting: timeFormat mode -->
@@ -529,14 +529,14 @@
     <string name="calendarMode_gregorian">Gergely</string>               
     <string name="calendarMode_hebrew">Héber</string>                      
     <string name="calendarMode_hijri_diyanet">Hijri (Török)</string>   
-    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>
     <string name="calendarMode_julian">Julián</string>                      
     <string name="calendarMode_persian">Perzsa (Szoláris Hijri)</string>  
     <string name="calendarMode_thaisolar">Thai szoláris</string>               
     <string name="calendarMode_chinese">Kínai</string>  
     <string name="calendarMode_korean">Koreai</string>
     <string name="calendarMode_vietnamese">Vietnámi</string> 
-    <string name="calendarMode_minguo">Minguo</string>  <!-- TODO -->
+    <string name="calendarMode_minguo">Minguo</string>
     <string name="calendarMode_indian">Indiai</string> 
     <string name="calendarMode_japanese">Japán</string> 
 
@@ -558,16 +558,16 @@
     <string name="trackingMode_recent">Legutóbbi esemény</string>                   <!-- setting -->   
     <string name="trackingMode_closest">Legközelebbi esemény</string>                 <!-- setting --> 
     <string name="trackingMode_soonest">Közelgő esemény</string>                <!-- setting -->  
-    <string name="configLabel_general_trackingMode">Követés:</string>            <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_trackingMode">Követés:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
     <string name="configLabel_general_timeMode_override">Követés felülírja a módot</string>     <!-- checkbox label -->  
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_general_showNoon">Szoláris nap megjelenítése</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_id">Azonosító:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_id">Azonosító:</string>                 <!-- edittext label -->
     <string name="configLabel_action_launch">Kategória:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_package">Csomag:</string>                 <!-- edittext label -->
@@ -594,7 +594,7 @@
     <string name="addaction_error_title">A név mező nem lehet üres.</string>
     <string name="addaction_error_exists">Ez az azonosító már foglalt. Ez a művelet felül lesz írva.</string>
 
-    <string name="delaction_dialog_msg">Biztos hogy törölni akarod ezt? %1$s (%2$s)?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg">Biztos hogy törölni akarja ezt? %1$s (%2$s)?</string>
     <string name="delaction_dialog_msg1">Beépített műveletek nem törölhetők.\n\nVisszaállítás alapértelmezettre?</string>
     <string name="delaction_dialog_ok">Törlés</string>
     <string name="delaction_dialog_ok1">Visszaállítás</string>
@@ -746,8 +746,8 @@
     <string name="configLabel_themeName">Cím:</string>               <!-- edit label -->
     <string name="configHint_themeName">A téma címe</string>                   <!-- edit hint -->
 
-    <string name="widgetLabel_azimuth">Azimut</string>                   <!-- label --> 
-    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth">Tetőpont</string>                   <!-- label --> 
+    <string name="widgetLabel_azimuth_short">Tp</string>                   <!-- label -->
     <string name="widgetLabel_altitude">Magasság</string>               <!-- label -->
     <string name="widgetLabel_altitude_short">Mag</string>               <!-- label -->
 
@@ -964,7 +964,7 @@
     <string name="configLabel_alarms_bootcompleted">Rendszerindítás befejezve</string>
     <string name="configLabel_alarms_bootcompleted_summary">A riasztások automatikusan átütemeződnek néhány perccel az újraindítás után.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
     <string name="configLabel_alarms_bootcompleted_info">Legutóbb futott <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> újraindítás után (időtartam <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
-    <string name="configLabel_alarms_bootcompleted_info_never">Soha</string>   <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_info_never">Soha</string>
     <string name="configLabel_alarms_bootcompleted_action_confirm">Átütemezi az összes ébresztést és értesítést?</string>
     <string name="configLabel_alarms_bootcompleted_action_message">Ébresztések és értesítések átütemezése...</string>
 
@@ -1033,7 +1033,7 @@
     <string name="configLabel_alarms_showlauncher">Indító ikon</string>
     <string name="configLabel_alarms_showlauncher_summary">Ébresztőóra ikon megjelenítése az alkalmazástálcán.</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Kikapcsolt ébresztés</string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms">Kikapcsolt ébresztés</string>
     <string name="configLabel_alarms_poweroffalarms_summary">A készülék felébresztése kikapcsolt állapotból.\nCsomag: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
@@ -1094,11 +1094,11 @@
     <string name="configLabel_ui_showmoon_summary">A holdkelte és holdnyugta idők valamint a fázis és a megvilágítás mutatása.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Holdbéli dél megjelenítése</string>
-    <string name="configLabel_ui_showmoon_noon_summary">A holdbéli dél és éjfél megjelenítése a hold panelén.</string>
+    <string name="configLabel_ui_showmoon_noon">Holdi dél megjelenítése</string>
+    <string name="configLabel_ui_showmoon_noon_summary">A holdi dél és éjfél megjelenítése a hold panelén.</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Negyedévi napok megjelenítése</string>
+    <string name="configLabel_ui_showCrossQuarter">Negyednapok megjelenítése</string>
     <string name="configLabel_ui_showCrossQuarter_summary">A napfordulók és a napéjegyenlőségek közötti napok mutatása.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
@@ -1128,7 +1128,7 @@
     <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>Nincs</item>
         <item>Szöveg</item>
-        <item>Azimut</item>
+        <item>Tetőpont</item>
     </string-array>
 
     <!-- App Setting: show golden hour -->
@@ -1186,10 +1186,10 @@
     <string name="configActionDesc_setAlarmForNote">Emlékeztető beállítása az infókártyához</string>
     <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
     <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
-    <string name="configActionDesc_alarmList">Ébresztő lista</string>  <!-- TODO -->
-    <string name="configActionDesc_themeList">Téma lista</string>  <!-- TODO -->
-    <string name="configActionDesc_actionList">Művelet lista</string>  <!-- TODO -->
-    <string name="configActionDesc_widgetList">Widget lista</string>  <!-- TODO -->
+    <string name="configActionDesc_alarmList">Ébresztő lista</string> 
+    <string name="configActionDesc_themeList">Téma lista</string> 
+    <string name="configActionDesc_actionList">Művelet lista</string> 
+    <string name="configActionDesc_widgetList">Widget lista</string>
     <string name="configActionDesc_nextSunrise">Következő napkelte mutatása</string>
     <string name="configActionDesc_nextSunset">Következő napnyugta mutatása</string>
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
@@ -1366,7 +1366,7 @@
       <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
       \n\nA legjobb eredmény érdekében válasszon egy olyan képet, amely megfelel ezeknek a tulajdonságoknak.
-    </string>    <!-- TODO -->
+    </string>
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
@@ -1428,8 +1428,8 @@
         <item>nyári napforduló</item>
         <item>őszi nap-éj egyenlőség</item>
         <item>téli napforduló</item>
-        <item>holdbéli dél</item>
-        <item>holdbéli éjfél</item>
+        <item>holdi dél</item>
+        <item>holdi éjfél</item>
         <item>@string/timeMode_cross_midwinter</item>
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
@@ -1461,8 +1461,8 @@
         <item>nyári napforduló</item>
         <item>őszi nap-éj egyenlőség</item>
         <item>téli napforduló</item>
-        <item>holdbéli dél</item>
-        <item>holdbéli éjfél</item>
+        <item>holdi dél</item>
+        <item>holdi éjfél</item>
         <item>@string/timeMode_cross_midwinter</item>
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
@@ -1494,8 +1494,8 @@
         <item>nyári napforduló</item>
         <item>őszi nap-éj egyenlőség</item>
         <item>téli napforduló</item>
-        <item>holdbéli dél</item>
-        <item>holdbéli éjfél</item>
+        <item>holdi dél</item>
+        <item>holdi éjfél</item>
         <item>@string/timeMode_cross_midwinter</item>
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
@@ -1511,8 +1511,8 @@
     <string name="gps_lastfix_title_set">Hely megadása</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Utolsó megadott hely</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Hely keresése</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">A keresett hely nem található; visszatérés az utolsó ismert helyre.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
-    <string name="gps_lastfix_toast_cancelled">A hely frissítése megszakadt.</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
+    <string name="gps_lastfix_toast_notfound">A keresett hely nem található; visszatérés az utolsó ismert helyre.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">A hely frissítése visszavonva.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Nincs jel</string>
@@ -1608,7 +1608,7 @@
     <!-- Dialog: About -->
     <string name="about_dialog_title">Névjegy</string>
     <string name="app_name">Suntimes</string>
-    <string name="app_name_alarmclock">Suntimes Ébresztő</string>
+    <string name="app_name_alarmclock">Suntimes Alarms</string>
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (átváltható)</string>
     <string name="app_name_widget2">Nap pozíció widget</string>
@@ -1619,7 +1619,7 @@
     <string name="app_name_solsticewidget0">Napforduló Widget</string>
     <string name="app_name_moonwidget0">Hold Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Megnézheti a napkelte, a napnyugta és egyéb napszakok valamint a hold különböző idejeit.</string>  <!-- TODO: needs update to mention the moon. default changed to -> "Displays sunlight and moonlight times" -->
+    <string name="app_shortdesc">Megjeleníti a napfény- és holdfényidőket.</string> 
     <string name="app_support_url"><![CDATA[
         <b>Támogatás:</b> keresse fel a
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">problémakövetőt</a> kérések benyújtásához.
@@ -1651,168 +1651,168 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Segítség</string>
     <string name="help_appearance_allowresize"><![CDATA[
-      <big>Swap layouts to fill available space</big><br/><br/>
-      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
-      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
-    ]]></string>  <!-- TODO -->
+      <big>Elrendezések megváltoztatása a rendelkezésre álló hely kitöltéséhez</big><br/><br/>
+      <i><b>[engedélyezve]</b></i> A widget a rendelkezésre álló helytől függően változtatja az elrendezéseket.<br/><br/>
+      <i><b>[letiltva]</b></i> A widget megtartja eredeti elrendezését, amikor átméretezi. Használja ezt a \"<i>szövegek és ikonok méretezése</i>\" opcióval együtt extra nagy widgetekhez.<br/>
+    ]]></string>
     <string name="help_appearance_widgetlayout"><![CDATA[
-      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
-    ]]></string>  <!-- TODO -->
+      Ez a widget eredetileg a(z) <b>%1$s</b> <em>elrendezéssel készült</em>.<br/></br/>
+    ]]></string>
     <string name="help_appearance_title"><![CDATA[
-        The following title substitutions are supported:<br/>
+        Az alábbi szöveghelyettesítések támogatottak:<br/>
         <br/>
-        <b>All Widgets:</b> <br />
-                * <b>%d</b> for date (e.g. February 12) <br/>
-                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
-                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
-                * <b>%dY</b> for year (e.g. 2018) <br/>
-                * <b>%dt</b> for time (of last update) <br/>
-                * <b>%dT</b> for time with seconds (of last update) <br/>
+        <b>All Widgetek:</b> <br />
+                * <b>%d</b> - dátum (pl. Február 12) <br/>
+                * <b>%dd</b> - nap (rövid) (pl. H) <br/>
+                * <b>%dD</b> - nap (hosszú) (pl. Hétfő) <br/>
+                * <b>%dY</b> - év (pl. 2018) <br/>
+                * <b>%dt</b> - idő (legutóbbi frissítéskor) <br/>
+                * <b>%dT</b> - idő másodpercekkel (legutóbbi frissítéskor) <br/>
                 <br/>
-                * <b>%loc</b> for label (e.g. Budapest) <br />
-                * <b>%lat</b> for latitude <br />
-                * <b>%lon</b> for longitude <br/>
-                * <b>%lel</b> for elevation (e.g. 225 meters) <br/>
+                * <b>%loc</b> - hely (pl. Budapest) <br />
+                * <b>%lat</b> - szélességi fok <br />
+                * <b>%lon</b> - hosszúsági fok <br/>
+                * <b>%lel</b> - magasság (pl. 225 méter) <br/>
                 <br/>
-                * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
-                * <b>%t</b> for time zone (id) (e.g. Europe/Budapest) <br/>
-                * <b>%id</b> for appWidgetID <br/>
+                * <b>%s</b> - adatforrás (pl. sunrisesunsetlib) <br/>
+                * <b>%t</b> - időzóna (id) (pl. Európa/Budapest) <br/>
+                * <b>%id</b> - appWidgetID <br/>
          <br/>
-         <b>Sun Widgets:</b> <br/>
-                * <b>%m</b> for mode (short) (e.g. Civil) <br/>
-                * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
-                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+         <b>Nap Widgetek:</b> <br/>
+                * <b>%m</b> - mód (rövid) (pl. polgári) <br/>
+                * <b>%M</b> - mód (hosszú) (pl. polgári szürkület) <br/>
+                * <b>%o</b> - sorrend (pl. utolsó/következő, ma) <br/>
          <br/>
-         <b>Moon Widgets:</b> <br/>
-                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
-                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
-                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+         <b>Hold Widgetek:</b> <br/>
+                * <b>%i</b> - megvilágítás (pl. 25%) <br/>
+                * <b>%M</b> - holdfázis (pl. növekvő sarló) <br/>
+                * <b>%o</b> - sorrend (pl. utolsó/következő, ma) <br/>
          <br/>
-         <b>Solstice Widgets:</b> <br/>
-                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
-                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
-                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
-    ]]></string>    <!-- TODO -->
+         <b>Napforduló Widgetek:</b> <br/>
+                * <b>%m</b> - mód (rövid) (pl. napforduló) <br/>
+                * <b>%M</b> - mód (hosszú) (pl. téli napforduló) <br/>
+                * <b>%o</b> - sorrend (pl. legközelebbi esemény, következő esemény) <br/>
+    ]]></string>
 
     <string name="help_general_calendarFormatPattern"><![CDATA[
-          <b>Date Format:</b> A date format pattern.<br/>
-          <br/>Available elements may differ between calendars, but usually include..<br/>
+          <b>Dátumformátum:</b> Dátumformátum minta.<br/>
+          <br/>A rendelkezésre álló elemek naptáranként eltérőek lehetnek, de általában a következőket tartalmazzák..<br/>
           <br/>
-          <b>E</b> : day of week <br/>
-          <b>d</b> : day of month <br/>
-          <b>D</b> : day of year <br/>
-          <b>F</b> : weekday in month <br/>
-          <b>M</b> : month of year <br/>
-          <b>y</b> : year of era <br/>
-          <b>G</b> : era <br/>
+          <b>E</b> : hét napja <br/>
+          <b>d</b> : hónap napja <br/>
+          <b>D</b> : év napja <br/>
+          <b>F</b> : hónap hétköznapja <br/>
+          <b>M</b> : év hónapja <br/>
+          <b>y</b> : időszámítás éve <br/>
+          <b>G</b> : időszámítás <br/>
           <br/>
-    ]]></string>    <!-- TODO -->
+    ]]></string>
 
     <string name="help_general_moondialog"><![CDATA[
-          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
-          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
-          \n\nShare [Icon Share] will copy text to the clipboard.
-    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
+          \n[Icon Rising]  holdkelte \t\t[Icon Noon]  holdi dél
+          \n[Icon Setting]  holdnyugta \t\t[Icon Midnight]  holdi éjfél
+          \n\nA Megosztás [Icon Share] ikon a szöveget a vágólapra másolja.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
-          <b>Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
-          <b>Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
-          <b>Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->  <!-- TODO -->
+          <b>Tavaszi keresztnegyed nap:</b> A téli napforduló és a tavaszi napéjegyenlőség közötti nap; <em>Február</em> [északi féltekén], or <em>Augusztus</em> [déli féltekén].<br/><br/>
+          <b>Nyári keresztnegyed nap:</b> A tavaszi napéjegyenlőség és a nyári napforduló közötti nap; <em>Május</em> [északi féltekén], or <em>November</em> [déli féltekén].<br/><br/>
+          <b>Őszi keresztnegyed nap:</b> A nyári napforduló és az őszi napéjegyenlőség közötti nap; <em>Augusztus</em> [északi féltekén], or <em>Február</em> [déli féltekén].<br/><br/>
+          <b>Téli keresztnegyed nap:</b> Az őszi napéjegyenlőség és a téli napforduló közötti nap.; <em>November</em> [északi féltekén], or <em>Május</em> [déli féltekén].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[
-          [Icon OK] Choose a custom event.\n
-          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
-          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
-          [Icon View] Marked events are displayed by the app.
-    ]]></string>    <!-- TODO -->
+          [Icon OK] Egyéni esemény kiválasztása.\n
+          Egyéni események [Icon Add] hozzáadása, [Icon Edit] szerkesztése, vagy [Icon Delete] törlése.\n
+          \nAz egyéni eseményeket az alkalmazás és a kezdőképernyő widgetjei is megjeleníthetik. Továbbá használhatók riasztások és értesítések ütemezésére.\n
+          Az [Icon View] ikonnal jelölt eseményeket az alkalmazás megjeleníti.
+    ]]></string>
 
     <string name="help_alarms_edit"><![CDATA[
-          [Icon Back] to cancel without making changes.<br/>
-          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
-          [Icon Cancel] to save and disable.<br/>
-          [Icon Delete] to cancel and delete.<br/>
+          [Icon Back] a módosítások nélküli törléshez.<br/>
+          [Icon Save] a mentéshez és [Icon Done] a mentéshez és engedélyezéshez.<br/>
+          [Icon Cancel] a mentéshez és letiltáshoz.<br/>
+          [Icon Delete] a visszavonáshoz és törléshez.<br/>
           <br/>
-          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
-    ]]></string>   <!-- TODO -->
+          [Icon Offset] akkor jelenik meg, ha a tervezett időpont az esemény időpontja előtt vagy után van eltolva.
+    ]]></string>
 
     <string name="help_general_dst"><![CDATA[
-          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
-    ]]></string>   <!-- TODO -->
+          <b>Nyári időszámítás:</b> [Icon DST] akkor jelenik meg, ha az aktuális idő a <b>nyári időszámítást</b> alkalmazza.<br/><br/>
+    ]]></string>
 
     <string name="help_general_actualTime"><![CDATA[
-          <b>Actual Time:</b> The sun is on the horizon; this is the approximate time of sunrise and sunset.<br/>
-    ]]></string>    <!-- TODO -->
+          <b>Valós idő:</b> A nap a horizonton van; ez a napfelkelte és a napnyugta hozzávetőleges időpontja.<br/>
+    ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
-    ]]></string>   <!-- TODO -->
+          <b>Polgári szürkület:</b> A hajnal utolsó és az alkonyat első szakasza; a Nap ilyenkor a látóhatár és ‒6° között tartózkodik. Ebben az időszakban felhőtlen időben jól lehet látni, és a szokásos tevékenységeinket végezhetjük, akár olvashatunk is. A végén már be kell kapcsolni a világítást, és láthatóak a legfényesebb csillagok és bolygók. A horizont tisztán kivehető.<br/><br/>
+          <b>Navigációs szürkület:</b> Ez azt az időszakot jelenti, amikor a Nap ‒6° és ‒12° között jár. Jó időben a földi tárgyak körvonalai láthatóak, de a horizont már (még) elmosódott. Ilyenkor lámpa nélkül is tudunk tájékozódni a szabadban, de más tevékenységekhez általában már világításra van szükség.<br/><br/>
+          <b>Csillagászati szürkület:</b> Ezt az időszakot nevezzük annak, amikor a Nap ‒12° és ‒18° között jár. Ebben az intervallumban gyakorlatilag sötét van, és tiszta időben látható a csillagok többsége. Az esti csillagászati szürkület végére sötétedik be annyira, hogy minden megfigyelést el lehessen végezni; ekkor kezdődik az éjszaka.<br/>
+    ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
-          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
-    ]]></string>  <!-- TODO -->
+          <b>Ma:</b> Felkelési és lenyugvási időpontok a mai napra.<br/><br/>
+          <b>Utolsó / Következő:</b> Az utolsó esemény időpontja és a következő közelgő esemény időpontja.<br/>
+    ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
-          <b>Summer Solstice:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
-          <b>Autumn Equinox:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
-          <b>Winter Solstice:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
-    ]]></string>    <!-- TODO -->
+          <b>Tavaszi nap-éj egyenlőség:</b> A csillagászati tavasz kezdete; <em>Március</em> [északi féltekén], or <em>Szeptember</em> [déli féltekén]. A márciusi nap-éj egyenlőséget <em>északi nap-éj egyenlőségnek</em> is nevezik.<br/><br/>
+          <b>Nyári napforduló:</b> A csillagászati nyár kezdete; <em>Június</em> [északi féltekén], or <em>December</em> [déli féltekén]. A júniusi napfordulót <em>északi napfordulónak</em> is nevezik.<br/><br/>
+          <b>Autumn nap-éj egyenlőség:</b> A csillagászati ősz kezdete; <em>Szeptember</em> [északi féltekén], or <em>Március</em> [déli féltekén]. A szeptemberi nap-éj egyenlőséget <em>déli nap-éj egyenlőségnek</em> is nevezik.<br/><br/>
+          <b>Téli napforduló:</b> A csillagászati tél kezdete; <em>December</em> [északi féltekén], or <em>Június</em> [déli féltekén]. A decemberi napfordulót <em>déli napfordulónak</em> is nevezik.<br/>
+    ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
-    ]]></string>   <!-- TODO -->
+          <b>Tropikus év:</b> Az évszakok teljes körforgása. A <em>tropikus év</em> hosszát az egyik <em>márciusi nap-éj egyenlőségtől</em> a másikig mérik. Ez átlagosan <em>~365,24 nap</em>, pontos hossza évente változik (akár 30 percenként).<br/>
+    ]]></string>
     <string name="help_general_daylength"><![CDATA[
-        <b>Length of day:</b> the amount of time between sunrise and sunset.<br/><br/>
-        <b>Usable light:</b> the amount of time between morning and evening civil twilight.</br>
+        <b>Nap hossza:</b> a napfelkelte és napnyugta közötti idő.<br/><br/>
+        <b>Használható fény:</b> a reggeli és az esti polgári szürkület közötti idő.</br>
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Moon Illumination:</b> The moon widgets and main page display the moon\'s illumination at lunar noon (the midpoint between moonrise and moonset), while the moon dialog displays the moon\'s current illumination.<br/><br/>
-    ]]></string> <!-- TODO -->
+        <b>Hold megvilágítása:</b> A hold widgetek és a főoldal a hold megvilágítását mutatják holdi délidőben (a holdkelte és a holdnyugta közötti középpontban). A hold panel a hold aktuális megvilágítását mutatja.<br/><br/>
+    ]]></string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
-    ]]></string>  <!-- TODO -->
+        <b>Arany óra:</b> A nap 6 fokkal a horizont felett vagy alatt van. Reggel az arany óra a polgári szürkületkor kezdődik, és röviddel napkelte után ér véget. Este az arany óra röviddel napnyugta előtt kezdődik és a polgári szürkületkor ér véget.<br/>
+    ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
-    ]]></string>  <!-- TODO -->
+        <b>Kék óra:</b> A nap 8 és 4 fok között van a horizont alatt. A kék óra kezdete és vége a navigációs és a polgári szürkület közé esik.<br/>
+    ]]></string>
     <!--<string name="help_action_launch"><![CDATA[
         The fully qualified class name of the Activity to be launched.<br/>
     ]]></string>-->  <!-- TODO: update from strings.xml -->
     <string name="help_widgetlist"><![CDATA[
-          To <b>add a new widget</b> you must navigate to the home screen.<br/><br/>
-          To <b>reconfigure an existing widget</b> you can select from the following list.<br/>
+          Új <b>widget hozzáadásához</b> a kezdőképernyőre kell mennie.<br/><br/>
+          Egy meglévő widget <b>újrakonfigurálásához</b> a következő listából választhat.<br/>
     ]]></string>
     <string name="help_themelist">
-          [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
+          Téma [Icon Add] hozzáadása vagy egy meglévő [Icon Copy] másolása.\n
           \n
-          [Icon Edit] Edit or [Icon Delete] delete themes.\n
-          The [Icon Default] default themes cannot be modified.
-    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
+          Téma [Icon Edit] szerkesztése vagy [Icon Delete] törlése.\n
+          Az [Icon Default] alapértelmezett témák nem módosíthatók..
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
-    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Események hozzáadása a naptárba (holdfázisok, napfordulók és nap-éj egyenlőségek).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar integration was removed in v0.10.0.</font></b></u><br />
+        <u><b><font color="#ff9900">A naptár integráció a v0.10.0-ban eltávolításra került.</font></b></u><br />
         <br />
-        This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>  <!-- TODO -->
+        Ez a funkció mostantól <a href="moreInfoLink">külön alkalmazásként</a> érhető el.
+    ]]></string>
 
-    <string name="privacy_policy0"><![CDATA[<b>Privacy:</b><br/>Suntimes nem gyűjt, nem tárol vagy továbbít személyes felhasználói adatokat. Nem tartalmaz <b>hirdetéseket</b>, <b>elemzéseket</b>, <b>nyomkövetőket</b> és <b>szükségtelen engedélyeket</b>.]]></string>
-    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes nem gyűjt, nem tárol vagy továbbít személyes felhasználói adatokat. Nem tartalmaz <b>hirdetéseket</b>, <b>elemzéseket</b>, <b>nyomkövetőket</b> és <b>szükségtelen engedélyeket</b>. <br/><br/>Az alkalmazás helyadatokból van konfigurálva. Ezeket az információkat (és az alkalmazás által használt egyéb konfigurációs adatokat) a rendszer helyileg tárolja, és nem hagyja el az eszközt.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
-    <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
+    <string name="privacy_policy0"><![CDATA[<b>Privacy:</b><br/>A Suntimes nem gyűjt, nem tárol vagy továbbít személyes felhasználói adatokat. Nem tartalmaz <b>hirdetéseket</b>, <b>elemzéseket</b>, <b>nyomkövetőket</b> és <b>szükségtelen engedélyeket</b>.]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>A Suntimes nem gyűjt, nem tárol vagy továbbít személyes felhasználói adatokat. Nem tartalmaz <b>hirdetéseket</b>, <b>elemzéseket</b>, <b>nyomkövetőket</b> és <b>szükségtelen engedélyeket</b>. <br/><br/>Az alkalmazás helyadatokból van konfigurálva. Ezeket az információkat (és az alkalmazás által használt egyéb konfigurációs adatokat) a rendszer helyileg tárolja, és az eszközön maradnak.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[A Suntimes a <b>helyadatok</b> engedélyt használja az jelenlegi földrajzi hosszúság és szélesség meghatározására.<br/><br/>Ez az engedély nem kötelező; a hely alapértelmezés szerint manuálisan van beállítva.]]></string>
+    <string name="privacy_permission_storage"><![CDATA[A Suntimes <b>külső tároló</b> engedélyeket használ az adatok fájlba történő mentéséhez/exportálásához (pl. helyek, témák).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[A Suntimes Alarms a <b>külső tároló</b> engedélyt használja az SD-kártyán található hangok lejátszásához.<br/><br/>Ez a jogosultság nem kötelező; a hozzáférés megtagadása esetén az alapértelmezett hang fog megszólalni. Ez a jogosultság nem szükséges a rendszerhangokhoz (Médiatároló).]]></string>
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Jogosultságok kérése most?]]></string>
     <string name="privacy_permissiondialog_ignore">Mellőzés</string>
     <string name="privacy_permissiondialog_title">Engedélyek</string>
     <string name="privacyTab">Adatvédelem</string>
 
     <string name="security_dialog_title">Biztonsági értesítés</string> 
-    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
-    <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
-    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
-    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
-    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+    <string name="security_duplicate_permissions">A Suntimeshoz tartozó engedély:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nígy is definálva van: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="feature_not_supported_by_api">Ezt a funkciót nem támogatja az API %1$s.</string>
+    <string name="feature_not_supported_by_source">Ezt a funkciót a jelenlegi adatforrás nem támogatja.</string>
+    <string name="reboot_required_message">A módosítások érvénybe lépéséhez újraindításra lehet szükség.</string>
+    <string name="restart_required_message">Előfordulhat, hogy újra kell indítani a rendszert ahhoz, hogy a módosítások teljes mértékben érvényesüljenek.</string>   <!-- toast; app restart may be required -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Mégse</string>
@@ -1821,20 +1821,19 @@
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">A simple, relatively fast, but imprecise calculator.</string>  <!-- TODO -->
-    <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>  <!-- TODO -->
-    <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>  <!-- TODO -->
-    <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>  <!-- TODO -->
+    <string name="calculator_displayString_time4a_simple">Egy egyszerű, viszonylag gyors, de pontatlan számológép.</string>
+    <string name="calculator_displayString_time4a_noaa">A National Oceanic and Atmospheric Administration (NOAA) által közzétett algoritmusokat használja.</string>
+    <string name="calculator_displayString_time4a_cc">A Dershowitz/Reingold a "Calendrical Calculations" (harmadik kiadás) című könyvben közzétett algoritmusokat követi.</string>
+    <string name="calculator_displayString_time4a_4j">A Jean Meeus "Astronomical Algorithms" (második kiadás) című könyvében közzétett csillagászati számításokon alapul.</string>
     <string name="help_datasources">
         <![CDATA[
-        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        A Suntimes harmadik féltől származó könyvtárakat használ a csillagászati számítások elvégzéséhez.<br/>
         <br/>
-        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        Az <b>adatforrás</b> beállítás lehetővé teszi a különböző könyvtárak közötti választást (vagy a könyvtárak által kínált különböző algoritmusok közötti választást). Alapértelmezett: <b>time4a-time4j</b>.<br/>
         <br/>
-        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        Ez a beállítás befolyásolja a számítások sebességét és pontosságát, és korlátozhatja a használható funkciókat. <br/>
         <br/>
-        For more information about available choices, or extending the app to support other libraries, see the online help.
+        A rendelkezésre álló választási lehetőségekről, illetve az alkalmazás bővítéséről, hogy más könyvtárakat is támogasson, további információkat az online súgóban talál.
     ]]>
-    </string>   <!-- TODO -->
-
+    </string>
 </resources>
