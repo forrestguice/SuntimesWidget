@@ -136,5 +136,7 @@
     <dimen name="welcomeActivity_margin">16dp</dimen>
 
     <dimen name="equinoxItem_height">56dp</dimen>
+    <dimen name="equinoxItem_margin">12dp</dimen>
+    <dimen name="equinoxList_topMargin">6dp</dimen>
 
 </resources>

@@ -1958,7 +1958,7 @@ public class SuntimesActivity extends AppCompatActivity
         startTimeTask();
     }
 
-    private Runnable updateEquinoxViewColumnWidth = new Runnable()
+    private final Runnable updateEquinoxViewColumnWidth = new Runnable()
     {
         @Override
         public void run()
@@ -1967,7 +1967,9 @@ public class SuntimesActivity extends AppCompatActivity
             if (card != null) {
                 View column = card.findViewById(R.id.header_column);
                 if (column != null) {
-                    card_equinoxSolstice.adjustColumnWidth(column.getMeasuredWidth());
+                    if (!getResources().getBoolean(R.bool.is_watch)) {
+                        card_equinoxSolstice.adjustColumnWidth(column.getMeasuredWidth());
+                    }
                 }
             }
         }
@@ -2447,7 +2449,9 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showEquinoxDialog()
     {
         final EquinoxCardDialog equinoxDialog = new EquinoxCardDialog();
-        updateEquinoxDialogColumnWidth(equinoxDialog);
+        if (!getResources().getBoolean(R.bool.is_watch)) {
+            updateEquinoxDialogColumnWidth(equinoxDialog);
+        }
         equinoxDialog.themeViews(this, appThemeOverride);
         equinoxDialog.setDialogListener(equinoxDialogListener);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);

@@ -206,7 +206,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
             {
                 BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
                 ViewGroup dialogLayout = (ViewGroup) bottomSheet.findViewById(R.id.dialog_lightmap_layout);
-                View divider1 = bottomSheet.findViewById(R.id.media_actions);
+                int resID = getResources().getBoolean(R.bool.is_watch) ? R.id.sundialog_gutter2 : R.id.media_actions;
+                View divider1 = bottomSheet.findViewById(resID);
                 if (dialogLayout != null && divider1 != null)
                 {
                     Rect headerBounds = new Rect();
