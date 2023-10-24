@@ -351,9 +351,7 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
-        <activity android:name=".tiles.ClockTileConfigActivity"
-            android:taskAffinity=".tiles.ClockTileConfigActivity"
-            android:launchMode="singleTask" />
+        <activity android:name=".tiles.ClockTileConfigActivity" />
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Event Tile                                                                  -->
@@ -368,9 +366,7 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
-        <activity android:name=".tiles.NextEventTileConfigActivity"
-            android:taskAffinity=".tiles.NextEventTileConfigActivity"
-            android:launchMode="singleTask" />
+        <activity android:name=".tiles.NextEventTileConfigActivity" />
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->
