@@ -32,6 +32,7 @@
         <android.support.v7.widget.Toolbar android:id="@+id/app_menubar"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:background="?attr/colorPrimary" android:theme="?attr/toolbarTheme" app:popupTheme="?attr/actionBarPopupTheme"
+            app:titleTextAppearance="@style/ToolbarTitleTextAppearance" app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
             app:title="@string/configLabel_widgetThemeAdd" />
 
         <include layout="@layout/layout_themeconfig_header" />
