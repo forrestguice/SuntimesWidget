@@ -69,11 +69,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <ViewFlipper
+                    <com.forrestguice.suntimeswidget.notes.NoteViewFlipper
                         android:id="@+id/info_note_flipper"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="?attr/selectableItemBackground"
+                        android:focusable="true"
                         android:layout_marginTop="5dp" android:layout_marginBottom="5dp">
 
                         <LinearLayout
@@ -96,7 +97,7 @@
 
                         </LinearLayout>
 
-                    </ViewFlipper>
+                    </com.forrestguice.suntimeswidget.notes.NoteViewFlipper>
 
                 </ScrollView>
 

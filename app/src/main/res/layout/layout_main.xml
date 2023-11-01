@@ -79,11 +79,12 @@
                     app:layout_constraintStart_toEndOf="@+id/layout_clock"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <ViewFlipper
+                    <com.forrestguice.suntimeswidget.notes.NoteViewFlipper
                         android:id="@+id/info_note_flipper"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="center" android:gravity="center"
-                        android:background="?attr/selectableItemBackground">
+                        android:background="?attr/selectableItemBackground"
+                        android:focusable="true">
 
                         <LinearLayout android:id="@+id/info_time_note1"
                             android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -95,7 +96,7 @@
                             <include layout="@layout/info_time_note"/>
                         </LinearLayout>
 
-                    </ViewFlipper>
+                    </com.forrestguice.suntimeswidget.notes.NoteViewFlipper>
 
                 </FrameLayout>
 

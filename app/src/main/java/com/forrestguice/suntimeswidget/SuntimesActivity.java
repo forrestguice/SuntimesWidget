@@ -73,6 +73,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -209,7 +210,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     // note views
     private ProgressBar note_progress;
-    private ViewFlipper note_flipper;
+    private NoteViewFlipper note_flipper;
     private Animation anim_note_inPrev, anim_note_inNext;
     private Animation anim_note_outPrev, anim_note_outNext;
 
@@ -1164,16 +1165,9 @@ public class SuntimesActivity extends AppCompatActivity
             note_progress.setVisibility(View.GONE);
         }
 
-        note_flipper = (ViewFlipper) findViewById(R.id.info_note_flipper);
-        if (note_flipper != null)
-        {
-            note_flipper.setOnTouchListener(noteTouchListener);
-            note_flipper.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                { /* DO NOTHING HERE (but we still need this listener) */ }
-            });
+        note_flipper = (NoteViewFlipper) findViewById(R.id.info_note_flipper);
+        if (note_flipper != null) {
+            note_flipper.setViewFlipperListener(noteFlipListener);
 
         } else {
             Log.w("initNoteViews", "Failed to set touchListener; note_flipper is null!");
@@ -2237,62 +2231,40 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * viewFlipper "note" onTouchListener; swipe between available notes
      */
-    private View.OnTouchListener noteTouchListener = new View.OnTouchListener()
+    private final NoteViewFlipper.ViewFlipperListener noteFlipListener = new NoteViewFlipper.ViewFlipperListener()
     {
-        public int MOVE_SENSITIVITY = 25;
-        public int FLING_SENSITIVITY = 10;
-        public float firstTouchX, secondTouchX;
+        @Override
+        public boolean performClick()
+        {
+            String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
+            if (WidgetActions.SuntimesAction.ALARM.name().equals(actionID)) {
+                scheduleAlarmFromNote();
+            } else if (WidgetActions.SuntimesAction.NEXT_NOTE.name().equals(actionID)) {
+                setUserSwappedCard(false, "noteTouchListener (next note)");
+                notes.showNextNote();    // call next/prev methods directly; using onTapAction (re)triggers the activity lifecycle (onResume)
+            } else if (WidgetActions.SuntimesAction.PREV_NOTE.name().equals(actionID)) {
+                setUserSwappedCard(false, "noteTouchListener (prev note)");
+                notes.showPrevNote();
+            } else {
+                onTapAction(actionID, "onNoteTouch");
+            }
+            return true;
+        }
 
         @Override
-        public boolean onTouch(View view, MotionEvent event)
+        public boolean performFlingPrev()
         {
-            switch (event.getAction())
-            {
-                case MotionEvent.ACTION_DOWN:
-                    firstTouchX = event.getX();
-                    break;
+            setUserSwappedCard(false, "noteTouchListener (fling prev)");
+            notes.showPrevNote();   // swipe left: prev
+            return true;
+        }
 
-                case MotionEvent.ACTION_UP:
-                    secondTouchX = event.getX();
-                    if ((firstTouchX - secondTouchX) >= FLING_SENSITIVITY)
-                    {
-                        setUserSwappedCard(false, "noteTouchListener (fling next)");
-                        if (isRtl)
-                            notes.showPrevNote();
-                        else notes.showNextNote();    // swipe right: next
-
-                    } else if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY) {
-                        setUserSwappedCard(false, "noteTouchListener (fling prev)");
-                        if (isRtl)
-                            notes.showNextNote();
-                        else notes.showPrevNote();   // swipe left: prev
-
-                    } else {                    // click: user defined
-                        String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
-                        if (WidgetActions.SuntimesAction.ALARM.name().equals(actionID)) {
-                            scheduleAlarmFromNote();
-                        } else if (WidgetActions.SuntimesAction.NEXT_NOTE.name().equals(actionID)) {
-                            setUserSwappedCard(false, "noteTouchListener (next note)");
-                            notes.showNextNote();    // call next/prev methods directly; using onTapAction (re)triggers the activity lifecycle (onResume)
-                        } else if (WidgetActions.SuntimesAction.PREV_NOTE.name().equals(actionID)) {
-                            setUserSwappedCard(false, "noteTouchListener (prev note)");
-                            notes.showPrevNote();
-                        } else {
-                            onTapAction(actionID, "onNoteTouch");
-                        }
-                    }
-                    break;
-
-                case MotionEvent.ACTION_MOVE:
-                    final View currentView = note_flipper.getCurrentView();
-                    int moveDeltaX = (isRtl ? (int)(firstTouchX - event.getX()) : (int)(event.getX() - firstTouchX));
-                    if (Math.abs(moveDeltaX) < MOVE_SENSITIVITY)
-                    {
-                        currentView.layout(moveDeltaX, currentView.getTop(), currentView.getWidth(), currentView.getBottom());
-                    }
-                    break;
-            }
-            return false;
+        @Override
+        public boolean performFlingNext()
+        {
+            setUserSwappedCard(false, "noteTouchListener (fling next)");
+            notes.showNextNote();    // swipe right: next
+            return true;
         }
     };
 
