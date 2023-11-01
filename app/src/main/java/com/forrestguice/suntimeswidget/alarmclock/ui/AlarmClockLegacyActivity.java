@@ -540,6 +540,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
      * initialize ui/views
      * @param context a context used to access resources
      */
+    @SuppressLint("ClickableViewAccessibility")
     protected void initViews(Context context)
     {
         SuntimesUtils.initDisplayStrings(context);
