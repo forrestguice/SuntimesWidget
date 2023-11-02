@@ -317,6 +317,9 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         ImageButton btn_cancel = (ImageButton) view.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(hideFooter ? null : onDialogCancelClick);
+        if (AppSettings.isTelevision(getActivity())) {
+            btn_cancel.setFocusableInTouchMode(true);
+        }
 
         ImageButton btn_accept = (ImageButton) view.findViewById(R.id.dialog_button_accept);
         TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());

@@ -302,9 +302,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         mediaAnchor = dialogView.findViewById(R.id.dialogTopRightAnchor);
 
         menuButton = (ImageButton) dialogView.findViewById(R.id.menu_button);
-        if (menuButton != null) {
+        if (menuButton != null)
+        {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(onMenuClicked);
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.setFocusableInTouchMode(true);
+            }
         }
 
         if (context != null) {

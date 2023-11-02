@@ -365,9 +365,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
 
         menuButton = (ImageButton)dialogView.findViewById(R.id.media_menu);
-        if (menuButton != null) {
+        if (menuButton != null)
+        {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.setFocusableInTouchMode(true);
+            }
         }
 
         speedButton = (TextView)dialogView.findViewById(R.id.media_speed);

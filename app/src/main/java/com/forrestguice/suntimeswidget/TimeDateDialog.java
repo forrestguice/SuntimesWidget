@@ -90,6 +90,9 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(onDialogCancelClick);
+        if (AppSettings.isTelevision(getActivity())) {
+            btn_cancel.setFocusableInTouchMode(true);
+        }
 
         ImageButton btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
         TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
