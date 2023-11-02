@@ -1260,9 +1260,8 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initClockViews(Context context)
     {
-        LinearLayout clockLayout = (LinearLayout) findViewById(R.id.layout_clock);
-        if (clockLayout != null)
-        {
+        LinearLayout clockLayout = (LinearLayout) findViewById(R.id.text_time_layout);
+        if (clockLayout != null) {
             clockLayout.setOnClickListener(onClockClick);
         }
 
