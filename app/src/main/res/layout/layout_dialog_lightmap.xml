@@ -38,6 +38,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         tools:text="June 3, 6:00 PM Apparent Solar Time" android:gravity="end|right"
         android:background="?attr/selectableItemBackground"
+        android:focusable="true" android:clickable="true"
         android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />
@@ -332,6 +333,7 @@
         <TextView
             style="@style/SunsetTimeTextView"
             android:background="?attr/selectableItemBackground"
+            android:focusable="true" android:clickable="true"
             android:id="@+id/media_speed" android:textStyle="bold"
             android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp"
             android:layout_height="match_parent"

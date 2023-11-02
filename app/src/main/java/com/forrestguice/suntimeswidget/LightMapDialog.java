@@ -456,25 +456,43 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     public static final boolean DEF_KEY_WORLDMAP_MINORGRID = false;
 
-    private View.OnClickListener playClickListener = new View.OnClickListener()
+    private final View.OnClickListener playClickListener = new View.OnClickListener()
     {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             playMap();
+            if (AppSettings.isTelevision(getActivity())) {
+                if (pauseButton != null) {
+                    pauseButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnClickListener pauseClickListener = new View.OnClickListener()
+    private final View.OnClickListener pauseClickListener = new View.OnClickListener()
     {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             stopMap(false);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnClickListener resetClickListener = new View.OnClickListener()
+    private final View.OnClickListener resetClickListener = new View.OnClickListener()
     {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             stopMap(true);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
     private final View.OnClickListener menuClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
