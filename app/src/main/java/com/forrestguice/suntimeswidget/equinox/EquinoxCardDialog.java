@@ -101,8 +101,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
             @Override
             public void onBackPressed() {
-                if (hasSelection()) {
+                if (hasSelection())
+                {
                     setSelection((Integer) null);
+                    if (AppSettings.isTelevision(getActivity())) {
+                        btn_menu.requestFocus();
+                    }
                 } else super.onBackPressed();
             }
         };

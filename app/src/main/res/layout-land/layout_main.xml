@@ -157,6 +157,9 @@
                             android:id="@+id/info_date_solsticequinox"
                             android:layout_width="match_parent" android:layout_height="wrap_content"
                             android:layout_margin="0dp" android:padding="0dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:focusable="true" android:clickable="true"
+                            android:descendantFocusability="afterDescendants"
                             app:minimized="true" />
 
                     </LinearLayout>
