@@ -48,6 +48,8 @@ import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ViewFlipper;
 
@@ -1221,6 +1223,9 @@ public class LocationConfigView extends LinearLayout
         {
             updateViews();   // reset changes
             setMode(LocationViewMode.MODE_CUSTOM_SELECT);
+            if (AppSettings.isTelevision(getContext())) {
+                button_edit.requestFocus();
+            }
         }
     };
 
@@ -1276,6 +1281,9 @@ public class LocationConfigView extends LinearLayout
             {
                 setMode(LocationViewMode.MODE_CUSTOM_SELECT);
                 populateLocationList();
+                if (AppSettings.isTelevision(getContext())) {
+                    button_edit.requestFocus();
+                }
             }
 
             final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
@@ -1287,6 +1295,9 @@ public class LocationConfigView extends LinearLayout
                     {
                         setMode(LocationViewMode.MODE_CUSTOM_SELECT);
                         populateLocationList();
+                        if (AppSettings.isTelevision(getContext())) {
+                            button_edit.requestFocus();
+                        }
                     }
                 }
             };
