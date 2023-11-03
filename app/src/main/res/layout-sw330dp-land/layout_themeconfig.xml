@@ -38,7 +38,8 @@
         <include layout="@layout/layout_themeconfig_header" />
 
         <ScrollView android:id="@+id/scrollView"
-            android:layout_width="match_parent" android:layout_height="match_parent">
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:descendantFocusability="afterDescendants">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
