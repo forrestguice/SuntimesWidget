@@ -64,7 +64,6 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -73,11 +72,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
-import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
@@ -1349,7 +1348,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         MenuItem alarmItem = menu.findItem(R.id.action_alarm);
         if (alarmItem != null) {
-            alarmItem.setVisible(!AppSettings.isTelevision(SuntimesActivity.this));    // alarms disabled on tvs (not supported)
+            alarmItem.setVisible(AlarmSettings.hasAlarmSupport(SuntimesActivity.this));    // alarms disabled on tvs (not supported)
         }
 
         return super.onPrepareOptionsPanel(view, menu);
