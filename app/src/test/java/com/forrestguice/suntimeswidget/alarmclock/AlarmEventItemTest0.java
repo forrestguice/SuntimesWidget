@@ -49,8 +49,7 @@ public class AlarmEventItemTest0
         assertEquals(item0.getEventID(), event.name());
         assertEquals(item0.getTitle(), event.getLongDisplayString());
         assertEquals(item0.getTitle(), item0.toString());
-        assertNotNull(item0.getSummary());
-        assertTrue(item0.getSummary().isEmpty());
+        assertNull(item0.getSummary());
         assertNull(item0.phrase);
         //assertEquals(item0.getIcon(null), event.getIcon());    // requires non-null context
         assertNull(item0.getUri());
@@ -110,8 +109,7 @@ public class AlarmEventItemTest0
 
         assertEquals(item1.getTitle(), event1.getLongDisplayString());
         assertEquals(item1.getTitle(), item1.toString());
-        assertNotNull(item1.getSummary());
-        assertTrue(item1.getSummary().isEmpty());
+        assertNull(item1.getSummary());
         assertNull(item1.phrase);
     }
 

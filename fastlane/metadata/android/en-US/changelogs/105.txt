@@ -1,0 +1,3 @@
+- fixes bugs in "current location" mode (automatically refresh the location).
+- adds a warning when using "current location" but location permissions are denied.
+- updates translation to Hungarian.

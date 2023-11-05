@@ -584,8 +584,10 @@ public class AlarmClockItem implements Parcelable
      * getUri
      * @return e.g. content://com.forrestguice.suntimeswidget.alarmclock/alarms/[rowID]
      */
-    public Uri getUri()
-    {
+    public Uri getUri() {
+        return getUri(rowID);
+    }
+    public static Uri getUri(long rowID) {
         return ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, rowID);
     }
 

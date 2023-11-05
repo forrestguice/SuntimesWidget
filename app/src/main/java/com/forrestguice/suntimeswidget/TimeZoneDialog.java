@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -350,26 +350,26 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
 
         final ImageButton button_solartime_help = (ImageButton) dialogContent.findViewById(R.id.appwidget_solartime_help);
-        button_solartime_help.setOnClickListener(new View.OnClickListener() {
+        button_solartime_help.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HelpDialog helpDialog = new HelpDialog();
                 helpDialog.setContent(getString(R.string.help_general_solartime));
                 helpDialog.show(getFragmentManager(), DIALOGTAG_HELP);
             }
-        });
+        }));
 
         button_sort_timezones = (ImageButton) dialogContent.findViewById(R.id.sort_timezones);
         if (button_sort_timezones != null)
         {
             TooltipCompat.setTooltipText(button_sort_timezones, button_sort_timezones.getContentDescription());
-            button_sort_timezones.setOnClickListener(new View.OnClickListener() {
+            button_sort_timezones.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //triggerTimeZoneActionMode(v);
                     showTimeZoneSortMenu(getContext(), v);
                 }
-            });
+            }));
         }
 
         layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
@@ -378,6 +378,9 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(onDialogCancelClick);
+        if (AppSettings.isTelevision(context)) {
+            btn_cancel.setFocusableInTouchMode(true);
+        }
 
         btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
         TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
@@ -415,7 +418,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     }
 
     public static final int UPDATE_RATE = 3000;
-    private Runnable updateTask = new Runnable()
+    private final Runnable updateTask = new Runnable()
     {
         @Override
         public void run()
@@ -463,9 +466,9 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
     private void updateExtras(Context context, boolean solarTime, Object item0)
     {
+        WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
         if (solarTime)
         {
-            WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
             if (item != null && item.getID().equals(WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME.getID()))
             {
                 int eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis(), calculator);
@@ -473,7 +476,6 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             } else updateExtrasLabel(null);
 
         } else {
-            WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
             if (item != null)
             {
                 TimeZone timezone = TimeZone.getTimeZone(item.getID());
@@ -489,7 +491,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     /**
      * onSolarTimeSelected
      */
-    private AdapterView.OnItemSelectedListener onSolarTimeSelected = new AdapterView.OnItemSelectedListener()
+    private final AdapterView.OnItemSelectedListener onSolarTimeSelected = new AdapterView.OnItemSelectedListener()
     {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -509,7 +511,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     /**
      * onTimeZoneSelected
      */
-    private AdapterView.OnItemSelectedListener onTimeZoneSelected = new AdapterView.OnItemSelectedListener()
+    private final AdapterView.OnItemSelectedListener onTimeZoneSelected = new AdapterView.OnItemSelectedListener()
     {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -529,16 +531,14 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     /**
      * onTimeZoneModeSelected
      */
-    private Spinner.OnItemSelectedListener onTimeZoneModeSelected = new Spinner.OnItemSelectedListener()
+    private final Spinner.OnItemSelectedListener onTimeZoneModeSelected = new Spinner.OnItemSelectedListener()
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             spinner_timezone.setOnItemSelectedListener(null);
             spinner_solartime.setOnItemSelectedListener(null);
 
-            final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
-            WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
-
+            WidgetSettings.TimezoneMode timezoneMode = (WidgetSettings.TimezoneMode) parent.getSelectedItem();
             boolean useSolarTime = (timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
             if (useSolarTime)
                 spinner_solartime.setOnItemSelectedListener(onSolarTimeSelected);
@@ -615,7 +615,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             item.setChecked(value);
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
@@ -658,7 +658,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             sortActionBase.init(context, spinner_timezone);
             return sortActionBase.onActionItemClicked(item.getItemId());
         }
-    };
+    });
 
     /**
      * trigger the time zone ActionMode
@@ -776,7 +776,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
         customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId, (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE ? SLOT_CUSTOM0 : ""));
-        WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+        String tzID = (getTimeZoneMode() == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE ? TimeZone.getDefault().getID() : customTimezoneID);
+        WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, tzID);
 
         WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
         spinner_solartime.setSelection(solartimeMode.ordinal());
@@ -903,7 +904,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()
+    private final WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()
     {
         @Override
         public void onStart()
@@ -920,7 +921,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             super.onFinished(result);
             spinner_timezone_adapter = result;
             spinner_timezone.setAdapter(spinner_timezone_adapter);
-            WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+            String tzID = (getTimeZoneMode() == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE ? TimeZone.getDefault().getID() : customTimezoneID);
+            WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, tzID);
             btn_accept.setEnabled(validateInput());
             progress_timezone.setVisibility(View.GONE);
             startUpdateTask();
@@ -935,12 +937,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     };
 
-    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogCancelClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getDialog().cancel();
         }
-    };
+    });
 
     @Override
     public void onCancel(DialogInterface dialog)
@@ -950,7 +952,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     }
 
-    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -964,7 +966,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 }
             }
         }
-    };
+    });
 
     private boolean validateInput()
     {

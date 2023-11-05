@@ -75,6 +75,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -286,12 +287,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
 
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
-        utcTime.setOnClickListener(new View.OnClickListener() {
+        utcTime.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimeZoneMenu(context, v);
             }
-        });
+        }));
 
         offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
         empty = (TextView)dialogView.findViewById(R.id.txt_empty);
@@ -335,12 +336,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         modeButton = (ImageButton)dialogView.findViewById(R.id.map_modemenu);
         if (modeButton != null) {
-            modeButton.setOnClickListener(new View.OnClickListener() {
+            modeButton.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showMapModeMenu(context, modeButton);
                 }
-            });
+            }));
         }
 
         /**radioGroup = dialogView.findViewById(R.id.radio_group);
@@ -406,9 +407,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
 
         menuButton = (ImageButton)dialogView.findViewById(R.id.map_menu);
-        if (menuButton != null) {
+        if (menuButton != null)
+        {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.setFocusableInTouchMode(true);
+            }
         }
 
         speedButton = (TextView)dialogView.findViewById(R.id.map_speed);
@@ -723,7 +728,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         menu.show();
         return true;
     }
-    private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -740,7 +745,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             }
             return (tzID != null);
         }
-    };
+    });
 
     protected boolean showMapModeMenu(final Context context, View view)
     {
@@ -758,7 +763,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_mapmode.setChecked(true);
         }
     }
-    private PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -783,7 +788,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected boolean showSpeedMenu(final Context context, View view)
     {
@@ -809,7 +814,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -837,7 +842,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected boolean showContextMenu(final Context context, View view)
     {
@@ -1126,7 +1131,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -1250,7 +1255,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     public static final int SEEK_STEPSIZE_5m = 5;
 
@@ -1263,24 +1268,39 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private int seek_totalMinutes = SEEK_TOTALMINUTES_15m;
     private int seek_now = seek_totalMinutes / 2;     // with "now" at center point
 
-    private View.OnClickListener playClickListener = new View.OnClickListener()
+    private final View.OnClickListener playClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             playMap();
+            if (AppSettings.isTelevision(getActivity())) {
+                if (pauseButton != null) {
+                    pauseButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnLongClickListener playLongClickListener = new View.OnLongClickListener()
+    private final View.OnLongClickListener playLongClickListener = new View.OnLongClickListener()
     {
         @Override
         public boolean onLongClick(View v)
         {
             if (worldmap.isAnimated()) {
                 stopMap(false);
+                if (AppSettings.isTelevision(getActivity())) {
+                    if (playButton != null) {
+                        playButton.requestFocus();
+                    }
+                }
 
             } else {
                 playMap();
                 shareMap();
+                if (AppSettings.isTelevision(getActivity())) {
+                    if (recordButton != null) {
+                        recordButton.requestFocus();
+                    }
+                }
             }
             return true;
         }
@@ -1291,18 +1311,28 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateMediaButtons();
     }
 
-    private View.OnClickListener pauseClickListener = new View.OnClickListener()
+    private final View.OnClickListener pauseClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             stopMap(false);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnClickListener resetClickListener = new View.OnClickListener()
+    private final View.OnClickListener resetClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             stopMap(true);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
     private void stopMap(boolean reset)
@@ -1315,21 +1345,21 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateMediaButtons();
     }
 
-    private View.OnClickListener menuClickListener = new View.OnClickListener()
+    private final View.OnClickListener menuClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showContextMenu(getContext(), dialogTitle);
         }
-    };
+    });
 
-    private View.OnClickListener speedClickListener = new View.OnClickListener()
+    private final View.OnClickListener speedClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showSpeedMenu(getContext(), v);
         }
-    };
+    });
 
     private View.OnClickListener nextClickListener = new View.OnClickListener()
     {

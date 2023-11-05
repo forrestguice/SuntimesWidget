@@ -172,6 +172,20 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
+        Preference autostartPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
+        if (autostartPref != null)
+        {
+            if (AlarmSettings.hasAutostartSettings(context))
+            {
+                autostartPref.setOnPreferenceClickListener(onAutostartPrefClicked(context));
+                autostartPref.setSummary(AlarmSettings.autostartMessage(context));
+
+            } else {
+                PreferenceCategory alarmsCategory = (PreferenceCategory)fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
+                removePrefFromCategory(autostartPref, alarmsCategory);
+            }
+        }
+
         Preference notificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
         if (notificationPrefs != null)
         {
@@ -344,6 +358,17 @@ public class AlarmPrefsFragment extends PreferenceFragment
             Log.e(SuntimesSettingsActivity.LOG_TAG, "Failed to open notification settings! " + e);
             Toast.makeText(context, e.getClass().getSimpleName() + "!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private static Preference.OnPreferenceClickListener onAutostartPrefClicked(final Context context)
+    {
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                AlarmSettings.openAutostartSettings(context);
+                return false;
+            }
+        };
     }
 
     private static Preference.OnPreferenceClickListener onVolumesPrefsClicked(final Context context)

@@ -37,6 +37,7 @@
     <string name="configAction_moon">Moon</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_onlineHelp">Online Help</string>
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">More</string>
     <string name="configAction_options">Options</string>
     <string name="configAction_settings">Settings</string>
@@ -550,6 +551,8 @@
     <string name="locationMode_current">Current (last known)</string>  <!-- setting -->
     <string name="locationMode_custom">User Defined</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+
     <string name="configLabel_location">Location</string>               <!-- group title -->
     <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitude:</string>                   <!-- edittext label -->
@@ -1046,6 +1049,12 @@
     <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>
+
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
 
     <string name="help_battery_optimization_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#battery-optimization</string>
     <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
@@ -1692,7 +1701,7 @@
         <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Jej>Jej</a>|<a href=https://github.com/Aloha>Aloha</a>|<a href=https://github.com/ldmpub>ldmpub</a>|<a href=https://github.com/grenagit>grenagit</a>]]></item>
         <item><![CDATA[<a href=https://github.com/HerHde>Henrik "HerHde" Hüttemann</a>|<a href=https://github.com/Wolkenschieber>Wolkenschieber</a>|<a href=https://github.com/xnumad>xnumad</a>|<a href=https://github.com/cstrsk>CSTRSK</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/Erci>Erci</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/Erci>Erci</a>|<a href=https://github.com/titanicbobo>titanicbobo</a>]]></item>
         <item><![CDATA[<a href=https://github.com/cao->Matteo Caoduro</a>|<a href=https://github.com/GiovaGa>GiovaGa</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>|<a href=https://github.com/gnusuari0>gnusuari0</a>]]></item>
@@ -2011,8 +2020,9 @@
     <string name="gps_dialog_cancel">No</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Set Position</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_set">Configured Position</string>               <!-- may appear as place name when location set by intent -->   <!-- TODO: changed from "Set Position" to "Configured Position" -->
     <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by lookup -->
+    <string name="gps_lastfix_title_cached">Previous Position</string>            <!-- TODO -->
     <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while lookup in progress -->
     <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after failing to get a location -->
     <string name="gps_lastfix_toast_cancelled">Location update cancelled.</string> <!-- displayed briefly when location refresh cancelled -->

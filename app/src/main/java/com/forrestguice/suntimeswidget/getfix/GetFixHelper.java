@@ -93,8 +93,9 @@ public class GetFixHelper
     /**
      * Get a fix; main entry point for GPS "get fix" button in location settings.
      * Spins up a GetFixTask; allows only one such task to execute at a time.
+     * @return true if location permission is granted (and action was taken)
      */
-    public void getFix()
+    public boolean getFix()
     {
         if (!gettingFix)
         {
@@ -139,11 +140,15 @@ public class GetFixHelper
                     Log.w("GetFixHelper", "getFix called while GPS disabled; showing a prompt");
                     showGPSEnabledPrompt();
                 }
+                return true;
+
             } else {
                 Log.w("GetFixHelper", "getFix called without GPS permissions! ignored");
+                return false;
             }
         } else {
             Log.w("GetFixHelper", "getFix called while already running! ignored");
+            return true;
         }
     }
     public void getFix( int i )
@@ -220,6 +225,12 @@ public class GetFixHelper
         }
     }
 
+    public static boolean hasLocationPermission(Activity activity)
+    {
+        int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
+        return (permission == PackageManager.PERMISSION_GRANTED);
+    }
+
     /**
      * @param activity
      * @param requestID used to identify the permission request
@@ -227,8 +238,7 @@ public class GetFixHelper
      */
     public boolean checkGPSPermissions(final FragmentActivity activity, final int requestID)
     {
-        int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
-        boolean hasPermission = (permission == PackageManager.PERMISSION_GRANTED);
+        boolean hasPermission = hasLocationPermission(activity);
         //Log.d("checkGPSPermissions", "" + hasPermission);
 
         if (!hasPermission)

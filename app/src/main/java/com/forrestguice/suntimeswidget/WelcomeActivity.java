@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -53,7 +53,6 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -70,13 +69,10 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
-import com.forrestguice.suntimeswidget.getfix.PlacesListFragment;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -971,6 +967,7 @@ public class WelcomeActivity extends AppCompatActivity
 
         public WelcomeAlarmsFragment() {}
 
+        protected TextView autostartText;
         protected TextView batteryOptimizationText;
         protected Button importAlarmsButton;
         private ProgressBar progress_importAlarms;
@@ -1028,6 +1025,22 @@ public class WelcomeActivity extends AppCompatActivity
                 });
             }
 
+            View layout_autoStart = view.findViewById(R.id.layout_autostart);
+            if (layout_autoStart != null) {
+                layout_autoStart.setVisibility( AlarmSettings.hasAutostartSettings(context) ? View.VISIBLE : View.GONE );
+            }
+
+            autostartText = (TextView) view.findViewById(R.id.text_autostart);
+            Button autostartButton = (Button) view.findViewById(R.id.button_autostart);
+            if (autostartButton != null) {
+                autostartButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlarmSettings.openAutostartSettings(context);
+                    }
+                });
+            }
+
             progress_importAlarms = (ProgressBar) view.findViewById(R.id.progress_import_alarms);
             importAlarmsButton = (Button) view.findViewById(R.id.button_import_alarms);
             if (importAlarmsButton != null) {
@@ -1042,6 +1055,10 @@ public class WelcomeActivity extends AppCompatActivity
             {
                 batteryOptimizationText.setVisibility((Build.VERSION.SDK_INT >= 23) ? View.VISIBLE : View.GONE);
                 batteryOptimizationText.setText(AlarmSettings.batteryOptimizationMessage(context));
+            }
+
+            if (autostartText != null) {
+                autostartText.setText(AlarmSettings.hasAutostartSettings(context) ? AlarmSettings.autostartMessage(context) : "");
             }
         }
 

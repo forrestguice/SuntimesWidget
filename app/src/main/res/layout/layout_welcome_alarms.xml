@@ -86,7 +86,7 @@
                     android:text="@string/configLabel_alarms_optWhiteList" />
 
                 <TextView
-                    android:id="@+id/text_optWhiteList" android:layout_gravity="center"
+                    android:id="@+id/text_optWhiteList"
                     android:layout_height="wrap_content" android:layout_width="wrap_content"
                     android:gravity="center_vertical" android:layout_margin="4dp"
                     android:textSize="?attr/text_size_small"
@@ -94,7 +94,28 @@
 
             </LinearLayout>
 
+            <LinearLayout android:id="@+id/layout_autostart" android:visibility="visible"
+                android:orientation="vertical"
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
 
+                <View android:background="?attr/hrColor" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <Button
+                    android:id="@+id/button_autostart"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:text="@string/configLabel_alarms_autostart" />
+
+                <TextView
+                    android:id="@+id/text_autostart"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:gravity="center_vertical" android:layout_margin="4dp"
+                    android:textSize="?attr/text_size_small"
+                    android:text="@string/configLabel_alarms_autostart_on" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

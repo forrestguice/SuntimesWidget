@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -825,7 +826,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             }
         }
 
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -898,7 +899,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                         return false;
                 }
             }
-        });
+        }));
 
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
@@ -916,7 +917,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.alarmtype, menu.getMenu());
 
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -937,7 +938,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                         return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);
                 }
             }
-        });
+        }));
 
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();

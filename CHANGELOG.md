@@ -1,5 +1,21 @@
 ### ~
 
+### v0.15.8 (2023-10-24)
+* adds a warning when the app is configured to "current location" but location permissions are denied (#733).
+* changes the location label when switching away from "current location" mode (#733).
+* fixes bug in "current location" mode; the location automatically refreshes when the activity is resumed (#733).
+* fixes bug where the time zone selector shows the wrong system time zone (#733).
+* fixes bug where the alarm event icon and text are out of alignment.
+* refactors alarm adapter click listeners (bind rowID instead of position).
+* updates translation to Hungarian (hu) (#736 by titanicbobo).
+
+### v0.15.7 (2023-09-10)
+* adds a warning to SuntimesAlarms when the "Autostart" setting is disabled (Xiomi devices only) (#730).
+* fixes bug "time refreshes aren't happening properly" (#705).
+* fixes bug where the update loop continues running in the background after the activity is no longer visible.
+* fixes bugs where rapidly clicking triggers actions more than once (throttled click listeners).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#728 by James Liu).
+
 ### v0.15.6 (2023-07-21)
 * improves time zone defaults (localized default values).
 * improves time zone recommendations; fixes recommendation when place names contain spaces or special characters.

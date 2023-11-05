@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2022 Forrest Guice
+    Copyright (C) 2019-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,13 +27,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -172,6 +176,73 @@ public class ViewUtils
                 }
             }
             Toast.makeText(context, itemDisplay, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * ThrottledClickListener
+     */
+    public static class ThrottledClickListener implements View.OnClickListener
+    {
+        protected long delayMs;
+        protected Long previousClickAt;
+        protected View.OnClickListener listener;
+
+        public ThrottledClickListener(@NonNull View.OnClickListener listener) {
+            this(listener, 1000);
+        }
+
+        public ThrottledClickListener(@NonNull View.OnClickListener listener, long delayMs)
+        {
+            this.delayMs = delayMs;
+            this.listener = listener;
+            if (listener == null) {
+                throw new NullPointerException("OnClickListener is null!");
+            }
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            long currentClickAt = System.currentTimeMillis();
+            if (previousClickAt == null || Math.abs(currentClickAt - previousClickAt) > delayMs) {
+                previousClickAt = currentClickAt;
+                listener.onClick(v);
+            }
+        }
+    }
+
+    /**
+     * ThrottledMenuItemClickListener
+     */
+    public static class ThrottledMenuItemClickListener implements PopupMenu.OnMenuItemClickListener
+    {
+        protected long delayMs;
+        protected Long previousClickAt;
+        protected PopupMenu.OnMenuItemClickListener listener;
+
+        public ThrottledMenuItemClickListener(@NonNull PopupMenu.OnMenuItemClickListener listener) {
+            this(listener, 1000);
+        }
+
+        public ThrottledMenuItemClickListener(@NonNull PopupMenu.OnMenuItemClickListener listener, long delayMs)
+        {
+            this.delayMs = delayMs;
+            this.listener = listener;
+            if (listener == null) {
+                throw new NullPointerException("OnMenuItemClickListener is null!");
+            }
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            long currentClickAt = System.currentTimeMillis();
+            if (previousClickAt == null || Math.abs(currentClickAt - previousClickAt) > delayMs) {
+                previousClickAt = currentClickAt;
+                return listener.onMenuItemClick(item);
+            }
+            return true;
         }
     }
 

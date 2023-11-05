@@ -24,6 +24,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -31,8 +32,10 @@ import android.content.pm.PermissionInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -42,6 +45,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+
+import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -152,6 +157,7 @@ public class AppSettings
     public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
     public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
     public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
+    public static final String PREF_KEY_GETFIX_TIME = "getFix_time";    // time of last automatic request
 
     public static final String PREF_KEY_GETFIX_PASSIVE = "getFix_passiveMode";
     public static final boolean PREF_DEF_GETFIX_PASSIVE = false;
@@ -699,6 +705,25 @@ public class AppSettings
         return ((override != null && !override.equals(THEME_DEFAULT)) ? override : null);
     }
 
+    public static boolean lastAutoLocationIsStale(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return timeSinceLastAutoLocationRequest(context) > AppSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
+    }
+    public static long timeSinceLastAutoLocationRequest(Context context) {
+        return System.currentTimeMillis() - lastAutoLocationRequest(context);
+    }
+    public static long lastAutoLocationRequest(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getLong(PREF_KEY_GETFIX_TIME, 0);
+    }
+    public static void saveLastAutoLocationRequest(Context context, long value)
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putLong(PREF_KEY_GETFIX_TIME, value);
+        pref.apply();
+    }
+
     /**
      * @param prefs an instance of SharedPreferences
      * @param defaultValue the default max age value if pref can't be loaded
@@ -904,6 +929,14 @@ public class AppSettings
             }
         }
         return packageName;
+    }
+
+    public static void openAppDetails(Activity activity)
+    {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

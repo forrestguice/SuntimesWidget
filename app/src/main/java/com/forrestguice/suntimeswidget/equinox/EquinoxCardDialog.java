@@ -54,6 +54,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -101,8 +103,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
             @Override
             public void onBackPressed() {
-                if (hasSelection()) {
+                if (hasSelection())
+                {
                     setSelection((Integer) null);
+                    if (AppSettings.isTelevision(getActivity())) {
+                        btn_menu.requestFocus();
+                    }
                 } else super.onBackPressed();
             }
         };
@@ -144,9 +150,13 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             TooltipCompat.setTooltipText(btn_prev, btn_prev.getContentDescription());
             btn_prev.setOnClickListener(onPrevClicked);
         }
-        if (btn_menu != null) {
+        if (btn_menu != null)
+        {
             TooltipCompat.setTooltipText(btn_menu, btn_menu.getContentDescription());
             btn_menu.setOnClickListener(onMenuClicked);
+            if (AppSettings.isTelevision(getActivity())) {
+                btn_menu.setFocusableInTouchMode(true);
+            }
         }
 
         initCardView(context, v);
@@ -266,12 +276,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onMenuClicked = new View.OnClickListener() {
+    private final View.OnClickListener onMenuClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showOverflowMenu(getContext(), v);
         }
-    };
+    });
 
     private void themeViews(Context context)
     {
@@ -465,7 +475,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         });
     }
 
-    private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -488,7 +498,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -516,6 +526,11 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
         Menu m = menu.getMenu();
         setDataToMenu(m, data);
+
+        MenuItem alarmItem = m.findItem(R.id.action_alarm);
+        if (alarmItem != null) {
+            alarmItem.setVisible(AlarmSettings.hasAlarmSupport(context));
+        }
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
         if (addonSubmenuItem != null) {
@@ -549,7 +564,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     };
 
-    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -601,7 +616,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected void shareItem(Context context, Intent itemData)
     {

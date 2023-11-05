@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,8 +30,8 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 public class LocationListTask extends AsyncTask<Object, Object, LocationListTask.LocationListTaskResult>
 {
-    private GetFixDatabaseAdapter db;
-    private Location selected;
+    private final GetFixDatabaseAdapter db;
+    private final Location selected;
 
     public LocationListTask(Context context, Location selected)
     {
@@ -56,11 +57,17 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
             cursor = db.getAllPlaces(0, true);
         }
 
+        String selectedLat = selectedPlaceLat, selectedLon = selectedPlaceLon, selectedAlt = selectedPlaceAlt;
         Cursor selectedCursor = db.getPlace(selectedPlaceName, true);
-        String selectedLat = selectedCursor.getString(selectedCursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
-        String selectedLon = selectedCursor.getString(selectedCursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
-        String selectedAlt = selectedCursor.getString(selectedCursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
-        closeCursor(selectedCursor);
+        try {
+            selectedLat = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
+            selectedLon = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
+            selectedAlt = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
+        } catch (CursorIndexOutOfBoundsException | IllegalArgumentException e) {
+            Log.w("LocationListTask", "Place not found.. " + e);
+        } finally {
+            closeCursor(selectedCursor);
+        }
 
         if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon) || !selectedAlt.equals(selectedPlaceAlt))
         {
