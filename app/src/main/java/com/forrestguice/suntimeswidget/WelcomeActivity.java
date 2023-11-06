@@ -103,15 +103,6 @@ public class WelcomeActivity extends AppCompatActivity
         setResult(RESULT_CANCELED, getResultData());
         AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(savedInstanceState);
-
-        if (Build.VERSION.SDK_INT >= 21)
-        {
-            Window window = getWindow();
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-
         setContentView(R.layout.layout_activity_welcome);
 
         Intent intent = getIntent();
