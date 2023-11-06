@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -962,6 +963,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         if (inflater != null)
         {
+            @SuppressLint("InflateParams")
             View popupView = inflater.inflate(R.layout.layout_dialog_seekaltitude, null);
             if (popupView != null)
             {
@@ -1075,6 +1077,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         if (inflater != null)
         {
+            @SuppressLint("InflateParams")
             View popupView = inflater.inflate(R.layout.layout_dialog_objheight, null);
             if (popupView != null)
             {
