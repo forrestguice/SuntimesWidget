@@ -70,6 +70,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -109,7 +110,7 @@ public class WelcomeActivity extends AppCompatActivity
             intent.removeExtra(EXTRA_PAGE);
         }
 
-        pagerAdapter = new WelcomeFragmentAdapter(getSupportFragmentManager());
+        pagerAdapter = new WelcomeFragmentAdapter(this, getSupportFragmentManager());
         pager = (ViewPager) findViewById(R.id.container);
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(pagerChangeListener);
@@ -320,30 +321,69 @@ public class WelcomeActivity extends AppCompatActivity
      */
     private class WelcomeFragmentAdapter extends FragmentPagerAdapter
     {
-        public WelcomeFragmentAdapter(FragmentManager fragments)
+        protected ArrayList<WelcomeFragmentPage> pages = new ArrayList<>();
+
+        public WelcomeFragmentAdapter(Context context, FragmentManager fragments)
         {
             super(fragments);
+            pages.add(new WelcomeFragmentPage() {    // 0; first page
+                public WelcomeFragment newInstance() {
+                    return WelcomeFirstPageFragment.newInstance();
+                }
+            });
+            pages.add(new WelcomeFragmentPage() {    // 1; appearance
+                public WelcomeFragment newInstance() {
+                    return WelcomeAppearanceFragment.newInstance();
+                }
+            });
+            pages.add(new WelcomeFragmentPage() {    // 2; ui
+                public WelcomeFragment newInstance() {
+                    return WelcomeUserInterfaceFragment.newInstance();
+                }
+            });
+            pages.add(new WelcomeFragmentPage() {    // 3; location
+                public WelcomeFragment newInstance() {
+                    return WelcomeLocationFragment.newInstance();
+                }
+            });
+            pages.add(new WelcomeFragmentPage() {    // 4; time zone
+                public WelcomeFragment newInstance() {
+                    return WelcomeTimeZoneFragment.newInstance(WelcomeActivity.this);
+                }
+            });
+            if (AlarmSettings.hasAlarmSupport(context)) {    // 5; alarms
+                pages.add(new WelcomeFragmentPage() {
+                    public WelcomeFragment newInstance() {
+                        return WelcomeAlarmsFragment.newInstance();
+                    }
+                });
+            }
+            pages.add(new WelcomeFragmentPage() {
+                public WelcomeFragment newInstance() {    // last page
+                    return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
+                }
+            });
         }
 
         @Override
         public Fragment getItem(int position)
         {
-            switch (position)
-            {
-                case 6: return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
-                case 5: return WelcomeAlarmsFragment.newInstance();
-                case 4: return WelcomeTimeZoneFragment.newInstance(WelcomeActivity.this);
-                case 3: return WelcomeLocationFragment.newInstance();
-                case 2: return WelcomeUserInterfaceFragment.newInstance();
-                case 1: return WelcomeAppearanceFragment.newInstance();
-                case 0: default: return WelcomeFirstPageFragment.newInstance();
-            }
+            if (position >= 0 && position < getCount()) {
+                return pages.get(position).newInstance();
+            } else return WelcomeFirstPageFragment.newInstance();
         }
 
         @Override
         public int getCount() {
-            return 7;
+            return pages.size();
         }
+    }
+
+    /**
+     * WelcomeFragmentPage
+     */
+    public abstract static class WelcomeFragmentPage {
+        public abstract WelcomeFragment newInstance();
     }
 
     /**
