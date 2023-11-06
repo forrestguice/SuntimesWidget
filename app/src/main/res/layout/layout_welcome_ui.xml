@@ -35,7 +35,9 @@
 
         <LinearLayout android:id="@+id/options_layout" android:orientation="vertical"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="48dp">
 
             <TextView
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -100,8 +102,8 @@
 
             <Button android:id="@+id/button_defaults" android:visibility="visible"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_gravity="end" android:layout_marginTop="24dp"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_gravity="end" android:layout_marginTop="16dp"
                 android:text="@string/configAction_restoreDefaults" />
 
         </LinearLayout>
