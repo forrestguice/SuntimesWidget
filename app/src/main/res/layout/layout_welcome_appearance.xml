@@ -32,18 +32,23 @@
 
     <LinearLayout android:id="@+id/theme_layout" android:orientation="vertical"
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="16dp" android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/text_layout">
+        app:layout_constraintTop_toBottomOf="@+id/header" app:layout_constraintBottom_toTopOf="@+id/text_layout">
 
-        <TextView
+        <TextView android:visibility="gone"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
-            android:gravity="start" android:layout_gravity="start" android:layout_marginBottom="8dp"
-            android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="?attr/text_size_xlarge"
+            android:gravity="start" android:layout_gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium" android:textSize="?attr/text_size_medium"
             android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
             android:text="@string/configLabel_appearance" />
 
-        <LinearLayout
+        <Spinner android:id="@+id/spin_theme"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:dropDownVerticalOffset="16sp" />
+
+        <LinearLayout android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
             <ToggleButton android:id="@+id/button_theme_system" android:theme="@style/ThemeButton"
@@ -57,7 +62,7 @@
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
         </LinearLayout>
 
-        <LinearLayout
+        <LinearLayout android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
             <ToggleButton android:id="@+id/button_theme_dark" android:theme="@style/ThemeButton"
@@ -77,15 +82,16 @@
     <LinearLayout android:id="@+id/text_layout"
         android:orientation="vertical" android:gravity="center_horizontal"
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/theme_layout"
-        app:layout_constraintBottom_toTopOf="@+id/gutter">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             android:gravity="start" android:layout_gravity="start"
-            android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="?attr/text_size_small"
+            android:textAppearance="?android:attr/textAppearanceMedium" android:textSize="?attr/text_size_medium"
+            android:textStyle="bold"
             android:text="@string/configLabel_ui_textsize" />
 
         <include layout="@layout/layout_welcome_appearance_textsize" />
@@ -98,7 +104,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_layout"
         app:layout_constraintBottom_toTopOf="@+id/preview_layout" />
 
-    <ScrollView android:id="@+id/preview_layout"
+    <ScrollView android:id="@+id/preview_layout" android:visibility="gone"
         android:layout_width="match_parent" android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/gutter"
         app:layout_constraintBottom_toBottomOf="parent"

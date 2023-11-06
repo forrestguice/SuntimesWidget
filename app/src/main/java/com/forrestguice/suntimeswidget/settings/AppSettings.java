@@ -990,6 +990,14 @@ public class AppSettings
     private static final AppThemeInfo info_light1Theme = new LightTheme1Info();
     private static final AppThemeInfo info_defaultTheme = info_systemTheme;
 
+    public static AppThemeInfo[] appThemeInfo()
+    {
+        return new AppThemeInfo[] {
+                info_systemTheme, info_darkTheme, info_lightTheme,
+                info_system1Theme, info_dark1Theme, info_light1Theme
+        };
+    }
+
     /**
      * AppThemeInfo
      */
