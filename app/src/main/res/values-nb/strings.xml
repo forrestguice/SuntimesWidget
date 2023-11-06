@@ -36,6 +36,7 @@
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
     <string name="configAction_onlineHelp">Hjelp på nett</string>
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">Mer</string>
     <string name="configAction_options">Alternativer</string>
     <string name="configAction_settings">Innstillinger</string>
@@ -496,6 +497,8 @@
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Gjeldende (sist kjente)</string>  <!-- setting -->
     <string name="locationMode_custom">Brukerdefinert</string>           <!-- setting -->
+
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
 
     <string name="configLabel_location">Sted</string>               <!-- group title -->
     <string name="configLabel_location_mode">Modus:</string>                      <!-- spinner label -->
@@ -980,6 +983,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> må være \"ikke optimalisert\" for beste resultater.</string>
     <string name="help_battery_optimization_aggressive">Dette er en <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> enhet, som kan kreve ekstra innstilling for å virke korrekt.</string>
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Varsler</string>
     <string name="configLabel_alarms_notifications_on">På</string>
     <string name="configLabel_alarms_notifications_off">Av.\nAlarmer kan mislykkes i å vises korrekt.</string>
@@ -1118,7 +1127,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Vis månen</string>
-    <string name="configLabel_ui_showmoon_summary">Vis oppgang- og nedgangstider, fase og illuminasjon.</string>
+    <string name="configLabel_ui_showmoon_summary">Vis oppgang- og nedgangstider, fase og illuminasjon.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Vis månens kulminasjon</string>
@@ -1528,6 +1537,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Bestem posisjon</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Siste posisjon</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Siste posisjon</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Henter posisjon</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->

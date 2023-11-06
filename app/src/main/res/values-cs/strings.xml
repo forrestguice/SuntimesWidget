@@ -37,6 +37,7 @@
     <string name="configAction_moon">Měsíc</string>
     <string name="configAction_help">Nápověda</string>
     <string name="configAction_onlineHelp">Nápověda online</string>
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">Více</string>
     <string name="configAction_options">Možnosti</string>
     <string name="configAction_settings">Nastavení</string>
@@ -546,6 +547,8 @@
     <string name="locationMode_current">Aktuální (poslední známa)</string>  <!-- setting -->
     <string name="locationMode_custom">Uživatelem definovaná</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+
     <string name="configLabel_location">Nastavení polohy</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Režim:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Zeměpisná šířka:</string>                   <!-- edittext label -->
@@ -1032,6 +1035,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Notifikace</string>
     <string name="configLabel_alarms_notifications_on">Zapnuty</string>
     <string name="configLabel_alarms_notifications_off">Vypnuty.\nNemusí dojít ke správnému zobrazení budíku.</string>
@@ -1177,7 +1186,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Zobrazit měsíc</string>
-    <string name="configLabel_ui_showmoon_summary">Zobrazit časy východu a západu, fázi a osvícenost.</string>
+    <string name="configLabel_ui_showmoon_summary">Zobrazit časy východu a západu, fázi a osvícenost.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
@@ -1635,6 +1644,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Nastavit polohu</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Poslední poloha</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Poslední poloha</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Získávaní polohy</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Získávaní polohy selhalo; vracím se k poslední známé poloze</string>  <!-- displayed briefly after gps has failed to get a location -->
