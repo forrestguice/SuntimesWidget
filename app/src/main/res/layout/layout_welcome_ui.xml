@@ -13,9 +13,9 @@
         app:layout_constraintVertical_chainStyle="packed">
 
         <ImageView
-            android:id="@+id/icon"
-            android:layout_width="97dp" android:layout_height="96dp" android:scaleType="fitCenter"
-            android:src="@drawable/ic_action_settings" android:tint="?attr/colorControlHighlight"
+            android:id="@+id/icon" android:layout_marginTop="8dp"
+            android:layout_width="96dp" android:layout_height="96dp" android:scaleType="fitCenter"
+            android:src="@drawable/ic_settings_128dp" app:tint="?attr/colorControlNormal"
             tools:ignore="ContentDescription" />
 
         <TextView android:id="@+id/text_title"
