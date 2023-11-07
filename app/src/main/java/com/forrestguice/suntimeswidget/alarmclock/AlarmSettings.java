@@ -487,6 +487,15 @@ public class AlarmSettings
         }
     }
 
+    @TargetApi(26)
+    public static void openChannelSettings(@NonNull Context context, @NonNull AlarmClockItem.AlarmType type)
+    {
+        Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+        intent.putExtra(Settings.EXTRA_CHANNEL_ID, AlarmNotifications.createNotificationChannel(context, type));
+        context.startActivity(intent);
+    }
+
     /**
      * isChannelMuted
      * @return true if NotificationChannel is blocked

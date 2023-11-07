@@ -969,7 +969,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     {
                         @Override
                         public void onClick(View view) {
-                            SuntimesSettingsActivity.openChannelSettings(AlarmClockActivity.this, types[j]);
+                            AlarmSettings.openChannelSettings(AlarmClockActivity.this, types[j]);
                         }
                     });
                     warning.show();
