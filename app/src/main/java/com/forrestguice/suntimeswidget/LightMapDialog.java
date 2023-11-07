@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -365,9 +366,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
 
         menuButton = (ImageButton)dialogView.findViewById(R.id.media_menu);
-        if (menuButton != null) {
+        if (menuButton != null)
+        {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.setFocusableInTouchMode(true);
+            }
         }
 
         speedButton = (TextView)dialogView.findViewById(R.id.media_speed);
@@ -452,25 +457,43 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     public static final boolean DEF_KEY_WORLDMAP_MINORGRID = false;
 
-    private View.OnClickListener playClickListener = new View.OnClickListener()
+    private final View.OnClickListener playClickListener = new View.OnClickListener()
     {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             playMap();
+            if (AppSettings.isTelevision(getActivity())) {
+                if (pauseButton != null) {
+                    pauseButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnClickListener pauseClickListener = new View.OnClickListener()
+    private final View.OnClickListener pauseClickListener = new View.OnClickListener()
     {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             stopMap(false);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnClickListener resetClickListener = new View.OnClickListener()
+    private final View.OnClickListener resetClickListener = new View.OnClickListener()
     {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             stopMap(true);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
     private final View.OnClickListener menuClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
@@ -940,6 +963,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         if (inflater != null)
         {
+            @SuppressLint("InflateParams")
             View popupView = inflater.inflate(R.layout.layout_dialog_seekaltitude, null);
             if (popupView != null)
             {
@@ -1053,6 +1077,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         if (inflater != null)
         {
+            @SuppressLint("InflateParams")
             View popupView = inflater.inflate(R.layout.layout_dialog_objheight, null);
             if (popupView != null)
             {

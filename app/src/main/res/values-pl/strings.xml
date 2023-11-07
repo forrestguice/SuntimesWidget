@@ -36,6 +36,7 @@
     <string name="configAction_moon">Księżyc</string>
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_onlineHelp">Pomoc online</string>
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">Więcej</string>
     <string name="configAction_options">Opcje</string>
     <string name="configAction_settings">Ustawienia</string>
@@ -491,6 +492,8 @@
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Obecna (ostatnia znana)</string>  <!-- setting -->
     <string name="locationMode_custom">Użytkownika</string>           <!-- setting -->
+
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
 
     <string name="configLabel_location">Lokalizacja</string>              <!-- group title -->
     <string name="configLabel_location_mode">Tryb:</string>                     <!-- spinner label -->
@@ -975,6 +978,12 @@
     <string name="help_battery_optimization">Ustaw aplikację <xliff:g id="appName">%s</xliff:g> jako „nie zoptymalizowaną” dla jej poprawnego działania.</string>
     <string name="help_battery_optimization_aggressive">To jest urządzenie <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, które może wymagać dodatkowej konfiguracji dla bezawaryjnego działania.</string>
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Powiadomienia</string>
     <string name="configLabel_alarms_notifications_on">Włączone</string>
     <string name="configLabel_alarms_notifications_off">Wyłączone.\nAlarmy mogą nie wyświetlić się poprawnie.</string>
@@ -1121,7 +1130,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Wyświetl dane Księżyca</string>
-    <string name="configLabel_ui_showmoon_summary">Wyświetla czasu wschodu i zachodu Księżyca, fazę i oświetlenie.</string>
+    <string name="configLabel_ui_showmoon_summary">Wyświetla czasu wschodu i zachodu Księżyca, fazę i oświetlenie.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Wyświetl kulminacje Księżyca</string>
@@ -1525,6 +1534,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Ustaw lokalizację</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Ostatnia lokalizacja</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Ostatnia lokalizacja</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Ustalanie lokalizacji</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Nie udało się określić Twojej lokalizacji, powrót do ostatniej znanej lokalizacji.</string>  <!-- displayed briefly after gps has failed to get a location -->

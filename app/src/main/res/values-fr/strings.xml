@@ -36,6 +36,7 @@
     <string name="configAction_moon">Lune</string>
     <string name="configAction_help">Aide</string>
     <string name="configAction_onlineHelp">Aide en ligne</string>
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">Plus</string>
     <string name="configAction_options">Options</string>
     <string name="configAction_settings">Paramètres</string>
@@ -480,6 +481,8 @@
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Actuel (dernier connu)</string>  <!-- setting -->
     <string name="locationMode_custom">Défini par l\'utilisateur</string>           <!-- setting -->
+
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
 
     <string name="configLabel_location">Paramètres de localisation</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Mode :</string>                      <!-- spinner label -->
@@ -957,6 +960,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
     <string name="configLabel_alarms_notifications_on">Actives</string>
     <string name="configLabel_alarms_notifications_off">Inactives.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
@@ -1094,7 +1103,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Afficher la lune</string>  
-    <string name="configLabel_ui_showmoon_summary">Affiche les heures de lever et de coucher, la phase actuelle et la luminosité.</string>
+    <string name="configLabel_ui_showmoon_summary">Affiche les heures de lever et de coucher, la phase actuelle et la luminosité.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Afficher le midi lunaire</string>
@@ -1505,6 +1514,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Sélectionner l\'emplacement</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Dernier emplacement</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Dernier emplacement</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Obtenir l\'emplacement</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Impossible d\'obtenir l\'emplacement par GPS. Repli sur la dernière position connue.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->

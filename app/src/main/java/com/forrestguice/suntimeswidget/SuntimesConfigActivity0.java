@@ -2930,5 +2930,5 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
     }
-
+    
 }

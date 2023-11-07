@@ -56,6 +56,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
     public static final int REQUEST_LOCATION = 30;
 
+    protected ImageButton btn_accept, btn_cancel;
+
     public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState)
     {
         super.onInflate(activity, attrs, savedInstanceState);
@@ -314,11 +316,14 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             footer.setVisibility(hideFooter ? View.GONE : View.VISIBLE);
         }
 
-        ImageButton btn_cancel = (ImageButton) view.findViewById(R.id.dialog_button_cancel);
+        btn_cancel = (ImageButton) view.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(hideFooter ? null : onDialogCancelClick);
+        if (AppSettings.isTelevision(getActivity())) {
+            btn_cancel.setFocusableInTouchMode(true);
+        }
 
-        ImageButton btn_accept = (ImageButton) view.findViewById(R.id.dialog_button_accept);
+        btn_accept = (ImageButton) view.findViewById(R.id.dialog_button_accept);
         TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
         btn_accept.setOnClickListener(hideFooter ? null : onDialogAcceptClick);
 
@@ -496,8 +501,15 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             if (location != null) {
                 setLocation(getActivity(), location);
             }
+            if (AppSettings.isTelevision(getContext())) {
+                btn_accept.requestFocus();
+            }
+
         } else {
             getDialogContent().populateLocationList();
+            if (AppSettings.isTelevision(getContext())) {
+                btn_cancel.requestFocus();
+            }
         }
     }
 

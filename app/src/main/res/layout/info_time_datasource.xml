@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
+            android:focusable="true" android:clickable="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="5dp" android:paddingRight="5dp"
@@ -89,6 +90,7 @@
             android:textColor="?attr/date_buttonSelector" android:textSize="?attr/text_size_xsmall" android:textStyle="bold"
             tools:text="sunrisesunsetlib" tools:ignore="SmallSp"
             android:background="?attr/selectableItemBackground"
+            android:focusable="true" android:clickable="true"
             android:ellipsize="start" android:maxLines="2"
             app:layout_constraintHorizontal_weight="3"/>
 

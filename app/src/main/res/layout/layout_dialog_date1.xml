@@ -44,6 +44,7 @@
                 style="@style/ActionButton" android:contentDescription="@string/timedate_dialog_ok"
                 android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
                 android:src="?attr/icActionAccept"
+                android:nextFocusDown="@+id/dialog_button_neutral"
                 android:tint="?attr/text_accentColor" />
 
         </LinearLayout>

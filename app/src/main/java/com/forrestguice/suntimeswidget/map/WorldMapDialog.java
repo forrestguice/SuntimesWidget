@@ -407,9 +407,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
 
         menuButton = (ImageButton)dialogView.findViewById(R.id.map_menu);
-        if (menuButton != null) {
+        if (menuButton != null)
+        {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.setFocusableInTouchMode(true);
+            }
         }
 
         speedButton = (TextView)dialogView.findViewById(R.id.map_speed);
@@ -1264,24 +1268,39 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private int seek_totalMinutes = SEEK_TOTALMINUTES_15m;
     private int seek_now = seek_totalMinutes / 2;     // with "now" at center point
 
-    private View.OnClickListener playClickListener = new View.OnClickListener()
+    private final View.OnClickListener playClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             playMap();
+            if (AppSettings.isTelevision(getActivity())) {
+                if (pauseButton != null) {
+                    pauseButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnLongClickListener playLongClickListener = new View.OnLongClickListener()
+    private final View.OnLongClickListener playLongClickListener = new View.OnLongClickListener()
     {
         @Override
         public boolean onLongClick(View v)
         {
             if (worldmap.isAnimated()) {
                 stopMap(false);
+                if (AppSettings.isTelevision(getActivity())) {
+                    if (playButton != null) {
+                        playButton.requestFocus();
+                    }
+                }
 
             } else {
                 playMap();
                 shareMap();
+                if (AppSettings.isTelevision(getActivity())) {
+                    if (recordButton != null) {
+                        recordButton.requestFocus();
+                    }
+                }
             }
             return true;
         }
@@ -1292,18 +1311,28 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateMediaButtons();
     }
 
-    private View.OnClickListener pauseClickListener = new View.OnClickListener()
+    private final View.OnClickListener pauseClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             stopMap(false);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnClickListener resetClickListener = new View.OnClickListener()
+    private final View.OnClickListener resetClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             stopMap(true);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
     private void stopMap(boolean reset)

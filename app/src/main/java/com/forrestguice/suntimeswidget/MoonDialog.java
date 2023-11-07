@@ -27,7 +27,6 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -42,10 +41,8 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Pair;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +52,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
@@ -302,9 +300,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         mediaAnchor = dialogView.findViewById(R.id.dialogTopRightAnchor);
 
         menuButton = (ImageButton) dialogView.findViewById(R.id.menu_button);
-        if (menuButton != null) {
+        if (menuButton != null)
+        {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(onMenuClicked);
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.setFocusableInTouchMode(true);
+            }
         }
 
         if (context != null) {
@@ -785,6 +787,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         if (inflater != null)
         {
+            @SuppressLint("InflateParams")
             final View popupView = inflater.inflate(R.layout.layout_popup_mediacontrol, null);
             if (popupView != null)
             {
@@ -930,6 +933,11 @@ public class MoonDialog extends BottomSheetDialogFragment
     {
         Menu m = menu.getMenu();
         setDataToMenu(m, data);
+
+        MenuItem alarmItem = m.findItem(R.id.action_alarm);
+        if (alarmItem != null) {
+            alarmItem.setVisible(AlarmSettings.hasAlarmSupport(context));
+        }
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
         if (addonSubmenuItem != null) {

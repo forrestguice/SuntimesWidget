@@ -1049,6 +1049,7 @@
         <item name="android:gravity">end</item>
         <item name="android:maxLines">2</item>
         <item name="android:textColor">@drawable/btn_labeltxt</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
