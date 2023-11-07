@@ -77,7 +77,8 @@ jobs:
       id: translation-report-write
       if: ${{ steps.translation-report.outputs.result }}
       run: |      
-          git checkout gh-actions-report      
+          git checkout gh-actions-report
+          git pull
           filename=".github/translation-report-${{steps.translation-report.outputs.language}}.txt"          
           prevLine="-1"
           if [ -f $filename ]; then

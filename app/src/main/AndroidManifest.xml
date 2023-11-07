@@ -4,6 +4,10 @@
           package="com.forrestguice.suntimeswidget"
           android:installLocation="internalOnly">   <!-- internalOnly; widgets may be unavailable when installed to external -->
 
+    <uses-feature android:name="android.software.app_widgets" android:required="false"/>   <!-- provides app widgets -->
+
+    <uses-feature android:name="android.hardware.location" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />     <!-- needed to get location using GPS -->
 
@@ -26,6 +30,9 @@
     <uses-permission android:name="suntimes.permission.READ_CALCULATOR" />
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
+
+    <uses-feature android:name="android.software.leanback" android:required="false" />    <!-- Leanback support (Android TV) -->
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -57,6 +64,20 @@
                 <data android:scheme="geo" />
             </intent-filter>
 
+        </activity>
+
+        <!-- TV Activity -->
+        <activity
+            android:name=".SuntimesTvActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:banner="@mipmap/ic_banner"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboard|keyboardHidden|navigation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- Calculator Provider -->

@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import org.junit.Before;
 
@@ -40,6 +41,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
@@ -85,6 +87,48 @@ public class AlarmScheduleTest
             now = event;
             now.add(Calendar.SECOND, 1);
             c++;
+        }
+    }
+
+    @Test
+    public void test_updateAlarmTime_clockTime_ltst()
+    {
+        int hour = 6;
+        int minute = 30;
+
+        AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
+        alarm.location = new Location("Phoenix", "33.45", "-111.94", "1263");
+        alarm.timezone = WidgetTimezones.ApparentSolarTime.TIMEZONEID;
+        alarm.hour = hour;
+        alarm.minute = minute;
+
+        int c = 0, n = 7;
+        Calendar event0 = null;
+        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, alarm.location));
+        Calendar now = getCalendar(2023, Calendar.JUNE, 22, 7, 0);
+
+        while (c < n)
+        {
+            Calendar event = AlarmNotifications.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
+            assertNotNull(event);
+            if (event0 != null) {
+                assertTrue(event.after(event0));
+            }
+
+            boolean result = AlarmNotifications.updateAlarmTime((Context)null, alarm, now, true);
+            assertTrue(result);
+            assertEquals(event.getTimeInMillis(), alarm.timestamp);
+            assertEquals("hour value should remain unchanged", hour, alarm.hour);
+            assertEquals("minute value should remain unchanged", minute, alarm.minute);
+
+            event0 = event;
+            now.setTimeInMillis(event.getTimeInMillis());
+            now.add(Calendar.SECOND, 1);
+            c++;
+
+            event1.setTimeInMillis(event.getTimeInMillis());
+            Log.i("TEST", utils.calendarDateTimeDisplayString(null, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " +
+                    utils.calendarDateTimeDisplayString(null, event1, true, true).toString() + " [" + event1.getTimeZone().getID() + "] ");
         }
     }
 

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -90,6 +90,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
@@ -655,8 +656,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         locationConfig = (LocationConfigView) findViewById(R.id.appwidget_location_config);
         if (locationConfig != null)
         {
-            locationConfig.setAutoAllowed(false);
-            locationConfig.setHideMode(true);
+            locationConfig.setAutoAllowed(true);
+            locationConfig.setHideMode(false);
             locationConfig.init(this, false, this.appWidgetId);
             locationConfig.setOnListButtonClicked(new View.OnClickListener() {
                 @Override
@@ -889,6 +890,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     locationConfig.setMode(isChecked ? LocationConfigView.LocationViewMode.MODE_DISABLED : LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+                    locationConfig.setAutoAllowed(!isChecked);
+                    locationConfig.setHideMode(isChecked, true);
                     if (isChecked) {
                         locationConfig.updateViews(WidgetSettings.loadLocationPref(context, 0));
                     } else {
@@ -1249,7 +1252,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void prepareTimeModeMenu(Context context, Menu menu) {
     }
 
-    protected PopupMenu.OnMenuItemClickListener onTimeModeMenuClicked = new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenu.OnMenuItemClickListener onTimeModeMenuClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
@@ -1268,7 +1271,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     return false;
             }
         }
-    };
+    });
 
     protected void showTimeModeHelp()
     {
@@ -1432,7 +1435,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         menu.show();
         return true;
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -1459,7 +1462,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             sortActionBase.init(context, spinner_timezone);
             return sortActionBase.onActionItemClicked(item.getItemId());
         }
-    };
+    });
 
     /**
      *
@@ -1768,7 +1771,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_riseSetOrder.setSelection(riseSetOrder.ordinal());
 
         // load: showNoon
-        boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
+        boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId, getDefaultShowSolarNoon());
         checkbox_showNoon.setChecked(showNoon);
 
         // load: showSeconds
@@ -1815,6 +1818,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // load: date offset
         loadDateOffset(context);
+    }
+
+    public boolean getDefaultShowSolarNoon() {
+        return WidgetSettings.PREF_DEF_GENERAL_SHOWNOON;
     }
 
     public boolean getDefaultLocationFromApp() {
@@ -2923,5 +2930,5 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
     }
-
+    
 }

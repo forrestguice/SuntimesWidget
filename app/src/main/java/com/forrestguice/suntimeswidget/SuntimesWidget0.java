@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,6 +37,9 @@ import android.appwidget.AppWidgetProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
@@ -527,6 +530,17 @@ public class SuntimesWidget0 extends AppWidgetProvider
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
+    protected static boolean isCurrentLocationMode(Context context, int appWidgetId) {
+        return (WidgetSettings.loadLocationModePref(context, appWidgetId) == WidgetSettings.LocationMode.CURRENT_LOCATION);
+    }
+    protected static void updateLocationToLastKnown(Context context, int appWidgetId)
+    {
+        android.location.Location currentLocation = GetFixHelper.lastKnownLocation(context);
+        if (currentLocation != null) {
+            WidgetSettings.saveLocationPref(context, appWidgetId, new Location(context.getString(R.string.gps_lastfix_title_found), currentLocation));
+        }
+    }
+
     /**
      * @param context the context
      * @param appWidgetManager widget manager
@@ -535,6 +549,10 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunLayout layout, Class widgetClass)
     {
+        if (isCurrentLocationMode(context, appWidgetId)) {
+            updateLocationToLastKnown(context, appWidgetId);
+        }
+
         SuntimesRiseSetData data = getRiseSetData(context, appWidgetId);
         data.calculate();
 

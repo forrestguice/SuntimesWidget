@@ -70,6 +70,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -662,7 +663,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     };
     public static final int AUTO_EXPAND_DELAY = 500;
 
-    private View.OnClickListener onDialogNeutralClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogNeutralClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -671,9 +672,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 onNeutral.onClick(getDialog(), 0);
             }
         }
-    };
+    });
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogCancelClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (getShowsDialog())
@@ -684,7 +685,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 onCanceled.onClick(getDialog(), 0);
             }
         }
-    };
+    });
 
     @Override
     public void onCancel(DialogInterface dialog)
@@ -701,7 +702,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         saveSettings(getActivity());
     }
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -713,7 +714,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 dismiss();
             }
         }
-    };
+    });
 
     private View.OnClickListener onDialogBottomBarClick = new View.OnClickListener() {
         @Override

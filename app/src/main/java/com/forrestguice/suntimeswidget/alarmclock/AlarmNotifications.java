@@ -115,6 +115,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final int NOTIFICATION_SCHEDULE_ALL_DURATION = 4000;
 
     public static final int NOTIFICATION_BATTERYOPT_WARNING_ID = -20;
+    public static final int NOTIFICATION_AUTOSTART_WARNING_ID = -30;
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -543,11 +544,11 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             if (!isValidSoundUri(soundUri)) {
-                Log.w(TAG, "startAlert: rejecting sound uri: " + soundUri.toString() + ".. replacing with default.");
+                Log.w(TAG, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with default.");
                 soundUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
 
                 if (!isValidSoundUri(soundUri)) {
-                    Log.w(TAG, "startAlert: rejecting sound uri: " + soundUri.toString() + ".. replacing with fallback.");
+                    Log.w(TAG, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with fallback.");
                     soundUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.type);
                 }
             }
@@ -556,13 +557,13 @@ public class AlarmNotifications extends BroadcastReceiver
                 startAlert(context, soundUri, isAlarm);  // (0)
 
             } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {    // fallback to default
-                Log.e(TAG, "startAlert: failed to play " + soundUri.toString() + " ..(0) " + e);
+                Log.e(TAG, "startAlert: failed to play " + (soundUri != null ? soundUri.toString() : "null") + " ..(0) " + e);
                 Uri defaultUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
                 try {
                     startAlert(context, defaultUri, isAlarm);  // (1)
 
                 } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e1) {    // default failed too..
-                    Log.e(TAG, "startAlert: failed to play " + defaultUri.toString() + " ..(1) " + e);
+                    Log.e(TAG, "startAlert: failed to play " + (defaultUri != null ? defaultUri.toString() : "null") + " ..(1) " + e);
                     Uri fallbackUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.type);
                     try {
                         startAlert(context, fallbackUri, isAlarm);  // (2)
@@ -1027,7 +1028,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
                     notificationIcon = R.drawable.ic_action_snooze;
                     builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_snoozing));
-                    builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
+                    //builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
                     builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), alarm.hasDismissChallenge(context) ? pendingDismissWithChallenge : pendingDismiss);
                     if (Build.VERSION.SDK_INT < 16) {
                         builder.setContentIntent(alarm.hasDismissChallenge(context) ? pendingDismissWithChallenge : pendingDismiss);    // action buttons require expanded notifications (api 16+)
@@ -1140,16 +1141,8 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
-    public static Notification createBatteryOptWarningNotification(Context context)
+    public static NotificationCompat.Builder warningNotificationBuilder(Context context)
     {
-        String message = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive  : R.string.configLabel_alarms_optWhiteList_unlisted)
-                + "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
-
-        Intent intent = AlarmSettings.getRequestIgnoreBatteryOptimizationSettingsIntent(context);
-        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
-            intent = AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context);
-        }
-
         NotificationCompat.Builder builder = createNotificationBuilder(context, null);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
@@ -1158,10 +1151,41 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setOngoing(false);
         builder.setOnlyAlertOnce(true);
         builder.setContentTitle(context.getString(R.string.app_name_alarmclock));
-        builder.setContentText(message);
         builder.setSmallIcon(R.drawable.ic_action_warning);
         builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_warning));
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        return builder;
+    }
+
+    public static Notification createAutostartWarningNotification(Context context)
+    {
+        NotificationCompat.Builder builder = warningNotificationBuilder(context);
+        String message = context.getString(R.string.autostartWarning).replaceAll("\\[w\\]", "").trim();
+        builder.setContentText(message);
+
+        Intent intent = AlarmSettings.getAutostartSettingsIntent(context);
+        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingView);
+
+        NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
+        style.setBigContentTitle(context.getString(R.string.app_name_alarmclock));
+        style.bigText(message);
+        builder.setStyle(style);
+
+        return builder.build();
+    }
+
+    public static Notification createBatteryOptWarningNotification(Context context)
+    {
+        NotificationCompat.Builder builder = warningNotificationBuilder(context);
+        String message = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive  : R.string.configLabel_alarms_optWhiteList_unlisted)
+                + "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
+        builder.setContentText(message);
+
+        Intent intent = AlarmSettings.getRequestIgnoreBatteryOptimizationSettingsIntent(context);
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
+            intent = AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context);
+        }
 
         PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingView);
@@ -1442,13 +1466,17 @@ public class AlarmNotifications extends BroadcastReceiver
                                             @Override
                                             public void run()
                                             {
+                                                Context context = getApplicationContext();
                                                 sendBroadcast(getFullscreenBroadcast(null));
                                                 if (ids.length > 0) {    // show warning if alarms where rescheduled
-                                                    if (!AlarmSettings.isIgnoringBatteryOptimizations(getApplicationContext())) {
-                                                        notifications.showNotification(getApplicationContext(), createBatteryOptWarningNotification(getApplicationContext()), NOTIFICATION_BATTERYOPT_WARNING_ID);
+                                                    if (!AlarmSettings.isIgnoringBatteryOptimizations(context)) {
+                                                        notifications.showNotification(context, createBatteryOptWarningNotification(context), NOTIFICATION_BATTERYOPT_WARNING_ID);
+                                                    }
+                                                    if (AlarmSettings.hasAutostartSettings(context) && AlarmSettings.isAutostartDisabled(context)) {
+                                                        notifications.showNotification(context, createAutostartWarningNotification(context), NOTIFICATION_AUTOSTART_WARNING_ID);
                                                     }
                                                 }
-                                                notifications.dismissNotification(getApplicationContext(), NOTIFICATION_SCHEDULE_ALL_ID);
+                                                notifications.dismissNotification(context, NOTIFICATION_SCHEDULE_ALL_ID);
                                                 notifications.stopSelf(startId);
                                             }
                                         }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));
@@ -2194,6 +2222,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
         Calendar eventTime = null;
+        boolean modifyHourMinute = true;
         String eventID = item.getEvent();
         SolarEvents event = SolarEvents.valueOf(eventID, null);
         ArrayList<Integer> repeatingDays = (item.repeatingDays != null ? item.repeatingDays : AlarmClockItem.everyday());
@@ -2206,6 +2235,7 @@ public class AlarmNotifications extends BroadcastReceiver
             eventTime = updateAlarmTime_addonEvent(context.getContentResolver(), eventID, item.location, item.offset, item.repeating, repeatingDays, now);
 
         } else {
+            modifyHourMinute = false;    // "clock time" alarms should leave "hour" and "minute" values untouched
             eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.timezone, item.location, item.offset, item.repeating, repeatingDays, now);
         }
 
@@ -2216,8 +2246,10 @@ public class AlarmNotifications extends BroadcastReceiver
 
         if (modifyItem)
         {
-            item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
-            item.minute = eventTime.get(Calendar.MINUTE);
+            if (modifyHourMinute) {
+                item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
+                item.minute = eventTime.get(Calendar.MINUTE);
+            }
             item.timestamp = eventTime.getTimeInMillis();
             item.modified = true;
         }
@@ -2545,6 +2577,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         Calendar alarmTime = Calendar.getInstance(timezone);
         Calendar eventTime = Calendar.getInstance(timezone);
+        eventTime.setTimeInMillis(now.getTimeInMillis());
 
         eventTime.set(Calendar.SECOND, 0);
         if (hour >= 0 && hour < 24) {

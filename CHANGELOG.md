@@ -1,5 +1,67 @@
 ### ~
 
+### v0.15.8 (2023-10-24)
+* adds a warning when the app is configured to "current location" but location permissions are denied (#733).
+* changes the location label when switching away from "current location" mode (#733).
+* fixes bug in "current location" mode; the location automatically refreshes when the activity is resumed (#733).
+* fixes bug where the time zone selector shows the wrong system time zone (#733).
+* fixes bug where the alarm event icon and text are out of alignment.
+* refactors alarm adapter click listeners (bind rowID instead of position).
+* updates translation to Hungarian (hu) (#736 by titanicbobo).
+
+### v0.15.7 (2023-09-10)
+* adds a warning to SuntimesAlarms when the "Autostart" setting is disabled (Xiomi devices only) (#730).
+* fixes bug "time refreshes aren't happening properly" (#705).
+* fixes bug where the update loop continues running in the background after the activity is no longer visible.
+* fixes bugs where rapidly clicking triggers actions more than once (throttled click listeners).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#728 by James Liu).
+
+### v0.15.6 (2023-07-21)
+* improves time zone defaults (localized default values).
+* improves time zone recommendations; fixes recommendation when place names contain spaces or special characters.
+* adds "recommend time zone" action to time zone dialog.
+* fixes time zone list to show the correct display name and offset when day light saving is applied.
+* fixes app crash when addons attempt to open settings with an invalid fragment.
+* changes labels for cross-quarter days (#719); Imbolc, Beltane, Lughnasadh, Samhain.
+* changes snooze notification so that it no longer triggers fullscreen intent (#724).
+* updates translation to Polish and Esperanto (eo, pl) (#722 by Verdulo).
+* updates translation to Brazilian Portuguese (pt-br) (#721 by naoliv).
+
+### v0.15.5 (2023-07-01)
+* adds Hijri calendar to the date widget (#714).
+* fixes bug where alarms using Apparent Solar Time drift over time (#715).
+* fixes bug where app dialogs display Apparent Solar Time with reduced accuracy.
+* fixes bug where actions fail to apply all available %substitutions.
+* fixes bug where actions fail to apply the correct `extra type` to %substitutions.
+* increases max snooze from 59 to 120 minutes; increases max "auto dismiss" from 59 to 300 seconds.
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#716 by James Liu).
+
+### v0.15.4 (2023-06-03)
+* adds support for Android TV.
+* adds "current location" mode to widgets (#707); widgets use the "last known" location from any provider.
+* enhances custom events to support an offset in minutes (#537).
+* enhances custom events to accept angle as decimal (#704).
+* fixes a bug where the "lunar noon" and "lunar midnight" notes are displayed when the option is disabled.
+* fixes cropping in ActionBar when using "large" or "extra large" text, and other layout improvements.
+* fixes bug where the "3x1 sun widget" doesn't appear in the widget list (#711); adds 3x1 sun widget preview image.
+* updates translation to Polish and Esperanto (eo, pl) (#712 by Verdulo).
+
+### v0.15.3 (2023-04-10)
+* updates translation to French (fr) (#702 by grenagit).
+
+### v0.15.2 (2023-03-20)
+* adds themed alarms icon (Android 13+); updates shortcut icons (adaptive).
+* adds "quick notification" alarm shortcut; adds "world map" app shortcut; removes "themes" shortcut.
+* adds help to the "alarm note" dialog (supports substitutions).
+* adds a warning message when overriding the locale; "the app may need to be restarted before changes take full effect".
+* fixes bug where overriding the locale is not immediately applied to existing widgets.
+* fixes bug where changes to settings from the WelcomeActivity are not applied until after the app is restarted.
+* fixes bug "sun position doesn't update on main screen" (#695).
+* fixes bug "broken 2x1 sun widget preview".
+* misc refactoring (reorganizes WidgetLayout and SettingsActivity classes).
+* fixes spelling error in translation to German (de) (#698 by Das-Nichts).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#700 by James Liu).
+
 ### v0.15.1 (2023-02-15)
 * adds themed icon (Android 13+).
 * adds Chinese, Indian, Japanese, Korean, Minguo, and Vietnamese calendars to the date widget (#692).

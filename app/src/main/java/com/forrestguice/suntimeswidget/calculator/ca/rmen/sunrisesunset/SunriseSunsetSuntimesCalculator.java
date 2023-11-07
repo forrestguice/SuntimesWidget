@@ -316,12 +316,12 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
-    public Calendar getSunriseCalendarForDate( Calendar date, int angle ) {
+    public Calendar getSunriseCalendarForDate( Calendar date, double angle ) {
         return null;   // TODO: supported by this lib?
     }
 
     @Override
-    public Calendar getSunsetCalendarForDate( Calendar date, int angle ) {
+    public Calendar getSunsetCalendarForDate( Calendar date, double angle ) {
         return null;   // TODO: supported by this lib?
     }
 

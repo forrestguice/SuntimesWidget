@@ -5,6 +5,7 @@
     <string name="default_location_latitude">39.9042</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">116.4074</string>  <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>          <!-- meters -->
+    <string name="default_timezone">Asia/Beijing</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 
@@ -35,6 +36,7 @@
     <string name="configAction_moon">月亮</string>
     <string name="configAction_help">帮助</string>
     <string name="configAction_onlineHelp">在线帮助</string>
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">更多</string>
     <string name="configAction_options">选项</string>
     <string name="configAction_settings">设置</string>
@@ -369,14 +371,14 @@
     <string name="timeMode_solstice_winter">冬至</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">冬至</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">春跨季度</string>      <!-- setting -->
-    <string name="timeMode_cross_spring_short">跨季度</string>       <!-- setting -->
-    <string name="timeMode_cross_autumnal">秋跨季度</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal_short">跨季度</string>     <!-- setting -->
-    <string name="timeMode_cross_summer">夏跨季度</string>    <!-- setting -->
-    <string name="timeMode_cross_summer_short">跨季度</string>     <!-- setting -->
-    <string name="timeMode_cross_winter">冬跨季度</string>    <!-- setting -->
-    <string name="timeMode_cross_winter_short">跨季度</string>     <!-- setting -->
+    <string name="timeMode_cross_midwinter">圣布里吉德节 (Imbolc)</string>      <!-- setting -->
+    <string name="timeMode_cross_midwinter_short">跨季节</string>       <!-- setting -->
+    <string name="timeMode_cross_midsummer">拉马斯节 (Lughnasadh)</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer_short">跨季节</string>     <!-- setting -->
+    <string name="timeMode_cross_midspring">贝尔丹节 (Beltane)</string>    <!-- setting --> 
+    <string name="timeMode_cross_midspring_short">跨季节</string>     <!-- setting -->
+    <string name="timeMode_cross_midautumnal">夏末节 (Samhain)</string>    <!-- setting -->
+    <string name="timeMode_cross_midautumnal_short">跨季节</string>     <!-- setting -->
 
     <string name="timeMode_moon">月光</string>                               <!-- label -->
     <string name="timeMode_moon_new">新月</string>                               <!-- setting -->
@@ -499,6 +501,8 @@
     <string name="locationMode_current">当前（最近获取到的位置）</string>  <!-- setting -->
     <string name="locationMode_custom">用户自定</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+
     <string name="configLabel_location">位置</string>               <!-- group title -->
     <string name="configLabel_location_mode">模式:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">纬度:</string>                   <!-- edittext label -->
@@ -549,15 +553,17 @@
     <string name="calendarMode_ethiopian">埃塞俄比亚历</string>
     <string name="calendarMode_gregorian">公历</string>
     <string name="calendarMode_hebrew">希伯来历</string>
+    <string name="calendarMode_hijri_diyanet">伊斯兰历（土耳其）</string>
+    <string name="calendarMode_hijri_umalqura">伊斯兰历（乌姆库拉）</string>
     <string name="calendarMode_julian">儒略历</string>
     <string name="calendarMode_persian">伊朗历</string>
     <string name="calendarMode_thaisolar">泰国阳历</string>
-    <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
-    <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
-    <string name="calendarMode_vietnamese">Vietnamese</string>  <!-- TODO -->
-    <string name="calendarMode_minguo">Minguo</string>  <!-- TODO -->
-    <string name="calendarMode_indian">Indian</string>  <!-- TODO -->
-    <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
+    <string name="calendarMode_chinese">农历</string>
+    <string name="calendarMode_korean">朝鲜历</string>
+    <string name="calendarMode_vietnamese">越南历</string>
+    <string name="calendarMode_minguo">民国历</string>
+    <string name="calendarMode_indian">印度历</string>
+    <string name="calendarMode_japanese">和历</string>
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">今天</string>                  <!-- setting -->
@@ -974,6 +980,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> 须为 \"未优化\" 以获得更好的更好的结果。</string>
     <string name="help_battery_optimization_aggressive">这是一个 <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> 设备，需要额外配置才能正常运作。</string>
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">通知</string>
     <string name="configLabel_alarms_notifications_on">打开</string>
     <string name="configLabel_alarms_notifications_off">关闭。\n闹钟可能无法正确显示。</string>
@@ -1111,14 +1123,14 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">显示月亮信息</string>
-    <string name="configLabel_ui_showmoon_summary">显示月出月落的时间，月相和月光饱满度。</string>
+    <string name="configLabel_ui_showmoon_summary">显示月出月落的时间，月相和月光饱满度。</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">显示月亮正午</string>
     <string name="configLabel_ui_showmoon_noon_summary">在月亮对话框中显示月亮正午和月亮午夜。</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">跨季度日</string>
+    <string name="configLabel_ui_showCrossQuarter">跨季节日</string>
     <string name="configLabel_ui_showCrossQuarter_summary">包含至点和分点之间的中点。</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
@@ -1458,10 +1470,10 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>天文曙光</item>
@@ -1491,10 +1503,10 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>天文曙光</item>
@@ -1524,10 +1536,10 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1537,6 +1549,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">设置位置</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">上次获取到的位置</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">上次获取到的位置</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">获取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">未能获取到位置；尝试用上次获取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->
@@ -1764,10 +1777,10 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>春跨季度:</b> 冬至与春分的中点；<em>二月</em> [北半球]，或 <em>八月</em> [南半球]。<br/><br/>
-          <b>夏跨季度:</b> 春分与夏至的中点；<em>五月</em> [北半球], 或 <em>十一月</em> [南半球]。<br/><br/>
-          <b>秋跨季度:</b> 夏至与秋分的中点；<em>八月</em> [北半球], 或 <em>二月</em> [南半球]。<br/><br/>
-          <b>冬跨季度:</b> 秋分与冬至的中点；<em>十一月</em> [北半球], 或 <em>五月</em> [南半球]。<br/>
+          <b>春跨季节:</b> 冬至与春分的中点；<em>二月</em>[北半球]，或 <em>八月</em>[南半球]。<br/><br/>
+          <b>夏跨季节:</b> 春分与夏至的中点；<em>五月</em>[北半球], 或 <em>十一月</em>[南半球]。<br/><br/>
+          <b>秋跨季节:</b> 夏至与秋分的中点；<em>八月</em>[北半球], 或 <em>二月</em>[南半球]。<br/><br/>
+          <b>冬跨季节:</b> 秋分与冬至的中点；<em>十一月</em>[北半球], 或 <em>五月</em>[南半球]。<br/>
     ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[

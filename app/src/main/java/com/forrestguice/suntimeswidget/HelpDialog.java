@@ -62,17 +62,6 @@ public class HelpDialog extends BottomSheetDialogFragment
         }
     }
 
-    /**
-     * @param savedInstanceState a previously saved state (or null)
-     * @return a Dialog object ready to be displayed
-     */
-    /**@NonNull @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState)
-    {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        return dialog;
-    }*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
@@ -122,6 +111,11 @@ public class HelpDialog extends BottomSheetDialogFragment
         txtView = (TextView) dialogView.findViewById(R.id.txt_help_content);
         buttonFrame = dialogView.findViewById(R.id.dialog_buttons);
         neutralButton = (Button)dialogView.findViewById(R.id.dialog_button_neutral);
+        if (neutralButton != null) {
+            if (AppSettings.isTelevision(getActivity())) {
+                neutralButton.setFocusableInTouchMode(true);
+            }
+        }
     }
 
     public void updateViews()

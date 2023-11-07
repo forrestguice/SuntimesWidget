@@ -19,13 +19,27 @@
     <shortcut
         android:shortcutId="shortcut_alarmclock_addnotify"
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_alarm_add1"
+        android:icon="@drawable/ic_shortcut_alarm_add2"
         android:shortcutShortLabel="@string/shortcut_alarmclock_addnotify_short"
         android:shortcutLongLabel="@string/shortcut_alarmclock_addnotify_long"
         android:shortcutDisabledMessage="@string/shortcut_alarmclock_addnotify_disabled">
 
         <intent
             android:action="com.forrestguice.suntimeswidget.alarmclock.ADD_NOTIFICATION"
+            android:targetPackage="com.forrestguice.suntimeswidget"
+            android:targetClass="com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="shortcut_alarmclock_addnotify1"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_alarm_add1"
+        android:shortcutShortLabel="@string/shortcut_alarmclock_addnotify1_short"
+        android:shortcutLongLabel="@string/shortcut_alarmclock_addnotify1_long"
+        android:shortcutDisabledMessage="@string/shortcut_alarmclock_addnotify1_disabled">
+
+        <intent
+            android:action="com.forrestguice.suntimeswidget.alarmclock.ADD_QNOTIFICATION"
             android:targetPackage="com.forrestguice.suntimeswidget"
             android:targetClass="com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity" />
     </shortcut>

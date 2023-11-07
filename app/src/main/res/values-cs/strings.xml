@@ -6,6 +6,7 @@
     <string name="default_location_longitude">14.3255</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">361</string>         <!-- meters -->
     <string name="default_units_length">METRIC</string>
+    <string name="default_timezone">Europe/Prague</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 
@@ -36,6 +37,7 @@
     <string name="configAction_moon">Měsíc</string>
     <string name="configAction_help">Nápověda</string>
     <string name="configAction_onlineHelp">Nápověda online</string>
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">Více</string>
     <string name="configAction_options">Možnosti</string>
     <string name="configAction_settings">Nastavení</string>
@@ -415,14 +417,14 @@
     <string name="timeMode_solstice_winter">Zimní slunovrat</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Slunovrat</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">Spring Cross-Quarter</string>      <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_spring_short">Cross-Quarter</string>       <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal">Autumn Cross-Quarter</string>  <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer">Summer Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter">Winter Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midwinter">Imbolc (Cross-Quarter)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   <!-- TODO -->
+    <string name="timeMode_cross_midwinter_short">Cross-Quarter</string>       <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer">Lughnasadh (Cross-Quarter)</string>  <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midspring">Beltane (Cross-Quarter)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->   <!-- TODO -->
+    <string name="timeMode_cross_midspring_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal">Samhain (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="timeMode_moon">Měsíc</string>                               <!-- label -->
     <string name="timeMode_moon_new">Nov</string>                               <!-- setting -->
@@ -545,6 +547,8 @@
     <string name="locationMode_current">Aktuální (poslední známa)</string>  <!-- setting -->
     <string name="locationMode_custom">Uživatelem definovaná</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+
     <string name="configLabel_location">Nastavení polohy</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Režim:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Zeměpisná šířka:</string>                   <!-- edittext label -->
@@ -596,8 +600,10 @@
     <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
     <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
     <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
+    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
     <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
-    <string name="calendarMode_persian">Persian (Solar Hijiri)</string>     <!-- TODO -->
+    <string name="calendarMode_persian">Persian (Solar Hijri)</string>     <!-- TODO -->
     <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
     <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
     <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
@@ -1029,6 +1035,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Notifikace</string>
     <string name="configLabel_alarms_notifications_on">Zapnuty</string>
     <string name="configLabel_alarms_notifications_off">Vypnuty.\nNemusí dojít ke správnému zobrazení budíku.</string>
@@ -1174,7 +1186,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Zobrazit měsíc</string>
-    <string name="configLabel_ui_showmoon_summary">Zobrazit časy východu a západu, fázi a osvícenost.</string>
+    <string name="configLabel_ui_showmoon_summary">Zobrazit časy východu a západu, fázi a osvícenost.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
@@ -1553,10 +1565,10 @@
         <item>zimní slunovrat</item>
         <item>lunární poledne</item>
         <item>lunární půlnoc</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>ranní astronomický soumrak (začátek)</item>
@@ -1586,10 +1598,10 @@
         <item>zimní slunovrat</item>
         <item>lunární poledne</item>
         <item>lunární půlnoc</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>ranní astronomický soumrak (začátek)</item>
@@ -1619,10 +1631,10 @@
         <item>zimní slunovrat</item>
         <item>lunární poledne</item>
         <item>lunární půlnoc</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1632,6 +1644,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Nastavit polohu</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Poslední poloha</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Poslední poloha</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Získávaní polohy</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Získávaní polohy selhalo; vracím se k poslední známé poloze</string>  <!-- displayed briefly after gps has failed to get a location -->

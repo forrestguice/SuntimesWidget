@@ -34,12 +34,12 @@
             android:id="@+id/app_menubar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:minHeight="?attr/actionBarSize"
-            android:paddingBottom="2dp"
             android:background="?attr/colorPrimary"
             android:theme="?attr/toolbarTheme"
             app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
             app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
-            app:popupTheme="?attr/actionBarPopupTheme"/>
+            app:popupTheme="?attr/actionBarPopupTheme"
+            app:title="@string/app_name" app:subtitle="@string/app_shortdesc" />
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -54,12 +54,12 @@
                 <!-- Clock -->
                 <LinearLayout android:id="@+id/layout_clock"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
                     android:orientation="vertical"
                     android:paddingStart="8dp" android:paddingEnd="8dp"
                     android:paddingLeft="8dp" android:paddingRight="8dp"
                     android:paddingBottom="8dp"
                     app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/noteframe">
@@ -69,20 +69,21 @@
                 </LinearLayout>
 
                 <!-- Flipper: Note -->
-                <ScrollView
+                <FrameLayout
                     android:id="@+id/noteframe"
-                    android:layout_width="0dp" android:layout_height="0dp"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
                     app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintTop_toTopOf="@+id/layout_clock"
-                    app:layout_constraintBottom_toBottomOf="@+id/layout_clock"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/layout_clock"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <ViewFlipper
+                    <com.forrestguice.suntimeswidget.notes.NoteViewFlipper
                         android:id="@+id/info_note_flipper"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal" android:paddingTop="8dp"
-                        android:background="?attr/selectableItemBackground">
+                        android:layout_gravity="center" android:gravity="center"
+                        android:background="?attr/selectableItemBackground"
+                        android:focusable="true">
 
                         <LinearLayout android:id="@+id/info_time_note1"
                             android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -94,9 +95,9 @@
                             <include layout="@layout/info_time_note"/>
                         </LinearLayout>
 
-                    </ViewFlipper>
+                    </com.forrestguice.suntimeswidget.notes.NoteViewFlipper>
 
-                </ScrollView>
+                </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -132,6 +133,9 @@
                     android:id="@+id/info_date_solsticequinox"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_margin="0dp" android:padding="0dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:focusable="true" android:clickable="true"
+                    android:descendantFocusability="afterDescendants"
                     app:minimized="true" />
 
             </LinearLayout>

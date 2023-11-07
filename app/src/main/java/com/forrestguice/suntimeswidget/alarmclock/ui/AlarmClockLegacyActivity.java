@@ -57,6 +57,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -227,7 +229,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             {
                 @Override
                 public void onClick(View view) {
-                    SuntimesSettingsActivity.openNotificationSettings(AlarmClockLegacyActivity.this);
+                    AlarmPrefsFragment.openNotificationSettings(AlarmClockLegacyActivity.this);
                 }
             });
             notificationWarning.show();
@@ -538,6 +540,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
      * initialize ui/views
      * @param context a context used to access resources
      */
+    @SuppressLint("ClickableViewAccessibility")
     protected void initViews(Context context)
     {
         SuntimesUtils.initDisplayStrings(context);

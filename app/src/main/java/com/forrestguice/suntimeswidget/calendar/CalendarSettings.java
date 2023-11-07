@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -46,6 +46,8 @@ public class CalendarSettings
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN = "MMMM d, yyyy";   // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN = "MMMM d, yyyy";
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW = "d MMMM yyyy";
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_HIJRI_DIYANET = "MMMM d, yyyy";    // TODO
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_HIJRI_UMALQURA = "MMMM d, yyyy";    // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_INDIAN = "MMMM d, yyyy";    // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_JAPANESE = "MMMM d, yyyy";    // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN = "MMMM d, yyyy";   // TODO

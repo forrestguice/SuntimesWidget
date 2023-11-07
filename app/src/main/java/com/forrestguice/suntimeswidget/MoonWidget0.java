@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -66,6 +66,10 @@ public class MoonWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, MoonLayout layout, Class widgetClass)
     {
+        if (isCurrentLocationMode(context, appWidgetId)) {
+            updateLocationToLastKnown(context, appWidgetId);
+        }
+
         SuntimesMoonData data = new SuntimesMoonData(context, appWidgetId);
         data.calculate();
         layout.prepareForUpdate(context, appWidgetId, data);

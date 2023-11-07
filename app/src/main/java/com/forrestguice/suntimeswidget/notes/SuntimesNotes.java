@@ -134,6 +134,7 @@ public class SuntimesNotes
 
         boolean hasMoon = (moondata != null && moondata.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_MOON));
         boolean enabledMoon = AppSettings.loadShowMoonPref(context);
+        boolean enabledLunarNoon = AppSettings.loadShowLunarNoonPref(context);
 
         notesList = new ArrayList<NoteData>();
         for (SolarEvents event : SolarEvents.values())
@@ -143,6 +144,8 @@ public class SuntimesNotes
             else if ((!hasGoldBlue || !enabledBlue) && (event.equals(SolarEvents.EVENING_BLUE8) || event.equals(SolarEvents.MORNING_BLUE8) || event.equals(SolarEvents.EVENING_BLUE4) || event.equals(SolarEvents.MORNING_BLUE4)))
                 continue;
             else if ((!hasMoon || !enabledMoon) && (event.equals(SolarEvents.MOONRISE) || event.equals(SolarEvents.MOONSET) || event.equals(SolarEvents.MOONNOON) || event.equals(SolarEvents.MOONNIGHT)))
+                continue;
+            else if ((!enabledLunarNoon) && (event.equals(SolarEvents.MOONNOON) || event.equals(SolarEvents.MOONNIGHT)))
                 continue;
             else if (!enabledNoon && (event.equals(SolarEvents.NOON)))
                 continue;

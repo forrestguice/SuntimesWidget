@@ -365,7 +365,7 @@ public class SuntimesTheme
         this.themeTimeBold = themes.getBoolean( theme + THEME_TIMEBOLD, defaultTheme.themeTimeBold );
 
         long bench_end = System.nanoTime();
-        Log.d("DEBUG", "init theme: " + this.themeName() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        //Log.d("DEBUG", "init theme: " + this.themeName() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         return true;
     }
 

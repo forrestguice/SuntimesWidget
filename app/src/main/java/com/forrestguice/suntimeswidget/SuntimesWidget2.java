@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -83,6 +83,10 @@ public class SuntimesWidget2 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunPosLayout layout, Class widgetClass)
     {
+        if (isCurrentLocationMode(context, appWidgetId)) {
+            updateLocationToLastKnown(context, appWidgetId);
+        }
+
         SuntimesRiseSetDataset dataset = new SuntimesRiseSetDataset(context, appWidgetId);
         layout.prepareForUpdate(context, appWidgetId, dataset, widgetMaxSizeDp(context, appWidgetManager, appWidgetId, new int[] {40, 40}));
 

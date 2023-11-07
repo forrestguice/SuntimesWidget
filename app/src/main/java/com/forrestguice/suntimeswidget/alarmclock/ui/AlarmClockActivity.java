@@ -28,7 +28,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -55,7 +54,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import com.forrestguice.suntimeswidget.views.Toast;
+
+import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
@@ -117,8 +117,9 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static final String ACTION_ADD_ALARM = "suntimes.action.alarmclock.ADD_ALARM";
     public static final String ACTION_ADD_NOTIFICATION = "suntimes.action.alarmclock.ADD_NOTIFICATION";
+    public static final String ACTION_ADD_QNOTIFICATION = "suntimes.action.alarmclock.ADD_QNOTIFICATION";
 
-    public static final String[] SUNTIMES_ALARMS_ACTIONS = new String[] { ACTION_SHOW_ALARMS, ACTION_ADD_ALARM, ACTION_ADD_NOTIFICATION, ACTION_SET_ALARM, ACTION_SNOOZE_ALARM, ACTION_DISMISS_ALARM };    // legacy action map
+    public static final String[] SUNTIMES_ALARMS_ACTIONS = new String[] { ACTION_SHOW_ALARMS, ACTION_ADD_ALARM, ACTION_ADD_NOTIFICATION, ACTION_ADD_QNOTIFICATION, ACTION_SET_ALARM, ACTION_SNOOZE_ALARM, ACTION_DISMISS_ALARM };    // legacy action map
     private static final HashMap<String, String> SUNTIMES_ALARMS_ACTION_MAP = SuntimesActivity.createLegacyActionMap(SUNTIMES_ALARMS_ACTIONS);
 
     public static final String EXTRA_SHOWBACK = "showBack";
@@ -140,6 +141,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String WARNINGID_NOTIFICATIONS_CHANNEL = "NotificationsChannelWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION = "BatteryOptimizationWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION_SONY = "BatteryOptimizationWarning_sony";
+    public static final String WARNINGID_AUTOSTART= "AutostartWarning";
 
     private AlarmListDialog list;
 
@@ -151,7 +153,8 @@ public class AlarmClockActivity extends AppCompatActivity
     private SuntimesWarning[] notificationChannelWarning = null;   // remains null for api < 26
     private SuntimesWarning batteryOptimizationWarning = null;   // remains null for api < 23
     private SuntimesWarning batteryOptimizationWarning_sony = null;   // remains null for non-sony devices
-    private List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
+    private SuntimesWarning autostartWarning = null;    // remains null for non-xiomi devices
+    private final List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
 
     private AppSettings.LocaleInfo localeInfo;
 
@@ -313,6 +316,9 @@ public class AlarmClockActivity extends AppCompatActivity
 
             } else if (param_action.equals(ACTION_ADD_NOTIFICATION)) {
                 showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
+
+            } else if (param_action.equals(ACTION_ADD_QNOTIFICATION)) {
+                showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION1);
 
             } else if (param_action.equals(ACTION_DISMISS_ALARM)) {
                 handleIntent_dismissAlarms(intent, param_data);
@@ -905,6 +911,12 @@ public class AlarmClockActivity extends AppCompatActivity
             warnings.add(batteryOptimizationWarning_sony);
         }
 
+        if (AlarmSettings.isXiomi())
+        {
+            autostartWarning = new SuntimesWarning(WARNINGID_AUTOSTART);
+            warnings.add(autostartWarning);
+        }
+
         restoreWarnings(savedState);
     }
     private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
@@ -936,7 +948,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 @Override
                 public void onClick(View view) {
-                    SuntimesSettingsActivity.openNotificationSettings(AlarmClockActivity.this);
+                    AlarmPrefsFragment.openNotificationSettings(AlarmClockActivity.this);
                 }
             });
             notificationWarning.show();
@@ -975,7 +987,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 @Override
                 public void onClick(View view) {
-                    SuntimesSettingsActivity.createBatteryOptimizationAlertDialog(AlarmClockActivity.this).show();
+                    AlarmPrefsFragment.createBatteryOptimizationAlertDialog(AlarmClockActivity.this).show();
                 }
             });
             batteryOptimizationWarning.show();
@@ -987,6 +999,21 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             batteryOptimizationWarning_sony.initWarning(this, addButton, getString(R.string.sonyStaminaModeWarning));
             batteryOptimizationWarning_sony.show();
+            return;
+        }
+
+        if (showWarnings && autostartWarning != null
+                && autostartWarning.shouldShow() && !autostartWarning.wasDismissed())
+        {
+            autostartWarning.initWarning(this, addButton, getString(R.string.autostartWarning));
+            autostartWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_autostart), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    AlarmSettings.openAutostartSettings(AlarmClockActivity.this);
+                }
+            });
+            autostartWarning.show();
             return;
         }
 
@@ -1022,6 +1049,9 @@ public class AlarmClockActivity extends AppCompatActivity
         }
         if (batteryOptimizationWarning_sony != null) {
             batteryOptimizationWarning_sony.setShouldShow(AlarmSettings.isSonyStaminaModeEnabled(this));
+        }
+        if (autostartWarning != null) {
+            autostartWarning.setShouldShow(AlarmSettings.isAutostartDisabled(this));
         }
         showWarnings();
     }

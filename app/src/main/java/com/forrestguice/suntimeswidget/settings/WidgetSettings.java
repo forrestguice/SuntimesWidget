@@ -218,8 +218,8 @@ public class WidgetSettings
     public static final boolean PREF_DEF_TIMEZONE_FROMAPP = false;
 
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
-    public static final String PREF_DEF_TIMEZONE_CUSTOM = "MST";    // TODO: candidate for initDefaults?
-    public static final String[][] PREF_DEF_TIMEZONES = new String[][] { new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
+    public static String PREF_DEF_TIMEZONE_CUSTOM = "MST";    // reassigned later by initDefaults
+    public static final String[][] PREF_DEF_TIMEZONES = new String[][] { };  // e.g. new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
 
     public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
     public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.LOCAL_MEAN_TIME;
@@ -1302,23 +1302,23 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_spring_short),
-                    context.getString(R.string.timeMode_cross_spring));
+            CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_midwinter_short),
+                    context.getString(R.string.timeMode_cross_midwinter));
             EQUINOX_SPRING.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
                     context.getString(R.string.timeMode_equinox_vernal));
 
-            CROSS_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_cross_summer_short),
-                    context.getString(R.string.timeMode_cross_summer));
+            CROSS_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_cross_midspring_short),
+                    context.getString(R.string.timeMode_cross_midspring));
             SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
                     context.getString(R.string.timeMode_solstice_summer));
 
-            CROSS_AUTUMN.setDisplayStrings( context.getString(R.string.timeMode_cross_autumnal_short),
-                    context.getString(R.string.timeMode_cross_autumnal) );
+            CROSS_AUTUMN.setDisplayStrings( context.getString(R.string.timeMode_cross_midsummer_short),
+                    context.getString(R.string.timeMode_cross_midsummer) );
             EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_equinox_autumnal_short),
                     context.getString(R.string.timeMode_equinox_autumnal) );
 
-            CROSS_WINTER.setDisplayStrings(context.getString(R.string.timeMode_cross_winter_short),
-                    context.getString(R.string.timeMode_cross_winter));
+            CROSS_WINTER.setDisplayStrings(context.getString(R.string.timeMode_cross_midautumnal_short),
+                    context.getString(R.string.timeMode_cross_midautumnal));
             SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
                     context.getString(R.string.timeMode_solstice_winter));
         }
@@ -2917,11 +2917,14 @@ public class WidgetSettings
         prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, showNoon);
         prefs.apply();
     }
-    public static boolean loadShowNoonPref(Context context, int appWidgetId)
+    public static boolean loadShowNoonPref(Context context, int appWidgetId) {
+        return loadShowNoonPref(context, appWidgetId, PREF_DEF_GENERAL_SHOWNOON);
+    }
+    public static boolean loadShowNoonPref(Context context, int appWidgetId, boolean defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, PREF_DEF_GENERAL_SHOWNOON);
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, defaultValue);
     }
     public static void deleteShowNoonPref(Context context, int appWidgetId)
     {
@@ -3260,6 +3263,7 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LATITUDE = context.getString(R.string.default_location_latitude);
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
         PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
+        PREF_DEF_TIMEZONE_CUSTOM = context.getString(R.string.default_timezone);
         PREF_DEF_GENERAL_UNITS_LENGTH = getLengthUnit(context.getString(R.string.default_units_length));
 
         WidgetActions.initDefaults(context);

@@ -6,4 +6,6 @@
         <item android:id="@+id/sortByOffset"
               android:title="@string/timezone_sort_byOffset" />
     </group>
+    <item android:id="@+id/suggestTz"
+        android:title="@string/configAction_suggestTimeZone" />
 </menu>

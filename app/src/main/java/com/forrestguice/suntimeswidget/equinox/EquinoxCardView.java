@@ -106,6 +106,12 @@ public class EquinoxCardView extends LinearLayout
         resetForwardButton.setOnClickListener(onResetClicked);
         resetForwardButton.setVisibility(GONE);
 
+        if (AppSettings.isTelevision(getContext()))
+        {
+            resetBackButton.setFocusableInTouchMode(true);
+            resetForwardButton.setFocusableInTouchMode(true);
+        }
+
         empty = (TextView)findViewById(R.id.txt_empty);
         initCardView(context);
 

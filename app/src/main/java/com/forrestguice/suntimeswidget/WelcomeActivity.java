@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -53,9 +53,11 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
+import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ToggleButton;
 
@@ -67,13 +69,10 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
-import com.forrestguice.suntimeswidget.getfix.PlacesListFragment;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -315,14 +314,14 @@ public class WelcomeActivity extends AppCompatActivity
 
     public void setNeedsRecreateFlag() {
         Log.d("DEBUG", "setNeedsRecreateFlag");
-        getIntent().putExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, true);
+        getIntent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, true);
         setResult(RESULT_OK, getResultData());
     }
 
     public Intent getResultData() {
-        boolean value = getIntent().getBooleanExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, false);
+        boolean value = getIntent().getBooleanExtra(SettingsActivityInterface.RECREATE_ACTIVITY, false);
         Log.d("DEBUG", "getResultData: needsRecreate? " + value);
-        return new Intent().putExtra(SuntimesSettingsActivity.RECREATE_ACTIVITY, value);
+        return new Intent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, value);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -871,7 +870,7 @@ public class WelcomeActivity extends AppCompatActivity
 
             TimeZoneDialog tzConfig = getTimeZoneDialog();
             if (tzConfig != null) {
-                tzConfig.setLongitude(getLongitude());
+                tzConfig.setLongitude(getLongitudeLabel(), getLongitude());
                 tzConfig.updatePreview(context);
             }
         }
@@ -927,54 +926,14 @@ public class WelcomeActivity extends AppCompatActivity
             public void onNothingSelected(AdapterView<?> parent) {}
         };
 
-        private View.OnClickListener timeZoneSuggestButtonListener = new View.OnClickListener() {
+        private final View.OnClickListener timeZoneSuggestButtonListener = new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
                 TimeZoneDialog tzConfig = getTimeZoneDialog();
-                if (tzConfig != null)
-                {
-                    Calendar now = Calendar.getInstance();
-                    double longitude = getLongitude();
-                    String label = getLongitudeLabel();
-                    Log.d("DEBUG", "longitude label: " + label);
-
-                    boolean foundItem = false;
-                    String tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
-                    WidgetTimezones.TimeZoneItemAdapter adapter = tzConfig.getTimeZoneItemAdapter();
-                    WidgetTimezones.TimeZoneItem[] recommendations = null;
-                    if (adapter != null)
-                    {
-                        if (label != null)
-                        {
-                            WidgetTimezones.TimeZoneItem[] items = adapter.values();
-                            for (WidgetTimezones.TimeZoneItem item : items)
-                            {
-                                if (item.getID().contains(label) || item.getDisplayString().contains(label)) {
-                                    tzID = item.getID();
-                                    foundItem = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (!foundItem) {
-                            recommendations = adapter.findItems(longitude);
-                        }
-                    }
-
-                    if (!foundItem)
-                    {
-                        tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
-                        TimeZone tz = WidgetTimezones.getTimeZone(tzID, longitude);
-                        if (WidgetTimezones.isProbablyNotLocal(tz, longitude, now.getTime()))
-                        {
-                            if (recommendations != null && recommendations[0] != null) {
-                                tzID = recommendations[0].getID();
-                            }
-                        }
-                    }
-                    tzConfig.setCustomTimeZone(tzID);
+                if (tzConfig != null) {
+                    tzConfig.setCustomTimeZone(tzConfig.timeZoneRecommendation(getLongitudeLabel(), getLongitude()));
                 }
             }
         };
@@ -1007,6 +966,7 @@ public class WelcomeActivity extends AppCompatActivity
 
         public WelcomeAlarmsFragment() {}
 
+        protected TextView autostartText;
         protected TextView batteryOptimizationText;
         protected Button importAlarmsButton;
         private ProgressBar progress_importAlarms;
@@ -1059,7 +1019,23 @@ public class WelcomeActivity extends AppCompatActivity
                 batteryOptimizationButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SuntimesSettingsActivity.createBatteryOptimizationAlertDialog(context).show();
+                        AlarmPrefsFragment.createBatteryOptimizationAlertDialog(context).show();
+                    }
+                });
+            }
+
+            View layout_autoStart = view.findViewById(R.id.layout_autostart);
+            if (layout_autoStart != null) {
+                layout_autoStart.setVisibility( AlarmSettings.hasAutostartSettings(context) ? View.VISIBLE : View.GONE );
+            }
+
+            autostartText = (TextView) view.findViewById(R.id.text_autostart);
+            Button autostartButton = (Button) view.findViewById(R.id.button_autostart);
+            if (autostartButton != null) {
+                autostartButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlarmSettings.openAutostartSettings(context);
                     }
                 });
             }
@@ -1078,6 +1054,10 @@ public class WelcomeActivity extends AppCompatActivity
             {
                 batteryOptimizationText.setVisibility((Build.VERSION.SDK_INT >= 23) ? View.VISIBLE : View.GONE);
                 batteryOptimizationText.setText(AlarmSettings.batteryOptimizationMessage(context));
+            }
+
+            if (autostartText != null) {
+                autostartText.setText(AlarmSettings.hasAutostartSettings(context) ? AlarmSettings.autostartMessage(context) : "");
             }
         }
 

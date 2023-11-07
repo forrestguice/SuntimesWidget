@@ -5,6 +5,8 @@
     <string name="default_location_latitude">42.883008</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-1.935491</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">1258</string>         <!-- meters -->
+    <string name="default_timezone">Europe/Madrid</string>         <!-- tzid -->
+
 
     <!-- MAIN ACTIVITY -->
 
@@ -35,6 +37,7 @@
     <string name="configAction_moon">Ilargia</string>
     <string name="configAction_help">Laguntza</string>
     <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">More</string>  <!-- TODO -->
     <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Ezarpenak</string>
@@ -362,14 +365,14 @@
     <string name="timeMode_solstice_winter">Neguko solstizioa</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstizioa</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">Spring Cross-Quarter</string>      <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_spring_short">Cross-Quarter</string>       <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal">Autumn Cross-Quarter</string>  <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer">Summer Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter">Winter Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midwinter">Imbolc (Cross-Quarter)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   <!-- TODO -->
+    <string name="timeMode_cross_midwinter_short">Cross-Quarter</string>       <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer">Lughnasadh (Cross-Quarter)</string>  <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midspring">Beltane (Cross-Quarter)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->   <!-- TODO -->
+    <string name="timeMode_cross_midspring_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal">Samhain (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="timeMode_moon">Ilargia</string>                               <!-- label -->
     <string name="timeMode_moon_new">Ilberria</string>                               <!-- setting -->
@@ -492,6 +495,8 @@
     <string name="locationMode_current">Oraingoa (azken ezaguna)</string>  <!-- setting -->
     <string name="locationMode_custom">Erabiltzaileak ezarritakoa</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+
     <string name="configLabel_location">Kokapenaren ezarpenak</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Modua:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitudea:</string>                   <!-- edittext label -->
@@ -542,8 +547,10 @@
     <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
     <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
     <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
+    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
     <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
-    <string name="calendarMode_persian">Persian (Solar Hijiri)</string>     <!-- TODO -->
+    <string name="calendarMode_persian">Persian (Solar Hijri)</string>     <!-- TODO -->
     <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
     <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
     <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
@@ -969,6 +976,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
     <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
     <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
@@ -1107,7 +1120,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Ilargia erakutsi</string>
-    <string name="configLabel_ui_showmoon_summary">Irteera, ezkutatze, ilargialdi eta argiztapena erakutsi.</string>
+    <string name="configLabel_ui_showmoon_summary">Irteera, ezkutatze, ilargialdi eta argiztapena erakutsi.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
@@ -1454,10 +1467,10 @@
         <item>neguko solstizioa</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>goizeko krepuskulu astronomikoa (hasiera)</item>
@@ -1487,10 +1500,10 @@
         <item>neguko solstizioa</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>goizeko krepuskulu astronomikoa (hasiera)</item>
@@ -1520,10 +1533,10 @@
         <item>neguko solstizioa</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>    <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
@@ -1533,6 +1546,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Kokapena ezarri</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Azken kokapena</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Azken kokapena</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Kokapena eskuratzen</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->

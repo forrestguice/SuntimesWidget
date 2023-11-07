@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2021 Forrest Guice
+    Copyright (C) 2021-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,9 +21,11 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -592,7 +594,9 @@ public class WidgetThemePreview
 
         ImageView previewNoonIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_noon);
         if (previewNoonIcon != null) {
-            previewNoonIcon.setImageBitmap(SuntimesUtils.gradientDrawableToBitmap(context, R.drawable.ic_noon_large0, values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_FILL_COLOR), values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR), noonStrokePixels));
+            Bitmap noonIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_noon_large1, values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_FILL_COLOR), values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR), noonStrokePixels);   // doesn't call mutate (themes other Drawable instances)
+            Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+            previewNoonIcon.setImageDrawable(d);
         }
     }
 

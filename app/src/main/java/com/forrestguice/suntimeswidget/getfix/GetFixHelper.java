@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -93,8 +93,9 @@ public class GetFixHelper
     /**
      * Get a fix; main entry point for GPS "get fix" button in location settings.
      * Spins up a GetFixTask; allows only one such task to execute at a time.
+     * @return true if location permission is granted (and action was taken)
      */
-    public void getFix()
+    public boolean getFix()
     {
         if (!gettingFix)
         {
@@ -139,11 +140,15 @@ public class GetFixHelper
                     Log.w("GetFixHelper", "getFix called while GPS disabled; showing a prompt");
                     showGPSEnabledPrompt();
                 }
+                return true;
+
             } else {
                 Log.w("GetFixHelper", "getFix called without GPS permissions! ignored");
+                return false;
             }
         } else {
             Log.w("GetFixHelper", "getFix called while already running! ignored");
+            return true;
         }
     }
     public void getFix( int i )
@@ -183,6 +188,31 @@ public class GetFixHelper
         } else Log.w("GetFixHelper", "unable to fallback to last location ... LocationManager is null!");
     }
 
+    public static android.location.Location lastKnownLocation(Context context)
+    {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null)
+        {
+            try {
+                android.location.Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                if (location == null) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location == null) {
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+                }
+                return location;
+
+            } catch (SecurityException e) {
+                Log.e("lastKnownLocation", "Permissions! we don't have them.. checkPermissions should be called before calling this method. " + e);
+                return null;
+            }
+        } else {
+            Log.w("lastKnownLocation", "LocationManager is null!");
+            return null;
+        }
+    }
+
     /**
      * Cancel acquiring a location fix (cancels running task(s)).
      */
@@ -195,6 +225,12 @@ public class GetFixHelper
         }
     }
 
+    public static boolean hasLocationPermission(Activity activity)
+    {
+        int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
+        return (permission == PackageManager.PERMISSION_GRANTED);
+    }
+
     /**
      * @param activity
      * @param requestID used to identify the permission request
@@ -202,8 +238,7 @@ public class GetFixHelper
      */
     public boolean checkGPSPermissions(final FragmentActivity activity, final int requestID)
     {
-        int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
-        boolean hasPermission = (permission == PackageManager.PERMISSION_GRANTED);
+        boolean hasPermission = hasLocationPermission(activity);
         //Log.d("checkGPSPermissions", "" + hasPermission);
 
         if (!hasPermission)

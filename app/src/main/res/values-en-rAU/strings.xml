@@ -5,5 +5,6 @@
     <string name="default_location_latitude">-33.8981</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">151.2328</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">40</string>         <!-- meters -->
+    <string name="default_timezone">Australia/Sydney</string>         <!-- tzid -->
 
 </resources>

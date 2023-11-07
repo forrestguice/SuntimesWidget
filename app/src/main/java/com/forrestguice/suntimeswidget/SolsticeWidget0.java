@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 /**
-    Copyright (C) 2017-2022 Forrest Guice
+    Copyright (C) 2017-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,6 +28,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset1;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout_1x1_0;
 
@@ -84,6 +86,10 @@ public class SolsticeWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SolsticeLayout layout)
     {
+        if (isCurrentLocationMode(context, appWidgetId)) {
+            updateLocationToLastKnown(context, appWidgetId);
+        }
+
         SuntimesEquinoxSolsticeData data = getSolsticeEquinoxData(context, appWidgetId);
         layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);

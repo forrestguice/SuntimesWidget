@@ -58,12 +58,12 @@
 
         <TextView style="@style/SunsetTimeTextView"
                   android:id="@+id/text_timenote3"
-                  android:text=""
-                  tools:text="astronomical twilight"
                   android:layout_gravity="center_horizontal"
                   android:textSize="?attr/text_size_large"
                   android:gravity="center" android:maxWidth="@dimen/clock_note_maxwidth"
-                  android:layout_margin="0dp"/>
+                  android:layout_margin="0dp"
+                  android:maxLines="2" android:ellipsize="marquee"
+                  tools:text="astronomical twilight" />
 
     </LinearLayout>
 </merge>
