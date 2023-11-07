@@ -75,6 +75,7 @@
     <TextView
         style="@style/SunsetTimeTextView"
         android:background="?attr/selectableItemBackground"
+        android:focusable="true" android:clickable="true"
         android:id="@+id/media_speed" android:textStyle="bold"
         android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp"
         android:layout_height="match_parent"
