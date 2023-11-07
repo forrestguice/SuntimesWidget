@@ -33,6 +33,7 @@
         tools:text="June 3, 6:00 PM Apparent Solar Time" android:gravity="end|right"
         android:singleLine="true" android:ellipsize="marquee"
         android:background="?attr/selectableItemBackground"
+        android:focusable="true" android:clickable="true"
         android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />

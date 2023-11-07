@@ -45,6 +45,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.lang.ref.WeakReference;
@@ -136,6 +137,9 @@ public class AlarmSettings
     public static final DismissChallenge PREF_DEF_ALARM_DISMISS_CHALLENGE = DismissChallenge.NONE;
 
 
+    public static boolean hasAlarmSupport(Context context) {
+        return !AppSettings.isTelevision(context);
+    }
 
     public static int loadPrefAlarmSort(Context context)
     {

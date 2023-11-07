@@ -538,11 +538,11 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             if (!isValidSoundUri(soundUri)) {
-                Log.w(TAG, "startAlert: rejecting sound uri: " + soundUri.toString() + ".. replacing with default.");
+                Log.w(TAG, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with default.");
                 soundUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
 
                 if (!isValidSoundUri(soundUri)) {
-                    Log.w(TAG, "startAlert: rejecting sound uri: " + soundUri.toString() + ".. replacing with fallback.");
+                    Log.w(TAG, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with fallback.");
                     soundUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.type);
                 }
             }
@@ -551,13 +551,13 @@ public class AlarmNotifications extends BroadcastReceiver
                 startAlert(context, soundUri, isAlarm);  // (0)
 
             } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {    // fallback to default
-                Log.e(TAG, "startAlert: failed to play " + soundUri.toString() + " ..(0) " + e);
+                Log.e(TAG, "startAlert: failed to play " + (soundUri != null ? soundUri.toString() : "null") + " ..(0) " + e);
                 Uri defaultUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
                 try {
                     startAlert(context, defaultUri, isAlarm);  // (1)
 
                 } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e1) {    // default failed too..
-                    Log.e(TAG, "startAlert: failed to play " + defaultUri.toString() + " ..(1) " + e);
+                    Log.e(TAG, "startAlert: failed to play " + (defaultUri != null ? defaultUri.toString() : "null") + " ..(1) " + e);
                     Uri fallbackUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.type);
                     try {
                         startAlert(context, fallbackUri, isAlarm);  // (2)

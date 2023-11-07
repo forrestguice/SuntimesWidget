@@ -17,6 +17,10 @@
             android:layout_weight="1"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
+            android:theme="?attr/toolbarTheme"
+            app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
+            app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
+            app:popupTheme="?attr/actionBarPopupTheme"
             app:title="@string/about_dialog_title">
 
         </android.support.v7.widget.Toolbar>

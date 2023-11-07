@@ -54,6 +54,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -101,8 +103,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
             @Override
             public void onBackPressed() {
-                if (hasSelection()) {
+                if (hasSelection())
+                {
                     setSelection((Integer) null);
+                    if (AppSettings.isTelevision(getActivity())) {
+                        btn_menu.requestFocus();
+                    }
                 } else super.onBackPressed();
             }
         };
@@ -144,9 +150,13 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             TooltipCompat.setTooltipText(btn_prev, btn_prev.getContentDescription());
             btn_prev.setOnClickListener(onPrevClicked);
         }
-        if (btn_menu != null) {
+        if (btn_menu != null)
+        {
             TooltipCompat.setTooltipText(btn_menu, btn_menu.getContentDescription());
             btn_menu.setOnClickListener(onMenuClicked);
+            if (AppSettings.isTelevision(getActivity())) {
+                btn_menu.setFocusableInTouchMode(true);
+            }
         }
 
         initCardView(context, v);
@@ -516,6 +526,11 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
         Menu m = menu.getMenu();
         setDataToMenu(m, data);
+
+        MenuItem alarmItem = m.findItem(R.id.action_alarm);
+        if (alarmItem != null) {
+            alarmItem.setVisible(AlarmSettings.hasAlarmSupport(context));
+        }
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
         if (addonSubmenuItem != null) {

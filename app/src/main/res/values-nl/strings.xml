@@ -36,6 +36,7 @@
     <string name="configAction_moon">Maan</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">Meer</string>
     <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Instellingen</string>
@@ -538,6 +539,8 @@
     <string name="locationMode_current">Huidige (laatst bekende)</string>  <!-- setting -->
     <string name="locationMode_custom">Gebruiker gedefinieerd</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+
     <string name="configLabel_location">Locatie-instellingen</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Modus:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Breedtegraad:</string>                   <!-- edittext label -->
@@ -1022,6 +1025,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Notifications</string>
     <string name="configLabel_alarms_notifications_on">On</string>
     <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>
@@ -1161,7 +1170,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Show Moon</string>
-    <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>
+    <string name="configLabel_ui_showmoon_summary">Show moon rise and set times, phase, and illumination.</string>   <!-- TODO -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
@@ -1619,6 +1628,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Set Position</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Previous Position</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO -->
     <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->

@@ -35,6 +35,7 @@
         style="@style/SunsetTimeTextView"
         android:id="@+id/info_time_utc"
         android:background="?attr/selectableItemBackground"
+        android:focusable="true" android:clickable="true"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         tools:text="June 3, 6:00 PM UTC" android:gravity="end|right"
         app:layout_constraintStart_toStartOf="@+id/info_time_worldmap_layout"

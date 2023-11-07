@@ -32,6 +32,9 @@
         <TextView
             android:id="@+id/text_date" style="@style/TableHeadDateView"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:focusable="true" android:clickable="true"
+            android:nextFocusLeft="@+id/header_time_sunset" android:nextFocusRight="@+id/header_time_sunrise"
+            android:background="?attr/selectableItemBackground"
             tools:text="Today\nApril 1, 2016"
 
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -64,6 +67,9 @@
         <LinearLayout
             android:id="@+id/header_time_sunrise"
             android:background="?attr/selectableItemBackground"
+            android:focusable="true" android:clickable="true"
+            android:nextFocusLeft="@+id/text_date"
+            android:nextFocusRight="@+id/header_time_sunset"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/table_rise_leftMargin" android:layout_marginStart="@dimen/table_rise_leftMargin"
             android:layout_marginTop="8dp"
@@ -102,6 +108,8 @@
         <LinearLayout
             android:id="@+id/header_time_sunset"
             android:background="?attr/selectableItemBackground"
+            android:focusable="true" android:clickable="true"
+            android:nextFocusLeft="@+id/header_time_sunrise" android:nextFocusRight="@+id/text_date"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/table_set_leftMargin" android:layout_marginStart="@dimen/table_set_leftMargin"
             android:layout_marginTop="8dp"
