@@ -169,7 +169,12 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
 
         Context context = contextRef.get();
         SuntimesEquinoxSolsticeData data = initData(context, position);
-        holder.button_menu.setOnClickListener(onMenuClick(holder.button_menu, position, data.timeMode(), data.eventCalendarThisYear().getTimeInMillis()));
+        Calendar calendar = data.eventCalendarThisYear();
+        if (calendar == null) {
+            calendar = Calendar.getInstance();
+            Log.e("DEBUG", "calendar is null!");
+        }
+        holder.button_menu.setOnClickListener(onMenuClick(holder.button_menu, position, data.timeMode(), calendar.getTimeInMillis()));
     }
 
     private void detachListeners(EquinoxDataViewHolder holder)
