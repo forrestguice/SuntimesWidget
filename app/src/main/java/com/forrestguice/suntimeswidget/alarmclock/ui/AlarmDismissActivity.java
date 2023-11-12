@@ -32,6 +32,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -40,7 +41,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -49,12 +49,12 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -96,10 +96,15 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     public static final String ACTION_SNOOZE = AlarmNotifications.ACTION_SNOOZE;
     public static final String ACTION_DISMISS = AlarmNotifications.ACTION_DISMISS;
 
+    public static final String MODE_SCHEDULED = AlarmNotifications.ACTION_SCHEDULE;
+    public static final String MODE_SOUNDING = AlarmNotifications.ACTION_SHOW;
+    public static final String MODE_SNOOZING = AlarmNotifications.ACTION_SNOOZE;
+    public static final String MODE_TIMEOUT = AlarmNotifications.ACTION_TIMEOUT;
+
     public static final int REQUEST_DISMISS_CHALLENGE = 100;
 
     private AlarmClockItem alarm = null;
-    private String mode = null;
+    private String mode = null, prevMode = null;
 
     private boolean isTesting = false;
     private int testChallengeID = -1;
@@ -107,14 +112,17 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText, noteText;
     private TextView[] labels;
 
-    private Button snoozeButton, dismissButton;
-    private Button[] buttons;
+    private AlarmButton dismissButton;
+    private AlarmButton snoozeButton;
+    private AlarmButton[] buttons;
 
+    private View background;
     private ViewFlipper icon;
     private ImageView iconSounding, iconSnoozing;
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
 
     private int enabledColor, disabledColor, pressedColor, textColor, timeColor, titleColor;
+    private int[] bgColors;
 
     private int pulseSoundingDuration = 4000;
     private int pulseSoundingColor_start, pulseSoundingColor_end;
@@ -157,10 +165,13 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private String appTheme;
     private int appThemeResID;
     private SuntimesTheme appThemeOverride = null;
+    private boolean isBrightMode = false;
 
     private void initTheme(Context context)
     {
-        appTheme = AppSettings.loadThemePref(this);
+        isBrightMode = AlarmSettings.loadPrefAlarmBrightMode(this);
+        appTheme = //(isBrightMode ? AppSettings.AppThemeInfo.getExtendedThemeName("light", AppSettings.loadTextSizePref(context)) :
+                AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
 
         String themeName = AppSettings.getThemeOverride(this, appTheme);
@@ -172,30 +183,44 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     protected void initViews(Context context)
     {
+        background = findViewById(R.id.background);
+
         alarmTitle = (TextView)findViewById(R.id.txt_alarm_label);
+        alarmTitle.setTextColor(titleColor);
+
         alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
+        alarmSubtitle.setTextColor(titleColor);
+
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
+        alarmText.setTextColor(textColor);
+
         clockText = (TextView)findViewById(R.id.txt_clock_time);
+        clockText.setTextColor(titleColor);
+
         offsetText = (TextView)findViewById(R.id.txt_alarm_offset);
+        offsetText.setTextColor(textColor);
+
         infoText = (TextView)findViewById(R.id.txt_snooze);
+        infoText.setTextColor(textColor);
+
         noteText = (TextView)findViewById(R.id.txt_alarm_note);
+        noteText.setTextColor(textColor);
 
         icon = (ViewFlipper)findViewById(R.id.icon_alarm);
         iconSounding = (ImageView)findViewById(R.id.icon_alarm_sounding);
         iconSnoozing = (ImageView)findViewById(R.id.icon_alarm_snooze);
 
-        dismissButton = (Button) findViewById(R.id.btn_dismiss);
+        dismissButton = (AlarmButton) findViewById(R.id.btn_dismiss);
         dismissButton.setOnClickListener(onDismissClicked);
 
-        snoozeButton = (Button) findViewById(R.id.btn_snooze);
+        snoozeButton = (AlarmButton) findViewById(R.id.btn_snooze);
         snoozeButton.setOnClickListener(onSnoozeClicked);
         snoozeButton.setVisibility(isTesting ? View.VISIBLE : View.GONE);
 
-        buttons = new Button[] {snoozeButton, dismissButton};
+        buttons = new AlarmButton[] {snoozeButton, dismissButton};
         labels = new TextView[] {alarmSubtitle, offsetText};
-        if (Build.VERSION.SDK_INT >= 12) {
-            stopAnimateColors(labels, buttons);
-        }
+
+        resetAnimateColors(labels, buttons);
     }
 
     @Override
@@ -346,6 +371,17 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         timeColor = titleColor = ContextCompat.getColor(context, a.getResourceId(7, android.R.color.primary_text_dark));
         a.recycle();
 
+        if (isBrightMode) {
+            textColor = ContextCompat.getColor(context, android.R.color.secondary_text_light_nodisable);
+            timeColor = titleColor = ContextCompat.getColor(context, android.R.color.primary_text_light_nodisable);
+        }
+
+        bgColors = new int[] {
+                Color.BLACK,
+                //Color.parseColor("#827717"),
+                //Color.parseColor("#F4FF81"),
+                Color.WHITE };
+
         pulseSoundingDuration = getResources().getInteger(R.integer.anim_alarmscreen_sounding_pulse_duration);
         pulseSnoozingDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_pulse_duration);
         snoozingDimmingDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_dimming_duration);
@@ -430,66 +466,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         } else dismissAlarm(context);
     }
 
-    private void setMode( @Nullable String action )
+    private void setMode( @Nullable String mode )
     {
-        String prevMode = this.mode;
-        this.mode = action;
-
-        if (AlarmNotifications.ACTION_SNOOZE.equals(action))
-        {
-            if (Build.VERSION.SDK_INT >= 12) {
-                animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
-            }
-            SuntimesUtils.initDisplayStrings(this);
-            long snoozeMillis = alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this));    // NPE this line after rotation
-            SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
-            String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
-            SpannableString snoozeDisplay = SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
-            infoText.setText(snoozeDisplay);
-            infoText.setVisibility(View.VISIBLE);
-
-            icon.setDisplayedChild(1);
-            snoozeButton.setVisibility(View.GONE);
-            snoozeButton.setEnabled(false);
-            dismissButton.setEnabled(true);
-
-            if (Build.VERSION.SDK_INT >= 17)  // BUG: on some older devices modifying brightness turns off the screen
-            {
-                float dimScreenValue = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;
-                boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
-                if (needsTransition) {
-                    animateBrightness(dimScreenValue, snoozingDimmingDuration);
-                } else {
-                    setBrightness(dimScreenValue);
-                }
-                allowScreenOffAfterDelay(snoozingScreenOnDuration);
-            }
-
-        } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
-            if (Build.VERSION.SDK_INT >= 11) {
-                stopAnimateColors(labels, buttons);
-            }
-            infoText.setText(getString(R.string.alarmAction_timeoutMsg));
-            infoText.setVisibility(View.VISIBLE);
-            snoozeButton.setVisibility(View.GONE);
-            snoozeButton.setEnabled(false);
-            dismissButton.setEnabled(true);
-            icon.setDisplayedChild(2);
-            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
-
-        } else {
-            if (Build.VERSION.SDK_INT >= 11) {
-                animateColors(labels, buttons, iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
-            }
-            hardwareButtonPressed = false;
-            infoText.setText("");
-            infoText.setVisibility(View.GONE);
-            snoozeButton.setVisibility(isTesting ? View.GONE : View.VISIBLE);
-            snoozeButton.setEnabled(true);
-            dismissButton.setEnabled(true);
-            icon.setDisplayedChild(0);
-            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
-        }
+        this.prevMode = this.mode;
+        this.mode = mode;
+        updateViews(this);
     }
 
     private static void colorizeButtonCompoundDrawable(int color, @NonNull Button button)
@@ -511,9 +492,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         getWindow().setAttributes(layoutParams);
     }
 
-    @TargetApi(12)
-    private void animateBrightness(float downToValue, @SuppressWarnings("SameParameterValue") int durationMillis)
+    private ValueAnimator animateBrightness(float downToValue, @SuppressWarnings("SameParameterValue") int durationMillis)
     {
+        if (Build.VERSION.SDK_INT < 12) {
+            return null;
+        }
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
         float startValue = layoutParams.screenBrightness;
         ValueAnimator animator = ValueAnimator.ofFloat(startValue, downToValue);
@@ -530,16 +513,44 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         });
         animator.setDuration(durationMillis);
         animator.reverse();
+        return animator;
     }
 
-    private Object animationObj;
-    @TargetApi(12)
-    private void animateColors(final TextView[] labels, final Button[] buttons, final ImageView icon, int startColor, int endColor, long duration, @Nullable TimeInterpolator interpolator)
+    @Nullable
+    private static ValueAnimator animateColors(final View v, int[] colors, long duration, @Nullable TimeInterpolator interpolator)
     {
+        if (Build.VERSION.SDK_INT < 12) {
+            return null;
+        }
+        if (v != null)
+        {
+            ValueAnimator animation = ValueAnimator.ofArgb(colors);
+            animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator animator) {
+                    v.setBackgroundColor((int)animator.getAnimatedValue());
+                }
+            });
+            if (interpolator != null) {
+                animation.setInterpolator(interpolator);
+            }
+            animation.setDuration(duration);
+            animation.start();
+            return animation;
+        }
+        return null;
+    }
+
+    private Object pulseAnimationObj, bgAnimationObj;
+
+    @Nullable
+    private static ValueAnimator animateColors(final TextView[] labels, final AlarmButton[] buttons1, final ImageView icon, int startColor, int endColor, long duration, @Nullable TimeInterpolator interpolator)
+    {
+        if (Build.VERSION.SDK_INT < 12) {
+            return null;
+        }
         if (icon != null && labels != null)
         {
-            ValueAnimator animation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
-            animationObj = animation;
+            ValueAnimator animation = ValueAnimator.ofArgb(startColor, endColor);
             animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
             {
                 @Override
@@ -554,10 +565,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                         }
                     }
 
-                    for (Button button : buttons) {
+                    for (AlarmButton button : buttons1) {
                         if (button != null) {
-                            button.setTextColor(animatedValue);
-                            colorizeButtonCompoundDrawable(animatedValue, button);
+                            button.setThumbTextColor(animatedValue);
+                            button.setThumbImageTint(animatedValue);
                         }
                     }
                 }
@@ -571,18 +582,21 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             }
             animation.setDuration(duration);
             animation.start();
+            return animation;
         }
+        return null;
     }
-    @TargetApi(11)
-    private void stopAnimateColors(TextView[] labels, Button[] buttons)
+
+    private void resetAnimateColors(TextView[] labels, AlarmButton[] buttons)
     {
+        if (Build.VERSION.SDK_INT < 11) {
+            return;
+        }
+
         clockText.setTextColor(timeColor);
         //alarmTitle.setTextColor(titleColor);
 
-        ValueAnimator animation = (ValueAnimator)animationObj;
-        if (animation != null) {
-            animation.removeAllUpdateListeners();
-        }
+        stopAnimation((ValueAnimator) pulseAnimationObj);
 
         for (TextView label : labels){
             if (label != null) {
@@ -591,11 +605,17 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
 
         ColorStateList buttonColors = SuntimesUtils.colorStateList(enabledColor, disabledColor, pressedColor);
-        for (Button button : buttons) {
+        for (AlarmButton button : buttons) {
             if (button != null) {
-                button.setTextColor(buttonColors);
-                colorizeButtonCompoundDrawable(enabledColor, button);
+                button.setThumbTextColor(buttonColors);
+                button.setThumbImageTint(enabledColor);
             }
+        }
+    }
+    private void stopAnimation(ValueAnimator animation)
+    {
+        if (animation != null) {
+            animation.removeAllUpdateListeners();
         }
     }
 
@@ -621,97 +641,176 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     }
 
     public static final int CLOCK_UPDATE_RATE = 3000;
-    private Runnable updateClockTask = new Runnable()
+    private final Runnable updateClockTask = new Runnable()
     {
         @Override
         public void run()
         {
-            SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AlarmDismissActivity.this, Calendar.getInstance(), false);
-            if (SuntimesUtils.is24()) {
-                clockText.setText(timeText.getValue());
-            } else {
-                String timeString = timeText.getValue() + " " + timeText.getSuffix();
-                SpannableString timeDisplay = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
-                clockText.setText(timeDisplay);
-            }
+            clockText.setText(formatTimeDisplay(AlarmDismissActivity.this, Calendar.getInstance()));
             clockText.postDelayed(this, CLOCK_UPDATE_RATE);
         }
     };
+
+    public void updateViews(Context context)
+    {
+        if (alarm != null)
+        {
+            String emptyLabel = context.getString(R.string.alarmMode_alarm);
+            alarmTitle.setText((alarm.label == null || alarm.label.isEmpty()) ? emptyLabel : alarm.label);
+
+            String eventString = alarm.getEvent();
+            if (eventString != null)
+            {
+                AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
+                alarmSubtitle.setText(eventItem.getTitle());
+                alarmSubtitle.setVisibility(View.VISIBLE);
+
+            } else if (alarm.timezone != null) {
+                Calendar eventTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(alarm.timezone, alarm.location));
+                eventTime.set(Calendar.HOUR_OF_DAY, alarm.hour);
+                eventTime.set(Calendar.MINUTE, alarm.minute);
+                alarmSubtitle.setText(utils.calendarTimeShortDisplayString(context, eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(alarm.timezone));
+                alarmSubtitle.setVisibility(View.VISIBLE);
+
+            } else {
+                alarmSubtitle.setVisibility(View.GONE);
+            }
+
+            alarmText.setText(formatTimeDisplay(context, alarm.getCalendar()));
+            offsetText.setText(formatOffsetDisplay(context));
+
+            if (alarm.note != null) {
+                noteText.setText(utils.displayStringForTitlePattern(context, alarm.note, AlarmNotifications.getData(context, alarm)));
+            } else noteText.setText("");
+
+
+        } else {    // null alarm item
+            alarmTitle.setText("");
+            alarmSubtitle.setText("");
+            alarmText.setText("");
+            offsetText.setText("");
+        }
+
+        if (MODE_SNOOZING.equals(mode))
+        {
+            icon.setDisplayedChild(1);
+            infoText.setText(formatSnoozeDisplay());
+            infoText.setVisibility(View.VISIBLE);
+            snoozeButton.setVisibility(View.GONE);
+            snoozeButton.setEnabled(false);
+            dismissButton.setEnabled(true);
+
+            pulseAnimationObj = animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
+            if (isBrightMode) {
+                bgAnimationObj = animateColors(background, new int[]{bgColors[bgColors.length-1], bgColors[0]}, 2 * 1000, new LinearInterpolator());
+            }
+
+            if (Build.VERSION.SDK_INT >= 17)  // BUG: on some older devices modifying brightness turns off the screen
+            {
+                float dimScreenValue = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;
+                boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
+                if (needsTransition) {
+                    animateBrightness(dimScreenValue, snoozingDimmingDuration);
+                } else {
+                    setBrightness(dimScreenValue);
+                }
+                allowScreenOffAfterDelay(snoozingScreenOnDuration);
+            }
+
+        } else if (MODE_TIMEOUT.equals(mode)) {
+            icon.setDisplayedChild(2);
+            infoText.setText(getString(R.string.alarmAction_timeoutMsg));
+            infoText.setVisibility(View.VISIBLE);
+            snoozeButton.setVisibility(View.GONE);
+            snoozeButton.setEnabled(false);
+            dismissButton.setEnabled(true);
+
+            resetAnimateColors(labels, buttons);
+            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
+
+        } else if (MODE_SOUNDING.equals(mode)) {
+            icon.setDisplayedChild(0);
+            hardwareButtonPressed = false;
+            infoText.setText("");
+            infoText.setVisibility(View.GONE);
+            snoozeButton.setVisibility(isTesting ? View.GONE : View.VISIBLE);
+            snoozeButton.setEnabled(true);
+            dismissButton.setEnabled(true);
+
+            pulseAnimationObj = animateColors(labels, buttons, iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
+            if (isBrightMode) {
+                bgAnimationObj = animateColors(background, bgColors, AlarmSettings.loadPrefAlarmBrightFadeIn(this), new AccelerateInterpolator());
+            }
+            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
+
+        } else {     // } else if (MODE_SCHEDULED.equals(mode)) {
+            icon.setDisplayedChild(0);
+            snoozeButton.setVisibility(View.GONE);
+            snoozeButton.setEnabled(false);
+            dismissButton.setEnabled(false);
+
+            pulseAnimationObj = animateColors(labels, buttons, iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
+            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
+        }
+    }
+
+    protected CharSequence formatTimeDisplay(Context context, Calendar calendar)
+    {
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, calendar, false);
+        if (SuntimesUtils.is24()) {
+            return timeText.getValue();
+        } else {
+            String timeString = timeText.getValue() + " " + timeText.getSuffix();
+            return SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+        }
+    }
+
+    protected CharSequence formatOffsetDisplay(Context context)
+    {
+        Spannable offsetSpan = new SpannableString("");
+        if (alarm != null && alarm.offset != 0)
+        {
+            Calendar alarmTime = Calendar.getInstance();
+            alarmTime.setTimeInMillis(alarm.timestamp);
+            int alarmHour = alarmTime.get( SuntimesUtils.is24() ? Calendar.HOUR_OF_DAY : Calendar.HOUR );
+            boolean isBefore = (alarm.offset <= 0);
+            String offsetText = utils.timeDeltaLongDisplayString(0, alarm.offset).getValue();
+            String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
+            offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
+        }
+        return offsetSpan;
+    }
+
+    protected CharSequence formatSnoozeDisplay()
+    {
+        SuntimesUtils.initDisplayStrings(this);
+        long snoozeMillis = (alarm != null)
+                ? alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this))    // NPE this line after rotation
+                : AlarmSettings.PREF_DEF_ALARM_SNOOZE;
+        SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
+        String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
+        return SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
+    }
 
     @SuppressLint("SetTextI18n")
     public void setAlarmItem(@NonNull Context context, @NonNull AlarmClockItem item)
     {
         alarm = item;
-
-        String emptyLabel = context.getString(R.string.alarmMode_alarm);
-        alarmTitle.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
-
-        String eventString = alarm.getEvent();
-        if (eventString != null)
-        {
-            AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
-            alarmSubtitle.setText(eventItem.getTitle());
-            alarmSubtitle.setVisibility(View.VISIBLE);
-
-        } else if (alarm.timezone != null) {
-            Calendar eventTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
-            eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
-            eventTime.set(Calendar.MINUTE, item.minute);
-            alarmSubtitle.setText(utils.calendarTimeShortDisplayString(context, eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone));
-            alarmSubtitle.setVisibility(View.VISIBLE);
-
-         } else {
-            alarmSubtitle.setVisibility(View.GONE);
-        }
-
-        Spannable offsetSpan = new SpannableString("");
-        if (item.offset != 0)
-        {
-            Calendar alarmTime = Calendar.getInstance();
-            alarmTime.setTimeInMillis(item.timestamp);
-            int alarmHour = alarmTime.get( SuntimesUtils.is24() ? Calendar.HOUR_OF_DAY : Calendar.HOUR );
-            boolean isBefore = (item.offset <= 0);
-            String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
-            String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
-            offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
-        }
-        offsetText.setText(offsetSpan);
-
-        if (item.note != null) {
-            noteText.setText(utils.displayStringForTitlePattern(context, item.note, AlarmNotifications.getData(context, item)));
-        } else noteText.setText("");
-
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, item.getCalendar(), false);
-        if (SuntimesUtils.is24()) {
-            alarmText.setText(timeText.getValue());
-        } else {
-            String timeString = timeText.getValue() + " " + timeText.getSuffix();
-            SpannableString timeDisplay = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
-            alarmText.setText(timeDisplay);
-        }
-
         if (alarm.state != null)
         {
             switch (alarm.state.getState())
             {
-                case AlarmState.STATE_SOUNDING:
-                    setMode(null);
-                    break;
-
-                case AlarmState.STATE_SNOOZING:
-                    setMode(AlarmNotifications.ACTION_SNOOZE);
-                    break;
-
-                case AlarmState.STATE_TIMEOUT:
-                    setMode(AlarmNotifications.ACTION_TIMEOUT);
-                    break;
-
+                case AlarmState.STATE_SOUNDING: setMode(MODE_SOUNDING); break;
+                case AlarmState.STATE_SNOOZING: setMode(MODE_SNOOZING); break;
+                case AlarmState.STATE_TIMEOUT: setMode(MODE_TIMEOUT); break;
+                case AlarmState.STATE_SCHEDULED_SOON:
+                case AlarmState.STATE_SCHEDULED_DISTANT: setMode(MODE_SCHEDULED); break;
                 default:
                     if (isTesting) {
                         setMode(null);
 
                     } else {
-                        Log.i(TAG, "setAlarmItem: state is not SOUNDING/SNOOZING/TIMEOUT.. calling finish()");
+                        Log.i(TAG, "setAlarmItem: state is not SCHEDULED/SOUNDING/SNOOZING/TIMEOUT.. calling finish()");
                         finish();
                     }
                     break;

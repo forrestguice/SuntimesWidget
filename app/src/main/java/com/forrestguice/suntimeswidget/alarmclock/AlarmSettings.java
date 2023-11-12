@@ -118,6 +118,12 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID = "app_alarms_systemtz_id";
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET = "app_alarms_systemtz_offset";
 
+    public static final String PREF_KEY_ALARM_BRIGHTMODE = "app_alarms_bright";
+    public static final boolean PREF_DEF_ALARM_BRIGHTMODE = true;
+
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_FADEIN = "app_alarms_bright_fadeinMillis";
+    public static final int PREF_DEF_ALARM_BRIGHTMODE_FADEIN = 1000 * 60;   // 60 s
+
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
     public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
 
@@ -295,6 +301,20 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(PREF_KEY_ALARM_ALLRINGTONES, PREF_DEF_ALARM_ALLRINGTONES);
+    }
+
+    public static boolean loadPrefAlarmBrightMode(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_BRIGHTMODE, PREF_DEF_ALARM_BRIGHTMODE);
+    }
+
+    public static long loadPrefAlarmBrightFadeIn(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
     }
 
     public static long loadPrefAlarmFadeIn(Context context)
