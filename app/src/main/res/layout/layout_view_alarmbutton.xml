@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/button_frame" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:minWidth="175dp"
+    android:layout_gravity="center">
+
+    <TextView android:id="@+id/layout_drag_hint_top"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Drag here"
+        android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="top|center_horizontal"
+        android:rotation="0" />
+
+    <TextView android:id="@+id/layout_drag_hint_bottom"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Drag here"
+        android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="bottom|center_horizontal"
+        android:rotation="0" />
+
+    <FrameLayout android:id="@+id/layout_drag_hint_start"
+        android:layout_width="32dp" android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:clipChildren="false">
+
+        <TextView android:id="@+id/text_drag_hint_start"
+            android:layout_width="300dp" android:layout_height="300dp"
+            android:text="Drag here"
+            android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
+            android:textStyle="bold" android:paddingTop="8dp"
+            android:layout_gravity="center" android:gravity="center"
+            android:rotation="90" />
+
+    </FrameLayout>
+
+    <FrameLayout android:id="@+id/layout_drag_hint_end"
+        android:layout_width="32dp" android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:clipChildren="false">
+
+        <TextView android:id="@+id/text_drag_hint_end"
+            android:layout_width="300dp" android:layout_height="300dp"
+            android:text="Drag here"
+            android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
+            android:textStyle="bold" android:paddingTop="8dp"
+            android:layout_gravity="center" android:gravity="center"
+            android:rotation="-90" />
+
+    </FrameLayout>
+
+    <View android:id="@+id/frame_top"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+        android:background="?attr/colorControlHighlight"
+        android:layout_gravity="top" />
+
+    <View android:id="@+id/frame_bottom"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+        android:background="?attr/colorControlHighlight"
+        android:layout_gravity="bottom" />
+
+    <View android:id="@+id/frame_start"
+        android:layout_width="1dp" android:layout_height="match_parent"
+        android:background="?attr/colorControlHighlight"
+        android:layout_gravity="start"
+        android:layout_marginTop="8dp" android:layout_marginBottom="8dp" />
+
+    <View android:id="@+id/frame_end"
+        android:layout_width="1dp" android:layout_height="match_parent"
+        android:background="?attr/colorControlHighlight"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp" android:layout_marginBottom="8dp" />
+
+    <View android:id="@+id/shade_start"
+        android:layout_width="1dp" android:layout_height="match_parent"
+        android:background="?attr/text_accentColor"
+        android:layout_gravity="start"
+        android:layout_marginTop="8dp" android:layout_marginBottom="8dp" />
+
+    <View android:id="@+id/shade_end"
+        android:layout_width="1dp" android:layout_height="match_parent"
+        android:background="?attr/text_accentColor"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp" android:layout_marginBottom="8dp" />
+
+    <LinearLayout android:id="@+id/thumb"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center" android:gravity="center"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/alarmAction_dismiss"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <ImageView android:id="@+id/thumb_icon"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="?attr/icActionCancel" />
+
+        <TextView android:id="@+id/thumb_text"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/alarmAction_dismiss" android:textSize="?attr/text_size_small"
+            android:textStyle="bold" android:textAllCaps="true" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/touchArea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null" />
+
+</FrameLayout>
