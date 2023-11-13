@@ -7,7 +7,7 @@
 
     <TextView android:id="@+id/layout_drag_hint_top"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Drag here"
+        android:text="@string/drag_hint"
         android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
         android:textStyle="bold"
         android:gravity="center"
@@ -16,7 +16,7 @@
 
     <TextView android:id="@+id/layout_drag_hint_bottom"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Drag here"
+        android:text="@string/drag_hint"
         android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
         android:textStyle="bold"
         android:gravity="center"
@@ -30,7 +30,7 @@
 
         <TextView android:id="@+id/text_drag_hint_start"
             android:layout_width="300dp" android:layout_height="300dp"
-            android:text="Drag here"
+            android:text="@string/drag_hint"
             android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
             android:textStyle="bold" android:paddingTop="8dp"
             android:layout_gravity="center" android:gravity="center"
@@ -45,7 +45,7 @@
 
         <TextView android:id="@+id/text_drag_hint_end"
             android:layout_width="300dp" android:layout_height="300dp"
-            android:text="Drag here"
+            android:text="@string/drag_hint"
             android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
             android:textStyle="bold" android:paddingTop="8dp"
             android:layout_gravity="center" android:gravity="center"

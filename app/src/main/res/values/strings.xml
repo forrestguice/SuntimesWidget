@@ -953,7 +953,7 @@
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
     <string name="alarmAction_silencedMsg">Alarm silenced</string>          <!-- toast message -->
     <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
-    <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->
+    <string name="alarmAction_timeoutMsg">Missed alarm</string>     <!-- notification msg -->   <!-- TODO: update: "alarm timed out" to "Missed alarm" -->
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->
 
@@ -2423,6 +2423,8 @@
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
