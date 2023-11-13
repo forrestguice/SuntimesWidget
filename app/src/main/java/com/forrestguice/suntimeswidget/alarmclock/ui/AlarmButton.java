@@ -43,6 +43,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 /**
  * AlarmButton
@@ -50,10 +51,14 @@ import com.forrestguice.suntimeswidget.R;
 public class AlarmButton extends RelativeLayout
 {
     public static final String ARG_START = "start";
-    public static final int ACTIVATED_START = 10;
-
     public static final String ARG_END = "end";
+    public static final String ARG_TOP = "top";
+    public static final String ARG_BOTTOM = "bottom";
+
+    public static final int ACTIVATED_START = 10;
     public static final int ACTIVATED_END = 0;
+    public static final int ACTIVATED_TOP = 20;
+    public static final int ACTIVATED_BOTTOM = 30;
 
     public AlarmButton(Context context) {
         super(context);
@@ -83,6 +88,7 @@ public class AlarmButton extends RelativeLayout
     protected ImageView thumbIcon;
 
     protected View dragHint;
+    protected View[] hintViews;
     protected View[] allDragHints;
     protected View[] allDragTargets;
     protected View shade;
@@ -92,12 +98,17 @@ public class AlarmButton extends RelativeLayout
 
     protected int color_accent = Color.CYAN;
 
+    protected float width, height;
+    protected float thumbWidth, thumbHeight;
+    protected float thumbWidth2, thumbHeight2;
+
     protected float x0 = -1, y0 = -1;
     protected long dragStartedAt = -1;
     protected boolean[] dragLock = new boolean[] { false, true };
     protected boolean dragging = false;
     protected boolean settling = false;
 
+    protected boolean isRtl = false;
     protected int activatedDirection = ACTIVATED_END;
     protected boolean activated = false;
     public boolean isActivated() {
@@ -106,6 +117,8 @@ public class AlarmButton extends RelativeLayout
 
     protected void initLocale(Context context, AttributeSet attrs)
     {
+        isRtl = AppSettings.isLocaleRtl(context);
+
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AlarmButton);
         try {
             String directionArg = a.getString(R.styleable.AlarmButton_dragActivatedDirection);
@@ -151,6 +164,7 @@ public class AlarmButton extends RelativeLayout
 
         dragHint = (activatedDirection == ACTIVATED_END ? allDragHints[2] : allDragHints[0]);
         dragHint.setVisibility(View.VISIBLE);
+        dragHint.setAlpha(0);
 
         shade = (activatedDirection == ACTIVATED_END ? allDragTargets[1] : allDragTargets[0]);
         shade.setVisibility(View.VISIBLE);
@@ -165,36 +179,15 @@ public class AlarmButton extends RelativeLayout
             frameEnd.setBackgroundColor(color_accent);
         } else frameStart.setBackgroundColor(color_accent);
 
-        frameViews = new View[] { dragHint, frameStart, frameEnd, frameTop, frameBottom };
+        hintViews = new View[] { dragHint, (activatedDirection == ACTIVATED_END) ? frameEnd : frameStart };
+        frameViews = new View[] { frameStart, frameTop, frameEnd, frameBottom };
         for (View v : frameViews) {
-            v.setAlpha(0);   // hint/frame is initially hidden
+            v.setAlpha(0);
         }
 
         touchArea = findViewById(R.id.touchArea);
         touchArea.setOnTouchListener(new OnTouchListener()
         {
-            protected float width, height;
-            protected float thumbWidth, thumbHeight;
-            protected float thumbWidth2, thumbHeight2;
-
-            private void initPosition()
-            {
-                width = getWidth();
-                height = getHeight();
-
-                thumbWidth = thumb.getWidth();
-                thumbHeight = thumb.getHeight();
-                thumbWidth2 = thumbWidth / 2f;
-                thumbHeight2 = thumbHeight / 2f;
-
-                if (x0 == -1) {
-                    x0 = thumb.getX();
-                }
-                if (y0 == -1) {
-                    y0 = thumb.getY();
-                }
-            }
-
             @Override
             public boolean onTouch(View v, MotionEvent event)
             {
@@ -211,7 +204,7 @@ public class AlarmButton extends RelativeLayout
                             dragging = true;
                             dragStartedAt = System.currentTimeMillis();
                             triggerRippleAnimation(thumb, eventX - thumb.getX(), eventY - thumb.getY(), true);
-                            animateShowFrame(true);
+                            animateShowHint(true);
                         }
                         return true;
 
@@ -245,9 +238,18 @@ public class AlarmButton extends RelativeLayout
                                 triggerRippleAnimation(thumb, eventX, eventY, false);
                                 animateActivated(activated, new AnimatorListenerAdapter()
                                 {
-                                    public void onAnimationEnd(Animator animation) {
-                                        if (activated) {
+                                    public void onAnimationEnd(Animator animation)
+                                    {
+                                        if (activated)
+                                        {
                                             AlarmButton.this.performClick();
+                                            thumb.postDelayed(new Runnable()
+                                            {
+                                                @Override
+                                                public void run() {
+                                                    animateActivated(false, null);
+                                                }
+                                            }, 500);
                                         }
                                     }
                                 });
@@ -275,17 +277,53 @@ public class AlarmButton extends RelativeLayout
         }
     }
 
+    /*@Override
+    public void onSizeChanged(int w, int h, int oldw, int oldh)
+    {
+        super.onSizeChanged(w, h, oldw, oldh);
+        x0 = y0 = -1;
+        initPosition();
+    }*/
+
+    private void initPosition()
+    {
+        width = getWidth();
+        height = getHeight();
+
+        thumbWidth = thumb.getWidth();
+        thumbHeight = thumb.getHeight();
+        thumbWidth2 = thumbWidth / 2f;
+        thumbHeight2 = thumbHeight / 2f;
+
+        if (x0 == -1) {
+            x0 = thumb.getX();
+        }
+        if (y0 == -1) {
+            y0 = thumb.getY();
+        }
+    }
+
     protected boolean checkActivated()
     {
         switch (activatedDirection)
         {
-            case ACTIVATED_START:
-                return ((thumb.getX() <= dragHint.getX() + dragHint.getWidth() / 2f));
-
-            case ACTIVATED_END:
-            default:
-                return ((thumb.getX() + thumb.getWidth() >= dragHint.getX() + dragHint.getWidth() / 2f));
+            case ACTIVATED_TOP: return checkActivatedTop();
+            case ACTIVATED_BOTTOM: return checkActivatedBottom();
+            case ACTIVATED_START: return (isRtl) ? checkActivatedRight() : checkActivatedLeft();
+            case ACTIVATED_END: default: return (isRtl) ? checkActivatedLeft() : checkActivatedRight();
         }
+    }
+    protected boolean checkActivatedTop() {
+        return (thumb.getY() + thumb.getHeight() >= dragHint.getY() + dragHint.getHeight() / 2f);
+    }
+    protected boolean checkActivatedBottom() {
+        return (thumb.getY() <= dragHint.getY() + dragHint.getHeight() / 2f);
+    }
+    protected boolean checkActivatedRight() {
+        return ((thumb.getX() + thumb.getWidth() >= dragHint.getX() + dragHint.getWidth() / 2f));
+    }
+    protected boolean checkActivatedLeft() {
+        return ((thumb.getX() <= dragHint.getX() + dragHint.getWidth() / 2f));
     }
 
     protected void animateActivated(boolean value, final AnimatorListenerAdapter listener)
@@ -318,7 +356,7 @@ public class AlarmButton extends RelativeLayout
             public void onAnimationEnd(Animator animation) {
                 activated = false;
                 shade.setAlpha(0);
-                animateShowFrame(false);
+                animateShowHint(false);
                 if (listener != null) {
                     listener.onAnimationEnd(animation);
                 }
@@ -359,10 +397,10 @@ public class AlarmButton extends RelativeLayout
         animation.start();
     }
 
-    protected void animateShowFrame(boolean visible)
+    protected void animateShowHint(boolean visible)
     {
         int duration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
-        animateShowViews(frameViews, duration, visible);
+        animateShowViews(hintViews, duration, visible);
     }
 
     protected void animateShowViews(View[] views, int duration, boolean visible)
