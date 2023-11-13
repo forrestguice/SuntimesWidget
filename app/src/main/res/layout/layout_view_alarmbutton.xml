@@ -89,26 +89,7 @@
         android:layout_gravity="end"
         android:layout_marginTop="8dp" android:layout_marginBottom="8dp" />
 
-    <LinearLayout android:id="@+id/thumb"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="center" android:gravity="center"
-        android:background="?attr/selectableItemBackground"
-        android:contentDescription="@string/alarmAction_dismiss"
-        android:orientation="vertical"
-        android:padding="8dp">
-
-        <ImageView android:id="@+id/thumb_icon"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="?attr/icActionCancel" />
-
-        <TextView android:id="@+id/thumb_text"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/alarmAction_dismiss" android:textSize="?attr/text_size_small"
-            android:textStyle="bold" android:textAllCaps="true" />
-
-    </LinearLayout>
+    <include layout="@layout/layout_view_alarmbutton_thumb" />
 
     <View
         android:id="@+id/touchArea"

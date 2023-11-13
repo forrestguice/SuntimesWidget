@@ -133,7 +133,7 @@
 
 		<com.forrestguice.suntimeswidget.alarmclock.ui.AlarmButton
 			android:id="@+id/btn_snooze"
-			android:layout_width="0dp" android:layout_height="96dp"
+			android:layout_width="0dp" android:layout_height="128dp"
 			android:text="@string/alarmAction_snooze"
 			android:src="?attr/icActionSnooze"
 			app:dragActivatedDirection="start"
@@ -146,7 +146,7 @@
 
 		<com.forrestguice.suntimeswidget.alarmclock.ui.AlarmButton
 			android:id="@+id/btn_dismiss"
-			android:layout_width="196dp" android:layout_height="96dp"
+			android:layout_width="0dp" android:layout_height="128dp"
 			android:text="@string/alarmAction_dismiss"
 			android:src="?attr/icActionDismiss"
 			app:dragActivatedDirection="end"
