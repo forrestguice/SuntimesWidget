@@ -33,7 +33,9 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Interpolator;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -651,6 +653,32 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     };
 
+    protected Object animateBackground(int[] colors, long duration, TimeInterpolator interpolator)
+    {
+        stopAnimateBackground();
+        bgAnimationObj = animateColors(background, colors, duration, interpolator);
+        return bgAnimationObj;
+    }
+    protected void stopAnimateBackground()
+    {
+        if (bgAnimationObj != null)
+        {
+            ValueAnimator bgAnimation = (ValueAnimator) bgAnimationObj;
+            bgAnimation.cancel();
+            bgAnimationObj = null;
+        }
+    }
+
+    protected int currentBackgroundColor()
+    {
+        Drawable d = background.getBackground();
+        if (d instanceof ColorDrawable) {
+            return ((ColorDrawable) d.mutate()).getColor();
+        } else {
+            return bgColors[0];
+        }
+    }
+
     public void updateViews(Context context)
     {
         if (alarm != null)
@@ -702,7 +730,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
             pulseAnimationObj = animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
             if (isBrightMode) {
-                bgAnimationObj = animateColors(background, new int[]{bgColors[bgColors.length-1], bgColors[0]}, 2 * 1000, new LinearInterpolator());
+                animateBackground(new int[]{currentBackgroundColor(), bgColors[0]}, 1500, new LinearInterpolator());
             }
 
             if (Build.VERSION.SDK_INT >= 17)  // BUG: on some older devices modifying brightness turns off the screen
@@ -739,7 +767,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
             pulseAnimationObj = animateColors(labels, buttons, iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
             if (isBrightMode) {
-                bgAnimationObj = animateColors(background, bgColors, AlarmSettings.loadPrefAlarmBrightFadeIn(this), new AccelerateInterpolator());
+                animateBackground(bgColors, AlarmSettings.loadPrefAlarmBrightFadeIn(this), new AccelerateInterpolator());
             }
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
