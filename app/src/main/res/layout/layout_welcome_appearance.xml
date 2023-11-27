@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@+id/theme_layout"
         app:layout_constraintVertical_chainStyle="spread">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/icon"
             android:layout_width="128dp" android:layout_height="128dp" android:scaleType="fitCenter"
             android:src="@drawable/ic_style_128dp" app:tint="?attr/colorControlNormal"
