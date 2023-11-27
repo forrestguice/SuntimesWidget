@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="8">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/icon"
             android:layout_width="128dp" android:layout_height="128dp" android:layout_margin="8dp"
             android:scaleType="fitCenter"
