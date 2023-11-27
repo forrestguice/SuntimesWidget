@@ -91,36 +91,36 @@ public class WidgetThemes
             }
         }
 
-        boolean added = addValue(LightTheme.THEMEDEF_DESCRIPTOR);         // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, LightTheme.THEMEDEF_DESCRIPTOR))
+        boolean added = addValue(LightTheme.themeDescriptor(context));         // add default (if missing)
+        if (!SuntimesTheme.isInstalled(themePref, LightTheme.themeDescriptor(context)))
         {
             LightTheme theme = new LightTheme(context);
             theme.saveTheme(themePref);
         }
 
-        added = addValue(LightThemeTrans.THEMEDEF_DESCRIPTOR) || added;   // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, LightThemeTrans.THEMEDEF_DESCRIPTOR))
+        added = addValue(LightThemeTrans.themeDescriptor(context)) || added;   // add default (if missing)
+        if (!SuntimesTheme.isInstalled(themePref, LightThemeTrans.themeDescriptor(context)))
         {
             LightThemeTrans theme = new LightThemeTrans(context);
             theme.saveTheme(themePref);
         }
 
-        added = addValue(DarkTheme.THEMEDEF_DESCRIPTOR) || added;         // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, DarkTheme.THEMEDEF_DESCRIPTOR))
+        added = addValue(DarkTheme.themeDescriptor(context)) || added;         // add default (if missing)
+        if (!SuntimesTheme.isInstalled(themePref, DarkTheme.themeDescriptor(context)))
         {
             DarkTheme theme = new DarkTheme(context);
             theme.saveTheme(themePref);
         }
 
-        added = addValue(DarkThemeTrans.THEMEDEF_DESCRIPTOR) || added;    // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTrans.THEMEDEF_DESCRIPTOR))
+        added = addValue(DarkThemeTrans.themeDescriptor(context)) || added;    // add default (if missing)
+        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTrans.themeDescriptor(context)))
         {
             DarkThemeTrans theme = new DarkThemeTrans(context);
             theme.saveTheme(themePref);
         }
 
-        added = addValue(DarkThemeTranslucent.THEMEDEF_DESCRIPTOR) || added;  // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTranslucent.THEMEDEF_DESCRIPTOR))
+        added = addValue(DarkThemeTranslucent.themeDescriptor(context)) || added;  // add default (if missing)
+        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTranslucent.themeDescriptor(context)))
         {
             DarkThemeTranslucent theme = new DarkThemeTranslucent(context);
             theme.saveTheme(themePref);
