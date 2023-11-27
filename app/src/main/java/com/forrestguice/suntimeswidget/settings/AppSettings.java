@@ -444,6 +444,12 @@ public class AppSettings
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWEQUINOX, PREF_DEF_UI_SHOWEQUINOX);
     }
+    public static void saveShowEquinoxPref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_SHOWEQUINOX, value);
+        pref.apply();
+    }
 
     public static boolean loadShowCrossQuarterPref( Context context )
     {
@@ -461,6 +467,12 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWMOON, PREF_DEF_UI_SHOWMOON);
+    }
+    public static void saveShowMoonPref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_SHOWMOON, value);
+        pref.apply();
     }
 
     public static boolean loadShowLunarNoonPref( Context context )
@@ -512,8 +524,10 @@ public class AppSettings
     public static boolean[] loadShowFieldsPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        int showFields = pref.getInt(PREF_KEY_UI_SHOWFIELDS, PREF_DEF_UI_SHOWFIELDS);
-
+        return loadShowFields(pref.getInt(PREF_KEY_UI_SHOWFIELDS, PREF_DEF_UI_SHOWFIELDS));
+    }
+    public static boolean[] loadShowFields( int showFields )
+    {
         boolean[] retValue = new boolean[8];
         for (int i=0; i<retValue.length; i++)
         {
@@ -975,6 +989,14 @@ public class AppSettings
     private static final AppThemeInfo info_dark1Theme = new DarkTheme1Info();
     private static final AppThemeInfo info_light1Theme = new LightTheme1Info();
     private static final AppThemeInfo info_defaultTheme = info_systemTheme;
+
+    public static AppThemeInfo[] appThemeInfo()
+    {
+        return new AppThemeInfo[] {
+                info_systemTheme, info_darkTheme, info_lightTheme,
+                info_system1Theme, info_dark1Theme, info_light1Theme
+        };
+    }
 
     /**
      * AppThemeInfo

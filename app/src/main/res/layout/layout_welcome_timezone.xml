@@ -20,7 +20,7 @@
             android:layout_marginTop="8dp" android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
             android:layout_gravity="center" android:gravity="center_vertical">
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/icon"
                 android:layout_width="128dp" android:layout_height="128dp" android:scaleType="fitCenter"
                 android:src="@drawable/ic_time_256dp" android:tint="?attr/colorControlHighlight"

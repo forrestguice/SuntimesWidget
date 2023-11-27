@@ -12,11 +12,11 @@
         app:layout_constraintBottom_toTopOf="@+id/content_layout"
         app:layout_constraintVertical_chainStyle="spread_inside">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/icon"
             android:layout_width="128dp" android:layout_height="128dp" android:layout_margin="8dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_place_128dp" android:tint="?attr/colorControlHighlight"
+            android:src="@drawable/ic_place_128dp" app:tint="?attr/colorControlNormal"
             tools:ignore="ContentDescription" />
 
         <TextView android:visibility="visible"
