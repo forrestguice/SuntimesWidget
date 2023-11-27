@@ -29,9 +29,8 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 public class DarkTheme extends SuntimesTheme
 {
     public static final String THEMEDEF_NAME = "dark";
-    public static final String THEMEDEF_DISPLAYSTRING = "Dark";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
-    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION, ThemeBackground.DARK.name(), Color.DKGRAY);
+    private static ThemeDescriptor THEMEDEF_DESCRIPTOR = null;
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.DARK;
     public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_dark;
@@ -92,7 +91,7 @@ public class DarkTheme extends SuntimesTheme
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
+        this.themeDisplayString = context.getString(R.string.widgetThemes_dark);
 
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
@@ -160,9 +159,12 @@ public class DarkTheme extends SuntimesTheme
 
     }
 
-    public ThemeDescriptor themeDescriptor()
+    public static ThemeDescriptor themeDescriptor(Context context)
     {
-        return DarkTheme.THEMEDEF_DESCRIPTOR;
+        if (THEMEDEF_DESCRIPTOR == null) {
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_dark), THEMEDEF_VERSION, ThemeBackground.DARK.name(), Color.DKGRAY);
+        }
+        return THEMEDEF_DESCRIPTOR;
     }
 
 }

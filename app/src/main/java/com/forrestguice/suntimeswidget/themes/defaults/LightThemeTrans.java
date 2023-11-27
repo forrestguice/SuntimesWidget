@@ -22,13 +22,13 @@ import android.content.Context;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.R;
 
 public class LightThemeTrans extends LightTheme
 {
     public static final String THEMEDEF_NAME = "light_transparent";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
-    public static final String THEMEDEF_DISPLAYSTRING = "Light (transparent)";
-    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION, ThemeBackground.TRANSPARENT.name(), null);
+    private static ThemeDescriptor THEMEDEF_DESCRIPTOR = null;
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.TRANSPARENT;
     public static final boolean THEMEDEF_TITLEBOLD = true;
@@ -40,15 +40,19 @@ public class LightThemeTrans extends LightTheme
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
+        this.themeDisplayString = context.getString(R.string.widgetThemes_light_transparent);
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = Color.TRANSPARENT;
         this.themeTitleBold = THEMEDEF_TITLEBOLD;
         this.themeTimeBold = THEMEDEF_TIMEBOLD;
     }
 
-    public ThemeDescriptor themeDescriptor()
+    public static ThemeDescriptor themeDescriptor(Context context)
     {
-        return LightThemeTrans.THEMEDEF_DESCRIPTOR;
+        if (THEMEDEF_DESCRIPTOR == null) {
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_light_transparent), THEMEDEF_VERSION, ThemeBackground.TRANSPARENT.name(), null);
+        }
+        return THEMEDEF_DESCRIPTOR;
     }
+
 }
