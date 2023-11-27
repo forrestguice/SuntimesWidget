@@ -1,5 +1,12 @@
 ### ~
 
+### v0.15.9 (2023-11-29)
+* fixes navigation bugs when using D-pad (Android TV).
+* fixes app crash after changing `data source` (#743).
+* fixes bug where toolbar fails to apply text size setting.
+* fixes bug where alarm dismiss challenge is shown after alarm has timed-out.
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#745 by James Liu).
+
 ### v0.15.8 (2023-10-24)
 * adds a warning when the app is configured to "current location" but location permissions are denied (#733).
 * changes the location label when switching away from "current location" mode (#733).
