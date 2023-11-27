@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.UiModeManager;
 import android.appwidget.AppWidgetManager;
@@ -804,6 +805,7 @@ public class AppSettings
                                                        int iconResId, @Nullable String title, @NonNull String message, @Nullable final DialogInterface.OnClickListener onOkClicked)
     {
         final Context context = inflater.getContext();
+        @SuppressLint("InflateParams")
         View dialogView = inflater.inflate(R.layout.layout_dialog_alert, null);
         final CheckBox check_notagain = (CheckBox) dialogView.findViewById(R.id.check_donotshowagain);
 

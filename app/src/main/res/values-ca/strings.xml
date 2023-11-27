@@ -35,6 +35,7 @@
     <string name="configAction_moon">Lluna</string>
     <string name="configAction_help">Ajuda</string>
     <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">Més</string>
     <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Configuració</string>
@@ -486,6 +487,8 @@
     <string name="locationMode_current">Actual (última coneguda)</string>  <!-- setting -->
     <string name="locationMode_custom">Definida per usuari</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+
     <string name="configLabel_location">Opcions d\'ubicació</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitud:</string>                   <!-- edittext label -->
@@ -645,6 +648,12 @@
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_shareTheme">@string/configAction_share</string>
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+
+    <string name="widgetThemes_dark">Dark</string>                                <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_dark_translucent">Dark (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_light">Light</string>                              <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_light_transparent">Light (transparent)</string>    <!-- default widget theme name --> <!-- TODO -->
 
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -963,6 +972,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Notificacions</string>
     <string name="configLabel_alarms_notifications_on">Activades</string>
     <string name="configLabel_alarms_notifications_off">Desactivades. Les alarmes poden no mostrar-se correctament</string>
@@ -1100,7 +1115,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Mostrar la Lluna</string>
-    <string name="configLabel_ui_showmoon_summary">Mostra els moments de sortida i posta, fase i iŀluminació.</string>
+    <string name="configLabel_ui_showmoon_summary">Mostra els moments de sortida i posta, fase i iŀluminació.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
@@ -1526,6 +1541,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Configurar posició</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Última posició</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Última posició</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Obtenint posició</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Posició no trobada; utilizant l\'última posició coneguda.</string>  <!-- displayed briefly after gps has failed to get a location -->

@@ -1611,7 +1611,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             themeDescriptor = WidgetThemes.valueOf(theme.themeName());
         } catch (InvalidParameterException e) {
             Log.e("loadAppearanceSettings", "Failed to load theme " + theme.themeName());
-            themeDescriptor = DarkTheme.THEMEDEF_DESCRIPTOR;
+            themeDescriptor = DarkTheme.themeDescriptor(context);
         }
         if (themeDescriptor != null)
         {

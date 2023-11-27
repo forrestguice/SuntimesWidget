@@ -787,6 +787,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         if (inflater != null)
         {
+            @SuppressLint("InflateParams")
             final View popupView = inflater.inflate(R.layout.layout_popup_mediacontrol, null);
             if (popupView != null)
             {

@@ -400,7 +400,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             challenge.setID(testChallengeID);
         }
 
-        if (challenge != AlarmSettings.DismissChallenge.NONE)
+        if (challenge != AlarmSettings.DismissChallenge.NONE && !AlarmNotifications.ACTION_TIMEOUT.equals(mode))
         {
             showDismissChallenge(context, getDismissChallenge(context, challenge));
         } else dismissAlarm(context);

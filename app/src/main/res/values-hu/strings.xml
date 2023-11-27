@@ -36,6 +36,7 @@
     <string name="configAction_moon">Hold</string>
     <string name="configAction_help">Segítség</string>
     <string name="configAction_onlineHelp">Online segítség</string>
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">Több</string>
     <string name="configAction_options">Testreszabás</string>
     <string name="configAction_settings">Beállítások</string>
@@ -478,6 +479,8 @@
     <string name="locationMode_current">Jelenlegi (utolsó ismert)</string>  <!-- setting -->
     <string name="locationMode_custom">Felhasználó által megadott</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+
     <string name="configLabel_location">Hely</string>               <!-- group title -->
     <string name="configLabel_location_mode">Mód:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Szélesség:</string>                   <!-- edittext label -->
@@ -636,6 +639,12 @@
     <string name="configAction_copyTheme">Másolás</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+
+    <string name="widgetThemes_dark">Dark</string>                                <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_dark_translucent">Dark (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_light">Light</string>                              <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_light_transparent">Light (transparent)</string>    <!-- default widget theme name --> <!-- TODO -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -952,7 +961,13 @@
     <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> A Sony STAMINA mód engedélyezve van.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően működni.</string>  <!-- snackbar message (sony devices only) -->
     <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Az akkumulátor optimalizálás be van kapcsolva.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően működni.</string>
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> a \"nincs optimalizálva\" beállítással működik a legjobban.</string>
-    <string name="help_battery_optimization_aggressive">Ez egy <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> eszköz, amelyek megfelelő működéséhez további beállításra lehet szükség.</string> 
+    <string name="help_battery_optimization_aggressive">Ez egy <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> eszköz, amelyek megfelelő működéséhez további beállításra lehet szükség.</string>
+
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Értesítések</string>
     <string name="configLabel_alarms_notifications_on">Be</string>
@@ -1091,7 +1106,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Hold megjelenítése</string>
-    <string name="configLabel_ui_showmoon_summary">A holdkelte és holdnyugta idők valamint a fázis és a megvilágítás mutatása.</string>
+    <string name="configLabel_ui_showmoon_summary">A holdkelte és holdnyugta idők valamint a fázis és a megvilágítás mutatása.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Holdi dél megjelenítése</string>
@@ -1509,6 +1524,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Hely megadása</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Utolsó megadott hely</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Utolsó megadott hely</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Hely keresése</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">A keresett hely nem található; visszatérés az utolsó ismert helyre.</string>  <!-- displayed briefly after gps has failed to get a location -->
