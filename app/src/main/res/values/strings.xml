@@ -779,6 +779,9 @@
     <string name="configLabel_themeColorMoonFull">Full</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">New</string> <!-- color label -->
 
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
+
     <string name="configLabel_themeColorSunrise">Sunrise</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 

@@ -102,13 +102,17 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_SHADOWCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULL_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEW_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONRISECOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONSETCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWAXINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWAXINGCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_MAX;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_MIN;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NAME;
@@ -206,6 +210,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
     private ColorChooser chooseColorMoonWaning, chooseColorMoonNew, chooseColorMoonWaxing, chooseColorMoonFull;
+    private ColorChooser chooseColorMoonNewText, chooseColorMoonFullText;
     private ColorChooser chooseColorMapBackground, chooseColorMapForeground, chooseColorMapShadow, chooseColorMapHighlight;
     private ArrayList<ColorChooser> colorChoosers;
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
@@ -411,6 +416,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorMoonNew = createColorChooser(this, R.id.chooser_moonNewColor, THEME_MOONNEWCOLOR);
         chooseColorMoonWaxing = createColorChooser(this, R.id.chooser_moonWaxingColor, THEME_MOONWAXINGCOLOR);
         chooseColorMoonFull = createColorChooser(this, R.id.chooser_moonFullColor, THEME_MOONFULLCOLOR);
+
+        //chooseColorMoonWaningText = createColorChooser(this, R.id.chooser_moonWaningColor_text, THEME_MOONWANINGCOLOR_TEXT);
+        chooseColorMoonNewText = createColorChooser(this, R.id.chooser_moonNewColor_text, THEME_MOONNEWCOLOR_TEXT);
+        //chooseColorMoonWaxingText = createColorChooser(this, R.id.chooser_moonWaxingColor_text, THEME_MOONWAXINGCOLOR_TEXT);
+        chooseColorMoonFullText = createColorChooser(this, R.id.chooser_moonFullColor_text, THEME_MOONFULLCOLOR_TEXT);
 
         // other colors
         chooseColorTitle = createColorChooser(this, R.id.chooser_titleColor, THEME_TITLECOLOR);
@@ -1513,6 +1523,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorMoonWaxing.setColor(theme.getMoonWaxingColor());
             chooseColorMoonFull.setColor(theme.getMoonFullColor());
 
+            chooseColorMoonNewText.setColor(theme.getMoonNewTextColor());
+            chooseColorMoonFullText.setColor(theme.getMoonFullTextColor());
+
             chooseMoonStroke.setValue(theme.getMoonFullStroke());
 
             choosePadding.setPadding(theme.getPadding());
@@ -1611,6 +1624,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeMoonWaxingColor = chooseColorMoonWaxing.getColor();
                 this.themeMoonFullColor = chooseColorMoonFull.getColor();
 
+                this.themeMoonWaningTextColor = chooseColorMoonWaning.getColor();
+                this.themeMoonNewTextColor = chooseColorMoonNewText.getColor();
+                this.themeMoonWaxingTextColor = chooseColorMoonWaxing.getColor();
+                this.themeMoonFullTextColor = chooseColorMoonFullText.getColor();
+
                 this.themeMoonFullStroke = (int)chooseMoonStroke.getValue();
                 this.themeMoonNewStroke = (int)chooseMoonStroke.getValue();
 
@@ -1685,6 +1703,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         values.put(THEME_MOONNEWCOLOR, chooseColorMoonNew.getColor());
         values.put(THEME_MOONWAXINGCOLOR, chooseColorMoonWaxing.getColor());
         values.put(THEME_MOONFULLCOLOR, chooseColorMoonFull.getColor());
+
+        values.put(THEME_MOONWANINGCOLOR_TEXT, chooseColorMoonWaning.getColor());
+        values.put(THEME_MOONNEWCOLOR_TEXT, chooseColorMoonNewText.getColor());
+        values.put(THEME_MOONWAXINGCOLOR_TEXT, chooseColorMoonWaxing.getColor());
+        values.put(THEME_MOONFULLCOLOR_TEXT, chooseColorMoonFullText.getColor());
 
         values.put(THEME_MOONFULL_STROKE_WIDTH, (int)chooseMoonStroke.getValue());
         values.put(THEME_MOONNEW_STROKE_WIDTH, (int)chooseMoonStroke.getValue());

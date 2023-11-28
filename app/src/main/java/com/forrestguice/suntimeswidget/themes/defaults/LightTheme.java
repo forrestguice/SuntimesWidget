@@ -133,6 +133,11 @@ public class LightTheme extends SuntimesTheme
         this.themeMoonWaxingColor = ContextCompat.getColor(context, THEMEDEF_MOONWAXINGCOLOR_ID);
         this.themeMoonFullColor = ContextCompat.getColor(context, THEMEDEF_MOONFULLCOLOR_ID);
 
+        this.themeMoonWaningTextColor = ContextCompat.getColor(context, THEMEDEF_MOONWANINGCOLOR_ID);
+        this.themeMoonNewTextColor = ContextCompat.getColor(context, R.color.moonIcon_color_new_text_light);
+        this.themeMoonWaxingTextColor = ContextCompat.getColor(context, THEMEDEF_MOONWAXINGCOLOR_ID);
+        this.themeMoonFullTextColor = ContextCompat.getColor(context, R.color.moonIcon_color_full_text_light);
+
         this.themeMoonFullStroke = THEMEDEF_MOONFULL_STROKEWIDTH;
         this.themeMoonNewStroke = THEMEDEF_MOONNEW_STROKEWIDTH;
 

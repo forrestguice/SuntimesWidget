@@ -177,23 +177,23 @@ public abstract class MoonLayout extends SuntimesLayout
         suffixSizeSp = theme.getTimeSuffixSizeSp();
     }
 
-    protected HashMap<MoonPhaseDisplay, Integer> phaseColors = new HashMap<>();
+    protected HashMap<MoonPhaseDisplay, Integer> phaseTextColors = new HashMap<>();
 
     protected void themeViewsMoonPhase(Context context, RemoteViews views, SuntimesTheme theme)
     {
-        int waningColor = theme.getMoonWaningColor();
-        int waxingColor = theme.getMoonWaxingColor();
+        int waningTextColor = theme.getMoonWaningTextColor();
+        int waxingTextColor = theme.getMoonWaxingTextColor();
 
-        phaseColors.put(MoonPhaseDisplay.FIRST_QUARTER, waxingColor);
-        phaseColors.put(MoonPhaseDisplay.WAXING_CRESCENT, waxingColor);
-        phaseColors.put(MoonPhaseDisplay.WAXING_GIBBOUS, waxingColor);
+        phaseTextColors.put(MoonPhaseDisplay.FIRST_QUARTER, waxingTextColor);
+        phaseTextColors.put(MoonPhaseDisplay.WAXING_CRESCENT, waxingTextColor);
+        phaseTextColors.put(MoonPhaseDisplay.WAXING_GIBBOUS, waxingTextColor);
 
-        phaseColors.put(MoonPhaseDisplay.NEW, theme.getMoonNewColor());
-        phaseColors.put(MoonPhaseDisplay.FULL, theme.getMoonFullColor());
+        phaseTextColors.put(MoonPhaseDisplay.NEW, theme.getMoonNewTextColor());
+        phaseTextColors.put(MoonPhaseDisplay.FULL, theme.getMoonFullTextColor());
 
-        phaseColors.put(MoonPhaseDisplay.THIRD_QUARTER, waningColor);
-        phaseColors.put(MoonPhaseDisplay.WANING_CRESCENT, waningColor);
-        phaseColors.put(MoonPhaseDisplay.WANING_GIBBOUS, waningColor);
+        phaseTextColors.put(MoonPhaseDisplay.THIRD_QUARTER, waningTextColor);
+        phaseTextColors.put(MoonPhaseDisplay.WANING_CRESCENT, waningTextColor);
+        phaseTextColors.put(MoonPhaseDisplay.WANING_GIBBOUS, waningTextColor);
     }
 
     protected void themeViewsMoonPhaseIcons(Context context, RemoteViews views, SuntimesTheme theme)
