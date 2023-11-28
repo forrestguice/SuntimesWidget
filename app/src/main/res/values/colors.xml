@@ -296,8 +296,10 @@
 
     <color name="moonIcon_color_new_dark">@color/grey_850</color>
     <color name="moonIcon_color_new_border_dark">@color/grey_500l</color>
+    <color name="moonIcon_color_new_text_dark">@color/grey_500</color>
     <color name="moonIcon_color_new_light">@color/grey_850</color>
     <color name="moonIcon_color_new_border_light">@color/grey_600</color>
+    <color name="moonIcon_color_new_text_light">@color/grey_850</color>
 
     <!-- moon icon (full) -->
     <color name="moonIcon_color_full">@color/moonIcon_color_full_dark</color>
@@ -305,8 +307,10 @@
 
     <color name="moonIcon_color_full_dark">@color/grey_100</color>
     <color name="moonIcon_color_full_border_dark">@color/grey_500l</color>
+    <color name="moonIcon_color_full_text_dark">@color/grey_100</color>
     <color name="moonIcon_color_full_light">@color/grey_100</color>
     <color name="moonIcon_color_full_border_light">@color/grey_600</color>
+    <color name="moonIcon_color_full_text_light">@color/grey_600</color>
 
     <!-- sun icon -->
     <color name="sunIcon_color_rising_dark">#ffd500</color>
