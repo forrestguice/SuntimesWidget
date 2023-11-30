@@ -49,7 +49,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -312,13 +311,17 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     public void onRestoreInstanceState( Bundle bundle )
     {
         super.onRestoreInstanceState(bundle);
-        setMode(bundle.getString(EXTRA_MODE));
+        AlarmClockItem item = bundle.getParcelable("alarmItem");
+        if (item != null) {
+            setAlarmItem(this, item);
+        }
     }
 
     @Override
     public void onSaveInstanceState( Bundle bundle )
     {
         super.onSaveInstanceState(bundle);
+        bundle.putParcelable("alarmItem", this.alarm);
         bundle.putString(EXTRA_MODE, mode);
     }
 
@@ -441,7 +444,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
             }
             SuntimesUtils.initDisplayStrings(this);
-            long snoozeMillis = alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this));    // NPE this line after rotation
+            long snoozeMillis = alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this));
             SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
             String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
             SpannableString snoozeDisplay = SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
