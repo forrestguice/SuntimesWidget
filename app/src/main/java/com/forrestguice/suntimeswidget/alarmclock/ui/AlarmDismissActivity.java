@@ -40,6 +40,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -106,6 +107,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText, noteText;
     private TextView[] labels;
 
+    private FloatingActionButton backButton;
     private Button snoozeButton, dismissButton;
     private Button[] buttons;
 
@@ -189,6 +191,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         snoozeButton = (Button) findViewById(R.id.btn_snooze);
         snoozeButton.setOnClickListener(onSnoozeClicked);
         snoozeButton.setVisibility(isTesting ? View.VISIBLE : View.GONE);
+
+        backButton = (FloatingActionButton) findViewById(R.id.btn_back);
+        backButton.setOnClickListener(onBackClicked);
+        backButton.hide();
 
         buttons = new Button[] {snoozeButton, dismissButton};
         labels = new TextView[] {alarmSubtitle, offsetText};
@@ -365,6 +371,21 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
+    }
+
+    private final View.OnClickListener onBackClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            onBackPressed();
+        }
+    };
+
     private final View.OnClickListener onSnoozeClicked = new View.OnClickListener()
     {
         @Override
@@ -455,6 +476,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
+            backButton.show();
 
             if (Build.VERSION.SDK_INT >= 17)  // BUG: on some older devices modifying brightness turns off the screen
             {
@@ -477,6 +499,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
+            backButton.show();
             icon.setDisplayedChild(2);
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
@@ -490,6 +513,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(isTesting ? View.GONE : View.VISIBLE);
             snoozeButton.setEnabled(true);
             dismissButton.setEnabled(true);
+            backButton.hide();
             icon.setDisplayedChild(0);
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
         }
