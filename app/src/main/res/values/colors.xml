@@ -122,7 +122,7 @@
     <color name="text_secondary_dark">@android:color/secondary_text_dark</color>
     <color name="text_tertiary_dark">@android:color/tertiary_text_dark</color>
     <color name="text_time_dark">@android:color/primary_text_dark</color>
-    <color name="text_disabled_dark">#4Dffffff</color>
+    <color name="text_disabled_dark">@color/grey_500</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
     <color name="nav_bg_dark">@color/grey_800</color>
     <color name="hr_dark">#33ffffff</color>
@@ -144,8 +144,8 @@
     <color name="table_rising_dark">@color/sunIcon_color_rising_dark</color>
     <color name="table_setting_dark">@color/sunIcon_color_setting_dark</color>
     <color name="table_civil_dark">@color/graphColor_civil_dark</color>
-    <color name="table_astro_dark">@color/graphColor_astronomical_dark</color>
-    <color name="table_night_dark">@color/graphColor_night_dark</color>
+    <color name="table_astro_dark">@color/grey_500</color>
+    <color name="table_night_dark">@color/grey_500</color>
     <color name="table_noon_dark">@color/sunIcon_color_setting_dark</color>
     <color name="table_moon_rising_dark">@color/moonIcon_color_rising_dark</color>
     <color name="table_moon_setting_dark">@color/moonIcon_color_setting_dark</color>
