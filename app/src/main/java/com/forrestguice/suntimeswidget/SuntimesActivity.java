@@ -513,7 +513,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         TimeDateDialog seekDateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_SEEK);
-        if (dateDialog != null)
+        if (seekDateDialog != null)
         {
             seekDateDialog.setTimezone(dataset.timezone());
             seekDateDialog.setOnAcceptedListener(onSeekDate(seekDateDialog));
