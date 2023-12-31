@@ -1,0 +1,1 @@
+- updates translations to Simplified Chinese, and Traditional Chinese.

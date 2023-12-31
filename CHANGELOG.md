@@ -1,5 +1,10 @@
 ### ~
 
+### v0.15.10 (2023-12-31)
+* fixes bug where the solstice widget displays "cross-quarter days" when disabled by the app (#755).
+* increments `CalculatorProviderContract` version 5 -> 6; fixes columns for "cross-quarter days".
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#752 by James Liu).
+
 ### v0.15.9 (2023-12-03)
 * adds a `back` button to the alarm dismiss activity (#750).
 * fixes navigation bugs when using D-pad (Android TV).
