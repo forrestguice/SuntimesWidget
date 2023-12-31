@@ -1,6 +1,7 @@
 ### ~
 
 ### v0.15.10 (2023-12-31)
+* fixes app crash when tapping on the date (#751).
 * fixes bug where the solstice widget displays "cross-quarter days" when disabled by the app (#755).
 * increments `CalculatorProviderContract` version 5 -> 6; fixes columns for "cross-quarter days".
 * updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#752 by James Liu).
