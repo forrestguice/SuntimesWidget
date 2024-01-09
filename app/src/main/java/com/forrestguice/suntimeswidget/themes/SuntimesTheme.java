@@ -47,13 +47,17 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_SHADOWCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULL_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEW_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONRISECOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONSETCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWAXINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWAXINGCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_DEF;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_MAX;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_MIN;
@@ -179,6 +183,11 @@ public class SuntimesTheme
     protected int themeMoonWaxingColor;
     protected int themeMoonFullColor;
 
+    protected int themeMoonWaningTextColor;
+    protected int themeMoonNewTextColor;
+    protected int themeMoonWaxingTextColor;
+    protected int themeMoonFullTextColor;
+
     protected int themeMoonFullStroke;
     protected int themeMoonFullStrokePixels = -1;
 
@@ -237,6 +246,11 @@ public class SuntimesTheme
         this.themeMoonNewColor = otherTheme.themeMoonNewColor;
         this.themeMoonWaxingColor = otherTheme.themeMoonWaxingColor;
         this.themeMoonFullColor = otherTheme.themeMoonFullColor;
+
+        this.themeMoonWaningTextColor = otherTheme.themeMoonWaningTextColor;
+        this.themeMoonNewTextColor = otherTheme.themeMoonNewTextColor;
+        this.themeMoonWaxingTextColor = otherTheme.themeMoonWaxingTextColor;
+        this.themeMoonFullTextColor = otherTheme.themeMoonFullTextColor;
 
         this.themeMoonFullStroke = otherTheme.themeMoonFullStroke;
         this.themeMoonNewStroke = otherTheme.themeMoonNewStroke;
@@ -335,6 +349,11 @@ public class SuntimesTheme
         this.themeMoonWaxingColor = themes.getInt( theme + THEME_MOONWAXINGCOLOR, defaultTheme.themeMoonWaxingColor );
         this.themeMoonFullColor = themes.getInt( theme + THEME_MOONFULLCOLOR, defaultTheme.themeMoonFullColor );
 
+        this.themeMoonWaningTextColor = themes.getInt( theme + THEME_MOONWANINGCOLOR_TEXT, defaultTheme.themeMoonWaningTextColor );
+        this.themeMoonNewTextColor = themes.getInt( theme + THEME_MOONNEWCOLOR_TEXT, defaultTheme.themeMoonNewTextColor );
+        this.themeMoonWaxingTextColor = themes.getInt( theme + THEME_MOONWAXINGCOLOR_TEXT, defaultTheme.themeMoonWaxingTextColor );
+        this.themeMoonFullTextColor = themes.getInt( theme + THEME_MOONFULLCOLOR_TEXT, defaultTheme.themeMoonFullTextColor );
+
         this.themeMoonFullStroke = themes.getInt( theme + THEME_MOONFULL_STROKE_WIDTH, defaultTheme.themeMoonFullStroke );
         this.themeMoonNewStroke = themes.getInt( theme + THEME_MOONNEW_STROKE_WIDTH, defaultTheme.themeMoonNewStroke );
 
@@ -421,6 +440,11 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + THEME_MOONWAXINGCOLOR, this.themeMoonWaxingColor);
         themePrefs.putInt(themePrefix + THEME_MOONFULLCOLOR, this.themeMoonFullColor);
 
+        themePrefs.putInt(themePrefix + THEME_MOONWANINGCOLOR_TEXT, this.themeMoonWaningTextColor);
+        themePrefs.putInt(themePrefix + THEME_MOONNEWCOLOR_TEXT, this.themeMoonNewTextColor);
+        themePrefs.putInt(themePrefix + THEME_MOONWAXINGCOLOR_TEXT, this.themeMoonWaxingTextColor);
+        themePrefs.putInt(themePrefix + THEME_MOONFULLCOLOR_TEXT, this.themeMoonFullTextColor);
+
         themePrefs.putInt(themePrefix + THEME_MOONFULL_STROKE_WIDTH, this.themeMoonFullStroke);
         themePrefs.putInt(themePrefix + THEME_MOONNEW_STROKE_WIDTH, this.themeMoonNewStroke);
 
@@ -506,6 +530,11 @@ public class SuntimesTheme
         values.put(THEME_MOONNEWCOLOR, this.themeMoonNewColor);
         values.put(THEME_MOONWAXINGCOLOR, this.themeMoonWaxingColor);
         values.put(THEME_MOONFULLCOLOR, this.themeMoonFullColor);
+
+        values.put(THEME_MOONWANINGCOLOR_TEXT, this.themeMoonWaningTextColor);
+        values.put(THEME_MOONNEWCOLOR_TEXT, this.themeMoonNewTextColor);
+        values.put(THEME_MOONWAXINGCOLOR_TEXT, this.themeMoonWaxingTextColor);
+        values.put(THEME_MOONFULLCOLOR_TEXT, this.themeMoonFullTextColor);
 
         values.put(THEME_MOONFULL_STROKE_WIDTH, this.themeMoonFullStroke);
         values.put(THEME_MOONNEW_STROKE_WIDTH, this.themeMoonNewStroke);
@@ -743,20 +772,32 @@ public class SuntimesTheme
     {
         return themeMoonWaningColor;
     }
+    public int getMoonWaningTextColor() {
+        return themeMoonWaningTextColor;
+    }
 
     public int getMoonNewColor()
     {
         return themeMoonNewColor;
+    }
+    public int getMoonNewTextColor() {
+        return themeMoonNewTextColor;
     }
 
     public int getMoonWaxingColor()
     {
         return themeMoonWaxingColor;
     }
+    public int getMoonWaxingTextColor() {
+        return themeMoonWaxingTextColor;
+    }
 
     public int getMoonFullColor()
     {
         return themeMoonFullColor;
+    }
+    public int getMoonFullTextColor() {
+        return themeMoonFullTextColor;
     }
 
     public int getMoonriseTextColor()

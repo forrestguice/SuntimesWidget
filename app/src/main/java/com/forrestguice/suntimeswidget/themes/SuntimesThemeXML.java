@@ -328,6 +328,22 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.text(colorToString(theme.getMoonNewColor()));
                 xml.endTag(namespace, SuntimesThemeContract.THEME_MOONNEWCOLOR);
 
+                xml.startTag(namespace, SuntimesThemeContract.THEME_MOONWANINGCOLOR_TEXT);
+                xml.text(colorToString(theme.getMoonWaningTextColor()));
+                xml.endTag(namespace, SuntimesThemeContract.THEME_MOONWANINGCOLOR_TEXT);
+
+                xml.startTag(namespace, SuntimesThemeContract.THEME_MOONWAXINGCOLOR_TEXT);
+                xml.text(colorToString(theme.getMoonWaxingTextColor()));
+                xml.endTag(namespace, SuntimesThemeContract.THEME_MOONWAXINGCOLOR_TEXT);
+
+                xml.startTag(namespace, SuntimesThemeContract.THEME_MOONFULLCOLOR_TEXT);
+                xml.text(colorToString(theme.getMoonFullTextColor()));
+                xml.endTag(namespace, SuntimesThemeContract.THEME_MOONFULLCOLOR_TEXT);
+
+                xml.startTag(namespace, SuntimesThemeContract.THEME_MOONNEWCOLOR_TEXT);
+                xml.text(colorToString(theme.getMoonNewTextColor()));
+                xml.endTag(namespace, SuntimesThemeContract.THEME_MOONNEWCOLOR_TEXT);
+
                 xml.startTag(namespace, SuntimesThemeContract.THEME_MOONFULL_STROKE_WIDTH);
                 xml.text(Integer.toString(theme.getMoonFullStroke()));
                 xml.endTag(namespace, SuntimesThemeContract.THEME_MOONFULL_STROKE_WIDTH);
@@ -601,6 +617,15 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                         theme.themeMoonFullColor = colorStringToInt(value);
                     } else if (tag.equalsIgnoreCase(SuntimesThemeContract.THEME_MOONNEWCOLOR)) {
                         theme.themeMoonNewColor = colorStringToInt(value);
+
+                    } else if (tag.equalsIgnoreCase(SuntimesThemeContract.THEME_MOONWANINGCOLOR_TEXT)) {
+                        theme.themeMoonWaningTextColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesThemeContract.THEME_MOONWAXINGCOLOR_TEXT)) {
+                        theme.themeMoonWaxingTextColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesThemeContract.THEME_MOONFULLCOLOR_TEXT)) {
+                        theme.themeMoonFullTextColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesThemeContract.THEME_MOONNEWCOLOR_TEXT)) {
+                        theme.themeMoonNewTextColor = colorStringToInt(value);
 
                     } else if (tag.equalsIgnoreCase(SuntimesThemeContract.THEME_MOONFULL_STROKE_WIDTH)) {
                         theme.themeMoonFullStroke = Integer.parseInt(value);

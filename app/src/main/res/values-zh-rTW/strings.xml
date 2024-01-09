@@ -36,7 +36,7 @@
     <string name="configAction_moon">月亮</string>
     <string name="configAction_help">幫助</string>
     <string name="configAction_onlineHelp">在線幫助</string>
-    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
+    <string name="configAction_appDetails">應用訊息</string>
     <string name="configAction_overflow">更多</string>
     <string name="configAction_options">選項</string>
     <string name="configAction_settings">設定</string>
@@ -501,7 +501,7 @@
     <string name="locationMode_current">當前（最近獲取到的位置）</string>  <!-- setting -->
     <string name="locationMode_custom">用戶自訂</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> 更新當前位置需要位置權限。</string>           <!-- snackbar text -->
 
     <string name="configLabel_location">位置</string>               <!-- group title -->
     <string name="configLabel_location_mode">模式:</string>                      <!-- spinner label -->
@@ -662,6 +662,12 @@
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
+    <string name="widgetThemes_dark">深色</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark_transparent">深色（透明）</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_dark_translucent">深色（半透明）</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_light">淺色</string>                              <!-- default widget theme name -->
+    <string name="widgetThemes_light_transparent">淺色（透明）</string>    <!-- default widget theme name -->
+
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g>（副本）</string>                            <!-- copied theme name (display string) -->
@@ -688,8 +694,8 @@
     <string name="configAction_chooseColor">選擇顏色</string> <!-- button (contentDescription) -->
 
     <string name="configLabel_themeBackgroundId">底色:</string>    <!-- spinner label -->
-    <string name="configLabel_themeBackground_light">亮色</string>        <!-- light background -->
-    <string name="configLabel_themeBackground_dark">暗色</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_light">淺色</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">深色</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">透明</string>  <!-- transparent background -->
     <string name="configLabel_themeBackground_color">顏色</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">顏色:</string>      <!-- color label -->
@@ -980,11 +986,11 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> 須為 \"未優化\" 以獲得更好的更好的結果。</string>
     <string name="help_battery_optimization_aggressive">這是一個 <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> 設備，需要額外配置才能正常工作。</string>
 
-    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart">自動啟動</string>
+    <string name="configLabel_alarms_autostart_on">打開</string>
+    <string name="configLabel_alarms_autostart_off">關閉。\n重啟後鬧鐘可能無法可靠地運作。</string>
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] 自動啟動被禁用！\n重啟後鬧鐘可能無法可靠地運作。</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
     <string name="configLabel_alarms_notifications">通知</string>
     <string name="configLabel_alarms_notifications_on">打開</string>
@@ -1123,7 +1129,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">顯示月亮訊息</string>
-    <string name="configLabel_ui_showmoon_summary">顯示月出月落的時間，月相和月光飽滿度。</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
+    <string name="configLabel_ui_showmoon_summary">顯示月出月落的時間，月相和月光飽滿度。</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">顯示月亮正午</string>
@@ -1170,13 +1176,13 @@
     <string name="configLabel_ui_showbluehour">顯示藍色時刻</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">亮色主題</string>
-    <string name="appThemes_darkTheme">暗色主題</string>
-    <string name="appThemes_nightMode">亮色主題/暗色主題（夜間模式）</string>
+    <string name="appThemes_lightTheme">淺色主題</string>
+    <string name="appThemes_darkTheme">深色主題</string>
+    <string name="appThemes_nightMode">淺色主題/深色主題（夜間模式）</string>
     <string name="appThemes_systemDefault">系統預設</string>
     <string name="appThemes_systemDefault1">高對比度（系統預設）</string>
-    <string name="appThemes_darkTheme1">高對比度（暗色）</string>
-    <string name="appThemes_lightTheme1">高對比度（亮色）</string>
+    <string name="appThemes_darkTheme1">高對比度（深色）</string>
+    <string name="appThemes_lightTheme1">高對比度（淺色）</string>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1548,16 +1554,16 @@
     <string name="gps_dialog_cancel">否</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">設定位置</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">上次獲取到的位置</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
-    <string name="gps_lastfix_title_found">上次獲取到的位置</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">獲取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_title_set">設定的位置</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">上次的位置</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="gps_lastfix_title_found">最後的位置</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_searching">正在獲取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">未能獲取到位置；嘗試用上次獲取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">位置更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">沒有更新檔</string>
-    <string name="gps_keeptrying_msg">無法獲取更新檔。</string>
+    <string name="gps_keeptrying_title">沒有位置</string>
+    <string name="gps_keeptrying_msg">無法獲取位置。</string>
     <string name="gps_keeptrying_ok">繼續嘗試</string>
     <string name="gps_keeptrying_cancel">放棄</string>
     <string name="gps_keeptrying_fallback">使用最後的位置</string>

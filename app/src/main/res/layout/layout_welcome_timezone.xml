@@ -20,7 +20,7 @@
             android:layout_marginTop="8dp" android:layout_marginLeft="@dimen/welcomeActivity_margin" android:layout_marginRight="@dimen/welcomeActivity_margin"
             android:layout_gravity="center" android:gravity="center_vertical">
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/icon"
                 android:layout_width="@dimen/welcomeIcon_size" android:layout_height="@dimen/welcomeIcon_size" android:scaleType="fitCenter"
                 android:src="@drawable/ic_time_256dp" android:tint="?attr/colorControlHighlight"

@@ -40,6 +40,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -49,7 +50,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -107,6 +107,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText, noteText;
     private TextView[] labels;
 
+    private FloatingActionButton backButton;
     private Button snoozeButton, dismissButton;
     private Button[] buttons;
 
@@ -190,6 +191,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         snoozeButton = (Button) findViewById(R.id.btn_snooze);
         snoozeButton.setOnClickListener(onSnoozeClicked);
         snoozeButton.setVisibility(isTesting ? View.VISIBLE : View.GONE);
+
+        backButton = (FloatingActionButton) findViewById(R.id.btn_back);
+        backButton.setOnClickListener(onBackClicked);
+        backButton.hide();
 
         buttons = new Button[] {snoozeButton, dismissButton};
         labels = new TextView[] {alarmSubtitle, offsetText};
@@ -312,13 +317,17 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     public void onRestoreInstanceState( Bundle bundle )
     {
         super.onRestoreInstanceState(bundle);
-        setMode(bundle.getString(EXTRA_MODE));
+        AlarmClockItem item = bundle.getParcelable("alarmItem");
+        if (item != null) {
+            setAlarmItem(this, item);
+        }
     }
 
     @Override
     public void onSaveInstanceState( Bundle bundle )
     {
         super.onSaveInstanceState(bundle);
+        bundle.putParcelable("alarmItem", this.alarm);
         bundle.putString(EXTRA_MODE, mode);
     }
 
@@ -362,6 +371,21 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
+    }
+
+    private final View.OnClickListener onBackClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            onBackPressed();
+        }
+    };
+
     private final View.OnClickListener onSnoozeClicked = new View.OnClickListener()
     {
         @Override
@@ -400,7 +424,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             challenge.setID(testChallengeID);
         }
 
-        if (challenge != AlarmSettings.DismissChallenge.NONE)
+        if (challenge != AlarmSettings.DismissChallenge.NONE && !AlarmNotifications.ACTION_TIMEOUT.equals(mode))
         {
             showDismissChallenge(context, getDismissChallenge(context, challenge));
         } else dismissAlarm(context);
@@ -441,7 +465,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
             }
             SuntimesUtils.initDisplayStrings(this);
-            long snoozeMillis = alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this));    // NPE this line after rotation
+            long snoozeMillis = alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this));
             SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
             String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
             SpannableString snoozeDisplay = SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
@@ -452,6 +476,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
+            backButton.show();
 
             if (Build.VERSION.SDK_INT >= 17)  // BUG: on some older devices modifying brightness turns off the screen
             {
@@ -474,6 +499,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
+            backButton.show();
             icon.setDisplayedChild(2);
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
@@ -487,6 +513,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(isTesting ? View.GONE : View.VISIBLE);
             snoozeButton.setEnabled(true);
             dismissButton.setEnabled(true);
+            backButton.hide();
             icon.setDisplayedChild(0);
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
         }
