@@ -48,7 +48,6 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
-import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -89,6 +88,9 @@ public class AppSettings
 
     public static final String PREF_KEY_LOCALE = "app_locale";
     public static final String PREF_DEF_LOCALE = "en";
+
+    public static final String PREF_KEY_LAUNCHER_MODE = "app_launcher_mode";
+    public static final String PREF_DEF_LAUNCHER_MODE = "default";
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final String PREF_DEF_UI_DATETAPACTION = WidgetActions.SuntimesAction.SWAP_CARD.name();
@@ -388,6 +390,17 @@ public class AppSettings
     public static boolean isLocaleRtl(Context context)
     {
         return context.getResources().getBoolean(R.bool.is_rtl);
+    }
+
+    /**
+     * @param context Context
+     * @return launcher class name
+     */
+    @NonNull
+    public static String loadLauncherModePref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_LAUNCHER_MODE, PREF_DEF_LAUNCHER_MODE);
     }
 
     /**

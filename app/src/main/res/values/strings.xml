@@ -1208,6 +1208,17 @@
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
 
+    <!-- App Setting: Launch Activity -->
+    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string-array name="launcherMode_display">                      <!-- one-to-one with launcherMode_values -->
+        <item>@string/app_name</item>
+        <item>@string/app_name_alarmclock</item>
+    </string-array>
+    <string-array name="launcherMode_values" translatable="false">  <!-- one-to-one with launcherMode_display -->
+        <item>SuntimesActivity</item>
+        <item>AlarmClockActivity</item>
+    </string-array>
+
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
@@ -2463,6 +2474,7 @@
     <string name="def_appwidget_0_general_observerheight" translatable="false">1.8288</string>
     <string name="def_appwidget_0_general_localize_hemisphere" translatable="false">true</string>
 
+    <string name="def_app_launcher_mode" translatable="false">SuntimesActivity</string>
     <string name="def_app_plugins_enabled" translatable="false">false</string>
 
     <string name="def_app_appearance_textsize" translatable="false">NORMAL</string>

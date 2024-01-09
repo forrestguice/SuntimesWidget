@@ -7,6 +7,14 @@
         android:title="@string/welcome_pref_title"
         android:summary="@string/welcome_pref_summary" />
 
+    <com.forrestguice.suntimeswidget.settings.ListPreference
+        android:key="appwidget_0_appearance_timeformatmode"
+        android:title="@string/configLabel_launcherMode"
+        android:dialogTitle="@string/configLabel_launcherMode"
+        android:summary="%s"
+        android:entries="@array/launcherMode_display" android:entryValues="@array/launcherMode_values"
+        android:defaultValue="@string/def_app_launcher_mode" />
+
     <PreferenceCategory
         android:title="@string/configLabel_general">
 
