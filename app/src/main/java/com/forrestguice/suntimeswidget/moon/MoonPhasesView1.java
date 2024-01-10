@@ -278,7 +278,7 @@ public class MoonPhasesView1 extends LinearLayout
     private OnClickListener onResetClick1 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // forward to position; scrolling from left-to-right
-            card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION + 3);
+            card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION + (numColumns-1));
             card_view.smoothScrollBy(1, 0); // triggers a snap
         }
     };
