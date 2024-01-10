@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2023 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -78,6 +79,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.actions.EditActionView;
+import com.forrestguice.suntimeswidget.settings.ExportWidgetSettingsTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -89,9 +91,11 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -115,12 +119,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected static final String HELPTAG_SUBSTITUTIONS = "help_substitutions";
 
+    public static final int IMPORT_REQUEST = 100;
+    public static final int EXPORT_REQUEST = 200;
+
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
     protected ContentValues themeValues;
 
     private ActionBar actionBar;
     protected TextView text_appWidgetID;
+    protected View progressView;
 
     protected ScrollView scrollView;
 
@@ -1932,6 +1940,126 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     };
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void showProgress( Context context, CharSequence title, CharSequence message )
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.VISIBLE);
+        }
+    }
+    public void dismissProgress()
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * exportSettings
+     */
+    protected void exportSettings(Context context)
+    {
+        String exportTarget = "SuntimesWidget_" + appWidgetId;
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            String filename = exportTarget + ExportWidgetSettingsTask.FILEEXT;
+            Intent intent = ExportTask.getCreateFileIntent(filename, ExportWidgetSettingsTask.MIMETYPE);
+            try {
+                startActivityForResult(intent, EXPORT_REQUEST);
+                return;
+
+            } catch (ActivityNotFoundException e) {
+                Log.e("ExportSettings", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+            }
+        }
+
+        ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, exportTarget, true, true);  // export to external cache
+        task.setTaskListener(exportSettingsListener);
+        task.execute();
+
+    }
+    public void exportSettings(Context context, @NonNull Uri uri)
+    {
+        Log.i("ExportSettings", "Starting export task: " + uri);
+        ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, uri);
+        task.setTaskListener(exportSettingsListener);
+        task.execute();
+    }
+
+    private final ExportWidgetSettingsTask.TaskListener exportSettingsListener = new ExportWidgetSettingsTask.TaskListener()
+    {
+        @Override
+        public void onStarted()
+        {
+            //setRetainInstance(true);
+            Context context = SuntimesConfigActivity0.this;
+            showProgress(context, context.getString(R.string.exportwidget_dialog_title), context.getString(R.string.exportwidget_dialog_message));
+        }
+
+        @Override
+        public void onFinished(ExportWidgetSettingsTask.ExportResult results)
+        {
+            //setRetainInstance(false);
+            dismissProgress();
+
+            Context context = SuntimesConfigActivity0.this;
+            if (context != null)
+            {
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath()
+                        : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
+
+                if (results.getResult())
+                {
+                    //if (isAdded()) {
+                    String successMessage = context.getString(R.string.msg_export_success, path);
+                    Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
+                    //}
+
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        if (results.getExportUri() == null) {
+                            ExportTask.shareResult(context, file, results.getMimeType());
+                        }
+                    } else {
+                        ExportTask.shareResult(context, file, results.getMimeType());
+                    }
+                    return;
+                }
+
+                //if (isAdded()) {
+                String failureMessage = context.getString(R.string.msg_export_failure, path);
+                Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                //}
+            }
+        }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * importSettings
+     */
+    protected boolean importSettings(Context context)
+    {
+        if (context != null) {
+            startActivityForResult(ExportTask.getOpenFileIntent("text/*"), IMPORT_REQUEST);
+            return true;
+        }
+        return false;
+    }
+    public boolean importSettings(Context context, @NonNull Uri uri)
+    {
+        Log.i("ImportSettings", "Starting import task: " + uri);
+        // TODO
+        return true;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Click handler executed when the "Add Widget" button is pressed.
      */
@@ -2425,6 +2553,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
+            case EXPORT_REQUEST:
+                onExportResult(resultCode, data);
+                break;
+
+            case IMPORT_REQUEST:
+                onImportResult(resultCode, data);
+                break;
+
             case LocationConfigDialog.REQUEST_LOCATION:
                 onLocationResult(resultCode, data);
                 break;
@@ -2436,6 +2572,28 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             case PICK_THEME_REQUEST:
                 onPickThemeResult(resultCode, data);
                 break;
+        }
+    }
+
+    protected void onExportResult(int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK)
+        {
+            Uri uri = (data != null ? data.getData() : null);
+            if (uri != null) {
+                exportSettings(this, uri);
+            }
+        }
+    }
+
+    protected void onImportResult(int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK)
+        {
+            Uri uri = (data != null ? data.getData() : null);
+            if (uri != null) {
+                importSettings(this, uri);
+            }
         }
     }
 
@@ -2633,6 +2791,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             case R.id.action_about:
                 showAbout();
+                return true;
+
+            case R.id.action_import:
+                importSettings(SuntimesConfigActivity0.this);
+                return true;
+
+            case R.id.action_export:
+                exportSettings(SuntimesConfigActivity0.this);
                 return true;
 
             case R.id.action_save:

@@ -1190,6 +1190,14 @@
     <string name="configLabel_widgetListHelp_summary">Show widget help</string>
     <string name="configLabel_widgetList_emptyMsg">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->
 
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_exportWidgets">Export Settings</string>    <!-- button (contentDescription) -->  <!-- export all widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="configAction_importWidgets">Restore Settings</string>    <!-- button (contentDescription) -->  <!-- import all widget config -->
+
+    <string name="exportwidget_dialog_title">Exporting</string>    <!-- TODO -->
+    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
+
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->

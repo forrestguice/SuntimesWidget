@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2023 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.ActivityNotFoundException;
@@ -36,6 +37,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
@@ -66,9 +68,12 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.ExportWidgetSettingsTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.widgets.DateWidget0;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -82,9 +87,13 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     private static final String KEY_LISTVIEW_TOP = "widgetlisttop";
     private static final String KEY_LISTVIEW_INDEX = "widgetlistindex";
 
+    public static final int IMPORT_REQUEST = 100;
+    public static final int EXPORT_REQUEST = 200;
+
     private ActionBar actionBar;
     private ListView widgetList;
     private WidgetListAdapter widgetListAdapter;
+    protected View progressView;
     private static final SuntimesUtils utils = new SuntimesUtils();
 
     public SuntimesWidgetListActivity()
@@ -124,6 +133,34 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         super.onStart();
         updateViews(this);
         updateWidgetAlarms(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case EXPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        exportSettings(SuntimesWidgetListActivity.this, uri);
+                    }
+                }
+                break;
+
+            case IMPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        importSettings(SuntimesWidgetListActivity.this, uri);
+                    }
+                }
+                break;
+        }
     }
 
     /**
@@ -300,6 +337,123 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         startActivity(intent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void showProgress( Context context, CharSequence title, CharSequence message )
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.VISIBLE);
+        }
+    }
+    public void dismissProgress()
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * exportSettings
+     * @param context Context
+     */
+    protected void exportSettings(Context context)
+    {
+        String exportTarget = "SuntimesWidgets";
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            String filename = exportTarget + ExportWidgetSettingsTask.FILEEXT;
+            Intent intent = ExportTask.getCreateFileIntent(filename, ExportWidgetSettingsTask.MIMETYPE);
+            try {
+                startActivityForResult(intent, EXPORT_REQUEST);
+                return;
+
+            } catch (ActivityNotFoundException e) {
+                Log.e("ExportSettings", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+            }
+        }
+
+        ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, exportTarget, true, true);  // export to external cache
+        task.setTaskListener(exportSettingsListener);
+        task.execute();
+    }
+    public void exportSettings(Context context, @NonNull Uri uri)
+    {
+        Log.i("ExportSettings", "Starting export task: " + uri);
+        ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, uri);
+        task.setTaskListener(exportSettingsListener);
+        task.execute();
+    }
+    private final ExportWidgetSettingsTask.TaskListener exportSettingsListener = new ExportWidgetSettingsTask.TaskListener()
+    {
+        @Override
+        public void onStarted()
+        {
+            //setRetainInstance(true);
+            Context context = SuntimesWidgetListActivity.this;
+            showProgress(context, context.getString(R.string.exportwidget_dialog_title), context.getString(R.string.exportwidget_dialog_message));
+        }
+
+        @Override
+        public void onFinished(ExportWidgetSettingsTask.ExportResult results)
+        {
+            //setRetainInstance(false);
+            dismissProgress();
+
+            Context context = SuntimesWidgetListActivity.this;
+            if (context != null)
+            {
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath()
+                        : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
+
+                if (results.getResult())
+                {
+                    //if (isAdded()) {
+                    String successMessage = context.getString(R.string.msg_export_success, path);
+                    Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
+                    //}
+
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        if (results.getExportUri() == null) {
+                            ExportTask.shareResult(context, file, results.getMimeType());
+                        }
+                    } else {
+                        ExportTask.shareResult(context, file, results.getMimeType());
+                    }
+                    return;
+                }
+
+                //if (isAdded()) {
+                String failureMessage = context.getString(R.string.msg_export_failure, path);
+                Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                //}
+            }
+        }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public boolean importSettings(Context context)
+    {
+        if (context != null) {
+            startActivityForResult(ExportTask.getOpenFileIntent("text/*"), IMPORT_REQUEST);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean importSettings(Context context, @NonNull Uri uri)
+    {
+        Log.i("ImportSettings", "Starting import task: " + uri);
+        // TODO
+        return true;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * @param widgetItem a WidgetListItem (referencing some widget id)
@@ -661,6 +815,14 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
             case R.id.action_actionlist:
                 launchActionList(SuntimesWidgetListActivity.this);
+                return true;
+
+            case R.id.action_import:
+                importSettings(SuntimesWidgetListActivity.this);
+                return true;
+
+            case R.id.action_export:
+                exportSettings(SuntimesWidgetListActivity.this);
                 return true;
 
             case R.id.action_help:
