@@ -40,13 +40,13 @@
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
+        android:layout_marginLeft="@dimen/dialog_margin1" android:layout_marginRight="@dimen/dialog_margin1"
         android:orientation="horizontal">
 
         <include layout="@layout/layout_dialog_moon_distance" />
 
         <com.forrestguice.suntimeswidget.moon.MoonApsisView android:id="@+id/moonapsis_view"
-            android:layout_marginStart="8dp" android:layout_marginLeft="8dp" android:layout_marginBottom="4dp"
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp" android:layout_marginBottom="4dp"
             android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
     </LinearLayout>

@@ -3,8 +3,8 @@
     android:id="@+id/moonapsis_current_layout"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
     android:orientation="vertical" android:minWidth="75dp"
-    android:layout_marginLeft="8dp" android:layout_marginRight="16dp"
-    android:layout_marginStart="8dp" android:layout_marginEnd="16dp">
+    android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+    android:layout_marginStart="8dp" android:layout_marginEnd="8dp">
 
     <TextView android:id="@+id/moonapsis_current_label"
         style="@style/SunsetTimeTextView2" android:layout_margin="0dp"

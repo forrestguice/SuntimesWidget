@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
+    android:layout_marginLeft="@dimen/dialog_margin1" android:layout_marginRight="@dimen/dialog_margin1"
     android:layout_marginTop="0dp" android:layout_marginBottom="4dp">
 
     <com.forrestguice.suntimeswidget.moon.MoonPhaseView1
@@ -23,7 +23,7 @@
 
     <com.forrestguice.suntimeswidget.moon.MoonRiseSetView1
         android:id="@+id/moonriseset_view" app:showPosition="true"
-        android:layout_marginStart="16dp" android:layout_marginLeft="16dp" android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp" android:layout_marginLeft="8dp" android:layout_marginBottom="4dp"
         android:layout_width="0dp" android:layout_height="wrap_content" app:layout_constraintHorizontal_weight="48"
         app:layout_constraintStart_toEndOf="@+id/header_gutter3"
         app:layout_constraintEnd_toStartOf="@+id/header_gutter2"
