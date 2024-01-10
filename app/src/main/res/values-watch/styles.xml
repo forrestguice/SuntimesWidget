@@ -17,8 +17,8 @@
 
     <style name="WelcomeTextSizeGroup">
         <item name="android:orientation">horizontal</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
     </style>
 
