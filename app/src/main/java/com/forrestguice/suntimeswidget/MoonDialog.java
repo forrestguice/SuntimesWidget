@@ -685,6 +685,17 @@ public class MoonDialog extends BottomSheetDialogFragment
         if (lunarNoonItem != null) {
             lunarNoonItem.setChecked(AppSettings.loadShowLunarNoonPref(context));
         }
+
+        MenuItem columnItem;
+        switch (moonphases.numColumns())
+        {
+            case 2: columnItem = menu.findItem(R.id.action_phase_columns_2); break;
+            case 3: columnItem = menu.findItem(R.id.action_phase_columns_3); break;
+            case 4: default: columnItem = menu.findItem(R.id.action_phase_columns_4); break;
+        }
+        if (columnItem != null) {
+            columnItem.setChecked(true);
+        }
     }
     private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
@@ -693,6 +704,18 @@ public class MoonDialog extends BottomSheetDialogFragment
         {
             switch (item.getItemId())
             {
+                case R.id.action_phase_columns_2:
+                    saveMoonPhaseColumns(2);
+                    return true;
+
+                case R.id.action_phase_columns_3:
+                    saveMoonPhaseColumns(3);
+                    return true;
+
+                case R.id.action_phase_columns_4:
+                    saveMoonPhaseColumns(4);
+                    return true;
+
                 case R.id.action_show_controls:
                     showMediaPopup(getActivity(), text_dialogTimeOffset);
                     return true;
@@ -710,6 +733,13 @@ public class MoonDialog extends BottomSheetDialogFragment
             }
         }
     });
+
+    protected void saveMoonPhaseColumns(int numColumns)
+    {
+        AppSettings.saveMoonPhaseColumnsPref(getActivity(), numColumns);
+        moonphases.setNumColumns(numColumns);
+        moonphases.onSizeChanged(moonphases.getWidth(), moonphases.getHeight(), moonphases.getWidth(), moonphases.getHeight());
+    }
 
     /**
      * MediaMenu

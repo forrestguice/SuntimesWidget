@@ -64,6 +64,7 @@ public class MoonPhasesView1 extends LinearLayout
     private static SuntimesUtils utils = new SuntimesUtils();
     private boolean isRtl = false;
     private boolean centered = false;
+    private int numColumns = 4;
 
     private RecyclerView card_view;
     private PhaseAdapter card_adapter;
@@ -87,6 +88,7 @@ public class MoonPhasesView1 extends LinearLayout
 
     private void init(Context context, AttributeSet attrs)
     {
+        setNumColumns(AppSettings.loadMoonPhaseColumnsPref(context));
         initLocale(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_moonphases1, this, true);
 
@@ -108,7 +110,7 @@ public class MoonPhasesView1 extends LinearLayout
 
         card_adapter = new PhaseAdapter(context);
         card_adapter.setAdapterListener(card_listener);
-        card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / 4);  // initial width; reassigned later in onSizeChanged
+        card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / numColumns);  // initial width; reassigned later in onSizeChanged
 
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION);
@@ -188,13 +190,27 @@ public class MoonPhasesView1 extends LinearLayout
         MoonPhaseDisplay.initDisplayStrings(context);
     }
 
+    public int numColumns() {
+        return numColumns;
+    }
+    public void setNumColumns(int value)
+    {
+        if (value < 2) {
+            numColumns = 2;
+        } else if (value > 4) {
+            numColumns = 4;
+        } else {
+            numColumns = value;
+        }
+    }
+
     @Override
     public void onSizeChanged( int w, int h, int oldWidth, int oldHeight )
     {
         super.onSizeChanged(w, h, oldWidth, oldHeight);
         if (card_adapter != null) {
             int margin = 8;
-            card_adapter.setItemWidth((w - (margin * 2)) / 4);
+            card_adapter.setItemWidth((w - (margin * 2)) / numColumns);
         }
     }
 
