@@ -1197,6 +1197,8 @@
 
     <string name="exportwidget_dialog_title">Exporting</string>    <!-- TODO -->
     <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title">Importing</string>    <!-- TODO -->
+    <string name="importwidget_dialog_message">Importing widget settings to file.</string>     <!-- TODO -->
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->

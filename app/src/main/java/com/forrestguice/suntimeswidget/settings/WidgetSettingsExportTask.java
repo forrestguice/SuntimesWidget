@@ -31,22 +31,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ExportWidgetSettingsTask extends ExportTask
+public class WidgetSettingsExportTask extends ExportTask
 {
     public static final String FILEEXT = ".txt";
     public static final String MIMETYPE = "text/plain";
 
-    public ExportWidgetSettingsTask(Context context, String exportTarget)
+    public WidgetSettingsExportTask(Context context, String exportTarget)
     {
         super(context, exportTarget);
         initTask();
     }
-    public ExportWidgetSettingsTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
+    public WidgetSettingsExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         super(context, exportTarget, useExternalStorage, saveToCache);
         initTask();
     }
-    public ExportWidgetSettingsTask(Context context, Uri uri)
+    public WidgetSettingsExportTask(Context context, Uri uri)
     {
         super(context, uri);
         initTask();
@@ -65,18 +65,12 @@ public class ExportWidgetSettingsTask extends ExportTask
         {
             Integer appWidgetId = appWidgetIds.get(i);
             if (appWidgetId != null) {
-                String json = toJson(WidgetSettings.toContentValues(context, appWidgetId));
+                String json = WidgetSettingsImportTask.WidgetSettingsJson.toJson(WidgetSettings.toContentValues(context, appWidgetId));
                 out.write(json.getBytes());
             }
         }
         out.flush();
         return true;
-    }
-
-    private static String toJson(ContentValues values)
-    {
-        HashMap<String,String> map = ExportTask.toMap(values);
-        return new JSONObject(map).toString();
     }
 
     /**

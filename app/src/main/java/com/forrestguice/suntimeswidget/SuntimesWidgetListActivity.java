@@ -68,7 +68,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.ExportWidgetSettingsTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.widgets.DateWidget0;
@@ -378,8 +378,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         String exportTarget = "SuntimesWidgets";
         if (Build.VERSION.SDK_INT >= 19)
         {
-            String filename = exportTarget + ExportWidgetSettingsTask.FILEEXT;
-            Intent intent = ExportTask.getCreateFileIntent(filename, ExportWidgetSettingsTask.MIMETYPE);
+            String filename = exportTarget + WidgetSettingsExportTask.FILEEXT;
+            Intent intent = ExportTask.getCreateFileIntent(filename, WidgetSettingsExportTask.MIMETYPE);
             try {
                 startActivityForResult(intent, EXPORT_REQUEST);
                 return;
@@ -389,7 +389,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             }
         }
 
-        ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, exportTarget, true, true);  // export to external cache
+        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, exportTarget, true, true);  // export to external cache
         task.setTaskListener(exportSettingsListener);
         task.setAppWidgetIds(getAllWidgetIds(context));
         task.execute();
@@ -397,12 +397,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void exportSettings(Context context, @NonNull Uri uri)
     {
         Log.i("ExportSettings", "Starting export task: " + uri);
-        ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, uri);
+        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, uri);
         task.setTaskListener(exportSettingsListener);
         task.setAppWidgetIds(getAllWidgetIds(context));
         task.execute();
     }
-    private final ExportWidgetSettingsTask.TaskListener exportSettingsListener = new ExportWidgetSettingsTask.TaskListener()
+    private final WidgetSettingsExportTask.TaskListener exportSettingsListener = new WidgetSettingsExportTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -413,7 +413,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         }
 
         @Override
-        public void onFinished(ExportWidgetSettingsTask.ExportResult results)
+        public void onFinished(WidgetSettingsExportTask.ExportResult results)
         {
             //setRetainInstance(false);
             dismissProgress();
@@ -511,7 +511,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     /**
-     * ListItem representing a running widget; specifies appWidgetId, and configuration activity.
+     * ListItem representing a running widget; specifies appWidgetId, and configuration activity.f
      */
     public static class WidgetListItem
     {

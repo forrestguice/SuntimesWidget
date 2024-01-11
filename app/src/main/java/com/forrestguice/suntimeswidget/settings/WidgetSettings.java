@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -3321,6 +3322,14 @@ public class WidgetSettings
                     //Log.d("DEBUG", key + " is Integer");
                     values.put(key, prefs.getInt(key, -1));
 
+                } else if (map.get(key).getClass().equals(Long.class)) {
+                    //Log.d("DEBUG", key + " is Long");
+                    values.put(key, prefs.getLong(key, -1));
+
+                } else if (map.get(key).getClass().equals(Float.class)) {
+                    //Log.d("DEBUG", key + " is Long");
+                    values.put(key, prefs.getFloat(key, -1));
+
                 } else if (map.get(key).getClass().equals(Boolean.class)) {
                     //Log.d("DEBUG", key + " is boolean");
                     values.put(key, prefs.getBoolean(key, false));
@@ -3328,5 +3337,95 @@ public class WidgetSettings
             }
         }
         return values;
+    }
+
+    public static ContentValues putValueInto(ContentValues values, String key, Object value)
+    {
+        if (value == null) {
+            values.putNull(key);
+
+        } else if (value.getClass().equals(String.class)) {
+            values.put(key, (String) value);
+
+        } else if (value.getClass().equals(Long.class)) {
+            values.put(key, (Long) value);
+
+        } else if (value.getClass().equals(Integer.class)) {
+            values.put(key, (Integer) value);
+
+        } else if (value.getClass().equals(Boolean.class)) {
+            values.put(key, (Boolean) value);
+
+        } else if (value.getClass().equals(Byte.class)) {
+            values.put(key, (Byte) value);
+
+        } else if (value.getClass().equals(Float.class)) {
+            values.put(key, (Float) value);
+
+        } else if (value.getClass().equals(Short.class)) {
+            values.put(key, (Short) value);
+
+        } else if (value.getClass().equals(Double.class)) {
+            values.put(key, (Double) value);
+        }
+        return values;
+    }
+
+    public static ContentValues replaceKeyPrefix(ContentValues values, int replacementId)
+    {
+        ContentValues v = new ContentValues();
+        for (String key : values.keySet())
+        {
+            String[] parts = key.split("_");
+            parts[1] = Integer.toString(replacementId);
+            String k = TextUtils.join("_", parts);
+            WidgetSettings.putValueInto(v, k, values.get(key));
+        }
+        return v;
+    }
+
+    public static void putValues(Context context, ContentValues values)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        for (String key : values.keySet())
+        {
+            Object value = values.get(key);
+            Log.d("DEBUG", key + " :: " + value);
+            if (value == null) {
+                continue;
+            }
+            if (value.getClass().equals(String.class))
+            {
+                String s = (String) value;
+                if (s.toLowerCase().equals("true") || s.toLowerCase().equals("false")) {
+                    prefs.putBoolean(key, Boolean.parseBoolean(s));
+
+                } else if (!s.trim().isEmpty() && s.endsWith("L") && TextUtils.isDigitsOnly(s.substring(0, s.length()-1))) {
+                    prefs.putLong(key, Long.parseLong(s));
+
+                } else if (!s.trim().isEmpty() && s.endsWith("f") && TextUtils.isDigitsOnly(s.substring(0, s.length()-1))) {
+                    prefs.putFloat(key, Float.parseFloat(s));
+
+                } else if (!s.trim().isEmpty() && TextUtils.isDigitsOnly(s)) {
+                    prefs.putInt(key, Integer.parseInt(s));
+
+                } else {
+                    prefs.putString(key, (String) value);
+                }
+
+            } else if (value.getClass().equals(Long.class)) {
+                prefs.putLong(key, (Long) value);
+
+            } else if (value.getClass().equals(Integer.class)) {
+                prefs.putInt(key, (Integer) value);
+
+            } else if (value.getClass().equals(Boolean.class)) {
+                prefs.putBoolean(key, (Boolean) value);
+
+            } else if (value.getClass().equals(Float.class)) {
+                prefs.putFloat(key, (Float) value);
+            }
+        }
+        prefs.apply();
     }
 }

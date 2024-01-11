@@ -40,6 +40,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,8 +80,9 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.actions.EditActionView;
-import com.forrestguice.suntimeswidget.settings.ExportWidgetSettingsTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
@@ -1966,8 +1968,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         String exportTarget = "SuntimesWidget_" + appWidgetId;
         if (Build.VERSION.SDK_INT >= 19)
         {
-            String filename = exportTarget + ExportWidgetSettingsTask.FILEEXT;
-            Intent intent = ExportTask.getCreateFileIntent(filename, ExportWidgetSettingsTask.MIMETYPE);
+            String filename = exportTarget + WidgetSettingsExportTask.FILEEXT;
+            Intent intent = ExportTask.getCreateFileIntent(filename, WidgetSettingsExportTask.MIMETYPE);
             try {
                 startActivityForResult(intent, EXPORT_REQUEST);
                 return;
@@ -1977,7 +1979,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             }
         }
 
-        ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, exportTarget, true, true);  // export to external cache
+        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, exportTarget, true, true);  // export to external cache
         task.setTaskListener(exportSettingsListener);
         task.setAppWidgetId(appWidgetId);
         task.execute();
@@ -1986,13 +1988,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         Log.i("ExportSettings", "Starting export task: " + uri);
         saveSettings(context);
-        ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, uri);
+        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, uri);
         task.setTaskListener(exportSettingsListener);
         task.setAppWidgetId(appWidgetId);
         task.execute();
     }
 
-    private final ExportWidgetSettingsTask.TaskListener exportSettingsListener = new ExportWidgetSettingsTask.TaskListener()
+    private final WidgetSettingsExportTask.TaskListener exportSettingsListener = new WidgetSettingsExportTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -2003,7 +2005,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         @Override
-        public void onFinished(ExportWidgetSettingsTask.ExportResult results)
+        public void onFinished(WidgetSettingsExportTask.ExportResult results)
         {
             //setRetainInstance(false);
             dismissProgress();
@@ -2054,12 +2056,39 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
         return false;
     }
-    public boolean importSettings(Context context, @NonNull Uri uri)
+    public boolean importSettings(final Context context, @NonNull Uri uri)
     {
         Log.i("ImportSettings", "Starting import task: " + uri);
-        // TODO
+        WidgetSettingsImportTask task = new WidgetSettingsImportTask(context);
+        task.setTaskListener(new WidgetSettingsImportTask.TaskListener()
+        {
+            @Override
+            public void onStarted() {
+                showProgress(context, context.getString(R.string.importwidget_dialog_title), context.getString(R.string.importwidget_dialog_message));
+            }
+
+            @Override
+            public void onFinished(WidgetSettingsImportTask.TaskResult result)
+            {
+                dismissProgress();
+                if (result.getResult() && result.numResults() > 0)
+                {
+                    Toast.makeText(context, "TODO: found " + result.numResults() + " items.", Toast.LENGTH_SHORT).show();    // TODO
+                    Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+                    ContentValues values = WidgetSettings.replaceKeyPrefix(result.getItems()[0], appWidgetId);
+                    WidgetSettings.putValues(context, values);
+                    loadSettings(context);   // reload
+
+                } else {
+                    Toast.makeText(context, context.getString(R.string.msg_import_failure), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        task.execute(uri);
         return true;
     }
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
