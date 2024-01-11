@@ -1961,6 +1961,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void exportSettings(Context context)
     {
+        saveSettings(context);
+
         String exportTarget = "SuntimesWidget_" + appWidgetId;
         if (Build.VERSION.SDK_INT >= 19)
         {
@@ -1977,14 +1979,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, exportTarget, true, true);  // export to external cache
         task.setTaskListener(exportSettingsListener);
+        task.setAppWidgetId(appWidgetId);
         task.execute();
-
     }
     public void exportSettings(Context context, @NonNull Uri uri)
     {
         Log.i("ExportSettings", "Starting export task: " + uri);
+        saveSettings(context);
         ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, uri);
         task.setTaskListener(exportSettingsListener);
+        task.setAppWidgetId(appWidgetId);
         task.execute();
     }
 

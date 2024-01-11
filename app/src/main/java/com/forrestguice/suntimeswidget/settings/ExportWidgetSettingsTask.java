@@ -18,13 +18,18 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 
+import org.json.JSONObject;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ExportWidgetSettingsTask extends ExportTask
 {
@@ -56,14 +61,37 @@ public class ExportWidgetSettingsTask extends ExportTask
     @Override
     public boolean export( Context context, BufferedOutputStream out ) throws IOException
     {
-        // TODO
-        return false;
+        for (int i=0; i<appWidgetIds.size(); i++)
+        {
+            Integer appWidgetId = appWidgetIds.get(i);
+            if (appWidgetId != null) {
+                String json = toJson(WidgetSettings.toContentValues(context, appWidgetId));
+                out.write(json.getBytes());
+            }
+        }
+        out.flush();
+        return true;
     }
 
-    @Override
-    public void cleanup( Context context )
+    private static String toJson(ContentValues values)
     {
-        // TODO
+        HashMap<String,String> map = ExportTask.toMap(values);
+        return new JSONObject(map).toString();
     }
+
+    /**
+     * @param value export single appWidgetId
+     */
+    public void setAppWidgetId(int value)
+    {
+        appWidgetIds.clear();
+        appWidgetIds.add(value);
+    }
+    public void setAppWidgetIds(ArrayList<Integer> values)
+    {
+        appWidgetIds.clear();
+        appWidgetIds.addAll(values);
+    }
+    protected ArrayList<Integer> appWidgetIds = new ArrayList<>();
 
 }

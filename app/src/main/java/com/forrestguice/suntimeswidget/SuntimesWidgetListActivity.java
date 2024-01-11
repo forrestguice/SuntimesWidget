@@ -354,6 +354,21 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         }
     }
 
+    protected static ArrayList<Integer> getAllWidgetIds(Context context)
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        String packageName = context.getPackageName();
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
+        {
+            int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(packageName, widgetClass.getName()));
+            for (int id : widgetIds) {
+                ids.add(id);
+            }
+        }
+        return ids;
+    }
+
     /**
      * exportSettings
      * @param context Context
@@ -376,6 +391,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
         ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, exportTarget, true, true);  // export to external cache
         task.setTaskListener(exportSettingsListener);
+        task.setAppWidgetIds(getAllWidgetIds(context));
         task.execute();
     }
     public void exportSettings(Context context, @NonNull Uri uri)
@@ -383,6 +399,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         Log.i("ExportSettings", "Starting export task: " + uri);
         ExportWidgetSettingsTask task = new ExportWidgetSettingsTask(context, uri);
         task.setTaskListener(exportSettingsListener);
+        task.setAppWidgetIds(getAllWidgetIds(context));
         task.execute();
     }
     private final ExportWidgetSettingsTask.TaskListener exportSettingsListener = new ExportWidgetSettingsTask.TaskListener()

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -59,6 +60,8 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 /**
@@ -3296,5 +3299,34 @@ public class WidgetSettings
         RiseSetOrder.initDisplayStrings(context);
         CalendarSettings.initDisplayStrings(context);
         WidgetActions.initDisplayStrings(context);
+    }
+
+    public static ContentValues toContentValues(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        Map<String, ?> map = prefs.getAll();
+        Set<String> keys = map.keySet();
+
+        ContentValues values = new ContentValues();
+        for (String key : keys)
+        {
+            if (key.startsWith(WidgetSettings.PREF_PREFIX_KEY + appWidgetId))
+            {
+                if (map.get(key).getClass().equals(String.class))
+                {
+                    //Log.d("DEBUG", key + " is String");
+                    values.put(key, prefs.getString(key, null));
+
+                } else if (map.get(key).getClass().equals(Integer.class)) {
+                    //Log.d("DEBUG", key + " is Integer");
+                    values.put(key, prefs.getInt(key, -1));
+
+                } else if (map.get(key).getClass().equals(Boolean.class)) {
+                    //Log.d("DEBUG", key + " is boolean");
+                    values.put(key, prefs.getBoolean(key, false));
+                }
+            }
+        }
+        return values;
     }
 }
