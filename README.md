@@ -144,6 +144,7 @@ Version `0.9.*` contained the following additional permissions (removed in v0.10
 Do you find value in this software? Pay as you feel. 
 
 [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
+<noscript><a href="https://liberapay.com/forrestguice/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
 
 I want to express my thanks to those who have sent me something. This is greatly appreciated.
 
