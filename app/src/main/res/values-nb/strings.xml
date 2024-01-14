@@ -1934,5 +1934,7 @@
         For more information about available choices, or extending the app to support other libraries, see the online help.
     ]]>
     </string>   <!-- TODO -->
-    
+
+    <string name="def_app_ui_showheader_text">0</string>  <!-- 0: none -->
+
 </resources>

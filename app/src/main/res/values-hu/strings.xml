@@ -1852,4 +1852,7 @@
         A rendelkezésre álló választási lehetőségekről, illetve az alkalmazás bővítéséről, hogy más könyvtárakat is támogasson, további információkat az online súgóban talál.
     ]]>
     </string>
+
+    <string name="def_app_ui_showheader_text">0</string>  <!-- 0: none -->
+
 </resources>

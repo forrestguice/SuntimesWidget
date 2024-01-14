@@ -2489,7 +2489,7 @@
     <string name="def_app_ui_showgoldhour" translatable="false">true</string>
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showheader_icon" translatable="false">true</string>
-    <string name="def_app_ui_showheader_text" translatable="false">1</string>  <!-- 1: labels -->
+    <string name="def_app_ui_showheader_text">1</string>  <!-- 1: labels -->
     <string name="def_app_ui_emphasizefield" translatable="false">OFFICIAL</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_showmapbutton" translatable="false">true</string>

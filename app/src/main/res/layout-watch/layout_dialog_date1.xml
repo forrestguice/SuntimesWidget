@@ -1,0 +1,64 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout android:id="@+id/dialog_header"
+            android:background="?attr/dialogFrame"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical|start">
+
+            <ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
+                android:layout_width="wrap_content" android:layout_height="48dp"
+                android:src="?attr/icActionBack" android:scaleType="centerInside"
+                android:contentDescription="@string/timedate_dialog_cancel" />
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:textSize="?attr/text_size_medium"
+                style="@style/Base.DialogWindowTitle.AppCompat"
+                android:text="@string/timedate_dialog_title" />
+
+            <ImageButton android:id="@+id/dialog_button_accept"
+                style="@style/ActionButton" android:contentDescription="@string/timedate_dialog_ok"
+                android:layout_width="wrap_content" android:layout_height="48dp"
+                android:src="?attr/icActionAccept"
+                android:tint="?attr/text_accentColor" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" style="@style/SunsetTimeWidget_dark"
+            android:paddingTop="0dp" android:paddingBottom="0dp"
+            android:background="?attr/dialogBackground">
+
+            <DatePicker android:id="@+id/appwidget_date_custom" android:theme="@style/DatePickerStyle"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:calendarViewShown="false" android:spinnersShown="true"
+                android:datePickerMode="spinner" android:layout_gravity="center"
+                tools:ignore="UnusedAttribute"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/dialog_footer"
+            android:background="?attr/dialogFrame"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center">
+
+            <Button
+                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                android:id="@+id/dialog_button_neutral" android:textSize="?attr/text_size_small"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/today" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

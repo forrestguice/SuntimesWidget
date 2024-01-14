@@ -22,7 +22,7 @@
             android:paddingEnd="8dp" android:paddingRight="8dp"
             android:paddingStart="0dp" android:paddingLeft="0dp"
             android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
-            android:layout_marginLeft="12dp" android:layout_marginStart="12dp"
+            android:layout_marginLeft="@dimen/equinoxItem_margin" android:layout_marginStart="@dimen/equinoxItem_margin"
             android:paddingTop="4dp" />
 
         <LinearLayout android:id="@+id/note_layout"
@@ -31,20 +31,17 @@
 
             <LinearLayout android:orientation="vertical" android:paddingTop="4dp"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content">
-                <TextView
+
+                <TextView android:id="@+id/text_datetime" style="@style/EquinoxDialogItemDateStyle"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:id="@+id/text_datetime"
-                    android:textSize="?attr/text_size_small" android:antialias="true"
                     android:textColor="@drawable/txt_equinox_vernal"
-                    android:singleLine="true" android:ellipsize="marquee"
                     tools:text="March 20, 2016; 9:00 PM" />
 
-                <TextView
+                <TextView android:id="@+id/text_note" style="@style/EquinoxDialogItemNoteStyle"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:id="@+id/text_note"
                     tools:text="21d 6h 5m  from now"
-                    android:textSize="?attr/text_size_small" android:antialias="true"
                     android:layout_marginBottom="8dp" />
+
             </LinearLayout>
 
             <ImageButton style="?attr/actionOverflowButtonStyle" android:visibility="visible"
