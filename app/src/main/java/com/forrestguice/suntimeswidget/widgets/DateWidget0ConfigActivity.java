@@ -103,7 +103,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected int getAboutIconID() {
-        return R.drawable.ic_calendar;
+        return R.drawable.ic_action_suntimes;
     }
 
     @Override
