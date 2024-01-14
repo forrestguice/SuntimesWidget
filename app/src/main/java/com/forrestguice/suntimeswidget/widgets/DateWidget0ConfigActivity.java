@@ -247,6 +247,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         if (fragments != null) {
             CalendarFormatDialog calendarFormatDialog = (CalendarFormatDialog) fragments.findFragmentByTag("CalendarFormatDialog");
             if (calendarFormatDialog != null) {
+                calendarFormatDialog.applyFocusedPattern();
                 CalendarSettings.saveCalendarFormatPatternPref(context, appWidgetId, calendarMode.name(), calendarFormatDialog.getFormatPattern());
             }
         }
