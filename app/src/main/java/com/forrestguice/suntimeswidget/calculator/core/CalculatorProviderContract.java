@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 
 /**
  * CalculatorProviderContract
- * @version 6 (0.5.1)
+ * @version 7 (0.6.0)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -228,13 +228,15 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *     adds COLUMN_CONFIG_APP_TEXT_SIZE
  *     adds COLUMN_SUNPOS_EOT, COLUMN_CONFIG_TIMEZONEMODE, COLUMN_CONFIG_SOLARTIMEMODE
  *   6 fixes ambiguity of COLUMN_SEASON_CROSS_* columns; e.g. CROSS_SUMMER is the midpoint between summer solstice and autumn equinox.
+ *   7 adds COLUMN_MOON_RISE, COLUMN_MOON_RISE_AZ, COLUMN_MOON_SET_RA, COLUMN_MOON_SET_DEC, COLUMN_MOON_SET_ILLUM, COLUMN_MOON_SET_DISTANCE
+ *     adds COLUMN_MOON_SET, COLUMN_MOON_SET_AZ, COLUMN_MOON_RISE_RA, COLUMN_MOON_RISE_DEC, COLUMN_MOON_RISE_ILLUM, COLUMN_MOON_RISE_DISTANCE
  */
 public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
     String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-    String VERSION_NAME = "v0.5.1";
-    int VERSION_CODE = 6;
+    String VERSION_NAME = "v0.6.0";
+    int VERSION_CODE = 7;
 
     /**
      * CONFIG
@@ -343,8 +345,27 @@ public interface CalculatorProviderContract
     String COLUMN_MOON_RISE = "moonrise";                  // long (timestamp); (broken <= v0.10.2 [returns Calendar])
     String COLUMN_MOON_SET = "moonset";                    // long (timestamp); (broken <= v0.10.2 [returns Calendar])
 
+    String COLUMN_MOON_RISE_AZ = "moonrise_azimuth";       // double
+    String COLUMN_MOON_RISE_RA = "moonrise_ra";            // double
+    String COLUMN_MOON_RISE_DEC = "moonrise_dec";          // double
+    String COLUMN_MOON_RISE_ILLUM = "moonrise_illum";      // double [0,1]
+    String COLUMN_MOON_RISE_DISTANCE = "moonrise_distance";  // double (kilometers)
+
+    String COLUMN_MOON_SET_AZ = "moonset_azimuth";         // double
+    String COLUMN_MOON_SET_RA = "moonset_ra";              // double
+    String COLUMN_MOON_SET_DEC = "moonset_dec";            // double
+    String COLUMN_MOON_SET_ILLUM = "moonset_illum";        // double [0,1]
+    String COLUMN_MOON_SET_DISTANCE = "moonset_distance";  // double (kilometers)
+
     String QUERY_MOON = "moon";
-    String[] QUERY_MOON_PROJECTION = new String[] { COLUMN_MOON_RISE, COLUMN_MOON_SET };
+    String[] QUERY_MOON_PROJECTION = new String[] {
+            COLUMN_MOON_RISE, COLUMN_MOON_SET,
+            COLUMN_MOON_RISE_AZ, COLUMN_MOON_SET_AZ,
+            COLUMN_MOON_RISE_RA, COLUMN_MOON_SET_RA,
+            COLUMN_MOON_RISE_DEC, COLUMN_MOON_SET_DEC,
+            COLUMN_MOON_RISE_ILLUM, COLUMN_MOON_SET_ILLUM,
+            COLUMN_MOON_RISE_DISTANCE, COLUMN_MOON_SET_DISTANCE
+    };
 
     /**
      * MOONPOS
