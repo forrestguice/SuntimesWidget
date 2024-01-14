@@ -1142,6 +1142,9 @@
     <string name="configLabel_ui_showmoon_noon">Wyświetl kulminacje Księżyca</string>
     <string name="configLabel_ui_showmoon_noon_summary">Wyświetl górowanie i dołowanie Księżyca w oknie “Księżyc”.</string>
 
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Pólmetki pór roku</string>
     <string name="configLabel_ui_showCrossQuarter_summary">Uwzględnij punkty środkowe pomiędzy równonocami i przesileniami.</string>

@@ -12,21 +12,21 @@
         app:showAsAction="never" />
 
     <item android:id="@+id/action_phase_columns"
-        android:title="Columns (phases)"
+        android:title="@string/configLabel_ui_showmoon_phase_columns"
         app:showAsAction="never">
 
         <menu>
             <group android:id="@+id/action_phase_columns_group" android:checkableBehavior="single">
                 <item android:id="@+id/action_phase_columns_2"
-                    android:title="2"
+                    android:title="@string/configLabel_ui_showmoon_phase_columns_2"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_phase_columns_3"
-                    android:title="3"
+                    android:title="@string/configLabel_ui_showmoon_phase_columns_3"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_phase_columns_4"
-                    android:title="4"
+                    android:title="@string/configLabel_ui_showmoon_phase_columns_4"
                     app:showAsAction="never" />
             </group>
         </menu>

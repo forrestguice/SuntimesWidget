@@ -1241,6 +1241,12 @@
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>
     <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>
 
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_phase_columns_2">2</string>
+    <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
+    <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>

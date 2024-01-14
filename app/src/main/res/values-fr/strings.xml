@@ -1115,6 +1115,9 @@
     <string name="configLabel_ui_showmoon_noon">Afficher le midi lunaire</string>
     <string name="configLabel_ui_showmoon_noon_summary">Affiche le midi lunaire et minuit lunaire dans le cadre du dialogue de la lune.</string>
 
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->

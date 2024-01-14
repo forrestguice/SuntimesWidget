@@ -1112,6 +1112,9 @@
     <string name="configLabel_ui_showmoon_noon">Holdi dél megjelenítése</string>
     <string name="configLabel_ui_showmoon_noon_summary">A holdi dél és éjfél megjelenítése a hold panelén.</string>
 
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Negyednapok megjelenítése</string>
     <string name="configLabel_ui_showCrossQuarter_summary">A napfordulók és a napéjegyenlőségek közötti napok mutatása.</string>
