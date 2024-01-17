@@ -35,7 +35,7 @@
     <string name="configAction_moon">Luno</string>
     <string name="configAction_help">Helpo</string>
     <string name="configAction_onlineHelp">Helpo enrete</string>
-    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
+    <string name="configAction_appDetails"><Aplikaĵ-informoj</string>
     <string name="configAction_overflow">Pli</string>
     <string name="configAction_options">Agordi…</string>
     <string name="configAction_settings">Agordoj</string>
@@ -485,7 +485,7 @@
     <string name="locationMode_current">Aktuala (laste konata)</string>  <!-- setting -->
     <string name="locationMode_custom">Propra</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Permeso por determini pozicion estas necesa por aktualigi vian nunan lokon.</string>           <!-- snackbar text -->
 
     <string name="configLabel_location">Lokoj</string>              <!-- group title -->
     <string name="configLabel_location_mode">Reĝimo:</string>                     <!-- spinner label -->
@@ -647,11 +647,11 @@
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
-    <string name="widgetThemes_dark">Malhela</string>                                <!-- default widget theme name --> <!-- TODO: review -->
-    <string name="widgetThemes_dark_transparent">Malhela (travidebla)</string>      <!-- default widget theme name --> <!-- TODO: review -->
-    <string name="widgetThemes_dark_translucent">Malhela (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_light">Hela</string>                              <!-- default widget theme name --> <!-- TODO: review -->
-    <string name="widgetThemes_light_transparent">Hela (travidebla)</string>    <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_dark">Malhela</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark_transparent">Malhela (travidebla)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_dark_translucent">Malhela (duon-travidebla)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_light">Hela</string>                              <!-- default widget theme name -->
+    <string name="widgetThemes_light_transparent">Hela (travidebla)</string>    <!-- default widget theme name -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -974,11 +974,11 @@
     <string name="help_battery_optimization">Estas konsilinde agordi la aplikaĵon <xliff:g id="appName">%s</xliff:g> kiel “ne optimumigitan”.</string>
     <string name="help_battery_optimization_aggressive">Tio ĉi estas aparato <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, kiu povas bezoni plian agordadon por funkcii ĝuste.</string>
 
-    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart">Memstarto</string>
+    <string name="configLabel_alarms_autostart_on">jes</string>
+    <string name="configLabel_alarms_autostart_off">ne.\nAlarmoj povos ne funkcii post restarto.</string>
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Memstarto estas malŝaltita!\nAlarmoj povos ne funkcii post restarto.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
     <string name="configLabel_alarms_notifications">Sciigoj</string>
     <string name="configLabel_alarms_notifications_on">Aktivaj</string>
@@ -1116,14 +1116,14 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Montri lunajn informojn</string>
-    <string name="configLabel_ui_showmoon_summary">Montri tempojn de lun-leviĝo, lun-subiro, fazon kaj prilumecon.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
+    <string name="configLabel_ui_showmoon_summary">Luno: montri tempojn de leviĝo, subiro, fazon kaj prilumecon.</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Montri plej(mal)supron de Luno</string>
     <string name="configLabel_ui_showmoon_noon_summary">Montri plejsupron kaj plejmalsupron de Luno en la dialogujo “lunaj informoj”.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_phase_columns">Kolumnoj (fazoj)</string>
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Jarsezon-mezoj</string>
@@ -1521,9 +1521,9 @@
     <string name="gps_dialog_cancel">Ne</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Pozicio agordita</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">Pozicio determinita</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
-    <string name="gps_lastfix_title_found">Pozicio determinita</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_set">Agordita pozicio</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Antaŭa pozicio</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="gps_lastfix_title_found">Aktuala pozicio</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Determinado de pozicio</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Pozici-trova servo ne povas determini vian aktualan pozicion, reagordante al la lasta konata pozicio.</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">Aktualigo de via pozicio ĉesigita.</string> <!-- displayed briefly when gps refresh cancelled -->
