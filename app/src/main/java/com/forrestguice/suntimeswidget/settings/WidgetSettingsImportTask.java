@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings;
 import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -283,7 +284,8 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                             case BEGIN_OBJECT: skipJsonObject(reader); break;
                             case BOOLEAN: value = reader.nextBoolean(); break;
                             case NULL: value = null; reader.nextNull(); break;
-                            case NUMBER: case STRING:
+                            case NUMBER: // int, long, or double
+                            case STRING:
                             default: value = reader.nextString(); break;
                         }
                         map.put(key, value);
@@ -324,6 +326,157 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             return new JSONObject(map).toString();
         }
 
+    }
+
+    public static ContentValues putValueInto(ContentValues values, String key, Object value)
+    {
+        if (value == null) {
+            values.putNull(key);
+
+        } else if (value.getClass().equals(String.class)) {
+            values.put(key, (String) value);
+
+        } else if (value.getClass().equals(Long.class)) {
+            values.put(key, (Long) value);
+
+        } else if (value.getClass().equals(Integer.class)) {
+            values.put(key, (Integer) value);
+
+        } else if (value.getClass().equals(Boolean.class)) {
+            values.put(key, (Boolean) value);
+
+        } else if (value.getClass().equals(Byte.class)) {
+            values.put(key, (Byte) value);
+
+        } else if (value.getClass().equals(Float.class)) {
+            values.put(key, (Float) value);
+
+        } else if (value.getClass().equals(Short.class)) {
+            values.put(key, (Short) value);
+
+        } else if (value.getClass().equals(Double.class)) {
+            values.put(key, (Double) value);
+        }
+        return values;
+    }
+
+    public static ContentValues replaceKeyPrefix(ContentValues values, int replacementId)
+    {
+        ContentValues v = new ContentValues();
+        for (String key : values.keySet())
+        {
+            String[] parts = key.split("_");
+            parts[1] = Integer.toString(replacementId);
+            String k = TextUtils.join("_", parts);
+            v = putValueInto(v, k, values.get(key));
+        }
+        return v;
+    }
+
+    public static void importValue(SharedPreferences.Editor prefs, Class type, String key, Object value)
+    {
+        Log.d("WidgetSettings", "import " + key + " as type " + type.getSimpleName());
+
+        if (type.equals(String.class)) {
+            prefs.putString(key, (String) value);
+
+        } else if (type.equals(Integer.class)) {
+            prefs.putInt(key, (Integer) value);
+
+        } else if (type.equals(Boolean.class)) {
+            prefs.putBoolean(key, (Boolean) value);
+
+        } else if (type.equals(Long.class)) {
+            prefs.putLong(key, (Long) value);
+
+        } else if (type.equals(Float.class)) {
+            prefs.putFloat(key, (Float) value);
+
+        } else {
+            Log.w("WidgetSettings", "unrecognized type " + type.getSimpleName() + ", skipping key " + key);
+        }
+    }
+
+    public static void importValues(SharedPreferences.Editor prefs, ContentValues values, long appWidgetId)
+    {
+        Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
+        for (String key : values.keySet())
+        {
+            Object value = values.get(key);
+            Log.d("DEBUG", key + " :: " + value);
+            if (value == null) {
+                continue;
+            }
+
+            String[] keyParts = key.split("_");
+            keyParts[1] = appWidgetId + "";
+            String k = TextUtils.join("_", keyParts);    // replacement key
+            String k0 = k.replaceFirst(WidgetSettings.PREF_PREFIX_KEY + appWidgetId, "");
+
+            if (prefTypes.containsKey(k0))
+            {
+                Class expectedType = prefTypes.get(k0);
+                Class valueType = value.getClass();
+                if (valueType.equals(expectedType)) {
+                    importValue(prefs, expectedType, k, value);    // types match (direct cast)
+
+                } else {
+                    if (expectedType.equals(String.class)) {
+                        importValue(prefs, String.class, k, value.toString());    // int, long, double, or bool as String
+
+                    } else if (expectedType.equals(Boolean.class)) {
+                        if (valueType.equals(String.class))    // bool as String
+                        {
+                            String s = (String) value;
+                            if (s.toLowerCase().equals("true") || s.toLowerCase().equals("false")) {
+                                importValue(prefs, Boolean.class, k, Boolean.parseBoolean(s));
+                            } else {
+                                Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + s + " (String)");
+                            }
+                        } else {
+                            Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
+                        }
+
+                    } else if (expectedType.equals(Integer.class)) {
+                        if (valueType.equals(String.class)) {    // int as String
+                            try {
+                                importValue(prefs, Integer.class, k, Integer.parseInt((String) value));
+                            } catch (NumberFormatException e) {
+                                Log.w("WidgetSettings", "skipping " + k + "... " + e);
+                            }
+                        } else {
+                            Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
+                        }
+
+                    } else if (expectedType.equals(Long.class)) {
+                        if (valueType.equals(String.class)) {    // long as String
+                            try {
+                                importValue(prefs, Long.class, k, Long.parseLong((String) value));
+                            } catch (NumberFormatException e) {
+                                Log.w("WidgetSettings", "skipping " + k + "... " + e);
+                            }
+                        } else {
+                            Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
+                        }
+
+                    } else if (expectedType.equals(Double.class)) {
+                        if (valueType.equals(String.class)) {    // double as String
+                            try {
+                                importValue(prefs, Double.class, k, Double.parseDouble((String) value));
+                            } catch (NumberFormatException e) {
+                                Log.w("WidgetSettings", "skipping " + k + "... " + e);
+                            }
+                        } else {
+                            Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
+                        }
+                    }
+                }
+
+            } else {
+                Log.w("WidgetSettings", k0 + " is not recognized! skipping key...");
+            }
+        }
+        prefs.apply();
     }
 
 }

@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -30,6 +31,8 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class WidgetSettingsExportTask extends ExportTask
 {
@@ -64,8 +67,10 @@ public class WidgetSettingsExportTask extends ExportTask
         for (int i=0; i<appWidgetIds.size(); i++)
         {
             Integer appWidgetId = appWidgetIds.get(i);
-            if (appWidgetId != null) {
-                String json = WidgetSettingsImportTask.WidgetSettingsJson.toJson(WidgetSettings.toContentValues(context, appWidgetId));
+            if (appWidgetId != null)
+            {
+                SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+                String json = WidgetSettingsImportTask.WidgetSettingsJson.toJson(toContentValues(prefs, appWidgetId));
                 out.write(json.getBytes());
             }
         }
@@ -87,5 +92,41 @@ public class WidgetSettingsExportTask extends ExportTask
         appWidgetIds.addAll(values);
     }
     protected ArrayList<Integer> appWidgetIds = new ArrayList<>();
+
+    public static ContentValues toContentValues(SharedPreferences prefs, int appWidgetId)
+    {
+        Map<String, ?> map = prefs.getAll();
+        Set<String> keys = map.keySet();
+
+        ContentValues values = new ContentValues();
+        for (String key : keys)
+        {
+            if (key.startsWith(WidgetSettings.PREF_PREFIX_KEY + appWidgetId))
+            {
+                if (map.get(key).getClass().equals(String.class))
+                {
+                    //Log.d("DEBUG", key + " is String");
+                    values.put(key, prefs.getString(key, null));
+
+                } else if (map.get(key).getClass().equals(Integer.class)) {
+                    //Log.d("DEBUG", key + " is Integer");
+                    values.put(key, prefs.getInt(key, -1));
+
+                } else if (map.get(key).getClass().equals(Long.class)) {
+                    //Log.d("DEBUG", key + " is Long");
+                    values.put(key, prefs.getLong(key, -1));
+
+                } else if (map.get(key).getClass().equals(Float.class)) {
+                    //Log.d("DEBUG", key + " is Long");
+                    values.put(key, prefs.getFloat(key, -1));
+
+                } else if (map.get(key).getClass().equals(Boolean.class)) {
+                    //Log.d("DEBUG", key + " is boolean");
+                    values.put(key, prefs.getBoolean(key, false));
+                }
+            }
+        }
+        return values;
+    }
 
 }

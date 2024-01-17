@@ -25,6 +25,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -40,7 +41,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -2075,8 +2075,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     Toast.makeText(context, "TODO: found " + result.numResults() + " items.", Toast.LENGTH_SHORT).show();    // TODO
                     Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
-                    ContentValues values = WidgetSettings.replaceKeyPrefix(result.getItems()[0], appWidgetId);
-                    WidgetSettings.putValues(context, values);
+
+                    SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+                    WidgetSettingsImportTask.importValues(prefs, result.getItems()[0], appWidgetId);
+
                     loadSettings(context);   // reload
 
                 } else {
@@ -2087,8 +2089,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         task.execute(uri);
         return true;
     }
-
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
