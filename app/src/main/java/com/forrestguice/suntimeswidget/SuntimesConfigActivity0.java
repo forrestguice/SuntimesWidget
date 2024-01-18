@@ -1974,7 +1974,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         saveSettings(context);
 
-        String exportTarget = "SuntimesWidget_" + appWidgetId;
+        String exportTarget = getWidgetClass().getSimpleName() + "_" + appWidgetId;
         if (Build.VERSION.SDK_INT >= 19)
         {
             String filename = exportTarget + WidgetSettingsExportTask.FILEEXT;
