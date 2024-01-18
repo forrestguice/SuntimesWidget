@@ -83,7 +83,6 @@ public class WidgetSettings
     public static final String PREF_PREFIX_KEY_TIMEZONE = "_timezone_";
     public static final String PREF_PREFIX_KEY_DATE = "_date_";
     public static final String PREF_PREFIX_KEY_ACTION = "_action_";
-    public static final String PREF_PREFIX_KEY_META = "_meta_";
 
     public static final String PREF_KEY_GENERAL_CALCULATOR = "calculator";
     public static final String PREF_DEF_GENERAL_CALCULATOR = "time4a-time4j";
@@ -250,17 +249,11 @@ public class WidgetSettings
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
 
-    public static final String PREF_KEY_META_CLASSNAME = "className";
-    public static final String PREF_KEY_META_VERSIONCODE = "versionCode";
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static String[] ALL_KEYS = new String[]
     {
-            PREF_PREFIX_KEY_META + PREF_KEY_META_CLASSNAME,
-            PREF_PREFIX_KEY_META + PREF_KEY_META_VERSIONCODE,
-
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_THEME,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SHOWTITLE,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TITLETEXT,
@@ -376,7 +369,7 @@ public class WidgetSettings
         }
         return types;
     }
-    private static void putType(Map<String,Class> map, Class type, String... keys) {
+    public static void putType(Map<String,Class> map, Class type, String... keys) {
         for (String key : keys) {
             map.put(key, type);
         }
@@ -1693,75 +1686,6 @@ public class WidgetSettings
             TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );
             LASTNEXT.setDisplayString( context.getString(R.string.risesetorder_lastnext) );
         }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * WidgetMetaData
-     */
-    public static class WidgetMetaData
-    {
-        private String className = null;
-        private int versionCode = -1;
-
-        public WidgetMetaData(String widgetClassName, int versionCode) {
-            this.className = widgetClassName;
-        }
-
-        public String getWidgetClassName() {
-            return className;
-        }
-
-        public int getVersionCode() {
-            return versionCode;
-        }
-
-        public static WidgetMetaData getMetaDataFromValues(@NonNull ContentValues values)
-        {
-            Long values_id = WidgetSettingsImportTask.findAppWidgetIdFromFirstKey(values);
-            return WidgetSettings.WidgetMetaData.getMetaDataFromValues(values, values_id);
-        }
-
-        public static WidgetMetaData getMetaDataFromValues(@NonNull ContentValues values, @Nullable Long appWidgetId)
-        {
-            if (appWidgetId != null)
-            {
-                String key_className = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_META + WidgetSettings.PREF_KEY_META_CLASSNAME;
-                String key_versionCode = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_META + WidgetSettings.PREF_KEY_META_VERSIONCODE;
-                String widgetClassName = (values.containsKey(key_className) ? values.getAsString(key_className) : null);
-                int versionCode = (values.containsKey(key_versionCode) ? values.getAsInteger( key_versionCode) : -1);
-                return new WidgetMetaData(widgetClassName, versionCode);
-            } else return null;
-        }
-    }
-
-    public static void saveMetaData(Context context, int appWidgetId, WidgetMetaData metadata)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_META;
-        prefs.putString(prefs_prefix + PREF_KEY_META_CLASSNAME, metadata.getWidgetClassName());
-        prefs.putInt(prefs_prefix + PREF_KEY_META_VERSIONCODE, metadata.getVersionCode());
-        prefs.apply();
-    }
-
-    public static WidgetMetaData loadMetaData(Context context, int appWidgetId)
-    {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_META;
-        String className = prefs.getString(prefs_prefix + PREF_KEY_META_CLASSNAME, null);
-        int versionCode = prefs.getInt(prefs_prefix + PREF_KEY_META_VERSIONCODE, -1);
-        return new WidgetMetaData(className, versionCode);
-    }
-
-    public static void deleteMetaData(Context context, int appWidgetId)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_META;
-        prefs.remove(prefs_prefix + PREF_KEY_META_CLASSNAME);
-        prefs.remove(prefs_prefix + PREF_KEY_META_VERSIONCODE);
-        prefs.apply();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -3464,7 +3388,7 @@ public class WidgetSettings
         deleteTimeNoteSetPref(context, appWidgetId);
 
         WidgetActions.deletePrefs(context, appWidgetId);
-        deleteMetaData(context, appWidgetId);
+        WidgetSettingsMetadata.deleteMetaData(context, appWidgetId);
     }
 
     public static void initDefaults( Context context )

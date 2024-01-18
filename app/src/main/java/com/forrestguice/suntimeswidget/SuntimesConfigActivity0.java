@@ -86,6 +86,7 @@ import com.forrestguice.suntimeswidget.actions.EditActionView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
@@ -1903,8 +1904,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void saveMetadata(Context context)
     {
-        WidgetSettings.WidgetMetaData metadata = new WidgetSettings.WidgetMetaData(getWidgetClass().getSimpleName(), BuildConfig.VERSION_CODE);
-        WidgetSettings.saveMetaData(context, appWidgetId, metadata);
+        WidgetSettingsMetadata.WidgetMetaData metadata = new WidgetSettingsMetadata.WidgetMetaData(getWidgetClass().getSimpleName(), BuildConfig.VERSION_CODE);
+        WidgetSettingsMetadata.saveMetaData(context, appWidgetId, metadata);
     }
 
     /**
@@ -2090,7 +2091,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     for (int i=0; i<result.numResults(); i++)
                     {
                         ContentValues v = result.getItems()[i];
-                        WidgetSettings.WidgetMetaData metadata = WidgetSettings.WidgetMetaData.getMetaDataFromValues(v);
+                        WidgetSettingsMetadata.WidgetMetaData metadata = WidgetSettingsMetadata.WidgetMetaData.getMetaDataFromValues(v);
                         String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
                         items[i] = values_widgetClassName;
 

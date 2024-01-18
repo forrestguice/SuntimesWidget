@@ -408,6 +408,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         prefTypes.putAll(CalendarSettings.getPrefTypes());
         prefTypes.putAll(WidgetActions.getPrefTypes());
         prefTypes.putAll(WorldMapWidgetSettings.getPrefTypes());
+        prefTypes.putAll(WidgetSettingsMetadata.getPrefTypes());
 
         for (String key : values.keySet())
         {
@@ -451,7 +452,6 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                             }
                         } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
 
-
                     } else if (expectedType.equals(Long.class)) {
                         if (valueType.equals(String.class)) {    // long as String
                             try {
@@ -476,13 +476,6 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             }
         }
         prefs.apply();
-    }
-
-    public static String findWidgetClassName(ContentValues values, @Nullable Long appWidgetId)
-    {
-        if (appWidgetId != null) {
-            return values.getAsString( WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_META + WidgetSettings.PREF_KEY_META_CLASSNAME);
-        } else return null;
     }
 
     public static Long findAppWidgetIdFromFirstKey(ContentValues values)
