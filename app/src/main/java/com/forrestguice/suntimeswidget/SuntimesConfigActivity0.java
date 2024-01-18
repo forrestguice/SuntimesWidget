@@ -24,6 +24,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -39,6 +40,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -2080,22 +2082,41 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 dismissProgress();
                 if (result.getResult() && result.numResults() > 0)
                 {
-                    ContentValues values = result.getItems()[0];
-                    WidgetSettings.WidgetMetaData metadata = WidgetSettings.WidgetMetaData.getMetaDataFromValues(values);
-                    String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
-
-                    if (values_widgetClassName == null || getWidgetClass().getSimpleName().equals(values_widgetClassName))
+                    ContentValues v = null;
+                    for (int i=0; i<result.numResults(); i++)
                     {
-                        Log.d("DEBUG", "importing settings for widget type " + values_widgetClassName);
-                        Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
-                        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
-                        WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
-                        loadSettings(context);   // reload
+                        ContentValues values = result.getItems()[i];
+                        WidgetSettings.WidgetMetaData metadata = WidgetSettings.WidgetMetaData.getMetaDataFromValues(values);
+                        String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
+
+                        if (getWidgetClass().getSimpleName().equals(values_widgetClassName))
+                        {
+                            Log.d("DEBUG", "found settings for widget type " + values_widgetClassName + " at " + i);
+                            v = values;
+                            break;
+                        }
+                    }
+
+                    if (v != null) {
+                        importSettings(context, v);
 
                     } else {
-                        // TODO: show warning "types don't match, import anyway?"
+                        final ContentValues values = result.getItems()[0];
+                        WidgetSettings.WidgetMetaData metadata = WidgetSettings.WidgetMetaData.getMetaDataFromValues(values);
+                        String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
+
                         Log.w("ImportSettings", "widget class names do not match! Expected " + getWidgetClass().getSimpleName() + ", found " + values_widgetClassName);
                         Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+
+                        String message = context.getString(R.string.importwidget_dialog_message1);
+                        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+                                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        importSettings(context, values);
+                                    }
+                                })
+                                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+                        confirm.show();
                     }
 
                 } else {
@@ -2105,6 +2126,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         });
         task.execute(uri);
         return true;
+    }
+
+    protected void importSettings(Context context, ContentValues values)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
+        loadSettings(context);   // reload
+        Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
