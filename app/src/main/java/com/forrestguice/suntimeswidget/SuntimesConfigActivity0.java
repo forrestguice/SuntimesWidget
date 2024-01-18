@@ -2080,16 +2080,26 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 dismissProgress();
                 if (result.getResult() && result.numResults() > 0)
                 {
-                    Toast.makeText(context, "TODO: found " + result.numResults() + " items.", Toast.LENGTH_SHORT).show();    // TODO
-                    Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+                    ContentValues values = result.getItems()[0];
+                    WidgetSettings.WidgetMetaData metadata = WidgetSettings.WidgetMetaData.getMetaDataFromValues(values);
+                    String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
 
-                    SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
-                    WidgetSettingsImportTask.importValues(prefs, result.getItems()[0], appWidgetId);
+                    if (values_widgetClassName == null || getWidgetClass().getSimpleName().equals(values_widgetClassName))
+                    {
+                        Log.d("DEBUG", "importing settings for widget type " + values_widgetClassName);
+                        Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+                        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+                        WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
+                        loadSettings(context);   // reload
 
-                    loadSettings(context);   // reload
+                    } else {
+                        // TODO: show warning "types don't match, import anyway?"
+                        Log.w("ImportSettings", "widget class names do not match! Expected " + getWidgetClass().getSimpleName() + ", found " + values_widgetClassName);
+                        Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+                    }
 
                 } else {
-                    Toast.makeText(context, context.getString(R.string.msg_import_failure), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
                 }
             }
         });

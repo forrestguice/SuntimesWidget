@@ -2123,6 +2123,7 @@
     <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_import_noresults">Import skipped; no new themes were found.</string>
+    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">
         <item quantity="one">%d theme</item>

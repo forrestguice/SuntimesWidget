@@ -1717,6 +1717,24 @@ public class WidgetSettings
         public int getVersionCode() {
             return versionCode;
         }
+
+        public static WidgetMetaData getMetaDataFromValues(@NonNull ContentValues values)
+        {
+            Long values_id = WidgetSettingsImportTask.findAppWidgetIdFromFirstKey(values);
+            return WidgetSettings.WidgetMetaData.getMetaDataFromValues(values, values_id);
+        }
+
+        public static WidgetMetaData getMetaDataFromValues(@NonNull ContentValues values, @Nullable Long appWidgetId)
+        {
+            if (appWidgetId != null)
+            {
+                String key_className = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_META + WidgetSettings.PREF_KEY_META_CLASSNAME;
+                String key_versionCode = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_META + WidgetSettings.PREF_KEY_META_VERSIONCODE;
+                String widgetClassName = (values.containsKey(key_className) ? values.getAsString(key_className) : null);
+                int versionCode = (values.containsKey(key_versionCode) ? values.getAsInteger( key_versionCode) : -1);
+                return new WidgetMetaData(widgetClassName, versionCode);
+            } else return null;
+        }
     }
 
     public static void saveMetaData(Context context, int appWidgetId, WidgetMetaData metadata)

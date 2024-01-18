@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -475,6 +476,29 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             }
         }
         prefs.apply();
+    }
+
+    public static String findWidgetClassName(ContentValues values, @Nullable Long appWidgetId)
+    {
+        if (appWidgetId != null) {
+            return values.getAsString( WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_META + WidgetSettings.PREF_KEY_META_CLASSNAME);
+        } else return null;
+    }
+
+    public static Long findAppWidgetIdFromFirstKey(ContentValues values)
+    {
+        String[] keys = values.keySet().toArray(new String[0]);
+        if (keys.length > 0)
+        {
+            try {
+                String[] parts = keys[0].split("_");
+                return Long.parseLong(parts[1]);
+
+            } catch (NumberFormatException e) {
+                Log.w("WidgetSettings", "failed to find widget id from keys.. " + e);
+            }
+        }
+        return null;
     }
 
 }
