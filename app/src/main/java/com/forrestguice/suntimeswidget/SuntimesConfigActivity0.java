@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -2128,13 +2129,47 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return true;
     }
 
-    protected void importSettings(Context context, ContentValues values)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
-        WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
-        loadSettings(context);   // reload
-        Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+    protected void importSettings(Context context, ContentValues values) {
+        importSettings(context, values, true);
     }
+    protected void importSettings(Context context, ContentValues values, boolean offerUndo)
+    {
+        SharedPreferences prefs0 = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        ContentValues previousValues = null;
+        if (offerUndo) {
+            previousValues = WidgetSettingsExportTask.toContentValues(prefs0, appWidgetId);
+        }
+
+        SharedPreferences.Editor prefs = prefs0.edit();
+        WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
+        loadSettings(context);   // reload ui
+
+        if (offerUndo) {
+            Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+            offerUndoImport(context, previousValues);
+        }
+    }
+
+    protected  void offerUndoImport(final Context context, final ContentValues previous)
+    {
+        View view = getWindow().getDecorView();
+        if (context != null && view != null)
+        {
+            CharSequence message = context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings));
+            Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    importSettings(context, previous, false);
+                }
+            });
+            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            snackbar.setDuration(UNDO_IMPORT_MILLIS);
+            snackbar.show();
+        }
+    }
+    public static final int UNDO_IMPORT_MILLIS = 12000;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
