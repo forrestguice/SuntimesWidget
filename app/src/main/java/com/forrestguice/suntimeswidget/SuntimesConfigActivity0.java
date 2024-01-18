@@ -294,6 +294,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         saveTimezoneSettings(context);
         saveAppearanceSettings(context);
         saveActionSettings(context);
+        saveMetadata(context);
     }
 
     /**
@@ -1896,6 +1897,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return WidgetSettings.PREF_DEF_TIMEZONE_MODE;
     }
 
+    protected void saveMetadata(Context context)
+    {
+        WidgetSettings.WidgetMetaData metadata = new WidgetSettings.WidgetMetaData(getWidgetClass().getSimpleName(), BuildConfig.VERSION_CODE);
+        WidgetSettings.saveMetaData(context, appWidgetId, metadata);
+    }
+
     /**
      * Save UI state to settings (action group).
      *
@@ -2126,13 +2133,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected Class getWidgetClass() {
+        return SuntimesWidget0.class;
+    }
+
     /**
      * Update all widgets of this type (direct update, no broadcast).
      * @param context a context used to access resources
      */
     protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        Intent updateIntent = new Intent(context, SuntimesWidget0.class);
+        Intent updateIntent = new Intent(context, getWidgetClass());
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(updateIntent);
