@@ -424,6 +424,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         initToolbar(context);
 
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+        progressView = findViewById(R.id.progress);
 
         text_appWidgetID = (TextView) findViewById(R.id.text_appwidgetid);
         if (text_appWidgetID != null)
