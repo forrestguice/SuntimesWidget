@@ -25,12 +25,9 @@ import android.net.Uri;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 
-import org.json.JSONObject;
-
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,16 +61,23 @@ public class WidgetSettingsExportTask extends ExportTask
     @Override
     public boolean export( Context context, BufferedOutputStream out ) throws IOException
     {
-        for (int i=0; i<appWidgetIds.size(); i++)
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        int n = appWidgetIds.size();
+
+        out.write("[".getBytes());
+        for (int i=0; i<n; i++)
         {
             Integer appWidgetId = appWidgetIds.get(i);
             if (appWidgetId != null)
             {
-                SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
                 String json = WidgetSettingsImportTask.WidgetSettingsJson.toJson(toContentValues(prefs, appWidgetId));
                 out.write(json.getBytes());
+                if (i != n-1) {
+                    out.write(", \n".getBytes());
+                }
             }
         }
+        out.write("]".getBytes());
         out.flush();
         return true;
     }
