@@ -32,6 +32,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 
 import org.json.JSONObject;
 
@@ -394,7 +395,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         } else retValue = false;
 
         if (retValue) {
-            Log.i("WidgetSettings", "imported: added " + key + " as type " + type.getSimpleName());
+            Log.i("WidgetSettings", "import: added " + key + " as type " + type.getSimpleName());
         } else Log.w("WidgetSettings", "import: skipping " + key + "... unrecognized type " + type.getSimpleName());
 
         return retValue;
@@ -405,7 +406,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
         prefTypes.putAll(CalendarSettings.getPrefTypes());
         prefTypes.putAll(WidgetActions.getPrefTypes());
-
+        prefTypes.putAll(WorldMapWidgetSettings.getPrefTypes());
 
         for (String key : values.keySet())
         {
