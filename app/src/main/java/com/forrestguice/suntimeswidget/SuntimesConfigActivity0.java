@@ -2084,37 +2084,42 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 dismissProgress();
                 if (result.getResult() && result.numResults() > 0)
                 {
-                    ContentValues v = null;
+                    ContentValues values = null;
+                    CharSequence[] items = new CharSequence[result.numResults()];
+
                     for (int i=0; i<result.numResults(); i++)
                     {
-                        ContentValues values = result.getItems()[i];
-                        WidgetSettings.WidgetMetaData metadata = WidgetSettings.WidgetMetaData.getMetaDataFromValues(values);
+                        ContentValues v = result.getItems()[i];
+                        WidgetSettings.WidgetMetaData metadata = WidgetSettings.WidgetMetaData.getMetaDataFromValues(v);
                         String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
+                        items[i] = values_widgetClassName;
 
                         if (getWidgetClass().getSimpleName().equals(values_widgetClassName))
                         {
-                            Log.d("DEBUG", "found settings for widget type " + values_widgetClassName + " at " + i);
-                            v = values;
+                            Log.d("ImportSettings", "found settings for widget type " + values_widgetClassName + " at index " + i);
+                            values = v;
                             break;
                         }
                     }
 
-                    if (v != null) {
-                        importSettings(context, v);
+                    if (values != null) {
+                        importSettings(context, values);
 
                     } else {
-                        final ContentValues values = result.getItems()[0];
-                        WidgetSettings.WidgetMetaData metadata = WidgetSettings.WidgetMetaData.getMetaDataFromValues(values);
-                        String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
-
-                        Log.w("ImportSettings", "widget class names do not match! Expected " + getWidgetClass().getSimpleName() + ", found " + values_widgetClassName);
-                        Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
-
-                        String message = context.getString(R.string.importwidget_dialog_message1);
-                        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
-                                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        importSettings(context, values);
+                        final ContentValues[] allValues = result.getItems();
+                        String title = context.getString(R.string.importwidget_dialog_title1);
+                        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
+                                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                                })
+                                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialog, int whichButton)
+                                    {
+                                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                                        if ((p >= 0 && p < allValues.length)) {
+                                            importSettings(context, allValues[p]);
+                                        }
                                     }
                                 })
                                 .setNegativeButton(context.getString(R.string.dialog_cancel), null);
