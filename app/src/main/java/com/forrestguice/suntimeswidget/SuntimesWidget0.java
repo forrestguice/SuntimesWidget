@@ -140,6 +140,21 @@ public class SuntimesWidget0 extends AppWidgetProvider
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
             Log.d(TAG, "onReceive: ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
 
+        } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_RESTORED)) {
+            Log.d(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: " + getClass());
+            if (Build.VERSION.SDK_INT >= 21)
+            {
+                int[] oldAppWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_OLD_IDS);  // old (now invalid) appWidgetIds
+                int[] newAppWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);      // new (valid) appWidgetIds
+                if (oldAppWidgetIds != null && newAppWidgetIds != null)
+                {
+                    for (int i=0; i<oldAppWidgetIds.length; i++) {
+                        Log.d("DEBUG", oldAppWidgetIds[i] + " -> " + newAppWidgetIds[i]);
+                    }
+                    // TODO: restore widget
+                }
+            }
+
         } else if (action != null && action.equals(SUNTIMES_THEME_UPDATE)) {
             String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);
             Log.d(TAG, "onReceive: SUNTIMES_THEME_UPDATE :: " + getClass() + " :: " + themeName);
