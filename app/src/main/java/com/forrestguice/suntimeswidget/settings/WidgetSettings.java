@@ -299,7 +299,7 @@ public class WidgetSettings
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_MODE,
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP,
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_CUSTOM,
-            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_SOLARMODE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_TIMEZONE_SOLARMODE,    // in _general
 
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_MODE,
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_YEAR,
@@ -344,12 +344,12 @@ public class WidgetSettings
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGLEVEL,
     };
 
-    private static final Map<String,Class> types = null;
+    private static Map<String,Class> types = null;
     public static Map<String,Class> getPrefTypes()
     {
         if (types == null)
         {
-            TreeMap<String,Class> types = new TreeMap<>();
+            types = new TreeMap<>();
             putType(types, Long.class, LONG_KEYS);
             putType(types, Float.class, FLOAT_KEYS);
             putType(types, Integer.class, INT_KEYS);

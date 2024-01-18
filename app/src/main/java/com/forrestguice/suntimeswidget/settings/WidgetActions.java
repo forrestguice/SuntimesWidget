@@ -52,7 +52,9 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_DEFAULT;
@@ -105,6 +107,47 @@ public class WidgetActions
     public static final LaunchType PREF_DEF_ACTION_LAUNCH_TYPE = LaunchType.ACTIVITY;
 
     public static final String PREF_KEY_ACTION_LAUNCH_LIST = "list";
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[]
+    {
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_TITLE,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_DESC,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_COLOR,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_TAGS,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_PACKAGE,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_ACTION,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_EXTRAS,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_DATA,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_DATATYPE,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_TYPE,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_LIST
+    };
+
+    public static final String[] INT_KEYS = new String[] {
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_COLOR,
+    };
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : INT_KEYS) {
+                types.put(key, Integer.class);
+            }
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////

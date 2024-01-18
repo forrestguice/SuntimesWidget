@@ -31,6 +31,7 @@ import android.util.JsonReader;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 
 import org.json.JSONObject;
 
@@ -373,10 +374,9 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         return v;
     }
 
-    public static void importValue(SharedPreferences.Editor prefs, Class type, String key, Object value)
+    public static boolean importValue(SharedPreferences.Editor prefs, Class type, String key, Object value)
     {
-        Log.d("WidgetSettings", "import " + key + " as type " + type.getSimpleName());
-
+        boolean retValue = true;
         if (type.equals(String.class)) {
             prefs.putString(key, (String) value);
 
@@ -391,20 +391,27 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 
         } else if (type.equals(Float.class)) {
             prefs.putFloat(key, (Float) value);
+        } else retValue = false;
 
-        } else {
-            Log.w("WidgetSettings", "unrecognized type " + type.getSimpleName() + ", skipping key " + key);
-        }
+        if (retValue) {
+            Log.i("WidgetSettings", "imported: added " + key + " as type " + type.getSimpleName());
+        } else Log.w("WidgetSettings", "import: skipping " + key + "... unrecognized type " + type.getSimpleName());
+
+        return retValue;
     }
 
     public static void importValues(SharedPreferences.Editor prefs, ContentValues values, long appWidgetId)
     {
         Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
+        prefTypes.putAll(CalendarSettings.getPrefTypes());
+        prefTypes.putAll(WidgetActions.getPrefTypes());
+
+
         for (String key : values.keySet())
         {
             Object value = values.get(key);
-            Log.d("DEBUG", key + " :: " + value);
             if (value == null) {
+                Log.w("WidgetSettings", "import: skipping " + key + "... contains null value");
                 continue;
             }
 
@@ -430,50 +437,40 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                             String s = (String) value;
                             if (s.toLowerCase().equals("true") || s.toLowerCase().equals("false")) {
                                 importValue(prefs, Boolean.class, k, Boolean.parseBoolean(s));
-                            } else {
-                                Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + s + " (String)");
-                            }
-                        } else {
-                            Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
-                        }
+                            } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + s + " (String)");
+                        } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
 
                     } else if (expectedType.equals(Integer.class)) {
                         if (valueType.equals(String.class)) {    // int as String
                             try {
                                 importValue(prefs, Integer.class, k, Integer.parseInt((String) value));
                             } catch (NumberFormatException e) {
-                                Log.w("WidgetSettings", "skipping " + k + "... " + e);
+                                Log.w("WidgetSettings", "import: skipping " + k + "... " + e);
                             }
-                        } else {
-                            Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
-                        }
+                        } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
+
 
                     } else if (expectedType.equals(Long.class)) {
                         if (valueType.equals(String.class)) {    // long as String
                             try {
                                 importValue(prefs, Long.class, k, Long.parseLong((String) value));
                             } catch (NumberFormatException e) {
-                                Log.w("WidgetSettings", "skipping " + k + "... " + e);
+                                Log.w("WidgetSettings", "import: skipping " + k + "... " + e);
                             }
-                        } else {
-                            Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
-                        }
+                        } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
 
                     } else if (expectedType.equals(Double.class)) {
                         if (valueType.equals(String.class)) {    // double as String
                             try {
                                 importValue(prefs, Double.class, k, Double.parseDouble((String) value));
                             } catch (NumberFormatException e) {
-                                Log.w("WidgetSettings", "skipping " + k + "... " + e);
+                                Log.w("WidgetSettings", "import: skipping " + k + "... " + e);
                             }
-                        } else {
-                            Log.w("WidgetSettings", "skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
-                        }
+                        } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
                     }
                 }
-
             } else {
-                Log.w("WidgetSettings", k0 + " is not recognized! skipping key...");
+                Log.w("WidgetSettings", "import: skipping " + k0 + "... unrecognized key");
             }
         }
         prefs.apply();

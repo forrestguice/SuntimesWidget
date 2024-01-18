@@ -23,6 +23,9 @@ import android.content.SharedPreferences;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * @see WidgetSettings
  */
@@ -57,6 +60,35 @@ public class CalendarSettings
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR = "MMMM d, yyyy";   // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_VIETNAMESE = "EEE, d. MMMM r(U)";   // TODO: review
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = {
+            PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_SHOWDATE,
+            PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_MODE,
+            PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_FORMATPATTERN
+    };
+    public static final String[] BOOL_KEYS = {
+            PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_SHOWDATE
+    };
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : BOOL_KEYS) {
+                types.put(key, Boolean.class);
+            }
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
