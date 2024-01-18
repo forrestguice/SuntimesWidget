@@ -97,7 +97,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
     {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
-        // TODO
+        newOptions.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, getClass().getSimpleName());
+        WidgetSettingsMetadata.saveMetaData(context, appWidgetId, newOptions);
         initLocale(context);
         updateWidget(context, appWidgetManager, appWidgetId);
     }

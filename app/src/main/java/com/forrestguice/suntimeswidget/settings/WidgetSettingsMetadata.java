@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -31,18 +32,45 @@ public class WidgetSettingsMetadata
 {
     public static final String PREF_PREFIX_KEY_META = "_meta_";
 
-    public static final String PREF_KEY_META_CLASSNAME = "className";
-    public static final String PREF_KEY_META_VERSIONCODE = "versionCode";
+    public static final String PREF_KEY_META_CLASSNAME = "appWidgetClassName";
+    public static final String PREF_KEY_META_VERSIONCODE = "appWidgetVersionCode";
+
+    public static final String PREF_KEY_META_CATEGORY = "appWidgetCategory";
+    // AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN; 1; widget can be displayed on the home screen
+    // AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD; 2; widget can be displayed on the keyguard
+    // AppWidgetProviderInfo.WIDGET_CATEGORY_SEARCHBOX; 4; widget can be displayed within a space reserved for the search box
+
+
+    public static final String PREF_KEY_META_WIDTH_MIN = "appWidgetMinWidth";
+    public static final String PREF_KEY_META_WIDTH_MAX = "appWidgetMaxWidth";
+
+    public static final String PREF_KEY_META_HEIGHT_MIN = "appWidgetMinHeight";
+    public static final String PREF_KEY_META_HEIGHT_MAX = "appWidgetMaxHeight";
 
     public static String[] ALL_KEYS = new String[]
     {
             PREF_PREFIX_KEY_META + PREF_KEY_META_CLASSNAME,
             PREF_PREFIX_KEY_META + PREF_KEY_META_VERSIONCODE,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_CATEGORY,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_WIDTH_MIN,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_WIDTH_MIN,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_WIDTH_MAX,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_HEIGHT_MIN,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_HEIGHT_MAX,
     };
-    public static String[] BOOL_KEYS = new String[] { };
-    public static String[] FLOAT_KEYS = new String[] { };
-    public static String[] LONG_KEYS = new String[] { };
-    public static String[] INT_KEYS = new String[] { };
+    //public static String[] BOOL_KEYS = new String[] { };
+    //public static String[] FLOAT_KEYS = new String[] { };
+    //public static String[] LONG_KEYS = new String[] { };
+    public static String[] INT_KEYS = new String[]
+    {
+            PREF_PREFIX_KEY_META + PREF_KEY_META_VERSIONCODE,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_CATEGORY,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_WIDTH_MIN,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_WIDTH_MIN,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_WIDTH_MAX,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_HEIGHT_MIN,
+            PREF_PREFIX_KEY_META + PREF_KEY_META_HEIGHT_MAX,
+    };
 
     private static Map<String,Class> types = null;
     public static Map<String,Class> getPrefTypes()
@@ -50,10 +78,10 @@ public class WidgetSettingsMetadata
         if (types == null)
         {
             types = new TreeMap<>();
-            putType(types, Long.class, LONG_KEYS);
-            putType(types, Float.class, FLOAT_KEYS);
             putType(types, Integer.class, INT_KEYS);
-            putType(types, Boolean.class, BOOL_KEYS);
+            //putType(types, Long.class, LONG_KEYS);
+            //putType(types, Float.class, FLOAT_KEYS);
+            //putType(types, Boolean.class, BOOL_KEYS);
 
             for (String key : ALL_KEYS) {                // all others are type String
                 if (!types.containsKey(key)) {
@@ -79,17 +107,65 @@ public class WidgetSettingsMetadata
     {
         private String className = null;
         private int versionCode = -1;
+        private int category = -1;
+        private int[] minDimens = new int[] {-1, -1};
+        private int[] maxDimens = new int[] {-1, -1};
 
-        public WidgetMetaData(String widgetClassName, int versionCode) {
+        public WidgetMetaData(String widgetClassName, int versionCode, int category,
+                              int minWidth, int minHeight, int maxWidth, int maxHeight)
+        {
             this.className = widgetClassName;
+            this.versionCode = versionCode;
+            this.category = category;
+            this.minDimens[0] = minWidth;
+            this.minDimens[1] = minHeight;
+            this.maxDimens[0] = maxWidth;
+            this.maxDimens[1] = maxHeight;
         }
 
+        public WidgetMetaData(String widgetClassName, int versionCode, WidgetMetaData other)
+        {
+            this.className = widgetClassName;
+            this.versionCode = versionCode;
+            this.category = other.category;
+            this.minDimens[0] = other.minDimens[0];
+            this.minDimens[1] = other.minDimens[1];
+            this.maxDimens[0] = other.maxDimens[0];
+            this.maxDimens[1] = other.maxDimens[1];
+        }
+
+        /**
+         * @return widget class name
+         */
         public String getWidgetClassName() {
             return className;
         }
 
+        /**
+         * @return appVersionCode
+         */
         public int getVersionCode() {
             return versionCode;
+        }
+
+        /**
+         * @return category
+         */
+        public int getCategory() {
+            return category;
+        }
+
+        /**
+         * @return [width, height]
+         */
+        public int[] getMinDimensions() {
+            return minDimens;
+        }
+        /**
+         * @return [width, height]
+         */
+        public int[] getMaxDimensions() {
+            return maxDimens;
         }
 
         public static WidgetMetaData getMetaDataFromValues(@NonNull ContentValues values)
@@ -104,19 +180,72 @@ public class WidgetSettingsMetadata
             {
                 String key_className = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME;
                 String key_versionCode = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + WidgetSettingsMetadata.PREF_KEY_META_VERSIONCODE;
+                String key_category = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + WidgetSettingsMetadata.PREF_KEY_META_CATEGORY;
+                String key_width_min = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + WidgetSettingsMetadata.PREF_KEY_META_WIDTH_MIN;
+                String key_width_max = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + WidgetSettingsMetadata.PREF_KEY_META_WIDTH_MAX;
+                String key_height_min = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + WidgetSettingsMetadata.PREF_KEY_META_HEIGHT_MIN;
+                String key_height_max = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + WidgetSettingsMetadata.PREF_KEY_META_HEIGHT_MAX;
+
                 String widgetClassName = (values.containsKey(key_className) ? values.getAsString(key_className) : null);
                 int versionCode = (values.containsKey(key_versionCode) ? values.getAsInteger( key_versionCode) : -1);
-                return new WidgetMetaData(widgetClassName, versionCode);
+                int category = (values.containsKey(key_category) ? values.getAsInteger(key_category) : -1);
+                int minWidth = (values.containsKey(key_width_min) ? values.getAsInteger(key_width_min) : -1);
+                int minHeight = (values.containsKey(key_height_min) ? values.getAsInteger(key_height_min) : -1);
+                int maxWidth = (values.containsKey(key_width_max) ? values.getAsInteger(key_width_max) : -1);
+                int maxHeight = (values.containsKey(key_height_max) ? values.getAsInteger(key_height_max) : -1);
+
+                return new WidgetMetaData(widgetClassName, versionCode, category,
+                        minWidth, minHeight, maxWidth, maxHeight);
+
             } else return null;
         }
     }
 
     public static void saveMetaData(Context context, int appWidgetId, WidgetMetaData metadata)
     {
+        int[] minSize = metadata.getMinDimensions();
+        int[] maxSize = metadata.getMaxDimensions();
+
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_META;
         prefs.putString(prefs_prefix + PREF_KEY_META_CLASSNAME, metadata.getWidgetClassName());
         prefs.putInt(prefs_prefix + PREF_KEY_META_VERSIONCODE, metadata.getVersionCode());
+        prefs.putInt(prefs_prefix + PREF_KEY_META_WIDTH_MIN, minSize[0]);
+        prefs.putInt(prefs_prefix + PREF_KEY_META_HEIGHT_MIN, minSize[1]);
+        prefs.putInt(prefs_prefix + PREF_KEY_META_WIDTH_MAX, maxSize[0]);
+        prefs.putInt(prefs_prefix + PREF_KEY_META_HEIGHT_MAX, maxSize[1]);
+        prefs.putInt(prefs_prefix + PREF_KEY_META_CATEGORY, metadata.getCategory());
+        prefs.apply();
+    }
+
+    public static void saveMetaData(Context context, int appWidgetId, Bundle bundle)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_META;
+
+        if (bundle.containsKey(PREF_KEY_META_CLASSNAME)) {
+            prefs.putString(prefs_prefix + PREF_KEY_META_CLASSNAME, bundle.getString(PREF_KEY_META_CLASSNAME));
+        }
+        if (bundle.containsKey(PREF_KEY_META_VERSIONCODE)) {
+            prefs.putInt(prefs_prefix + PREF_KEY_META_VERSIONCODE, bundle.getInt(PREF_KEY_META_VERSIONCODE));
+        }
+
+        if (bundle.containsKey(PREF_KEY_META_CATEGORY)) {
+            prefs.putInt(prefs_prefix + PREF_KEY_META_CATEGORY, bundle.getInt(PREF_KEY_META_CATEGORY));
+        }
+        if (bundle.containsKey(PREF_KEY_META_WIDTH_MIN)) {
+            prefs.putInt(prefs_prefix + PREF_KEY_META_WIDTH_MIN, bundle.getInt(PREF_KEY_META_WIDTH_MIN));
+        }
+        if (bundle.containsKey(PREF_KEY_META_HEIGHT_MIN)) {
+            prefs.putInt(prefs_prefix + PREF_KEY_META_HEIGHT_MIN, bundle.getInt(PREF_KEY_META_HEIGHT_MIN));
+        }
+        if (bundle.containsKey(PREF_KEY_META_WIDTH_MAX)) {
+            prefs.putInt(prefs_prefix + PREF_KEY_META_WIDTH_MAX, bundle.getInt(PREF_KEY_META_WIDTH_MAX));
+        }
+        if (bundle.containsKey(PREF_KEY_META_HEIGHT_MAX)) {
+            prefs.putInt(prefs_prefix + PREF_KEY_META_HEIGHT_MAX, bundle.getInt(PREF_KEY_META_HEIGHT_MAX));
+        }
+
         prefs.apply();
     }
 
@@ -126,7 +255,13 @@ public class WidgetSettingsMetadata
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_META;
         String className = prefs.getString(prefs_prefix + PREF_KEY_META_CLASSNAME, null);
         int versionCode = prefs.getInt(prefs_prefix + PREF_KEY_META_VERSIONCODE, -1);
-        return new WidgetMetaData(className, versionCode);
+        int category = prefs.getInt(prefs_prefix + PREF_KEY_META_CATEGORY, -1);
+        int minWidth = prefs.getInt(prefs_prefix + PREF_KEY_META_WIDTH_MIN, -1);
+        int minHeight = prefs.getInt(prefs_prefix + PREF_KEY_META_HEIGHT_MIN, -1);
+        int maxWidth = prefs.getInt(prefs_prefix + PREF_KEY_META_WIDTH_MAX, -1);
+        int maxHeight = prefs.getInt(prefs_prefix + PREF_KEY_META_HEIGHT_MAX, -1);
+        return new WidgetMetaData(className, versionCode, category,
+                minWidth, minHeight, maxWidth, maxHeight);
     }
 
     public static void deleteMetaData(Context context, int appWidgetId)
@@ -135,6 +270,11 @@ public class WidgetSettingsMetadata
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_META;
         prefs.remove(prefs_prefix + PREF_KEY_META_CLASSNAME);
         prefs.remove(prefs_prefix + PREF_KEY_META_VERSIONCODE);
+        prefs.remove(prefs_prefix + PREF_KEY_META_CATEGORY);
+        prefs.remove(prefs_prefix + PREF_KEY_META_WIDTH_MIN);
+        prefs.remove(prefs_prefix + PREF_KEY_META_WIDTH_MAX);
+        prefs.remove(prefs_prefix + PREF_KEY_META_HEIGHT_MIN);
+        prefs.remove(prefs_prefix + PREF_KEY_META_HEIGHT_MAX);
         prefs.apply();
     }
 

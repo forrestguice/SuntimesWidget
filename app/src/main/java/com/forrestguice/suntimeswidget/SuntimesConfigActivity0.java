@@ -1904,7 +1904,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void saveMetadata(Context context)
     {
-        WidgetSettingsMetadata.WidgetMetaData metadata = new WidgetSettingsMetadata.WidgetMetaData(getWidgetClass().getSimpleName(), BuildConfig.VERSION_CODE);
+        WidgetSettingsMetadata.WidgetMetaData metadata = new WidgetSettingsMetadata.WidgetMetaData(
+                getWidgetClass().getSimpleName(), BuildConfig.VERSION_CODE,
+                WidgetSettingsMetadata.loadMetaData(context, appWidgetId)
+        );
         WidgetSettingsMetadata.saveMetaData(context, appWidgetId, metadata);
     }
 
