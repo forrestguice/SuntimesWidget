@@ -45,6 +45,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, WidgetSettingsImportTask.TaskResult>
 {
@@ -374,6 +375,44 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             v = putValueInto(v, k, values.get(key));
         }
         return v;
+    }
+
+    public static void copyValues(SharedPreferences prefs, int fromAppWidgetId, int toAppWidgetId) {
+        copyValues(prefs, WidgetSettings.PREF_PREFIX_KEY, fromAppWidgetId, WidgetSettings.PREF_PREFIX_KEY, toAppWidgetId);
+    }
+    public static void copyValues(SharedPreferences prefs, String fromPrefix, int fromAppWidgetId, String toPrefix, int toAppWidgetId)
+    {
+        Map<String, ?> map = prefs.getAll();
+        Set<String> keys = map.keySet();
+        SharedPreferences.Editor editor = prefs.edit();
+
+        for (String key : keys)
+        {
+            if (key.startsWith(fromPrefix + fromAppWidgetId))
+            {
+                String[] keyParts = key.split("_");
+                keyParts[0] = toPrefix;
+                keyParts[1] = toAppWidgetId + "";
+                String toKey = TextUtils.join("_", keyParts);
+
+                if (map.get(key).getClass().equals(String.class)) {
+                    editor.putString(toKey, (String) map.get(key));
+
+                } else if (map.get(key).getClass().equals(Integer.class)) {
+                    editor.putInt(toKey, (Integer) map.get(key));
+
+                } else if (map.get(key).getClass().equals(Long.class)) {
+                    editor.putLong(toKey, (Long) map.get(key));
+
+                } else if (map.get(key).getClass().equals(Float.class)) {
+                    editor.putFloat(toKey, (Float) map.get(key));
+
+                } else if (map.get(key).getClass().equals(Boolean.class)) {
+                    editor.putBoolean(toKey, (Boolean) map.get(key));
+                }
+            }
+        }
+        editor.apply();
     }
 
     public static boolean importValue(SharedPreferences.Editor prefs, Class type, String key, Object value)
