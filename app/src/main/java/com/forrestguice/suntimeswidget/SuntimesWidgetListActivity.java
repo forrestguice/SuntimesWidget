@@ -259,6 +259,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        progressView = findViewById(R.id.progress);
+
         widgetList = (ListView)findViewById(R.id.widgetList);
         widgetList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
