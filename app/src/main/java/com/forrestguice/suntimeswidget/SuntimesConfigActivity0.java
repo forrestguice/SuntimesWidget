@@ -2096,13 +2096,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                         ContentValues v = result.getItems()[i];
                         WidgetSettingsMetadata.WidgetMetaData metadata = WidgetSettingsMetadata.WidgetMetaData.getMetaDataFromValues(v);
                         String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
-                        items[i] = values_widgetClassName;
+                        items[i] = context.getString(R.string.importwidget_dialog_item, (values_widgetClassName != null)
+                                ? values_widgetClassName : context.getString(R.string.importwidget_dialog_item_unknown));
 
                         if (getWidgetClass().getSimpleName().equals(values_widgetClassName))
                         {
                             Log.d("ImportSettings", "found settings for widget type " + values_widgetClassName + " at index " + i);
                             values = v;
-                            break;
                         }
                     }
 
