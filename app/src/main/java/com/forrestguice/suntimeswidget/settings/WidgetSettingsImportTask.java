@@ -450,7 +450,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         prefTypes.putAll(CalendarSettings.getPrefTypes());
         prefTypes.putAll(WidgetActions.getPrefTypes());
         prefTypes.putAll(WorldMapWidgetSettings.getPrefTypes());
-        prefTypes.putAll(WidgetSettingsMetadata.getPrefTypes());
+        //prefTypes.putAll(WidgetSettingsMetadata.getPrefTypes());    // skip these keys, avoid overwriting existing metadata 
 
         for (String key : values.keySet())
         {
