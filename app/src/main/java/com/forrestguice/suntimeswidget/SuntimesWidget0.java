@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
@@ -148,10 +149,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
                 int[] newAppWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);      // new (valid) appWidgetIds
                 if (oldAppWidgetIds != null && newAppWidgetIds != null)
                 {
-                    for (int i=0; i<oldAppWidgetIds.length; i++) {
-                        Log.d("DEBUG", oldAppWidgetIds[i] + " -> " + newAppWidgetIds[i]);
+                    boolean[] backupRestored = WidgetSettingsImportTask.restoreFromBackup(context, oldAppWidgetIds, newAppWidgetIds);
+                    for (int i=0; i<newAppWidgetIds.length; i++) {
+                        setUpdateAlarm(context, newAppWidgetIds[i]);
                     }
-                    // TODO: restore widget
+                } else {
+                    Log.w(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: required extras are missing! ignoring request");
                 }
             }
 

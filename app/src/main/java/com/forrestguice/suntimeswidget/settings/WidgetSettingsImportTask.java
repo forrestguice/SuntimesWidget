@@ -377,15 +377,15 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         return v;
     }
 
-    public static void copyValues(SharedPreferences prefs, int fromAppWidgetId, int toAppWidgetId) {
-        copyValues(prefs, WidgetSettings.PREF_PREFIX_KEY, fromAppWidgetId, WidgetSettings.PREF_PREFIX_KEY, toAppWidgetId);
+    public static boolean copyValues(SharedPreferences prefs, int fromAppWidgetId, int toAppWidgetId) {
+        return copyValues(prefs, WidgetSettings.PREF_PREFIX_KEY, fromAppWidgetId, prefs.edit(), WidgetSettings.PREF_PREFIX_KEY, toAppWidgetId);
     }
-    public static void copyValues(SharedPreferences prefs, String fromPrefix, int fromAppWidgetId, String toPrefix, int toAppWidgetId)
+    public static boolean copyValues(SharedPreferences fromPrefs, String fromPrefix, int fromAppWidgetId, SharedPreferences.Editor toPrefs, String toPrefix, int toAppWidgetId)
     {
-        Map<String, ?> map = prefs.getAll();
+        Map<String, ?> map = fromPrefs.getAll();
         Set<String> keys = map.keySet();
-        SharedPreferences.Editor editor = prefs.edit();
 
+        boolean result = false;
         for (String key : keys)
         {
             if (key.startsWith(fromPrefix + fromAppWidgetId))
@@ -396,23 +396,29 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                 String toKey = TextUtils.join("_", keyParts);
 
                 if (map.get(key).getClass().equals(String.class)) {
-                    editor.putString(toKey, (String) map.get(key));
+                    toPrefs.putString(toKey, (String) map.get(key));
+                    result = true;
 
                 } else if (map.get(key).getClass().equals(Integer.class)) {
-                    editor.putInt(toKey, (Integer) map.get(key));
+                    toPrefs.putInt(toKey, (Integer) map.get(key));
+                    result = true;
 
                 } else if (map.get(key).getClass().equals(Long.class)) {
-                    editor.putLong(toKey, (Long) map.get(key));
+                    toPrefs.putLong(toKey, (Long) map.get(key));
+                    result = true;
 
                 } else if (map.get(key).getClass().equals(Float.class)) {
-                    editor.putFloat(toKey, (Float) map.get(key));
+                    toPrefs.putFloat(toKey, (Float) map.get(key));
+                    result = true;
 
                 } else if (map.get(key).getClass().equals(Boolean.class)) {
-                    editor.putBoolean(toKey, (Boolean) map.get(key));
+                    toPrefs.putBoolean(toKey, (Boolean) map.get(key));
+                    result = true;
                 }
             }
         }
-        editor.apply();
+        toPrefs.apply();
+        return result;
     }
 
     public static boolean importValue(SharedPreferences.Editor prefs, Class type, String key, Object value)
@@ -540,6 +546,37 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             }
         }
         return null;
+    }
+
+    /**
+     * @param oldAppWidgetIds array of old widget ids
+     * @param newAppWidgetIds array of new replacement widget ids
+     * @return array of true/false results for each old/new pair of old/new ids
+     */
+    public static boolean[] restoreFromBackup(Context context, int[] oldAppWidgetIds, int[] newAppWidgetIds) {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        return restoreFromBackup(prefs, oldAppWidgetIds, newAppWidgetIds);
+    }
+    public static boolean[] restoreFromBackup(SharedPreferences prefs, int[] oldAppWidgetIds, int[] newAppWidgetIds) {
+        return restoreFromBackup(prefs, prefs.edit(), oldAppWidgetIds, newAppWidgetIds);
+    }
+    public static boolean[] restoreFromBackup(SharedPreferences fromPrefs, SharedPreferences.Editor toPrefs, int[] oldAppWidgetIds, int[] newAppWidgetIds)
+    {
+        if (oldAppWidgetIds != null && newAppWidgetIds != null
+                && oldAppWidgetIds.length == newAppWidgetIds.length)
+        {
+            boolean[] results = new boolean[oldAppWidgetIds.length];
+            for (int i=0; i<oldAppWidgetIds.length; i++)
+            {
+                Log.i("WidgetSettings", "restoreFromBackup: " + oldAppWidgetIds[i] + " -> " + newAppWidgetIds[i]);
+                results[i] = copyValues(fromPrefs, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, oldAppWidgetIds[i], toPrefs, WidgetSettings.PREF_PREFIX_KEY, newAppWidgetIds[i]);
+            }
+            return results;
+
+        } else {
+            Log.e("WidgetSettings", "restoreFromBackup: arrays must be non-null with matching length! ignoring request...");
+            return new boolean[] { false };
+        }
     }
 
 }
