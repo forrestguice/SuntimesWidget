@@ -69,6 +69,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.widgets.DateWidget0;
@@ -371,6 +372,23 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         return ids;
     }
 
+    public static void saveBasicWidgetMetadata(Context context)
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        String packageName = context.getPackageName();
+        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
+        {
+            Bundle bundle = new Bundle();
+            bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, widgetClass.getSimpleName());
+            bundle.putInt(WidgetSettingsMetadata.PREF_KEY_META_VERSIONCODE, BuildConfig.VERSION_CODE);
+
+            int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(packageName, widgetClass.getName()));
+            for (int id : widgetIds) {
+                WidgetSettingsMetadata.saveMetaData(context, id, bundle);
+            }
+        }
+    }
+
     /**
      * exportSettings
      * @param context Context
@@ -392,6 +410,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         }
 
         WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, exportTarget, true, true);  // export to external cache
+        saveBasicWidgetMetadata(context);
         task.setTaskListener(exportSettingsListener);
         task.setAppWidgetIds(getAllWidgetIds(context));
         task.execute();
@@ -399,6 +418,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void exportSettings(Context context, @NonNull Uri uri)
     {
         Log.i("ExportSettings", "Starting export task: " + uri);
+        saveBasicWidgetMetadata(context);
         WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, uri);
         task.setTaskListener(exportSettingsListener);
         task.setAppWidgetIds(getAllWidgetIds(context));
