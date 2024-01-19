@@ -2151,7 +2151,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         SharedPreferences.Editor prefs = prefs0.edit();
-        WidgetSettingsImportTask.importValues(prefs, values, WidgetSettings.PREF_PREFIX_KEY, appWidgetId);
+        WidgetSettingsImportTask.importValues(prefs, values, WidgetSettings.PREF_PREFIX_KEY, (long) appWidgetId);
         loadSettings(context);   // reload ui
 
         if (offerUndo) {

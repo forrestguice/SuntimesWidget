@@ -26,6 +26,7 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
@@ -45,6 +46,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -501,9 +503,48 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             public void onFinished(WidgetSettingsImportTask.TaskResult result)
             {
                 dismissProgress();
-                if (result.getResult() && result.numResults() > 0) {
-                    importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, result.getItems());   // switch imported items to backup prefix, retain appWidgetIds
-                    //importSettings(context, WidgetSettings.PREF_PREFIX_KEY, result.getItems());    // TODO: selection between these
+                if (result.getResult() && result.numResults() > 0)
+                {
+                    final ContentValues[] allValues = result.getItems();
+                    final CharSequence[] items = new CharSequence[] {
+                            SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup)),   // 0
+                            SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess)),       // 1
+                            SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct)),          // 2
+                    };
+                    String title = context.getString(R.string.importwidget_dialog_title);
+                    AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
+                            .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                            })
+                            .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int whichButton)
+                                {
+                                    int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                                    switch (p)
+                                    {
+                                        case 2:    // direct import
+                                            importSettings(context, null, allValues);
+                                            break;
+
+                                        case 1:    // best guess
+                                            Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show();  // TODO
+                                            break;
+
+                                        case 0:
+                                        default:
+                                            // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
+                                            importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, allValues);
+                                            break;
+                                    }
+
+                                    if ((p >= 0 && p < items.length)) {
+                                        importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, allValues);   // switch imported items to backup prefix, retain appWidgetIds
+                                    }
+                                }
+                            })
+                            .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+                    confirm.show();
 
                 } else {
                     Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
