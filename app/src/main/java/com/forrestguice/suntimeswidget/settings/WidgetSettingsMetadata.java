@@ -30,6 +30,7 @@ import java.util.TreeMap;
 
 public class WidgetSettingsMetadata
 {
+    public static final String BACKUP_PREFIX_KEY = "bckwidget_";
     public static final String PREF_PREFIX_KEY_META = "_meta_";
 
     public static final String PREF_KEY_META_CLASSNAME = "appWidgetClassName";

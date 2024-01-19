@@ -1198,7 +1198,7 @@
     <string name="exportwidget_dialog_title">Exporting</string>    <!-- TODO -->
     <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
     <string name="importwidget_dialog_title">Importing</string>    <!-- TODO -->
-    <string name="importwidget_dialog_message">Importing widget settings to file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
     <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
     <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
     <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when widgetClassName is missing -->   <!-- TODO -->

@@ -24,9 +24,11 @@ import android.appwidget.AppWidgetProviderInfo;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -68,7 +70,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -475,20 +479,47 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public boolean importSettings(Context context)
+    public void importSettings(Context context)
     {
         if (context != null) {
             startActivityForResult(ExportTask.getOpenFileIntent("text/*"), IMPORT_REQUEST);
-            return true;
         }
-        return false;
     }
 
-    public boolean importSettings(Context context, @NonNull Uri uri)
+    public void importSettings(final Context context, @NonNull Uri uri)
     {
         Log.i("ImportSettings", "Starting import task: " + uri);
-        // TODO
-        return true;
+        WidgetSettingsImportTask task = new WidgetSettingsImportTask(context);
+        task.setTaskListener(new WidgetSettingsImportTask.TaskListener()
+        {
+            @Override
+            public void onStarted() {
+                showProgress(context, context.getString(R.string.importwidget_dialog_title), context.getString(R.string.importwidget_dialog_message));
+            }
+
+            @Override
+            public void onFinished(WidgetSettingsImportTask.TaskResult result)
+            {
+                dismissProgress();
+                if (result.getResult() && result.numResults() > 0) {
+                    importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, result.getItems());   // switch imported items to backup prefix, retain appWidgetIds
+                    //importSettings(context, WidgetSettings.PREF_PREFIX_KEY, result.getItems());    // TODO: selection between these
+
+                } else {
+                    Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        task.execute(uri);
+    }
+
+    protected void importSettings(Context context, String prefix, ContentValues... contentValues)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        for (ContentValues values : contentValues) {
+            WidgetSettingsImportTask.importValues(prefs, values, prefix, null);
+        }
+        Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

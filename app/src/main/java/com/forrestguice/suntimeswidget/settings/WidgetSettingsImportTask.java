@@ -444,7 +444,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     public static void importValues(SharedPreferences.Editor prefs, ContentValues values, long appWidgetId) {
         importValues(prefs, values, null, appWidgetId);
     }
-    public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, long appWidgetId)
+    public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId)
     {
         Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
         prefTypes.putAll(CalendarSettings.getPrefTypes());
@@ -464,9 +464,12 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             if (toPrefix != null) {
                 keyParts[0] = toPrefix;
             }
-            keyParts[1] = appWidgetId + "";
+            if (appWidgetId != null) {
+                keyParts[1] = appWidgetId + "";
+            }
+
             String k = TextUtils.join("_", keyParts);    // replacement key
-            String k0 = k.replaceFirst(WidgetSettings.PREF_PREFIX_KEY + appWidgetId, "");
+            String k0 = k.replaceFirst(WidgetSettings.PREF_PREFIX_KEY + keyParts[1], "");
 
             if (prefTypes.containsKey(k0))
             {
