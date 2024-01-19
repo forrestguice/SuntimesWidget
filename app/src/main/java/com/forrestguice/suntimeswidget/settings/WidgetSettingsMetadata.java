@@ -200,6 +200,29 @@ public class WidgetSettingsMetadata
 
             } else return null;
         }
+
+        @Override
+        public boolean equals(Object o)
+        {
+            if (this == o) {
+                return true;
+            } else if (o == null) {
+                return false;
+            } else if (getClass() != o.getClass()) {
+                return false;
+            }
+
+            WidgetMetaData other = (WidgetMetaData) o;
+            String widgetClassName1 = other.getWidgetClassName();
+            if (widgetClassName1 == null) {
+                widgetClassName1 = "";
+            }
+            String widgetClassName = getWidgetClassName();
+            if (widgetClassName == null) {
+                widgetClassName = "";
+            }
+            return widgetClassName.equals(widgetClassName1) && getCategory() == other.getCategory();
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -83,7 +83,10 @@ import com.forrestguice.suntimeswidget.widgets.DateWidget0;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static com.forrestguice.suntimeswidget.SuntimesConfigActivity0.EXTRA_RECONFIGURE;
 
@@ -365,15 +368,20 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
     protected static ArrayList<Integer> getAllWidgetIds(Context context)
     {
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
+            ids.addAll(getAllWidgetIds(context, widgetClass));
+        }
+        return ids;
+    }
+    protected static ArrayList<Integer> getAllWidgetIds(Context context, Class widgetClass)
+    {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         String packageName = context.getPackageName();
         ArrayList<Integer> ids = new ArrayList<>();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
-        {
-            int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(packageName, widgetClass.getName()));
-            for (int id : widgetIds) {
-                ids.add(id);
-            }
+        int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(packageName, widgetClass.getName()));
+        for (int id : widgetIds) {
+            ids.add(id);
         }
         return ids;
     }
@@ -528,12 +536,11 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                                             break;
 
                                         case 1:    // best guess
-                                            Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show();  // TODO
+                                            importSettingsBestGuess(context, allValues);
                                             break;
 
                                         case 0:
-                                        default:
-                                            // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
+                                        default:   // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
                                             importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, allValues);
                                             break;
                                     }
@@ -561,6 +568,56 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             WidgetSettingsImportTask.importValues(prefs, values, prefix, null);
         }
         Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Tries to match contentValues to existing widgetIds based on available metadata.
+     * @return suggested appWidget:ContentValues mapping
+     */
+
+    protected Map<Integer,ContentValues> makeBestGuess(Context context, ContentValues... contentValues)
+    {
+        Map<WidgetSettingsMetadata.WidgetMetaData, ContentValues> unused = new HashMap<>();
+        Map<WidgetSettingsMetadata.WidgetMetaData, ContentValues> used = new HashMap<>();
+        for (ContentValues values : contentValues) {
+            unused.put(WidgetSettingsMetadata.WidgetMetaData.getMetaDataFromValues(values), values);
+        }
+
+        Map<Integer, ContentValues> suggested = new HashMap<>();
+        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
+        {
+            ArrayList<Integer> widgetIds = getAllWidgetIds(context, widgetClass);
+            for (Integer appWidgetId : widgetIds)
+            {
+                WidgetSettingsMetadata.WidgetMetaData metadata = WidgetSettingsMetadata.loadMetaData(context, appWidgetId);
+                if (unused.containsKey(metadata))
+                {
+                    ContentValues values = unused.remove(metadata);
+                    used.put(metadata, values);
+                    suggested.put(appWidgetId, values);
+                }
+            }
+        }
+        return suggested;
+    }
+
+    protected void importSettingsBestGuess(Context context, ContentValues... contentValues)
+    {
+        Map<Integer, ContentValues> suggested = makeBestGuess(context, contentValues);
+        int numMatches = suggested.size();
+        if (numMatches > 0)     // matched some
+        {
+            SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+            for (Integer appWidgetId : suggested.keySet())
+            {
+                ContentValues values = suggested.get(appWidgetId);
+                WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
+            }
+            Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+
+        } else {               // matched none
+            Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
