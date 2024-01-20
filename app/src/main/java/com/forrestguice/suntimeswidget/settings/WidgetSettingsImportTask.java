@@ -475,13 +475,18 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     public static void importValues(SharedPreferences.Editor prefs, ContentValues values, long appWidgetId) {
         importValues(prefs, values, null, appWidgetId);
     }
-    public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId)
+    public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId) {
+        importValues(prefs, values, toPrefix, appWidgetId, false);
+    }
+    public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId, boolean includeMetadata)
     {
         Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
         prefTypes.putAll(CalendarSettings.getPrefTypes());
         prefTypes.putAll(WidgetActions.getPrefTypes());
         prefTypes.putAll(WorldMapWidgetSettings.getPrefTypes());
-        //prefTypes.putAll(WidgetSettingsMetadata.getPrefTypes());    // skip these keys, avoid overwriting existing metadata 
+        if (includeMetadata) {
+            prefTypes.putAll(WidgetSettingsMetadata.getPrefTypes());
+        }
 
         for (String key : values.keySet())
         {
@@ -493,14 +498,14 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 
             String[] keyParts = key.split("_");
             if (toPrefix != null) {
-                keyParts[0] = toPrefix;
+                keyParts[0] = toPrefix.endsWith("_") ? toPrefix.substring(0, toPrefix.length() - 1) : toPrefix;
             }
             if (appWidgetId != null) {
                 keyParts[1] = appWidgetId + "";
             }
 
             String k = TextUtils.join("_", keyParts);    // replacement key
-            String k0 = k.replaceFirst(WidgetSettings.PREF_PREFIX_KEY + keyParts[1], "");
+            String k0 = k.replaceFirst(toPrefix + keyParts[1], "");
 
             if (prefTypes.containsKey(k0))
             {

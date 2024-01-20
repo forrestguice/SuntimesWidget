@@ -2155,7 +2155,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         loadSettings(context);   // reload ui
 
         if (offerUndo) {
-            Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
             offerUndoImport(context, previousValues);
         }
     }

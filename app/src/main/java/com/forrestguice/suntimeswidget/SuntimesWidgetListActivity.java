@@ -531,7 +531,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                                     switch (p)
                                     {
                                         case 2:    // direct import
-                                            importSettings(context, null, allValues);
+                                            importSettings(context, null, false,  allValues);
                                             break;
 
                                         case 1:    // best guess
@@ -540,7 +540,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
                                         case 0:
                                         default:   // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
-                                            importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, allValues);
+                                            importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, true, allValues);
                                             break;
                                     }
                                 }
@@ -556,12 +556,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         task.execute(uri);
     }
 
-    protected void importSettings(Context context, String prefix, ContentValues... contentValues)
+    protected void importSettings(Context context, String prefix, boolean includeMetadata, ContentValues... contentValues)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
         int c = 0;
         for (ContentValues values : contentValues) {
-            WidgetSettingsImportTask.importValues(prefs, values, prefix, null);
+            WidgetSettingsImportTask.importValues(prefs, values, prefix, null, includeMetadata);
             c++;
         }
         showIOResultSnackbar(context, true, c);
