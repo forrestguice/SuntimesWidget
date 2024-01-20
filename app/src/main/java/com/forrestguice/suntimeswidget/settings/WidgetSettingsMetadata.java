@@ -112,6 +112,17 @@ public class WidgetSettingsMetadata
         private int[] minDimens = new int[] {-1, -1};
         private int[] maxDimens = new int[] {-1, -1};
 
+        public WidgetMetadata(WidgetMetadata other)
+        {
+            this.className = other.className;
+            this.versionCode = other.versionCode;
+            this.category = other.category;
+            this.minDimens[0] = other.minDimens[0];
+            this.minDimens[1] = other.minDimens[1];
+            this.maxDimens[0] = other.maxDimens[0];
+            this.maxDimens[1] = other.maxDimens[1];
+        }
+
         public WidgetMetadata(String widgetClassName, int versionCode, int category,
                               int minWidth, int minHeight, int maxWidth, int maxHeight)
         {
