@@ -78,6 +78,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.tiles.ClockTileService;
+import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 import com.forrestguice.suntimeswidget.widgets.DateWidget0;
 
 import java.io.File;
@@ -371,6 +373,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             ids.addAll(getAllWidgetIds(context, widgetClass));
         }
+        ids.add(0);                                                    // include app config and quick settings tiles
+        ids.add(ClockTileService.CLOCKTILE_APPWIDGET_ID);
+        ids.add(NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID);
         return ids;
     }
     protected static ArrayList<Integer> getAllWidgetIds(Context context, Class widgetClass)
@@ -385,7 +390,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         return ids;
     }
 
-    public static void saveBasicWidgetMetadata(Context context)
+    public static void addMetadata(Context context)
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         String packageName = context.getPackageName();
@@ -400,6 +405,17 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 WidgetSettingsMetadata.saveMetaData(context, id, bundle);
             }
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, "SuntimesActivity");
+        bundle.putInt(WidgetSettingsMetadata.PREF_KEY_META_VERSIONCODE, BuildConfig.VERSION_CODE);
+        WidgetSettingsMetadata.saveMetaData(context, 0, bundle);
+
+        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, ClockTileService.class.getSimpleName());
+        WidgetSettingsMetadata.saveMetaData(context, ClockTileService.CLOCKTILE_APPWIDGET_ID, bundle);
+
+        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, NextEventTileService.class.getSimpleName());
+        WidgetSettingsMetadata.saveMetaData(context, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID, bundle);
     }
 
     /**
@@ -423,7 +439,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         }
 
         WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, exportTarget, true, true);  // export to external cache
-        saveBasicWidgetMetadata(context);
+        addMetadata(context);
         task.setTaskListener(exportSettingsListener);
         task.setAppWidgetIds(getAllWidgetIds(context));
         task.execute();
@@ -431,7 +447,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void exportSettings(Context context, @NonNull Uri uri)
     {
         Log.i("ExportSettings", "Starting export task: " + uri);
-        saveBasicWidgetMetadata(context);
+        addMetadata(context);
         WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, uri);
         task.setTaskListener(exportSettingsListener);
         task.setAppWidgetIds(getAllWidgetIds(context));
