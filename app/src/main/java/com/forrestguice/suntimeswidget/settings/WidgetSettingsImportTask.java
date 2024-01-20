@@ -377,6 +377,31 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         return v;
     }
 
+    /**
+     * @param prefs SharedPreferences
+     * @param prefix prefix string
+     * @param appWidgetId appWidgetId; null to delete all ids
+     * @return true items were removed, false otherwise
+     */
+    public static boolean deleteValues(SharedPreferences prefs, String prefix, Integer appWidgetId)
+    {
+        Map<String, ?> map = prefs.getAll();
+        Set<String> keys = map.keySet();
+
+        String keyPrefix = (appWidgetId != null ? prefix + appWidgetId : prefix);
+        SharedPreferences.Editor editor = prefs.edit();
+        boolean result = false;
+        for (String key : keys)
+        {
+            if (key.startsWith(keyPrefix)) {
+                editor.remove(key);
+                result = true;
+            }
+        }
+        editor.apply();
+        return result;
+    }
+
     public static boolean copyValues(SharedPreferences prefs, int fromAppWidgetId, int toAppWidgetId) {
         return copyValues(prefs, WidgetSettings.PREF_PREFIX_KEY, fromAppWidgetId, prefs.edit(), WidgetSettings.PREF_PREFIX_KEY, toAppWidgetId);
     }
@@ -570,6 +595,9 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             {
                 Log.i("WidgetSettings", "restoreFromBackup: " + oldAppWidgetIds[i] + " -> " + newAppWidgetIds[i]);
                 results[i] = copyValues(fromPrefs, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, oldAppWidgetIds[i], toPrefs, WidgetSettings.PREF_PREFIX_KEY, newAppWidgetIds[i]);
+                //if (results[i]) {
+                //    deleteValues(fromPrefs, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, oldAppWidgetIds[i]);
+                //}
             }
             return results;
 
@@ -577,6 +605,10 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             Log.e("WidgetSettings", "restoreFromBackup: arrays must be non-null with matching length! ignoring request...");
             return new boolean[] { false };
         }
+    }
+
+    public static void clearBackup(Context context, SharedPreferences prefs ) {
+        deleteValues(prefs, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, null);
     }
 
 }
