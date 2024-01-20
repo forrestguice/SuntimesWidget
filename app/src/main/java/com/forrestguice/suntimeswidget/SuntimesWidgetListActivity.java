@@ -544,10 +544,6 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                                             importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, allValues);
                                             break;
                                     }
-
-                                    if ((p >= 0 && p < items.length)) {
-                                        importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, allValues);   // switch imported items to backup prefix, retain appWidgetIds
-                                    }
                                 }
                             })
                             .setNegativeButton(context.getString(R.string.dialog_cancel), null);

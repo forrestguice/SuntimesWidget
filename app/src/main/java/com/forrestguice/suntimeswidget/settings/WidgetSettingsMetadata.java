@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -202,6 +203,11 @@ public class WidgetSettingsMetadata
         }
 
         @Override
+        public int hashCode() {
+            return className.hashCode();
+        }
+
+        @Override
         public boolean equals(Object o)
         {
             if (this == o) {
@@ -213,15 +219,15 @@ public class WidgetSettingsMetadata
             }
 
             WidgetMetaData other = (WidgetMetaData) o;
-            String widgetClassName1 = other.getWidgetClassName();
+            String widgetClassName1 = other.className;
             if (widgetClassName1 == null) {
                 widgetClassName1 = "";
             }
-            String widgetClassName = getWidgetClassName();
+            String widgetClassName = className;
             if (widgetClassName == null) {
                 widgetClassName = "";
             }
-            return widgetClassName.equals(widgetClassName1) && getCategory() == other.getCategory();
+            return widgetClassName.equals(widgetClassName1);
         }
     }
 
