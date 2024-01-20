@@ -45,6 +45,7 @@ import android.os.Bundle;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -77,7 +78,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
-import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.widgets.DateWidget0;
 
 import java.io.File;
@@ -86,7 +86,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import static com.forrestguice.suntimeswidget.SuntimesConfigActivity0.EXTRA_RECONFIGURE;
 
@@ -465,7 +464,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 {
                     //if (isAdded()) {
                     String successMessage = context.getString(R.string.msg_export_success, path);
-                    Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
+                    showIOResultSnackbar(context, true, successMessage);
                     //}
 
                     if (Build.VERSION.SDK_INT >= 19) {
@@ -480,7 +479,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
                 //if (isAdded()) {
                 String failureMessage = context.getString(R.string.msg_export_failure, path);
-                Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                showIOResultSnackbar(context, false, failureMessage);
                 //}
             }
         }
@@ -550,7 +549,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     confirm.show();
 
                 } else {
-                    Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+                    showIOResultSnackbar(context, false, 0);
                 }
             }
         });
@@ -560,10 +559,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     protected void importSettings(Context context, String prefix, ContentValues... contentValues)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        int c = 0;
         for (ContentValues values : contentValues) {
             WidgetSettingsImportTask.importValues(prefs, values, prefix, null);
+            c++;
         }
-        Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+        showIOResultSnackbar(context, true, c);
     }
 
     /**
@@ -601,6 +602,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         Map<Integer, ContentValues> suggested = makeBestGuess(context, contentValues);
         int numMatches = suggested.size();
+        Log.d("DEBUG", "bestGuess: " + numMatches + " matches");
         if (numMatches > 0)     // matched some
         {
             SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
@@ -609,11 +611,36 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 ContentValues values = suggested.get(appWidgetId);
                 WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
             }
-            Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+            showIOResultSnackbar(context, true, numMatches);
 
         } else {               // matched none
-            Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+            showIOResultSnackbar(context, false, numMatches);
         }
+    }
+
+    protected void showIOResultSnackbar(final Context context, boolean result, CharSequence message)
+    {
+        View view = getWindow().getDecorView();
+        if (context != null && view != null)
+        {
+            Snackbar snackbar = Snackbar.make(view, message, (result ? 7000 : Snackbar.LENGTH_LONG));
+            /*snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });*/
+            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            snackbar.show();
+        }
+    }
+
+    protected void showIOResultSnackbar(final Context context, boolean result, int numResults)
+    {
+        //Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+        CharSequence message = (result ? context.getString(R.string.msg_import_success, context.getResources().getQuantityString(R.plurals.widgetPlural, numResults, numResults))
+                                       : context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)));
+        showIOResultSnackbar(context, result, message);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
