@@ -24,7 +24,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -105,7 +104,7 @@ public class WidgetSettingsMetadata
     /**
      * WidgetMetaData
      */
-    public static class WidgetMetaData
+    public static class WidgetMetadata
     {
         private String className = null;
         private int versionCode = -1;
@@ -113,7 +112,7 @@ public class WidgetSettingsMetadata
         private int[] minDimens = new int[] {-1, -1};
         private int[] maxDimens = new int[] {-1, -1};
 
-        public WidgetMetaData(String widgetClassName, int versionCode, int category,
+        public WidgetMetadata(String widgetClassName, int versionCode, int category,
                               int minWidth, int minHeight, int maxWidth, int maxHeight)
         {
             this.className = widgetClassName;
@@ -125,7 +124,7 @@ public class WidgetSettingsMetadata
             this.maxDimens[1] = maxHeight;
         }
 
-        public WidgetMetaData(String widgetClassName, int versionCode, WidgetMetaData other)
+        public WidgetMetadata(String widgetClassName, int versionCode, WidgetMetadata other)
         {
             this.className = widgetClassName;
             this.versionCode = versionCode;
@@ -170,13 +169,13 @@ public class WidgetSettingsMetadata
             return maxDimens;
         }
 
-        public static WidgetMetaData getMetaDataFromValues(@NonNull ContentValues values)
+        public static WidgetMetadata getMetaDataFromValues(@NonNull ContentValues values)
         {
             Long values_id = WidgetSettingsImportTask.findAppWidgetIdFromFirstKey(values);
-            return WidgetSettingsMetadata.WidgetMetaData.getMetaDataFromValues(values, values_id);
+            return WidgetMetadata.getMetaDataFromValues(values, values_id);
         }
 
-        public static WidgetMetaData getMetaDataFromValues(@NonNull ContentValues values, @Nullable Long appWidgetId)
+        public static WidgetMetadata getMetaDataFromValues(@NonNull ContentValues values, @Nullable Long appWidgetId)
         {
             if (appWidgetId != null)
             {
@@ -196,7 +195,7 @@ public class WidgetSettingsMetadata
                 int maxWidth = (values.containsKey(key_width_max) ? values.getAsInteger(key_width_max) : -1);
                 int maxHeight = (values.containsKey(key_height_max) ? values.getAsInteger(key_height_max) : -1);
 
-                return new WidgetMetaData(widgetClassName, versionCode, category,
+                return new WidgetMetadata(widgetClassName, versionCode, category,
                         minWidth, minHeight, maxWidth, maxHeight);
 
             } else return null;
@@ -218,7 +217,7 @@ public class WidgetSettingsMetadata
                 return false;
             }
 
-            WidgetMetaData other = (WidgetMetaData) o;
+            WidgetMetadata other = (WidgetMetadata) o;
             String widgetClassName1 = other.className;
             if (widgetClassName1 == null) {
                 widgetClassName1 = "";
@@ -234,7 +233,7 @@ public class WidgetSettingsMetadata
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveMetaData(Context context, int appWidgetId, WidgetMetaData metadata)
+    public static void saveMetaData(Context context, int appWidgetId, WidgetMetadata metadata)
     {
         int[] minSize = metadata.getMinDimensions();
         int[] maxSize = metadata.getMaxDimensions();
@@ -282,7 +281,7 @@ public class WidgetSettingsMetadata
         prefs.apply();
     }
 
-    public static WidgetMetaData loadMetaData(Context context, int appWidgetId)
+    public static WidgetMetadata loadMetaData(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_META;
@@ -293,7 +292,7 @@ public class WidgetSettingsMetadata
         int minHeight = prefs.getInt(prefs_prefix + PREF_KEY_META_HEIGHT_MIN, -1);
         int maxWidth = prefs.getInt(prefs_prefix + PREF_KEY_META_WIDTH_MAX, -1);
         int maxHeight = prefs.getInt(prefs_prefix + PREF_KEY_META_HEIGHT_MAX, -1);
-        return new WidgetMetaData(className, versionCode, category,
+        return new WidgetMetadata(className, versionCode, category,
                 minWidth, minHeight, maxWidth, maxHeight);
     }
 

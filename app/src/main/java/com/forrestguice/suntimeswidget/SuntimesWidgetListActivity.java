@@ -574,10 +574,10 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
     protected Map<Integer,ContentValues> makeBestGuess(Context context, ContentValues... contentValues)
     {
-        Map<WidgetSettingsMetadata.WidgetMetaData, ContentValues> unused = new HashMap<>();
-        Map<WidgetSettingsMetadata.WidgetMetaData, ContentValues> used = new HashMap<>();
+        Map<WidgetSettingsMetadata.WidgetMetadata, ContentValues> unused = new HashMap<>();
+        Map<WidgetSettingsMetadata.WidgetMetadata, ContentValues> used = new HashMap<>();
         for (ContentValues values : contentValues) {
-            unused.put(WidgetSettingsMetadata.WidgetMetaData.getMetaDataFromValues(values), values);
+            unused.put(WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values), values);
         }
 
         Map<Integer, ContentValues> suggested = new HashMap<>();
@@ -586,7 +586,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             ArrayList<Integer> widgetIds = getAllWidgetIds(context, widgetClass);
             for (Integer appWidgetId : widgetIds)
             {
-                WidgetSettingsMetadata.WidgetMetaData metadata = WidgetSettingsMetadata.loadMetaData(context, appWidgetId);
+                WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.loadMetaData(context, appWidgetId);
                 if (unused.containsKey(metadata))
                 {
                     ContentValues values = unused.remove(metadata);

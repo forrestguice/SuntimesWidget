@@ -1904,7 +1904,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void saveMetadata(Context context)
     {
-        WidgetSettingsMetadata.WidgetMetaData metadata = new WidgetSettingsMetadata.WidgetMetaData(
+        WidgetSettingsMetadata.WidgetMetadata metadata = new WidgetSettingsMetadata.WidgetMetadata(
                 getWidgetClass().getSimpleName(), BuildConfig.VERSION_CODE,
                 WidgetSettingsMetadata.loadMetaData(context, appWidgetId)
         );
@@ -2094,7 +2094,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     for (int i=0; i<result.numResults(); i++)
                     {
                         ContentValues v = result.getItems()[i];
-                        WidgetSettingsMetadata.WidgetMetaData metadata = WidgetSettingsMetadata.WidgetMetaData.getMetaDataFromValues(v);
+                        WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(v);
                         String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
                         items[i] = context.getString(R.string.importwidget_dialog_item, (values_widgetClassName != null)
                                 ? values_widgetClassName : context.getString(R.string.importwidget_dialog_item_unknown));
