@@ -557,6 +557,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                                         case 0:
                                         default:   // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
                                             importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, true, allValues);
+                                            WidgetSettingsImportTask.restoreFromBackup(context,
+                                                    new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID},    // these lines should be the same
+                                                    new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID});   // because the ids are unchanged
                                             break;
                                     }
                                 }
@@ -596,19 +599,24 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             unused.put(WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values), values);
         }
 
+        ArrayList<Integer> widgetIds = new ArrayList<>();
+        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
+            widgetIds.addAll(getAllWidgetIds(context, widgetClass));
+        }
+        widgetIds.add(0);
+        widgetIds.add(ClockTileService.CLOCKTILE_APPWIDGET_ID);
+        widgetIds.add(NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID);
+
         Map<Integer, ContentValues> suggested = new HashMap<>();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
+        for (Integer appWidgetId : widgetIds)
         {
-            ArrayList<Integer> widgetIds = getAllWidgetIds(context, widgetClass);
-            for (Integer appWidgetId : widgetIds)
+            WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.loadMetaData(context, appWidgetId);
+            if (unused.containsKey(metadata))
             {
-                WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.loadMetaData(context, appWidgetId);
-                if (unused.containsKey(metadata))
-                {
-                    ContentValues values = unused.remove(metadata);
-                    used.put(metadata, values);
-                    suggested.put(appWidgetId, values);
-                }
+                Log.d("DEBUG", "makeBestGuess: " + appWidgetId + " :: " + metadata.getWidgetClassName());
+                ContentValues values = unused.remove(metadata);
+                used.put(metadata, values);
+                suggested.put(appWidgetId, values);
             }
         }
         return suggested;
@@ -616,6 +624,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
     protected void importSettingsBestGuess(Context context, ContentValues... contentValues)
     {
+        addMetadata(context);
         Map<Integer, ContentValues> suggested = makeBestGuess(context, contentValues);
         int numMatches = suggested.size();
         Log.d("DEBUG", "bestGuess: " + numMatches + " matches");
