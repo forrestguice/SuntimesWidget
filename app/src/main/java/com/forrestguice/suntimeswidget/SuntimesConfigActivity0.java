@@ -2088,46 +2088,32 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 dismissProgress();
                 if (result.getResult() && result.numResults() > 0)
                 {
-                    ContentValues values = null;
-                    CharSequence[] items = new CharSequence[result.numResults()];
+                    ArrayList<ContentValues> values = new ArrayList<>();
+                    CharSequence[] labels = new CharSequence[result.numResults()];
 
                     for (int i=0; i<result.numResults(); i++)
                     {
                         ContentValues v = result.getItems()[i];
                         WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(v);
                         String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
-                        items[i] = context.getString(R.string.importwidget_dialog_item, (values_widgetClassName != null)
+                        labels[i] = context.getString(R.string.importwidget_dialog_item, (values_widgetClassName != null)
                                 ? values_widgetClassName : context.getString(R.string.importwidget_dialog_item_unknown));
 
                         if (getWidgetClass().getSimpleName().equals(values_widgetClassName))
                         {
                             Log.d("ImportSettings", "found settings for widget type " + values_widgetClassName + " at index " + i);
-                            values = v;
+                            values.add(v);
                         }
                     }
 
-                    if (values != null) {
-                        importSettings(context, values);
+                    if (values.size() == 1) {    // one match
+                        importSettings(context, values.get(0));
 
-                    } else {
-                        final ContentValues[] allValues = result.getItems();
-                        String title = context.getString(R.string.importwidget_dialog_title1);
-                        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
-                                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
-                                })
-                                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
-                                {
-                                    public void onClick(DialogInterface dialog, int whichButton)
-                                    {
-                                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                                        if ((p >= 0 && p < allValues.length)) {
-                                            importSettings(context, allValues[p]);
-                                        }
-                                    }
-                                })
-                                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
-                        confirm.show();
+                    } else if (values.size() > 1) {    // multiple matches; choose one
+                        chooseImportValuesOfSameType(context, values);
+
+                    } else {    // no matches; choose any
+                        chooseImportValuesOfDifferentType(context, result.getItems(), labels);
                     }
 
                 } else {
@@ -2137,6 +2123,55 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         });
         task.execute(uri);
         return true;
+    }
+
+    protected void chooseImportValuesOfSameType(final Context context, ArrayList<ContentValues> values)
+    {
+        final ContentValues[] matchingValues = values.toArray(new ContentValues[0]);
+        CharSequence[] labels = new CharSequence[matchingValues.length];
+        for (int i=0; i<matchingValues.length; i++) {
+            labels[i] = (i + 1) + "";
+        }
+        String title = context.getString(R.string.importwidget_dialog_title2);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_info)
+                .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                })
+                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        if ((p >= 0 && p < matchingValues.length)) {
+                            Log.d("ImportSettings", "user selected " + p + " of " + (matchingValues.length-1));
+                            importSettings(context, matchingValues[p]);
+                        }
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+
+    protected void chooseImportValuesOfDifferentType(final Context context, final ContentValues[] values, final CharSequence[] labels)
+    {
+        String title = context.getString(R.string.importwidget_dialog_title1);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
+                .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                })
+                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        if ((p >= 0 && p < values.length)) {
+                            Log.d("ImportSettings", "user selected " + p + " of " + (values.length-1) + " (" + labels[p] + ")");
+                            importSettings(context, values[p]);
+                        }
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
     }
 
     protected void importSettings(Context context, ContentValues values) {
