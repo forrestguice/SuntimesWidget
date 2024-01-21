@@ -505,7 +505,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             }
 
             String k = TextUtils.join("_", keyParts);    // replacement key
-            String k0 = k.replaceFirst(toPrefix + keyParts[1], "");
+            String k0 = k.replaceFirst(keyParts[0] + "_" + keyParts[1], "");
 
             if (prefTypes.containsKey(k0))
             {
