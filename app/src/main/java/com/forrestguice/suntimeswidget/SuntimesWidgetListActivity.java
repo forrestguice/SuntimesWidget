@@ -480,7 +480,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 {
                     //if (isAdded()) {
                     String successMessage = context.getString(R.string.msg_export_success, path);
-                    showIOResultSnackbar(context, true, successMessage);
+                    showIOResultSnackbar(context, true, successMessage, null);
                     //}
 
                     if (Build.VERSION.SDK_INT >= 19) {
@@ -495,7 +495,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
                 //if (isAdded()) {
                 String failureMessage = context.getString(R.string.msg_export_failure, path);
-                showIOResultSnackbar(context, false, failureMessage);
+                showIOResultSnackbar(context, false, failureMessage, null);
                 //}
             }
         }
@@ -568,7 +568,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     confirm.show();
 
                 } else {
-                    showIOResultSnackbar(context, false, 0);
+                    showIOResultSnackbar(context, false, 0, null);
                 }
             }
         });
@@ -579,11 +579,17 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
         int c = 0;
-        for (ContentValues values : contentValues) {
+        StringBuilder report = new StringBuilder();
+        for (ContentValues values : contentValues)
+        {
+            Long id = WidgetSettingsImportTask.findAppWidgetIdFromFirstKey(values);
+            WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values);
             WidgetSettingsImportTask.importValues(prefs, values, prefix, null, includeMetadata);
+            report.append(context.getString(R.string.importwidget_dialog_report_format, id + "", metadata.getWidgetClassName()));
+            report.append("\n");
             c++;
         }
-        showIOResultSnackbar(context, true, c);
+        showIOResultSnackbar(context, true, c, report.toString());
     }
 
     /**
@@ -633,6 +639,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         Map<Integer, ContentValues> suggested = makeBestGuess(context, contentValues);
         int numMatches = suggested.size();
         Log.d("DEBUG", "bestGuess: " + numMatches + " matches");
+        StringBuilder report = new StringBuilder();
         if (numMatches > 0)     // matched some
         {
             SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
@@ -640,37 +647,49 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             {
                 ContentValues values = suggested.get(appWidgetId);
                 WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
+
+                String widgetClassName = WidgetSettingsMetadata.loadMetaData(context, appWidgetId).getWidgetClassName();
+                report.append(context.getString(R.string.importwidget_dialog_report_format, appWidgetId + "", widgetClassName));
+                report.append("\n");
             }
-            showIOResultSnackbar(context, true, numMatches);
+            showIOResultSnackbar(context, true, numMatches, report.toString());
 
         } else {               // matched none
-            showIOResultSnackbar(context, false, numMatches);
+            showIOResultSnackbar(context, false, numMatches, null);
         }
     }
 
-    protected void showIOResultSnackbar(final Context context, boolean result, CharSequence message)
+    protected void showIOResultSnackbar(final Context context, boolean result, final CharSequence message, @Nullable final CharSequence report)
     {
         View view = getWindow().getDecorView();
         if (context != null && view != null)
         {
             Snackbar snackbar = Snackbar.make(view, message, (result ? 7000 : Snackbar.LENGTH_LONG));
-            /*snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });*/
+            if (report != null)
+            {
+                snackbar.setAction(context.getString(R.string.configAction_info), new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle(message)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .setMessage(report);
+                        dialog.show();
+                    }
+                });
+            }
             SuntimesUtils.themeSnackbar(context, snackbar, null);
             snackbar.show();
         }
     }
 
-    protected void showIOResultSnackbar(final Context context, boolean result, int numResults)
+    protected void showIOResultSnackbar(final Context context, boolean result, int numResults, @Nullable CharSequence report)
     {
         //Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
         //Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
         CharSequence message = (result ? context.getString(R.string.msg_import_success, context.getResources().getQuantityString(R.plurals.widgetPlural, numResults, numResults))
                                        : context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)));
-        showIOResultSnackbar(context, result, message);
+        showIOResultSnackbar(context, result, message, report);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
