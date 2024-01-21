@@ -2101,7 +2101,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
                         if (getWidgetClass().getSimpleName().equals(values_widgetClassName))
                         {
-                            Log.d("ImportSettings", "found settings for widget type " + values_widgetClassName + " at index " + i);
+                            //Log.d("ImportSettings", "found settings for widget type " + values_widgetClassName + " at index " + i);
                             values.add(v);
                         }
                     }
@@ -2143,7 +2143,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     {
                         int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
                         if ((p >= 0 && p < matchingValues.length)) {
-                            Log.d("ImportSettings", "user selected " + p + " of " + (matchingValues.length-1));
+                            //Log.d("ImportSettings", "user selected " + p + " of " + (matchingValues.length-1));
                             importSettings(context, matchingValues[p]);
                         }
                     }
@@ -2165,7 +2165,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     {
                         int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
                         if ((p >= 0 && p < values.length)) {
-                            Log.d("ImportSettings", "user selected " + p + " of " + (values.length-1) + " (" + labels[p] + ")");
+                            //Log.d("ImportSettings", "user selected " + p + " of " + (values.length-1) + " (" + labels[p] + ")");
                             importSettings(context, values[p]);
                         }
                     }

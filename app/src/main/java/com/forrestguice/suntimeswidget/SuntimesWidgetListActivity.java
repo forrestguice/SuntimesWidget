@@ -623,7 +623,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.loadMetaData(context, appWidgetId);
             if (unusedKeys.contains(metadata))
             {
-                Log.d("DEBUG", "makeBestGuess: " + appWidgetId + " :: " + metadata.getWidgetClassName());
+                //Log.d("DEBUG", "makeBestGuess: " + appWidgetId + " :: " + metadata.getWidgetClassName());
                 int i = unusedKeys.indexOf(metadata);
                 unusedKeys.remove(i);
                 ContentValues values = unusedValues.remove(i);
@@ -638,10 +638,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         addMetadata(context);
         Map<Integer, ContentValues> suggested = makeBestGuess(context, contentValues);
         int numMatches = suggested.size();
-        Log.d("DEBUG", "bestGuess: " + numMatches + " matches");
-        StringBuilder report = new StringBuilder();
         if (numMatches > 0)     // matched some
         {
+            StringBuilder report = new StringBuilder();
             SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
             for (Integer appWidgetId : suggested.keySet())
             {
