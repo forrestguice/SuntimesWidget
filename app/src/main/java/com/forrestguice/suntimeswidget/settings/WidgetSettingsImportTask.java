@@ -367,12 +367,13 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     public static ContentValues replaceKeyPrefix(ContentValues values, int replacementId)
     {
         ContentValues v = new ContentValues();
-        for (String key : values.keySet())
+        Set<Map.Entry<String, Object>> entries = values.valueSet();
+        for (Map.Entry<String, Object> entry : entries)
         {
-            String[] parts = key.split("_");
+            String[] parts = entry.getKey().split("_");
             parts[1] = Integer.toString(replacementId);
             String k = TextUtils.join("_", parts);
-            v = putValueInto(v, k, values.get(key));
+            v = putValueInto(v, k, entry.getValue());
         }
         return v;
     }
@@ -488,9 +489,11 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             prefTypes.putAll(WidgetSettingsMetadata.getPrefTypes());
         }
 
-        for (String key : values.keySet())
+        Set<Map.Entry<String, Object>> entries = values.valueSet();
+        for (Map.Entry<String, Object> entry : entries)
         {
-            Object value = values.get(key);
+            String key = entry.getKey();
+            Object value = entry.getValue();
             if (value == null) {
                 Log.w("WidgetSettings", "import: skipping " + key + "... contains null value");
                 continue;
@@ -564,15 +567,19 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 
     public static Long findAppWidgetIdFromFirstKey(ContentValues values)
     {
-        String[] keys = values.keySet().toArray(new String[0]);
-        if (keys.length > 0)
+        Set<Map.Entry<String, Object>> entries = values.valueSet();
+        if (entries.size() > 0)
         {
-            try {
-                String[] parts = keys[0].split("_");
-                return Long.parseLong(parts[1]);
+            for (Map.Entry<String,Object> entry : entries)
+            {
+                try {
+                    String key = entry.getKey();
+                    String[] parts = key.split("_");
+                    return Long.parseLong(parts[1]);
 
-            } catch (NumberFormatException e) {
-                Log.w("WidgetSettings", "failed to find widget id from keys.. " + e);
+                } catch (NumberFormatException | NullPointerException e) {
+                    Log.w("WidgetSettings", "failed to find widget id from keys.. " + e);
+                }
             }
         }
         return null;
