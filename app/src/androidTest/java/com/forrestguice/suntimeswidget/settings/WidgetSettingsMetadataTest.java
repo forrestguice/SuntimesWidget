@@ -97,4 +97,21 @@ public class WidgetSettingsMetadataTest
         assertNull(appWidgetId3);
     }
 
+    @Test
+    public void test_WidgetMetadata_replaceKeyPrefix()
+    {
+        Long appWidgetId0 = 100L;
+        ContentValues values0 = createContentValues0(appWidgetId0);
+        String key0 = WidgetSettings.PREF_PREFIX_KEY + appWidgetId0 + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + "testKey";
+        String value0 = "testValue";
+        values0.put(key0, value0);
+
+        Long appWidgetId1 = 200L;
+        ContentValues values1 = WidgetSettingsImportTask.replaceKeyPrefix(values0, appWidgetId1);
+        String key1 = WidgetSettings.PREF_PREFIX_KEY + appWidgetId1 + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + "testKey";
+        assertNotNull(values1);
+        assertTrue(values1.containsKey(key1));
+        assertEquals(values1.get(key1), value0);
+    }
+
 }
