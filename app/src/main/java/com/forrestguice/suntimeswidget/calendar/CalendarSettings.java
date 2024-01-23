@@ -69,7 +69,7 @@ public class CalendarSettings
         CalendarMode[] modes = CalendarMode.values();
         ALL_KEYS = new String[modes.length + 3];
         for (int i=0; i<modes.length; i++) {
-            ALL_KEYS[i] = PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_FORMATPATTERN + "_" + modes[i];
+            ALL_KEYS[i] = PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_FORMATPATTERN + "_" + modes[i].name();
         }
         int i = modes.length;
         ALL_KEYS[i] = PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_FORMATPATTERN;
