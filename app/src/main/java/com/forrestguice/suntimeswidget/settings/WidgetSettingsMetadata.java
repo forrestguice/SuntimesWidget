@@ -25,6 +25,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -121,6 +123,12 @@ public class WidgetSettingsMetadata
             this.minDimens[1] = other.minDimens[1];
             this.maxDimens[0] = other.maxDimens[0];
             this.maxDimens[1] = other.maxDimens[1];
+        }
+
+        public WidgetMetadata(String widgetClassName)
+        {
+            this.className = widgetClassName;
+            this.versionCode = BuildConfig.VERSION_CODE;
         }
 
         public WidgetMetadata(String widgetClassName, int versionCode, int category,

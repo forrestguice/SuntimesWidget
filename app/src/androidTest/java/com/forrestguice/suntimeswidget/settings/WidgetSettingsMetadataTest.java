@@ -25,6 +25,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNotEquals;
 
 public class WidgetSettingsMetadataTest
@@ -106,7 +107,7 @@ public class WidgetSettingsMetadataTest
         String value0 = "testValue";
         values0.put(key0, value0);
 
-        Long appWidgetId1 = 200L;
+        int appWidgetId1 = 200;
         ContentValues values1 = WidgetSettingsImportTask.replaceKeyPrefix(values0, appWidgetId1);
         String key1 = WidgetSettings.PREF_PREFIX_KEY + appWidgetId1 + WidgetSettingsMetadata.PREF_PREFIX_KEY_META + "testKey";
         assertNotNull(values1);
