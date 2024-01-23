@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -51,7 +50,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private final WeakReference<Context> contextRef;
+    protected final WeakReference<Context> contextRef;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -99,7 +98,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                 if (in != null)
                 {
                     Log.d(getClass().getSimpleName(), "doInBackground: reading");
-                    WidgetSettingsJson.readItems(context, in, items);
+                    readData(context, in, items);
                     result = true;
                     error = null;
 
@@ -124,6 +123,10 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 
         Log.d(getClass().getSimpleName(), "doInBackground: finishing");
         return new TaskResult(result, uri, (items != null ? items.toArray(new ContentValues[0]) : null), error);
+    }
+
+    protected void readData(Context context, InputStream in, ArrayList<ContentValues> items) throws IOException {
+        ContentValuesJson.readItems(context, in, items);
     }
 
     @Override
@@ -199,12 +202,17 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     }
 
     /**
-     * WidgetSettingsJson
+     * ContentValuesJson
      */
-    public static class WidgetSettingsJson
+    public static class ContentValuesJson
     {
-        public static final String TAG = "WidgetSettingsJson";
+        public static final String TAG = "ContentValuesJson";
 
+        /**
+         * Currently reads..
+         *     [{ ContentValues }, ...]
+         *     { ContentValues }
+         */
         public static void readItems(Context context, InputStream in, ArrayList<ContentValues> items) throws IOException
         {
             if (Build.VERSION.SDK_INT >= 11)
@@ -322,6 +330,16 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                 reader.skipValue();
             }
             reader.endArray();
+        }
+
+        @TargetApi(11)
+        protected static void skipJsonItem(JsonReader reader) throws IOException
+        {
+            switch (reader.peek()) {
+                case BEGIN_ARRAY: skipJsonArray(reader); break;
+                case BEGIN_OBJECT: skipJsonObject(reader); break;
+                default: reader.skipValue(); break;
+            }
         }
 
         public static String toJson(ContentValues values)
