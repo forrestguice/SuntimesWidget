@@ -89,6 +89,11 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             includeInBackup(key, true);
         }
     }
+    public void includeInBackup(String[] keys, boolean[] include) {
+        for (int i=0; i<keys.length; i++) {
+            includeInBackup(keys[i], (i<include.length && include[i]));
+        }
+    }
     public void includeAll() {
         includeInBackup(ALL_KEYS);
     }
@@ -177,7 +182,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 SuntimesBackupTask task = (uri != null ? new SuntimesBackupTask(context, uri)
                         : new SuntimesBackupTask(context, SuntimesBackupTask.DEF_EXPORT_TARGET, true, true));  // export to external cache;
                 task.setTaskListener(exportListener);
-                task.includeInBackup(keys);
+                task.includeInBackup(keys, checked);
                 task.setAppWidgetIds(getAllWidgetIds(context));
                 task.execute();
             }
