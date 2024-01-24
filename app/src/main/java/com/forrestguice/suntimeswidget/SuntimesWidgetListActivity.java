@@ -43,6 +43,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -73,10 +74,13 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SuntimesBackupRestoreTask;
+import com.forrestguice.suntimeswidget.settings.SuntimesBackupTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
+import com.forrestguice.suntimeswidget.themes.ImportThemesTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
@@ -88,8 +92,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static com.forrestguice.suntimeswidget.SuntimesConfigActivity0.EXTRA_RECONFIGURE;
+import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_METHOD_DIRECTIMPORT;
+import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_METHOD_MAKEBESTGUESS;
+import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_METHOD_RESTOREBACKUP;
 
 public class SuntimesWidgetListActivity extends AppCompatActivity
 {
@@ -157,7 +166,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 {
                     Uri uri = (data != null ? data.getData() : null);
                     if (uri != null) {
-                        exportSettings(SuntimesWidgetListActivity.this, uri);
+                        SuntimesBackupTask.exportSettings(SuntimesWidgetListActivity.this, uri, exportSettingsListener);
                     }
                 }
                 break;
@@ -367,67 +376,15 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         }
     }
 
-    protected static ArrayList<Integer> getAllWidgetIds(Context context)
-    {
-        ArrayList<Integer> ids = new ArrayList<>();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
-            ids.addAll(getAllWidgetIds(context, widgetClass));
-        }
-        ids.add(0);                                                    // include app config and quick settings tiles
-        ids.add(ClockTileService.CLOCKTILE_APPWIDGET_ID);
-        ids.add(NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID);
-        return ids;
-    }
-    protected static ArrayList<Integer> getAllWidgetIds(Context context, Class widgetClass)
-    {
-        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-        String packageName = context.getPackageName();
-        ArrayList<Integer> ids = new ArrayList<>();
-        int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(packageName, widgetClass.getName()));
-        for (int id : widgetIds) {
-            ids.add(id);
-        }
-        return ids;
-    }
-
-    public static void addMetadata(Context context)
-    {
-        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-        String packageName = context.getPackageName();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
-        {
-            Bundle bundle = new Bundle();
-            bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, widgetClass.getSimpleName());
-            bundle.putInt(WidgetSettingsMetadata.PREF_KEY_META_VERSIONCODE, BuildConfig.VERSION_CODE);
-
-            int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(packageName, widgetClass.getName()));
-            for (int id : widgetIds) {
-                WidgetSettingsMetadata.saveMetaData(context, id, bundle);
-            }
-        }
-
-        Bundle bundle = new Bundle();
-        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, "SuntimesActivity");
-        bundle.putInt(WidgetSettingsMetadata.PREF_KEY_META_VERSIONCODE, BuildConfig.VERSION_CODE);
-        WidgetSettingsMetadata.saveMetaData(context, 0, bundle);
-
-        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, ClockTileService.class.getSimpleName());
-        WidgetSettingsMetadata.saveMetaData(context, ClockTileService.CLOCKTILE_APPWIDGET_ID, bundle);
-
-        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, NextEventTileService.class.getSimpleName());
-        WidgetSettingsMetadata.saveMetaData(context, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID, bundle);
-    }
-
     /**
      * exportSettings
      * @param context Context
      */
     protected void exportSettings(Context context)
     {
-        String exportTarget = "SuntimesWidgets";
         if (Build.VERSION.SDK_INT >= 19)
         {
-            String filename = exportTarget + WidgetSettingsExportTask.FILEEXT;
+            String filename = SuntimesBackupTask.DEF_EXPORT_TARGET + WidgetSettingsExportTask.FILEEXT;
             Intent intent = ExportTask.getCreateFileIntent(filename, WidgetSettingsExportTask.MIMETYPE);
             try {
                 startActivityForResult(intent, EXPORT_REQUEST);
@@ -437,22 +394,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 Log.e("ExportSettings", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
             }
         }
+        SuntimesBackupTask.exportSettings(context, null, exportSettingsListener);
+    }
 
-        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, exportTarget, true, true);  // export to external cache
-        addMetadata(context);
-        task.setTaskListener(exportSettingsListener);
-        task.setAppWidgetIds(getAllWidgetIds(context));
-        task.execute();
-    }
-    public void exportSettings(Context context, @NonNull Uri uri)
-    {
-        Log.i("ExportSettings", "Starting export task: " + uri);
-        addMetadata(context);
-        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, uri);
-        task.setTaskListener(exportSettingsListener);
-        task.setAppWidgetIds(getAllWidgetIds(context));
-        task.execute();
-    }
     private final WidgetSettingsExportTask.TaskListener exportSettingsListener = new WidgetSettingsExportTask.TaskListener()
     {
         @Override
@@ -460,7 +404,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             //setRetainInstance(true);
             Context context = SuntimesWidgetListActivity.this;
-            showProgress(context, context.getString(R.string.exportwidget_dialog_title), context.getString(R.string.exportwidget_dialog_message));
+            showProgress(context, context.getString(R.string.configAction_createBackup), context.getString(R.string.configAction_createBackup));
         }
 
         @Override
@@ -480,7 +424,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 {
                     //if (isAdded()) {
                     String successMessage = context.getString(R.string.msg_export_success, path);
-                    showIOResultSnackbar(context, true, successMessage, null);
+                    SuntimesBackupTask.showIOResultSnackbar(context, getWindow().getDecorView(), true, successMessage, null);
                     //}
 
                     if (Build.VERSION.SDK_INT >= 19) {
@@ -495,7 +439,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
                 //if (isAdded()) {
                 String failureMessage = context.getString(R.string.msg_export_failure, path);
-                showIOResultSnackbar(context, false, failureMessage, null);
+                SuntimesBackupTask.showIOResultSnackbar(context, getWindow().getDecorView(), false, failureMessage, null);
                 //}
             }
         }
@@ -514,181 +458,59 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void importSettings(final Context context, @NonNull Uri uri)
     {
         Log.i("ImportSettings", "Starting import task: " + uri);
-        WidgetSettingsImportTask task = new WidgetSettingsImportTask(context);
-        task.setTaskListener(new WidgetSettingsImportTask.TaskListener()
+        SuntimesBackupRestoreTask task = new SuntimesBackupRestoreTask(context);
+        task.setTaskListener(new SuntimesBackupRestoreTask.TaskListener()
         {
             @Override
             public void onStarted() {
-                showProgress(context, context.getString(R.string.importwidget_dialog_title), context.getString(R.string.importwidget_dialog_message));
+                showProgress(context, context.getString(R.string.configAction_restoreBackup), context.getString(R.string.configAction_restoreBackup));
             }
 
             @Override
-            public void onFinished(WidgetSettingsImportTask.TaskResult result)
+            public void onFinished(final SuntimesBackupRestoreTask.TaskResult result)
             {
                 dismissProgress();
                 if (result.getResult() && result.numResults() > 0)
                 {
-                    final ContentValues[] allValues = result.getItems();
-                    final CharSequence[] items = new CharSequence[] {
-                            SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup)),   // 0
-                            SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess)),       // 1
-                            SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct)),          // 2
-                    };
-                    String title = context.getString(R.string.importwidget_dialog_title);
-                    AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
-                            .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
-                            })
-                            .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
-                            {
-                                public void onClick(DialogInterface dialog, int whichButton)
-                                {
-                                    int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                                    switch (p)
-                                    {
-                                        case 2:    // direct import
-                                            importSettings(context, null, false,  allValues);
-                                            break;
-
-                                        case 1:    // best guess
-                                            importSettingsBestGuess(context, allValues);
-                                            break;
-
-                                        case 0:
-                                        default:   // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
-                                            importSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, true, allValues);
-                                            WidgetSettingsImportTask.restoreFromBackup(context,
-                                                    new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID},    // these lines should be the same
-                                                    new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID});   // because the ids are unchanged
-                                            break;
-                                    }
+                    final Map<String, ContentValues[]> allValues = result.getItems();
+                    SuntimesBackupTask.chooseBackupContent(context, allValues.keySet(), true, new SuntimesBackupTask.ChooseBackupDialogListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which, String[] keys, boolean[] checked)
+                        {
+                            final Set<String> includeKeys = new TreeSet<>();
+                            for (int i=0; i<keys.length; i++) {
+                                if (checked[i]) {
+                                    includeKeys.add(keys[i]);
                                 }
-                            })
-                            .setNegativeButton(context.getString(R.string.dialog_cancel), null);
-                    confirm.show();
+                            }
+
+                            if (includeKeys.contains(SuntimesBackupTask.KEY_WIDGETSETTINGS))
+                            {
+                                WidgetSettingsImportTask.chooseWidgetSettingsImportMethod(context, WidgetSettingsImportTask.ALL_IMPORT_METHODS, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int method) {
+                                        importSettings(context, method, includeKeys, allValues);
+                                    }
+                                });
+                            } else {
+                                importSettings(context, IMPORT_METHOD_RESTOREBACKUP, includeKeys, allValues);
+                            }
+                        }
+                    });
 
                 } else {
-                    showIOResultSnackbar(context, false, 0, null);
+                    SuntimesBackupRestoreTask.showIOResultSnackbar(context, getWindow().getDecorView(), false, 0, null);
                 }
             }
         });
         task.execute(uri);
     }
 
-    protected void importSettings(Context context, String prefix, boolean includeMetadata, ContentValues... contentValues)
+    protected void importSettings(Context context, int method, Set<String> keys, Map<String, ContentValues[]> allValues)
     {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
-        int c = 0;
         StringBuilder report = new StringBuilder();
-        for (ContentValues values : contentValues)
-        {
-            Long id = WidgetSettingsImportTask.findAppWidgetIdFromFirstKey(values);
-            WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values);
-            WidgetSettingsImportTask.importValues(prefs, values, prefix, null, includeMetadata);
-            report.append(context.getString(R.string.importwidget_dialog_report_format, id + "", metadata.getWidgetClassName()));
-            report.append("\n");
-            c++;
-        }
-        showIOResultSnackbar(context, true, c, report.toString());
-    }
-
-    /**
-     * Tries to match contentValues to existing widgetIds based on available metadata.
-     * @return suggested appWidget:ContentValues mapping
-     */
-
-    protected Map<Integer,ContentValues> makeBestGuess(Context context, ContentValues... contentValues)
-    {
-        ArrayList<WidgetSettingsMetadata.WidgetMetadata> unusedKeys = new ArrayList<>();
-        ArrayList<ContentValues> unusedValues = new ArrayList<>();
-        for (int i=0; i<contentValues.length; i++)
-        {
-            ContentValues values = contentValues[i];
-            WidgetSettingsMetadata.WidgetMetadata key = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values);
-            unusedKeys.add(key);
-            unusedValues.add(values);
-        }
-
-        ArrayList<Integer> widgetIds = new ArrayList<>();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
-            widgetIds.addAll(getAllWidgetIds(context, widgetClass));
-        }
-        widgetIds.add(0);
-        widgetIds.add(ClockTileService.CLOCKTILE_APPWIDGET_ID);
-        widgetIds.add(NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID);
-
-        Map<Integer, ContentValues> suggested = new HashMap<>();
-        for (Integer appWidgetId : widgetIds)
-        {
-            WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.loadMetaData(context, appWidgetId);
-            if (unusedKeys.contains(metadata))
-            {
-                //Log.d("DEBUG", "makeBestGuess: " + appWidgetId + " :: " + metadata.getWidgetClassName());
-                int i = unusedKeys.indexOf(metadata);
-                unusedKeys.remove(i);
-                ContentValues values = unusedValues.remove(i);
-                suggested.put(appWidgetId, values);
-            }
-        }
-        return suggested;
-    }
-
-    protected void importSettingsBestGuess(Context context, ContentValues... contentValues)
-    {
-        addMetadata(context);
-        Map<Integer, ContentValues> suggested = makeBestGuess(context, contentValues);
-        int numMatches = suggested.size();
-        if (numMatches > 0)     // matched some
-        {
-            StringBuilder report = new StringBuilder();
-            SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
-            for (Integer appWidgetId : suggested.keySet())
-            {
-                ContentValues values = suggested.get(appWidgetId);
-                WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
-
-                String widgetClassName = WidgetSettingsMetadata.loadMetaData(context, appWidgetId).getWidgetClassName();
-                report.append(context.getString(R.string.importwidget_dialog_report_format, appWidgetId + "", widgetClassName));
-                report.append("\n");
-            }
-            showIOResultSnackbar(context, true, numMatches, report.toString());
-
-        } else {               // matched none
-            showIOResultSnackbar(context, false, numMatches, null);
-        }
-    }
-
-    protected void showIOResultSnackbar(final Context context, boolean result, final CharSequence message, @Nullable final CharSequence report)
-    {
-        View view = getWindow().getDecorView();
-        if (context != null && view != null)
-        {
-            Snackbar snackbar = Snackbar.make(view, message, (result ? 7000 : Snackbar.LENGTH_LONG));
-            if (report != null)
-            {
-                snackbar.setAction(context.getString(R.string.configAction_info), new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle(message)
-                                .setIcon(android.R.drawable.ic_dialog_info)
-                                .setMessage(report);
-                        dialog.show();
-                    }
-                });
-            }
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
-            snackbar.show();
-        }
-    }
-
-    protected void showIOResultSnackbar(final Context context, boolean result, int numResults, @Nullable CharSequence report)
-    {
-        //Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
-        CharSequence message = (result ? context.getString(R.string.msg_import_success, context.getResources().getQuantityString(R.plurals.widgetPlural, numResults, numResults))
-                                       : context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)));
-        showIOResultSnackbar(context, result, message, report);
+        int c = SuntimesBackupRestoreTask.importSettings(context, method, keys, report, allValues);
+        SuntimesBackupRestoreTask.showIOResultSnackbar(context, getWindow().getDecorView(), (c > 0), c, ((c > 0) ? report.toString() : null));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

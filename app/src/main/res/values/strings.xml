@@ -1191,12 +1191,18 @@
     <string name="configLabel_widgetListHelp_summary">Show widget help</string>
     <string name="configLabel_widgetList_emptyMsg">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="configAction_exportWidgets">Backup Settings</string>    <!-- button (contentDescription) -->  <!-- export all widget config -->    <!-- TODO -->
-    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="configAction_importWidgets">Import Settings</string>    <!-- button (contentDescription) -->  <!-- import all widget config -->    <!-- TODO -->
+    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
+    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
+    <string name="restorebackup_dialog_item_appsettings">App Configuration</string>  <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_eventitems">Custom Events</string> <!-- TODO -->
+    <string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>
 
-    <string name="exportwidget_dialog_title">Exporting</string>    <!-- TODO -->
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
     <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
     <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
     <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
@@ -1204,12 +1210,17 @@
     <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
     <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
     <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when widgetClassName is missing -->   <!-- TODO -->
-    <string name="importwidget_dialog_report_format"><xliff:g id="appWidgetId">%1$s</xliff:g>, <xliff:g id="WidgetClassName">%2$s</xliff:g></string>
-
     <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_report_format"><xliff:g id="appWidgetId">%1$s</xliff:g>, <xliff:g id="WidgetClassName">%2$s</xliff:g></string>
 
+    <plurals name="itemsPlural">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+        <item quantity="few">%d items</item>
+        <item quantity="many">%d items</item>
+    </plurals>  <!-- TODO -->
     <plurals name="widgetPlural">
         <item quantity="one">%d widget</item>
         <item quantity="other">%d widgets</item>

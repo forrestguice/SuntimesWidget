@@ -18,13 +18,20 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
+import com.forrestguice.suntimeswidget.tiles.ClockTileService;
+import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -154,6 +161,34 @@ public class WidgetSettingsExportTask extends ExportTask
             }
         }
         return values;
+    }
+
+    public static void addWidgetMetadata(Context context)
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        String packageName = context.getPackageName();
+        for (Class widgetClass : SuntimesWidgetListActivity.WidgetListAdapter.ALL_WIDGETS)
+        {
+            Bundle bundle = new Bundle();
+            bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, widgetClass.getSimpleName());
+            bundle.putInt(WidgetSettingsMetadata.PREF_KEY_META_VERSIONCODE, BuildConfig.VERSION_CODE);
+
+            int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(packageName, widgetClass.getName()));
+            for (int id : widgetIds) {
+                WidgetSettingsMetadata.saveMetaData(context, id, bundle);
+            }
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, "SuntimesActivity");
+        bundle.putInt(WidgetSettingsMetadata.PREF_KEY_META_VERSIONCODE, BuildConfig.VERSION_CODE);
+        WidgetSettingsMetadata.saveMetaData(context, 0, bundle);
+
+        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, ClockTileService.class.getSimpleName());
+        WidgetSettingsMetadata.saveMetaData(context, ClockTileService.CLOCKTILE_APPWIDGET_ID, bundle);
+
+        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, NextEventTileService.class.getSimpleName());
+        WidgetSettingsMetadata.saveMetaData(context, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID, bundle);
     }
 
 }

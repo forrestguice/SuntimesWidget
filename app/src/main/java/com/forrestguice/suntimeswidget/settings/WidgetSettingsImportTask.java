@@ -21,16 +21,21 @@ package com.forrestguice.suntimeswidget.settings;
 import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.JsonReader;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 
@@ -639,6 +644,47 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 
     public static void clearBackup(Context context, SharedPreferences prefs ) {
         deleteValues(prefs, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, null);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final int IMPORT_METHOD_RESTOREBACKUP = 0;
+    public static final int IMPORT_METHOD_MAKEBESTGUESS = 1;
+    public static final int IMPORT_METHOD_DIRECTIMPORT = 2;
+    public static final int[] ALL_IMPORT_METHODS = new int[] { IMPORT_METHOD_RESTOREBACKUP, IMPORT_METHOD_MAKEBESTGUESS, IMPORT_METHOD_DIRECTIMPORT };
+
+    public static void chooseWidgetSettingsImportMethod(final Context context, final int[] methods, @NonNull final DialogInterface.OnClickListener onClickListener)
+    {
+        final CharSequence[] items = new CharSequence[methods.length];
+        for (int i=0; i<items.length; i++) {
+            items[i] = displayStringForImportMethod(context, methods[i]);
+        }
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.restorebackup_dialog_item_widgetsettings))
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                })
+                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        onClickListener.onClick(dialog, methods[p]);
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+    protected static CharSequence displayStringForImportMethod(Context context, int method)
+    {
+        switch (method) {
+            case IMPORT_METHOD_DIRECTIMPORT: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
+            case IMPORT_METHOD_MAKEBESTGUESS: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
+            case IMPORT_METHOD_RESTOREBACKUP: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
+            default: return method + "";
+        }
     }
 
 }
