@@ -34,6 +34,10 @@ import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.ContentValuesJson;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
@@ -300,21 +304,32 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
             c += SuntimesBackupRestoreTask.importEventItems(context, report, allValues.get(SuntimesBackupTask.KEY_EVENTITEMS));
         }
 
+        if (keys.contains(SuntimesBackupTask.KEY_PLACEITEMS)) {
+            c += SuntimesBackupRestoreTask.importPlaceItems(context, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
+        }
+
+        if (keys.contains(SuntimesBackupTask.KEY_ACTIONS)) {
+            c += (SuntimesBackupRestoreTask.importActions(context, report, allValues.get(SuntimesBackupTask.KEY_ACTIONS)) ? 1 : 0);
+        }
+
         return c;
     }
 
     /**
      * importAppSettings
      */
-    public static boolean importAppSettings(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
+    protected static boolean importAppSettings(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
     {
+        Map<String,Class> prefTypes = AppSettings.getPrefTypes();
+        prefTypes.putAll(AlarmSettings.getPrefTypes());
+
         if (contentValues != null)
         {
             SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
             for (ContentValues values : contentValues)
             {
                 if (values != null) {
-                    //WidgetSettingsImportTask.importValues(prefs, values, prefix, null, includeMetadata);  // TODO
+                    WidgetSettingsImportTask.importValues(prefs, prefTypes, values, false, null, null, "AppSettings");
                     report.append(context.getString(R.string.restorebackup_dialog_report_format, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_APPSETTINGS)));
                     report.append("\n");
                     return true;
@@ -327,28 +342,86 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
     /**
      * importAlarmItems
      */
-    public static int importAlarmItems(Context context, StringBuilder report, @Nullable ContentValues... contentValues) {
-        return 0;  // TODO
+    protected static int importAlarmItems(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        int c = 0;
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
+        db.open();
+        for (ContentValues values : contentValues)
+        {
+            if (values != null) {
+                db.addAlarm(values);
+                c++;
+            }
+        }
+        db.close();
+        report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_ALARMITEMS), c+""));
+        report.append("\n");
+        return c;
     }
 
     /**
      * importEventItems
      */
-    public static int importEventItems(Context context, StringBuilder report, @Nullable ContentValues... contentValues) {
-        return 0;  // TODO
+    protected static int importEventItems(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        int c = 0;
+        for (ContentValues values : contentValues)
+        {
+            if (values != null) {
+                EventSettings.saveEvent(context, new EventSettings.EventAlias(values));
+                c++;
+            }
+        }
+        report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_EVENTITEMS), c+""));
+        report.append("\n");
+        return c;
     }
 
     /**
      * importPlaceItems
      */
-    public static int importPlaceItems(Context context, StringBuilder report, @Nullable ContentValues... contentValues) {
-        return 0;  // TODO
+    protected static int importPlaceItems(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        int c = 0;
+        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
+        db.open();
+        for (ContentValues values : contentValues) {
+            if (values != null &&
+                    db.addPlace(values) >= 0) {
+                c++;
+            }
+        }
+        db.close();
+        report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_PLACEITEMS), c+""));
+        report.append("\n");
+        return c;
+    }
+
+    /**
+     * importActions
+     */
+    protected static boolean importActions(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        if (contentValues != null)
+        {
+            int c = 0;
+            for (ContentValues values : contentValues) {
+                if (WidgetActions.saveActionLaunchPref(context, values, 0)) {
+                    c++;
+                }
+            }
+            report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_ACTIONS), c+""));
+            report.append("\n");
+            return true;
+        }
+        return false;
     }
 
     /**
      * importWidgetSettings
      */
-    public static int importWidgetSettings(Context context, String prefix, boolean includeMetadata, StringBuilder report, @Nullable ContentValues... contentValues)
+    protected static int importWidgetSettings(Context context, String prefix, boolean includeMetadata, StringBuilder report, @Nullable ContentValues... contentValues)
     {
         if (contentValues != null)
         {

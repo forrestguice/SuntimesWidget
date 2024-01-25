@@ -511,27 +511,36 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         if (includeMetadata) {
             prefTypes.putAll(WidgetSettingsMetadata.getPrefTypes());
         }
+        importValues(prefs, prefTypes, values, true, toPrefix, appWidgetId, "WidgetSettings");
+    }
 
+    public static void importValues(SharedPreferences.Editor prefs, Map<String,Class> prefTypes, ContentValues values, boolean hasPrefix, @Nullable String toPrefix, @Nullable Long appWidgetId, String tag)
+    {
         Set<Map.Entry<String, Object>> entries = values.valueSet();
         for (Map.Entry<String, Object> entry : entries)
         {
             String key = entry.getKey();
             Object value = entry.getValue();
             if (value == null) {
-                Log.w("WidgetSettings", "import: skipping " + key + "... contains null value");
+                Log.w(tag, "import: skipping " + key + "... contains null value");
                 continue;
             }
 
-            String[] keyParts = key.split("_");
-            if (toPrefix != null) {
-                keyParts[0] = toPrefix.endsWith("_") ? toPrefix.substring(0, toPrefix.length() - 1) : toPrefix;
-            }
-            if (appWidgetId != null) {
-                keyParts[1] = appWidgetId + "";
-            }
+            String k = key;
+            String k0 = k;
+            if (hasPrefix)
+            {
+                String[] keyParts = key.split("_");
+                if (toPrefix != null) {
+                    keyParts[0] = toPrefix.endsWith("_") ? toPrefix.substring(0, toPrefix.length() - 1) : toPrefix;
+                }
+                if (appWidgetId != null) {
+                    keyParts[1] = appWidgetId + "";
+                }
 
-            String k = TextUtils.join("_", keyParts);    // replacement key
-            String k0 = k.replaceFirst(keyParts[0] + "_" + keyParts[1], "");
+                k = TextUtils.join("_", keyParts);    // full replacement key
+                k0 = k.replaceFirst(keyParts[0] + "_" + keyParts[1], "");    // replacement key w/out prefix
+            }
 
             if (prefTypes.containsKey(k0))
             {
@@ -550,39 +559,39 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                             String s = (String) value;
                             if (s.toLowerCase().equals("true") || s.toLowerCase().equals("false")) {
                                 importValue(prefs, Boolean.class, k, Boolean.parseBoolean(s));
-                            } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + s + " (String)");
-                        } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
+                            } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + s + " (String)");
+                        } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
 
                     } else if (expectedType.equals(Integer.class)) {
                         if (valueType.equals(String.class)) {    // int as String
                             try {
                                 importValue(prefs, Integer.class, k, Integer.parseInt((String) value));
                             } catch (NumberFormatException e) {
-                                Log.w("WidgetSettings", "import: skipping " + k + "... " + e);
+                                Log.w(tag, "import: skipping " + k + "... " + e);
                             }
-                        } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
+                        } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
 
                     } else if (expectedType.equals(Long.class)) {
                         if (valueType.equals(String.class)) {    // long as String
                             try {
                                 importValue(prefs, Long.class, k, Long.parseLong((String) value));
                             } catch (NumberFormatException e) {
-                                Log.w("WidgetSettings", "import: skipping " + k + "... " + e);
+                                Log.w(tag, "import: skipping " + k + "... " + e);
                             }
-                        } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
+                        } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
 
                     } else if (expectedType.equals(Double.class)) {
                         if (valueType.equals(String.class)) {    // double as String
                             try {
                                 importValue(prefs, Double.class, k, Double.parseDouble((String) value));
                             } catch (NumberFormatException e) {
-                                Log.w("WidgetSettings", "import: skipping " + k + "... " + e);
+                                Log.w(tag, "import: skipping " + k + "... " + e);
                             }
-                        } else Log.w("WidgetSettings", "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
+                        } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
                     }
                 }
             } else {
-                Log.w("WidgetSettings", "import: skipping " + k0 + "... unrecognized key");
+                Log.w(tag, "import: skipping " + k0 + "... unrecognized key");
             }
         }
         prefs.apply();

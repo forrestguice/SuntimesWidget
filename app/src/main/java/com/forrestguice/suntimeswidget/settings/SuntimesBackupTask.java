@@ -20,9 +20,12 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -30,19 +33,31 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.events.EventExportTask;
+import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -57,12 +72,10 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     public static final String KEY_ALARMITEMS = "AlarmItems";
     public static final String KEY_EVENTITEMS = "EventItems";
     public static final String KEY_PLACEITEMS = "PlaceItems";
+    public static final String KEY_ACTIONS = "Actions";
 
     public static final String[] ALL_KEYS = new String[] {
-            KEY_APPSETTINGS, KEY_WIDGETSETTINGS
-            //, KEY_ALARMITEMS    // TODO: implement
-            //, KEY_EVENTITEMS    // TODO: implement
-            //, KEY_PLACEITEMS    // TODO: implement
+            KEY_APPSETTINGS, KEY_WIDGETSETTINGS, KEY_ALARMITEMS, KEY_EVENTITEMS, KEY_PLACEITEMS, KEY_ACTIONS
     };
 
     public static final String DEF_EXPORT_TARGET = "SuntimesBackup";
@@ -119,7 +132,8 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 out.write(",\n".getBytes());
             }
             out.write(("\"" + KEY_APPSETTINGS + "\": ").getBytes());    // include AppSettings
-            writeAppSettingsJSONObject(context, out);
+            SharedPreferences appPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+            writeAppSettingsJSONObject(context, appPrefs, out);
             c++;
         }
 
@@ -129,7 +143,8 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 out.write(",\n".getBytes());
             }
             out.write(("\"" + KEY_WIDGETSETTINGS + "\": ").getBytes());    // include WidgetSettings
-            writeWidgetSettingsJSONArray(context, out);
+            SharedPreferences widgetPrefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+            writeWidgetSettingsJSONArray(context, widgetPrefs, getAllWidgetIds(context), out);
             c++;
         }
 
@@ -139,7 +154,41 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 out.write(",\n".getBytes());
             }
             out.write(("\"" + KEY_ALARMITEMS + "\": ").getBytes());    // include AlarmItems
-            writeAlarmItemsJSONArray(context, out);
+            AlarmDatabaseAdapter alarmDb = new AlarmDatabaseAdapter(context);
+            writeAlarmItemsJSONArray(context, alarmDb, out);
+            c++;
+        }
+
+        if (includedKeys.containsKey(KEY_EVENTITEMS) && includedKeys.get(KEY_EVENTITEMS))
+        {
+            if (c > 0) {
+                out.write(",\n".getBytes());
+            }
+            out.write(("\"" + KEY_EVENTITEMS + "\": ").getBytes());    // include EventItems
+            List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+            EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventSettings.EventAlias[0]), out);
+            c++;
+        }
+
+        if (includedKeys.containsKey(KEY_PLACEITEMS) && includedKeys.get(KEY_PLACEITEMS))
+        {
+            if (c > 0) {
+                out.write(",\n".getBytes());
+            }
+            out.write(("\"" + KEY_PLACEITEMS + "\": ").getBytes());    // include PlacesItems
+            GetFixDatabaseAdapter placesDb = new GetFixDatabaseAdapter(context);
+            writePlaceItemsJSONArray(context, placesDb, out);
+            c++;
+        }
+
+        if (includedKeys.containsKey(KEY_ACTIONS) && includedKeys.get(KEY_ACTIONS))
+        {
+            if (c > 0) {
+                out.write(",\n".getBytes());
+            }
+            out.write(("\"" + KEY_ACTIONS + "\": ").getBytes());    // include ActionItems
+            String[] actions = WidgetActions.loadActionLaunchList(context, 0).toArray(new String[0]);
+            writeActionsJSONArray(context, actions, out);
             c++;
         }
 
@@ -152,9 +201,8 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
      * writes
      *   { ContentValues }
      */
-    protected void writeAppSettingsJSONObject(Context context, BufferedOutputStream out) throws IOException
+    public static void writeAppSettingsJSONObject(Context context, SharedPreferences appPrefs, BufferedOutputStream out) throws IOException
     {
-        SharedPreferences appPrefs = PreferenceManager.getDefaultSharedPreferences(context);         // AppSettings are stored in default shared prefs
         String json = WidgetSettingsImportTask.ContentValuesJson.toJson(toContentValues(appPrefs));
         out.write(json.getBytes());
         out.flush();
@@ -162,14 +210,90 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
     /**
      * writes
-     *   [{ AlarmClockItem}, ...]
+     *   { ContentValues }
      */
-    protected void writeAlarmItemsJSONArray(Context context, BufferedOutputStream out) throws IOException
+    public static void writeActionsJSONArray(Context context, String[] actions, BufferedOutputStream out) throws IOException
     {
-        out.write("{}".getBytes());  // TODO: write alarm items
+        out.write("[".getBytes());
+
+        for (int i=0; i<actions.length; i++)
+        {
+            ContentValues values = WidgetActions.loadActionLaunchPref(context, 0, actions[i]);
+            String json = WidgetSettingsImportTask.ContentValuesJson.toJson(values);
+            out.write(json.getBytes());
+
+            if (i != actions.length-1) {
+                out.write(", ".getBytes());
+            }
+        }
+        out.write("]".getBytes());
         out.flush();
     }
 
+    /**
+     * writes
+     *   [{ PlaceItem }, ...]
+     */
+    public static void writePlaceItemsJSONArray(Context context, GetFixDatabaseAdapter db, BufferedOutputStream out) throws IOException
+    {
+        ArrayList<ContentValues> values = new ArrayList<>();
+        db.open();
+        Cursor cursor = db.getAllPlaces(0, true);
+        while (!cursor.isAfterLast())
+        {
+            ContentValues placeValues = new ContentValues();
+            DatabaseUtils.cursorRowToContentValues(cursor, placeValues);
+            values.add(placeValues);
+            cursor.moveToNext();
+        }
+        db.close();
+        writeContentValuesJSONArray(context, values.toArray(new ContentValues[0]), out);
+    }
+
+    /**
+     * writes
+     *   [{ ContentValues }, ...]
+     */
+    public static void writeContentValuesJSONArray(Context context, ContentValues[] items, BufferedOutputStream out) throws IOException
+    {
+        out.write("[".getBytes());
+        for (int i=0; i<items.length; i++)
+        {
+            String jsonString = WidgetSettingsImportTask.ContentValuesJson.toJson(items[i]);
+            out.write(jsonString.getBytes());
+            if (i != items.length-1) {
+                out.write(", ".getBytes());
+            }
+        }
+        out.write("]".getBytes());
+        out.flush();
+    }
+
+    /**
+     * writes
+     *   [{ AlarmClockItem }, ...]
+     */
+    public static void writeAlarmItemsJSONArray(Context context, AlarmDatabaseAdapter db, BufferedOutputStream out) throws IOException
+    {
+        ArrayList<AlarmClockItem> items = new ArrayList<>();
+        db.open();
+        Cursor cursor = db.getAllAlarms(0, true);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast())
+        {
+            ContentValues entryValues = new ContentValues();
+            DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
+            items.add(new AlarmClockItem(context, entryValues));
+            cursor.moveToNext();
+        }
+        db.close();
+        AlarmClockItemExportTask.writeAlarmItemsJSONArray(context, items.toArray(new AlarmClockItem[0]), out);
+    }
+
+    /**
+     * exportSettings to uri
+     * Displays an AlertDialog (chooser), then creates and starts a SuntimesBackupTask.
+     */
     public static void exportSettings(final Context context, @Nullable final Uri uri, final ExportTask.TaskListener exportListener)
     {
         Log.i("ExportSettings", "Starting export task: " + uri);
@@ -235,6 +359,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         if (SuntimesBackupTask.KEY_PLACEITEMS.equals(key)) {
             return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_placeitems));
         }
+        if (SuntimesBackupTask.KEY_ACTIONS.equals(key)) {
+            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_actions));
+        }
         return key;
     }
 
@@ -257,28 +384,48 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     }
     public static void chooseBackupContent(final Context context, final String[] keys, boolean isImport, @NonNull final ChooseBackupDialogListener onClickListener)
     {
-        final CharSequence[] items = new CharSequence[keys.length];
+        final ArrayList<Pair<Integer,CharSequence>> items = new ArrayList<>();
         final boolean[] checked = new boolean[keys.length];
-        for (int i=0; i<items.length; i++) {
-            items[i] = SuntimesBackupTask.displayStringForBackupKey(context, keys[i]);
+        for (int i=0; i<keys.length; i++) {
             checked[i] = true;
+            items.add(new Pair<Integer, CharSequence>(i, SuntimesBackupTask.displayStringForBackupKey(context, keys[i])));
+        }
+        items.sort(new Comparator<Pair<Integer,CharSequence>>()
+        {
+            @Override
+            public int compare(Pair<Integer,CharSequence> o1, Pair<Integer,CharSequence> o2)
+            {
+                if (o1 == null) {
+                    return -1;
+                } else if (o2 == null) {
+                    return 1;
+                } else return o1.second.toString().compareTo(o2.second.toString());
+            }
+        });
+
+        CharSequence[] displayStrings = new CharSequence[items.size()];
+        for (int i=0; i<displayStrings.length; i++) {
+            displayStrings[i] = items.get(i).second;
         }
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(isImport ? R.string.configAction_restoreBackup : R.string.configAction_createBackup))
                 .setIcon(android.R.drawable.ic_dialog_info)
-                .setMultiChoiceItems(items, checked, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        checked[which] = isChecked;
+                        int i = items.get(which).first;
+                        checked[i] = isChecked;
+                        //Log.d("DEBUG", "setChecked: " + i+":"+checked[i]);
                     }
                 })
                 .setPositiveButton(context.getString(isImport ? R.string.configAction_import : R.string.configAction_export), new DialogInterface.OnClickListener()
                 {
-                    public void onClick(DialogInterface dialog, int whichButton)
-                    {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        onClickListener.onClick(dialog, p, keys, checked);
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        onClickListener.onClick(dialog, AlertDialog.BUTTON_POSITIVE, keys, checked);
+                        /*for (int i=0; i<checked.length; i++) {
+                            Log.d("DEBUG", "checked: " + i+":"+checked[i]);
+                        }*/
                     }
                 })
                 .setNegativeButton(context.getString(R.string.dialog_cancel), null);

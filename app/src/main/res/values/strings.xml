@@ -1194,11 +1194,13 @@
     <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
     <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
     <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
-    <string name="restorebackup_dialog_item_appsettings">App Configuration</string>  <!-- TODO -->
+    <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
     <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
     <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_eventitems">Custom Events</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
     <string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>
+    <string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>
 
     <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
     <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->

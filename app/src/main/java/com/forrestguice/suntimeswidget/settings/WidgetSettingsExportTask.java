@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -71,8 +72,10 @@ public class WidgetSettingsExportTask extends ExportTask
      *   [{ ContentValues }, ...]
      */
     @Override
-    public boolean export( Context context, BufferedOutputStream out ) throws IOException {
-        writeWidgetSettingsJSONArray(context, out);
+    public boolean export( Context context, BufferedOutputStream out ) throws IOException
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        writeWidgetSettingsJSONArray(context, prefs, appWidgetIds, out);
         return true;
     }
 
@@ -80,9 +83,8 @@ public class WidgetSettingsExportTask extends ExportTask
      * writes
      *   [{ ContentValues }, ...]
      */
-    protected void writeWidgetSettingsJSONArray(Context context, BufferedOutputStream out) throws IOException
+    public static void writeWidgetSettingsJSONArray(Context context, SharedPreferences widgetPrefs, List<Integer> appWidgetIds, BufferedOutputStream out) throws IOException
     {
-        SharedPreferences widgetPrefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         int n = appWidgetIds.size();
         out.write("[".getBytes());               // writes a json array
         for (int i=0; i<n; i++)
