@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -49,7 +49,9 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.lang.ref.WeakReference;
+import java.util.Map;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 
@@ -136,6 +138,71 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_DISMISS_CHALLENGE = "app_alarms_dismiss_challenge";
     public static final DismissChallenge PREF_DEF_ALARM_DISMISS_CHALLENGE = DismissChallenge.NONE;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[]
+    {
+            PREF_KEY_ALARM_CATEGORY, PREF_KEY_ALARM_AUTOSTART,
+            PREF_KEY_ALARM_BATTERYOPT, PREF_KEY_ALARM_NOTIFICATIONS,
+            PREF_KEY_ALARM_VOLUMES, PREF_KEY_ALARM_HARDAREBUTTON_ACTION,
+            PREF_KEY_ALARM_SILENCEAFTER, PREF_KEY_ALARM_TIMEOUT,
+            PREF_KEY_ALARM_SNOOZE, PREF_KEY_ALARM_SNOOZE_LIMIT,
+            PREF_KEY_ALARM_UPCOMING, PREF_KEY_ALARM_AUTODISMISS,
+            PREF_KEY_ALARM_AUTOENABLE, PREF_KEY_ALARM_AUTOVIBRATE,
+            PREF_KEY_ALARM_RINGTONE_URI_ALARM, PREF_KEY_ALARM_RINGTONE_NAME_ALARM,
+            PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION,
+            PREF_KEY_ALARM_ALLRINGTONES, PREF_KEY_ALARM_SHOWLAUNCHER,
+            PREF_KEY_ALARM_POWEROFFALARMS, PREF_KEY_ALARM_UPCOMING_ALARMID,
+            PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET,
+            PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_DISMISS_CHALLENGE,
+            PREF_KEY_ALARM_SORT, PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
+            PREF_KEY_ALARM_BOOTCOMPLETED, PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, PREF_KEY_ALARM_BOOTCOMPLETED_DURATION, PREF_KEY_ALARM_BOOTCOMPLETED_RESULT,
+    };
+    public static final String[] LONG_KEYS = new String[] {
+            PREF_KEY_ALARM_UPCOMING_ALARMID,
+            PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET,
+            PREF_KEY_ALARM_BOOTCOMPLETED, PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, PREF_KEY_ALARM_BOOTCOMPLETED_DURATION,
+    };
+    public static final String[] INT_KEYS = new String[] {
+            PREF_KEY_ALARM_SILENCEAFTER, PREF_KEY_ALARM_TIMEOUT,
+            PREF_KEY_ALARM_SNOOZE, PREF_KEY_ALARM_SNOOZE_LIMIT,
+            PREF_KEY_ALARM_UPCOMING, PREF_KEY_ALARM_AUTODISMISS,
+            PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_SORT,
+    };
+    public static final String[] BOOL_KEYS = new String[]
+    {
+            PREF_KEY_ALARM_AUTOENABLE, PREF_KEY_ALARM_AUTOVIBRATE,
+            PREF_KEY_ALARM_ALLRINGTONES, PREF_KEY_ALARM_SHOWLAUNCHER, PREF_KEY_ALARM_POWEROFFALARMS,
+            PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
+            PREF_KEY_ALARM_BOOTCOMPLETED_RESULT
+    };
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : LONG_KEYS) {
+                types.put(key, Long.class);
+            }
+            for (String key : INT_KEYS) {
+                types.put(key, Integer.class);
+            }
+            for (String key : BOOL_KEYS) {
+                types.put(key, Boolean.class);
+            }
+
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static boolean hasAlarmSupport(Context context) {
         return !AppSettings.isTelevision(context);

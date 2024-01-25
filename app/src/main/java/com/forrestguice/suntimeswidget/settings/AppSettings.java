@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -55,6 +55,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Shared preferences used by the app; uses getDefaultSharedPreferences (stored in com.forrestguice.suntimeswidget_preferences.xml).
@@ -177,6 +179,61 @@ public class AppSettings
 
     public static final String PREF_KEY_DIALOG = "dialog";
     public static final String PREF_KEY_DIALOG_DONOTSHOWAGAIN = "donotshowagain";
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[]
+    {
+            PREF_KEY_APPEARANCE_THEME, PREF_KEY_APPEARANCE_THEME_LIGHT, PREF_KEY_APPEARANCE_THEME_DARK, PREF_KEY_APPEARANCE_TEXTSIZE,
+            PREF_KEY_LOCALE_MODE, PREF_KEY_LOCALE, PREF_KEY_UI_SHOWWARNINGS,
+            PREF_KEY_UI_DATETAPACTION, PREF_KEY_UI_DATETAPACTION1, PREF_KEY_UI_CLOCKTAPACTION, PREF_KEY_UI_NOTETAPACTION,
+            PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
+            PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON, PREF_KEY_UI_SHOWHEADER_TEXT,
+            PREF_KEY_UI_EMPHASIZEFIELD, PREF_KEY_UI_SHOWFIELDS, PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_UI_TIMEZONESORT,
+            PREF_KEY_GETFIX_MINELAPSED, PREF_KEY_GETFIX_MAXELAPSED, PREF_KEY_GETFIX_MAXAGE, PREF_KEY_GETFIX_TIME, PREF_KEY_GETFIX_PASSIVE,
+            PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG, PREF_KEY_DIALOG_DONOTSHOWAGAIN
+    };
+    public static final String[] INT_KEYS = new String[] {
+            PREF_KEY_UI_SHOWFIELDS
+    };
+    public static final String[] LONG_KEYS = new String[] {
+            PREF_KEY_GETFIX_TIME
+    };
+    public static final String[] BOOL_KEYS = new String[]
+    {
+            PREF_KEY_UI_SHOWWARNINGS, PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON,
+            PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
+            PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_GETFIX_PASSIVE, PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG_DONOTSHOWAGAIN
+    };
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : INT_KEYS) {
+                types.put(key, Integer.class);
+            }
+            for (String key : BOOL_KEYS) {
+                types.put(key, Boolean.class);
+            }
+
+            types.put(PREF_KEY_UI_SHOWHEADER_TEXT, String.class);   // int as String
+            types.put(PREF_KEY_GETFIX_MINELAPSED, String.class);    // int as String
+            types.put(PREF_KEY_GETFIX_MAXELAPSED, String.class);    // int as String
+            types.put(PREF_KEY_GETFIX_MAXAGE, String.class);        // int as String
+
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Text sizes
