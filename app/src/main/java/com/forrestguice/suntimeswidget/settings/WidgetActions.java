@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2022 Forrest Guice
+    Copyright (C) 2019-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,13 +20,13 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -107,6 +107,8 @@ public class WidgetActions
     public static final LaunchType PREF_DEF_ACTION_LAUNCH_TYPE = LaunchType.ACTIVITY;
 
     public static final String PREF_KEY_ACTION_LAUNCH_LIST = "list";
+    public static final String PREF_KEY_ACTION_LAUNCH_ID = "id";
+    public static final String PREF_KEY_ACTION_LAUNCH_APPWIDGETID = "appWidgetId";
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +126,9 @@ public class WidgetActions
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_DATA,
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_DATATYPE,
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_TYPE,
-            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_LIST
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_LIST,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_ID,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_APPWIDGETID,
     };
 
     public static final String[] INT_KEYS = new String[] {
@@ -249,6 +253,34 @@ public class WidgetActions
         }
     }
 
+    public static boolean saveActionLaunchPref(Context context, @Nullable ContentValues values, int appWidgetId)
+    {
+        if (values != null)
+        {
+            String id = values.getAsString(PREF_KEY_ACTION_LAUNCH_ID);
+            if (id != null)
+            {
+                String tagString = values.getAsString(PREF_KEY_ACTION_LAUNCH_TAGS);
+                String[] tags = (tagString != null ? tagString.split("\\|") : new String[0]);
+
+                saveActionLaunchPref(context,
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_TITLE),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_DESC),
+                        values.getAsInteger(PREF_KEY_ACTION_LAUNCH_COLOR),
+                        tags, appWidgetId, id,
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_PACKAGE),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_TYPE),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_ACTION),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_DATA),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_DATATYPE),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_EXTRAS), true);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static Set<String> loadActionTags(Context context, int appWidgetId, @Nullable String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_ACTIONS, 0);
@@ -262,6 +294,23 @@ public class WidgetActions
         String listKey = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST;
         Set<String> actionList = getStringSet(prefs, listKey, null);
         return (actionList != null) ? new TreeSet<String>(actionList) : new TreeSet<String>();
+    }
+    public static ContentValues loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id)
+    {
+        ContentValues values = new ContentValues();
+        values.put(PREF_KEY_ACTION_LAUNCH_ID, id);
+        values.put(PREF_KEY_ACTION_LAUNCH, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH));
+        values.put(PREF_KEY_ACTION_LAUNCH_PACKAGE, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_PACKAGE));
+        values.put(PREF_KEY_ACTION_LAUNCH_TYPE, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_TYPE));
+        values.put(PREF_KEY_ACTION_LAUNCH_ACTION, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_ACTION));
+        values.put(PREF_KEY_ACTION_LAUNCH_DATA, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_DATA));
+        values.put(PREF_KEY_ACTION_LAUNCH_DATATYPE, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_DATATYPE));
+        values.put(PREF_KEY_ACTION_LAUNCH_EXTRAS, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_EXTRAS));
+        values.put(PREF_KEY_ACTION_LAUNCH_TITLE, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_TITLE));
+        values.put(PREF_KEY_ACTION_LAUNCH_DESC, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_DESC));
+        values.put(PREF_KEY_ACTION_LAUNCH_COLOR, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_COLOR));
+        values.put(PREF_KEY_ACTION_LAUNCH_TAGS, stringSetToString(loadActionTags(context, appWidgetId, id)));
+        return values;
     }
     public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key)
     {
