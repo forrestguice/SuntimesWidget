@@ -597,6 +597,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         prefs.apply();
     }
 
+    @Nullable
     public static Long findAppWidgetIdFromFirstKey(ContentValues values)
     {
         Set<Map.Entry<String, Object>> entries = values.valueSet();
@@ -606,8 +607,10 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             {
                 try {
                     String key = entry.getKey();
-                    String[] parts = key.split("_");
-                    return Long.parseLong(parts[1]);
+                    String[] parts = ((key != null) ? key.split("_") : new String[0]);
+                    if (parts.length > 2) {
+                        return Long.parseLong(parts[1]);
+                    }
 
                 } catch (NumberFormatException | NullPointerException e) {
                     Log.w("WidgetSettings", "failed to find widget id from keys.. " + e);
