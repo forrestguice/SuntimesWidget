@@ -41,12 +41,14 @@ import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -130,8 +132,30 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         return new TaskResult(result, uri, (items != null ? items.toArray(new ContentValues[0]) : null), error);
     }
 
-    protected void readData(Context context, InputStream in, ArrayList<ContentValues> items) throws IOException {
-        ContentValuesJson.readItems(context, in, items);
+    protected void readData(Context context, InputStream in, ArrayList<ContentValues> items) throws IOException
+    {
+        BufferedInputStream bufferedIn = new BufferedInputStream(in);
+        if (SuntimesBackupRestoreTask.containsBackupItem(bufferedIn)) {
+            readItemsFromBackup(context, bufferedIn, items);
+
+        } else {
+            ContentValuesJson.readItems(context, bufferedIn, items);
+        }
+    }
+
+    protected static void readItemsFromBackup(Context context, BufferedInputStream in, ArrayList<ContentValues> items) throws IOException
+    {
+        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+        reader.setLenient(true);
+        try {
+            Map<String,ContentValues[]> data = new HashMap<>();
+            SuntimesBackupRestoreTask.readBackupItem(context, reader, data);
+            items.addAll(Arrays.asList(data.get(SuntimesBackupTask.KEY_WIDGETSETTINGS)));
+
+        } finally {
+            reader.close();
+            in.close();
+        }
     }
 
     @Override

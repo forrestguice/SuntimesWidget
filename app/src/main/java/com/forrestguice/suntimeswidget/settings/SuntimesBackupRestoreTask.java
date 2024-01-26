@@ -163,7 +163,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
     }
 
     @TargetApi(11)
-    protected void readBackupItem(Context context, JsonReader reader, Map<String, ContentValues[]> data) throws IOException
+    public static void readBackupItem(Context context, JsonReader reader, Map<String, ContentValues[]> data) throws IOException
     {
         if (reader.peek() == JsonToken.BEGIN_OBJECT)
         {
