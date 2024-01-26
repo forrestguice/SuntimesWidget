@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.Content
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -139,8 +140,13 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
+            BufferedInputStream bufferedIn = new BufferedInputStream(in);
+            if (!containsBackupItem(bufferedIn)) {
+                Log.w(TAG, "This does not look like a valid backup file; trying to load it anyway...");
+            }
+
             //noinspection CharsetObjectCanBeUsed
-            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+            JsonReader reader = new JsonReader(new InputStreamReader(bufferedIn, "UTF-8"));
             reader.setLenient(true);
             try {
                 readBackupItem(context, reader, data);
@@ -149,8 +155,9 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
                 reader.close();
                 in.close();
             }
+
         } else {
-            Log.w("ImportSettings", "Unsupported; skipping import");
+            Log.w(TAG, "Unsupported; skipping import");
             in.close();
         }
     }
@@ -186,6 +193,47 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
         } else {
             ContentValuesJson.skipJsonItem(reader);
         }
+    }
+
+    /**
+     * @return true if beginning of stream indicates it contains a backup json object; marks/resets the stream
+     */
+    @TargetApi(11)
+    public static boolean containsBackupItem(BufferedInputStream in) throws IOException
+    {
+        in.mark(Integer.MAX_VALUE);    // mark starting position
+        JsonReader reader = new JsonReader(new InputStreamReader(in));
+        reader.setLenient(true);
+
+        boolean retValue = false;
+        if (reader.peek() == JsonToken.BEGIN_OBJECT)
+        {
+            reader.beginObject();
+            if (reader.peek() == JsonToken.NAME)
+            {
+                String key = reader.nextName();
+                if (SuntimesBackupTask.KEY_CLASS.equals(key))
+                {
+                    if (reader.peek() == JsonToken.STRING)
+                    {
+                        String type = reader.nextString();
+                        retValue = (SuntimesBackupTask.KEY_BACKUPFILE.equals(type));
+
+                        if (!retValue) {
+                            Log.w(TAG, "containsBackupItem: " + SuntimesBackupTask.KEY_CLASS + " should be " + SuntimesBackupTask.KEY_BACKUPFILE + " (found " + type + ")");
+                        }
+                    } else {
+                        Log.w(TAG, "containsBackupItem: " + SuntimesBackupTask.KEY_CLASS + " expects a String (found " + reader.peek() + ")");
+                    }
+                } else {
+                    Log.w(TAG, "containsBackupItem: " + SuntimesBackupTask.KEY_CLASS + " should be first item but it is missing!");
+                }
+            } else {
+                Log.w(TAG, "containsBackupItem: " + SuntimesBackupTask.KEY_CLASS + " should be first item but it is missing!");
+            }
+        }
+        in.reset();    // reset to starting mark
+        return retValue;
     }
 
     @Override

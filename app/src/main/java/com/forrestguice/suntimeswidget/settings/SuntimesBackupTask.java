@@ -36,6 +36,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -67,6 +68,10 @@ import java.util.Set;
  */
 public class SuntimesBackupTask extends WidgetSettingsExportTask
 {
+    public static final String KEY_CLASS = "Class";
+    public static final String KEY_BACKUPFILE = "SuntimesBackup";     // file type; "Class":"SuntimesBackup"
+    public static final String KEY_VERSION = "Version";               // type version; "version":"107"
+
     public static final String KEY_APPSETTINGS = "AppSettings";
     public static final String KEY_WIDGETSETTINGS = "WidgetSettings";
     public static final String KEY_ALARMITEMS = "AlarmItems";
@@ -112,19 +117,29 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     }
     protected Map<String,Boolean> includedKeys = new HashMap<>();
 
+    @Override
+    public boolean export( Context context, BufferedOutputStream out ) throws IOException
+    {
+        writeBackupJSONObject(context, out);
+        return true;
+    }
+
     /**
      * writes
      *   {
+     *     "Type": "SuntimesBackup"
+     *     "Version": "107"
      *     "AppSettings": { ContentValues }
      *     "WidgetSettings": [{ ContentValues }, ...]
      *     "AlarmItems": [{ AlarmClockItem }, ...]
      *   }
      */
-    @Override
-    public boolean export( Context context, BufferedOutputStream out ) throws IOException
+    protected void writeBackupJSONObject( Context context, BufferedOutputStream out ) throws IOException
     {
         out.write("{".getBytes());
-        int c = 0;    // keys written
+        out.write(("\"" + KEY_CLASS + "\": \"" + KEY_BACKUPFILE + "\",\n").getBytes());                // declare type (expected to be the first item)
+        out.write(("\"" + KEY_VERSION + "\": " + BuildConfig.VERSION_CODE).getBytes());                // declare version (expected to be the second item)
+        int c = 2;    // keys written
 
         if (includedKeys.containsKey(KEY_APPSETTINGS) && includedKeys.get(KEY_APPSETTINGS))
         {
@@ -194,7 +209,6 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
         out.write("}".getBytes());
         out.flush();
-        return true;
     }
 
     /**
