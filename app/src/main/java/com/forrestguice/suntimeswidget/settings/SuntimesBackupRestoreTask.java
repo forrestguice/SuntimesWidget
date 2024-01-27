@@ -18,222 +18,111 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.JsonReader;
-import android.util.JsonToken;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
-import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.ContentValuesJson;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
-import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_METHOD_DIRECTIMPORT;
-import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_METHOD_MAKEBESTGUESS;
-import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_METHOD_RESTOREBACKUP;
+import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_DIRECTIMPORT;
+import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_MAKEBESTGUESS;
+import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
 
-public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBackupRestoreTask.TaskResult>
+public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBackupRestoreTask.TaskResult>
 {
     public static final String TAG = "RestoreBackup";
-    public static final long MIN_WAIT_TIME = 2000;
 
     protected final WeakReference<Context> contextRef;
-
-    protected boolean isPaused = false;
-    public void pauseTask() {
-        isPaused = true;
-    }
-    public void resumeTask() {
-        isPaused = false;
-    }
-    public boolean isPaused() {
-        return isPaused;
-    }
-
     public SuntimesBackupRestoreTask(Context context) {
         contextRef = new WeakReference<>(context);
+    }
+
+    protected Map<String, ContentValues[]> data = new HashMap<>();    // all backup data
+    protected Set<String> keys = new TreeSet<>();                     // keys to restore
+
+    public void setData(Map<String, ContentValues[]> d) {
+        data = d;
+    }
+    public void setKeys(Set<String> included) {
+        keys = included;
+    }
+
+    protected Map<String, Integer> methods = new HashMap<>();
+    public void setMethod(String key, int method) {
+        methods.put(key, method);
+    }
+    public void setMethods(Map<String,Integer> values) {
+        methods = values;
     }
 
     @Override
     protected void onPreExecute()
     {
-        Log.d(getClass().getSimpleName(), "onPreExecute");
+        //Log.d(TAG, "onPreExecute");
         if (taskListener != null) {
             taskListener.onStarted();
         }
     }
 
     @Override
-    protected TaskResult doInBackground(Uri... params)
+    protected TaskResult doInBackground(Void... params)
     {
         Log.d(TAG, "doInBackground: starting");
-        Uri uri = null;
-        if (params.length > 0) {
-            uri = params[0];
-        }
-
         long startTime = System.currentTimeMillis();
+
+        int c = 0;
         boolean result = false;
-        Map<String, ContentValues[]> data = new HashMap<>();
         Exception error = null;
+        StringBuilder report = new StringBuilder();
 
         Context context = contextRef.get();
-        if (context != null && uri != null)
+        if (context != null && data != null && keys != null)
         {
             try {
-                InputStream in = context.getContentResolver().openInputStream(uri);
-                if (in != null)
-                {
-                    Log.d(TAG, "doInBackground: reading");
-                    readData(context, in, data);
-                    result = true;
-                    error = null;
+                c = importSettings(context, keys, methods, report, data);
+                result = true;
+                error = null;
 
-                } else {
-                    Log.e(TAG, "Failed to import from " + uri + ": null input stream!");
-                    result = false;
-                    error = null;
-                }
-            } catch (IOException e) {
-                Log.e(TAG, "Failed to import from " + uri + ": " + e);
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to restore backup: " + e);
                 result = false;
-                data = null;
                 error = e;
             }
+        } else {
+            result = false;
+            error = null;
         }
 
         Log.d(TAG, "doInBackground: waiting");
         long endTime = System.currentTimeMillis();
-        while ((endTime - startTime) < MIN_WAIT_TIME || isPaused) {
+        while ((endTime - startTime) < SuntimesBackupLoadTask.MIN_WAIT_TIME) {
             endTime = System.currentTimeMillis();
         }
 
         Log.d(TAG, "doInBackground: finishing");
-        return new TaskResult(result, uri, data, error);
-    }
-
-    protected void readData(Context context, InputStream in, Map<String, ContentValues[]> data) throws IOException
-    {
-        if (Build.VERSION.SDK_INT >= 11)
-        {
-            BufferedInputStream bufferedIn = new BufferedInputStream(in);
-            if (!containsBackupItem(bufferedIn)) {
-                Log.w(TAG, "This does not look like a valid backup file; trying to load it anyway...");
-            }
-
-            //noinspection CharsetObjectCanBeUsed
-            JsonReader reader = new JsonReader(new InputStreamReader(bufferedIn, "UTF-8"));
-            reader.setLenient(true);
-            try {
-                readBackupItem(context, reader, data);
-
-            } finally {
-                reader.close();
-                in.close();
-            }
-
-        } else {
-            Log.w(TAG, "Unsupported; skipping import");
-            in.close();
-        }
-    }
-
-    @TargetApi(11)
-    public static void readBackupItem(Context context, JsonReader reader, Map<String, ContentValues[]> data) throws IOException
-    {
-        if (reader.peek() == JsonToken.BEGIN_OBJECT)
-        {
-            reader.beginObject();
-            while (reader.hasNext())
-            {
-                String key = reader.nextName();
-                if (reader.hasNext())
-                {
-                    switch (reader.peek())
-                    {
-                        case BEGIN_ARRAY:
-                        case BEGIN_OBJECT:
-                            ArrayList<ContentValues> items = new ArrayList<>();
-                            ContentValuesJson.readItems(context, reader, items);
-                            data.put(key, items.toArray(new ContentValues[0]));
-                            break;
-
-                        default:
-                            reader.skipValue();
-                            break;
-                    }
-                }
-            }
-            reader.endObject();
-
-        } else {
-            ContentValuesJson.skipJsonItem(reader);
-        }
-    }
-
-    /**
-     * @return true if beginning of stream indicates it contains a backup json object; marks/resets the stream
-     */
-    @TargetApi(11)
-    public static boolean containsBackupItem(BufferedInputStream in) throws IOException
-    {
-        in.mark(Integer.MAX_VALUE);    // mark starting position
-        JsonReader reader = new JsonReader(new InputStreamReader(in));
-        reader.setLenient(true);
-
-        boolean retValue = false;
-        if (reader.peek() == JsonToken.BEGIN_OBJECT)
-        {
-            reader.beginObject();
-            if (reader.peek() == JsonToken.NAME)
-            {
-                String key = reader.nextName();
-                if (SuntimesBackupTask.KEY_CLASS.equals(key))
-                {
-                    if (reader.peek() == JsonToken.STRING)
-                    {
-                        String type = reader.nextString();
-                        retValue = (SuntimesBackupTask.KEY_BACKUPFILE.equals(type));
-
-                        if (!retValue) {
-                            Log.w(TAG, "containsBackupItem: " + SuntimesBackupTask.KEY_CLASS + " should be " + SuntimesBackupTask.KEY_BACKUPFILE + " (found " + type + ")");
-                        }
-                    } else {
-                        Log.w(TAG, "containsBackupItem: " + SuntimesBackupTask.KEY_CLASS + " expects a String (found " + reader.peek() + ")");
-                    }
-                } else {
-                    Log.w(TAG, "containsBackupItem: " + SuntimesBackupTask.KEY_CLASS + " should be first item but it is missing!");
-                }
-            } else {
-                Log.w(TAG, "containsBackupItem: " + SuntimesBackupTask.KEY_CLASS + " should be first item but it is missing!");
-            }
-        }
-        in.reset();    // reset to starting mark
-        return retValue;
+        return new TaskResult(result, report.toString(), c, error);
     }
 
     @Override
@@ -244,7 +133,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
     @Override
     protected void onPostExecute( TaskResult result )
     {
-        Log.d(TAG, "onPostExecute: " + result.getResult());
+        //Log.d(TAG, "onPostExecute: " + result.getResult());
         if (taskListener != null) {
             taskListener.onFinished(result);
         }
@@ -255,11 +144,11 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, Uri uri, @Nullable Map<String, ContentValues[]> items, Exception e)
+        public TaskResult(boolean result, String report, int numResults, Exception e)
         {
             this.result = result;
-            this.items = items;
-            this.uri = uri;
+            this.report = report;
+            this.numResults = numResults;
             this.e = e;
         }
 
@@ -268,18 +157,14 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
             return result;
         }
 
-        private final Map<String, ContentValues[]> items;
-        public Map<String, ContentValues[]> getItems() {
-            return items;
+        private final String report;
+        public String getReport() {
+            return report;
         }
 
-        private final Uri uri;
-        public Uri getUri() {
-            return uri;
-        }
-
-        public int numResults() {
-            return (items != null ? items.size() : 0);
+        private final int numResults;
+        public int getNumResults() {
+            return numResults;
         }
 
         private final Exception e;
@@ -310,33 +195,36 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
     /**
      * @param context Context context
      * @param keys the set of backup keys within allValues that should be restored
-     * @param method 2:directImport (copy widget ids as-is), 1:bestGuess (reassign widget ids (best guess)), 0:restoreBackup (import as backup for later (when the launcher initiates restoration))
-     * @param allValues a map containing backupKey:ContentValue[]; e.g. "AppSettings":ContentValues[], "WidgetSettings":ContentValues[], ...
-     * @return number of items imported
+     * @param methods 2:directImport (copy widget ids as-is), 1:bestGuess (reassign widget ids (best guess)), 0:restoreBackup (import as backup for later (when the launcher initiates restoration))
+        * @param allValues a map containing backupKey:ContentValue[]; e.g. "AppSettings":ContentValues[], "WidgetSettings":ContentValues[], ...
+        * @return number of items imported
      */
-    public static int importSettings(Context context, int method, Set<String> keys, StringBuilder report, Map<String, ContentValues[]> allValues)
+    public static int importSettings(Context context, Set<String> keys, Map<String, Integer> methods, StringBuilder report, Map<String, ContentValues[]> allValues)
     {
         int c = 0;
 
         if (keys.contains(SuntimesBackupTask.KEY_APPSETTINGS)) {
-            c += (SuntimesBackupRestoreTask.importAppSettings(context, report, allValues.get(SuntimesBackupTask.KEY_APPSETTINGS)) ? 1 : 0);
+            c += (importAppSettings(context, report, allValues.get(SuntimesBackupTask.KEY_APPSETTINGS)) ? 1 : 0);
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_WIDGETSETTINGS))
         {
+            int method = (methods.containsKey(SuntimesBackupTask.KEY_WIDGETSETTINGS))
+                    ? methods.get(SuntimesBackupTask.KEY_WIDGETSETTINGS) : IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
+
             switch (method)
             {
-                case IMPORT_METHOD_DIRECTIMPORT:    // direct import
-                    c += SuntimesBackupRestoreTask.importWidgetSettings(context, null, false, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
+                case IMPORT_WIDGETS_METHOD_DIRECTIMPORT:    // direct import
+                    c += importWidgetSettings(context, null, false, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
                     break;
 
-                case IMPORT_METHOD_MAKEBESTGUESS:    // best guess
-                    c += SuntimesBackupRestoreTask.importWidgetSettingsBestGuess(context, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
+                case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS:    // best guess
+                    c += importWidgetSettingsBestGuess(context, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
                     break;
 
-                case IMPORT_METHOD_RESTOREBACKUP:
+                case IMPORT_WIDGETS_METHOD_RESTOREBACKUP:
                 default:   // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
-                    c += SuntimesBackupRestoreTask.importWidgetSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, true, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
+                    c += importWidgetSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, true, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
                     WidgetSettingsImportTask.restoreFromBackup(context,
                             new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID},    // these lines should be the same
                             new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID});   // because the ids are unchanged
@@ -345,19 +233,19 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS)) {
-            c += SuntimesBackupRestoreTask.importAlarmItems(context, report, allValues.get(SuntimesBackupTask.KEY_ALARMITEMS));
+            c += importAlarmItems(context, report, allValues.get(SuntimesBackupTask.KEY_ALARMITEMS));
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_EVENTITEMS)) {
-            c += SuntimesBackupRestoreTask.importEventItems(context, report, allValues.get(SuntimesBackupTask.KEY_EVENTITEMS));
+            c += importEventItems(context, report, allValues.get(SuntimesBackupTask.KEY_EVENTITEMS));
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_PLACEITEMS)) {
-            c += SuntimesBackupRestoreTask.importPlaceItems(context, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
+            c += importPlaceItems(context, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_ACTIONS)) {
-            c += (SuntimesBackupRestoreTask.importActions(context, report, allValues.get(SuntimesBackupTask.KEY_ACTIONS)) ? 1 : 0);
+            c += (importActions(context, report, allValues.get(SuntimesBackupTask.KEY_ACTIONS)) ? 1 : 0);
         }
 
         return c;
@@ -395,9 +283,14 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
         int c = 0;
         AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
         db.open();
+        // db.clearAlarms();    // TODO: alarm import options; "clear first"
         for (ContentValues values : contentValues)
         {
-            if (values != null) {
+            if (values != null)
+            {
+                if (values.containsKey(AlarmDatabaseAdapter.KEY_ROWID)) {
+                    values.remove(AlarmDatabaseAdapter.KEY_ROWID);    // clear rowID (insert as new items)
+                }
                 db.addAlarm(values);
                 c++;
             }
@@ -434,10 +327,17 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
         int c = 0;
         GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
-        for (ContentValues values : contentValues) {
-            if (values != null &&
-                    db.addPlace(values) >= 0) {
-                c++;
+        // db.clearPlaces();    // TODO: place import options; "clear first"
+        for (ContentValues values : contentValues)
+        {
+            if (values != null)
+            {
+                if (values.containsKey(GetFixDatabaseAdapter.KEY_ROWID)) {
+                    values.remove(GetFixDatabaseAdapter.KEY_ROWID);    // clear rowID (insert as new items)
+                }
+                if (db.addPlace(values) >= 0) {
+                    c++;
+                }
             }
         }
         db.close();
@@ -552,16 +452,78 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Uri, Void, SuntimesBack
         }
     }
 
-    /**
-     * showIOResultSnackbar
-     */
-    public static void showIOResultSnackbar(final Context context, View view, boolean result, int numResults, @Nullable CharSequence report)
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final int IMPORT_WIDGETS_METHOD_RESTOREBACKUP = WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_RESTOREBACKUP;    // 0
+    public static final int IMPORT_WIDGETS_METHOD_MAKEBESTGUESS = WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_MAKEBESTGUESS;    // 1
+    public static final int IMPORT_WIDGETS_METHOD_DIRECTIMPORT = WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_DIRECTIMPORT;      // 2
+    public static final int[] IMPORT_WIDGETS_METHODS = WidgetSettingsImportTask.IMPORT_WIDGETS_METHODS;
+
+    public static final int IMPORT_PLACES_METHOD_CLEAR = 10;      // clear all, then insert
+    public static final int IMPORT_PLACES_METHOD_ADDALL = 20;     // insert all (may result in duplicates)
+    public static final int IMPORT_PLACES_METHOD_IGNORE = 30;     // insert values (ignore if existing)
+    public static final int IMPORT_PLACES_METHOD_OVERWRITE = 40;  // insert values (update if existing)
+    public static final int[] IMPORT_PLACES_METHODS = new int[] { IMPORT_PLACES_METHOD_ADDALL, IMPORT_PLACES_METHOD_CLEAR, IMPORT_PLACES_METHOD_IGNORE, IMPORT_PLACES_METHOD_OVERWRITE };
+
+    public static final int IMPORT_ALARMS_METHOD_CLEAR = 100;      // clear all, then insert
+    public static final int IMPORT_ALARMS_METHOD_ADDALL = 200;     // insert all (may result in duplicates)
+    public static final int[] IMPORT_ALARMS_METHODS = new int[] { IMPORT_ALARMS_METHOD_ADDALL, IMPORT_ALARMS_METHOD_CLEAR };
+
+    public static void chooseImportMethod(final Context context, final String key, final int[] methods, @NonNull final DialogInterface.OnClickListener onClickListener)
     {
-        //Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
-        CharSequence message = (result ? context.getString(R.string.msg_import_success, context.getResources().getQuantityString(R.plurals.itemsPlural, numResults, numResults))
-                : context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)));
-        SuntimesBackupTask.showIOResultSnackbar(context, view, result, message, report);
+        final CharSequence[] items = new CharSequence[methods.length];
+        for (int i=0; i<items.length; i++) {
+            items[i] = displayStringForImportMethod(context, methods[i]);
+        }
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                .setTitle(dialogTitleForImportKey(context, key))
+                .setIcon(dialogIconForImportKey(context, key))
+                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                })
+                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        onClickListener.onClick(dialog, methods[p]);
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+    protected static CharSequence dialogTitleForImportKey(Context context, String key) {
+        return SuntimesBackupTask.displayStringForBackupKey(context, key);
+    }
+    protected static int dialogIconForImportKey(Context context, String key)
+    {
+        switch (key)
+        {
+            case SuntimesBackupTask.KEY_PLACEITEMS: return R.drawable.ic_action_place;
+            case SuntimesBackupTask.KEY_APPSETTINGS: return R.drawable.ic_action_settings;
+            case SuntimesBackupTask.KEY_WIDGETSETTINGS: return R.drawable.ic_action_widget;
+            case SuntimesBackupTask.KEY_ALARMITEMS: return R.drawable.ic_action_alarms;
+            case SuntimesBackupTask.KEY_EVENTITEMS: default: return R.drawable.ic_action_copy;
+        }
+    }
+    protected static CharSequence displayStringForImportMethod(Context context, int method)
+    {
+        switch (method)
+        {
+            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
+            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
+            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
+
+            //case IMPORT_ALARMS_METHOD_ADDALL: return ""; // TODO
+            //case IMPORT_ALARMS_METHOD_CLEAR: return ""; // TODO
+
+            //case IMPORT_PLACES_METHOD_ADDALL: return ""; // TODO
+            //case IMPORT_PLACES_METHOD_CLEAR: return ""; // TODO
+            //case IMPORT_PLACES_METHOD_IGNORE: return ""; // TODO
+            //case IMPORT_PLACES_METHOD_OVERWRITE: return ""; // TODO
+            default: return method + "";
+        }
     }
 
 }
