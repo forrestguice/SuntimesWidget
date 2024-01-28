@@ -37,6 +37,8 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
@@ -193,29 +195,15 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
      * @param context Context context
      * @param keys the set of backup keys within allValues that should be restored
      * @param methods 2:directImport (copy widget ids as-is), 1:bestGuess (reassign widget ids (best guess)), 0:restoreBackup (import as backup for later (when the launcher initiates restoration))
-        * @param allValues a map containing backupKey:ContentValue[]; e.g. "AppSettings":ContentValues[], "WidgetSettings":ContentValues[], ...
-        * @return number of items imported
+     * @param allValues a map containing backupKey:ContentValue[]; e.g. "AppSettings":ContentValues[], "WidgetSettings":ContentValues[], ...
+     * @return number of items imported
      */
     public static int importSettings(Context context, Set<String> keys, Map<String, Integer> methods, StringBuilder report, Map<String, ContentValues[]> allValues)
     {
         int c = 0;
 
-        if (keys.contains(SuntimesBackupTask.KEY_APPSETTINGS)) {
-            c += (importAppSettings(context, report, allValues.get(SuntimesBackupTask.KEY_APPSETTINGS)) ? 1 : 0);
-        }
-
-        if (keys.contains(SuntimesBackupTask.KEY_WIDGETSETTINGS))
-        {
-            int method = (methods.containsKey(SuntimesBackupTask.KEY_WIDGETSETTINGS))
-                    ? methods.get(SuntimesBackupTask.KEY_WIDGETSETTINGS) : IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
-            c += importWidgetSettings(context, method, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
-        }
-
-        if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS))
-        {
-            int method = (methods.containsKey(SuntimesBackupTask.KEY_ALARMITEMS))
-                    ? methods.get(SuntimesBackupTask.KEY_ALARMITEMS) : IMPORT_ALARMS_METHOD_ADDALL;
-            c += importAlarmItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_ALARMITEMS));
+        if (keys.contains(SuntimesBackupTask.KEY_ACTIONS)) {
+            c += (importActions(context, report, allValues.get(SuntimesBackupTask.KEY_ACTIONS)) ? 1 : 0);
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_EVENTITEMS)) {
@@ -229,8 +217,26 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             c += importPlaceItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
         }
 
-        if (keys.contains(SuntimesBackupTask.KEY_ACTIONS)) {
-            c += (importActions(context, report, allValues.get(SuntimesBackupTask.KEY_ACTIONS)) ? 1 : 0);
+        if (keys.contains(SuntimesBackupTask.KEY_APPSETTINGS)) {
+            c += (importAppSettings(context, report, allValues.get(SuntimesBackupTask.KEY_APPSETTINGS)) ? 1 : 0);
+        }
+
+        if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS))
+        {
+            int method = (methods.containsKey(SuntimesBackupTask.KEY_ALARMITEMS))
+                    ? methods.get(SuntimesBackupTask.KEY_ALARMITEMS) : IMPORT_ALARMS_METHOD_ADDALL;
+            c += importAlarmItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_ALARMITEMS));
+        }
+
+        if (keys.contains(SuntimesBackupTask.KEY_WIDGETTHEMES)) {
+            c += importWidgetThemes(context, report, allValues.get(SuntimesBackupTask.KEY_WIDGETTHEMES));
+        }
+
+        if (keys.contains(SuntimesBackupTask.KEY_WIDGETSETTINGS))
+        {
+            int method = (methods.containsKey(SuntimesBackupTask.KEY_WIDGETSETTINGS))
+                    ? methods.get(SuntimesBackupTask.KEY_WIDGETSETTINGS) : IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
+            c += importWidgetSettings(context, method, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
         }
 
         return c;
@@ -265,6 +271,9 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
      */
     protected static int importWidgetSettings(Context context, int method, StringBuilder report, @Nullable ContentValues... contentValues)
     {
+        report.append(context.getString(R.string.restorebackup_dialog_report_format, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_WIDGETSETTINGS)));
+        report.append("\n");
+
         int c = 0;
         switch (method)
         {
@@ -284,6 +293,24 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
                         new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID});   // because the ids are unchanged
                 break;
         }
+        return c;
+    }
+
+    /**
+     * importWidgetThemes
+     */
+    protected static int importWidgetThemes(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        int c = 0;
+        for (ContentValues values : contentValues)
+        {
+            SuntimesTheme theme = new SuntimesTheme(values);
+            SuntimesTheme.ThemeDescriptor descriptor = theme.saveTheme(context, WidgetThemes.PREFS_THEMES);
+            WidgetThemes.addValue(context, descriptor);
+            c++;
+        }
+        report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_WIDGETTHEMES), c+""));
+        report.append("\n");
         return c;
     }
 

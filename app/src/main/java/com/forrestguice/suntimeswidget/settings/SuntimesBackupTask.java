@@ -49,6 +49,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.events.EventExportTask;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
@@ -82,7 +83,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     public static final String KEY_ACTIONS = "Actions";
 
     public static final String[] ALL_KEYS = new String[] {
-            KEY_APPSETTINGS, KEY_WIDGETSETTINGS, KEY_ALARMITEMS, KEY_EVENTITEMS, KEY_PLACEITEMS, KEY_ACTIONS  //, KEY_WIDGETTHEMES   // TODO: themes
+            KEY_APPSETTINGS, KEY_WIDGETSETTINGS, KEY_ALARMITEMS, KEY_EVENTITEMS, KEY_PLACEITEMS, KEY_ACTIONS, KEY_WIDGETTHEMES
     };
 
     public static final String DEF_EXPORT_TARGET = "SuntimesBackup";
@@ -215,7 +216,8 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 out.write(",\n".getBytes());
             }
             out.write(("\"" + KEY_WIDGETTHEMES + "\": ").getBytes());    // include Widget Themes
-            writeWidgetThemesJSONArray(context, out);   // TODO
+            SharedPreferences themePrefs = context.getSharedPreferences(WidgetThemes.PREFS_THEMES, Context.MODE_PRIVATE);
+            writeWidgetThemesJSONArray(context, themePrefs, out);
             c++;
         }
 
@@ -316,9 +318,22 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         AlarmClockItemExportTask.writeAlarmItemsJSONArray(context, items.toArray(new AlarmClockItem[0]), out);
     }
 
-    public static void writeWidgetThemesJSONArray(Context context, BufferedOutputStream out) throws IOException
+    public static void writeWidgetThemesJSONArray(Context context, SharedPreferences prefs, BufferedOutputStream out) throws IOException
     {
-        out.write("[]".getBytes()); // TODO
+        out.write("[".getBytes());
+        int c = 0;
+        Set<String> themes = WidgetThemes.loadInstalledList(prefs);
+        for (String themeName : themes)
+        {
+            if (c > 0) {
+                out.write(",\n".getBytes());
+            }
+            SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
+            String jsonString = WidgetSettingsImportTask.ContentValuesJson.toJson(theme.toContentValues());
+            out.write(jsonString.getBytes());
+            c++;
+        }
+        out.write("]".getBytes());
         out.flush();
     }
 
@@ -381,6 +396,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         }
         if (SuntimesBackupTask.KEY_WIDGETSETTINGS.equals(key)) {
             return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_widgetsettings));
+        }
+        if (SuntimesBackupTask.KEY_WIDGETTHEMES.equals(key)) {
+            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_widgetthemes));
         }
         if (SuntimesBackupTask.KEY_ALARMITEMS.equals(key)) {
             return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_alarmitems));

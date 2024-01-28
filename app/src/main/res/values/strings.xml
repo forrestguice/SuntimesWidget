@@ -1196,6 +1196,7 @@
     <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
     <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
     <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string> <!-- TODO -->
     <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
     <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
     <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
