@@ -23,6 +23,7 @@ import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -74,13 +75,14 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
     public static final String KEY_APPSETTINGS = "AppSettings";
     public static final String KEY_WIDGETSETTINGS = "WidgetSettings";
+    public static final String KEY_WIDGETTHEMES = "WidgetThemes";
     public static final String KEY_ALARMITEMS = "AlarmItems";
     public static final String KEY_EVENTITEMS = "EventItems";
     public static final String KEY_PLACEITEMS = "PlaceItems";
     public static final String KEY_ACTIONS = "Actions";
 
     public static final String[] ALL_KEYS = new String[] {
-            KEY_APPSETTINGS, KEY_WIDGETSETTINGS, KEY_ALARMITEMS, KEY_EVENTITEMS, KEY_PLACEITEMS, KEY_ACTIONS
+            KEY_APPSETTINGS, KEY_WIDGETSETTINGS, KEY_ALARMITEMS, KEY_EVENTITEMS, KEY_PLACEITEMS, KEY_ACTIONS  //, KEY_WIDGETTHEMES   // TODO: themes
     };
 
     public static final String DEF_EXPORT_TARGET = "SuntimesBackup";
@@ -207,6 +209,16 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
+        if (includedKeys.containsKey(KEY_WIDGETTHEMES) && includedKeys.get(KEY_WIDGETTHEMES))
+        {
+            if (c > 0) {
+                out.write(",\n".getBytes());
+            }
+            out.write(("\"" + KEY_WIDGETTHEMES + "\": ").getBytes());    // include Widget Themes
+            writeWidgetThemesJSONArray(context, out);   // TODO
+            c++;
+        }
+
         out.write("}".getBytes());
         out.flush();
     }
@@ -302,6 +314,12 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         }
         db.close();
         AlarmClockItemExportTask.writeAlarmItemsJSONArray(context, items.toArray(new AlarmClockItem[0]), out);
+    }
+
+    public static void writeWidgetThemesJSONArray(Context context, BufferedOutputStream out) throws IOException
+    {
+        out.write("[]".getBytes()); // TODO
+        out.flush();
     }
 
     /**
@@ -467,6 +485,10 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         }
     }
 
+    private static View.OnClickListener onClickShareUri(final Context context, final Uri uri)
+    {
+        return new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
