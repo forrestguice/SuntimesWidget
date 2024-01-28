@@ -440,7 +440,8 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             checked[i] = true;
             items.add(new Pair<Integer, CharSequence>(i, SuntimesBackupTask.displayStringForBackupKey(context, keys[i])));
         }
-        items.sort(new Comparator<Pair<Integer,CharSequence>>()
+
+        Collections.sort(items, new Comparator<Pair<Integer,CharSequence>>()
         {
             @Override
             public int compare(Pair<Integer,CharSequence> o1, Pair<Integer,CharSequence> o2)
