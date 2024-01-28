@@ -21,29 +21,17 @@ package com.forrestguice.suntimeswidget.settings;
 import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
-import com.forrestguice.suntimeswidget.events.EventSettings;
-import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.ContentValuesJson;
-import com.forrestguice.suntimeswidget.tiles.ClockTileService;
-import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -53,11 +41,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_DIRECTIMPORT;
-import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_MAKEBESTGUESS;
-import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
 
 public class SuntimesBackupLoadTask extends AsyncTask<Uri, Void, SuntimesBackupLoadTask.TaskResult>
 {
@@ -310,7 +293,6 @@ public class SuntimesBackupLoadTask extends AsyncTask<Uri, Void, SuntimesBackupL
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
     /**
      * showIOResultSnackbar
      */

@@ -135,7 +135,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     protected void readData(Context context, InputStream in, ArrayList<ContentValues> items) throws IOException
     {
         BufferedInputStream bufferedIn = new BufferedInputStream(in);
-        if (SuntimesBackupRestoreTask.containsBackupItem(bufferedIn)) {
+        if (SuntimesBackupLoadTask.containsBackupItem(bufferedIn)) {
             readItemsFromBackup(context, bufferedIn, items);
 
         } else {
@@ -149,7 +149,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         reader.setLenient(true);
         try {
             Map<String,ContentValues[]> data = new HashMap<>();
-            SuntimesBackupRestoreTask.readBackupItem(context, reader, data);
+            SuntimesBackupLoadTask.readBackupItem(context, reader, data);
             items.addAll(Arrays.asList(data.get(SuntimesBackupTask.KEY_WIDGETSETTINGS)));
 
         } finally {
@@ -685,10 +685,10 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final int IMPORT_METHOD_RESTOREBACKUP = 0;
-    public static final int IMPORT_METHOD_MAKEBESTGUESS = 1;
-    public static final int IMPORT_METHOD_DIRECTIMPORT = 2;
-    public static final int[] ALL_IMPORT_METHODS = new int[] { IMPORT_METHOD_RESTOREBACKUP, IMPORT_METHOD_MAKEBESTGUESS, IMPORT_METHOD_DIRECTIMPORT };
+    public static final int IMPORT_WIDGETS_METHOD_RESTOREBACKUP = 0;
+    public static final int IMPORT_WIDGETS_METHOD_MAKEBESTGUESS = 1;
+    public static final int IMPORT_WIDGETS_METHOD_DIRECTIMPORT = 2;
+    public static final int[] IMPORT_WIDGETS_METHODS = new int[] {IMPORT_WIDGETS_METHOD_RESTOREBACKUP, IMPORT_WIDGETS_METHOD_MAKEBESTGUESS, IMPORT_WIDGETS_METHOD_DIRECTIMPORT};
 
     public static void chooseWidgetSettingsImportMethod(final Context context, final int[] methods, @NonNull final DialogInterface.OnClickListener onClickListener)
     {
@@ -698,7 +698,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         }
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.restorebackup_dialog_item_widgetsettings))
-                .setIcon(android.R.drawable.ic_dialog_info)
+                .setIcon(R.drawable.ic_action_widget)
                 .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
                 })
@@ -716,9 +716,9 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     protected static CharSequence displayStringForImportMethod(Context context, int method)
     {
         switch (method) {
-            case IMPORT_METHOD_DIRECTIMPORT: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
-            case IMPORT_METHOD_MAKEBESTGUESS: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
-            case IMPORT_METHOD_RESTOREBACKUP: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
+            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
+            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
+            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
             default: return method + "";
         }
     }

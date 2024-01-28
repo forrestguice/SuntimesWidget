@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -45,10 +46,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
-import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_DIRECTIMPORT;
-import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_MAKEBESTGUESS;
-import static com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
 
 public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBackupRestoreTask.TaskResult>
 {
@@ -211,37 +208,25 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         {
             int method = (methods.containsKey(SuntimesBackupTask.KEY_WIDGETSETTINGS))
                     ? methods.get(SuntimesBackupTask.KEY_WIDGETSETTINGS) : IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
-
-            switch (method)
-            {
-                case IMPORT_WIDGETS_METHOD_DIRECTIMPORT:    // direct import
-                    c += importWidgetSettings(context, null, false, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
-                    break;
-
-                case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS:    // best guess
-                    c += importWidgetSettingsBestGuess(context, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
-                    break;
-
-                case IMPORT_WIDGETS_METHOD_RESTOREBACKUP:
-                default:   // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
-                    c += importWidgetSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, true, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
-                    WidgetSettingsImportTask.restoreFromBackup(context,
-                            new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID},    // these lines should be the same
-                            new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID});   // because the ids are unchanged
-                    break;
-            }
+            c += importWidgetSettings(context, method, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
         }
 
-        if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS)) {
-            c += importAlarmItems(context, report, allValues.get(SuntimesBackupTask.KEY_ALARMITEMS));
+        if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS))
+        {
+            int method = (methods.containsKey(SuntimesBackupTask.KEY_ALARMITEMS))
+                    ? methods.get(SuntimesBackupTask.KEY_ALARMITEMS) : IMPORT_ALARMS_METHOD_ADDALL;
+            c += importAlarmItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_ALARMITEMS));
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_EVENTITEMS)) {
             c += importEventItems(context, report, allValues.get(SuntimesBackupTask.KEY_EVENTITEMS));
         }
 
-        if (keys.contains(SuntimesBackupTask.KEY_PLACEITEMS)) {
-            c += importPlaceItems(context, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
+        if (keys.contains(SuntimesBackupTask.KEY_PLACEITEMS))
+        {
+            int method = (methods.containsKey(SuntimesBackupTask.KEY_PLACEITEMS))
+                    ? methods.get(SuntimesBackupTask.KEY_PLACEITEMS) : IMPORT_PLACES_METHOD_ADDALL;
+            c += importPlaceItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_ACTIONS)) {
@@ -276,14 +261,43 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
     }
 
     /**
+     * importWidgetSettings
+     */
+    protected static int importWidgetSettings(Context context, int method, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        int c = 0;
+        switch (method)
+        {
+            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT:    // direct import
+                c += importWidgetSettings(context, null, false, report, contentValues);
+                break;
+
+            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS:    // best guess
+                c += importWidgetSettingsBestGuess(context, report, contentValues);
+                break;
+
+            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP:
+            default:   // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
+                c += importWidgetSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, true, report, contentValues);
+                WidgetSettingsImportTask.restoreFromBackup(context,
+                        new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID},    // these lines should be the same
+                        new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID});   // because the ids are unchanged
+                break;
+        }
+        return c;
+    }
+
+    /**
      * importAlarmItems
      */
-    protected static int importAlarmItems(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
+    protected static int importAlarmItems(Context context, int method, StringBuilder report, @Nullable ContentValues... contentValues)
     {
         int c = 0;
         AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
         db.open();
-        // db.clearAlarms();    // TODO: alarm import options; "clear first"
+        if (method == IMPORT_ALARMS_METHOD_CLEAR) {
+            db.clearAlarms();
+        }
         for (ContentValues values : contentValues)
         {
             if (values != null)
@@ -322,12 +336,14 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
     /**
      * importPlaceItems
      */
-    protected static int importPlaceItems(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
+    protected static int importPlaceItems(Context context, int method, StringBuilder report, @Nullable ContentValues... contentValues)
     {
         int c = 0;
         GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
-        // db.clearPlaces();    // TODO: place import options; "clear first"
+        if (method == IMPORT_PLACES_METHOD_CLEAR) {
+            db.clearPlaces();
+        }
         for (ContentValues values : contentValues)
         {
             if (values != null)
@@ -464,11 +480,11 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
     public static final int IMPORT_PLACES_METHOD_ADDALL = 20;     // insert all (may result in duplicates)
     public static final int IMPORT_PLACES_METHOD_IGNORE = 30;     // insert values (ignore if existing)
     public static final int IMPORT_PLACES_METHOD_OVERWRITE = 40;  // insert values (update if existing)
-    public static final int[] IMPORT_PLACES_METHODS = new int[] { IMPORT_PLACES_METHOD_ADDALL, IMPORT_PLACES_METHOD_CLEAR, IMPORT_PLACES_METHOD_IGNORE, IMPORT_PLACES_METHOD_OVERWRITE };
+    public static final int[] IMPORT_PLACES_METHODS = new int[] { IMPORT_PLACES_METHOD_CLEAR, IMPORT_PLACES_METHOD_ADDALL }; // TODO: implement IMPORT_PLACES_METHOD_IGNORE, IMPORT_PLACES_METHOD_OVERWRITE };
 
     public static final int IMPORT_ALARMS_METHOD_CLEAR = 100;      // clear all, then insert
     public static final int IMPORT_ALARMS_METHOD_ADDALL = 200;     // insert all (may result in duplicates)
-    public static final int[] IMPORT_ALARMS_METHODS = new int[] { IMPORT_ALARMS_METHOD_ADDALL, IMPORT_ALARMS_METHOD_CLEAR };
+    public static final int[] IMPORT_ALARMS_METHODS = new int[] { IMPORT_ALARMS_METHOD_CLEAR, IMPORT_ALARMS_METHOD_ADDALL };
 
     public static void chooseImportMethod(final Context context, final String key, final int[] methods, @NonNull final DialogInterface.OnClickListener onClickListener)
     {
@@ -515,14 +531,75 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
             case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
 
-            //case IMPORT_ALARMS_METHOD_ADDALL: return ""; // TODO
-            //case IMPORT_ALARMS_METHOD_CLEAR: return ""; // TODO
+            case IMPORT_ALARMS_METHOD_ADDALL: return SuntimesUtils.fromHtml(context.getString(R.string.importalarms_dialog_item_addall));
+            case IMPORT_ALARMS_METHOD_CLEAR: return SuntimesUtils.fromHtml(context.getString(R.string.importalarms_dialog_item_clear));
 
-            //case IMPORT_PLACES_METHOD_ADDALL: return ""; // TODO
-            //case IMPORT_PLACES_METHOD_CLEAR: return ""; // TODO
-            //case IMPORT_PLACES_METHOD_IGNORE: return ""; // TODO
-            //case IMPORT_PLACES_METHOD_OVERWRITE: return ""; // TODO
+            case IMPORT_PLACES_METHOD_ADDALL: return SuntimesUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_addall));
+            case IMPORT_PLACES_METHOD_CLEAR: return SuntimesUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_clear));
+            case IMPORT_PLACES_METHOD_IGNORE: return SuntimesUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_ignore));
+            case IMPORT_PLACES_METHOD_OVERWRITE: return SuntimesUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_overwrite));
+
             default: return method + "";
+        }
+    }
+
+    /**
+     * BackupKeyObserver
+     */
+    public static class BackupKeyObserver
+    {
+        private final HashMap<String, Boolean> items = new HashMap<>();
+        private final Set<String> remainingKeys = new TreeSet<String>();
+
+        @SuppressLint("UseSparseArrays")
+        public BackupKeyObserver(String[] keys, ObserverListener listener)
+        {
+            this.observerListener = listener;
+            for (String key : keys) {
+                items.put(key, false);
+                remainingKeys.add(key);
+            }
+        }
+
+        public void observeNext()
+        {
+            for (String key : remainingKeys)
+            {
+                remainingKeys.remove(key);
+                if (observerListener != null) {
+                    observerListener.onObservingItem(this, key);
+                }
+                break;
+            }
+        }
+
+        public void notify(String key)
+        {
+            items.put(key, true);
+            if (observerListener != null)
+            {
+                observerListener.onObservedItem(this, key);
+                if (observedAll()) {
+                    observerListener.onObservedAll(this);
+                } else observeNext();
+            }
+        }
+
+        public boolean observedAll()
+        {
+            boolean retValue = true;
+            for (Boolean value : items.values()) {
+                retValue = retValue && value;
+            }
+            return retValue;
+        }
+
+        private final ObserverListener observerListener;
+        public static abstract class ObserverListener
+        {
+            public void onObservingItem(BackupKeyObserver observer, String key) {}
+            public void onObservedItem(BackupKeyObserver observer, String key) {}
+            public void onObservedAll(BackupKeyObserver observer) {}
         }
     }
 

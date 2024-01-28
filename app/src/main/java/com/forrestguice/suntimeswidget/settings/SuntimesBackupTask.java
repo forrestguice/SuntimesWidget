@@ -424,7 +424,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(isImport ? R.string.configAction_restoreBackup : R.string.configAction_createBackup))
-                .setIcon(android.R.drawable.ic_dialog_info)
+                .setIcon(isImport ? R.drawable.ic_action_copy : R.drawable.ic_action_save)
                 .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -449,27 +449,47 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     /**
      * showIOResultSnackbar
      */
-    public static void showIOResultSnackbar(final Context context, final View view, boolean result, final CharSequence message, @Nullable final CharSequence report)
+    public static void showIOResultSnackbar(final Context context, final View view, @Nullable Uri shareUri, boolean result, final CharSequence message, @Nullable final CharSequence report)
     {
         if (context != null && view != null)
         {
             Snackbar snackbar = Snackbar.make(view, message, (result ? 7000 : Snackbar.LENGTH_LONG));
-            if (report != null)
-            {
-                snackbar.setAction(context.getString(R.string.configAction_info), new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle(message)
-                                .setIcon(android.R.drawable.ic_dialog_info)
-                                .setMessage(report);
-                        dialog.show();
-                    }
-                });
+
+            if (report != null) {
+                snackbar.setAction(context.getString(R.string.configAction_info), onClickShowReport(context, message, report));
+
+            } else if (result && shareUri != null) {
+                snackbar.setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri));
             }
+
             SuntimesUtils.themeSnackbar(context, snackbar, null);
             snackbar.show();
         }
+    }
+
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
+                context.startActivity(Intent.createChooser(intent, context.getString(R.string.configAction_share)));
+            }
+        };
+    }
+
+    private static View.OnClickListener onClickShowReport(final Context context, final CharSequence message, final CharSequence report)
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle(message)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setMessage(report);
+                dialog.show();
+            }
+        };
     }
 
 }
