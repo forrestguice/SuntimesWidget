@@ -145,15 +145,22 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 
     protected static void readItemsFromBackup(Context context, BufferedInputStream in, ArrayList<ContentValues> items) throws IOException
     {
-        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-        reader.setLenient(true);
-        try {
-            Map<String,ContentValues[]> data = new HashMap<>();
-            SuntimesBackupLoadTask.readBackupItem(context, reader, data);
-            items.addAll(Arrays.asList(data.get(SuntimesBackupTask.KEY_WIDGETSETTINGS)));
+        if (Build.VERSION.SDK_INT >= 11)
+        {
+            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+            reader.setLenient(true);
+            try {
+                Map<String,ContentValues[]> data = new HashMap<>();
+                SuntimesBackupLoadTask.readBackupItem(context, reader, data);
+                items.addAll(Arrays.asList(data.get(SuntimesBackupTask.KEY_WIDGETSETTINGS)));
 
-        } finally {
-            reader.close();
+            } finally {
+                reader.close();
+                in.close();
+            }
+
+        } else {
+            Log.w("ImportSettings", "Unsupported; skipping import");
             in.close();
         }
     }
