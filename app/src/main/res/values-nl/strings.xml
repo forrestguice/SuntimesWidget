@@ -1133,6 +1133,50 @@
     <string name="configLabel_widgetListHelp_summary">Show widget help</string>
     <string name="configLabel_widgetList_emptyMsg">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->
 
+    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
+    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
+    <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
+    <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
+    <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
+
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
+    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
+    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicate).<br/>]]></string> <!-- TODO -->
+
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+
+    <plurals name="itemsPlural">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>  <!-- TODO -->
+    <plurals name="widgetPlural">
+        <item quantity="one">%d widget</item>
+        <item quantity="other">%d widgets</item>
+    </plurals>  <!-- TODO -->
+
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->
@@ -1718,6 +1762,7 @@
     <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_import_noresults">Import skipped; no new themes were found.</string>
+    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">
         <item quantity="one">%d theme</item>
