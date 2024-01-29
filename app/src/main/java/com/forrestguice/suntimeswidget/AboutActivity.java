@@ -248,6 +248,12 @@ public class AboutActivity extends AppCompatActivity
                 supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url)));
             }
 
+            TextView donateView = (TextView) dialogContent.findViewById(R.id.txt_donate_url);
+            if (donateView != null) {
+                donateView.setMovementMethod(LinkMovementMethod.getInstance());
+                donateView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name))));
+            }
+
             TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);
             if (legalView1 != null) {
                 legalView1.setMovementMethod(LinkMovementMethod.getInstance());
