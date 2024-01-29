@@ -223,7 +223,7 @@ public class WelcomeActivity extends AppCompatActivity
         for (int i=0; i<indicators.length; i++)
         {
             indicators[i] = new TextView(this);
-            indicators[i].setTextSize(36);
+            indicators[i].setTextSize(getResources().getDimensionPixelSize(R.dimen.welcomeIndicator_size));
             indicators[i].setTextColor((i == position) ? activeColor : inactiveColor);
             indicators[i].setText("\u2022");
         }
@@ -1292,8 +1292,9 @@ public class WelcomeActivity extends AppCompatActivity
                 final ArrayAdapter<AppSettings.AppThemeInfo> spinnerAdapter = new AppThemeInfoAdapter(getActivity(), R.layout.layout_listitem_welcome);
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinnerAdapter);
-                spinner.setSelection(spinnerAdapter.getPosition(themeID1 != null ? themeInfo1 : themeInfo), false);
-                spinner.setOnItemSelectedListener(onThemeItemSelected);
+                int initialPosition = spinnerAdapter.getPosition(themeID1 != null ? themeInfo1 : themeInfo);
+                spinner.setSelection(initialPosition, false);
+                spinner.setOnItemSelectedListener(onThemeItemSelected(initialPosition));
             }
 
             ToggleButton systemThemeButton = (ToggleButton) view.findViewById(R.id.button_theme_system);
@@ -1374,37 +1375,53 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
-        private final AdapterView.OnItemSelectedListener onThemeItemSelected = new AdapterView.OnItemSelectedListener()
+        private AdapterView.OnItemSelectedListener onThemeItemSelected(final int initialPosition)
         {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            return new AdapterView.OnItemSelectedListener()
             {
-                AppSettings.AppThemeInfo themeInfo = (AppSettings.AppThemeInfo) parent.getAdapter().getItem(position);
-                switch (themeInfo.getThemeName())
+                private int currentPosition = initialPosition;
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
                 {
-                    case AppSettings.THEME_SYSTEM1:
-                        onThemeButtonClicked(AppSettings.THEME_SYSTEM, AppSettings.THEME_SYSTEM1, AppSettings.THEME_SYSTEM1).onClick(view);
-                        break;
-
-                    case AppSettings.THEME_DARK1:
-                        onThemeButtonClicked(AppSettings.THEME_DARK, AppSettings.THEME_LIGHT1, AppSettings.THEME_DARK1).onClick(view);
-                        break;
-
-                    case AppSettings.THEME_LIGHT1:
-                        onThemeButtonClicked(AppSettings.THEME_LIGHT, AppSettings.THEME_LIGHT1, AppSettings.THEME_DARK1).onClick(view);
-                        break;
-
-                    case AppSettings.THEME_DARK:
-                    case AppSettings.THEME_LIGHT:
-                    case AppSettings.THEME_SYSTEM:
-                    default:
-                        onThemeButtonClicked(themeInfo.getThemeName(), null, null).onClick(view);
-                        break;
+                    if (position == currentPosition) {
+                        Log.d("DEBUG", "spinner position is already at " + position + ", skipping onItemSelected...");
+                        return;
+                    }
+                    currentPosition = position;
+                    onThemeItemSelected(parent, view, position, id);
                 }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            };
+        }
+        private void onThemeItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            AppSettings.AppThemeInfo themeInfo = (AppSettings.AppThemeInfo) parent.getAdapter().getItem(position);
+            switch (themeInfo.getThemeName())
+            {
+                case AppSettings.THEME_SYSTEM1:
+                    onThemeButtonClicked(AppSettings.THEME_SYSTEM, AppSettings.THEME_SYSTEM1, AppSettings.THEME_SYSTEM1).onClick(view);
+                    break;
+
+                case AppSettings.THEME_DARK1:
+                    onThemeButtonClicked(AppSettings.THEME_DARK, AppSettings.THEME_LIGHT1, AppSettings.THEME_DARK1).onClick(view);
+                    break;
+
+                case AppSettings.THEME_LIGHT1:
+                    onThemeButtonClicked(AppSettings.THEME_LIGHT, AppSettings.THEME_LIGHT1, AppSettings.THEME_DARK1).onClick(view);
+                    break;
+
+                case AppSettings.THEME_DARK:
+                case AppSettings.THEME_LIGHT:
+                case AppSettings.THEME_SYSTEM:
+                default:
+                    onThemeButtonClicked(themeInfo.getThemeName(), null, null).onClick(view);
+                    break;
             }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        };
+        }
 
         protected void updatePreview(Context context, String themeDisplay)
         {

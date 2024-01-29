@@ -656,11 +656,11 @@
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
-    <string name="widgetThemes_dark">Dark</string>                                <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_dark_translucent">Dark (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_light">Light</string>                              <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_light_transparent">Light (transparent)</string>    <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_dark">Iluna</string>                                <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_dark_transparent">Iluna (gardena)</string>      <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_dark_translucent">Iluna (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_light">Argia</string>                              <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_light_transparent">Argia (gardena)</string>    <!-- default widget theme name --> <!-- TODO: review -->
 
     <string name="addtheme_custname">itxura_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -1132,6 +1132,9 @@
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
     <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
 
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
@@ -1178,8 +1181,8 @@
     <string name="appThemes_nightMode">Argia / iluna (Gau&#160;modua)</string>
     <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
     <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
-    <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
-    <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
+    <string name="appThemes_darkTheme1">Contrast (Iluna)</string>   <!-- TODO -->
+    <string name="appThemes_lightTheme1">Contrast (Argia)</string>   <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1677,7 +1680,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Iturburu kodea:</b><br />
-        Copyright &#169 2014-2023 Forrest Guice <br />
+        Copyright &#169 2014-2024 Forrest Guice <br />
         Iturburu kodea GPLv3 lizentziapean eskuragarri dago.
     ]]></string>
 

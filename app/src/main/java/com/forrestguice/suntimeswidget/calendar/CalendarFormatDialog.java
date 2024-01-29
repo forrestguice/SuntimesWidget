@@ -206,6 +206,16 @@ public class CalendarFormatDialog extends DialogFragment
         }
     };
 
+    public boolean applyFocusedPattern()
+    {
+        if (text_calendarFormatPattern.hasFocus())
+        {
+            String pattern = text_calendarFormatPattern.getText().toString();
+            getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
+            return true;
+        } else return false;
+    }
+
     private final View.OnClickListener onEditButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

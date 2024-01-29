@@ -122,6 +122,9 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWLUNARNOON = "app_ui_showmoon_noon";
     public static final boolean PREF_DEF_UI_SHOWLUNARNOON = false;
 
+    public static final String PREF_KEY_UI_MOONPHASECOLUMNS = "app_ui_showmoon_phases_columns";
+    public static final int PREF_DEF_UI_MOONPHASECOLUMNS = 4;
+
     public static final String PREF_KEY_UI_SHOWMAPBUTTON = "app_ui_showmapbutton";
     public static final boolean PREF_DEF_UI_SHOWMAPBUTTON = true;
 
@@ -541,6 +544,18 @@ public class AppSettings
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putBoolean(PREF_KEY_UI_SHOWLUNARNOON, value);
+        pref.apply();
+    }
+
+    public static int loadMoonPhaseColumnsPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getInt(PREF_KEY_UI_MOONPHASECOLUMNS, PREF_DEF_UI_MOONPHASECOLUMNS);
+    }
+    public static void saveMoonPhaseColumnsPref( Context context, int value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putInt(PREF_KEY_UI_MOONPHASECOLUMNS, value);
         pref.apply();
     }
 

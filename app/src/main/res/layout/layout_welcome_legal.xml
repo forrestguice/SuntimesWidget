@@ -5,37 +5,12 @@
     android:background="?attr/dialogBackground"
     android:paddingBottom="48dp">
 
-    <FrameLayout android:id="@+id/icon_layout"
-        android:layout_width="0dp" android:layout_height="0dp"
-        android:gravity="center" android:orientation="vertical" android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/text_layout"
-        app:layout_constraintVertical_chainStyle="spread"
-        app:layout_constraintVertical_weight="1">
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/icon"
-            android:layout_width="128dp" android:layout_height="128dp" android:layout_margin="8dp"
-            android:scaleType="fitCenter" android:layout_gravity="center"
-            android:src="@drawable/ic_action_suntimes_huge"
-            tools:ignore="ContentDescription" />
-
-        <Button android:id="@+id/button_about"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:text="@string/configAction_aboutWidget" android:layout_margin="8dp"
-            android:layout_gravity="start|bottom"
-            android:onClick="showAbout" />
-
-    </FrameLayout>
-
     <ScrollView android:id="@+id/text_layout"
         android:layout_width="0dp" android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/welcomeActivity_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon_layout"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="2">
 
@@ -66,7 +41,7 @@
                     android:onClick="showAbout" />
 
             </LinearLayout>
-
+            
             <TextView
                 android:id="@+id/text1" android:textSize="?attr/text_size_large"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"

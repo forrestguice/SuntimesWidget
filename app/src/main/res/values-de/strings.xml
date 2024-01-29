@@ -1136,6 +1136,9 @@
   <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
   <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
 
+  <!-- App Setting: Moon Phase Columns -->
+  <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+
   <!-- App Setting: Show Cross Quarter days -->
   <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
   <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
@@ -1650,7 +1653,7 @@
       <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> um eine Anfrage zu stellen.
   ]]></string>
   <string name="app_legal1"><![CDATA[
-      Copyright &#169 2014-2023 Forrest Guice <br />
+      Copyright &#169 2014-2024 Forrest Guice <br />
       Quellcode verf&uuml;gbar unter GPLv3.
   ]]></string>
 
@@ -1880,5 +1883,7 @@
         Weitere Informationen zu verfügbaren Auswahlmöglichkeiten oder zur Erweiterung der App zur Unterstützung anderer Bibliotheken finden Sie in der Online-Hilfe.
     ]]>
     </string>
+
+  <string name="def_app_ui_showheader_text">0</string>  <!-- 0: none -->
 
 </resources>

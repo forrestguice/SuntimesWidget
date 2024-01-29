@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014-2021 Forrest Guice
+   Copyright (C) 2014-2024 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -25,6 +25,9 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
@@ -155,7 +158,6 @@ public abstract class SuntimesLayout
         return false;
     }
 
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static float[] adjustTextSize(Context context, int[] maxDimensionsDp, int[] paddingDp,
                                          String fontFamily, boolean bold, String timeText, float timeSizeSp, float timeSizeMaxSp, String suffixText, float suffixSizeSp)
@@ -237,6 +239,74 @@ public abstract class SuntimesLayout
     {
         textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textSizeSp, context.getResources().getDisplayMetrics()));
         textPaint.getTextBounds(text, 0, text.length(), textBounds);
+    }
+
+    public static final float SCALE_STEP_SIZE_SP = 0.1f;
+    public static final int SCALE_STEP_LIMIT = 1000;
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static float adjustTextSize(Context context, int[] maxDimensionsDp,
+                                       String fontFamily, boolean bold, String text, float textSizeSp, float textSizeMaxSp,
+                                       boolean singleLine)
+    {
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTypeface(Typeface.create(fontFamily, bold ? Typeface.BOLD : Typeface.NORMAL));
+
+        int c = 0;
+        float adjustedTextSizeSp = textSizeSp;
+        float maxWidthPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, Math.max(maxDimensionsDp[0], 0), context.getResources().getDisplayMetrics());
+        float maxHeightPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, Math.max(maxDimensionsDp[1], 0), context.getResources().getDisplayMetrics());
+        Rect rectPixels = new Rect();
+
+        if (singleLine)
+        {
+            int lines = 0;
+            while (lines < 2   // scale up until new line
+                    && (adjustedTextSizeSp < textSizeMaxSp || textSizeMaxSp == -1))
+            {
+                adjustedTextSizeSp += SCALE_STEP_SIZE_SP;
+                lines = getLineCount(context,  text, adjustedTextSizeSp, textPaint, (int)maxWidthPixels, rectPixels);
+
+                if (c > SCALE_STEP_LIMIT) {
+                    Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [0]");
+                    break;
+                } else c++;
+            }
+            adjustedTextSizeSp -= 1;
+            adjustedTextSizeSp = (adjustedTextSizeSp < textSizeSp) ? textSizeSp : (int)Math.floor(adjustedTextSizeSp);
+
+        } else {
+            while (rectPixels.height() < maxHeightPixels    // scale up until height exceeded
+                    && (adjustedTextSizeSp < textSizeMaxSp || textSizeMaxSp == -1))
+            {
+                adjustedTextSizeSp += SCALE_STEP_SIZE_SP;
+                getTextBounds(context,  text, adjustedTextSizeSp, textPaint, (int)maxWidthPixels, rectPixels);
+
+                if (c > SCALE_STEP_LIMIT) {
+                    Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [0]");
+                    break;
+                } else c++;
+            }
+        }
+
+        //Log.w("SuntimesLayout", "adjustTextSize: " + rect.height() + "px > " + maxHeightPixels + "px [" + maxHeightDp + "dp]");
+        Log.d("SuntimesLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + textSizeSp + ", adjustedSp:" + adjustedTextSizeSp);
+        return adjustedTextSizeSp;
+    }
+
+    public static void getTextBounds(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull TextPaint textPaint, int maxWidth, @NonNull Rect result)
+    {
+        textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textSizeSp, context.getResources().getDisplayMetrics()));
+        StaticLayout layout = new StaticLayout(text, textPaint, maxWidth, Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
+        result.set(0, 0, layout.getWidth(), layout.getHeight());
+        //Log.d("DEBUG", "getTextBounds: " + staticLayout.getWidth() + " x " + staticLayout.getHeight() + " @ " + textSizeSp + "sp" + " with max width of " + maxWidth );
+    }
+
+    public static int getLineCount(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull TextPaint textPaint, int maxWidth, @NonNull Rect result)
+    {
+        textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textSizeSp, context.getResources().getDisplayMetrics()));
+        StaticLayout layout = new StaticLayout(text, textPaint, maxWidth, Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
+        return layout.getLineCount();
     }
 
 }

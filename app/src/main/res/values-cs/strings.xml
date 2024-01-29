@@ -1198,6 +1198,9 @@
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
     <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
 
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
@@ -1777,7 +1780,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Zdrojový kód:</b><br />
-        Copyright &#169 2014-2023 Forrest Guice <br />
+        Copyright &#169 2014-2024 Forrest Guice <br />
         Zdorjový kód dostupný pod licencí GPLv3.
     ]]></string>
 

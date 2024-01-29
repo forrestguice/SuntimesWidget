@@ -1135,6 +1135,9 @@
     <string name="configLabel_ui_showmoon_noon">顯示月亮正午</string>
     <string name="configLabel_ui_showmoon_noon_summary">在月亮對話框中顯示月亮正午和月亮午夜。</string>
 
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">跨季節日</string>
     <string name="configLabel_ui_showCrossQuarter_summary">包含至點和分點之間的中點。</string>
@@ -1678,7 +1681,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>原始碼:</b><br />
-        Copyright &#169 2014-2023 Forrest Guice <br />
+        Copyright &#169 2014-2024 Forrest Guice <br />
         原始碼在 GPLv3 許可下發佈。
     ]]></string>
 

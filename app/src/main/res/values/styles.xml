@@ -1173,4 +1173,41 @@
         <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
+    <style name="AboutToolbarStyle">
+        <item name="android:visibility">visible</item>
+    </style>
+    <style name="AboutTabStyle">
+        <item name="android:visibility">visible</item>
+    </style>
+
+    <style name="WelcomeTextSizeGroup">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginLeft">32dp</item>
+        <item name="android:layout_marginRight">32dp</item>
+        <item name="android:layout_marginBottom">24dp</item>
+    </style>
+
+    <style name="DialogTitleStyle" parent="TableHeadTextView0">        <!-- rise/set header text -->
+        <item name="android:textSize">?attr/text_size_large</item>
+    </style>
+
+    <style name="EquinoxDialogTitleStyle" parent="TableHeadDateView">
+        <item name="android:textSize">?attr/text_size_large</item>
+        <item name="android:paddingLeft">32dp</item>
+        <item name="android:paddingRight">32dp</item>
+    </style>
+    <style name="EquinoxDialogItemDateStyle">
+        <item name="android:textSize">?attr/text_size_small</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:antialias">true</item>
+    </style>
+    <style name="EquinoxDialogItemNoteStyle">
+        <item name="android:textSize">?attr/text_size_small</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:antialias">true</item>
+    </style>
+
+
 </resources>

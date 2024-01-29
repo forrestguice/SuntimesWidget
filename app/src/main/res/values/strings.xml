@@ -1290,6 +1290,12 @@
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>
     <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>
 
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_phase_columns_2">2</string>
+    <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
+    <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>
@@ -2218,7 +2224,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
-        Copyright &#169 2014-2023 Forrest Guice <br />
+        Copyright &#169 2014-2024 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
 
@@ -2543,7 +2549,7 @@
     <string name="def_app_ui_showgoldhour" translatable="false">true</string>
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showheader_icon" translatable="false">true</string>
-    <string name="def_app_ui_showheader_text" translatable="false">1</string>  <!-- 1: labels -->
+    <string name="def_app_ui_showheader_text">1</string>  <!-- 1: labels -->
     <string name="def_app_ui_emphasizefield" translatable="false">OFFICIAL</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_showmapbutton" translatable="false">true</string>

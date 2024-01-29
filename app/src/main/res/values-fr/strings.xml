@@ -643,11 +643,11 @@
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
-    <string name="widgetThemes_dark">Dark</string>                                <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_dark_translucent">Dark (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_light">Light</string>                              <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_light_transparent">Light (transparent)</string>    <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_dark">Sombre</string>                                <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_dark_transparent">Sombre (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_dark_translucent">Sombre (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_light">Clair</string>                              <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_light_transparent">Clair (transparent)</string>    <!-- default widget theme name --> <!-- TODO -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -1114,6 +1114,9 @@
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Afficher le midi lunaire</string>
     <string name="configLabel_ui_showmoon_noon_summary">Affiche le midi lunaire et minuit lunaire dans le cadre du dialogue de la lune.</string>
+
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
@@ -1638,7 +1641,7 @@
     ]]></string>
     <string name="app_legal1"><![CDATA[
         <b>Code source :</b><br />
-        Copyright &#169 2014-2023 Forrest Guice <br />
+        Copyright &#169 2014-2024 Forrest Guice <br />
         Code source disponible sous licence GPLv3.
     ]]></string>
 
@@ -1848,5 +1851,7 @@
         For more information about available choices, or extending the app to support other libraries, see the online help.
     ]]>
     </string>   <!-- TODO -->
+
+    <string name="def_app_ui_showheader_text">0</string>  <!-- 0: none -->
 
 </resources>
