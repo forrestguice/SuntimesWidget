@@ -40,6 +40,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
@@ -96,6 +98,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
     {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+        newOptions.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, getClass().getSimpleName());
+        WidgetSettingsMetadata.saveMetaData(context, appWidgetId, newOptions);
         initLocale(context);
         updateWidget(context, appWidgetManager, appWidgetId);
     }
@@ -136,6 +140,23 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
             Log.d(TAG, "onReceive: ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
+
+        } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_RESTORED)) {
+            Log.d(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: " + getClass());
+            if (Build.VERSION.SDK_INT >= 21)
+            {
+                int[] oldAppWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_OLD_IDS);  // old (now invalid) appWidgetIds
+                int[] newAppWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);      // new (valid) appWidgetIds
+                if (oldAppWidgetIds != null && newAppWidgetIds != null)
+                {
+                    boolean[] backupRestored = WidgetSettingsImportTask.restoreFromBackup(context, oldAppWidgetIds, newAppWidgetIds);
+                    for (int i=0; i<newAppWidgetIds.length; i++) {
+                        setUpdateAlarm(context, newAppWidgetIds[i]);
+                    }
+                } else {
+                    Log.w(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: required extras are missing! ignoring request");
+                }
+            }
 
         } else if (action != null && action.equals(SUNTIMES_THEME_UPDATE)) {
             String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);

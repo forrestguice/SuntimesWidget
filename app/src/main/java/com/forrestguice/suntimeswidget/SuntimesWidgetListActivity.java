@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2023 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,12 +18,15 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.pm.ActivityInfo;
@@ -36,6 +39,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
@@ -66,12 +70,22 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SuntimesBackupLoadTask;
+import com.forrestguice.suntimeswidget.settings.SuntimesBackupRestoreTask;
+import com.forrestguice.suntimeswidget.settings.SuntimesBackupTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.widgets.DateWidget0;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static com.forrestguice.suntimeswidget.SuntimesConfigActivity0.EXTRA_RECONFIGURE;
 
@@ -82,9 +96,13 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     private static final String KEY_LISTVIEW_TOP = "widgetlisttop";
     private static final String KEY_LISTVIEW_INDEX = "widgetlistindex";
 
+    public static final int IMPORT_REQUEST = 100;
+    public static final int EXPORT_REQUEST = 200;
+
     private ActionBar actionBar;
     private ListView widgetList;
     private WidgetListAdapter widgetListAdapter;
+    protected View progressView;
     private static final SuntimesUtils utils = new SuntimesUtils();
 
     public SuntimesWidgetListActivity()
@@ -124,6 +142,34 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         super.onStart();
         updateViews(this);
         updateWidgetAlarms(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case EXPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        SuntimesBackupTask.exportSettings(SuntimesWidgetListActivity.this, uri, exportSettingsListener);
+                    }
+                }
+                break;
+
+            case IMPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        importSettings(SuntimesWidgetListActivity.this, uri);
+                    }
+                }
+                break;
+        }
     }
 
     /**
@@ -222,6 +268,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        progressView = findViewById(R.id.progress);
+
         widgetList = (ListView)findViewById(R.id.widgetList);
         widgetList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -301,6 +349,216 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void showProgress( Context context, CharSequence title, CharSequence message )
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.VISIBLE);
+        }
+    }
+    public void dismissProgress()
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * exportSettings
+     * @param context Context
+     */
+    protected void exportSettings(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            String filename = SuntimesBackupTask.DEF_EXPORT_TARGET + WidgetSettingsExportTask.FILEEXT;
+            Intent intent = ExportTask.getCreateFileIntent(filename, WidgetSettingsExportTask.MIMETYPE);
+            try {
+                startActivityForResult(intent, EXPORT_REQUEST);
+                return;
+
+            } catch (ActivityNotFoundException e) {
+                Log.e("ExportSettings", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+            }
+        }
+        SuntimesBackupTask.exportSettings(context, null, exportSettingsListener);
+    }
+
+    private final WidgetSettingsExportTask.TaskListener exportSettingsListener = new WidgetSettingsExportTask.TaskListener()
+    {
+        @Override
+        public void onStarted()
+        {
+            //setRetainInstance(true);
+            Context context = SuntimesWidgetListActivity.this;
+            showProgress(context, context.getString(R.string.configAction_createBackup), context.getString(R.string.configAction_createBackup));
+        }
+
+        @Override
+        public void onFinished(WidgetSettingsExportTask.ExportResult results)
+        {
+            //setRetainInstance(false);
+            dismissProgress();
+
+            Context context = SuntimesWidgetListActivity.this;
+            if (context != null)
+            {
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath()
+                        : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
+
+                if (results.getResult())
+                {
+                    //if (isAdded()) {
+                    String successMessage = context.getString(R.string.msg_export_success, path);
+                    SuntimesBackupTask.showIOResultSnackbar(context, getWindow().getDecorView(), results.getExportUri(), true, successMessage, null);
+                    //}
+
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        if (results.getExportUri() == null) {
+                            ExportTask.shareResult(context, file, results.getMimeType());
+                        }
+                    } else {
+                        ExportTask.shareResult(context, file, results.getMimeType());
+                    }
+                    return;
+                }
+
+                //if (isAdded()) {
+                String failureMessage = context.getString(R.string.msg_export_failure, path);
+                SuntimesBackupTask.showIOResultSnackbar(context, getWindow().getDecorView(), results.getExportUri(), false, failureMessage, null);
+                //}
+            }
+        }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void importSettings(Context context)
+    {
+        if (context != null) {
+            startActivityForResult(ExportTask.getOpenFileIntent("text/*"), IMPORT_REQUEST);
+        }
+    }
+
+    public void importSettings(final Context context, @NonNull Uri uri)
+    {
+        Log.i("ImportSettings", "Starting import task: " + uri);
+        SuntimesBackupLoadTask task = new SuntimesBackupLoadTask(context);
+        task.setTaskListener(new SuntimesBackupLoadTask.TaskListener()
+        {
+            @Override
+            public void onStarted() {
+                showProgress(context, context.getString(R.string.configAction_restoreBackup), context.getString(R.string.configAction_restoreBackup));
+            }
+
+            @Override
+            public void onFinished(final SuntimesBackupLoadTask.TaskResult result)
+            {
+                dismissProgress();
+                if (result.getResult() && result.numResults() > 0)
+                {
+                    final Map<String, ContentValues[]> allValues = result.getItems();
+                    SuntimesBackupTask.chooseBackupContent(context, allValues.keySet(), true, new SuntimesBackupTask.ChooseBackupDialogListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which, String[] keys, boolean[] checked)
+                        {
+                            final Set<String> includeKeys = new TreeSet<>();
+                            for (int i=0; i<keys.length; i++) {
+                                if (checked[i]) {
+                                    includeKeys.add(keys[i]);
+                                }
+                            }
+
+                            final String[] keysThatWantMethods = new String[] { SuntimesBackupTask.KEY_WIDGETSETTINGS, SuntimesBackupTask.KEY_PLACEITEMS, SuntimesBackupTask.KEY_ALARMITEMS };
+                            final Map<String, int[]> methodsForKeysThatWantMethods = new HashMap<>();
+                            methodsForKeysThatWantMethods.put(SuntimesBackupTask.KEY_ALARMITEMS, SuntimesBackupRestoreTask.IMPORT_ALARMS_METHODS);
+                            methodsForKeysThatWantMethods.put(SuntimesBackupTask.KEY_PLACEITEMS, SuntimesBackupRestoreTask.IMPORT_PLACES_METHODS);
+                            methodsForKeysThatWantMethods.put(SuntimesBackupTask.KEY_WIDGETSETTINGS, SuntimesBackupRestoreTask.IMPORT_WIDGETS_METHODS);
+
+                            final Map<String,Integer> methods = new HashMap<>();   // choose methods for key each; import after observing all
+                            final SuntimesBackupRestoreTask.BackupKeyObserver observer = new SuntimesBackupRestoreTask.BackupKeyObserver(keysThatWantMethods, new SuntimesBackupRestoreTask.BackupKeyObserver.ObserverListener()
+                            {
+                                @Override
+                                public void onObservingItem(final SuntimesBackupRestoreTask.BackupKeyObserver observer, final String key )
+                                {
+                                    if (includeKeys.contains(key))
+                                    {
+                                        SuntimesBackupRestoreTask.chooseImportMethod(context, key, methodsForKeysThatWantMethods.get(key), new DialogInterface.OnClickListener()
+                                        {
+                                            public void onClick(DialogInterface dialog, int importMethod) {
+                                                methods.put(key, importMethod);
+                                                observer.notify(key);    // trigger observeNext
+                                            }
+                                        });
+                                    } else observer.notify(key);
+                                }
+                                public void onObservedAll(SuntimesBackupRestoreTask.BackupKeyObserver observer) {
+                                    importSettings(context, includeKeys, methods, allValues);
+                                }
+                            });
+                            observer.observeNext();
+
+                            /*if (includeKeys.contains(SuntimesBackupTask.KEY_WIDGETSETTINGS))
+                            {
+                                SuntimesBackupRestoreTask.chooseImportMethod(context, SuntimesBackupTask.KEY_WIDGETSETTINGS, SuntimesBackupRestoreTask.IMPORT_WIDGETS_METHODS, new DialogInterface.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialog, int widgetImportMethod) {
+                                        methods.put(SuntimesBackupTask.KEY_WIDGETSETTINGS, widgetImportMethod);
+                                        importSettings(context, includeKeys, methods, allValues);
+                                    }
+                                });
+                            } else {
+                                importSettings(context, includeKeys, methods, allValues);
+                            }*/
+                        }
+                    });
+
+                } else {
+                    SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), false, 0, null);
+                }
+            }
+        });
+        task.execute(uri);
+    }
+
+    protected void importSettings(final Context context, final Set<String> keys, final Map<String,Integer> methods, final Map<String, ContentValues[]> allValues)
+    {
+        SuntimesBackupRestoreTask task = new SuntimesBackupRestoreTask(context);
+        task.setData(allValues);
+        task.setKeys(keys);
+        task.setMethods(methods);
+        task.setTaskListener(new SuntimesBackupRestoreTask.TaskListener()
+        {
+            @Override
+            public void onStarted() {
+                showProgress(context, context.getString(R.string.configAction_import), context.getString(R.string.configAction_import));
+            }
+
+            @Override
+            public void onFinished(SuntimesBackupRestoreTask.TaskResult result)
+            {
+                dismissProgress();
+                if (result.getResult())
+                {
+                    int c = result.getNumResults();
+                    SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), (c > 0), c, ((c > 0) ? result.getReport() : null));
+
+                } else {
+                    SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), false, result.getNumResults(), result.getReport());
+                }
+            }
+        });
+        task.execute();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * @param widgetItem a WidgetListItem (referencing some widget id)
      */
@@ -340,7 +598,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     /**
-     * ListItem representing a running widget; specifies appWidgetId, and configuration activity.
+     * ListItem representing a running widget; specifies appWidgetId, and configuration activity.f
      */
     public static class WidgetListItem
     {
@@ -661,6 +919,14 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
             case R.id.action_actionlist:
                 launchActionList(SuntimesWidgetListActivity.this);
+                return true;
+
+            case R.id.action_import:
+                importSettings(SuntimesWidgetListActivity.this);
+                return true;
+
+            case R.id.action_export:
+                exportSettings(SuntimesWidgetListActivity.this);
                 return true;
 
             case R.id.action_help:

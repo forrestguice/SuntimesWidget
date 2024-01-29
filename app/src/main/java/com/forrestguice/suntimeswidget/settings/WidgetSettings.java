@@ -18,13 +18,17 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -59,7 +63,10 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 /**
  * Shared preferences used by individual widgets; uses getSharedPreferences (stored in com.forrestguice.suntimeswidget.xml).
@@ -241,6 +248,132 @@ public class WidgetSettings
 
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String[] ALL_KEYS = new String[]
+    {
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_THEME,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SHOWTITLE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TITLETEXT,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SHOWLABELS,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x2,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_ALLOWRESIZE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SCALETEXT,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SCALEBASE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_GRAVITY,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TIMEFORMATMODE,
+
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_CALCULATOR,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_RISESETORDER,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE2,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE3,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMENOTE_RISE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMENOTE_SET,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGMODE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGLEVEL,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_COMPAREMODE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWCOMPARE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWNOON,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWWEEKS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWHOURS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWSECONDS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWTIMEDATE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWABBRMONTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_OBSERVERHEIGHT,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_UNITS_LENGTH,
+
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_MODE,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LONGITUDE,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LATITUDE,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE_ENABLED,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LABEL,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_FROMAPP,
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_MODE,
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP,
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_CUSTOM,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_TIMEZONE_SOLARMODE,    // in _general
+
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_MODE,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_YEAR,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_MONTH,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_DAY,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_OFFSET,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_NEXTUPDATE,
+
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_MODE,
+    };
+    public static String[] BOOL_KEYS = new String[]
+    {
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SHOWTITLE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SHOWLABELS,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_ALLOWRESIZE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SCALETEXT,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SCALEBASE,
+
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWCOMPARE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWNOON,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWWEEKS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWHOURS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWSECONDS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWTIMEDATE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWABBRMONTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE,
+
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE_ENABLED,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_FROMAPP,
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP
+    };
+    public static String[] FLOAT_KEYS = new String[] { PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_OBSERVERHEIGHT };
+    public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE };
+    public static String[] INT_KEYS = new String[]
+    {
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_GRAVITY,   // enum as ordinal
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_YEAR,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_MONTH,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_DAY,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_OFFSET,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGLEVEL,
+    };
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            putType(types, Long.class, LONG_KEYS);
+            putType(types, Float.class, FLOAT_KEYS);
+            putType(types, Integer.class, INT_KEYS);
+            putType(types, Boolean.class, BOOL_KEYS);
+
+            types.put(PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LATITUDE, String.class);    // double as String
+            types.put(PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LONGITUDE, String.class);   // double as String
+            types.put(PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE, String.class);    // double as String
+
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
+    public static void putType(Map<String,Class> map, Class type, String... keys) {
+        for (String key : keys) {
+            map.put(key, type);
+        }
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -3255,6 +3388,7 @@ public class WidgetSettings
         deleteTimeNoteSetPref(context, appWidgetId);
 
         WidgetActions.deletePrefs(context, appWidgetId);
+        WidgetSettingsMetadata.deleteMetaData(context, appWidgetId);
     }
 
     public static void initDefaults( Context context )
@@ -3297,4 +3431,5 @@ public class WidgetSettings
         CalendarSettings.initDisplayStrings(context);
         WidgetActions.initDisplayStrings(context);
     }
+
 }

@@ -441,13 +441,18 @@ public class WelcomeActivity extends AppCompatActivity
                     }
                 }
 
-                textViews = new int[] { R.id.link0, R.id.link1, R.id.link2, R.id.link3 };
+                textViews = new int[] { R.id.link0, R.id.link1, R.id.link2, R.id.link3, R.id.link4 };
                 for (int resID : textViews) {
                     TextView text = (TextView) view.findViewById(resID);
                     if (text != null) {
                         text.setText(SuntimesUtils.fromHtml(text.getText().toString()));
                         text.setMovementMethod(LinkMovementMethod.getInstance());
                     }
+                }
+
+                TextView donateLink = (TextView) view.findViewById(R.id.link4);
+                if (donateLink != null) {
+                    donateLink.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name))));
                 }
             }
         }

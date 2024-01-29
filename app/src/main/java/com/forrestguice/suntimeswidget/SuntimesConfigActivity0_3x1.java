@@ -34,9 +34,14 @@ public class SuntimesConfigActivity0_3x1 extends SuntimesConfigActivity0_2x1
     }
 
     @Override
+    protected Class getWidgetClass() {
+        return SuntimesWidget0_3x1.class;
+    }
+
+    @Override
     protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        Intent updateIntent = new Intent(context, SuntimesWidget0_3x1.class);
+        Intent updateIntent = new Intent(context, getWidgetClass());
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(updateIntent);

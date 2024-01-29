@@ -28,6 +28,9 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public class WorldMapWidgetSettings
 {
 
@@ -74,6 +77,33 @@ public class WorldMapWidgetSettings
     public static final String PROJ4_EQD = "+proj=eqc +lat_ts=0 +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371007 +b=6371007 +units=m +no_defs";
     public static final String PROJ4_AEQD = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs";
     public static final String PROJ4_AEQD1 = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[] {
+            WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_WORLDMAP
+    };
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : ALL_KEYS) {                // all others are type String
+                for (String tag : MAPTAGS) {
+                    if (!types.containsKey(key + tag)) {
+                        types.put(key + tag, String.class);
+                    }
+                }
+            }
+        }
+        return types;
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
 
     /**
      * WorldMapWidgetMode
