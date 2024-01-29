@@ -228,8 +228,8 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *     adds COLUMN_CONFIG_APP_TEXT_SIZE
  *     adds COLUMN_SUNPOS_EOT, COLUMN_CONFIG_TIMEZONEMODE, COLUMN_CONFIG_SOLARTIMEMODE
  *   6 fixes ambiguity of COLUMN_SEASON_CROSS_* columns; e.g. CROSS_SUMMER is the midpoint between summer solstice and autumn equinox.
- *   7 adds COLUMN_MOON_RISE, COLUMN_MOON_RISE_AZ, COLUMN_MOON_SET_RA, COLUMN_MOON_SET_DEC, COLUMN_MOON_SET_ILLUM, COLUMN_MOON_SET_DISTANCE
- *     adds COLUMN_MOON_SET, COLUMN_MOON_SET_AZ, COLUMN_MOON_RISE_RA, COLUMN_MOON_RISE_DEC, COLUMN_MOON_RISE_ILLUM, COLUMN_MOON_RISE_DISTANCE
+ *   7 adds COLUMN_MOON_SET_ILLUM, COLUMN_MOON_SET_DISTANCE, COLUMN_MOON_SET_ILLUM, COLUMN_MOON_SET_DISTANCE.
+ *     adds _POSITION_KEYS; may be combined with COLUMN_MOON and COLUMN_SUN keys to specify position at time of event.
  */
 public interface CalculatorProviderContract
 {
@@ -288,6 +288,16 @@ public interface CalculatorProviderContract
     };
 
     /**
+     * POSITION
+     * Position keys that must be appended to other keys to form a valid combination;
+     * e.g. COLUMN_MOON_RISE + _POSITION_AZ is moon azimuth at time of rising
+     */
+    String _POSITION_AZ = "_azimuth";      // double
+    String _POSITION_ALT = "_altitude";    // double
+    String _POSITION_RA = "_ra";           // double
+    String _POSITION_DEC = "_dec";         // double
+
+    /**
      * SUN
      */
     String COLUMN_SUN_NOON = "solarnoon";                   // long (timestamp); (broken <= v0.10.2 [returns Calendar])
@@ -308,6 +318,9 @@ public interface CalculatorProviderContract
     String COLUMN_SUN_BLUE4_RISE = "blue4rise";             // long (timestamp); (broken <= v0.10.2 [returns Calendar])
     String COLUMN_SUN_BLUE8_SET = "blue8set";               // long (timestamp); (broken <= v0.10.2 [returns Calendar])
     String COLUMN_SUN_BLUE4_SET = "blue4set";               // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+
+    // These columns may be combined with _POSITION keys: COLUMN_SUN_ACTUAL, COLUMN_SUN_CIVIL, COLUMN_SUN_NAUTICAL, COLUMN_SUN_ASTRO
+    // e.g. COLUMN_SUN_CIVIL_RISE + _POSITION_AZ = "sunrise_azimuth";         // double
 
     String QUERY_SUN = "sun";
     String[] QUERY_SUN_PROJECTION = new String[] {
@@ -345,26 +358,18 @@ public interface CalculatorProviderContract
     String COLUMN_MOON_RISE = "moonrise";                  // long (timestamp); (broken <= v0.10.2 [returns Calendar])
     String COLUMN_MOON_SET = "moonset";                    // long (timestamp); (broken <= v0.10.2 [returns Calendar])
 
-    String COLUMN_MOON_RISE_AZ = "moonrise_azimuth";       // double
-    String COLUMN_MOON_RISE_RA = "moonrise_ra";            // double
-    String COLUMN_MOON_RISE_DEC = "moonrise_dec";          // double
-    String COLUMN_MOON_RISE_ILLUM = "moonrise_illum";      // double [0,1]
+    String COLUMN_MOON_RISE_ILLUM = "moonrise_illum";        // double [0,1]
     String COLUMN_MOON_RISE_DISTANCE = "moonrise_distance";  // double (kilometers)
 
-    String COLUMN_MOON_SET_AZ = "moonset_azimuth";         // double
-    String COLUMN_MOON_SET_RA = "moonset_ra";              // double
-    String COLUMN_MOON_SET_DEC = "moonset_dec";            // double
     String COLUMN_MOON_SET_ILLUM = "moonset_illum";        // double [0,1]
     String COLUMN_MOON_SET_DISTANCE = "moonset_distance";  // double (kilometers)
 
+    // These columns may be combined with position keys: COLUMN_MOON_RISE, COLUMN_MOON_SET
+    // e.g. COLUMN_MOON_RISE + _POSITION_AZ = "moonrise_azimuth";       // double
+
     String QUERY_MOON = "moon";
     String[] QUERY_MOON_PROJECTION = new String[] {
-            COLUMN_MOON_RISE, COLUMN_MOON_SET,
-            COLUMN_MOON_RISE_AZ, COLUMN_MOON_SET_AZ,
-            COLUMN_MOON_RISE_RA, COLUMN_MOON_SET_RA,
-            COLUMN_MOON_RISE_DEC, COLUMN_MOON_SET_DEC,
-            COLUMN_MOON_RISE_ILLUM, COLUMN_MOON_SET_ILLUM,
-            COLUMN_MOON_RISE_DISTANCE, COLUMN_MOON_SET_DISTANCE
+            COLUMN_MOON_RISE,                 COLUMN_MOON_SET,
     };
 
     /**
