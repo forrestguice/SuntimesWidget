@@ -1896,6 +1896,10 @@
         <b>Поддержка:</b> посетите
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">трекер отслеживания проблем</a> на GitHub для создания запроса.
     ]]></string>
+    <string name="app_donate_url"><![CDATA[
+        %s is available gratis, but if it has proven its value, please
+        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+    ]]></string>    <!-- TODO -->
     <string name="app_source_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
     ]]></xliff:g></string>

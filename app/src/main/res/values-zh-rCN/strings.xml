@@ -1719,6 +1719,10 @@
         <b>支持:</b> 访问
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">问题追踪器</a> 提交一个请求。
     ]]></string>
+    <string name="app_donate_url"><![CDATA[
+        %s is available gratis, but if it has proven its value, please
+        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+    ]]></string>    <!-- TODO -->
     <string name="app_url"><xliff:g id="url"><![CDATA[
         <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>

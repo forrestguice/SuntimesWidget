@@ -1720,6 +1720,10 @@
         <b>Laguntza:</b> joan zaitez
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">arazoen jarraitzailera</a> eskaera bat bidaltzeko.
     ]]></string>
+    <string name="app_donate_url"><![CDATA[
+        %s is available gratis, but if it has proven its value, please
+        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+    ]]></string>    <!-- TODO -->
     <string name="app_url"><xliff:g id="url"><![CDATA[
         <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>

@@ -1709,6 +1709,10 @@
         <b>Suport:</b> visita el
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguiment d\'incidències</a> per enviar una petició.
     ]]></string>
+    <string name="app_donate_url"><![CDATA[
+        %s is available gratis, but if it has proven its value, please
+        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+    ]]></string>    <!-- TODO -->
     <string name="app_legal1"><![CDATA[
     <b>Codi font:</b><br />
     Copyright &#169 2014-2024 Forrest Guice <br />
