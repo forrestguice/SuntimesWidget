@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -443,6 +444,9 @@ public class CalculatorProvider extends ContentProvider
             endDay.setTimeInMillis(range[1] + 1000);      // +1000ms (make range[1] inclusive)
 
             do {
+                Map<String,SuntimesCalculator.SunPosition> positions = new HashMap<>();
+                SuntimesCalculator.SunPosition position;
+
                 Calendar calendar;
                 Calendar[] morningBlueHour = null, eveningBlueHour = null;
                 Object[] row = new Object[columns.length];
@@ -526,6 +530,67 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = (eveningBlueHour[1] != null) ? eveningBlueHour[1].getTimeInMillis() : null;
                             break;
 
+                        case COLUMN_SUN_NOON_AZ: case COLUMN_SUN_NOON_ALT:
+                        case COLUMN_SUN_NOON_RA: case COLUMN_SUN_NOON_DEC:
+                            calendar = calculator.getSolarNoonCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_NOON, columns[i], positions);
+                            break;
+
+                        case COLUMN_SUN_ACTUAL_RISE_AZ: case COLUMN_SUN_ACTUAL_RISE_ALT:
+                        case COLUMN_SUN_ACTUAL_RISE_RA: case COLUMN_SUN_ACTUAL_RISE_DEC:
+                            calendar = calculator.getOfficialSunriseCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_ACTUAL_RISE, columns[i], positions);
+                            break;
+                        case COLUMN_SUN_ACTUAL_SET_AZ: case COLUMN_SUN_ACTUAL_SET_ALT:
+                        case COLUMN_SUN_ACTUAL_SET_RA: case COLUMN_SUN_ACTUAL_SET_DEC:
+                            calendar = calculator.getOfficialSunsetCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_ACTUAL_SET, columns[i], positions);
+                            break;
+
+                        case COLUMN_SUN_CIVIL_RISE_AZ: case COLUMN_SUN_CIVIL_RISE_ALT:
+                        case COLUMN_SUN_CIVIL_RISE_RA: case COLUMN_SUN_CIVIL_RISE_DEC:
+                            calendar = calculator.getCivilSunriseCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_CIVIL_RISE, columns[i], positions);
+                            break;
+                        case COLUMN_SUN_CIVIL_SET_AZ: case COLUMN_SUN_CIVIL_SET_ALT:
+                        case COLUMN_SUN_CIVIL_SET_RA: case COLUMN_SUN_CIVIL_SET_DEC:
+                            calendar = calculator.getCivilSunsetCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_CIVIL_SET, columns[i], positions);
+                            break;
+
+                        case COLUMN_SUN_NAUTICAL_RISE_AZ: case COLUMN_SUN_NAUTICAL_RISE_ALT:
+                        case COLUMN_SUN_NAUTICAL_RISE_RA: case COLUMN_SUN_NAUTICAL_RISE_DEC:
+                            calendar = calculator.getNauticalSunriseCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_NAUTICAL_RISE, columns[i], positions);
+                            break;
+                        case COLUMN_SUN_NAUTICAL_SET_AZ: case COLUMN_SUN_NAUTICAL_SET_ALT:
+                        case COLUMN_SUN_NAUTICAL_SET_RA: case COLUMN_SUN_NAUTICAL_SET_DEC:
+                            calendar = calculator.getNauticalSunsetCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_NAUTICAL_SET, columns[i], positions);
+                            break;
+
+                        case COLUMN_SUN_ASTRO_RISE_AZ: case COLUMN_SUN_ASTRO_RISE_ALT:
+                        case COLUMN_SUN_ASTRO_RISE_RA: case COLUMN_SUN_ASTRO_RISE_DEC:
+                            calendar = calculator.getAstronomicalSunriseCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_ASTRO_RISE, columns[i], positions);
+                            break;
+                        case COLUMN_SUN_ASTRO_SET_AZ: case COLUMN_SUN_ASTRO_SET_ALT:
+                        case COLUMN_SUN_ASTRO_SET_RA: case COLUMN_SUN_ASTRO_SET_DEC:
+                            calendar = calculator.getAstronomicalSunsetCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_ASTRO_SET, columns[i], positions);
+                            break;
+
+                        case COLUMN_SUN_GOLDEN_MORNING_AZ: case COLUMN_SUN_GOLDEN_MORNING_ALT:
+                        case COLUMN_SUN_GOLDEN_MORNING_RA: case COLUMN_SUN_GOLDEN_MORNING_DEC:
+                            calendar = calculator.getMorningGoldenHourForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_GOLDEN_MORNING, columns[i], positions);
+                            break;
+                        case COLUMN_SUN_GOLDEN_EVENING_AZ: case COLUMN_SUN_GOLDEN_EVENING_ALT:
+                        case COLUMN_SUN_GOLDEN_EVENING_RA: case COLUMN_SUN_GOLDEN_EVENING_DEC:
+                            calendar = calculator.getEveningGoldenHourForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_GOLDEN_EVENING, columns[i], positions);
+                            break;
+
                         default:
                             row[i] = null;
                             break;
@@ -538,6 +603,92 @@ public class CalculatorProvider extends ContentProvider
         } else Log.w("CalculatorProvider", "querySun: sunSource is null!");
         return retValue;
     }
+
+    protected static Double getPositionValueForSunKey(@NonNull SuntimesCalculator calculator, @Nullable Calendar calendar, String rootKey, String fullKey, Map<String, SuntimesCalculator.SunPosition> positions)
+    {
+        if (!positions.containsKey(rootKey)) {
+            positions.put(rootKey, calendar != null ? calculator.getSunPosition(calendar) : null);
+        }
+        SuntimesCalculator.SunPosition position = positions.get(rootKey);
+
+        String ROOT_KEY_PLUS_POSITION_AZ = rootKey + _POSITION_AZ;
+        String ROOT_KEY_PLUS_POSITION_ALT = rootKey + _POSITION_ALT;
+        String ROOT_KEY_PLUS_POSITION_RA = rootKey + _POSITION_RA;
+        String ROOT_KEY_PLUS_POSITION_DEC = rootKey + _POSITION_DEC;
+        String[] ROOT_KEY_PLUS_POSITION = new String[] { ROOT_KEY_PLUS_POSITION_AZ, ROOT_KEY_PLUS_POSITION_ALT, ROOT_KEY_PLUS_POSITION_RA, ROOT_KEY_PLUS_POSITION_DEC };    // 0, 1, 2, 3
+
+        int j = -1;    // index into ROOT_KEY_PLUS_POSITION
+        for (int i=0; i<ROOT_KEY_PLUS_POSITION.length; i++)
+        {
+            if (ROOT_KEY_PLUS_POSITION[i].equals(fullKey)) {
+                j = i;
+                break;
+            }
+        }
+        switch (j)
+        {
+            case 0: return (position != null ? position.azimuth : null);
+            case 1: return (position != null ? position.elevation : null);
+            case 2: return (position != null ? position.rightAscension : null);
+            case 3: return (position != null ? position.declination : null);
+        }
+        return null;
+    }
+
+    public static final String COLUMN_SUN_NOON_AZ = COLUMN_SUN_NOON + _POSITION_AZ;
+    public static final String COLUMN_SUN_NOON_ALT = COLUMN_SUN_NOON + _POSITION_ALT;
+    public static final String COLUMN_SUN_NOON_RA = COLUMN_SUN_NOON + _POSITION_RA;
+    public static final String COLUMN_SUN_NOON_DEC = COLUMN_SUN_NOON + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_ACTUAL_RISE_AZ = COLUMN_SUN_ACTUAL_RISE + _POSITION_AZ;
+    public static final String COLUMN_SUN_ACTUAL_RISE_ALT = COLUMN_SUN_ACTUAL_RISE + _POSITION_ALT;
+    public static final String COLUMN_SUN_ACTUAL_RISE_RA = COLUMN_SUN_ACTUAL_RISE + _POSITION_RA;
+    public static final String COLUMN_SUN_ACTUAL_RISE_DEC = COLUMN_SUN_ACTUAL_RISE + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_ACTUAL_SET_AZ = COLUMN_SUN_ACTUAL_SET + _POSITION_AZ;
+    public static final String COLUMN_SUN_ACTUAL_SET_ALT = COLUMN_SUN_ACTUAL_SET + _POSITION_ALT;
+    public static final String COLUMN_SUN_ACTUAL_SET_RA = COLUMN_SUN_ACTUAL_SET + _POSITION_RA;
+    public static final String COLUMN_SUN_ACTUAL_SET_DEC = COLUMN_SUN_ACTUAL_SET + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_CIVIL_RISE_AZ = COLUMN_SUN_CIVIL_RISE + _POSITION_AZ;
+    public static final String COLUMN_SUN_CIVIL_RISE_ALT = COLUMN_SUN_CIVIL_RISE + _POSITION_ALT;
+    public static final String COLUMN_SUN_CIVIL_RISE_RA = COLUMN_SUN_CIVIL_RISE + _POSITION_RA;
+    public static final String COLUMN_SUN_CIVIL_RISE_DEC = COLUMN_SUN_CIVIL_RISE + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_CIVIL_SET_AZ = COLUMN_SUN_CIVIL_SET + _POSITION_AZ;
+    public static final String COLUMN_SUN_CIVIL_SET_ALT = COLUMN_SUN_CIVIL_SET + _POSITION_ALT;
+    public static final String COLUMN_SUN_CIVIL_SET_RA = COLUMN_SUN_CIVIL_SET + _POSITION_RA;
+    public static final String COLUMN_SUN_CIVIL_SET_DEC = COLUMN_SUN_CIVIL_SET + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_NAUTICAL_RISE_AZ = COLUMN_SUN_NAUTICAL_RISE + _POSITION_AZ;
+    public static final String COLUMN_SUN_NAUTICAL_RISE_ALT = COLUMN_SUN_NAUTICAL_RISE + _POSITION_ALT;
+    public static final String COLUMN_SUN_NAUTICAL_RISE_RA = COLUMN_SUN_NAUTICAL_RISE + _POSITION_RA;
+    public static final String COLUMN_SUN_NAUTICAL_RISE_DEC = COLUMN_SUN_NAUTICAL_RISE + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_NAUTICAL_SET_AZ = COLUMN_SUN_NAUTICAL_SET + _POSITION_AZ;
+    public static final String COLUMN_SUN_NAUTICAL_SET_ALT = COLUMN_SUN_NAUTICAL_SET + _POSITION_ALT;
+    public static final String COLUMN_SUN_NAUTICAL_SET_RA = COLUMN_SUN_NAUTICAL_SET + _POSITION_RA;
+    public static final String COLUMN_SUN_NAUTICAL_SET_DEC = COLUMN_SUN_NAUTICAL_SET + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_ASTRO_RISE_AZ = COLUMN_SUN_ASTRO_RISE + _POSITION_AZ;
+    public static final String COLUMN_SUN_ASTRO_RISE_ALT = COLUMN_SUN_ASTRO_RISE + _POSITION_ALT;
+    public static final String COLUMN_SUN_ASTRO_RISE_RA = COLUMN_SUN_ASTRO_RISE + _POSITION_RA;
+    public static final String COLUMN_SUN_ASTRO_RISE_DEC = COLUMN_SUN_ASTRO_RISE + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_ASTRO_SET_AZ = COLUMN_SUN_ASTRO_SET + _POSITION_AZ;
+    public static final String COLUMN_SUN_ASTRO_SET_ALT = COLUMN_SUN_ASTRO_SET + _POSITION_ALT;
+    public static final String COLUMN_SUN_ASTRO_SET_RA = COLUMN_SUN_ASTRO_SET + _POSITION_RA;
+    public static final String COLUMN_SUN_ASTRO_SET_DEC = COLUMN_SUN_ASTRO_SET + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_GOLDEN_MORNING_AZ = COLUMN_SUN_GOLDEN_MORNING + _POSITION_AZ;
+    public static final String COLUMN_SUN_GOLDEN_MORNING_ALT = COLUMN_SUN_GOLDEN_MORNING + _POSITION_ALT;
+    public static final String COLUMN_SUN_GOLDEN_MORNING_RA = COLUMN_SUN_GOLDEN_MORNING + _POSITION_RA;
+    public static final String COLUMN_SUN_GOLDEN_MORNING_DEC = COLUMN_SUN_GOLDEN_MORNING + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_GOLDEN_EVENING_AZ = COLUMN_SUN_GOLDEN_EVENING + _POSITION_AZ;
+    public static final String COLUMN_SUN_GOLDEN_EVENING_ALT = COLUMN_SUN_GOLDEN_EVENING + _POSITION_ALT;
+    public static final String COLUMN_SUN_GOLDEN_EVENING_RA = COLUMN_SUN_GOLDEN_EVENING + _POSITION_RA;
+    public static final String COLUMN_SUN_GOLDEN_EVENING_DEC = COLUMN_SUN_GOLDEN_EVENING + _POSITION_DEC;
 
     /**
      * querySunPos
@@ -633,6 +784,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_MOON_RISE_AZ:
+                        case COLUMN_MOON_RISE_ALT:
                         case COLUMN_MOON_RISE_RA:
                         case COLUMN_MOON_RISE_DEC:
                         case COLUMN_MOON_RISE_DISTANCE:
@@ -641,6 +793,7 @@ public class CalculatorProvider extends ContentProvider
                             switch (columns[i])
                             {
                                 case COLUMN_MOON_RISE_AZ: row[i] = (position_rising != null ? position_rising.azimuth : null); break;
+                                case COLUMN_MOON_RISE_ALT: row[i] = (position_rising != null ? position_rising.elevation : null); break;
                                 case COLUMN_MOON_RISE_RA: row[i] = (position_rising != null ? position_rising.rightAscension : null); break;
                                 case COLUMN_MOON_RISE_DEC: row[i] = (position_rising != null ? position_rising.declination : null); break;
                                 case COLUMN_MOON_RISE_DISTANCE: row[i] = (position_rising != null ? position_rising.distance : null); break;
@@ -648,6 +801,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_MOON_SET_AZ:
+                        case COLUMN_MOON_SET_ALT:
                         case COLUMN_MOON_SET_RA:
                         case COLUMN_MOON_SET_DEC:
                         case COLUMN_MOON_SET_DISTANCE:
@@ -656,6 +810,7 @@ public class CalculatorProvider extends ContentProvider
                             switch (columns[i])
                             {
                                 case COLUMN_MOON_SET_AZ: row[i] = (position_setting != null ? position_setting.azimuth : null); break;
+                                case COLUMN_MOON_SET_ALT: row[i] = (position_setting != null ? position_setting.elevation : null); break;
                                 case COLUMN_MOON_SET_RA: row[i] = (position_setting != null ? position_setting.rightAscension : null); break;
                                 case COLUMN_MOON_SET_DEC: row[i] = (position_setting != null ? position_setting.declination : null); break;
                                 case COLUMN_MOON_SET_DISTANCE: row[i] = (position_setting != null ? position_setting.distance : null); break;
@@ -683,6 +838,16 @@ public class CalculatorProvider extends ContentProvider
         } else Log.w("CalculatorProvider", "queryMoon: moonSource is null!");
         return retValue;
     }
+
+    public static final String COLUMN_MOON_RISE_AZ = COLUMN_MOON_RISE + _POSITION_AZ;
+    public static final String COLUMN_MOON_RISE_ALT = COLUMN_MOON_RISE + _POSITION_ALT;
+    public static final String COLUMN_MOON_RISE_RA = COLUMN_MOON_RISE + _POSITION_RA;
+    public static final String COLUMN_MOON_RISE_DEC = COLUMN_MOON_RISE + _POSITION_DEC;
+
+    public static final String COLUMN_MOON_SET_AZ = COLUMN_MOON_SET + _POSITION_AZ;
+    public static final String COLUMN_MOON_SET_ALT = COLUMN_MOON_SET + _POSITION_ALT;
+    public static final String COLUMN_MOON_SET_RA = COLUMN_MOON_SET + _POSITION_RA;
+    public static final String COLUMN_MOON_SET_DEC = COLUMN_MOON_SET + _POSITION_DEC;
 
     /**
      * queryMoonPos
