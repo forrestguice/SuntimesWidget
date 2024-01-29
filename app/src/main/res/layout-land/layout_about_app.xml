@@ -80,6 +80,29 @@
                 android:text="@string/app_url"
                 android:autoLink="web" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="4dp" android:layout_marginBottom="4dp" />
+
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp" android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp">
+
+                <ImageView
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:src="@drawable/ic_action_favorite_24"
+                    android:tint="?attr/text_disabledColor"
+                    android:layout_gravity="center" android:layout_margin="8dp"
+                    tools:ignore="ContentDescription" />
+
+                <TextView android:id="@+id/txt_donate_url"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:textSize="?attr/text_size_small"
+                    android:text="@string/app_donate_url" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

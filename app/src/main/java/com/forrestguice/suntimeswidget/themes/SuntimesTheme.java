@@ -282,6 +282,85 @@ public class SuntimesTheme
         this.themeTimeBold = otherTheme.themeTimeBold;
     }
 
+    public SuntimesTheme(ContentValues values)    // TODO: test
+    {
+        this.themeVersion = values.getAsInteger(THEME_VERSION);
+        this.themeName = values.getAsString(THEME_NAME);
+        this.themeIsDefault = values.getAsBoolean(THEME_ISDEFAULT);
+        this.themeDisplayString = values.getAsString(THEME_DISPLAYSTRING);
+
+        this.themeBackground = ThemeBackground.valueOf(values.getAsString(THEME_BACKGROUND));
+        this.themeBackgroundColor = values.getAsInteger(THEME_BACKGROUND_COLOR);
+
+        this.themePadding[0] = values.getAsInteger(THEME_PADDING_LEFT);
+        this.themePadding[1] = values.getAsInteger(THEME_PADDING_TOP);
+        this.themePadding[2] = values.getAsInteger(THEME_PADDING_RIGHT);
+        this.themePadding[3] = values.getAsInteger(THEME_PADDING_BOTTOM);
+
+        this.themeTextColor = values.getAsInteger(THEME_TEXTCOLOR);
+        this.themeTitleColor = values.getAsInteger(THEME_TITLECOLOR);
+        this.themeTimeColor = values.getAsInteger(THEME_TIMECOLOR);
+        this.themeTimeSuffixColor = values.getAsInteger(THEME_TIMESUFFIXCOLOR);
+        this.themeActionColor = values.getAsInteger(THEME_ACTIONCOLOR);
+        this.themeAccentColor = values.getAsInteger(THEME_ACCENTCOLOR);
+
+        this.themeSunriseTextColor = values.getAsInteger(THEME_SUNRISECOLOR);
+        this.themeSunriseIconColor = values.getAsInteger(THEME_RISEICON_FILL_COLOR);
+        this.themeSunriseIconStrokeColor = values.getAsInteger(THEME_RISEICON_STROKE_COLOR);
+        this.themeSunriseIconStrokeWidth = values.getAsInteger(THEME_RISEICON_STROKE_WIDTH);
+
+        this.themeNoonTextColor = values.getAsInteger(THEME_NOONCOLOR);
+        this.themeNoonIconColor = values.getAsInteger(THEME_NOONICON_FILL_COLOR);
+        this.themeNoonIconStrokeColor = values.getAsInteger(THEME_NOONICON_STROKE_COLOR);
+        this.themeNoonIconStrokeWidth = values.getAsInteger(THEME_NOONICON_STROKE_WIDTH);
+
+        this.themeSunsetTextColor = values.getAsInteger(THEME_SUNSETCOLOR);
+        this.themeSunsetIconColor = values.getAsInteger(THEME_SETICON_FILL_COLOR);
+        this.themeSunsetIconStrokeColor = values.getAsInteger(THEME_SETICON_STROKE_COLOR);
+        this.themeSunsetIconStrokeWidth = values.getAsInteger(THEME_SETICON_STROKE_WIDTH);
+
+        this.themeMoonriseTextColor = values.getAsInteger(THEME_MOONRISECOLOR);
+        this.themeMoonsetTextColor = values.getAsInteger(THEME_MOONSETCOLOR);
+        this.themeMoonWaningColor = values.getAsInteger(THEME_MOONWANINGCOLOR);
+        this.themeMoonNewColor = values.getAsInteger(THEME_MOONNEWCOLOR);
+        this.themeMoonWaxingColor = values.getAsInteger(THEME_MOONWAXINGCOLOR);
+        this.themeMoonFullColor = values.getAsInteger(THEME_MOONFULLCOLOR);
+
+        this.themeMoonWaningTextColor = values.getAsInteger(THEME_MOONWANINGCOLOR_TEXT);
+        this.themeMoonNewTextColor = values.getAsInteger(THEME_MOONNEWCOLOR_TEXT);
+        this.themeMoonWaxingTextColor = values.getAsInteger(THEME_MOONWAXINGCOLOR_TEXT);
+        this.themeMoonFullTextColor = values.getAsInteger(THEME_MOONFULLCOLOR_TEXT);
+
+        this.themeMoonFullStroke = values.getAsInteger(THEME_MOONFULL_STROKE_WIDTH);
+        this.themeMoonNewStroke = values.getAsInteger(THEME_MOONNEW_STROKE_WIDTH);
+
+        this.themeDayColor = values.getAsInteger(THEME_DAYCOLOR);
+        this.themeCivilColor = values.getAsInteger(THEME_CIVILCOLOR);
+        this.themeNauticalColor = values.getAsInteger(THEME_NAUTICALCOLOR);
+        this.themeAstroColor = values.getAsInteger(THEME_ASTROCOLOR);
+        this.themeNightColor = values.getAsInteger(THEME_NIGHTCOLOR);
+        this.themeGraphPointFillColor = values.getAsInteger(THEME_GRAPH_POINT_FILL_COLOR);
+        this.themeGraphPointStrokeColor = values.getAsInteger(THEME_GRAPH_POINT_STROKE_COLOR);
+
+        this.themeSpringColor = values.getAsInteger(THEME_SPRINGCOLOR);
+        this.themeSummerColor = values.getAsInteger(THEME_SUMMERCOLOR);
+        this.themeFallColor = values.getAsInteger(THEME_FALLCOLOR);
+        this.themeWinterColor = values.getAsInteger(THEME_WINTERCOLOR);
+
+        this.themeMapBackgroundColor = values.getAsInteger(THEME_MAP_BACKGROUNDCOLOR);
+        this.themeMapForegroundColor = values.getAsInteger(THEME_MAP_FOREGROUNDCOLOR);
+        this.themeMapShadowColor = values.getAsInteger(THEME_MAP_SHADOWCOLOR);
+        this.themeMapHighlightColor = values.getAsInteger(THEME_MAP_HIGHLIGHTCOLOR);
+
+        this.themeTitleSize = values.getAsFloat(THEME_TITLESIZE);
+        this.themeTextSize = values.getAsFloat(THEME_TEXTSIZE);
+        this.themeTimeSize = values.getAsFloat(THEME_TIMESIZE);
+        this.themeTimeSuffixSize = values.getAsFloat(THEME_TIMESUFFIXSIZE);
+
+        this.themeTitleBold = values.getAsBoolean(THEME_TITLEBOLD);
+        this.themeTimeBold = values.getAsBoolean(THEME_TIMEBOLD);
+    }
+
     public boolean initTheme( Context context, String themesPrefix, String themeName, SuntimesTheme defaultTheme )
     {
         long bench_start = System.nanoTime();
@@ -492,15 +571,15 @@ public class SuntimesTheme
         values.put(THEME_BACKGROUND, this.themeBackground.name());
         values.put(THEME_BACKGROUND_COLOR, this.themeBackgroundColor);
 
-        values.put(THEME_PADDING_LEFT, this.themePaddingPixels[0]);
-        values.put(THEME_PADDING_TOP, this.themePaddingPixels[1]);
-        values.put(THEME_PADDING_RIGHT, this.themePaddingPixels[2]);
-        values.put(THEME_PADDING_BOTTOM, this.themePaddingPixels[3]);
+        values.put(THEME_PADDING_LEFT, this.themePadding[0]);
+        values.put(THEME_PADDING_TOP, this.themePadding[1]);
+        values.put(THEME_PADDING_RIGHT, this.themePadding[2]);
+        values.put(THEME_PADDING_BOTTOM, this.themePadding[3]);
 
-        values.put(THEME_PADDING_LEFT + THEME_PADDING_PIXELS, this.themePadding[0]);
-        values.put(THEME_PADDING_TOP + THEME_PADDING_PIXELS, this.themePadding[1]);
-        values.put(THEME_PADDING_RIGHT + THEME_PADDING_PIXELS, this.themePadding[2]);
-        values.put(THEME_PADDING_BOTTOM + THEME_PADDING_PIXELS, this.themePadding[3]);
+        values.put(THEME_PADDING_LEFT + THEME_PADDING_PIXELS, this.themePaddingPixels[0]);
+        values.put(THEME_PADDING_TOP + THEME_PADDING_PIXELS, this.themePaddingPixels[1]);
+        values.put(THEME_PADDING_RIGHT + THEME_PADDING_PIXELS, this.themePaddingPixels[2]);
+        values.put(THEME_PADDING_BOTTOM + THEME_PADDING_PIXELS, this.themePaddingPixels[3]);
 
         values.put(THEME_TEXTCOLOR, this.themeTextColor);
         values.put(THEME_TITLECOLOR, this.themeTitleColor);

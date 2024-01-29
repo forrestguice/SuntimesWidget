@@ -180,6 +180,10 @@ public class GetFixDatabaseAdapter
         values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
         values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
         values.put(KEY_PLACE_COMMENT, comment);
+        return addPlace(values);
+    }
+
+    public long addPlace(ContentValues values) {   // TODO: verify contents before calling insert
         return database.insert(TABLE_PLACES, null, values);
     }
 

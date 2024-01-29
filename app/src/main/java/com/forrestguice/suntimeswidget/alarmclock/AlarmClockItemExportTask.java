@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -71,20 +71,28 @@ public class AlarmClockItemExportTask extends ExportTask
         if (items != null)
         {
             numEntries = items.length;
-            out.write("[".getBytes());
-            for (int i=0; i<items.length; i++)
-            {
-                String jsonString = AlarmClockItemImportTask.AlarmClockItemJson.toJson(items[i]);
-                out.write(jsonString.getBytes());
-                if (i != items.length-1) {
-                    out.write(", ".getBytes());
-                }
-            }
-            out.write("]".getBytes());
+            writeAlarmItemsJSONArray(context, items, out);
             return true;
         }
         return false;
     }
 
+    /**
+     * writeAlarmItemsJSONArray
+     */
+    public static void writeAlarmItemsJSONArray(Context context, AlarmClockItem[] items, BufferedOutputStream out) throws IOException
+    {
+        out.write("[".getBytes());
+        for (int i=0; i<items.length; i++)
+        {
+            String jsonString = AlarmClockItemImportTask.AlarmClockItemJson.toJson(items[i]);
+            out.write(jsonString.getBytes());
+            if (i != items.length-1) {
+                out.write(", ".getBytes());
+            }
+        }
+        out.write("]".getBytes());
+        out.flush();
+    }
 
 }

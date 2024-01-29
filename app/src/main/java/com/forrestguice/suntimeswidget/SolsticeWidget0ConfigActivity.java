@@ -47,6 +47,11 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
+    protected Class getWidgetClass() {
+        return SolsticeWidget0.class;
+    }
+
+    @Override
     protected void initViews( Context context )
     {
         super.initViews(context);
@@ -72,7 +77,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        Intent updateIntent = new Intent(context, SolsticeWidget0.class);
+        Intent updateIntent = new Intent(context, getWidgetClass());
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(updateIntent);

@@ -26,8 +26,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
-import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
-
 /**
  * Clock widget config activity.
  */
@@ -37,6 +35,11 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     public ClockWidget0ConfigActivity()
     {
         super();
+    }
+
+    @Override
+    protected Class getWidgetClass() {
+        return ClockWidget0.class;
     }
 
     @Override
@@ -73,7 +76,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        Intent updateIntent = new Intent(context, ClockWidget0.class);
+        Intent updateIntent = new Intent(context, getWidgetClass());
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(updateIntent);
