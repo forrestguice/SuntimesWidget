@@ -783,13 +783,11 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = (moontimes.setTime) != null ? moontimes.setTime.getTimeInMillis() : null;
                             break;
 
-                        case COLUMN_MOON_RISE_AZ:
-                        case COLUMN_MOON_RISE_ALT:
-                        case COLUMN_MOON_RISE_RA:
-                        case COLUMN_MOON_RISE_DEC:
+                        case COLUMN_MOON_RISE_AZ: case COLUMN_MOON_RISE_ALT:
+                        case COLUMN_MOON_RISE_RA: case COLUMN_MOON_RISE_DEC:
                         case COLUMN_MOON_RISE_DISTANCE:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            position_rising = (position_rising == null && moontimes.riseTime != null) ? calculator.getMoonPosition(moontimes.riseTime) : null;
+                            position_rising = (position_rising == null && moontimes.riseTime != null) ? calculator.getMoonPosition(moontimes.riseTime) : position_rising;
                             switch (columns[i])
                             {
                                 case COLUMN_MOON_RISE_AZ: row[i] = (position_rising != null ? position_rising.azimuth : null); break;
@@ -800,13 +798,11 @@ public class CalculatorProvider extends ContentProvider
                             }
                             break;
 
-                        case COLUMN_MOON_SET_AZ:
-                        case COLUMN_MOON_SET_ALT:
-                        case COLUMN_MOON_SET_RA:
-                        case COLUMN_MOON_SET_DEC:
+                        case COLUMN_MOON_SET_AZ: case COLUMN_MOON_SET_ALT:
+                        case COLUMN_MOON_SET_RA: case COLUMN_MOON_SET_DEC:
                         case COLUMN_MOON_SET_DISTANCE:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            position_setting = (position_setting == null && moontimes.setTime != null) ? calculator.getMoonPosition(moontimes.setTime) : null;
+                            position_setting = (position_setting == null && moontimes.setTime != null) ? calculator.getMoonPosition(moontimes.setTime) : position_setting;
                             switch (columns[i])
                             {
                                 case COLUMN_MOON_SET_AZ: row[i] = (position_setting != null ? position_setting.azimuth : null); break;
