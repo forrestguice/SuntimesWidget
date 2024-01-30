@@ -591,6 +591,28 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_GOLDEN_EVENING, columns[i], positions);
                             break;
 
+                        case COLUMN_SUN_BLUE8_RISE_AZ: case COLUMN_SUN_BLUE8_RISE_ALT:
+                        case COLUMN_SUN_BLUE8_RISE_RA: case COLUMN_SUN_BLUE8_RISE_DEC:
+                            calendar = calculator.getMorningBlueHourForDate(day)[0];
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_BLUE8_RISE, columns[i], positions);
+                            break;
+                        case COLUMN_SUN_BLUE8_SET_AZ: case COLUMN_SUN_BLUE8_SET_ALT:
+                        case COLUMN_SUN_BLUE8_SET_RA: case COLUMN_SUN_BLUE8_SET_DEC:
+                            calendar = calculator.getEveningBlueHourForDate(day)[1];
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_BLUE8_SET, columns[i], positions);
+                            break;
+
+                        case COLUMN_SUN_BLUE4_RISE_AZ: case COLUMN_SUN_BLUE4_RISE_ALT:
+                        case COLUMN_SUN_BLUE4_RISE_RA: case COLUMN_SUN_BLUE4_RISE_DEC:
+                            calendar = calculator.getMorningBlueHourForDate(day)[1];
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_BLUE4_RISE, columns[i], positions);
+                            break;
+                        case COLUMN_SUN_BLUE4_SET_AZ: case COLUMN_SUN_BLUE4_SET_ALT:
+                        case COLUMN_SUN_BLUE4_SET_RA: case COLUMN_SUN_BLUE4_SET_DEC:
+                            calendar = calculator.getEveningBlueHourForDate(day)[0];
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_BLUE4_SET, columns[i], positions);
+                            break;
+
                         default:
                             row[i] = null;
                             break;
@@ -689,6 +711,26 @@ public class CalculatorProvider extends ContentProvider
     public static final String COLUMN_SUN_GOLDEN_EVENING_ALT = COLUMN_SUN_GOLDEN_EVENING + _POSITION_ALT;
     public static final String COLUMN_SUN_GOLDEN_EVENING_RA = COLUMN_SUN_GOLDEN_EVENING + _POSITION_RA;
     public static final String COLUMN_SUN_GOLDEN_EVENING_DEC = COLUMN_SUN_GOLDEN_EVENING + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_BLUE8_RISE_AZ = COLUMN_SUN_BLUE8_RISE + _POSITION_AZ;
+    public static final String COLUMN_SUN_BLUE8_RISE_ALT = COLUMN_SUN_BLUE8_RISE + _POSITION_ALT;
+    public static final String COLUMN_SUN_BLUE8_RISE_RA = COLUMN_SUN_BLUE8_RISE + _POSITION_RA;
+    public static final String COLUMN_SUN_BLUE8_RISE_DEC = COLUMN_SUN_BLUE8_RISE + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_BLUE8_SET_AZ = COLUMN_SUN_BLUE8_SET + _POSITION_AZ;
+    public static final String COLUMN_SUN_BLUE8_SET_ALT = COLUMN_SUN_BLUE8_SET + _POSITION_ALT;
+    public static final String COLUMN_SUN_BLUE8_SET_RA = COLUMN_SUN_BLUE8_SET + _POSITION_RA;
+    public static final String COLUMN_SUN_BLUE8_SET_DEC = COLUMN_SUN_BLUE8_SET + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_BLUE4_RISE_AZ = COLUMN_SUN_BLUE4_RISE + _POSITION_AZ;
+    public static final String COLUMN_SUN_BLUE4_RISE_ALT = COLUMN_SUN_BLUE4_RISE + _POSITION_ALT;
+    public static final String COLUMN_SUN_BLUE4_RISE_RA = COLUMN_SUN_BLUE4_RISE + _POSITION_RA;
+    public static final String COLUMN_SUN_BLUE4_RISE_DEC = COLUMN_SUN_BLUE4_RISE + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_BLUE4_SET_AZ = COLUMN_SUN_BLUE4_SET + _POSITION_AZ;
+    public static final String COLUMN_SUN_BLUE4_SET_ALT = COLUMN_SUN_BLUE4_SET + _POSITION_ALT;
+    public static final String COLUMN_SUN_BLUE4_SET_RA = COLUMN_SUN_BLUE4_SET + _POSITION_RA;
+    public static final String COLUMN_SUN_BLUE4_SET_DEC = COLUMN_SUN_BLUE4_SET + _POSITION_DEC;
 
     /**
      * querySunPos
