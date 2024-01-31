@@ -375,7 +375,7 @@
     <string name="timeMode_cross_midwinter_short">跨季節</string>       <!-- setting -->
     <string name="timeMode_cross_midsummer">拉馬斯節 (Lughnasadh)</string>  <!-- setting -->
     <string name="timeMode_cross_midsummer_short">跨季節</string>     <!-- setting -->
-    <string name="timeMode_cross_midspring">貝爾丹節 (Beltane)</string>    <!-- setting --> 
+    <string name="timeMode_cross_midspring">貝爾丹節 (Beltane)</string>    <!-- setting -->
     <string name="timeMode_cross_midspring_short">跨季節</string>     <!-- setting -->
     <string name="timeMode_cross_midautumnal">夏末節 (Samhain)</string>    <!-- setting -->
     <string name="timeMode_cross_midautumnal_short">跨季節</string>     <!-- setting -->
@@ -879,7 +879,7 @@
     <string name="configAction_setAlarmOffset">設定前後補償</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">設定類型</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">設定標記</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmNote">設置筆記</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmNote">設定筆記</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmDismissChallenge">設定解除挑战</string>         <!-- button (contentDescription) -->
     <string name="configAction_configAlarmDismissChallenge">配置解除挑战</string>         <!-- button (contentDescription) -->
     <string name="configAction_testAlarmDismissChallenge">测试解除挑战</string>         <!-- button (contentDescription) -->
@@ -1087,47 +1087,47 @@
     <string name="configLabel_widgetListHelp_summary">顯示小工具幫助</string>
     <string name="configLabel_widgetList_emptyMsg">無小工具</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
-    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
-    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
-    <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
-    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
+    <string name="configAction_createBackup">創建備份</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="configAction_restoreBackup">恢復備份</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="restorebackup_dialog_item_alarmitems">鬧鐘</string>
+    <string name="restorebackup_dialog_item_appsettings">應用設定</string>
+    <string name="restorebackup_dialog_item_widgetsettings">小工具設定</string>
+    <string name="restorebackup_dialog_item_widgetthemes">小工具主題</string>
+    <string name="restorebackup_dialog_item_placeitems">地點</string>
+    <string name="restorebackup_dialog_item_eventitems">事件</string>
+    <string name="restorebackup_dialog_item_actions">動作</string>
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
     <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
     <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
-    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
-    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="exportwidget_dialog_title">匯出設定</string>
+    <string name="exportwidget_dialog_message">匯出小工具設定到檔案。</string>
+    <string name="importwidget_dialog_title">匯入設定</string>
+    <string name="importwidget_dialog_message">從檔案匯入小工具設定。</string>
+    <string name="importwidget_dialog_title1">找到設定\n但屬於其它小工具…</string>
+    <string name="importwidget_dialog_title2">找到多個設定…</string>
     <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_unknown">（未知）</string>   <!-- shown as item when type cannot be determined -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>恢復備份</b>。匯入的設定會被緩存，當啟動器請求時會被恢復。<br/>]]></string>
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>最佳猜測</b>。匯入的設定會根據類型被應用於現有的小工具。<br/>]]></string>
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>直接匯入</b>。匯入的設定會被直接應用。只有小工具 ID 未發生變化時可用。<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
 
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>清除</b>。鬧鐘會在從備份中匯入前被清除。<br/>]]></string>
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>保持現有</b>。現有的鬧鐘會被保留（可能會重復）。<br/>]]></string>
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>清除</b>。地點會在從備份中匯入前被清除。<br/>]]></string>
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>保持現有</b>。現有的地點會被保留（可能會重復）。<br/>]]></string>
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>忽略現有</b>。如果地點不存在則會被新增（忽略現有）。<br/>]]></string>
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>覆蓋現有</b>。如果地點存在則會被更新。<br/>]]></string>
 
     <plurals name="itemsPlural">
-        <item quantity="other">%d items</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="other">%d 項</item>
+    </plurals>
     <plurals name="widgetPlural">
-        <item quantity="other">%d widgets</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="other">%d 個小工具</item>
+    </plurals>
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">地點</string>                           <!-- group title -->
@@ -1178,7 +1178,7 @@
     <string name="configLabel_ui_showmoon_noon_summary">在月亮對話框中顯示月亮正午和月亮午夜。</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_phase_columns">列（相）</string>
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">跨季節日</string>
@@ -1280,8 +1280,8 @@
     <string name="configActionDesc_themeList">主題列表</string>
     <string name="configActionDesc_actionList">操作列表</string>
     <string name="configActionDesc_widgetList">小工具列表</string>
-    <string name="configActionDesc_nextSunrise">顯示下一個日出</string> 
-    <string name="configActionDesc_nextSunset">顯示下一個日落</string>   
+    <string name="configActionDesc_nextSunrise">顯示下一個日出</string>
+    <string name="configActionDesc_nextSunset">顯示下一個日落</string>
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
 
     <!-- App Setting: time zone sort modes -->
@@ -1680,7 +1680,7 @@
     <string name="msg_import_success">匯入 <xliff:g id="themePlural">%s</xliff:g>。</string>
     <string name="msg_import_failure">從 <xliff:g id="filepath">%s</xliff:g> 匯入失敗！</string>
     <string name="msg_import_noresults">匯入已跳過；沒有找到新的主題。</string>
-    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
+    <string name="msg_import_label_file">檔案</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">
         <item quantity="other">%d 個主題</item>
@@ -1720,9 +1720,9 @@
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">問題追踪器</a> 提交一個請求。
     ]]></string>
     <string name="app_donate_url"><![CDATA[
-        %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
-    ]]></string>    <!-- TODO -->
+        %s 免費使用，如果您認為它有價值，請
+        <a href="https://forrestguice.github.io/SuntimesWidget/donate">隨意付費</a>。
+    ]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[
         <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>
@@ -1965,9 +1965,9 @@
         <![CDATA[
         Suntimes 使用第三方庫進行天文計算。<br/>
         <br/>
-        <b>資料源</b>設置允許在不同的庫之間進行選擇（或在這些庫提供的不同算法之間進行選擇）。預設為 <b>time4a-time4j</b>。<br/>
+        <b>資料源</b>設定允許在不同的庫之間進行選擇（或在這些庫提供的不同算法之間進行選擇）。預設為 <b>time4a-time4j</b>。<br/>
         <br/>
-        此設置會影響計算的速度和準確性，並且可能會限制可用的功能。<br/>
+        此設定會影響計算的速度和準確性，並且可能會限制可用的功能。<br/>
         <br/>
         有關可用選項的更多資訊，或擴展應用程式以支援其他庫，請參閱在線幫助。
     ]]>
