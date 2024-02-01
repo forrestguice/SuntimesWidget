@@ -1124,6 +1124,13 @@
     <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
     <string name="configLabel_alarms_fadein_disabled">Off</string>
 
+    <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->    <!-- TODO -->
+    <string name="configLabel_alarms_brightMode">Bright Alarms</string>    <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color, and increase in brightness.</string>     <!-- TODO -->
+
+    <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+
     <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
@@ -2567,6 +2574,8 @@
     <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
     <string name="def_app_alarms_snoozeLimit" translatable="false">0</string>      <!-- no snooze limit -->
     <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
+    <string name="def_app_alarms_bright" translatable="false">true</string>       <!-- bright mode alarms -->
+    <string name="def_app_alarms_bright_fadein" translatable="false">60000</string>       <!-- bright mode fade in 60s -->
     <string name="def_app_alarms_fadein" translatable="false">10000</string>       <!-- fade-in 10s to full volume -->
     <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
     <string name="def_app_alarms_autodismiss" translatable="false">30000</string>    <!-- auto-dismiss after 30s -->

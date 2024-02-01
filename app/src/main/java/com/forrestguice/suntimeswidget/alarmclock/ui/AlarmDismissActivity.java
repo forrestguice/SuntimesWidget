@@ -127,7 +127,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private final SuntimesUtils utils = new SuntimesUtils();
 
     private int enabledColor, disabledColor, pressedColor, textColor, timeColor, titleColor;
-    private int[] bgColors;
+    private int[] bgColors = new int[] { Color.BLACK, Color.WHITE };
 
     private int pulseSoundingDuration = 4000;
     private int pulseSoundingColor_start, pulseSoundingColor_end;
@@ -390,11 +390,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             timeColor = titleColor = ContextCompat.getColor(context, android.R.color.primary_text_light_nodisable);
         }
 
-        bgColors = new int[] {
-                Color.BLACK,
-                //Color.parseColor("#827717"),
-                //Color.parseColor("#F4FF81"),
-                Color.WHITE };
+        bgColors = AlarmSettings.loadPrefAlarmBrightColors(context);
 
         pulseSoundingDuration = getResources().getInteger(R.integer.anim_alarmscreen_sounding_pulse_duration);
         pulseSnoozingDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_pulse_duration);
