@@ -450,9 +450,24 @@ public class WelcomeActivity extends AppCompatActivity
                     }
                 }
 
-                TextView donateLink = (TextView) view.findViewById(R.id.link4);
+                final TextView donateLink = (TextView) view.findViewById(R.id.link4);
                 if (donateLink != null) {
+                    donateLink.setVisibility(View.GONE);
                     donateLink.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name))));
+                }
+
+                CheckBox donateCheck = (CheckBox) view.findViewById(R.id.check_donate);
+                if (donateCheck != null)
+                {
+                    donateCheck.setChecked(false);
+                    donateCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+                    {
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (donateLink != null) {
+                                donateLink.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                            }
+                        }
+                    });
                 }
             }
         }
