@@ -22,6 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="?attr/selectableItemBackground"
+        android:textSize="?attr/text_size_small"
         android:text="@string/welcome_action_next" />
 
     <Button android:id="@+id/button_prev"
@@ -29,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="?attr/selectableItemBackground"
+        android:textSize="?attr/text_size_small"
         android:text="@string/welcome_action_prev" />
 
 </android.support.constraint.ConstraintLayout>

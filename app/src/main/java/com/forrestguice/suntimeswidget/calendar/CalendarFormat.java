@@ -46,6 +46,7 @@ public enum CalendarFormat
     F_MMMM("%s [month]", "MMMM"),                      // month name
     F_MMM_d("%s", "MMM d"),                            // month + day
     F_MMMM_d("%s", "MMMM d"),                          // month + day
+    F_EE_MMM_d("%s", "EE, MMM d"),                     // day name, month + day
     F_EE_MMMM_d("%s", "EE, MMMM d"),                   // day name, month + day
     F_EEEE_MMMM_d("%s", "EEEE, MMMM d"),               // day name, month + day
     F_MMMM_d_yyyy("%s", "MMMM d, yyyy"),               // month day, year

@@ -4,7 +4,10 @@
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        style="@style/SunsetTimeCard" android:layout_margin="16dp"
+        style="@style/SunsetTimeCard"
+        android:layout_marginStart="@dimen/welcomeActivity_margin"
+        android:layout_marginEnd="@dimen/welcomeActivity_margin"
+        android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
         android:padding="8dp">
 
         <android.support.constraint.ConstraintLayout

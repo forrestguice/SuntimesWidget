@@ -23,6 +23,9 @@ import android.content.SharedPreferences;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * @see WidgetSettings
  */
@@ -57,6 +60,44 @@ public class CalendarSettings
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR = "MMMM d, yyyy";   // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_VIETNAMESE = "EEE, d. MMMM r(U)";   // TODO: review
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS;
+    static
+    {
+        CalendarMode[] modes = CalendarMode.values();
+        ALL_KEYS = new String[modes.length + 3];
+        for (int i=0; i<modes.length; i++) {
+            ALL_KEYS[i] = PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_FORMATPATTERN + "_" + modes[i].name();
+        }
+        int i = modes.length;
+        ALL_KEYS[i] = PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_FORMATPATTERN;
+        ALL_KEYS[i+1] = PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_SHOWDATE;
+        ALL_KEYS[i+2] = PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_MODE;
+    }
+
+    public static final String[] BOOL_KEYS = {
+            PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_SHOWDATE
+    };
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : BOOL_KEYS) {
+                types.put(key, Boolean.class);
+            }
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////

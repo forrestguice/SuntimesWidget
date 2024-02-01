@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2023 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,9 +21,12 @@ package com.forrestguice.suntimeswidget;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -34,9 +37,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -78,7 +83,10 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.actions.EditActionView;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
@@ -89,9 +97,11 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -115,12 +125,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected static final String HELPTAG_SUBSTITUTIONS = "help_substitutions";
 
+    public static final int IMPORT_REQUEST = 100;
+    public static final int EXPORT_REQUEST = 200;
+
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
     protected ContentValues themeValues;
 
     private ActionBar actionBar;
     protected TextView text_appWidgetID;
+    protected View progressView;
 
     protected ScrollView scrollView;
 
@@ -284,6 +298,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         saveTimezoneSettings(context);
         saveAppearanceSettings(context);
         saveActionSettings(context);
+        saveMetadata(context);
     }
 
     /**
@@ -410,6 +425,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         initToolbar(context);
 
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+        progressView = findViewById(R.id.progress);
 
         text_appWidgetID = (TextView) findViewById(R.id.text_appwidgetid);
         if (text_appWidgetID != null)
@@ -1611,7 +1627,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             themeDescriptor = WidgetThemes.valueOf(theme.themeName());
         } catch (InvalidParameterException e) {
             Log.e("loadAppearanceSettings", "Failed to load theme " + theme.themeName());
-            themeDescriptor = DarkTheme.THEMEDEF_DESCRIPTOR;
+            themeDescriptor = DarkTheme.themeDescriptor(context);
         }
         if (themeDescriptor != null)
         {
@@ -1886,6 +1902,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return WidgetSettings.PREF_DEF_TIMEZONE_MODE;
     }
 
+    protected void saveMetadata(Context context)
+    {
+        WidgetSettingsMetadata.WidgetMetadata metadata = new WidgetSettingsMetadata.WidgetMetadata(
+                getWidgetClass().getSimpleName(), BuildConfig.VERSION_CODE,
+                WidgetSettingsMetadata.loadMetaData(context, appWidgetId)
+        );
+        WidgetSettingsMetadata.saveMetaData(context, appWidgetId, metadata);
+    }
+
     /**
      * Save UI state to settings (action group).
      *
@@ -1932,6 +1957,268 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     };
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void showProgress( Context context, CharSequence title, CharSequence message )
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.VISIBLE);
+        }
+    }
+    public void dismissProgress()
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * exportSettings
+     */
+    protected void exportSettings(Context context)
+    {
+        saveSettings(context);
+
+        String exportTarget = getWidgetClass().getSimpleName() + "_" + appWidgetId;
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            String filename = exportTarget + WidgetSettingsExportTask.FILEEXT;
+            Intent intent = ExportTask.getCreateFileIntent(filename, WidgetSettingsExportTask.MIMETYPE);
+            try {
+                startActivityForResult(intent, EXPORT_REQUEST);
+                return;
+
+            } catch (ActivityNotFoundException e) {
+                Log.e("ExportSettings", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+            }
+        }
+
+        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, exportTarget, true, true);  // export to external cache
+        task.setTaskListener(exportSettingsListener);
+        task.setAppWidgetId(appWidgetId);
+        task.execute();
+    }
+    public void exportSettings(Context context, @NonNull Uri uri)
+    {
+        Log.i("ExportSettings", "Starting export task: " + uri);
+        saveSettings(context);
+        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, uri);
+        task.setTaskListener(exportSettingsListener);
+        task.setAppWidgetId(appWidgetId);
+        task.execute();
+    }
+
+    private final WidgetSettingsExportTask.TaskListener exportSettingsListener = new WidgetSettingsExportTask.TaskListener()
+    {
+        @Override
+        public void onStarted()
+        {
+            //setRetainInstance(true);
+            Context context = SuntimesConfigActivity0.this;
+            showProgress(context, context.getString(R.string.exportwidget_dialog_title), context.getString(R.string.exportwidget_dialog_message));
+        }
+
+        @Override
+        public void onFinished(WidgetSettingsExportTask.ExportResult results)
+        {
+            //setRetainInstance(false);
+            dismissProgress();
+
+            Context context = SuntimesConfigActivity0.this;
+            if (context != null)
+            {
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath()
+                        : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
+
+                if (results.getResult())
+                {
+                    //if (isAdded()) {
+                    String successMessage = context.getString(R.string.msg_export_success, path);
+                    Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
+                    //}
+
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        if (results.getExportUri() == null) {
+                            ExportTask.shareResult(context, file, results.getMimeType());
+                        }
+                    } else {
+                        ExportTask.shareResult(context, file, results.getMimeType());
+                    }
+                    return;
+                }
+
+                //if (isAdded()) {
+                String failureMessage = context.getString(R.string.msg_export_failure, path);
+                Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                //}
+            }
+        }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * importSettings
+     */
+    protected boolean importSettings(Context context)
+    {
+        if (context != null) {
+            startActivityForResult(ExportTask.getOpenFileIntent("text/*"), IMPORT_REQUEST);
+            return true;
+        }
+        return false;
+    }
+    public boolean importSettings(final Context context, @NonNull Uri uri)
+    {
+        Log.i("ImportSettings", "Starting import task: " + uri);
+        WidgetSettingsImportTask task = new WidgetSettingsImportTask(context);
+        task.setTaskListener(new WidgetSettingsImportTask.TaskListener()
+        {
+            @Override
+            public void onStarted() {
+                showProgress(context, context.getString(R.string.importwidget_dialog_title), context.getString(R.string.importwidget_dialog_message));
+            }
+
+            @Override
+            public void onFinished(WidgetSettingsImportTask.TaskResult result)
+            {
+                dismissProgress();
+                if (result.getResult() && result.numResults() > 0)
+                {
+                    ArrayList<ContentValues> values = new ArrayList<>();
+                    CharSequence[] labels = new CharSequence[result.numResults()];
+
+                    for (int i=0; i<result.numResults(); i++)
+                    {
+                        ContentValues v = result.getItems()[i];
+                        WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(v);
+                        String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
+                        labels[i] = context.getString(R.string.importwidget_dialog_item, (values_widgetClassName != null)
+                                ? values_widgetClassName : context.getString(R.string.importwidget_dialog_item_unknown));
+
+                        if (getWidgetClass().getSimpleName().equals(values_widgetClassName))
+                        {
+                            //Log.d("ImportSettings", "found settings for widget type " + values_widgetClassName + " at index " + i);
+                            values.add(v);
+                        }
+                    }
+
+                    if (values.size() == 1) {    // one match
+                        importSettings(context, values.get(0));
+
+                    } else if (values.size() > 1) {    // multiple matches; choose one
+                        chooseImportValuesOfSameType(context, values);
+
+                    } else {    // no matches; choose any
+                        chooseImportValuesOfDifferentType(context, result.getItems(), labels);
+                    }
+
+                } else {
+                    Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        task.execute(uri);
+        return true;
+    }
+
+    protected void chooseImportValuesOfSameType(final Context context, ArrayList<ContentValues> values)
+    {
+        final ContentValues[] matchingValues = values.toArray(new ContentValues[0]);
+        CharSequence[] labels = new CharSequence[matchingValues.length];
+        for (int i=0; i<matchingValues.length; i++) {
+            labels[i] = (i + 1) + "";
+        }
+        String title = context.getString(R.string.importwidget_dialog_title2);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_info)
+                .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                })
+                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        if ((p >= 0 && p < matchingValues.length)) {
+                            //Log.d("ImportSettings", "user selected " + p + " of " + (matchingValues.length-1));
+                            importSettings(context, matchingValues[p]);
+                        }
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+
+    protected void chooseImportValuesOfDifferentType(final Context context, final ContentValues[] values, final CharSequence[] labels)
+    {
+        String title = context.getString(R.string.importwidget_dialog_title1);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
+                .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                })
+                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        if ((p >= 0 && p < values.length)) {
+                            //Log.d("ImportSettings", "user selected " + p + " of " + (values.length-1) + " (" + labels[p] + ")");
+                            importSettings(context, values[p]);
+                        }
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+
+    protected void importSettings(Context context, ContentValues values) {
+        importSettings(context, values, true);
+    }
+    protected void importSettings(Context context, ContentValues values, boolean offerUndo)
+    {
+        SharedPreferences prefs0 = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        ContentValues previousValues = null;
+        if (offerUndo) {
+            previousValues = WidgetSettingsExportTask.toContentValues(prefs0, appWidgetId);
+        }
+
+        SharedPreferences.Editor prefs = prefs0.edit();
+        WidgetSettingsImportTask.importValues(prefs, values, WidgetSettings.PREF_PREFIX_KEY, (long) appWidgetId);
+        loadSettings(context);   // reload ui
+
+        if (offerUndo) {
+            //Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+            offerUndoImport(context, previousValues);
+        }
+    }
+
+    protected  void offerUndoImport(final Context context, final ContentValues previous)
+    {
+        View view = getWindow().getDecorView();
+        if (context != null && view != null)
+        {
+            CharSequence message = context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings));
+            Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    importSettings(context, previous, false);
+                }
+            });
+            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            snackbar.setDuration(UNDO_IMPORT_MILLIS);
+            snackbar.show();
+        }
+    }
+    public static final int UNDO_IMPORT_MILLIS = 12000;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Click handler executed when the "Add Widget" button is pressed.
      */
@@ -1965,13 +2252,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected Class getWidgetClass() {
+        return SuntimesWidget0.class;
+    }
+
     /**
      * Update all widgets of this type (direct update, no broadcast).
      * @param context a context used to access resources
      */
     protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        Intent updateIntent = new Intent(context, SuntimesWidget0.class);
+        Intent updateIntent = new Intent(context, getWidgetClass());
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(updateIntent);
@@ -2425,6 +2716,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
+            case EXPORT_REQUEST:
+                onExportResult(resultCode, data);
+                break;
+
+            case IMPORT_REQUEST:
+                onImportResult(resultCode, data);
+                break;
+
             case LocationConfigDialog.REQUEST_LOCATION:
                 onLocationResult(resultCode, data);
                 break;
@@ -2436,6 +2735,28 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             case PICK_THEME_REQUEST:
                 onPickThemeResult(resultCode, data);
                 break;
+        }
+    }
+
+    protected void onExportResult(int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK)
+        {
+            Uri uri = (data != null ? data.getData() : null);
+            if (uri != null) {
+                exportSettings(this, uri);
+            }
+        }
+    }
+
+    protected void onImportResult(int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK)
+        {
+            Uri uri = (data != null ? data.getData() : null);
+            if (uri != null) {
+                importSettings(this, uri);
+            }
         }
     }
 
@@ -2633,6 +2954,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             case R.id.action_about:
                 showAbout();
+                return true;
+
+            case R.id.action_import:
+                importSettings(SuntimesConfigActivity0.this);
+                return true;
+
+            case R.id.action_export:
+                exportSettings(SuntimesConfigActivity0.this);
                 return true;
 
             case R.id.action_save:

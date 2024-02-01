@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 
 /**
  * CalculatorProviderContract
- * @version 5 (0.5.0)
+ * @version 6 (0.5.1)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -198,7 +198,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *   The permission is granted by the user when an app is installed (and revoked if the provider is
  *   uninstalled/reinstalled).
  *
- *       <uses-permission android:name="suntimeswidget.calculator.permission.READ_PROVIDER" />
+ *       <uses-permission android:name="suntimeswidget.calculator.permission.READ_CALCULATOR" />
  *
  *   Note that calling query without the necessary permission will result in a SecurityException.
  *       try {
@@ -227,13 +227,14 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *     deprecates COLUMN_SEASON_VERNAL and replaces it with COLUMN_SEASON_SPRING
  *     adds COLUMN_CONFIG_APP_TEXT_SIZE
  *     adds COLUMN_SUNPOS_EOT, COLUMN_CONFIG_TIMEZONEMODE, COLUMN_CONFIG_SOLARTIMEMODE
+ *   6 fixes ambiguity of COLUMN_SEASON_CROSS_* columns; e.g. CROSS_SUMMER is the midpoint between summer solstice and autumn equinox.
  */
 public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
     String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-    String VERSION_NAME = "v0.5.0";
-    int VERSION_CODE = 5;
+    String VERSION_NAME = "v0.5.1";
+    int VERSION_CODE = 6;
 
     /**
      * CONFIG

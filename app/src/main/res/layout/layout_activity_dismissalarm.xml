@@ -175,6 +175,23 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			tools:text="Snoozing for 10m" />
 
+		<FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_gravity="bottom|start"
+			app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+			android:animateLayoutChanges="true">
+
+			<android.support.design.widget.FloatingActionButton
+				android:id="@+id/btn_back" android:visibility="visible"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_gravity="bottom|start" android:layout_margin="8dp"
+				android:src="?attr/icActionBack" android:scaleType="center"
+				android:contentDescription="@android:string/cancel"
+				app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
+				app:fabSize="mini"
+				app:layout_dodgeInsetEdges="bottom" />
+
+		</FrameLayout>
+
 	</android.support.constraint.ConstraintLayout>
 
 </merge>

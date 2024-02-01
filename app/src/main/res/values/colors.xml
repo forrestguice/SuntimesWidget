@@ -122,7 +122,7 @@
     <color name="text_secondary_dark">@android:color/secondary_text_dark</color>
     <color name="text_tertiary_dark">@android:color/tertiary_text_dark</color>
     <color name="text_time_dark">@android:color/primary_text_dark</color>
-    <color name="text_disabled_dark">#4Dffffff</color>
+    <color name="text_disabled_dark">@color/grey_500</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
     <color name="nav_bg_dark">@color/grey_800</color>
     <color name="hr_dark">#33ffffff</color>
@@ -144,8 +144,8 @@
     <color name="table_rising_dark">@color/sunIcon_color_rising_dark</color>
     <color name="table_setting_dark">@color/sunIcon_color_setting_dark</color>
     <color name="table_civil_dark">@color/graphColor_civil_dark</color>
-    <color name="table_astro_dark">@color/graphColor_astronomical_dark</color>
-    <color name="table_night_dark">@color/graphColor_night_dark</color>
+    <color name="table_astro_dark">@color/grey_500</color>
+    <color name="table_night_dark">@color/grey_500</color>
     <color name="table_noon_dark">@color/sunIcon_color_setting_dark</color>
     <color name="table_moon_rising_dark">@color/moonIcon_color_rising_dark</color>
     <color name="table_moon_setting_dark">@color/moonIcon_color_setting_dark</color>
@@ -296,8 +296,10 @@
 
     <color name="moonIcon_color_new_dark">@color/grey_850</color>
     <color name="moonIcon_color_new_border_dark">@color/grey_500l</color>
+    <color name="moonIcon_color_new_text_dark">@color/grey_500</color>
     <color name="moonIcon_color_new_light">@color/grey_850</color>
     <color name="moonIcon_color_new_border_light">@color/grey_600</color>
+    <color name="moonIcon_color_new_text_light">@color/grey_850</color>
 
     <!-- moon icon (full) -->
     <color name="moonIcon_color_full">@color/moonIcon_color_full_dark</color>
@@ -305,8 +307,10 @@
 
     <color name="moonIcon_color_full_dark">@color/grey_100</color>
     <color name="moonIcon_color_full_border_dark">@color/grey_500l</color>
+    <color name="moonIcon_color_full_text_dark">@color/grey_100</color>
     <color name="moonIcon_color_full_light">@color/grey_100</color>
     <color name="moonIcon_color_full_border_light">@color/grey_600</color>
+    <color name="moonIcon_color_full_text_light">@color/grey_600</color>
 
     <!-- sun icon -->
     <color name="sunIcon_color_rising_dark">#ffd500</color>

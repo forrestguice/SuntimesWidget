@@ -43,6 +43,8 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -114,6 +116,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText, noteText;
     private TextView[] labels;
 
+    private FloatingActionButton backButton;
     private AlarmButton dismissButton;
     private AlarmButton snoozeButton;
     private AlarmButton[] buttons;
@@ -220,6 +223,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         snoozeButton.setVisibility(isTesting ? View.VISIBLE : View.GONE);
 
         buttons = new AlarmButton[] {snoozeButton, dismissButton};
+
+        backButton = (FloatingActionButton) findViewById(R.id.btn_back);
+        backButton.setOnClickListener(onBackClicked);
+        backButton.hide();
+
         labels = new TextView[] {alarmSubtitle, offsetText};
 
         resetAnimateColors(labels, buttons);
@@ -339,13 +347,17 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     public void onRestoreInstanceState( Bundle bundle )
     {
         super.onRestoreInstanceState(bundle);
-        setMode(bundle.getString(EXTRA_MODE));
+        AlarmClockItem item = bundle.getParcelable("alarmItem");
+        if (item != null) {
+            setAlarmItem(this, item);
+        }
     }
 
     @Override
     public void onSaveInstanceState( Bundle bundle )
     {
         super.onSaveInstanceState(bundle);
+        bundle.putParcelable("alarmItem", this.alarm);
         bundle.putString(EXTRA_MODE, mode);
     }
 
@@ -400,6 +412,21 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
+    }
+
+    private final View.OnClickListener onBackClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            onBackPressed();
+        }
+    };
+
     private final View.OnClickListener onSnoozeClicked = new View.OnClickListener()
     {
         @Override
@@ -438,7 +465,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             challenge.setID(testChallengeID);
         }
 
-        if (challenge != AlarmSettings.DismissChallenge.NONE)
+        if (challenge != AlarmSettings.DismissChallenge.NONE && !AlarmNotifications.ACTION_TIMEOUT.equals(mode))
         {
             showDismissChallenge(context, getDismissChallenge(context, challenge));
         } else dismissAlarm(context);
@@ -473,6 +500,66 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         this.prevMode = this.mode;
         this.mode = mode;
         updateViews(this);
+
+        /*if (AlarmNotifications.ACTION_SNOOZE.equals(action))
+        {
+            if (Build.VERSION.SDK_INT >= 12) {
+                animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
+            }
+            SuntimesUtils.initDisplayStrings(this);
+            long snoozeMillis = alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this));
+            SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
+            String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
+            SpannableString snoozeDisplay = SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
+            infoText.setText(snoozeDisplay);
+            infoText.setVisibility(View.VISIBLE);
+
+            icon.setDisplayedChild(1);
+            snoozeButton.setVisibility(View.GONE);
+            snoozeButton.setEnabled(false);
+            dismissButton.setEnabled(true);
+            backButton.show();
+
+            if (Build.VERSION.SDK_INT >= 17)  // BUG: on some older devices modifying brightness turns off the screen
+            {
+                float dimScreenValue = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;
+                boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
+                if (needsTransition) {
+                    animateBrightness(dimScreenValue, snoozingDimmingDuration);
+                } else {
+                    setBrightness(dimScreenValue);
+                }
+                allowScreenOffAfterDelay(snoozingScreenOnDuration);
+            }
+
+        } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
+            if (Build.VERSION.SDK_INT >= 11) {
+                stopAnimateColors(labels, buttons);
+            }
+            infoText.setText(getString(R.string.alarmAction_timeoutMsg));
+            infoText.setVisibility(View.VISIBLE);
+            snoozeButton.setVisibility(View.GONE);
+            snoozeButton.setEnabled(false);
+            dismissButton.setEnabled(true);
+            backButton.show();
+            icon.setDisplayedChild(2);
+            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
+
+        } else {
+            if (Build.VERSION.SDK_INT >= 11) {
+                animateColors(labels, buttons, iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
+            }
+            hardwareButtonPressed = false;
+            infoText.setText("");
+            infoText.setVisibility(View.GONE);
+            snoozeButton.setVisibility(isTesting ? View.GONE : View.VISIBLE);
+            snoozeButton.setEnabled(true);
+            dismissButton.setEnabled(true);
+            backButton.hide();
+            icon.setDisplayedChild(0);
+            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
+        }*/
+
     }
 
     private static void colorizeButtonCompoundDrawable(int color, @NonNull Button button)
@@ -727,6 +814,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
+            backButton.show();
 
             pulseAnimationObj = animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
             if (isBrightMode) {
@@ -752,6 +840,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
+            backButton.show();
 
             resetAnimateColors(labels, buttons);
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
@@ -776,6 +865,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(View.GONE);
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(false);
+            backButton.hide();
 
             pulseAnimationObj = animateColors(labels, buttons, iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
