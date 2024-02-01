@@ -104,6 +104,23 @@ public class SuntimesWidget0 extends AppWidgetProvider
         updateWidget(context, appWidgetManager, appWidgetId);
     }
 
+    @Override
+    @TargetApi(21)
+    public void onRestored (Context context, int[] oldAppWidgetIds, int[] newAppWidgetIds)
+    {
+        if (oldAppWidgetIds != null && newAppWidgetIds != null)
+        {
+            boolean[] backupRestored = WidgetSettingsImportTask.restoreFromBackup(context, oldAppWidgetIds, newAppWidgetIds);
+            for (int i=0; i<newAppWidgetIds.length; i++) {
+                setUpdateAlarm(context, newAppWidgetIds[i]);
+            }
+            // TODO: api30+ should set AppWidgetManager#OPTION_APPWIDGET_RESTORE_COMPLETED true
+
+        } else {
+            Log.w(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: required extras are missing! ignoring request");
+        }
+    }
+
     /**
      * @param context the context
      * @param intent the intent that was received
@@ -143,7 +160,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_RESTORED)) {
             Log.d(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: " + getClass());
-            if (Build.VERSION.SDK_INT >= 21)
+            /*if (Build.VERSION.SDK_INT >= 21)
             {
                 int[] oldAppWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_OLD_IDS);  // old (now invalid) appWidgetIds
                 int[] newAppWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);      // new (valid) appWidgetIds
@@ -156,7 +173,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
                 } else {
                     Log.w(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: required extras are missing! ignoring request");
                 }
-            }
+            }*/
 
         } else if (action != null && action.equals(SUNTIMES_THEME_UPDATE)) {
             String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);
