@@ -2,6 +2,7 @@
 <resources>
     <bool name="api_pre_14">true</bool>
     <bool name="api_post_14">false</bool>
+    <bool name="is_watch">false</bool>
 
     <attr name="dialogFrame" format="reference" />
     <attr name="dialogBackground" format="reference" />
@@ -162,6 +163,7 @@
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
 
+    <attr name="checkFavorite" format="reference" />
     <attr name="checkAltitude" format="reference" />
     <attr name="checkVibrate" format="reference" />
     <attr name="checkVisibility" format="reference" />
@@ -269,5 +271,6 @@
     <item type="id" name="link1"/>
     <item type="id" name="link2"/>
     <item type="id" name="link3"/>
+    <item type="id" name="link4"/>
 
 </resources>

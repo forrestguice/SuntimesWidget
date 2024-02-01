@@ -933,6 +933,7 @@ public class CalculatorProvider extends ContentProvider
                 Object[] row = new Object[columns.length];
                 for (int i=0; i<columns.length; i++)
                 {
+                    Calendar event;
                     switch (columns[i])
                     {
                         case COLUMN_SEASON_YEAR:
@@ -944,48 +945,53 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_SEASON_CROSS_SPRING:
-                            if (calculator.getLocation().getLatitudeAsDouble() >= 0) {
-                                row[i] = SuntimesData.midpoint(calculator.getWinterSolsticeForYear(year0), calculator.getSpringEquinoxForYear(year)).getTimeInMillis();
-                            } else {
-                                row[i] = SuntimesData.midpoint(calculator.getWinterSolsticeForYear(year), calculator.getSpringEquinoxForYear(year)).getTimeInMillis();
-                            }
+                            event = SuntimesData.midpoint(calculator.getSpringEquinoxForYear(year), calculator.getSummerSolsticeForYear(year));
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_SEASON_CROSS_AUTUMN:
-                            if (calculator.getLocation().getLatitudeAsDouble() >= 0) {
-                                row[i] = SuntimesData.midpoint(calculator.getSummerSolsticeForYear(year), calculator.getAutumnalEquinoxForYear(year)).getTimeInMillis();
-                            } else {
-                                row[i] = SuntimesData.midpoint(calculator.getSummerSolsticeForYear(year0), calculator.getAutumnalEquinoxForYear(year)).getTimeInMillis();
-                            }
+                            event = SuntimesData.midpoint(calculator.getAutumnalEquinoxForYear(year), calculator.getWinterSolsticeForYear(year));
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_SEASON_CROSS_SUMMER:
-                            row[i] = SuntimesData.midpoint(calculator.getSpringEquinoxForYear(year), calculator.getSummerSolsticeForYear(year)).getTimeInMillis();
+                            event = (calculator.getLocation().getLatitudeAsDouble() >= 0)
+                                    ? SuntimesData.midpoint(calculator.getSummerSolsticeForYear(year), calculator.getAutumnalEquinoxForYear(year))
+                                    : SuntimesData.midpoint(calculator.getSummerSolsticeForYear(year0), calculator.getAutumnalEquinoxForYear(year));
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_SEASON_CROSS_WINTER:
-                            row[i] = SuntimesData.midpoint(calculator.getAutumnalEquinoxForYear(year), calculator.getWinterSolsticeForYear(year)).getTimeInMillis();
+                            event = (calculator.getLocation().getLatitudeAsDouble() >= 0)
+                                    ? SuntimesData.midpoint(calculator.getWinterSolsticeForYear(year0), calculator.getSpringEquinoxForYear(year))
+                                    : SuntimesData.midpoint(calculator.getWinterSolsticeForYear(year), calculator.getSpringEquinoxForYear(year));
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_SEASON_VERNAL:
                         case COLUMN_SEASON_SPRING:
-                            row[i] = calculator.getSpringEquinoxForYear(year).getTimeInMillis();
+                            event = calculator.getSpringEquinoxForYear(year);
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_SEASON_SUMMER:
-                            row[i] = calculator.getSummerSolsticeForYear(year).getTimeInMillis();
+                            event = calculator.getSummerSolsticeForYear(year);
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_SEASON_AUTUMN:
-                            row[i] = calculator.getAutumnalEquinoxForYear(year).getTimeInMillis();
+                            event = calculator.getAutumnalEquinoxForYear(year);
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_SEASON_WINTER:
-                            row[i] = calculator.getWinterSolsticeForYear(year).getTimeInMillis();
+                            event = calculator.getWinterSolsticeForYear(year);
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         default:
-                            row[i] = null; break;
+                            row[i] = null;
+                            break;
                     }
                 }
                 retValue.addRow(row);

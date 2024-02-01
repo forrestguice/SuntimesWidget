@@ -36,7 +36,7 @@
     <string name="configAction_moon">Księżyc</string>
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_onlineHelp">Pomoc online</string>
-    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
+    <string name="configAction_appDetails">Informacje o aplikacji</string>
     <string name="configAction_overflow">Więcej</string>
     <string name="configAction_options">Opcje</string>
     <string name="configAction_settings">Ustawienia</string>
@@ -493,7 +493,7 @@
     <string name="locationMode_current">Obecna (ostatnia znana)</string>  <!-- setting -->
     <string name="locationMode_custom">Użytkownika</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Uprawnienie na dostęp do lokalizacji jest niezbędne do aktualizacji Twojego bieżącego położenia.</string>           <!-- snackbar text -->
 
     <string name="configLabel_location">Lokalizacja</string>              <!-- group title -->
     <string name="configLabel_location_mode">Tryb:</string>                     <!-- spinner label -->
@@ -653,6 +653,12 @@
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+
+    <string name="widgetThemes_dark">Ciemna</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark_transparent">Ciemna (przezroczysta)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_dark_translucent">Ciemna (półprzezroczysta)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_light">Jasna</string>                              <!-- default widget theme name -->
+    <string name="widgetThemes_light_transparent">Jasna (przezroczysta)</string>    <!-- default widget theme name -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -978,11 +984,11 @@
     <string name="help_battery_optimization">Ustaw aplikację <xliff:g id="appName">%s</xliff:g> jako „nie zoptymalizowaną” dla jej poprawnego działania.</string>
     <string name="help_battery_optimization_aggressive">To jest urządzenie <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, które może wymagać dodatkowej konfiguracji dla bezawaryjnego działania.</string>
 
-    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart">Uruchomienie przy starcie</string>
+    <string name="configLabel_alarms_autostart_on">wł.</string>
+    <string name="configLabel_alarms_autostart_off">wył.\nAlarmy mogą nie działać po ponownym uruchomieniu.</string>
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Uruchomienie przy starcie urządzenia jest wyłączone!\nAlarmy mogą nie działać po ponownym uruchomieniu.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
     <string name="configLabel_alarms_notifications">Powiadomienia</string>
     <string name="configLabel_alarms_notifications_on">Włączone</string>
@@ -1086,6 +1092,54 @@
     <string name="configLabel_widgetListHelp_summary">Pokaż pomoc dot. widżetów</string>
     <string name="configLabel_widgetList_emptyMsg">Brak widżetów</string>          <!-- a label that is displayed in place of an empty listview -->
 
+    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
+    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
+    <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
+    <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
+    <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
+
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
+    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
+    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+
+    <plurals name="itemsPlural">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+        <item quantity="few">%d items</item>
+        <item quantity="many">%d items</item>
+    </plurals>  <!-- TODO -->
+    <plurals name="widgetPlural">
+        <item quantity="one">%d widget</item>
+        <item quantity="other">%d widgets</item>
+        <item quantity="few">%d widgets</item>
+        <item quantity="many">%d widgets</item>
+    </plurals>  <!-- TODO -->
+
     <!-- App Setting: Places -->
     <string name="configLabel_places">Miejsca</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Zarządzaj miejscami</string>             <!-- group title -->
@@ -1130,11 +1184,14 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Wyświetl dane Księżyca</string>
-    <string name="configLabel_ui_showmoon_summary">Wyświetla czasu wschodu i zachodu Księżyca, fazę i oświetlenie.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
+    <string name="configLabel_ui_showmoon_summary">Księżyc: wyświetla czasu wschodu i zachodu, fazę i oświetlenie.</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Wyświetl kulminacje Księżyca</string>
-    <string name="configLabel_ui_showmoon_noon_summary">Wyświetl górowanie i dołowanie Księżyca w oknie “Księżyc”.</string>
+    <string name="configLabel_ui_showmoon_noon_summary">Wyświetl górowanie i dołowanie Księżyca w oknie „Księżyc”.</string>
+
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Kolumny (fazy)</string>
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Pólmetki pór roku</string>
@@ -1533,9 +1590,9 @@
     <string name="gps_dialog_cancel">Nie</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Ustaw lokalizację</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">Ostatnia lokalizacja</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
-    <string name="gps_lastfix_title_found">Ostatnia lokalizacja</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_set">Ustawiona lokalizację</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Poprzednia lokalizacja</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="gps_lastfix_title_found">Obecna lokalizacja</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Ustalanie lokalizacji</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Nie udało się określić Twojej lokalizacji, powrót do ostatniej znanej lokalizacji.</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">Anulowano odświeżanie lokalizacji.</string> <!-- displayed briefly when gps refresh cancelled -->
@@ -1617,6 +1674,7 @@
     <string name="msg_import_success">Zaimportowano <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Nie udało się zaimportować z <xliff:g id="filepath">%s</xliff:g>!</string>
     <string name="msg_import_noresults">Pominięto importowanie; nie znaleziono nowych skórek.</string>
+    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">
         <item quantity="one">%d skórkę</item>
@@ -1655,8 +1713,12 @@
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
+    <string name="app_donate_url"><![CDATA[
+        %s is available gratis, but if it has proven its value, please
+        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+    ]]></string>    <!-- TODO -->
     <string name="app_license_about">Aplikacja Czasy Słońca jest wolnym i otwartoźródłowym oprogramowaniem.</string>   <!-- displayed by welcome dialog -->-->
-    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2022 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
+    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2024 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
 
     <string name="app_legal2"><![CDATA[<b>Tłumaczenia na:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>

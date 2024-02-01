@@ -22,7 +22,7 @@
 
 	<LinearLayout
 		android:layout_width="match_parent" android:layout_height="match_parent"
-		android:orientation="vertical">
+		android:orientation="vertical" android:animateLayoutChanges="true">
 
 		<android.support.v7.widget.Toolbar
 			android:id="@+id/app_menubar"
@@ -35,9 +35,14 @@
 			app:popupTheme="?attr/actionBarPopupTheme"
 			app:title="@string/configLabel_widgetList" />
 
+		<ProgressBar android:id="@+id/progress" android:visibility="gone"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:indeterminateOnly="true" />
+
 		<ListView
 			android:id="@+id/widgetList"
-			android:layout_width="match_parent" android:layout_height="match_parent" />
+			android:layout_width="match_parent" android:layout_height="wrap_content" />
 
 		<include layout="@layout/layout_empty_widgetlist" />
 

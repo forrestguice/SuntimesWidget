@@ -36,7 +36,7 @@
     <string name="configAction_moon">月亮</string>
     <string name="configAction_help">帮助</string>
     <string name="configAction_onlineHelp">在线帮助</string>
-    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
+    <string name="configAction_appDetails">应用信息</string>
     <string name="configAction_overflow">更多</string>
     <string name="configAction_options">选项</string>
     <string name="configAction_settings">设置</string>
@@ -375,7 +375,7 @@
     <string name="timeMode_cross_midwinter_short">跨季节</string>       <!-- setting -->
     <string name="timeMode_cross_midsummer">拉马斯节 (Lughnasadh)</string>  <!-- setting -->
     <string name="timeMode_cross_midsummer_short">跨季节</string>     <!-- setting -->
-    <string name="timeMode_cross_midspring">贝尔丹节 (Beltane)</string>    <!-- setting --> 
+    <string name="timeMode_cross_midspring">贝尔丹节 (Beltane)</string>    <!-- setting -->
     <string name="timeMode_cross_midspring_short">跨季节</string>     <!-- setting -->
     <string name="timeMode_cross_midautumnal">夏末节 (Samhain)</string>    <!-- setting -->
     <string name="timeMode_cross_midautumnal_short">跨季节</string>     <!-- setting -->
@@ -501,7 +501,7 @@
     <string name="locationMode_current">当前（最近获取到的位置）</string>  <!-- setting -->
     <string name="locationMode_custom">用户自定</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> 更新当前位置需要位置权限。</string>           <!-- snackbar text -->
 
     <string name="configLabel_location">位置</string>               <!-- group title -->
     <string name="configLabel_location_mode">模式:</string>                      <!-- spinner label -->
@@ -662,6 +662,12 @@
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
+    <string name="widgetThemes_dark">深色</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark_transparent">深色（透明）</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_dark_translucent">深色（半透明）</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_light">浅色</string>                              <!-- default widget theme name -->
+    <string name="widgetThemes_light_transparent">浅色（透明）</string>    <!-- default widget theme name -->
+
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g>（副本）</string>                            <!-- copied theme name (display string) -->
@@ -688,8 +694,8 @@
     <string name="configAction_chooseColor">选择颜色</string> <!-- button (contentDescription) -->
 
     <string name="configLabel_themeBackgroundId">底色:</string>    <!-- spinner label -->
-    <string name="configLabel_themeBackground_light">亮色</string>        <!-- light background -->
-    <string name="configLabel_themeBackground_dark">暗色</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_light">浅色</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">深色</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">透明</string>  <!-- transparent background -->
     <string name="configLabel_themeBackground_color">颜色</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">颜色:</string>      <!-- color label -->
@@ -980,11 +986,11 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> 须为 \"未优化\" 以获得更好的更好的结果。</string>
     <string name="help_battery_optimization_aggressive">这是一个 <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> 设备，需要额外配置才能正常运作。</string>
 
-    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart">自动启动</string>
+    <string name="configLabel_alarms_autostart_on">打开</string>
+    <string name="configLabel_alarms_autostart_off">关闭。\n重启后闹钟可能无法可靠地运作。</string>
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] 自动启动被禁用！\n重启后闹钟可能无法可靠地运作。</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
     <string name="configLabel_alarms_notifications">通知</string>
     <string name="configLabel_alarms_notifications_on">打开</string>
@@ -1081,6 +1087,48 @@
     <string name="configLabel_widgetListHelp_summary">显示小部件帮助</string>
     <string name="configLabel_widgetList_emptyMsg">无小部件</string>          <!-- a label that is displayed in place of an empty listview -->
 
+    <string name="configAction_createBackup">创建备份</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="configAction_restoreBackup">恢复备份</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="restorebackup_dialog_item_alarmitems">闹钟</string>
+    <string name="restorebackup_dialog_item_appsettings">应用设置</string>
+    <string name="restorebackup_dialog_item_widgetsettings">小部件设置</string>
+    <string name="restorebackup_dialog_item_widgetthemes">小部件主题</string>
+    <string name="restorebackup_dialog_item_placeitems">地点</string>
+    <string name="restorebackup_dialog_item_eventitems">事件</string>
+    <string name="restorebackup_dialog_item_actions">动作</string>
+    <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
+    <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
+
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="exportwidget_dialog_title">导出设置</string>
+    <string name="exportwidget_dialog_message">导出小部件设置到文件。</string>
+    <string name="importwidget_dialog_title">导入设置</string>
+    <string name="importwidget_dialog_message">从文件导入小部件设置。</string>
+    <string name="importwidget_dialog_title1">找到设置\n但属于其它小部件…</string>
+    <string name="importwidget_dialog_title2">找到多个设置…</string>
+    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="importwidget_dialog_item_unknown">（未知）</string>   <!-- shown as item when type cannot be determined -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>恢复备份</b>。导入的设置会被缓存，当启动器请求时会被恢复。<br/>]]></string>
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>最佳猜测</b>。导入的设置会根据类型被应用于现有的小部件。<br/>]]></string>
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>直接导入</b>。导入的设置会被直接应用。只有小部件 ID 未发生变化时可用。<br/>]]></string>
+    <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>清除</b>。闹钟会在从备份中导入前被清除。<br/>]]></string>
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>保持现有</b>。现有的闹钟会被保留（可能会重复）。<br/>]]></string>
+
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>清除</b>。地点会在从备份中导入前被清除。<br/>]]></string>
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>保持现有</b>。现有的地点会被保留（可能会重复）。<br/>]]></string>
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>忽略现有</b>。如果地点不存在则会被新增（忽略现有）。<br/>]]></string>
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>覆盖现有</b>。如果地点存在则会被更新。<br/>]]></string>
+
+    <plurals name="itemsPlural">
+        <item quantity="other">%d 项</item>
+    </plurals>
+    <plurals name="widgetPlural">
+        <item quantity="other">%d 个小部件</item>
+    </plurals>
+
     <!-- App Setting: Places -->
     <string name="configLabel_places">地点</string>                           <!-- group title -->
     <string name="configLabel_places_manage">管理地点</string>             <!-- group title -->
@@ -1123,11 +1171,14 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">显示月亮信息</string>
-    <string name="configLabel_ui_showmoon_summary">显示月出月落的时间，月相和月光饱满度。</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
+    <string name="configLabel_ui_showmoon_summary">显示月出月落的时间，月相和月光饱满度。</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">显示月亮正午</string>
     <string name="configLabel_ui_showmoon_noon_summary">在月亮对话框中显示月亮正午和月亮午夜。</string>
+
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">列（相）</string>
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">跨季节日</string>
@@ -1170,13 +1221,13 @@
     <string name="configLabel_ui_showbluehour">显示蓝色时刻</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">亮色主题</string>
-    <string name="appThemes_darkTheme">暗色主题</string>
-    <string name="appThemes_nightMode">亮色主题/暗色主题（夜间模式）</string>
+    <string name="appThemes_lightTheme">浅色主题</string>
+    <string name="appThemes_darkTheme">深色主题</string>
+    <string name="appThemes_nightMode">浅色主题/深色主题（夜间模式）</string>
     <string name="appThemes_systemDefault">系统默认</string>
     <string name="appThemes_systemDefault1">高对比度（系统默认）</string>
-    <string name="appThemes_darkTheme1">高对比度（暗色）</string>
-    <string name="appThemes_lightTheme1">高对比度（亮色）</string>
+    <string name="appThemes_darkTheme1">高对比度（深色）</string>
+    <string name="appThemes_lightTheme1">高对比度（浅色）</string>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1548,16 +1599,16 @@
     <string name="gps_dialog_cancel">否</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">设置位置</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">上次获取到的位置</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
-    <string name="gps_lastfix_title_found">上次获取到的位置</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">获取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_title_set">配置的位置</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">上次的位置</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="gps_lastfix_title_found">最后的位置</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_searching">正在获取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">未能获取到位置；尝试用上次获取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">位置更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">没有补丁</string>
-    <string name="gps_keeptrying_msg">无法获取补丁。</string>
+    <string name="gps_keeptrying_title">没有位置</string>
+    <string name="gps_keeptrying_msg">无法获取位置。</string>
     <string name="gps_keeptrying_ok">继续尝试</string>
     <string name="gps_keeptrying_cancel">放弃</string>
     <string name="gps_keeptrying_fallback">使用最后的位置</string>
@@ -1629,6 +1680,7 @@
     <string name="msg_import_success">导入 <xliff:g id="themePlural">%s</xliff:g>。</string>
     <string name="msg_import_failure">从 <xliff:g id="filepath">%s</xliff:g> 导入失败！</string>
     <string name="msg_import_noresults">导入已跳过；没有找到新的主题。</string>
+    <string name="msg_import_label_file">文件</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">
         <item quantity="other">%d 个主题</item>
@@ -1667,12 +1719,16 @@
         <b>支持:</b> 访问
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">问题追踪器</a> 提交一个请求。
     ]]></string>
+    <string name="app_donate_url"><![CDATA[
+        %s 免费使用，如果您认为它有价值，请
+        <a href="https://forrestguice.github.io/SuntimesWidget/donate">随意付费</a>。
+    ]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[
         <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>源代码:</b><br />
-        Copyright &#169 2014-2023 Forrest Guice <br />
+        Copyright &#169 2014-2024 Forrest Guice <br />
         源代码在 GPLv3 许可下发布。
     ]]></string>
 

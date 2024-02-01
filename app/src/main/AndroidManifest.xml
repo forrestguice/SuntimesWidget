@@ -332,6 +332,7 @@
             android:name=".alarmclock.ui.AlarmDismissActivity"
             android:label="@string/app_name_alarmclock"
             android:icon="@mipmap/ic_launcher_alarms"
+            android:configChanges="orientation"
             android:launchMode="singleTop" android:excludeFromRecents="true"
             android:taskAffinity=".alarmclock.ui.AlarmDismissActivity"
             android:exported="true">

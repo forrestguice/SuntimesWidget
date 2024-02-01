@@ -1,5 +1,26 @@
 ### ~
 
+### v0.15.10 (2024-01-14)
+* adds layouts and resources for very small screens (#727); experimental support for wearables.
+* adds 'columns' setting to moon dialog; 2, 3 or 4 columns.
+* fixes app crash when tapping on the date field (#751).
+* fixes bug "can't interact with app after install (flashes/strobes)" (#760).
+* fixes bug "custom date format is not saved"; adds calendar format pattern "EE, MMM d" (#759).
+* fixes bug where the solstice widget displays "cross-quarter days" when disabled by the app (#755).
+* fixes bug where moon dialog content is clipped (#754).
+* increments `CalculatorProviderContract` version 5 -> 6; fixes columns for "cross-quarter days".
+* changes "header labels" default to "none" for translations with longer strings (de, fr, hu, nb, nl, pt_BR) (#754).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#752 by James Liu).
+
+### v0.15.9 (2023-12-03)
+* adds a `back` button to the alarm dismiss activity (#750).
+* fixes navigation bugs when using D-pad (Android TV).
+* fixes app crash after changing `data source` (#743).
+* fixes bug where toolbar fails to apply text size setting.
+* fixes bug where alarm dismiss challenge is shown after alarm has timed-out.
+* fixes default colors to improve contrast and readability (#744).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#745 by James Liu).
+
 ### v0.15.8 (2023-10-24)
 * adds a warning when the app is configured to "current location" but location permissions are denied (#733).
 * changes the location label when switching away from "current location" mode (#733).

@@ -133,7 +133,14 @@
     <dimen name="chipIcon_size">20dp</dimen>
     <dimen name="prefIcon_size">24dp</dimen>
     <dimen name="helpIcon_size">24dp</dimen>
+    <dimen name="aboutIcon_size">96dp</dimen>
+    <dimen name="welcomeIcon_size">128dp</dimen>
+
+    <dimen name="welcomeIndicator_size">36px</dimen>
+    <dimen name="welcomeActivity_margin">16dp</dimen>
 
     <dimen name="equinoxItem_height">56dp</dimen>
+    <dimen name="equinoxItem_margin">12dp</dimen>
+    <dimen name="equinoxList_topMargin">6dp</dimen>
 
 </resources>

@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -382,12 +383,21 @@ public class SuntimesData
         return (soonest != null ? soonest.getTimeInMillis() : -1);
     }
 
-    public static Calendar midpoint(Calendar c1, Calendar c2)
+    @Nullable
+    public static Calendar midpoint(@Nullable Calendar c1, @Nullable Calendar c2)
     {
-        Calendar r = (Calendar)c1.clone();
-        long d = c2.getTimeInMillis() - c1.getTimeInMillis();
-        r.setTimeInMillis(c1.getTimeInMillis() + (d/2L));
-        return r;
+        if (c1 != null)
+        {
+            Calendar r = (Calendar) c1.clone();
+            if (c2 != null) {
+                long d = c2.getTimeInMillis() - c1.getTimeInMillis();
+                r.setTimeInMillis(c1.getTimeInMillis() + (d / 2L));
+            }
+            return r;
+        } else {
+            Log.e("DEBUG", "midpoint: null calendar!");
+            return null;
+        }
     }
 
 }

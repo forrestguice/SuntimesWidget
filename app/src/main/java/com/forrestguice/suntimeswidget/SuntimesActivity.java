@@ -515,7 +515,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         TimeDateDialog seekDateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_SEEK);
-        if (dateDialog != null)
+        if (seekDateDialog != null)
         {
             seekDateDialog.setTimezone(dataset.timezone());
             seekDateDialog.setOnAcceptedListener(onSeekDate(seekDateDialog));
@@ -1140,7 +1140,8 @@ public class SuntimesActivity extends AppCompatActivity
                 if (mapItem != null)
                 {
                     boolean showMapButton = AppSettings.loadShowMapButtonPref(this);
-                    int showAsAction = (showMapButton ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER);
+                    boolean hideItems = getResources().getBoolean(R.bool.is_watch);
+                    int showAsAction = (showMapButton ? (hideItems ? MenuItem.SHOW_AS_ACTION_NEVER : MenuItem.SHOW_AS_ACTION_IF_ROOM) : MenuItem.SHOW_AS_ACTION_NEVER);
                     mapItem.setShowAsAction(showAsAction);
                 }
             }
@@ -1958,7 +1959,7 @@ public class SuntimesActivity extends AppCompatActivity
         startTimeTask();
     }
 
-    private Runnable updateEquinoxViewColumnWidth = new Runnable()
+    private final Runnable updateEquinoxViewColumnWidth = new Runnable()
     {
         @Override
         public void run()
@@ -1967,7 +1968,9 @@ public class SuntimesActivity extends AppCompatActivity
             if (card != null) {
                 View column = card.findViewById(R.id.header_column);
                 if (column != null) {
-                    card_equinoxSolstice.adjustColumnWidth(column.getMeasuredWidth());
+                    if (!getResources().getBoolean(R.bool.is_watch)) {
+                        card_equinoxSolstice.adjustColumnWidth(column.getMeasuredWidth());
+                    }
                 }
             }
         }
@@ -2425,7 +2428,9 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showEquinoxDialog()
     {
         final EquinoxCardDialog equinoxDialog = new EquinoxCardDialog();
-        updateEquinoxDialogColumnWidth(equinoxDialog);
+        if (!getResources().getBoolean(R.bool.is_watch)) {
+            updateEquinoxDialogColumnWidth(equinoxDialog);
+        }
         equinoxDialog.themeViews(this, appThemeOverride);
         equinoxDialog.setDialogListener(equinoxDialogListener);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout android:id="@+id/media_actions" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:gravity="center_vertical"
+    app:layout_constraintTop_toBottomOf="@+id/info_time_worldmap_layout">
+
+    <ImageButton
+        android:id="@+id/media_reset_map"
+        android:layout_width="wrap_content" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:paddingLeft="8dp" android:paddingStart="8dp"
+        android:paddingRight="4dp" android:paddingEnd="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/worldmap_dialog_action_reset"
+        android:src="?attr/icActionTimeReset" />
+
+    <ImageButton
+        android:id="@+id/media_play_map"
+        android:layout_width="wrap_content" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:paddingLeft="4dp" android:paddingStart="4dp"
+        android:paddingRight="8dp" android:paddingEnd="8dp"
+        app:layout_constraintStart_toEndOf="@+id/media_reset_map"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/worldmap_dialog_action_play"
+        android:src="?attr/icActionPlay" />
+
+    <ImageButton android:visibility="gone"
+        android:id="@+id/media_pause_map"
+        android:layout_width="wrap_content" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:paddingLeft="4dp" android:paddingStart="4dp"
+        android:paddingRight="8dp" android:paddingEnd="8dp"
+        app:layout_constraintStart_toEndOf="@+id/media_reset_map"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/worldmap_dialog_action_pause"
+        android:src="?attr/icActionPause" />
+
+    <ImageButton android:visibility="gone"
+        android:id="@+id/media_record_map"
+        android:layout_width="wrap_content" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:paddingLeft="4dp" android:paddingStart="4dp"
+        android:paddingRight="8dp" android:paddingEnd="8dp"
+        app:layout_constraintStart_toEndOf="@+id/media_reset_map"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/worldmap_dialog_action_record"
+        android:src="?attr/icActionRecord" />
+
+    <ImageButton
+        android:id="@+id/media_prev_map"
+        android:layout_width="wrap_content" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:scaleY="0.75" android:scaleX="0.75"
+        app:layout_constraintEnd_toStartOf="@+id/info_time_offset"
+        app:layout_constraintTop_toBottomOf="@+id/media_reset_map" app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/worldmap_dialog_action_prev"
+        android:src="?attr/icActionPrevious" />
+
+    <TextView
+        style="@style/SunsetTimeTextView"
+        android:id="@+id/info_time_offset"
+        android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="65dp" android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/media_reset_map" app:layout_constraintBottom_toBottomOf="parent"
+        android:minLines="2" android:maxLines="2"
+        tools:text="30m\nfrom now" android:gravity="center_horizontal" />
+
+    <ImageButton
+        android:id="@+id/media_next_map"
+        android:layout_width="wrap_content" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:scaleY="0.75" android:scaleX="0.75"
+        app:layout_constraintStart_toEndOf="@+id/info_time_offset"
+        app:layout_constraintTop_toBottomOf="@+id/media_reset_map" app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/worldmap_dialog_action_next"
+        android:src="?attr/icActionNext" />
+
+    <TextView
+        style="@style/SunsetTimeTextView"
+        android:id="@+id/map_speed" android:textStyle="bold" android:layout_margin="0dp"
+        android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintEnd_toStartOf="@+id/map_menu" app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/worldmap_dialog_speed_15m" android:gravity="center" />
+
+    <ImageButton
+        android:id="@+id/map_menu"
+        android:layout_width="0dp" android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/worldmap_dialog_action_menu"
+        style="?attr/actionOverflowButtonStyle" />
+
+</android.support.constraint.ConstraintLayout>

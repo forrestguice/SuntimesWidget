@@ -163,7 +163,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
             views.setViewVisibility(R.id.text_info_moonphase, (showLabels ? View.VISIBLE : View.GONE));
             views.setViewVisibility(phase.getView(), View.VISIBLE);
 
-            Integer phaseColor = phaseColors.get(phase);
+            Integer phaseColor = phaseTextColors.get(phase);
             if (phaseColor != null)
             {
                 views.setTextColor(R.id.text_info_moonphase, phaseColor);
