@@ -8,7 +8,7 @@
         android:summary="@string/welcome_pref_summary" />
 
     <com.forrestguice.suntimeswidget.settings.ListPreference
-        android:key="appwidget_0_appearance_timeformatmode"
+        android:key="app_launcher_mode"
         android:title="@string/configLabel_launcherMode"
         android:dialogTitle="@string/configLabel_launcherMode"
         android:summary="%s"
