@@ -2203,6 +2203,7 @@
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
     <string name="app_name_widget2">Sun Position Widget</string>
+    <string name="app_name_alarmwidget0">Alarm Widget</string>
     <string name="app_name_clockwidget0">Clock Widget</string>
     <string name="app_name_datewidget0">Date Widget</string>
     <string name="app_name_clocktile">Clock Tile</string>
