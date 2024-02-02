@@ -76,6 +76,7 @@ import com.forrestguice.suntimeswidget.settings.SuntimesBackupTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
 import com.forrestguice.suntimeswidget.widgets.DateWidget0;
 
 import java.io.File;
@@ -670,7 +671,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 SuntimesWidget0.class, SuntimesWidget0_2x1.class, SuntimesWidget0_3x1.class, SuntimesWidget1.class, SolsticeWidget0.class,
                 MoonWidget0.class, MoonWidget0_2x1.class, MoonWidget0_3x1.class, MoonWidget0_3x2.class,
                 SuntimesWidget2.class, SuntimesWidget2_3x1.class, SuntimesWidget2_3x2.class, SuntimesWidget2_3x3.class,
-                ClockWidget0.class, ClockWidget0_3x1.class, DateWidget0.class
+                ClockWidget0.class, ClockWidget0_3x1.class, DateWidget0.class, AlarmWidget0.class
         };
 
         public ComponentName[] getAllWidgetClasses()
@@ -765,7 +766,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                     data = data0;
 
-                } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1") ||  widgetClass0.equals("DateWidget0")) {
+                } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1") ||  widgetClass0.equals("DateWidget0") || widgetClass0.equals("AlarmWidget0")) {
                     SuntimesClockData data0 = new SuntimesClockData(context, id);
                     widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                     widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern1;
@@ -859,6 +860,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             {
                 case "DateWidget0":
                     return context.getString(R.string.configLabel_widgetList_itemTitlePattern2);
+                case "AlarmWidget0":
                 case "ClockWidget0": case "ClockWidget0_3x1":
                 case "MoonWidget0": case "MoonWidget0_2x1": case "MoonWidget0_3x1": case "MoonWidget0_3x2":
                 case "SuntimesWidget2": case "SuntimesWidget2_3x1": case "SuntimesWidget2_3x2": case "SuntimesWidget2_3x3":
@@ -874,6 +876,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             switch (simpleClassName(widgetClass))
             {
                 case "SolsticeWidget0": return context.getString(R.string.app_name_solsticewidget0);
+                case "AlarmWidget0": return context.getString(R.string.app_name_alarmwidget0);
                 case "ClockWidget0": return context.getString(R.string.app_name_clockwidget0);
                 case "ClockWidget0_3x1": return context.getString(R.string.app_name_clockwidget0) + " (3x1)";
                 case "DateWidget0": return context.getString(R.string.app_name_datewidget0);
