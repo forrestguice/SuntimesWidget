@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.widgets;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -56,6 +55,11 @@ public class AlarmWidget0 extends SuntimesWidget0
     @Override
     protected long getUpdateInterval() {
         return 1000 * 60 * 60;  // every hour   // TODO: schedule
+    }
+
+    @Override
+    protected void onAlarmUpdateUIBroadcast(Context context) {
+        updateWidgets(context);
     }
 
     @Override

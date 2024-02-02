@@ -736,6 +736,12 @@
                 <action android:name="suntimes.ALARM_WIDGET_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
                 <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+                <action android:name="suntimeswidget.alarm.ui.update" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="suntimeswidget.alarm.ui.update" />
+                <data android:scheme="content" />
             </intent-filter>
 
             <meta-data
