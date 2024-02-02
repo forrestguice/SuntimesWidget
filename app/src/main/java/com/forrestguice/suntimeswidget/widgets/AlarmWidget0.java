@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.widgets;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -70,7 +71,7 @@ public class AlarmWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, AlarmLayout layout)
     {
-        SuntimesClockData data = new SuntimesClockData(context, appWidgetId);  // TODO: data
+        SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
         data.calculate();
         layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);
@@ -91,7 +92,7 @@ public class AlarmWidget0 extends SuntimesWidget0
 
     @Override
     protected SuntimesData getData(Context context, int appWidgetId) {
-        return new SuntimesClockData(context, appWidgetId);   // TODO: data
+        return new SuntimesClockData(context, appWidgetId);
     }
 
     protected static AlarmLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)

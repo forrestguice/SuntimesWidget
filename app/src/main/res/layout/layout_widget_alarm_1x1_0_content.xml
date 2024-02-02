@@ -12,21 +12,28 @@
         android:layout_weight="1"
         android:orientation="vertical" android:gravity="center" android:layout_gravity="center">
 
+        <TextView style="@style/WidgetTimeTextView2" android:visibility="visible"
+            android:id="@+id/text_alarmtime_label"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+            android:text="Next Alarm" android:labelFor="@+id/text_alarmtime"
+            android:gravity="center" android:layout_gravity="center" />    <!-- TODO: i18n -->
+
         <RelativeLayout
-            android:id="@+id/text_date_layout"
+            android:id="@+id/text_alarmtime_layout"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center" android:layout_gravity="center">
 
             <!-- TODO: remoteViews -->
             <TextView style="@style/WidgetTimeTextView"
-                android:id="@+id/text_date"
+                android:id="@+id/text_alarmtime"
                 android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
                 android:paddingTop="0dp" android:paddingBottom="0dp"
                 android:layout_gravity="end"
                 android:text=""
-                tools:text="April 12, 2022" />
+                tools:text="6:00 AM" />
 
-            <TextView android:id="@+id/text_date_extras" android:visibility="visible"
+            <TextView android:id="@+id/text_alarmtime_extras" android:visibility="visible"
                 style="@style/WidgetSuffixTextView"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_below="@+id/text_date" android:layout_alignRight="@+id/text_date" android:layout_alignEnd="@+id/text_date"

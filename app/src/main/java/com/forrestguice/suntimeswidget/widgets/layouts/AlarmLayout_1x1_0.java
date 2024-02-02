@@ -27,10 +27,10 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
-import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
-import com.forrestguice.suntimeswidget.calendar.CalendarMode;
-import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -66,19 +66,35 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
     }
 
     @Override
-    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
+    public void updateViews(final Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         super.updateViews(context, appWidgetId, views, data);
-        // TODO: update views
 
-        Calendar now = Calendar.getInstance(data.timezone());
-        CalendarMode mode = CalendarSettings.loadCalendarModePref(context, appWidgetId);
-        String pattern = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, mode.name());
-        if (!CalendarFormat.isValidPattern(pattern)) {
-            Log.w(getClass().getSimpleName(), "updateViews: invalid pattern! " + pattern + ", falling back to default..");
-            pattern = mode.getDefaultPattern();
+        String displayString = "";
+
+        Long upcomingAlarmId = AlarmSettings.loadUpcomingAlarmId(context);
+        if (upcomingAlarmId == null || upcomingAlarmId == -1) {
+            displayString = "no upcoming alarms";    // TODO: i18n
+
+        } else {
+            long bench_start = System.nanoTime();    // TODO: use Handler here to avoid blocking
+            AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
+            db.open();
+            AlarmClockItem item = AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, upcomingAlarmId);
+            db.close();
+            long bench_end = System.nanoTime();
+            Log.d("DEBUG", "load single alarm item takes " + ((bench_end - bench_start) / 1000000.0) + " ms");
+
+            if (item != null)
+            {
+                Calendar alarmTime = item.getCalendar();
+                alarmTime.setTimeInMillis(item.alarmtime);
+                displayString = "" + item.rowID + " @\n" + utils.calendarDateTimeDisplayString(context, alarmTime, true, false);    // TODO
+
+            } else {
+                displayString = "no upcoming alarms (null)";    // TODO: i18n
+            }
         }
-        String displayString = CalendarMode.formatDate(mode, pattern, now) ;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -88,54 +104,47 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
                 int[] maxDp = new int[] { maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) };
 
                 String s = (displayString.length() <= 3 ? "0:00" : displayString);
-                float adjustedSizeSp = adjustTextSize(context, maxDp, "sans-serif", boldDate, s, dateSizeSp, DateLayout.MAX_SP, false);
+                float adjustedSizeSp = adjustTextSize(context, maxDp, "sans-serif", boldDate, s, timeSizeSp, DateLayout.MAX_SP, false);
 
-                if (adjustedSizeSp != dateSizeSp) {
-                    views.setTextViewTextSize(R.id.text_date, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp);
+                if (adjustedSizeSp != timeSizeSp) {
+                    views.setTextViewTextSize(R.id.text_alarmtime, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp);
                 }
             }
         }
 
-        //boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
-        //if (showLabels)
-        //{
-        //    String extrasDisplayString = "TODO (extra labels)";    // TODO
-        //    views.setTextViewText(R.id.text_date_extras, extrasDisplayString);
-        //    views.setViewVisibility(R.id.text_date_extras, View.VISIBLE);
-        //} else
-            views.setViewVisibility(R.id.text_date_extras, View.GONE);
-
-        views.setTextViewText(R.id.text_date, displayString);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        views.setViewVisibility(R.id.text_alarmtime_label, (showLabels ? View.VISIBLE : View.GONE));
+        views.setTextViewText(R.id.text_alarmtime, displayString);
     }
 
-    protected int dateColor = Color.WHITE;
+    protected int timeColor = Color.WHITE;
     protected int textColor = Color.WHITE;
     //protected int suffixColor = Color.GRAY;
     private boolean boldDate = false;
     protected float titleSizeSp = 10;
-    protected float dateSizeSp = 12;
+    protected float timeSizeSp = 12;
     //protected float suffixSizeSp = 8;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        dateColor = theme.getTimeColor();
+        timeColor = theme.getTimeColor();
         textColor = theme.getTextColor();
         //suffixColor = theme.getTimeSuffixColor();
         boldTime = theme.getTimeBold();
         paddingDp = theme.getPadding();
 
-        views.setTextColor(R.id.text_date, dateColor);
-        views.setTextColor(R.id.text_date_extras, textColor);
+        views.setTextColor(R.id.text_alarmtime, timeColor);
+        views.setTextColor(R.id.text_alarmtime_label, textColor);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            dateSizeSp = theme.getTimeSizeSp();
+            timeSizeSp = theme.getTimeSizeSp();
             //suffixSizeSp = theme.getTimeSuffixSizeSp();
 
-            views.setTextViewTextSize(R.id.text_date, TypedValue.COMPLEX_UNIT_DIP, dateSizeSp);
-            views.setTextViewTextSize(R.id.text_date_extras, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
+            views.setTextViewTextSize(R.id.text_alarmtime, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
+            views.setTextViewTextSize(R.id.text_alarmtime_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
         }
     }
 
