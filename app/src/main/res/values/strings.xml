@@ -1131,6 +1131,10 @@
     <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
     <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
 
+    <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->       <!-- TODO -->
+    <string name="configLabel_alarms_nextAlarm_none">@string/time_none</string>            <!-- widget text (no alarm set msg) -->    <!-- TODO -->
+    <string name="configLabel_alarms_nextAlarm_error">failed to load</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
+
     <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->

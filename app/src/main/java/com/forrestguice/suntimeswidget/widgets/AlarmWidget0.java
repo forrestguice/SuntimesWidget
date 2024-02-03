@@ -54,7 +54,7 @@ public class AlarmWidget0 extends SuntimesWidget0
 
     @Override
     protected long getUpdateInterval() {
-        return 1000 * 60 * 60;  // every hour   // TODO: schedule
+        return 1000 * 60 * 60;  // every hour
     }
 
     @Override
@@ -89,7 +89,7 @@ public class AlarmWidget0 extends SuntimesWidget0
 
         Calendar nextUpdate = Calendar.getInstance();
         nextUpdate.setTimeInMillis(data.calendar().getTimeInMillis());
-        nextUpdate.add(Calendar.HOUR, 1);   // up to an hour from now    // TODO: schedule
+        nextUpdate.add(Calendar.HOUR, 1);   // up to an hour from now
         nextUpdate.set(Calendar.SECOND, 1);
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate.getTimeInMillis());
     }

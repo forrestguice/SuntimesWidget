@@ -81,7 +81,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
         Long upcomingAlarmId = AlarmSettings.loadUpcomingAlarmId(context);
         if (upcomingAlarmId == null || upcomingAlarmId == -1) {
-            displayString = "none";    // TODO: i18n
+            displayString = context.getString(R.string.configLabel_alarms_nextAlarm_none);
 
         } else {
             long bench_start = System.nanoTime();    // TODO: use Handler here to avoid blocking
@@ -105,7 +105,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
                         : utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
 
             } else {
-                displayString = "failed to load alarm";    // TODO: i18n
+                displayString = context.getString(R.string.configLabel_alarms_nextAlarm_error);
             }
         }
 
@@ -117,7 +117,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
                 int[] maxDp = new int[] { maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) };
 
                 String s = (displayString.length() <= 3 ? "0:00" : displayString);
-                float adjustedSizeSp = adjustTextSize(context, maxDp, "sans-serif", boldDate, s, timeSizeSp, DateLayout.MAX_SP, false);
+                float adjustedSizeSp = adjustTextSize(context, maxDp, "sans-serif", boldTime, s, timeSizeSp, AlarmLayout.MAX_SP, true);
 
                 if (adjustedSizeSp != timeSizeSp) {
                     views.setTextViewTextSize(R.id.text_alarmtime, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp);
@@ -132,11 +132,10 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
     protected int timeColor = Color.WHITE;
     protected int textColor = Color.WHITE;
-    //protected int suffixColor = Color.GRAY;
-    private boolean boldDate = false;
+    protected int suffixColor = Color.GRAY;
     protected float titleSizeSp = 10;
     protected float timeSizeSp = 12;
-    //protected float suffixSizeSp = 8;
+    protected float suffixSizeSp = 8;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -144,7 +143,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
         super.themeViews(context, views, theme);
         timeColor = theme.getTimeColor();
         textColor = theme.getTextColor();
-        //suffixColor = theme.getTimeSuffixColor();
+        suffixColor = theme.getTimeSuffixColor();
         boldTime = theme.getTimeBold();
         paddingDp = theme.getPadding();
 
@@ -154,7 +153,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             timeSizeSp = theme.getTimeSizeSp();
-            //suffixSizeSp = theme.getTimeSuffixSizeSp();
+            suffixSizeSp = theme.getTimeSuffixSizeSp();
 
             views.setTextViewTextSize(R.id.text_alarmtime, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
             views.setTextViewTextSize(R.id.text_alarmtime_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());

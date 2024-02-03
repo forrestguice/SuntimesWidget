@@ -8,28 +8,27 @@
               tools:text="title" />
 
     <LinearLayout
-        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical" android:gravity="start|center_vertical" android:layout_gravity="center">
+        android:orientation="vertical" android:gravity="center" android:layout_gravity="center">
 
-        <TextView style="@style/WidgetTimeTextView2" android:visibility="gone"
+        <TextView style="@style/WidgetTimeTextView2" android:visibility="visible"
             android:id="@+id/text_alarmtime_label"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-            android:text="Alarm at" android:labelFor="@+id/text_alarmtime"
-            android:gravity="start" android:layout_gravity="start" />    <!-- TODO: i18n -->
+            android:text="@string/configLabel_alarms_nextAlarm" android:labelFor="@+id/text_alarmtime"
+            android:gravity="start" android:layout_gravity="start" />
 
         <RelativeLayout
             android:id="@+id/text_alarmtime_layout"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="start" android:layout_gravity="start">
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="start" android:layout_gravity="center">
 
-            <!-- TODO: remoteViews -->
             <TextView style="@style/WidgetTimeTextView"
-                android:id="@+id/text_alarmtime"
+                android:id="@+id/text_alarmtime" android:layout_width="wrap_content"
                 android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
                 android:paddingTop="0dp" android:paddingBottom="0dp"
-                android:layout_gravity="end"
+                android:gravity="start"
                 android:text=""
                 tools:text="6:00 AM" />
 

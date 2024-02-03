@@ -48,7 +48,7 @@ public abstract class AlarmLayout extends SuntimesLayout
      * @param appWidgetId the android widget ID to update
      * @param views the RemoteViews to apply the data to
      */
-    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)   // TODO: data
+    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
