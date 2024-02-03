@@ -20,12 +20,15 @@ package com.forrestguice.suntimeswidget.widgets;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidget0;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -112,6 +115,18 @@ public class AlarmWidget0 extends SuntimesWidget0
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
+    }
+
+    public static AlarmClockItem loadAlarmClockItem(Context context, long rowID)
+    {
+        long bench_start = System.nanoTime();    // TODO: use Handler here to avoid blocking
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
+        db.open();
+        AlarmClockItem item = AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, rowID);
+        db.close();
+        long bench_end = System.nanoTime();
+        Log.d("DEBUG", "load single alarm item takes " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        return item;
     }
 
 }
