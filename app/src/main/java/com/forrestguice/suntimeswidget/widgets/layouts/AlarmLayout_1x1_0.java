@@ -97,11 +97,12 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
                 Calendar now = data.now();
                 Calendar alarmTime = item.getCalendar();
                 long millisUntilAlarm = now.getTimeInMillis() - alarmTime.getTimeInMillis();
-
                 alarmTime.setTimeInMillis(item.alarmtime);
+
+                WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
                 displayString = (millisUntilAlarm > 1000 * 60 * 60 * 24)
-                        ? utils.calendarDateTimeDisplayString(context, alarmTime, true, false).toString()
-                        : utils.calendarTimeShortDisplayString(context, alarmTime).toString();
+                        ? utils.calendarDateTimeDisplayString(context, alarmTime, true, false, timeFormat).toString()
+                        : utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
 
             } else {
                 displayString = "failed to load alarm";    // TODO: i18n

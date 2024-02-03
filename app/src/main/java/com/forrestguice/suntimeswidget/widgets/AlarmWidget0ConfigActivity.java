@@ -100,7 +100,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected int getAboutIconID() {
-        return R.drawable.ic_action_alarms;
+        return R.drawable.ic_suntimesalarms;
     }
 
     @Override
@@ -118,7 +118,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     protected Intent themeEditorIntent(Context context)
     {
         Intent intent = super.themeEditorIntent(context);
-        intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_CLOCK_1x1);    // TODO: previewID
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_ALARM_1x1);
         return intent;
     }
 
