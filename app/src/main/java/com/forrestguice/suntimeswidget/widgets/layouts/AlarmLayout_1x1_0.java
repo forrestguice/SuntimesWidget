@@ -57,11 +57,18 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
     protected int chooseLayout(int position)
     {
-        switch (position) {
-            case 0: return R.layout.layout_widget_alarm_1x1_0_align_fill;                       // fill
-            case 1: case 2: case 3: return R.layout.layout_widget_alarm_1x1_0_align_float_2;    // top
-            case 7: case 8: case 9: return R.layout.layout_widget_alarm_1x1_0_align_float_8;    // bottom
-            case 4: case 6: case 5: default: return R.layout.layout_widget_alarm_1x1_0;         // center
+        switch (position)
+        {
+            case 0: return R.layout.layout_widget_alarm_1x1_0_align_fill;
+            case 1: return R.layout.layout_widget_alarm_1x1_0_align_float_1;
+            case 2: return R.layout.layout_widget_alarm_1x1_0_align_float_2;
+            case 3: return R.layout.layout_widget_alarm_1x1_0_align_float_3;
+            case 4: return R.layout.layout_widget_alarm_1x1_0_align_float_4;
+            case 6: return R.layout.layout_widget_alarm_1x1_0_align_float_6;
+            case 7: return R.layout.layout_widget_alarm_1x1_0_align_float_7;
+            case 8: return R.layout.layout_widget_alarm_1x1_0_align_float_8;
+            case 9: return R.layout.layout_widget_alarm_1x1_0_align_float_9;
+            case 5: default: return R.layout.layout_widget_alarm_1x1_0;
         }
     }
 
@@ -74,7 +81,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
         Long upcomingAlarmId = AlarmSettings.loadUpcomingAlarmId(context);
         if (upcomingAlarmId == null || upcomingAlarmId == -1) {
-            displayString = "no upcoming alarms";    // TODO: i18n
+            displayString = "none";    // TODO: i18n
 
         } else {
             long bench_start = System.nanoTime();    // TODO: use Handler here to avoid blocking
@@ -87,12 +94,17 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
             if (item != null)
             {
+                Calendar now = data.now();
                 Calendar alarmTime = item.getCalendar();
+                long millisUntilAlarm = now.getTimeInMillis() - alarmTime.getTimeInMillis();
+
                 alarmTime.setTimeInMillis(item.alarmtime);
-                displayString = "" + item.rowID + " @\n" + utils.calendarDateTimeDisplayString(context, alarmTime, true, false);    // TODO
+                displayString = (millisUntilAlarm > 1000 * 60 * 60 * 24)
+                        ? utils.calendarDateTimeDisplayString(context, alarmTime, true, false).toString()
+                        : utils.calendarTimeShortDisplayString(context, alarmTime).toString();
 
             } else {
-                displayString = "no upcoming alarms (null)";    // TODO: i18n
+                displayString = "failed to load alarm";    // TODO: i18n
             }
         }
 

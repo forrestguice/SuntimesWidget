@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/SunsetTimeWidgetFrame" android:layout_width="match_parent">
+    style="@style/SunsetTimeWidgetFrame">
     <LinearLayout style="@style/SunsetTimeWidget" android:layout_height="match_parent" android:id="@+id/widgetframe_inner">
         <include layout="@layout/layout_widget_alarm_1x1_0_content" />
     </LinearLayout>
