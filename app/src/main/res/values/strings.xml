@@ -2212,6 +2212,7 @@
     <string name="app_name_datewidget0">Date Widget</string>
     <string name="app_name_clocktile">Clock Tile</string>
     <string name="app_name_eventtile">Next Event Tile</string>
+    <string name="app_name_alarmtile">Alarm Tile</string>
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>

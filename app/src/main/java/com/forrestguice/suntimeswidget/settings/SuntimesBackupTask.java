@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.events.EventExportTask;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
@@ -369,6 +370,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         ids.add(0);                                                    // include app config and quick settings tiles
         ids.add(ClockTileService.CLOCKTILE_APPWIDGET_ID);
         ids.add(NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID);
+        ids.add(AlarmTileService.ALARMTILE_APPWIDGET_ID);
         return ids;
     }
     protected static ArrayList<Integer> getAllWidgetIds(Context context, Class widgetClass)

@@ -30,6 +30,7 @@ import android.support.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
+import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
@@ -191,6 +192,9 @@ public class WidgetSettingsExportTask extends ExportTask
 
         bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, NextEventTileService.class.getSimpleName());
         WidgetSettingsMetadata.saveMetaData(context, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID, bundle);
+
+        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, AlarmTileService.class.getSimpleName());
+        WidgetSettingsMetadata.saveMetaData(context, AlarmTileService.ALARMTILE_APPWIDGET_ID, bundle);
     }
 
 }
