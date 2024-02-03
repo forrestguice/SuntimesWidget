@@ -19,13 +19,15 @@
 package com.forrestguice.suntimeswidget.widgets;
 
 import android.appwidget.AppWidgetManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Spinner;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesConfigActivity0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
 /**
@@ -44,22 +46,32 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
+    protected WidgetSettings.ActionMode defaultActionMode() {
+        return WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
+    }
+
+    @Override
+    protected ContentValues launchActionIntentDefaults() {
+        return WidgetActions.SuntimesAction.OPEN_ALARM_LIST.toContentValues();
+    }
+
+    @Override
     protected void initViews( Context context )
     {
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.app_name_alarmwidget0));
 
-        // TODO: options
-        showCalendarMode(true);
-        showCalendarFormat(true);
         showOptionLabels(true);
+        showTimeFormatMode(true);
 
-        showOptionShowDate(false);    // always true
-        showTimeFormatMode(false);
+        showCalendarMode(false);
+        showCalendarFormat(false);
+        showOptionShowDate(false);
+
+        showTimeMode(false);
         showOptionRiseSetOrder(false);
         hideOptionUseAltitude();
         hideOptionCompareAgainst();
-        hideOption1x1LayoutMode();
         showOptionWeeks(false);
         showOptionHours(false);
         showOptionTimeDate(false);
@@ -67,12 +79,14 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);
         showDataSource(false);
-        showTimeMode(false);
         showOptionShowNoon(false);
 
+        hideOption1x1LayoutMode();
         hideLayoutSettings();
+        hideTimeZoneSettings();
+        hideLocationSettings();
 
-        moveSectionToTop(R.id.appwidget_general_layout);
+        //moveSectionToTop(R.id.appwidget_general_layout);
     }
 
     @Override
@@ -107,4 +121,5 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
         intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_CLOCK_1x1);    // TODO: previewID
         return intent;
     }
+
 }
