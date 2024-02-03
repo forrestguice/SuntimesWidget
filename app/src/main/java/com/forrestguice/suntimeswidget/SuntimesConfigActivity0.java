@@ -83,6 +83,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.actions.EditActionView;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
@@ -1938,7 +1939,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_onTap.setSelection(actionMode.ordinal(supportedActionModes()));
 
         // load: launch activity
-        edit_launchIntent.loadIntent(context, appWidgetId, null);
+        edit_launchIntent.loadIntent(context, appWidgetId, null, launchActionIntentDefaults());
+    }
+
+    protected ContentValues launchActionIntentDefaults() {
+        return WidgetActions.defaultLaunchPrefValues();
     }
 
     /**
