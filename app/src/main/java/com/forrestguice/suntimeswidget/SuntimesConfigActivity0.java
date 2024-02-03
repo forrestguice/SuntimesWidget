@@ -2373,6 +2373,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void hideLocationSettings()
+    {
+        View settings = findViewById(R.id.appwidget_location_layout);
+        if (settings != null) {
+            settings.setVisibility(View.GONE);
+        }
+    }
+    
     protected void hideTimeZoneSettings()
     {
         View settings = findViewById(R.id.appwidget_timezone_layout);
