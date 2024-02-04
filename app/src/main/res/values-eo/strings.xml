@@ -1100,7 +1100,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Konjekti</b>. Enportotaj agordoj estos aplikitaj al la ekzistantaj fenestraĵoj laŭ speco.<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>Senpere enporti</b>. Enportotaj agordoj estos senpere aplikitaj. Funkcias ĝuste nur se identigiloj de fenestraĵoj ne ŝanĝiĝis.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
-
+    
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>Forviŝi</b>. Alarmoj estos forigitaj antaŭ enporti ilin el sekurkopio.<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>Teni ekzistantajn</b>. La ekzistantaj alarmoj teniĝos (povas kaŭzi duobligitajn alarmojn).<br/>]]></string>
 

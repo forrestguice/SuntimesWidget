@@ -38,6 +38,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -248,10 +250,24 @@ public class AboutActivity extends AppCompatActivity
                 supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url)));
             }
 
-            TextView donateView = (TextView) dialogContent.findViewById(R.id.txt_donate_url);
+            final TextView donateView = (TextView) dialogContent.findViewById(R.id.txt_donate_url);
             if (donateView != null) {
+                donateView.setVisibility(View.GONE);
                 donateView.setMovementMethod(LinkMovementMethod.getInstance());
                 donateView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name))));
+            }
+
+            CheckBox checkDonate = (CheckBox) dialogContent.findViewById(R.id.check_donate);
+            if (checkDonate != null)
+            {
+                checkDonate.setChecked(false);
+                checkDonate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (donateView != null) {
+                            donateView.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                        }
+                    }
+                });
             }
 
             TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);

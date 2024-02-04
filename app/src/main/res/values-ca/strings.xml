@@ -1101,7 +1101,7 @@
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
 
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicate).<br/>]]></string> <!-- TODO -->
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
 
     <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
     <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
