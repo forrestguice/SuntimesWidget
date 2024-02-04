@@ -172,8 +172,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
 
-    protected TextView label_1x1mode, label_2x1mode, label_3x1mode, label_3x2mode, label_3x3mode;
-    protected Spinner spinner_1x1mode, spinner_2x1mode, spinner_3x1mode, spinner_3x2mode, spinner_3x3mode;
+    protected TextView label_1x1mode, label_2x1mode, label_2x2mode, label_3x1mode, label_3x2mode, label_3x3mode;
+    protected Spinner spinner_1x1mode, spinner_2x1mode, spinner_2x2mode, spinner_3x1mode, spinner_3x2mode, spinner_3x3mode;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_scaleText;
     protected CheckBox checkbox_scaleBase;
@@ -687,7 +687,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         //
-        // widget: 1x1, 2x1, 3x1, 3x2, 3x3 widget modes
+        // widget: 1x1, 2x1, 2x2, 3x1, 3x2, 3x3 widget modes
         //
         label_1x1mode = (TextView) findViewById(R.id.appwidget_appearance_1x1mode_label);
         spinner_1x1mode = (Spinner) findViewById(R.id.appwidget_appearance_1x1mode);
@@ -696,6 +696,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         label_2x1mode = (TextView) findViewById(R.id.appwidget_appearance_2x1mode_label);
         spinner_2x1mode = (Spinner) findViewById(R.id.appwidget_appearance_2x1mode);
         initWidgetMode2x1(context);
+
+        label_2x2mode = (TextView) findViewById(R.id.appwidget_appearance_2x2mode_label);
+        spinner_2x2mode = (Spinner) findViewById(R.id.appwidget_appearance_2x2mode);
+        initWidgetMode2x2(context);
 
         label_3x1mode = (TextView) findViewById(R.id.appwidget_appearance_3x1mode_label);
         spinner_3x1mode = (Spinner) findViewById(R.id.appwidget_appearance_3x1mode);
@@ -1030,6 +1034,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
     protected void saveWidgetMode2x1(Context context)
     {
+        // EMPTY
+    }
+
+    protected void initWidgetMode2x2(Context context) {
+        // EMPTY
+    }
+    protected void loadWidgetMode2x2(Context context) {
+        // EMPTY
+    }
+    protected void saveWidgetMode2x2(Context context) {
         // EMPTY
     }
 
@@ -2654,6 +2668,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void showOption2x1LayoutMode(boolean show)
     {
         View layout_mode = findViewById(R.id.appwidget_appearance_2x1mode_layout);
+        if (layout_mode != null) {
+            layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    protected void showOption2x2LayoutMode(boolean show)
+    {
+        View layout_mode = findViewById(R.id.appwidget_appearance_2x2mode_layout);
         if (layout_mode != null) {
             layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
         }
