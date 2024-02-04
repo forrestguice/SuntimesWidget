@@ -152,9 +152,10 @@ public class AlarmTileService extends ClockTileService
         AlarmClockItem item = initAlarmItem(context);
         if (item != null)
         {
+            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
-            String timeString = utils.calendarTimeShortDisplayString(context, event, false).toString();
+            String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();
             SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
             timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
             title.append(timeDisplay);
@@ -173,9 +174,10 @@ public class AlarmTileService extends ClockTileService
         if (item != null)
         {
             // formatted alarm time
+            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
-            String timeString = utils.calendarTimeShortDisplayString(context, event, false).toString();
+            String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();
 
             // formatted "time until"
             long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();
