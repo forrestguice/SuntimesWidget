@@ -759,7 +759,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Alarms (2x2)                                                        -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".widgets.AlarmWidget0"
+        <receiver android:name=".widgets.AlarmWidget0_2x2"
             android:label="@string/app_name_alarmwidget0"
             android:icon="@mipmap/ic_launcher_alarms">
 

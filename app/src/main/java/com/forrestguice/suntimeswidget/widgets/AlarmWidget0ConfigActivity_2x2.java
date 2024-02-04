@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.widgets;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
@@ -60,6 +62,21 @@ public class AlarmWidget0ConfigActivity_2x2 extends AlarmWidget0ConfigActivity
         Intent intent = super.themeEditorIntent(context);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_ALARM_2x2);
         return intent;
+    }
+
+    @Override
+    protected TextView getPrimaryWidgetModeLabel() {
+        return label_2x2mode;
+    }
+
+    @Override
+    protected View[] getPrimaryWidgetModeViews() {
+        return new View[] { label_2x2mode, spinner_2x2mode };
+    }
+
+    @Override
+    protected View[] getSecondaryWidgetModeViews() {
+        return new View[] { label_1x1mode, spinner_1x1mode };
     }
 
 }
