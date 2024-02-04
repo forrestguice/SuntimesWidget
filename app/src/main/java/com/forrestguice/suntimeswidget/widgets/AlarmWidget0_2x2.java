@@ -43,23 +43,10 @@ public class AlarmWidget0_2x2 extends AlarmWidget0
     }
 
     @Override
-    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        AlarmWidget0_2x2.updateAppWidget(context, appWidgetManager, appWidgetId, getMinSize(context));
-    }
-
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
+    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        AlarmLayout layout = AlarmWidget0_2x2.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize);
-        AlarmWidget0_2x2.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        AlarmLayout defLayout = AlarmWidgetSettings.loadAlarm2x2ModePref_asLayout(context, appWidgetId);
+        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, AlarmWidget0_2x2.class, getMinSize(context), defLayout);
     }
-
-    protected static AlarmLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
-    {
-        AlarmLayout layout = new AlarmLayout_2x2_0();
-        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
-        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
-        return layout;
-    }
-
 
 }

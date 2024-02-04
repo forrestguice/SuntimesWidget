@@ -19,11 +19,15 @@
 package com.forrestguice.suntimeswidget.widgets.layouts;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidgetService;
 
 public class AlarmLayout_2x2_0 extends AlarmLayout_1x1_0
 {
@@ -60,8 +64,14 @@ public class AlarmLayout_2x2_0 extends AlarmLayout_1x1_0
     }
 
     @Override
-    public void updateViews(final Context context, int appWidgetId, RemoteViews views, SuntimesClockData data) {
-        super.updateViews(context, appWidgetId, views, data);
+    public void updateViews(final Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
+    {
+        //super.updateViews(context, appWidgetId, views, data);
+
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        views.setViewVisibility(R.id.text_table_label, (showLabels ? View.VISIBLE : View.GONE));
+
+        views.setRemoteAdapter(R.id.list_alarms, new Intent(context, AlarmWidgetService.class));
     }
 
     @Override

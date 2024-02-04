@@ -13,16 +13,26 @@
         android:orientation="vertical" android:gravity="center" android:layout_gravity="center">
 
         <TextView style="@style/WidgetTimeTextView2" android:visibility="visible"
-            android:id="@+id/text_alarmtime_label"
+            android:id="@+id/text_table_label"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-            android:text="@string/configLabel_alarms_nextAlarm" android:labelFor="@+id/text_alarmtime"
+            android:text="@string/configLabel_alarmClock" android:labelFor="@+id/text_alarmtime"
             android:gravity="start" android:layout_gravity="start" />
 
-        <RelativeLayout
-            android:id="@+id/text_alarmtime_layout"
+        <ListView android:id="@+id/list_alarms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="start" android:layout_gravity="center">
+            android:orientation="horizontal">
+
+            <TextView style="@style/WidgetTimeTextView2" android:visibility="visible"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+                tools:text="Alarm Label" android:labelFor="@+id/text_alarmtime"
+                android:contentDescription="Alarm Label"
+                android:gravity="start" android:layout_gravity="start" />
 
             <TextView style="@style/WidgetTimeTextView"
                 android:id="@+id/text_alarmtime" android:layout_width="wrap_content"
@@ -32,17 +42,7 @@
                 android:text=""
                 tools:text="6:00 AM" />
 
-            <TextView android:id="@+id/text_alarmtime_extras" android:visibility="gone"
-                style="@style/WidgetSuffixTextView"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_below="@+id/text_alarmtime" android:layout_alignRight="@+id/text_alarmtime" android:layout_alignEnd="@+id/text_alarmtime"
-                android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
-                android:paddingTop="0dp" android:paddingBottom="0dp"
-                android:maxLines="1"
-                android:layout_gravity="center" android:gravity="top|end"
-                tools:text="+1 day" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

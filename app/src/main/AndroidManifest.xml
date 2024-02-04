@@ -781,6 +781,11 @@
                 android:resource="@xml/widget_alarms0_2x2" />
         </receiver>
 
+        <service
+            android:name=".widgets.AlarmWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:enabled="@bool/api_post_14" />    <!-- AlarmWidget Service: Collections widget [requires api 14+] -->
+
         <activity
             android:name=".widgets.AlarmWidget0ConfigActivity_2x2" >
             <intent-filter>
