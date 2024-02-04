@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
 
 import java.util.Calendar;
 
@@ -84,14 +85,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
             displayString = context.getString(R.string.configLabel_alarms_nextAlarm_none);
 
         } else {
-            long bench_start = System.nanoTime();    // TODO: use Handler here to avoid blocking
-            AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
-            db.open();
-            AlarmClockItem item = AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, upcomingAlarmId);
-            db.close();
-            long bench_end = System.nanoTime();
-            Log.d("DEBUG", "load single alarm item takes " + ((bench_end - bench_start) / 1000000.0) + " ms");
-
+            AlarmClockItem item = AlarmWidget0.loadAlarmClockItem(context, upcomingAlarmId);
             if (item != null)
             {
                 Calendar now = data.now();
