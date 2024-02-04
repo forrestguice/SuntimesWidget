@@ -18,9 +18,11 @@
 
 package com.forrestguice.suntimeswidget.tiles;
 
+import android.content.ContentValues;
 import android.content.Context;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmTileConfigActivity extends ClockTileConfigActivity
@@ -35,7 +37,15 @@ public class AlarmTileConfigActivity extends ClockTileConfigActivity
     {
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.app_name_alarmtile));
+
+        showOptionLabels(true);
         hideTimeZoneSettings();
+        hideLocationSettings();
+    }
+
+    @Override
+    protected ContentValues launchActionIntentDefaults() {
+        return WidgetActions.SuntimesAction.OPEN_ALARM_LIST.toContentValues();
     }
 
 }
