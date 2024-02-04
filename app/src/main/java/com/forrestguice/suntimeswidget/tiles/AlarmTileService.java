@@ -66,6 +66,11 @@ public class AlarmTileService extends ClockTileService
     }
 
     @Override
+    public int updateTaskRateMs() {
+        return UPDATE_RATE;
+    }
+    public static final int UPDATE_RATE = 12000;     // dialog update rate: 12s
+    @Override
     protected Dialog createDialog(final Context context) {
         return super.createDialog(context);
     }
