@@ -93,6 +93,7 @@ public class AlarmWidget0 extends SuntimesWidget0
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_alarms);
 
         Calendar nextUpdate = Calendar.getInstance();
         nextUpdate.setTimeInMillis(data.calendar().getTimeInMillis());

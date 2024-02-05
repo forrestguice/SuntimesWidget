@@ -53,13 +53,11 @@ public class AlarmWidgetService extends RemoteViewsService
      */
     public static class AlarmWidgetItemViewFactory implements RemoteViewsService.RemoteViewsFactory
     {
-        public static final String EXTRA_THEME = "theme";
-        public static final String EXTRA_TIMEFORMATMODE = "timeformatmode";
+        public static final String EXTRA_APPWIDGETID = "appWidgetID";
 
-        protected List<AlarmClockItem> alarmList = new ArrayList<>();
         protected Context context;
-        protected SuntimesTheme theme = null;
-        protected WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.TimeFormatMode.MODE_SYSTEM;
+        protected int appWidgetID = 0;
+        protected List<AlarmClockItem> alarmList = new ArrayList<>();
         protected SuntimesUtils utils = new SuntimesUtils();
 
         public AlarmWidgetItemViewFactory(Context context, Intent intent)
@@ -75,24 +73,8 @@ public class AlarmWidgetService extends RemoteViewsService
 
         protected void initOptions(Intent intent)
         {
-            if (intent != null)
-            {
-                ContentValues themeValues = intent.getParcelableExtra(EXTRA_THEME);
-                if (themeValues != null) {
-                    theme = new SuntimesTheme(themeValues);
-                }
-
-                String timeFormatModeString = intent.getStringExtra(EXTRA_TIMEFORMATMODE);
-                if (timeFormatModeString != null)
-                {
-                    try {
-                        timeFormat = WidgetSettings.TimeFormatMode.valueOf(timeFormatModeString);
-
-                    } catch (IllegalArgumentException e) {
-                        timeFormat = WidgetSettings.TimeFormatMode.MODE_SYSTEM;
-                        Log.e("AlarmWidgetService", "init: failed to load TimeFormatMode! " + e);
-                    }
-                }
+            if (intent != null) {
+                appWidgetID = intent.getIntExtra(EXTRA_APPWIDGETID, 0);
             }
         }
 
@@ -147,10 +129,10 @@ public class AlarmWidgetService extends RemoteViewsService
             AlarmClockItem item = alarmList.get(position);
             RemoteViews view = new RemoteViews(context.getPackageName(), android.R.layout.simple_list_item_1);
 
-            if (theme != null) {
-                view.setTextColor(android.R.id.text1, theme.getTimeColor());
-            }
+            SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetID);
+            view.setTextColor(android.R.id.text1, theme.getTimeColor());
 
+            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetID);
             Calendar alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(item.alarmtime);
             CharSequence timeDisplay = utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
