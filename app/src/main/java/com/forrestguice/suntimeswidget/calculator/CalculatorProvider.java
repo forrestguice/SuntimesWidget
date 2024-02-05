@@ -173,7 +173,7 @@ public class CalculatorProvider extends ContentProvider
             case URIMATCH_SEASONS_FOR_YEAR:
                 //Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_YEAR");
                 Calendar dateTime = now(selectionMap);
-                dateTime.set(Calendar.YEAR, (int)ContentUris.parseId(uri));
+                dateTime.set(Calendar.YEAR, (int)parseDate(uri, Calendar.getInstance().get(Calendar.YEAR)));
                 retValue = querySeasons(new long[] { dateTime.getTimeInMillis(), dateTime.getTimeInMillis() }, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SEASONS_FOR_RANGE:
@@ -188,7 +188,7 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_SUN_FOR_DATE:
                 //Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_DATE");
-                date = ContentUris.parseId(uri);
+                date = parseDate(uri);
                 retValue = querySun(new long[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SUN_FOR_RANGE:
@@ -203,7 +203,7 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_SUNPOS_FOR_DATE:
                 //Log.d("CalculatorProvider", "URIMATCH_SUNPOS_FOR_DATE");
-                date = ContentUris.parseId(uri);
+                date = parseDate(uri);
                 retValue = querySunPos(date, uri, projection, selectionMap, sortOrder);
                 break;
 
@@ -213,7 +213,7 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_MOON_FOR_DATE:
                 //Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_DATE");
-                date = ContentUris.parseId(uri);
+                date = parseDate(uri);
                 retValue = queryMoon(new long[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOON_FOR_RANGE:
@@ -228,7 +228,7 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_MOONPOS_FOR_DATE:
                 //Log.d("CalculatorProvider", "URIMATCH_MOONPOS_FOR_DATE");
-                date = ContentUris.parseId(uri);
+                date = parseDate(uri);
                 retValue = queryMoonPos(date, uri, projection, selectionMap, sortOrder);
                 break;
 
@@ -238,7 +238,7 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_MOONPHASE_FOR_DATE:
                 //Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_DATE");
-                date = ContentUris.parseId(uri);
+                date = parseDate(uri);
                 retValue = queryMoonPhase(new long[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOONPHASE_FOR_RANGE:
@@ -1335,6 +1335,31 @@ public class CalculatorProvider extends ContentProvider
             }
         }
         return location;
+    }
+
+    /**
+     * parseDate
+     */
+    protected long parseDate(@Nullable Uri uri) {
+        return parseDate(uri, Calendar.getInstance().getTimeInMillis());
+    }
+
+    /**
+     * parseDate
+     * @param uri Uri
+     * @param fallback date returned if unable to parse uri
+     */
+    protected long parseDate(@Nullable Uri uri, long fallback)
+    {
+        if (uri != null)
+        {
+            try {
+                return ContentUris.parseId(uri);
+            } catch (NumberFormatException e) {
+                Log.e("CalculatorProvider", "invalid argument! " + e);
+            }
+        }
+        return fallback;
     }
 
     /**
