@@ -18,8 +18,10 @@ package com.forrestguice.suntimeswidget.widgets;
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -27,6 +29,7 @@ import com.forrestguice.suntimeswidget.MoonWidget0;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidget0;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -87,12 +90,17 @@ public class AlarmWidget0 extends SuntimesWidget0
         layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);
 
+        Intent intentTemplate = AlarmNotifications.getAlarmListIntent(context, null);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentTemplate, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.list_alarms, pendingIntent);
+
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_alarms);
 
         Calendar nextUpdate = Calendar.getInstance();

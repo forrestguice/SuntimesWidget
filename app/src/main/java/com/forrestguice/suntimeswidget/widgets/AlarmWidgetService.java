@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.widgets;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -28,9 +29,11 @@ import android.widget.RemoteViewsService;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -130,11 +133,15 @@ public class AlarmWidgetService extends RemoteViewsService
             return alarmList.size();
         }
 
+        protected int getViewLayoutID() {
+            return android.R.layout.simple_list_item_1;
+        }
+
         @Override
         public RemoteViews getViewAt(int position)
         {
             AlarmClockItem item = alarmList.get(position);
-            RemoteViews view = new RemoteViews(context.getPackageName(), android.R.layout.simple_list_item_1);
+            RemoteViews view = new RemoteViews(context.getPackageName(), getViewLayoutID());
 
             SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetID);
             view.setTextColor(android.R.id.text1, theme.getTimeColor());
@@ -144,6 +151,12 @@ public class AlarmWidgetService extends RemoteViewsService
             alarmTime.setTimeInMillis(item.alarmtime);
             CharSequence timeDisplay = utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
             view.setTextViewText(android.R.id.text1, timeDisplay);
+
+            Intent fillInIntent = new Intent();
+            fillInIntent.setData(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, item.rowID));
+            fillInIntent.putExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, item.rowID);
+            view.setOnClickFillInIntent(android.R.id.text1, fillInIntent);
+
             return view;
         }
 
