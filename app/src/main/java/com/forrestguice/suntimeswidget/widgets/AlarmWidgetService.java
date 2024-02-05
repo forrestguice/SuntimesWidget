@@ -23,17 +23,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -51,16 +53,56 @@ public class AlarmWidgetService extends RemoteViewsService
      */
     public static class AlarmWidgetItemViewFactory implements RemoteViewsService.RemoteViewsFactory
     {
-        protected List<AlarmClockItem> alarmList = new ArrayList<>();
-        protected Context context = null;
+        public static final String EXTRA_THEME = "theme";
+        public static final String EXTRA_TIMEFORMATMODE = "timeformatmode";
 
-        public AlarmWidgetItemViewFactory(Context context, Intent intent) {
+        protected List<AlarmClockItem> alarmList = new ArrayList<>();
+        protected Context context;
+        protected SuntimesTheme theme = null;
+        protected WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.TimeFormatMode.MODE_SYSTEM;
+        protected SuntimesUtils utils = new SuntimesUtils();
+
+        public AlarmWidgetItemViewFactory(Context context, Intent intent)
+        {
             this.context = context;
+            initLocale(context);
+            initOptions(intent);
         }
 
-        public void setData(List<AlarmClockItem> items) {
-            alarmList.clear();
-            alarmList.addAll(items);
+        protected void initLocale(Context context) {
+            SuntimesUtils.initDisplayStrings(context);
+        }
+
+        protected void initOptions(Intent intent)
+        {
+            if (intent != null)
+            {
+                ContentValues themeValues = intent.getParcelableExtra(EXTRA_THEME);
+                if (themeValues != null) {
+                    theme = new SuntimesTheme(themeValues);
+                }
+
+                String timeFormatModeString = intent.getStringExtra(EXTRA_TIMEFORMATMODE);
+                if (timeFormatModeString != null)
+                {
+                    try {
+                        timeFormat = WidgetSettings.TimeFormatMode.valueOf(timeFormatModeString);
+
+                    } catch (IllegalArgumentException e) {
+                        timeFormat = WidgetSettings.TimeFormatMode.MODE_SYSTEM;
+                        Log.e("AlarmWidgetService", "init: failed to load TimeFormatMode! " + e);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onCreate() {
+        }
+
+        @Override
+        public void onDataSetChanged() {
+            initData();
         }
 
         protected void initData()
@@ -85,16 +127,8 @@ public class AlarmWidgetService extends RemoteViewsService
             }
 
             db.close();
-            setData(items);
-        }
-
-        @Override
-        public void onCreate() {
-        }
-
-        @Override
-        public void onDataSetChanged() {
-            initData();
+            alarmList.clear();
+            alarmList.addAll(items);
         }
 
         @Override
@@ -110,8 +144,17 @@ public class AlarmWidgetService extends RemoteViewsService
         @Override
         public RemoteViews getViewAt(int position)
         {
+            AlarmClockItem item = alarmList.get(position);
             RemoteViews view = new RemoteViews(context.getPackageName(), android.R.layout.simple_list_item_1);
-            view.setTextViewText(android.R.id.text1, alarmList.get(position).alarmtime + "");    // TODO: format
+
+            if (theme != null) {
+                view.setTextColor(android.R.id.text1, theme.getTimeColor());
+            }
+
+            Calendar alarmTime = Calendar.getInstance();
+            alarmTime.setTimeInMillis(item.alarmtime);
+            CharSequence timeDisplay = utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
+            view.setTextViewText(android.R.id.text1, timeDisplay);
             return view;
         }
 

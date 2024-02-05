@@ -18,8 +18,11 @@
 
 package com.forrestguice.suntimeswidget.widgets.layouts;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -67,17 +70,29 @@ public class AlarmLayout_2x2_0 extends AlarmLayout_1x1_0
     public void updateViews(final Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         //super.updateViews(context, appWidgetId, views, data);
-
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_table_label, (showLabels ? View.VISIBLE : View.GONE));
 
-        views.setRemoteAdapter(R.id.list_alarms, new Intent(context, AlarmWidgetService.class));
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+
+        Intent intent = new Intent(context, AlarmWidgetService.class);
+        intent.putExtra(AlarmWidgetService.AlarmWidgetItemViewFactory.EXTRA_THEME, themeValues);
+        intent.putExtra(AlarmWidgetService.AlarmWidgetItemViewFactory.EXTRA_TIMEFORMATMODE, timeFormat);
+        views.setRemoteAdapter(R.id.list_alarms, intent);
     }
 
     @Override
-    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme) {
+    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
+    {
         super.themeViews(context, views, theme);
-    }
+        themeValues = theme.toContentValues();
 
+        views.setTextColor(R.id.text_table_label, theme.getTextColor());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            views.setTextViewTextSize(R.id.text_table_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
+        }
+
+    }
+    protected ContentValues themeValues;
 
 }
