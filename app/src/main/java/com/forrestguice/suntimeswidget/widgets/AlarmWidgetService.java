@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -31,12 +30,17 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * AlarmWidgetService
@@ -63,16 +67,12 @@ public class AlarmWidgetService extends RemoteViewsService
         public AlarmWidgetItemViewFactory(Context context, Intent intent)
         {
             this.context = context;
-            initLocale(context);
-            initOptions(intent);
+            init(context, intent);
         }
 
-        protected void initLocale(Context context) {
-            SuntimesUtils.initDisplayStrings(context);
-        }
-
-        protected void initOptions(Intent intent)
+        protected void init(Context context, Intent intent)
         {
+            SuntimesUtils.initDisplayStrings(context);
             if (intent != null) {
                 appWidgetID = intent.getIntExtra(EXTRA_APPWIDGETID, 0);
             }
@@ -83,17 +83,27 @@ public class AlarmWidgetService extends RemoteViewsService
         }
 
         @Override
+        public void onDestroy() {
+        }
+
+        @Override
         public void onDataSetChanged() {
             initData();
         }
 
         protected void initData()
         {
+            boolean enabledOnly = true;
+            boolean enabledFirst = true;
+            int sortOrder = AlarmSettings.SORT_BY_ALARMTIME;
+            String[] types = new String[] { AlarmClockItem.AlarmType.ALARM.name(), AlarmClockItem.AlarmType.NOTIFICATION.name(), AlarmClockItem.AlarmType.NOTIFICATION1.name() };
+            Set<String> filterTypes = new TreeSet<>(Arrays.asList(types));
+
             List<AlarmClockItem> items = new ArrayList<>();
             AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
             db.open();
 
-            Cursor cursor = db.getAllAlarms(0, true, true);
+            Cursor cursor = db.getAllAlarms(0, true, enabledOnly);
             while (!cursor.isAfterLast())
             {
                 ContentValues entryValues = new ContentValues();
@@ -104,18 +114,15 @@ public class AlarmWidgetService extends RemoteViewsService
                     AlarmNotifications.updateAlarmTime(context, item);
                 }
 
-                items.add(item);
+                if (filterTypes.contains(item.type.name())) {
+                    items.add(item);
+                }
                 cursor.moveToNext();
             }
-
             db.close();
-            alarmList.clear();
-            alarmList.addAll(items);
-        }
 
-        @Override
-        public void onDestroy() {
-            /* EMPTY */
+            alarmList.clear();
+            alarmList.addAll(AlarmListDialog.AlarmListDialogAdapter.sortItems(items, sortOrder, enabledFirst));
         }
 
         @Override
