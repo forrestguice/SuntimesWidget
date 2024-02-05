@@ -24,9 +24,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
@@ -97,8 +100,8 @@ public class AlarmWidgetService extends RemoteViewsService
         protected void initData()
         {
             boolean enabledOnly = true;
-            boolean enabledFirst = true;
-            int sortOrder = AlarmSettings.SORT_BY_ALARMTIME;
+            boolean enabledFirst = AlarmSettings.loadPrefAlarmSortEnabledFirst(context);
+            int sortOrder = AlarmSettings.loadPrefAlarmSort(context);
             String[] types = new String[] { AlarmClockItem.AlarmType.ALARM.name(), AlarmClockItem.AlarmType.NOTIFICATION.name(), AlarmClockItem.AlarmType.NOTIFICATION1.name() };
             Set<String> filterTypes = new TreeSet<>(Arrays.asList(types));
 
@@ -107,20 +110,24 @@ public class AlarmWidgetService extends RemoteViewsService
             db.open();
 
             Cursor cursor = db.getAllAlarms(0, true, enabledOnly);
-            while (!cursor.isAfterLast())
+            if (cursor != null)
             {
-                ContentValues entryValues = new ContentValues();
-                DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
+                while (!cursor.isAfterLast())
+                {
+                    ContentValues entryValues = new ContentValues();
+                    DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
 
-                AlarmClockItem item = new AlarmClockItem(context, entryValues);
-                if (!item.enabled) {
-                    AlarmNotifications.updateAlarmTime(context, item);
-                }
+                    AlarmClockItem item = new AlarmClockItem(context, entryValues);
+                    if (!item.enabled) {
+                        AlarmNotifications.updateAlarmTime(context, item);
+                    }
 
-                if (filterTypes.contains(item.type.name())) {
-                    items.add(item);
+                    if (filterTypes.contains(item.type.name())) {
+                        items.add(item);
+                    }
+                    cursor.moveToNext();
                 }
-                cursor.moveToNext();
+                cursor.close();
             }
             db.close();
 
@@ -133,29 +140,35 @@ public class AlarmWidgetService extends RemoteViewsService
             return alarmList.size();
         }
 
-        protected int getViewLayoutID() {
-            return android.R.layout.simple_list_item_1;
+        protected int getViewLayoutResID() {
+            return R.layout.layout_listitem_alarmwidget;
         }
 
         @Override
         public RemoteViews getViewAt(int position)
         {
             AlarmClockItem item = alarmList.get(position);
-            RemoteViews view = new RemoteViews(context.getPackageName(), getViewLayoutID());
+            RemoteViews view = new RemoteViews(context.getPackageName(), getViewLayoutResID());
 
             SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetID);
-            view.setTextColor(android.R.id.text1, theme.getTimeColor());
+            view.setTextColor(android.R.id.text1, theme.getTextColor());
+            view.setTextColor(android.R.id.text2, theme.getTimeColor());
+
+            view.setTextViewText(android.R.id.text1, item.getLabel(item.getLabel(context)));
 
             WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetID);
             Calendar alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(item.alarmtime);
             CharSequence timeDisplay = utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
-            view.setTextViewText(android.R.id.text1, timeDisplay);
+            view.setTextViewText(android.R.id.text2, timeDisplay);
+
+            Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
+            view.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)theme.getTimeSizeSp(), (int)theme.getTimeSizeSp(), false));
 
             Intent fillInIntent = new Intent();
             fillInIntent.setData(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, item.rowID));
             fillInIntent.putExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, item.rowID);
-            view.setOnClickFillInIntent(android.R.id.text1, fillInIntent);
+            view.setOnClickFillInIntent(R.id.itemLayout, fillInIntent);
 
             return view;
         }
