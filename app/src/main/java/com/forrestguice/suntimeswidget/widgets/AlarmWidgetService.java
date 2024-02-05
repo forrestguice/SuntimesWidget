@@ -18,14 +18,20 @@
 
 package com.forrestguice.suntimeswidget.widgets;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,25 +58,38 @@ public class AlarmWidgetService extends RemoteViewsService
             this.context = context;
         }
 
+        public void setData(List<AlarmClockItem> items) {
+            alarmList.clear();
+            alarmList.addAll(items);
+        }
+
         protected void initData()
         {
-            alarmList.clear();
+            List<AlarmClockItem> items = new ArrayList<>();
             AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
             db.open();
 
-            Long upcomingAlarmID = AlarmSettings.loadUpcomingAlarmId(context);    // TODO: load list
-            if (upcomingAlarmID != null) {
-                alarmList.add(AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, AlarmSettings.loadUpcomingAlarmId(context)));
-                alarmList.add(AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, AlarmSettings.loadUpcomingAlarmId(context)));
-                alarmList.add(AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, AlarmSettings.loadUpcomingAlarmId(context)));
+            Cursor cursor = db.getAllAlarms(0, true, true);
+            while (!cursor.isAfterLast())
+            {
+                ContentValues entryValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
+
+                AlarmClockItem item = new AlarmClockItem(context, entryValues);
+                if (!item.enabled) {
+                    AlarmNotifications.updateAlarmTime(context, item);
+                }
+
+                items.add(item);
+                cursor.moveToNext();
             }
 
             db.close();
+            setData(items);
         }
 
         @Override
         public void onCreate() {
-            initData();
         }
 
         @Override
