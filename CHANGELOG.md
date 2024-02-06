@@ -1,5 +1,15 @@
 ### ~
 
+### v0.15.11 (2024-02-05)
+* adds "create/restore backup" option; saves all configuration data as json text (#757).
+* adds "export/import widget" option; save/load individual widget configurations.
+* adds support for restoring all widgets from backup (requires launcher implementing `AppWidgetManager.ACTION_APPWIDGET_RESTORED`).
+* adds donation link to the about dialog; adds Liberapay to donation options (#574); https://liberapay.com/forrestguice/
+* fixes bug in date widget where the scaled text is too large (#763).
+* increments `CalculatorProviderContract` version 6 -> 7; adds columns for event position data.
+* updates translation to Polish and Esperanto (eo, pl) (#761 by Verdulo).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#765 by James Liu).
+
 ### v0.15.10 (2024-01-14)
 * adds layouts and resources for very small screens (#727); experimental support for wearables.
 * adds 'columns' setting to moon dialog; 2, 3 or 4 columns.
