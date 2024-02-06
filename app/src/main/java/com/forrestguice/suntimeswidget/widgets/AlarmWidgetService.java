@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -42,11 +43,18 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
+
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_ENABLEDONLY;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_SHOWICONS;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_SORTORDER;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_TYPES;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_ENABLEDONLY;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_SHOWICONS;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_SORTORDER;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_TYPES;
 
 /**
  * AlarmWidgetService
@@ -99,11 +107,10 @@ public class AlarmWidgetService extends RemoteViewsService
 
         protected void initData()
         {
-            boolean enabledOnly = true;
             boolean enabledFirst = AlarmSettings.loadPrefAlarmSortEnabledFirst(context);
-            int sortOrder = AlarmSettings.loadPrefAlarmSort(context);
-            String[] types = new String[] { AlarmClockItem.AlarmType.ALARM.name(), AlarmClockItem.AlarmType.NOTIFICATION.name(), AlarmClockItem.AlarmType.NOTIFICATION1.name() };
-            Set<String> filterTypes = new TreeSet<>(Arrays.asList(types));
+            boolean enabledOnly = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetID, PREF_KEY_ALARMWIDGET_ENABLEDONLY, PREF_DEF_ALARMWIDGET_ENABLEDONLY);
+            int sortOrder = AlarmWidgetSettings.loadAlarmWidgetInt(context, appWidgetID, PREF_KEY_ALARMWIDGET_SORTORDER, PREF_DEF_ALARMWIDGET_SORTORDER);
+            Set<String> filterTypes = AlarmWidgetSettings.loadAlarmWidgetStringSet(context, appWidgetID, PREF_KEY_ALARMWIDGET_TYPES, PREF_DEF_ALARMWIDGET_TYPES);
 
             List<AlarmClockItem> items = new ArrayList<>();
             AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
@@ -162,8 +169,10 @@ public class AlarmWidgetService extends RemoteViewsService
             CharSequence timeDisplay = utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
             view.setTextViewText(android.R.id.text2, timeDisplay);
 
+            boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetID, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
             Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
             view.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)theme.getTimeSizeSp(), (int)theme.getTimeSizeSp(), false));
+            view.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
 
             Intent fillInIntent = new Intent();
             fillInIntent.setData(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, item.rowID));
