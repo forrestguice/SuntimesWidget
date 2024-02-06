@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout android:id="@+id/check_enabledOnly_layout" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+        <CheckBox
+            android:id="@+id/check_enabledOnly"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Enabled Only" android:textSize="?attr/text_size_small" />   <!-- TODO: i18n -->
+
+    </LinearLayout>
+
+
+    <LinearLayout android:id="@+id/check_showIcons_layout" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+        <CheckBox
+            android:id="@+id/check_showIcons"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Show Icons" android:textSize="?attr/text_size_small" />   <!-- TODO: i18n -->
+
+    </LinearLayout>
+
+</LinearLayout>

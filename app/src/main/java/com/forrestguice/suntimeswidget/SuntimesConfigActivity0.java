@@ -313,11 +313,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         locationConfig.loadSettings(context);
         loadLayoutSettings(context);
         loadGeneralSettings(context);
+        loadMoreGeneralSettings(context);
         loadCalendarSettings(context);
         loadAppearanceSettings(context);
         loadTimezoneSettings(context);
         loadActionSettings(context);
-        loadMoreGeneralSettings(context);
     }
 
     protected ArrayAdapter<SuntimesCalculatorDescriptor> createAdapter_calculators()
@@ -451,6 +451,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
             //setConfigActivityTitle(getString(R.string.configAction_reconfigWidget));
         }
+
+        initMoreGeneralSettings(context);
 
         //
         // widget: onTap
@@ -953,8 +955,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
         }
-
-        initMoreGeneralSettings(context);
     }
 
     protected void initToolbar(final Context context)
