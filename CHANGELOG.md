@@ -7,7 +7,7 @@
 * adds donation link to the about dialog; adds Liberapay to donation options (#574); https://liberapay.com/forrestguice/
 * fixes bug in date widget where the scaled text is too large (#763).
 * increments `CalculatorProviderContract` version 6 -> 7; adds columns for event position data.
-* updates translation to Polish and Esperanto (eo, pl) (#761 by Verdulo).
+* updates translation to Polish and Esperanto (eo, pl) (#761, #769 by Verdulo).
 * updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#765 by James Liu).
 
 ### v0.15.10 (2024-01-14)
