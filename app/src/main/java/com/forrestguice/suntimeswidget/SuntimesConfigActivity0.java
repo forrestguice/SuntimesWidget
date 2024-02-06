@@ -299,6 +299,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         saveTimezoneSettings(context);
         saveAppearanceSettings(context);
         saveActionSettings(context);
+        saveMoreGeneralSettings(context);
         saveMetadata(context);
     }
 
@@ -316,6 +317,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         loadAppearanceSettings(context);
         loadTimezoneSettings(context);
         loadActionSettings(context);
+        loadMoreGeneralSettings(context);
     }
 
     protected ArrayAdapter<SuntimesCalculatorDescriptor> createAdapter_calculators()
@@ -951,6 +953,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
         }
+
+        initMoreGeneralSettings(context);
     }
 
     protected void initToolbar(final Context context)
@@ -1135,6 +1139,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected View[] getSecondaryWidgetModeViews() {
         return new View[] { label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
     }
+
+    protected void initMoreGeneralSettings(final Context context) { /* EMPTY */ }
+    protected void saveMoreGeneralSettings(final Context context) { /* EMPTY */ }
+    protected void loadMoreGeneralSettings(final Context context) { /* EMPTY */ }
 
     protected void initCalendarMode(final Context context) { /* EMPTY */ }
     protected void saveCalendarSettings(Context context) {
@@ -2601,6 +2609,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
         layout = findViewById(R.id.appwidget_general_calendarPattern_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showMoreGeneralSettings(boolean showUI) {
+        View layout = findViewById(R.id.appwidget_general_moreOptions_layout);
         if (layout != null) {
             layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
