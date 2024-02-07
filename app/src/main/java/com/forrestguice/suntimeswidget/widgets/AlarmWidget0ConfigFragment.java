@@ -18,26 +18,28 @@
 package com.forrestguice.suntimeswidget.widgets;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.settings.SuntimesBackupTask;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
@@ -88,6 +90,9 @@ public class AlarmWidget0ConfigFragment extends DialogFragment
     protected CheckBox check_showIcons;
     protected TextView chip_type_alarms, chip_type_notifications;
 
+    protected Spinner spin_sortOrder;
+    protected ArrayAdapter<SortOrder> spin_sortOrder_adapter;
+
     protected void initViews( final Context context, View dialogContent )
     {
         check_enabledOnly = (CheckBox) dialogContent.findViewById(R.id.check_enabledOnly);
@@ -114,7 +119,39 @@ public class AlarmWidget0ConfigFragment extends DialogFragment
         if (chip_type_add != null) {
             chip_type_add.setOnClickListener(onTypeChipClick);
         }
+
+        spin_sortOrder = (Spinner) dialogContent.findViewById(R.id.spin_sortOrder);
+        if (spin_sortOrder != null) {
+            spin_sortOrder.setOnItemSelectedListener(onSortOrderSelected);
+            spin_sortOrder.setAdapter(spin_sortOrder_adapter = createAdapter_sortOrder(context));
+        }
     }
+
+    protected ArrayAdapter<SortOrder> createAdapter_sortOrder(Context context)
+    {
+        SortOrder[] values = new SortOrder[] {new SortOrder(context, AlarmSettings.SORT_BY_ALARMTIME), new SortOrder(context, AlarmSettings.SORT_BY_CREATION)};
+        ArrayAdapter<SortOrder> adapter = new ArrayAdapter<SortOrder>(context, R.layout.layout_listitem_oneline, values);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+
+    protected AdapterView.OnItemSelectedListener onSortOrderSelected = new AdapterView.OnItemSelectedListener()
+    {
+        int sortOrder = PREF_DEF_ALARMWIDGET_SORTORDER;
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            int order = spin_sortOrder_adapter.getItem(position).getValue();
+            if (order != sortOrder) {
+                sortOrder = order;
+                setAlarmWidgetValue(PREF_KEY_ALARMWIDGET_SORTORDER, sortOrder);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
 
     protected View.OnClickListener onTypeChipClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
@@ -230,6 +267,24 @@ public class AlarmWidget0ConfigFragment extends DialogFragment
                     || filterTypes.contains(AlarmClockItem.AlarmType.NOTIFICATION1.name())
                     || filterTypes.contains(AlarmClockItem.AlarmType.NOTIFICATION2.name()) ? View.VISIBLE : View.GONE);
         }
+
+        if (spin_sortOrder != null)
+        {
+            int p = findPositionForValue(spin_sortOrder_adapter, getAlarmWidgetInt(PREF_KEY_ALARMWIDGET_SORTORDER, PREF_DEF_ALARMWIDGET_SORTORDER));
+            if (p >= 0) {
+                spin_sortOrder.setSelection(p);
+            }
+        }
+    }
+
+    protected int findPositionForValue(ArrayAdapter<SortOrder> adapter, int value)
+    {
+        for (int i=0; i<adapter.getCount(); i++) {
+            if (adapter.getItem(i).getValue() == value) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -295,6 +350,42 @@ public class AlarmWidget0ConfigFragment extends DialogFragment
     private DialogListener listener = null;
     public void setDialogListener( DialogListener listener ) {
         this.listener = listener;
+    }
+
+    /**
+     * SortOrder
+     */
+    public static class SortOrder
+    {
+        public SortOrder(Context context, int value) {
+            setValue(context, value);
+        }
+
+        protected void setValue(Context context, int value)
+        {
+            this.value = value;
+            switch (value)
+            {
+                case AlarmSettings.SORT_BY_CREATION:
+                    displayString = context.getString(R.string.configAction_sortAlarms_by_creation);
+                    break;
+
+                case AlarmSettings.SORT_BY_ALARMTIME:
+                default:
+                    displayString = context.getString(R.string.configAction_sortAlarms_by_time);
+                    break;
+            }
+        }
+
+        protected int value = AlarmSettings.SORT_BY_ALARMTIME;
+        public int getValue() {
+            return value;
+        }
+
+        protected String displayString = "";
+        public String toString() {
+            return displayString;
+        }
     }
 
 }

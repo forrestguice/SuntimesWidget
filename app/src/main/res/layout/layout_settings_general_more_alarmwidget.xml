@@ -60,4 +60,23 @@
 
     </LinearLayout>
 
+    <LinearLayout android:id="@+id/spin_sortOrder_layout" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/spin_sortOrder_label" android:labelFor="@+id/spin_sortOrder"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="?attr/text_size_small"
+            android:text="Sort by" />   <!-- TODO -->
+
+        <Spinner
+            android:id="@+id/spin_sortOrder"
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:dropDownVerticalOffset="16sp" />
+
+    </LinearLayout>
+
 </LinearLayout>
