@@ -949,7 +949,10 @@ public class SuntimesUtils
     }
 
     @SuppressWarnings("ConstantConditions")
-    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds)
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds) {
+        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, showWeeks, showHours, true, showSeconds);
+    }
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showMinutes, boolean showSeconds)
     {
         String value = strEmpty;
         String units = strEmpty;
@@ -991,7 +994,7 @@ public class SuntimesUtils
                      String.format(strTimeDeltaFormat, remainingDays, strDays);
 
         boolean showingHours = (!showingYears && !showingWeeks && remainingHours > 0);
-        boolean showingMinutes = (!showingDays && !showingWeeks && !showingYears && remainingMinutes > 0);
+        boolean showingMinutes = (showMinutes && !showingDays && !showingWeeks && !showingYears && remainingMinutes > 0);
         boolean showingSeconds = (showSeconds && !showingDays && !showingWeeks && !showingYears && (remainingSeconds > 0));
 
         if (showHours || !showingYears && !showingWeeks && remainingDays < 2)
