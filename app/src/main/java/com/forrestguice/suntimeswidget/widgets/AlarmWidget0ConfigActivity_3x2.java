@@ -24,22 +24,21 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
 /**
  * Alarm widget config activity.
  */
 @SuppressWarnings("Convert2Diamond")
-public class AlarmWidget0ConfigActivity_2x2 extends AlarmWidget0ConfigActivity
+public class AlarmWidget0ConfigActivity_3x2 extends AlarmWidget0ConfigActivity
 {
-    public AlarmWidget0ConfigActivity_2x2() {
+    public AlarmWidget0ConfigActivity_3x2() {
         super();
     }
 
     @Override
     protected Class getWidgetClass() {
-        return AlarmWidget0_2x2.class;
+        return AlarmWidget0_3x2.class;
     }
 
     @Override
@@ -60,23 +59,23 @@ public class AlarmWidget0ConfigActivity_2x2 extends AlarmWidget0ConfigActivity
     protected Intent themeEditorIntent(Context context)
     {
         Intent intent = super.themeEditorIntent(context);
-        intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_ALARM_2x2);
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_ALARM_3x2);
         return intent;
     }
 
     @Override
     protected TextView getPrimaryWidgetModeLabel() {
-        return label_2x2mode;
+        return label_3x2mode;
     }
 
     @Override
     protected View[] getPrimaryWidgetModeViews() {
-        return new View[] { label_2x2mode, spinner_2x2mode };
+        return new View[] { label_3x2mode, spinner_3x2mode };
     }
 
     @Override
     protected View[] getSecondaryWidgetModeViews() {
-        return new View[] { label_1x1mode, spinner_1x1mode, label_3x2mode, spinner_3x2mode };
+        return new View[] { label_1x1mode, spinner_1x1mode, label_2x2mode, spinner_2x2mode };
     }
 
 }

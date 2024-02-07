@@ -21,12 +21,11 @@ package com.forrestguice.suntimeswidget.widgets;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.util.Log;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.forrestguice.suntimeswidget.MoonWidget0;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidget0;
@@ -38,11 +37,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
-import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_2x1_0;
-import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_3x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_3x2_0;
 
 import java.util.Calendar;
 
@@ -131,10 +127,11 @@ public class AlarmWidget0 extends SuntimesWidget0
         AlarmLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
+            int minWidth3x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
             int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = (mustFitWithinDp[0] >= minWidth2x1)
-                    ? new AlarmLayout_2x2_0()
-                    : AlarmWidgetSettings.loadAlarm1x1ModePref_asLayout(context, appWidgetId);
+            layout = (mustFitWithinDp[0] >= minWidth3x1) ? new AlarmLayout_3x2_0()
+                    : ((mustFitWithinDp[0] >= minWidth2x1) ? new AlarmLayout_2x2_0()
+                        : AlarmWidgetSettings.loadAlarm1x1ModePref_asLayout(context, appWidgetId));
         } else {
             layout = defLayout;
         }
@@ -143,5 +140,17 @@ public class AlarmWidget0 extends SuntimesWidget0
         //Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
    }
+
+    public static AlarmClockItem loadAlarmClockItem(Context context, long rowID)
+    {
+        long bench_start = System.nanoTime();    // TODO: use Handler here to avoid blocking
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
+        db.open();
+        AlarmClockItem item = AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, rowID);
+        db.close();
+        long bench_end = System.nanoTime();
+        Log.d("DEBUG", "load single alarm item takes " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        return item;
+    }
 
 }

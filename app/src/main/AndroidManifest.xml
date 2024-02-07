@@ -796,13 +796,45 @@
                 android:resource="@xml/widget_alarms0_2x2" />
         </receiver>
 
+        <activity
+            android:name=".widgets.AlarmWidget0ConfigActivity_2x2" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".widgets.AlarmWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:enabled="@bool/api_post_14" />    <!-- AlarmWidget Service: Collections widget [requires api 14+] -->
 
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget: Alarms (3x2)                                                        -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".widgets.AlarmWidget0_3x2"
+            android:label="@string/app_name_alarmwidget0"
+            android:icon="@mipmap/ic_launcher_alarms">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="suntimes.ALARM_WIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+                <action android:name="suntimeswidget.alarm.ui.update" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="suntimeswidget.alarm.ui.update" />
+                <data android:scheme="content" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_alarms0_3x2" />
+        </receiver>
+
         <activity
-            android:name=".widgets.AlarmWidget0ConfigActivity_2x2" >
+            android:name=".widgets.AlarmWidget0ConfigActivity_3x2" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

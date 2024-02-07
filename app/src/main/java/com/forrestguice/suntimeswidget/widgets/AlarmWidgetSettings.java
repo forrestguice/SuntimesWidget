@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_3x2_0;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -39,11 +40,13 @@ import static com.forrestguice.suntimeswidget.settings.WidgetSettings.PREF_PREFI
 
 public class AlarmWidgetSettings
 {
-    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_ALARM1x1 = "widgetmode_alarm1x1";
+    public static final String MODE_1x1 = "1x1";
+    public static final String MODE_2x2 = "2x2";
+    public static final String MODE_3x2 = "3x2";
+    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_ALARM = "widgetmode_alarm";
     public static final WidgetModeAlarm1x1 PREF_DEF_APPEARANCE_WIDGETMODE_ALARM1x1 = WidgetModeAlarm1x1.WIDGETMODE1x1_0;
-
-    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_ALARM2x2 = "widgetmode_alarm2x2";
     public static final WidgetModeAlarm2x2 PREF_DEF_APPEARANCE_WIDGETMODE_ALARM2x2 = WidgetModeAlarm2x2.WIDGETMODE2x2_0;
+    public static final WidgetModeAlarm3x2 PREF_DEF_APPEARANCE_WIDGETMODE_ALARM3x2 = WidgetModeAlarm3x2.WIDGETMODE3x2_0;
 
     public static final String PREF_PREFIX_KEY_ALARMWIDGET = "_alarmwidget_";
 
@@ -64,8 +67,9 @@ public class AlarmWidgetSettings
     //////////////////////////////////////////////////
 
     public static String[] ALL_KEYS = new String[] {
-            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM1x1,
-            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM2x2,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + MODE_1x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + MODE_2x2,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + MODE_3x2,
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_TYPES,
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_ENABLEDONLY,
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_SORTORDER,
@@ -164,19 +168,32 @@ public class AlarmWidgetSettings
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
-    public static void saveAlarm1x1ModePref(Context context, int appWidgetId, WidgetModeAlarm1x1 mode)
+    public static void saveAlarmModePref(Context context, int appWidgetId, String value, String suffix)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM1x1, mode.name());
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + suffix, value);
         prefs.apply();
     }
-    public static WidgetModeAlarm1x1 loadAlarm1x1ModePref(Context context, int appWidgetId)
+    public static void deleteAlarmModePref(Context context, int appWidgetId, String suffix)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + suffix);
+        prefs.apply();
+    }
+    public static String loadAlarmModePref(Context context, int appWidgetId, String suffix, String defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM1x1, PREF_DEF_APPEARANCE_WIDGETMODE_ALARM1x1.name());
+        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + suffix, defaultValue);
+    }
 
+    //////////////////////////////////////////////////
+
+    public static WidgetModeAlarm1x1 loadAlarm1x1ModePref(Context context, int appWidgetId)
+    {
+        String modeString = loadAlarmModePref(context, appWidgetId, MODE_1x1, PREF_DEF_APPEARANCE_WIDGETMODE_ALARM1x1.name());
         WidgetModeAlarm1x1 widgetMode;
         try {
             widgetMode = WidgetModeAlarm1x1.valueOf(modeString);
@@ -194,35 +211,16 @@ public class AlarmWidgetSettings
         switch (mode)
         {
             case WIDGETMODE1x1_0:
-            default:
-                layout = new AlarmLayout_1x1_0();
-                break;
+            default: layout = new AlarmLayout_1x1_0(); break;
         }
         return layout;
-    }
-    public static void deleteAlarm1x1ModePref(Context context, int appWidgetId)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
-        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM1x1);
-        prefs.apply();
     }
 
     //////////////////////////////////////////////////
 
-    public static void saveAlarm2x2ModePref(Context context, int appWidgetId, WidgetModeAlarm2x2 mode)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
-        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM2x2, mode.name());
-        prefs.apply();
-    }
     public static WidgetModeAlarm2x2 loadAlarm2x2ModePref(Context context, int appWidgetId)
     {
-        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
-        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM2x2, PREF_DEF_APPEARANCE_WIDGETMODE_ALARM2x2.name());
-
+        String modeString = loadAlarmModePref(context, appWidgetId, MODE_2x2, PREF_DEF_APPEARANCE_WIDGETMODE_ALARM2x2.name());
         WidgetModeAlarm2x2 widgetMode;
         try {
             widgetMode = WidgetModeAlarm2x2.valueOf(modeString);
@@ -240,18 +238,36 @@ public class AlarmWidgetSettings
         switch (mode)
         {
             case WIDGETMODE2x2_0:
-            default:
-                layout = new AlarmLayout_2x2_0();
-                break;
+            default: layout = new AlarmLayout_2x2_0(); break;
         }
         return layout;
     }
-    public static void deleteAlarm2x2ModePref(Context context, int appWidgetId)
+
+    //////////////////////////////////////////////////
+
+    public static WidgetModeAlarm3x2 loadAlarm3x2ModePref(Context context, int appWidgetId)
     {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
-        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM2x2);
-        prefs.apply();
+        String modeString = loadAlarmModePref(context, appWidgetId, MODE_3x2, PREF_DEF_APPEARANCE_WIDGETMODE_ALARM3x2.name());
+        WidgetModeAlarm3x2 widgetMode;
+        try {
+            widgetMode = WidgetModeAlarm3x2.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            widgetMode = PREF_DEF_APPEARANCE_WIDGETMODE_ALARM3x2;
+            Log.w("loadAlarm2x2ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_ALARM3x2.name() + "'.");
+        }
+        return widgetMode;
+    }
+    public static AlarmLayout loadAlarm3x2ModePref_asLayout(Context context, int appWidgetId)
+    {
+        AlarmLayout layout;
+        WidgetModeAlarm3x2 mode = loadAlarm3x2ModePref(context, appWidgetId);
+        switch (mode)
+        {
+            case WIDGETMODE3x2_0:
+            default: layout = new AlarmLayout_3x2_0(); break;
+        }
+        return layout;
     }
 
     //////////////////////////////////////////////////
@@ -351,6 +367,50 @@ public class AlarmWidgetSettings
         }
     }
 
+    /**
+     * WidgetModeAlarm3x2
+     */
+    public static enum WidgetModeAlarm3x2 implements WidgetSettings.WidgetModeDisplay
+    {
+        WIDGETMODE3x2_0("Upcoming Alarms", R.layout.layout_widget_alarm_2x2_0);
+
+        private final int layoutID;
+        private String displayString;
+
+        private WidgetModeAlarm3x2(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID() {
+            return layoutID;
+        }
+
+        public String toString() {
+            return displayString;
+        }
+        public String getDisplayString() {
+            return displayString;
+        }
+        public void setDisplayString( String displayString ) {
+            this.displayString = displayString;
+        }
+        public static void initDisplayStrings( Context context ) {
+            //WIDGETMODE2x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));   // TODO
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetSettings.WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
@@ -369,8 +429,9 @@ public class AlarmWidgetSettings
      */
     public static void deletePrefs(Context context, int appWidgetId)
     {
-        deleteAlarm1x1ModePref(context, appWidgetId);
-        deleteAlarm2x2ModePref(context, appWidgetId);
+        deleteAlarmModePref(context, appWidgetId, MODE_1x1);
+        deleteAlarmModePref(context, appWidgetId, MODE_2x2);
+        deleteAlarmModePref(context, appWidgetId, MODE_3x2);
         deleteAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_TYPES);
         deleteAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_ENABLEDONLY);
         deleteAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SORTORDER);

@@ -41,12 +41,15 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.MODE_2x2;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.MODE_3x2;
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_ENABLEDONLY;
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_SHOWICONS;
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_SORTORDER;
@@ -72,9 +75,11 @@ public class AlarmWidgetService extends RemoteViewsService
     public static class AlarmWidgetItemViewFactory implements RemoteViewsService.RemoteViewsFactory
     {
         public static final String EXTRA_APPWIDGETID = "appWidgetID";
+        public static final String EXTRA_LAYOUTMODE = "layoutMode";
 
         protected Context context;
         protected int appWidgetID = 0;
+        protected String layoutMode = AlarmWidgetSettings.MODE_2x2;
         protected List<AlarmClockItem> alarmList = new ArrayList<>();
         protected SuntimesUtils utils = new SuntimesUtils();
 
@@ -89,6 +94,9 @@ public class AlarmWidgetService extends RemoteViewsService
             SuntimesUtils.initDisplayStrings(context);
             if (intent != null) {
                 appWidgetID = intent.getIntExtra(EXTRA_APPWIDGETID, 0);
+                if (intent.hasExtra(EXTRA_LAYOUTMODE)) {
+                    layoutMode = intent.getStringExtra(EXTRA_LAYOUTMODE);
+                }
             }
         }
 
@@ -147,8 +155,14 @@ public class AlarmWidgetService extends RemoteViewsService
             return alarmList.size();
         }
 
-        protected int getViewLayoutResID() {
-            return R.layout.layout_listitem_alarmwidget;
+        protected int getViewLayoutResID()
+        {
+            switch (layoutMode)
+            {
+                case MODE_3x2: return R.layout.layout_listitem_alarmwidget1;
+                case MODE_2x2:
+                default: return R.layout.layout_listitem_alarmwidget;
+            }
         }
 
         @Override
@@ -161,7 +175,16 @@ public class AlarmWidgetService extends RemoteViewsService
             view.setTextColor(android.R.id.text1, theme.getTextColor());
             view.setTextColor(android.R.id.text2, theme.getTimeColor());
 
-            view.setTextViewText(android.R.id.text1, item.getLabel(item.getLabel(context)));
+            String itemLabel = item.getLabel(item.getLabel(context));
+            String eventDisplay = AlarmTileService.formatEventDisplay(context, item);
+            view.setTextViewText(android.R.id.text1, itemLabel);
+            view.setTextViewText(R.id.text_event, eventDisplay);
+            view.setViewVisibility(R.id.text_event, (eventDisplay != null && !eventDisplay.isEmpty() ? View.VISIBLE : View.GONE));
+
+            long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();
+            String timeUntilDisplay = utils.timeDeltaLongDisplayString(timeUntilMs, 0, false, true, false,false).getValue();
+            //String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.hence : R.string.ago), timeUntilDisplay);
+            view.setTextViewText(R.id.text_note, "~ " + timeUntilDisplay);  // TODO: i18n
 
             WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetID);
             Calendar alarmTime = Calendar.getInstance();
@@ -173,6 +196,7 @@ public class AlarmWidgetService extends RemoteViewsService
             Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
             view.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)theme.getTimeSizeSp(), (int)theme.getTimeSizeSp(), false));
             view.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
+            view.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));
 
             Intent fillInIntent = new Intent();
             fillInIntent.setData(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, item.rowID));
