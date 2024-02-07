@@ -383,8 +383,8 @@
         <LinearLayout android:id="@+id/appwidget_general_moreOptions_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingRight="8dp" android:paddingLeft="16dp"
-            android:paddingEnd="8dp" android:paddingStart="16dp"
+            android:paddingRight="8dp" android:paddingLeft="8dp"
+            android:paddingEnd="8dp" android:paddingStart="8dp"
             android:weightSum="1" android:visibility="gone" android:animateLayoutChanges="true">
 
             <FrameLayout android:id="@+id/appwidget_general_moreOptions_fragmentContainer"
