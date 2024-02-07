@@ -256,7 +256,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                         }
                     };
                 }
-                setAlarmID(this, ContentUris.parseId(newData), onLoaded);
+                setAlarmID(this, newData, onLoaded);
 
             } else Log.w(TAG, "onNewIntent: null data!");
         } else Log.w(TAG, "onNewIntent: null Intent!");
@@ -274,7 +274,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             if (action != null) {
                 if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
                     if (data != null) {
-                        setAlarmID(AlarmDismissActivity.this, ContentUris.parseId(data));
+                        setAlarmID(AlarmDismissActivity.this, data);
                     } else Log.e(TAG, "updateReceiver.onReceive: null data!");
                 } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
             } else Log.e(TAG, "updateReceiver.onReceive: null action!");
@@ -318,7 +318,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         {
             try {
                 Log.d(TAG, "onResume: " + data);
-                setAlarmID(this, ContentUris.parseId(data), onLoaded);
+                setAlarmID(this, data, onLoaded);
                 if (!isInteractive()) {
                     screenOn();
                 }
@@ -723,6 +723,20 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             }
         });
         task.execute(alarmID);
+    }
+
+    public void setAlarmID(final Context context, Uri uri) {
+        setAlarmID(context, uri, null);
+    }
+    public void setAlarmID(Context context, Uri uri,  @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener listener)
+    {
+        try {
+            setAlarmID(context, ContentUris.parseId(uri), listener);
+
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "setAlarmID: invalid uri! " + e);
+            setAlarmID(context, -1, listener);
+        }
     }
 
     public static final int CLOCK_UPDATE_RATE = 3000;
