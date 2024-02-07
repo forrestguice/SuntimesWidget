@@ -63,6 +63,24 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_appearance_2x2mode_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:visibility="gone"
+            android:paddingLeft="@dimen/widget_settings_label_padding_left" android:paddingRight="8dp"
+            android:paddingStart="@dimen/widget_settings_label_padding_left" android:paddingEnd="8dp"
+            android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView android:labelFor="@+id/appwidget_appearance_2x2mode"
+                android:id="@+id/appwidget_appearance_2x2mode_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_2x2mode" />
+
+            <Spinner android:id="@+id/appwidget_appearance_2x2mode" android:layout_width="0dp"
+                android:dropDownVerticalOffset="16sp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:minHeight="28dp" />
+
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/appwidget_appearance_3x1mode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:visibility="gone"

@@ -520,6 +520,7 @@
 
     <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->    <!-- TODO -->
     <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->

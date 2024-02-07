@@ -18,23 +18,31 @@ package com.forrestguice.suntimeswidget.widgets;
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.util.Log;
+import android.content.Intent;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.suntimeswidget.MoonWidget0;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_1x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_3x1_0;
 
 import java.util.Calendar;
 
@@ -66,29 +74,37 @@ public class AlarmWidget0 extends SuntimesWidget0
     }
 
     @Override
-    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, getMinSize(context));
-    }
-
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
+    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        AlarmLayout layout = AlarmWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize);
-        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        AlarmLayout defLayout = AlarmWidgetSettings.loadAlarm1x1ModePref_asLayout(context, appWidgetId);
+        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, AlarmWidget0.class, getMinSize(context), defLayout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, AlarmLayout layout)
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, AlarmLayout defLayout)
+    {
+        AlarmLayout layout = AlarmWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
+        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
+    }
+
+    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, AlarmLayout layout, Class widgetClass)
     {
         SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
         data.calculate();
         layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);
 
+        Intent intentTemplate = AlarmNotifications.getAlarmListIntent(context, null);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentTemplate, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.list_alarms, pendingIntent);
+
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, AlarmWidget0.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_alarms);
 
         Calendar nextUpdate = Calendar.getInstance();
         nextUpdate.setTimeInMillis(data.calendar().getTimeInMillis());
@@ -102,14 +118,6 @@ public class AlarmWidget0 extends SuntimesWidget0
         return new SuntimesClockData(context, appWidgetId);
     }
 
-    protected static AlarmLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
-    {
-        AlarmLayout layout = new AlarmLayout_1x1_0();
-        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
-        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
-        return layout;
-    }
-
     @Override
     public void initLocale(Context context)
     {
@@ -117,16 +125,23 @@ public class AlarmWidget0 extends SuntimesWidget0
         SuntimesUtils.initDisplayStrings(context);
     }
 
-    public static AlarmClockItem loadAlarmClockItem(Context context, long rowID)
+    protected static AlarmLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, AlarmLayout defLayout)
     {
-        long bench_start = System.nanoTime();    // TODO: use Handler here to avoid blocking
-        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
-        db.open();
-        AlarmClockItem item = AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, rowID);
-        db.close();
-        long bench_end = System.nanoTime();
-        Log.d("DEBUG", "load single alarm item takes " + ((bench_end - bench_start) / 1000000.0) + " ms");
-        return item;
-    }
+        int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
+        AlarmLayout layout;
+        if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
+        {
+            int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            layout = (mustFitWithinDp[0] >= minWidth2x1)
+                    ? new AlarmLayout_2x2_0()
+                    : AlarmWidgetSettings.loadAlarm1x1ModePref_asLayout(context, appWidgetId);
+        } else {
+            layout = defLayout;
+        }
+        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
+        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
+        //Log.d("getWidgetLayout", "layout is: " + layout);
+        return layout;
+   }
 
 }
