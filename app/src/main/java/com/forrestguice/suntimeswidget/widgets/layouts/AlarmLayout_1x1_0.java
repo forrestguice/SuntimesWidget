@@ -20,22 +20,29 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 
 import java.util.Calendar;
+
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_SHOWICONS;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_SHOWICONS;
 
 public class AlarmLayout_1x1_0 extends AlarmLayout
 {
@@ -98,6 +105,25 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
                         ? utils.calendarDateTimeDisplayString(context, alarmTime, true, false, timeFormat).toString()
                         : utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
 
+                String itemLabel = item.getLabel(item.getLabel(context));
+                String eventDisplay = AlarmTileService.formatEventDisplay(context, item);
+                views.setTextViewText(android.R.id.text1, itemLabel);
+                views.setTextViewText(R.id.text_event, eventDisplay);
+                views.setViewVisibility(R.id.text_event, (eventDisplay != null && !eventDisplay.isEmpty() ? View.VISIBLE : View.GONE));
+
+                long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();
+                String timeUntilDisplay = utils.timeDeltaLongDisplayString(timeUntilMs, 0, false, true, false,false).getValue();
+                //String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.hence : R.string.ago), timeUntilDisplay);
+                views.setTextViewText(R.id.text_note, "~ " + timeUntilDisplay);  // TODO: i18n
+
+                views.setTextViewText(R.id.text_note1, item.note);   // TODO: substitutions
+
+                boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetId, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
+                Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), timeColor);
+                views.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)timeSizeSp, (int)timeSizeSp, false));
+                views.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
+                views.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));
+
             } else {
                 displayString = context.getString(R.string.configLabel_alarms_nextAlarm_error);
             }
@@ -114,13 +140,13 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
                 float adjustedSizeSp = adjustTextSize(context, maxDp, "sans-serif", boldTime, s, timeSizeSp, AlarmLayout.MAX_SP, true);
 
                 if (adjustedSizeSp != timeSizeSp) {
-                    views.setTextViewTextSize(R.id.text_alarmtime, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp);
+                    views.setTextViewTextSize(android.R.id.text2, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp);
                 }
             }
         }
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
-        views.setViewVisibility(R.id.text_alarmtime_label, (showLabels ? View.VISIBLE : View.GONE));
+        views.setViewVisibility(R.id.text_label, (showLabels ? View.VISIBLE : View.GONE));
         views.setTextViewText(android.R.id.text2, (boldTime ? SuntimesUtils.createBoldSpan(null, displayString, displayString) : displayString));
     }
 
@@ -141,16 +167,16 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
         boldTime = theme.getTimeBold();
         paddingDp = theme.getPadding();
 
-        views.setTextColor(R.id.text_alarmtime, timeColor);
-        views.setTextColor(R.id.text_alarmtime_label, textColor);
+        views.setTextColor(android.R.id.text2, timeColor);
+        views.setTextColor(R.id.text_label, textColor);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             timeSizeSp = theme.getTimeSizeSp();
             suffixSizeSp = theme.getTimeSuffixSizeSp();
 
-            views.setTextViewTextSize(R.id.text_alarmtime, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
-            views.setTextViewTextSize(R.id.text_alarmtime_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
+            views.setTextViewTextSize(android.R.id.text2, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
+            views.setTextViewTextSize(R.id.text_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
         }
     }
 

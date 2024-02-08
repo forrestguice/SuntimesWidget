@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.widgets.layouts;
 
 import android.content.Context;
+import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
@@ -55,6 +56,11 @@ public class AlarmLayout_2x2_1 extends AlarmLayout_1x1_0
             case 9: return R.layout.layout_widget_alarm_2x2_1_align_float_9;
             case 5: default: return R.layout.layout_widget_alarm_2x2_1;
         }
+    }
+
+    @Override
+    public void updateViews(final Context context, int appWidgetId, RemoteViews views, SuntimesClockData data) {
+        super.updateViews(context, appWidgetId, views, data);
     }
 
 }

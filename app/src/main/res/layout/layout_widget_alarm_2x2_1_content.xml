@@ -9,40 +9,94 @@
 
     <LinearLayout
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="vertical" android:gravity="center" android:layout_gravity="center">
 
         <TextView style="@style/WidgetTimeTextView2" android:visibility="visible"
-            android:id="@+id/text_alarmtime_label"
+            android:id="@+id/text_label"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-            android:text="TODO" android:labelFor="@+id/text_alarmtime"
+            android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
+            android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
+            android:text="@string/configLabel_alarms_nextAlarm" android:labelFor="@+id/text_alarmtime"
             android:gravity="start" android:layout_gravity="start" />
 
-        <RelativeLayout
-            android:id="@+id/text_alarmtime_layout"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="start" android:layout_gravity="center">
+        <LinearLayout android:orientation="horizontal"
+            android:id="@+id/itemLayout" android:layout_gravity="start"
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-            <TextView style="@style/WidgetTimeTextView"
-                android:id="@+id/text_alarmtime" android:layout_width="wrap_content"
-                android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
-                android:paddingTop="0dp" android:paddingBottom="0dp"
-                android:gravity="start"
-                android:text=""
+            <LinearLayout android:id="@+id/icon_layout"
+                android:orientation="vertical" android:gravity="center" android:paddingTop="2dp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+                android:layout_gravity="center_vertical">
+
+                <ImageView android:id="@android:id/icon1"
+                    android:layout_width="24dp" android:layout_height="24dp"
+                    android:src="@drawable/ic_action_alarms"
+                    tools:ignore="contentDescription" />
+
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/layout_text"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:paddingTop="2dp" android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                    android:orientation="vertical">
+
+                    <TextView android:id="@android:id/text1"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall" android:duplicateParentState="true"
+                        android:maxLines="2" android:ellipsize="end" android:textStyle="bold"
+                        tools:text="Alarm Label" />
+
+                    <TextView android:id="@+id/text_event"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall" android:duplicateParentState="true"
+                        android:maxLines="3" android:ellipsize="end"
+                        tools:text="event label" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginEnd="2dp" android:layout_marginRight="2dp"
+            android:layout_marginTop="6dp"
+            android:layout_gravity="start|left">
+
+            <TextView android:id="@android:id/text2"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:singleLine="true" android:duplicateParentState="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
+                android:layout_marginEnd="24dp" android:layout_marginRight="24dp"
                 tools:text="6:00 AM" />
 
-            <TextView android:id="@+id/text_alarmtime_extras" android:visibility="gone"
-                style="@style/WidgetSuffixTextView"
+            <TextView android:id="@+id/text_note"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_below="@+id/text_alarmtime" android:layout_alignRight="@+id/text_alarmtime" android:layout_alignEnd="@+id/text_alarmtime"
-                android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
-                android:paddingTop="0dp" android:paddingBottom="0dp"
-                android:maxLines="1"
-                android:layout_gravity="center" android:gravity="top|end"
-                tools:text="+1 day" />
+                android:textAppearance="?android:attr/textAppearanceSmall" android:duplicateParentState="true"
+                android:maxLines="2" android:ellipsize="end"
+                tools:text="~8h" />
 
-        </RelativeLayout>
+        </LinearLayout>
+
+        <TextView android:id="@+id/text_note1"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp" android:layout_marginStart="3dp"
+            android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" android:duplicateParentState="true"
+            android:ellipsize="end"
+            android:layout_gravity="start" android:layout_marginTop="6dp"
+            tools:text="Extended note area" />
 
     </LinearLayout>
 
