@@ -78,6 +78,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0_2x2;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidget0_3x2;
 import com.forrestguice.suntimeswidget.widgets.DateWidget0;
 
 import java.io.File;
@@ -672,7 +673,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 SuntimesWidget0.class, SuntimesWidget0_2x1.class, SuntimesWidget0_3x1.class, SuntimesWidget1.class, SolsticeWidget0.class,
                 MoonWidget0.class, MoonWidget0_2x1.class, MoonWidget0_3x1.class, MoonWidget0_3x2.class,
                 SuntimesWidget2.class, SuntimesWidget2_3x1.class, SuntimesWidget2_3x2.class, SuntimesWidget2_3x3.class,
-                ClockWidget0.class, ClockWidget0_3x1.class, DateWidget0.class, AlarmWidget0.class, AlarmWidget0_2x2.class
+                ClockWidget0.class, ClockWidget0_3x1.class, DateWidget0.class,
+                AlarmWidget0.class, AlarmWidget0_2x2.class, AlarmWidget0_3x2.class
         };
 
         public ComponentName[] getAllWidgetClasses()
