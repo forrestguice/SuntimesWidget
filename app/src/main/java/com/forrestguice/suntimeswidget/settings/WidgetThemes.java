@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014-2018 Forrest Guice
+   Copyright (C) 2014-2024 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -24,7 +24,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,7 +48,6 @@ import java.util.Set;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
-import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
@@ -78,6 +76,21 @@ public class WidgetThemes
         if (initialized)
             return;
 
+        ThemeDescriptor[] defThemes = new ThemeDescriptor[] {
+                LightTheme.themeDescriptor(context),               // 0
+                LightThemeTrans.themeDescriptor(context),          // 1
+                DarkTheme.themeDescriptor(context),                // 2
+                DarkThemeTrans.themeDescriptor(context),           // 3
+                DarkThemeTranslucent.themeDescriptor(context),     // 4
+        };
+        Class<?>[] defThemeClasses = new Class[] {
+                LightTheme.class,                                  // 0
+                LightThemeTrans.class,                             // 1
+                DarkTheme.class,                                   // 2
+                DarkThemeTrans.class,                              // 3
+                DarkThemeTranslucent.class,                        // 4
+        };
+
         SharedPreferences themePref = getSharedPreferences(context);
         Set<String> themesToProcess = loadInstalledList(themePref);
         for (String themeName : themesToProcess)
@@ -91,39 +104,9 @@ public class WidgetThemes
             }
         }
 
-        boolean added = addValue(LightTheme.themeDescriptor(context));         // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, LightTheme.themeDescriptor(context)))
-        {
-            LightTheme theme = new LightTheme(context);
-            theme.saveTheme(themePref);
-        }
-
-        added = addValue(LightThemeTrans.themeDescriptor(context)) || added;   // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, LightThemeTrans.themeDescriptor(context)))
-        {
-            LightThemeTrans theme = new LightThemeTrans(context);
-            theme.saveTheme(themePref);
-        }
-
-        added = addValue(DarkTheme.themeDescriptor(context)) || added;         // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, DarkTheme.themeDescriptor(context)))
-        {
-            DarkTheme theme = new DarkTheme(context);
-            theme.saveTheme(themePref);
-        }
-
-        added = addValue(DarkThemeTrans.themeDescriptor(context)) || added;    // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTrans.themeDescriptor(context)))
-        {
-            DarkThemeTrans theme = new DarkThemeTrans(context);
-            theme.saveTheme(themePref);
-        }
-
-        added = addValue(DarkThemeTranslucent.themeDescriptor(context)) || added;  // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTranslucent.themeDescriptor(context)))
-        {
-            DarkThemeTranslucent theme = new DarkThemeTranslucent(context);
-            theme.saveTheme(themePref);
+        boolean added = false;
+        for (int i=0; i<defThemes.length; i++) {
+            added = initTheme(context, themePref, defThemes[i], defThemeClasses[i]) || added;
         }
 
         if (added)
@@ -132,6 +115,23 @@ public class WidgetThemes
         }
         defaultTheme = new DarkTheme(context);
         initialized = true;
+    }
+
+    protected static boolean initTheme(Context context, SharedPreferences themePref, ThemeDescriptor themeDescriptor, Class<?> themeClass)
+    {
+        boolean added = addValue(themeDescriptor);
+        if (!SuntimesTheme.isInstalled(themePref, themeDescriptor))    // add default (if missing)
+        {
+            try {
+                SuntimesTheme theme = (SuntimesTheme) themeClass.getConstructor(Context.class).newInstance(context);
+                theme.saveTheme(themePref);
+                Log.i("initThemes", "initTheme: initialized " + theme.themeName());
+
+            } catch (Exception e) {
+                Log.e("initThemes", "initTheme: failed to init " + themeDescriptor.name() + ": " + e);
+            }
+        }
+        return added;
     }
 
     private static HashMap<String, ThemeDescriptor> themes = new HashMap<>();
