@@ -48,6 +48,7 @@ import java.util.Set;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
@@ -55,6 +56,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.LightTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
 
 import org.json.JSONArray;
@@ -82,6 +84,8 @@ public class WidgetThemes
                 DarkTheme.themeDescriptor(context),                // 2
                 DarkThemeTrans.themeDescriptor(context),           // 3
                 DarkThemeTranslucent.themeDescriptor(context),     // 4
+                DarkTheme1.themeDescriptor(context),               // 5
+                LightTheme1.themeDescriptor(context),              // 6
         };
         Class<?>[] defThemeClasses = new Class[] {
                 LightTheme.class,                                  // 0
@@ -89,6 +93,8 @@ public class WidgetThemes
                 DarkTheme.class,                                   // 2
                 DarkThemeTrans.class,                              // 3
                 DarkThemeTranslucent.class,                        // 4
+                DarkTheme1.class,                                  // 5
+                LightTheme1.class,                                 // 6
         };
 
         SharedPreferences themePref = getSharedPreferences(context);
