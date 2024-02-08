@@ -121,7 +121,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_alarmtime_label, (showLabels ? View.VISIBLE : View.GONE));
-        views.setTextViewText(R.id.text_alarmtime, displayString);
+        views.setTextViewText(android.R.id.text2, (boldTime ? SuntimesUtils.createBoldSpan(null, displayString, displayString) : displayString));
     }
 
     protected int timeColor = Color.WHITE;

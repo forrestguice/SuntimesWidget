@@ -189,8 +189,8 @@ public class AlarmWidgetService extends RemoteViewsService
             WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetID);
             Calendar alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(item.alarmtime);
-            CharSequence timeDisplay = utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
-            view.setTextViewText(android.R.id.text2, timeDisplay);
+            String timeDisplay = utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
+            view.setTextViewText(android.R.id.text2, (theme.getTimeBold() ? SuntimesUtils.createBoldSpan(null, timeDisplay, timeDisplay) : timeDisplay));
 
             boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetID, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
             Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
