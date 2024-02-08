@@ -27,10 +27,14 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
+
+import java.util.Set;
 
 public class AlarmLayout_1x1_0 extends AlarmLayout
 {
@@ -67,8 +71,8 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
         super.updateViews(context, appWidgetId, views, data);
 
         String displayString = "";
-
-        Long upcomingAlarmId = AlarmSettings.loadUpcomingAlarmId(context);
+        Set<String> types = AlarmWidgetSettings.loadAlarmWidgetStringSet(context, appWidgetId, AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_TYPES, AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_TYPES);
+        Long upcomingAlarmId = AlarmWidget0.findUpcomingAlarmId(context, data.now().getTimeInMillis(), types.toArray(new String[0]));
         if (upcomingAlarmId == null || upcomingAlarmId == -1) {
             displayString = context.getString(R.string.configLabel_alarms_nextAlarm_none);
 

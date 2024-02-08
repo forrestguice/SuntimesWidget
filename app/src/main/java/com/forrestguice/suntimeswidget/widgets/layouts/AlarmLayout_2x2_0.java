@@ -63,6 +63,8 @@ public class AlarmLayout_2x2_0 extends AlarmLayout_1x1_0
     @Override
     public void updateViews(final Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
+        super.updateViews(context, appWidgetId, views, data);
+
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_label, (showLabels ? View.VISIBLE : View.GONE));
         views.setRemoteAdapter(R.id.list_alarms, getRemoteAdapterIntent(context, appWidgetId));

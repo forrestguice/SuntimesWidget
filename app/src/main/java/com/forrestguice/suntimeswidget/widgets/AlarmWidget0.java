@@ -153,4 +153,13 @@ public class AlarmWidget0 extends SuntimesWidget0
         return item;
     }
 
+    public static Long findUpcomingAlarmId(Context context, long now, String[] types)
+    {
+        AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
+        db.open();
+        Long rowId = db.findUpcomingAlarmId(now, types);
+        db.close();
+        return rowId;
+    }
+
 }
