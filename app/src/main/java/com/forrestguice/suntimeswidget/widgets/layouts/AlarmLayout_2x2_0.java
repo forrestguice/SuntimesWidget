@@ -20,15 +20,12 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetService;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 
@@ -43,11 +40,6 @@ public class AlarmLayout_2x2_0 extends AlarmLayout_1x1_0
     @Override
     public void initLayoutID() {
         this.layoutID = R.layout.layout_widget_alarm_2x2_0;
-    }
-
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data) {
-        super.prepareForUpdate(context, appWidgetId, data);
     }
 
     @Override
@@ -72,7 +64,7 @@ public class AlarmLayout_2x2_0 extends AlarmLayout_1x1_0
     public void updateViews(final Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
-        views.setViewVisibility(R.id.text_table_label, (showLabels ? View.VISIBLE : View.GONE));
+        views.setViewVisibility(R.id.text_label, (showLabels ? View.VISIBLE : View.GONE));
         views.setRemoteAdapter(R.id.list_alarms, getRemoteAdapterIntent(context, appWidgetId));
     }
 
@@ -83,17 +75,6 @@ public class AlarmLayout_2x2_0 extends AlarmLayout_1x1_0
         intent.putExtra(AlarmWidgetService.AlarmWidgetItemViewFactory.EXTRA_LAYOUTMODE, AlarmWidgetSettings.MODE_2x2);
         intent.setAction(appWidgetId + "_" + AlarmWidgetSettings.MODE_2x2);  // set action so Intent has a unique hashcode (RemoteViews are cached by Intent)
         return intent;
-    }
-
-    @Override
-    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
-    {
-        super.themeViews(context, views, theme);
-
-        views.setTextColor(R.id.text_table_label, theme.getTextColor());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            views.setTextViewTextSize(R.id.text_table_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
-        }
     }
 
 }

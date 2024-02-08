@@ -19,12 +19,20 @@
 package com.forrestguice.suntimeswidget.widgets.layouts;
 
 import android.content.Context;
+import android.os.Build;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
 
-public class AlarmLayout_2x2_1 extends AlarmLayout_1x1_0
+public class AlarmLayout_2x2_1 extends AlarmLayout
 {
     public AlarmLayout_2x2_1() {
         super();
@@ -33,11 +41,6 @@ public class AlarmLayout_2x2_1 extends AlarmLayout_1x1_0
     @Override
     public void initLayoutID() {
         this.layoutID = R.layout.layout_widget_alarm_2x2_1;
-    }
-
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data) {
-        super.prepareForUpdate(context, appWidgetId, data);
     }
 
     @Override
@@ -59,8 +62,47 @@ public class AlarmLayout_2x2_1 extends AlarmLayout_1x1_0
     }
 
     @Override
-    public void updateViews(final Context context, int appWidgetId, RemoteViews views, SuntimesClockData data) {
-        super.updateViews(context, appWidgetId, views, data);
+    public void updateViews(final Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
+    {
+        String displayString = "";
+        Long upcomingAlarmId = AlarmSettings.loadUpcomingAlarmId(context);
+        if (upcomingAlarmId == null || upcomingAlarmId == -1) {
+            displayString = context.getString(R.string.configLabel_alarms_nextAlarm_none);
+
+        } else {
+            AlarmClockItem item = AlarmWidget0.loadAlarmClockItem(context, upcomingAlarmId);
+            if (item != null)
+            {
+                displayString = formatTimeDisplayString(context, views, appWidgetId, data, item);
+                updateIconView(context, views, appWidgetId, item);
+                updateLabelViews(context, views, item);
+                updateTimeUntilView(context, views, item);
+                updateNoteView(context, views, item);
+
+            } else {
+                displayString = context.getString(R.string.configLabel_alarms_nextAlarm_error);
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                /*int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
+                int[] maxDp = new int[] { maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) };
+
+                String s = (displayString.length() <= 3 ? "0:00" : displayString);
+                float adjustedSizeSp = adjustTextSize(context, maxDp, "sans-serif", boldTime, s, timeSizeSp, AlarmLayout.MAX_SP, true);
+
+                if (adjustedSizeSp != timeSizeSp) {
+                    views.setTextViewTextSize(android.R.id.text2, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp);
+                }*/
+            }
+        }
+
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        views.setViewVisibility(R.id.text_label, (showLabels ? View.VISIBLE : View.GONE));
+        views.setTextViewText(android.R.id.text2, (boldTime ? SuntimesUtils.createBoldSpan(null, displayString, displayString) : displayString));
     }
 
 }

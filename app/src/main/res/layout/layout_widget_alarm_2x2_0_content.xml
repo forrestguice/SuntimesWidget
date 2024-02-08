@@ -13,7 +13,7 @@
         android:orientation="vertical" android:gravity="center" android:layout_gravity="center">
 
         <TextView style="@style/WidgetTimeTextView2" android:visibility="visible"
-            android:id="@+id/text_table_label"
+            android:id="@+id/text_label"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
             android:text="@string/configLabel_alarmClock" android:labelFor="@+id/text_alarmtime"
