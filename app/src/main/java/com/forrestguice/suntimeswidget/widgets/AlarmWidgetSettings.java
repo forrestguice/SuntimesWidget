@@ -421,6 +421,7 @@ public class AlarmWidgetSettings
     {
         WidgetModeAlarm1x1.initDisplayStrings(context);
         WidgetModeAlarm2x2.initDisplayStrings(context);
+        WidgetModeAlarm3x2.initDisplayStrings(context);
     }
 
     /**
@@ -435,6 +436,7 @@ public class AlarmWidgetSettings
         deleteAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_TYPES);
         deleteAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_ENABLEDONLY);
         deleteAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SORTORDER);
+        deleteAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SHOWICONS);
     }
 
 }

@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_1;
@@ -3389,6 +3390,7 @@ public class WidgetSettings
 
         WidgetActions.deletePrefs(context, appWidgetId);
         WidgetSettingsMetadata.deleteMetaData(context, appWidgetId);
+        AlarmWidgetSettings.deletePrefs(context, appWidgetId);
     }
 
     public static void initDefaults( Context context )
@@ -3430,6 +3432,7 @@ public class WidgetSettings
         RiseSetOrder.initDisplayStrings(context);
         CalendarSettings.initDisplayStrings(context);
         WidgetActions.initDisplayStrings(context);
+        AlarmWidgetSettings.initDisplayStrings(context);
     }
 
 }
