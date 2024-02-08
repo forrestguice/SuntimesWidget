@@ -44,9 +44,9 @@ public class AlarmWidgetSettings
     public static final String MODE_2x2 = "2x2";
     public static final String MODE_3x2 = "3x2";
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_ALARM = "widgetmode_alarm";
-    public static final WidgetModeAlarm1x1 PREF_DEF_APPEARANCE_WIDGETMODE_ALARM1x1 = WidgetModeAlarm1x1.WIDGETMODE1x1_0;
-    public static final WidgetModeAlarm2x2 PREF_DEF_APPEARANCE_WIDGETMODE_ALARM2x2 = WidgetModeAlarm2x2.WIDGETMODE2x2_0;
-    public static final WidgetModeAlarm3x2 PREF_DEF_APPEARANCE_WIDGETMODE_ALARM3x2 = WidgetModeAlarm3x2.WIDGETMODE3x2_0;
+    public static final WidgetModeAlarm1x1 PREF_DEF_APPEARANCE_WIDGETMODE_ALARM1x1 = WidgetModeAlarm1x1.NEXTALARM;
+    public static final WidgetModeAlarm2x2 PREF_DEF_APPEARANCE_WIDGETMODE_ALARM2x2 = WidgetModeAlarm2x2.ALARMLIST;
+    public static final WidgetModeAlarm3x2 PREF_DEF_APPEARANCE_WIDGETMODE_ALARM3x2 = WidgetModeAlarm3x2.ALARMLIST_DETAILED;
 
     public static final String PREF_PREFIX_KEY_ALARMWIDGET = "_alarmwidget_";
 
@@ -210,7 +210,7 @@ public class AlarmWidgetSettings
         WidgetModeAlarm1x1 mode = loadAlarm1x1ModePref(context, appWidgetId);
         switch (mode)
         {
-            case WIDGETMODE1x1_0:
+            case NEXTALARM:
             default: layout = new AlarmLayout_1x1_0(); break;
         }
         return layout;
@@ -237,7 +237,7 @@ public class AlarmWidgetSettings
         WidgetModeAlarm2x2 mode = loadAlarm2x2ModePref(context, appWidgetId);
         switch (mode)
         {
-            case WIDGETMODE2x2_0:
+            case ALARMLIST:
             default: layout = new AlarmLayout_2x2_0(); break;
         }
         return layout;
@@ -264,7 +264,7 @@ public class AlarmWidgetSettings
         WidgetModeAlarm3x2 mode = loadAlarm3x2ModePref(context, appWidgetId);
         switch (mode)
         {
-            case WIDGETMODE3x2_0:
+            case ALARMLIST_DETAILED:
             default: layout = new AlarmLayout_3x2_0(); break;
         }
         return layout;
@@ -278,7 +278,7 @@ public class AlarmWidgetSettings
      */
     public static enum WidgetModeAlarm1x1 implements WidgetSettings.WidgetModeDisplay
     {
-        WIDGETMODE1x1_0("Next Alarm", R.layout.layout_widget_alarm_1x1_0);
+        NEXTALARM("Next Alarm", R.layout.layout_widget_alarm_1x1_0);
 
         private final int layoutID;
         private String displayString;
@@ -325,7 +325,8 @@ public class AlarmWidgetSettings
      */
     public static enum WidgetModeAlarm2x2 implements WidgetSettings.WidgetModeDisplay
     {
-        WIDGETMODE2x2_0("Upcoming Alarms", R.layout.layout_widget_alarm_2x2_0);
+        ALARMLIST("Upcoming Alarms", R.layout.layout_widget_alarm_2x2_0),
+        NEXTALARM_DETAILED("Next Alarm (detailed)", R.layout.layout_widget_alarm_2x2_1);
 
         private final int layoutID;
         private String displayString;
@@ -372,7 +373,7 @@ public class AlarmWidgetSettings
      */
     public static enum WidgetModeAlarm3x2 implements WidgetSettings.WidgetModeDisplay
     {
-        WIDGETMODE3x2_0("Upcoming Alarms", R.layout.layout_widget_alarm_2x2_0);
+        ALARMLIST_DETAILED("Upcoming Alarms", R.layout.layout_widget_alarm_2x2_0);    // 3x2 alarmlist uses same layout as 2x2
 
         private final int layoutID;
         private String displayString;
