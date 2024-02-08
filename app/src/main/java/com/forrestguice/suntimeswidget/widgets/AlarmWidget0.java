@@ -129,15 +129,15 @@ public class AlarmWidget0 extends SuntimesWidget0
         {
             int minWidth3x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
             int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = (mustFitWithinDp[0] >= minWidth3x1) ? new AlarmLayout_3x2_0()
-                    : ((mustFitWithinDp[0] >= minWidth2x1) ? new AlarmLayout_2x2_0()
+            layout = (mustFitWithinDp[0] >= minWidth3x1) ? AlarmWidgetSettings.loadAlarm3x2ModePref_asLayout(context, appWidgetId)
+                    : ((mustFitWithinDp[0] >= minWidth2x1) ? AlarmWidgetSettings.loadAlarm2x2ModePref_asLayout(context, appWidgetId)
                         : AlarmWidgetSettings.loadAlarm1x1ModePref_asLayout(context, appWidgetId));
         } else {
             layout = defLayout;
         }
         layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
         layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
-        //Log.d("getWidgetLayout", "layout is: " + layout);
+        Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
    }
 

@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_1;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_3x2_0;
 
 import java.util.Arrays;
@@ -237,6 +238,7 @@ public class AlarmWidgetSettings
         WidgetModeAlarm2x2 mode = loadAlarm2x2ModePref(context, appWidgetId);
         switch (mode)
         {
+            case NEXTALARM_DETAILED: layout = new AlarmLayout_2x2_1(); break;
             case ALARMLIST:
             default: layout = new AlarmLayout_2x2_0(); break;
         }
@@ -325,7 +327,7 @@ public class AlarmWidgetSettings
      */
     public static enum WidgetModeAlarm2x2 implements WidgetSettings.WidgetModeDisplay
     {
-        ALARMLIST("Upcoming Alarms", R.layout.layout_widget_alarm_2x2_0),
+        ALARMLIST("Alarm List", R.layout.layout_widget_alarm_2x2_0),
         NEXTALARM_DETAILED("Next Alarm (detailed)", R.layout.layout_widget_alarm_2x2_1);
 
         private final int layoutID;
@@ -373,7 +375,7 @@ public class AlarmWidgetSettings
      */
     public static enum WidgetModeAlarm3x2 implements WidgetSettings.WidgetModeDisplay
     {
-        ALARMLIST_DETAILED("Upcoming Alarms", R.layout.layout_widget_alarm_2x2_0);    // 3x2 alarmlist uses same layout as 2x2
+        ALARMLIST_DETAILED("Alarm List (detailed)", R.layout.layout_widget_alarm_2x2_0);    // 3x2 alarmlist uses same layout as 2x2
 
         private final int layoutID;
         private String displayString;

@@ -27,6 +27,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
@@ -204,14 +205,19 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
             final AlarmWidgetSettings.WidgetModeAlarm1x1[] modes = AlarmWidgetSettings.WidgetModeAlarm1x1.values();
             AlarmWidgetSettings.WidgetModeAlarm1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
             AlarmWidgetSettings.saveAlarmModePref(context, appWidgetId, mode.name(), AlarmWidgetSettings.MODE_1x1);
-            //Log.d("DEBUG", "Saved mode: " + mode.name());
         }
     }
     @Override
     protected void loadWidgetMode1x1(Context context)
     {
         AlarmWidgetSettings.WidgetModeAlarm1x1 mode1x1 = AlarmWidgetSettings.loadAlarm1x1ModePref(context, appWidgetId);
-        spinner_1x1mode.setSelection(mode1x1.ordinal());
+        if (spinner_1x1mode != null)
+        {
+            int p = searchForIndex(spinner_1x1mode, mode1x1);
+            if (p >= 0) {
+                spinner_1x1mode.setSelection(mode1x1.ordinal());
+            }
+        }
     }
     protected WidgetModeAdapter createAdapter_widgetMode1x1()
     {
@@ -240,14 +246,19 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
             final AlarmWidgetSettings.WidgetModeAlarm2x2[] modes = AlarmWidgetSettings.WidgetModeAlarm2x2.values();
             AlarmWidgetSettings.WidgetModeAlarm2x2 mode = modes[spinner_2x2mode.getSelectedItemPosition()];
             AlarmWidgetSettings.saveAlarmModePref(context, appWidgetId, mode.name(), MODE_2x2);
-            //Log.d("DEBUG", "Saved mode: " + mode.name());
         }
     }
     @Override
     protected void loadWidgetMode2x2(Context context)
     {
         AlarmWidgetSettings.WidgetModeAlarm2x2 mode2x2 = AlarmWidgetSettings.loadAlarm2x2ModePref(context, appWidgetId);
-        spinner_2x2mode.setSelection(mode2x2.ordinal());
+        if (spinner_2x2mode != null)
+        {
+            int p = searchForIndex(spinner_2x2mode, mode2x2);
+            if (p >= 0) {
+                spinner_2x2mode.setSelection(p);
+            }
+        }
     }
     protected WidgetModeAdapter createAdapter_widgetMode2x2()
     {
@@ -290,7 +301,23 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     protected void loadWidgetMode3x2(Context context)
     {
         AlarmWidgetSettings.WidgetModeAlarm3x2 mode3x2 = AlarmWidgetSettings.loadAlarm3x2ModePref(context, appWidgetId);
-        spinner_2x2mode.setSelection(mode3x2.ordinal());
+        if (spinner_3x2mode != null)
+        {
+            int p = searchForIndex(spinner_3x2mode, mode3x2);
+            if (p >= 0) {
+                spinner_3x2mode.setSelection(mode3x2.ordinal());
+            }
+        }
+    }
+
+    protected static int searchForIndex(Spinner spinner, Object enumValue)
+    {
+        for (int i=0; i<spinner.getAdapter().getCount(); i++) {
+            if (spinner.getAdapter().getItem(i).equals(enumValue)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**

@@ -1567,9 +1567,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void saveLayoutSettings(Context context)
     {
-        // save: widgetmode_1x1, 3x2, 3x3
+        // save: widgetmode_1x1, 2x2, 3x1, 3x2, 3x3
         saveWidgetMode1x1(context);
         saveWidgetMode2x1(context);
+        saveWidgetMode2x2(context);
         saveWidgetMode3x1(context);
         saveWidgetMode3x2(context);
         saveWidgetMode3x3(context);
@@ -1581,9 +1582,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void loadLayoutSettings(Context context)
     {
-        // load: widgetmode_1x1, 3x2, 3x3
+        // load: widgetmode_1x1, 2x2, 3x1, 3x2, 3x3
         loadWidgetMode1x1(context);
         loadWidgetMode2x1(context);
+        loadWidgetMode2x2(context);
         loadWidgetMode3x1(context);
         loadWidgetMode3x2(context);
         loadWidgetMode3x3(context);

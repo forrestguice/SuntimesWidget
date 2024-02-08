@@ -16,7 +16,7 @@
             android:id="@+id/text_alarmtime_label"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-            android:text="@string/configLabel_alarms_nextAlarm" android:labelFor="@+id/text_alarmtime"
+            android:text="TODO" android:labelFor="@+id/text_alarmtime"
             android:gravity="start" android:layout_gravity="start" />
 
         <RelativeLayout
