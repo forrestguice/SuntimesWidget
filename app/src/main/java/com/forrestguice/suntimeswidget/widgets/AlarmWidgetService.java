@@ -25,7 +25,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -197,6 +199,19 @@ public class AlarmWidgetService extends RemoteViewsService
             view.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)theme.getTimeSizeSp(), (int)theme.getTimeSizeSp(), false));
             view.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
             view.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));
+
+            if (Build.VERSION.SDK_INT >= 16)
+            {
+                float textSizeSp = theme.getTextSizeSp();
+                float timeSizeSp = theme.getTimeSizeSp();
+
+                view.setTextViewTextSize(android.R.id.text1, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+                view.setTextViewTextSize(android.R.id.text2, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
+                view.setTextViewTextSize(R.id.text_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+                view.setTextViewTextSize(R.id.text_event, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+                view.setTextViewTextSize(R.id.text_note, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+                view.setTextViewTextSize(R.id.text_note1, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+            }
 
             Intent fillInIntent = new Intent();
             fillInIntent.setData(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, item.rowID));

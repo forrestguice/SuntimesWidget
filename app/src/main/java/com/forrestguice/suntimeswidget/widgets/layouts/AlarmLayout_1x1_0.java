@@ -156,6 +156,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
     protected float titleSizeSp = 10;
     protected float timeSizeSp = 12;
     protected float suffixSizeSp = 8;
+    protected float textSizeSp = 12;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -172,13 +173,17 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
+            textSizeSp = theme.getTextSizeSp();
             timeSizeSp = theme.getTimeSizeSp();
             suffixSizeSp = theme.getTimeSuffixSizeSp();
 
+            views.setTextViewTextSize(android.R.id.text1, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
             views.setTextViewTextSize(android.R.id.text2, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
-            views.setTextViewTextSize(R.id.text_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
+            views.setTextViewTextSize(R.id.text_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+            views.setTextViewTextSize(R.id.text_event, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+            views.setTextViewTextSize(R.id.text_note, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+            views.setTextViewTextSize(R.id.text_note1, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
         }
     }
-
 
 }
