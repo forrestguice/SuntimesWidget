@@ -39,6 +39,7 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -354,13 +355,40 @@ public class AlarmDatabaseAdapter
         return cursor;
     }
 
-    public Long findUpcomingAlarmId(long nowMillis) throws SQLException
+    public Long findUpcomingAlarmId(long nowMillis) throws SQLException {
+        return findUpcomingAlarmId(nowMillis, new String[] { AlarmClockItem.AlarmType.ALARM.name() });
+    }
+    public Long findUpcomingAlarmId(long nowMillis, @Nullable String[] types) throws SQLException
     {
         String[] columns = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME_ADJUSTED };
-        String selection = KEY_ALARM_TYPE + "= ? AND " + KEY_ALARM_ENABLED + " = ?";
-        String[] selectionArgs = new String[] { "ALARM", "1" };
+        StringBuilder selection = new StringBuilder(KEY_ALARM_ENABLED + " = ?");
+        List<String> selectionArgs = new ArrayList<>(Collections.singletonList("1"));
+        if (types != null && types.length > 0)
+        {
+            boolean multipleTypes = (types.length > 1);
 
-        Cursor cursor = database.query( true, TABLE_ALARMS, columns, selection, selectionArgs, null, null, null, null );
+            selection.append(" AND ");
+            if (multipleTypes) {
+                selection.append("(");
+            }
+            for (int i=0; i<types.length; i++)
+            {
+                if (i > 0) {
+                    selection.append(" OR ");
+                }
+                selection.append(KEY_ALARM_TYPE + "= ?");
+                selectionArgs.add(types[i]);
+            }
+            if (multipleTypes) {
+                selection.append(")");
+            }
+        }
+        //String selection = KEY_ALARM_TYPE + "= ? AND " + KEY_ALARM_ENABLED + " = ?";
+        //String[] selectionArgs = ((type != null)
+        //        ? new String[] { "1", type }
+        //        : new String[] { "1" });
+
+        Cursor cursor = database.query( true, TABLE_ALARMS, columns, selection.toString(), selectionArgs.toArray(new String[0]), null, null, null, null );
         if (cursor != null)
         {
             Long upcomingAlarmId = null;
