@@ -308,7 +308,7 @@ public class AlarmWidgetSettings
         }
 
         public static void initDisplayStrings( Context context ) {
-            //WIDGETMODE2x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));   // TODO
+            NEXTALARM.setDisplayString(context.getString(R.string.widgetMode1x1_nextalarm));
         }
 
         public static boolean supportsLayout(int layoutID)
@@ -356,7 +356,8 @@ public class AlarmWidgetSettings
         }
 
         public static void initDisplayStrings( Context context ) {
-            //WIDGETMODE2x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));   // TODO
+            ALARMLIST.setDisplayString(context.getString(R.string.widgetMode2x2_alarmlist));
+            NEXTALARM_DETAILED.setDisplayString(context.getString(R.string.widgetMode2x2_nextalarm));
         }
 
         public static boolean supportsLayout(int layoutID)
@@ -400,7 +401,7 @@ public class AlarmWidgetSettings
             this.displayString = displayString;
         }
         public static void initDisplayStrings( Context context ) {
-            //WIDGETMODE2x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));   // TODO
+            ALARMLIST_DETAILED.setDisplayString(context.getString(R.string.widgetMode3x2_alarmlist));
         }
 
         public static boolean supportsLayout(int layoutID)
