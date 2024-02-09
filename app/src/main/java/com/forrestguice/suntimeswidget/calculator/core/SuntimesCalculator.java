@@ -396,9 +396,9 @@ public interface SuntimesCalculator
     /**
      * TimeOfShadowBeforeNoon
      * @param date a Calendar representing a given date
-     * @param objHeight height of the obj (meters)
-     * @param shadowLength length of shadow (meters)
-     * @return time of shadow before noon
+     * @param objHeight height of the obj (meters); must be positive
+     * @param shadowLength length of shadow (meters); must not be negative
+     * @return time of shadow before noon; may throw UnsupportedOperationException for polar regions (+-66 degrees)
      * @since 1.8.0 FEATURE_SHADOW
      */
     Calendar getTimeOfShadowBeforeNoon( Calendar date, double objHeight, double shadowLength );
@@ -406,9 +406,9 @@ public interface SuntimesCalculator
     /**
      * TimeOfShadowAfterNoon
      * @param date a Calendar representing a given date
-     * @param objHeight height of the obj (meters)
-     * @param shadowLength length of shadow (meters)
-     * @return time of shadow after noon
+     * @param objHeight height of the obj (meters); must be positive
+     * @param shadowLength length of shadow (meters); must not be negative
+     * @return time of shadow after noon; may throw UnsupportedOperationException for polar regions (+-66 degrees)
      * @since 1.8.0 FEATURE_SHADOW
      */
     Calendar getTimeOfShadowAfterNoon( Calendar date, double objHeight, double shadowLength );
