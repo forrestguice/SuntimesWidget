@@ -172,8 +172,10 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         for (String eventID : timeFields0.keySet())
         {
             TimeFieldRow row = timeFields0.get(eventID);
-            timeFields.put(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING, row.getField(0));
-            timeFields.put(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING, row.getField(1));
+            if (row != null) {
+                timeFields.put(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, row.getField(0));
+                timeFields.put(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, row.getField(1));
+            }
         }
 
         TimeFieldRow primaryRow = getRow(AppSettings.loadEmphasizeFieldPref(view.getContext()));
@@ -557,7 +559,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     public void resetHighlight()
     {
         for (TimeFieldRow row : rows) {
-            row.resetHighlight();
+            if (row != null) {
+                row.resetHighlight();
+            }
         }
         TextView[] views0 = moonrise.getTimeViews(SolarEvents.MOONRISE);
         for (TextView view : views0) {
