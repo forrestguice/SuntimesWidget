@@ -288,6 +288,8 @@ public class EventListHelper
     protected void initAdapter(Context context)
     {
         List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+
         Collections.sort(events, new Comparator<EventSettings.EventAlias>() {
             @Override
             public int compare(EventSettings.EventAlias o1, EventSettings.EventAlias o2) {
@@ -383,10 +385,14 @@ public class EventListHelper
         }
     });
 
-    public void addEvent()
+    public void addEvent() {
+        addEvent(AlarmEventProvider.EventType.SHADOWLENGTH);
+    }
+    public void addEvent(AlarmEventProvider.EventType type)
     {
         final Context context = contextRef.get();
         final EditEventDialog saveDialog = new EditEventDialog();
+        saveDialog.setType(type);
         saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_ADD);
         saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -403,12 +409,15 @@ public class EventListHelper
         final Context context = contextRef.get();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
+            final EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID);
+
             final EditEventDialog saveDialog = new EditEventDialog();
             saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_EDIT);
+            saveDialog.setType(event.getType());
             saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface dialog) {
-                    saveDialog.setEvent(EventSettings.loadEvent(context, eventID));
+                    saveDialog.setEvent(event);
                     saveDialog.setIsModified(false);
                 }
             });
@@ -426,6 +435,7 @@ public class EventListHelper
             public void onClick(DialogInterface dialog, int which) {
                 String eventID = saveDialog.getEventID();
                 EventSettings.saveEvent(context, saveDialog.getEvent());
+                Log.d("DEBUG", "onEventSaved " + saveDialog.getEvent().toString());
                 //Toast.makeText(context, context.getString(R.string.saveevent_toast, saveDialog.getEventLabel(), eventID), Toast.LENGTH_SHORT).show();  // TODO
                 initAdapter(context);
                 updateViews(context);

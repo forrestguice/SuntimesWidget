@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -819,15 +820,21 @@ public class AlarmEventProvider extends ContentProvider
     {
         public static final String NAME_PREFIX = "SHADOW_";
 
-        public ShadowLengthEvent(double length, int offset, boolean rising)
+        public ShadowLengthEvent(double objHeight, double length, int offset, boolean rising)
         {
             super(0, offset, rising);
+            this.objHeight = objHeight;
             this.length = length;
         }
 
         protected double length;    // meters
         public double getLength() {
             return length;
+        }
+
+        protected double objHeight;    // meters
+        public double getObjHeight() {
+            return objHeight;
         }
 
         @Override
@@ -848,12 +855,12 @@ public class AlarmEventProvider extends ContentProvider
         @Override
         protected String getEventSummary(Context context)
         {
-            SuntimesUtils utils = new SuntimesUtils();
-            String angle = utils.formatAsElevation(getAngle(), 1).toString();
+            String length = SuntimesUtils.formatAsHeight(context, getLength(), WidgetSettings.LengthUnit.METRIC, false, 1).toString();
+            String height = SuntimesUtils.formatAsHeight(context, getObjHeight(), WidgetSettings.LengthUnit.METRIC, false, 1).toString();
             if (offset == 0) {
-                return offsetDisplay(context) + context.getString(R.string.shadowevent_summary_format, context.getString(R.string.shadowevent_title), angle.toString());
+                return offsetDisplay(context) + context.getString(R.string.shadowevent_summary_format, context.getString(R.string.shadowevent_title), height, length);
             } else {
-                return context.getString(R.string.shadowevent_summary_format1, offsetDisplay(context), context.getString(R.string.shadowevent_title), angle.toString());
+                return context.getString(R.string.shadowevent_summary_format1, offsetDisplay(context), context.getString(R.string.shadowevent_title), height, length);
             }
         }
 
@@ -867,11 +874,11 @@ public class AlarmEventProvider extends ContentProvider
          */
         @Override
         protected String getEventName(Context context) {
-            return getEventName(length, offset, rising);
+            return getEventName(objHeight, length, offset, rising);
         }
-        public static String getEventName(double length, int offset, @Nullable Boolean rising) {
+        public static String getEventName(double objHeight, double length, int offset, @Nullable Boolean rising) {
             String name = NAME_PREFIX
-                    + length
+                    + length    // TODO: objHeight
                     + ((offset != 0) ? "|" + (int)Math.ceil(offset / 1000d / 60d) : "");
             if (rising != null) {
                 name += (rising ? SUFFIX_RISING : SUFFIX_SETTING);
@@ -884,6 +891,8 @@ public class AlarmEventProvider extends ContentProvider
         {
             if (isShadowLengthEvent(eventName))
             {
+                double objHeight = 1;   // 1m  // TODO: modify naming scheme to include height
+
                 double length;
                 int offsetMinutes = 0;
                 boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
@@ -901,7 +910,7 @@ public class AlarmEventProvider extends ContentProvider
                     return null;
                 }
                 boolean rising = eventName.endsWith(SUFFIX_RISING);
-                return new ShadowLengthEvent(length, (offsetMinutes * 60 * 1000), rising);
+                return new ShadowLengthEvent(objHeight, length, (offsetMinutes * 60 * 1000), rising);
             } else return null;
         }
     }
@@ -911,6 +920,9 @@ public class AlarmEventProvider extends ContentProvider
         SuntimesRiseSetData data = getData_shadowLengthEvent(context, event.getAngle(), event.getOffset(), location);
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime = null;
+
+        SuntimesCalculator calculator = data.calculator();
+        //calculator.getShadowLength()
 
         /*Calendar day = Calendar.getInstance();
         data.setTodayIs(day);

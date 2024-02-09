@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -49,10 +49,13 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmOffsetDialog;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.Toast;
+
+import java.util.Locale;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -75,8 +78,17 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     @Override
-    protected int getLayoutID() {
-        return R.layout.layout_dialog_event_edit;
+    protected int getLayoutID()
+    {
+        switch (type)
+        {
+            //case SHADOWLENGTH:
+            //    return R.layout.layout_dialog_event_edit;    // TODO: layout for shadow length?
+
+            case SUN_ELEVATION:
+            default:
+                return R.layout.layout_dialog_event_edit;
+        }
     }
 
     /* Dialog Mode */
@@ -199,12 +211,18 @@ public class EditEventDialog extends EditBottomSheetDialog
         setEventIsShown(event.isShown());
         updateViews(getActivity(), type);
     }
+    public void setType(AlarmEventProvider.EventType value) {
+        type = value;
+    }
 
     protected TextView text_label, text_offset;
     protected EditText edit_eventID, edit_label, edit_uri, edit_uri1;
     protected ColorChooser choose_color;
     protected CheckBox check_shown;
 
+    /**
+     * setAngle
+     */
     @SuppressLint("SetTextI18n")
     protected void setAngle(double value ) {
         angle = value;
@@ -213,17 +231,77 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     }
     @Nullable
-    public Double getAngle() {
-        try {
-            return Double.parseDouble(edit_angle.getText().toString());
-        } catch (NumberFormatException e) {
-            return null;
+    public Double getAngle()
+    {
+        if (edit_angle != null)
+        {
+            try {
+                return Double.parseDouble(edit_angle.getText().toString());
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+    private double angle = 0;
+    protected EditText edit_angle = null;
+    protected View layout_angle = null;
+
+    /**
+     * setObjHeight
+     */
+    protected void setObjHeight(double value) {
+        objHeight = value;
+        if (edit_objHeight != null) {
+            edit_objHeight.setText(String.format(Locale.getDefault(), "%.1f", objHeight));
         }
     }
+    @Nullable
+    public Double getObjHeight()
+    {
+        if (edit_objHeight != null)
+        {
+            try {
+                return Double.parseDouble(edit_objHeight.getText().toString());
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
+    }
 
-    private double angle = 0;
-    protected EditText edit_angle;
+    /**
+     * setShadowLength
+     */
+    protected void setShadowLength(double value)
+    {
+        shadowLength = value;
+        if (edit_shadowLength != null) {
+            edit_shadowLength.setText(Double.toString(shadowLength));
+        }
+    }
+    @Nullable
+    public Double getShadowLength()
+    {
+        if (edit_shadowLength != null)
+        {
+            try {
+                return Double.parseDouble(edit_shadowLength.getText().toString());
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
+    }
 
+    private double shadowLength = 0;
+    private double objHeight = 0;
+    protected EditText edit_shadowLength = null, edit_objHeight = null;
+    protected View layout_shadowLength = null, layout_objHeight = null;
+
+    /**
+     * onCreateDialog
+     */
     @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull
     @Override
@@ -302,9 +380,39 @@ public class EditEventDialog extends EditBottomSheetDialog
             });
         }
 
+        layout_angle = dialogContent.findViewById(R.id.layout_event_angle);
         edit_angle = (EditText) dialogContent.findViewById(R.id.edit_event_angle);
-        if (edit_angle != null) {
-            edit_angle.addTextChangedListener(angleWatcher);
+
+        layout_shadowLength = dialogContent.findViewById(R.id.layout_event_length);
+        edit_shadowLength = (EditText) dialogContent.findViewById(R.id.edit_event_length);
+
+        layout_objHeight = dialogContent.findViewById(R.id.layout_event_height);
+        edit_objHeight = (EditText) dialogContent.findViewById(R.id.edit_event_height);
+
+        switch (type)
+        {
+            case SHADOWLENGTH:
+                setViewVisibility(layout_objHeight, true);
+                setViewVisibility(layout_shadowLength, true);
+                setViewVisibility(layout_angle, false);
+                if (edit_shadowLength != null) {
+                    edit_shadowLength.addTextChangedListener(lengthWatcher);
+                }
+                if (edit_objHeight != null) {
+                    setObjHeight(WidgetSettings.loadObserverHeightPref(context, 0));    // initial value from app configuration
+                    edit_objHeight.addTextChangedListener(heightWatcher);
+                }
+                break;
+
+            case SUN_ELEVATION:
+            default:
+                setViewVisibility(layout_angle, true);
+                setViewVisibility(layout_objHeight, false);
+                setViewVisibility(layout_shadowLength, false);
+                if (edit_angle != null) {
+                    edit_angle.addTextChangedListener(angleWatcher);
+                }
+                break;
         }
 
         text_offset = (TextView) dialogContent.findViewById(R.id.edit_event_offset);
@@ -318,10 +426,16 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
 
         if (label == null || label.trim().isEmpty()) {
-            label = EventSettings.suggestEventLabel(context, eventID);
+            label = EventSettings.suggestEventLabel(context, type);
         }
 
         super.initViews(context, dialogContent, savedState);
+    }
+
+    protected void setViewVisibility(View layout, boolean visible) {
+        if (layout != null) {
+            layout.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Override
@@ -372,6 +486,32 @@ public class EditEventDialog extends EditBottomSheetDialog
                 }
                 break;
 
+            case SHADOWLENGTH:
+                double length = 0;
+                double objHeight = 0;
+
+                AlarmEventProvider.ShadowLengthEvent shadowEvent = null;
+                if (uri != null) {
+                    shadowEvent = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                }
+                if (edit_shadowLength != null && shadowEvent != null) {
+                    setShadowLength(shadowLength = shadowEvent.getLength());
+                }
+                if (edit_objHeight != null && shadowEvent != null) {
+                    setObjHeight(objHeight = shadowEvent.getObjHeight());
+                }
+
+                int shadowOffset = ((shadowEvent != null) ? shadowEvent.getOffset() : 0);
+                setOffset(shadowOffset);
+                if (text_offset != null)
+                {
+                    String offsetText = utils.timeDeltaLongDisplayString(0, shadowOffset).getValue();
+                    text_offset.setText((shadowOffset != 0)
+                            ? context.getResources().getQuantityString((shadowOffset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int)length, offsetText)
+                            : getResources().getQuantityString(R.plurals.offset_at_plural, (int)length));
+                }
+                break;
+
             case DATE:
             case SOLAREVENT:
             default:
@@ -412,7 +552,20 @@ public class EditEventDialog extends EditBottomSheetDialog
                     angle = EditEventDialog.this.angle;
                 }
 
-                String eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, offset, null);
+                String eventID;
+                switch (type)
+                {
+                    case SHADOWLENGTH:
+                        eventID = AlarmEventProvider.ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
+                        break;
+
+                    case SUN_ELEVATION:
+                    default:
+                        eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, offset, null);
+                        break;
+
+                }
+
                 String eventUri = AlarmAddon.getEventCalcUri(AUTHORITY, eventID);
                 setOffset(offset);
                 setEventUri(eventUri);
@@ -423,8 +576,22 @@ public class EditEventDialog extends EditBottomSheetDialog
     };
 
     @Override
-    protected boolean validateInput() {
-        return validateInput_id() && validateInput_label() && validateInput_angle();
+    protected boolean validateInput()
+    {
+        boolean isValid = validateInput_id() && validateInput_label();
+        switch (type)
+        {
+            case SHADOWLENGTH:
+                isValid = validateInput_objHeight() && isValid;
+                isValid = validateInput_shadowLength() && isValid;
+                break;
+
+            case SUN_ELEVATION:
+            default:
+                isValid = validateInput_angle() && isValid;
+                break;
+        }
+        return isValid;
     }
     @Override
     protected void checkInput() {
@@ -455,6 +622,9 @@ public class EditEventDialog extends EditBottomSheetDialog
 
     protected boolean validateInput_angle()
     {
+        if (edit_angle == null) {
+            return true;
+        }
         try {
             double angle = Double.parseDouble(edit_angle.getText().toString());
             if (angle < MIN_ANGLE || angle > MAX_ANGLE) {
@@ -470,6 +640,48 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
     public static final double MIN_ANGLE = -90;
     public static final double MAX_ANGLE = 90;
+
+    protected boolean validateInput_shadowLength()
+    {
+        if (edit_shadowLength == null) {
+            return true;
+        }
+        try {
+            double length = Double.parseDouble(edit_shadowLength.getText().toString());
+            if (length < MIN_LENGTH || length > MAX_LENGTH) {
+                edit_shadowLength.setError(getContext().getString(R.string.editevent_dialog_length_error));
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            edit_shadowLength.setError(getContext().getString(R.string.editevent_dialog_length_error));
+            return false;
+        }
+        edit_shadowLength.setError(null);
+        return true;
+    }
+    public static final double MIN_LENGTH = 0;      // TODO
+    public static final double MAX_LENGTH = 100;    // TODO
+
+    protected boolean validateInput_objHeight()
+    {
+        if (edit_objHeight == null) {
+            return true;
+        }
+        try {
+            double length = Double.parseDouble(edit_objHeight.getText().toString());
+            if (length < MIN_HEIGHT || length > MAX_HEIGHT) {
+                edit_objHeight.setError(getContext().getString(R.string.editevent_dialog_height_error));
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            edit_objHeight.setError(getContext().getString(R.string.editevent_dialog_height_error));
+            return false;
+        }
+        edit_objHeight.setError(null);
+        return true;
+    }
+    public static final double MIN_HEIGHT = .01;    // TODO
+    public static final double MAX_HEIGHT = 100;    // TODO
 
     private final TextWatcher labelWatcher = new TextWatcher() {
         @Override
@@ -512,6 +724,50 @@ public class EditEventDialog extends EditBottomSheetDialog
                 String eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, getOffset(), null);
                 setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
                 setIsModified(true);
+
+            } catch (NumberFormatException e) {
+                Log.e("EditEventDialog", "not an angle: " + e);
+            }
+        }
+    };
+
+    private final TextWatcher lengthWatcher = new TextWatcher()
+    {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                double length = Double.parseDouble(s.toString());
+                Double objHeight = getObjHeight();
+                if (objHeight != null)
+                {
+                    String eventID = AlarmEventProvider.ShadowLengthEvent.getEventName(objHeight, length, getOffset(), null);
+                    setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
+                    setIsModified(true);
+                }
+
+            } catch (NumberFormatException e) {
+                Log.e("EditEventDialog", "not an angle: " + e);
+            }
+        }
+    };
+
+    private final TextWatcher heightWatcher = new TextWatcher()
+    {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                double objHeight = Double.parseDouble(s.toString());
+                Double length = getShadowLength();
+                if (length != null)
+                {
+                    String eventID = AlarmEventProvider.ShadowLengthEvent.getEventName(objHeight, length, getOffset(), null);
+                    setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
+                    setIsModified(true);
+                }
 
             } catch (NumberFormatException e) {
                 Log.e("EditEventDialog", "not an angle: " + e);
