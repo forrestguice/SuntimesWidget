@@ -268,6 +268,16 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getTimeOfShadowBeforeNoon(Calendar dateTime, double objHeight, double shadowLength) {
+        return null;
+    }
+
+    @Override
+    public Calendar getTimeOfShadowAfterNoon(Calendar dateTime, double objHeight, double shadowLength) {
+        return null;
+    }
+
+    @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
         Calendar[] riseset = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.7.1
+ * @version 1.8.0
  */
 public interface SuntimesCalculator
 {
@@ -38,6 +38,7 @@ public interface SuntimesCalculator
     int FEATURE_MOON = 40;        // feature: moonrise, moonset, phase, illumination (1.3.0)
     int FEATURE_POSITION = 50;    // feature: sun, moon position (elevation, azimuth, etc) (1.4.0)
     int FEATURE_RISESET1 = 60;    // feature: rise/set @angle times (1.7.0, 1.7.1)
+    int FEATURE_SHADOW = 70;      // feature: rise/set shadow length times (1.8.0)
 
     //
     // 1.0.0 sunrise, sunset, noon, twilight times
@@ -387,5 +388,29 @@ public interface SuntimesCalculator
      * @since 1.7.0 FEATURE_RISESET1
      */
     Calendar getSunsetCalendarForDate( Calendar date, double angle );
+
+    //
+    // 1.8.0, (FEATURE_SHADOW)
+    //
+
+    /**
+     * TimeOfShadowBeforeNoon
+     * @param date a Calendar representing a given date
+     * @param objHeight height of the obj (meters)
+     * @param shadowLength length of shadow (meters)
+     * @return time of shadow before noon
+     * @since 1.8.0 FEATURE_SHADOW
+     */
+    Calendar getTimeOfShadowBeforeNoon( Calendar date, double objHeight, double shadowLength );
+
+    /**
+     * TimeOfShadowAfterNoon
+     * @param date a Calendar representing a given date
+     * @param objHeight height of the obj (meters)
+     * @param shadowLength length of shadow (meters)
+     * @return time of shadow after noon
+     * @since 1.8.0 FEATURE_SHADOW
+     */
+    Calendar getTimeOfShadowAfterNoon( Calendar date, double objHeight, double shadowLength );
 
 }
