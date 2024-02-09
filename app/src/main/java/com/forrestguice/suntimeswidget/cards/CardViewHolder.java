@@ -146,8 +146,10 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         rows.add(row_blue8 = new TimeFieldRow(view, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
         rows.add(row_blue4 = new TimeFieldRow(view, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
 
+        Set<String> customEvents = EventSettings.loadVisibleEvents(view.getContext(), AlarmEventProvider.EventType.SUN_ELEVATION);
+        customEvents.addAll(EventSettings.loadVisibleEvents(view.getContext(), AlarmEventProvider.EventType.SHADOWLENGTH));
         customRows = new CustomRows(view, options);
-        rows.addAll(customRows.initRows(view.getContext(), EventSettings.loadVisibleEvents(view.getContext(), AlarmEventProvider.EventType.SUN_ELEVATION)));
+        rows.addAll(customRows.initRows(view.getContext(), customEvents));
 
         timeFields = new HashMap<>();
         timeFields.put(SolarEvents.SUNRISE.name(), row_actual.getField(0));
