@@ -166,4 +166,20 @@ public class AlarmEventProviderTest0
         assertNull( AlarmEventProvider.SunElevationEvent.valueOf("SHADOW_-6|Xr") );    // bad offset (not a number)
     }
 
+    @Test
+    public void test_EventType_isNumeric()
+    {
+        assertTrue(AlarmEventProvider.EventType.isNumeric(""));    // empty string
+        assertTrue(AlarmEventProvider.EventType.isNumeric("0"));
+        assertTrue(AlarmEventProvider.EventType.isNumeric("1"));
+        assertTrue(AlarmEventProvider.EventType.isNumeric("100"));
+        assertTrue(AlarmEventProvider.EventType.isNumeric("1234567890"));
+        assertTrue(AlarmEventProvider.EventType.isNumeric("001"));     // leading 0s
+
+        assertFalse(AlarmEventProvider.EventType.isNumeric("1.1"));    // accepts ints only
+        assertFalse(AlarmEventProvider.EventType.isNumeric("x1"));     // contains x
+        assertFalse(AlarmEventProvider.EventType.isNumeric("1x"));     // contains x
+        assertFalse(AlarmEventProvider.EventType.isNumeric("nan"));    // no numerals
+    }
+
 }

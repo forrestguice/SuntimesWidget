@@ -1032,7 +1032,11 @@ public class AlarmEventProvider extends ContentProvider
             return null;
         }
 
-        private static boolean isNumeric(@NonNull String eventID)
+        /**
+         * @param eventID eventID
+         * @return true all characters are numeric, false if any character is not [1,9]
+         */
+        protected static boolean isNumeric(@NonNull String eventID)
         {
             for (int i=0; i<eventID.length(); i++)
             {
