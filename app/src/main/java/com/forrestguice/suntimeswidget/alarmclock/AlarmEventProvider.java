@@ -32,6 +32,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -925,17 +926,18 @@ public class AlarmEventProvider extends ContentProvider
 
     public static Calendar updateAlarmTime_shadowLengthEvent(Context context, @NonNull ShadowLengthEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        SuntimesRiseSetData data = getData_shadowLengthEvent(context, event.getAngle(), event.getOffset(), location);
+        SuntimesClockData data = getData_shadowLengthEvent(context, event.getAngle(), event.getOffset(), location);
+        SuntimesCalculator calculator = data.calculator();
+
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime = null;
 
-        SuntimesCalculator calculator = data.calculator();
-        //calculator.getShadowLength()
-
-        /*Calendar day = Calendar.getInstance();
+        Calendar day = Calendar.getInstance();
         data.setTodayIs(day);
         data.calculate();
-        eventTime = (event.isRising() ? data.sunriseCalendarToday() : data.sunsetCalendarToday());     // TODO
+
+        eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
+                                      : calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength()));
         if (eventTime != null)
         {
             eventTime.set(Calendar.SECOND, 0);
@@ -953,30 +955,29 @@ public class AlarmEventProvider extends ContentProvider
                 return null;
             }
 
-            Log.w(AlarmNotifications.TAG, "updateAlarmTime: sunElevationEvent advancing by 1 day..");
+            Log.w(AlarmNotifications.TAG, "updateAlarmTime: shadowLengthEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             data.setTodayIs(day);
             data.calculate();
-            eventTime = (event.isRising() ? data.sunriseCalendarToday() : data.sunsetCalendarToday());    // TODO
+            eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
+                                          : calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength()));
             if (eventTime != null)
             {
                 eventTime.set(Calendar.SECOND, 0);
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
             c++;
-        }*/
+        }
         return eventTime;
     }
 
-    private static SuntimesRiseSetData getData_shadowLengthEvent(Context context, double length, int offset, @NonNull Location location)
+    private static SuntimesClockData getData_shadowLengthEvent(Context context, double length, int offset, @NonNull Location location)
     {
-        //SuntimesRiseSetData data = new SuntimesRiseSetData(context, 0);
-        //data.setLocation(location);
-        //sunData.setAngle(angle);
+        SuntimesClockData data = new SuntimesClockData(context, 0);
+        data.setLocation(location);
+        data.setTodayIs(Calendar.getInstance());
         //data.setOffset(offset);
-        //data.setTodayIs(Calendar.getInstance());
-        //return data;    // TODO
-        return null;
+        return data;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
