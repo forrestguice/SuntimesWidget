@@ -869,8 +869,8 @@ public class AlarmEventProvider extends ContentProvider
         }
 
         /**
-         * @return e.g. SHADOW_10r          (@ 10 meters (rising)),
-         *              SHADOW_10|-300000r  (5m before @ 10 meters (rising))
+         * @return e.g. SHADOW_1:10r          (@ 10 meters (rising)),
+         *              SHADOW_1:10|-300000r  (5m before @ 10 meters (rising))
          */
         @Override
         protected String getEventName(Context context) {
@@ -878,7 +878,7 @@ public class AlarmEventProvider extends ContentProvider
         }
         public static String getEventName(double objHeight, double length, int offset, @Nullable Boolean rising) {
             String name = NAME_PREFIX
-                    + length    // TODO: objHeight
+                    + objHeight + ":" + length
                     + ((offset != 0) ? "|" + (int)Math.ceil(offset / 1000d / 60d) : "");
             if (rising != null) {
                 name += (rising ? SUFFIX_RISING : SUFFIX_SETTING);
@@ -891,16 +891,24 @@ public class AlarmEventProvider extends ContentProvider
         {
             if (isShadowLengthEvent(eventName))
             {
-                double objHeight = 1;   // 1m  // TODO: modify naming scheme to include height
-
-                double length;
+                double height = 1, length = 1;
                 int offsetMinutes = 0;
                 boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
                 try {
                     String contentString = eventName.substring(7, eventName.length() - (hasSuffix ? 1 : 0));    // SHADOW_<contentString>
                     String[] contentParts = contentString.split("\\|");
 
-                    length = Double.parseDouble(contentParts[0]);
+                    String[] shadowParts = contentParts[0].split(":");
+                    if (shadowParts.length > 1)
+                    {
+                        height = Double.parseDouble(shadowParts[0]);
+                        length = Double.parseDouble(shadowParts[1]);
+
+                    } else if (shadowParts.length > 0) {
+                        height = 1;
+                        length = Double.parseDouble(shadowParts[0]);
+                    }
+
                     if (contentParts.length > 1) {
                         offsetMinutes = Integer.parseInt(contentParts[1]);
                     }
@@ -910,7 +918,7 @@ public class AlarmEventProvider extends ContentProvider
                     return null;
                 }
                 boolean rising = eventName.endsWith(SUFFIX_RISING);
-                return new ShadowLengthEvent(objHeight, length, (offsetMinutes * 60 * 1000), rising);
+                return new ShadowLengthEvent(height, length, (offsetMinutes * 60 * 1000), rising);
             } else return null;
         }
     }
