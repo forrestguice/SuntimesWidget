@@ -857,8 +857,9 @@ public class AlarmEventProvider extends ContentProvider
         @Override
         protected String getEventSummary(Context context)
         {
-            String length = SuntimesUtils.formatAsHeight(context, getLength(), WidgetSettings.LengthUnit.METRIC, false, 1).toString();
-            String height = SuntimesUtils.formatAsHeight(context, getObjHeight(), WidgetSettings.LengthUnit.METRIC, false, 1).toString();
+            String height = SuntimesUtils.formatAsHeight(context, getObjHeight(), WidgetSettings.LengthUnit.METRIC, 1, false).getValue();
+            String length = SuntimesUtils.formatAsHeight(context, getLength(), WidgetSettings.LengthUnit.METRIC, 1, false).getUnits();
+
             if (offset == 0) {
                 return offsetDisplay(context) + context.getString(R.string.shadowevent_summary_format, context.getString(R.string.shadowevent_title), height, length);
             } else {
