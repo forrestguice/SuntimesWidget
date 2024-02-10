@@ -137,12 +137,12 @@ public class AlarmEventProvider extends ContentProvider
                 break;
 
             case URIMATCH_EVENT:
-                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT");
+                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT: " + uri.getLastPathSegment());
                 retValue = queryEvents(uri.getLastPathSegment(), uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_EVENT_CALC:
-                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT_CALC");
+                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT_CALC: " + uri.getLastPathSegment());
                 retValue = calculateEvent(uri.getLastPathSegment(), uri, projection, selection, selectionArgs);
                 break;
 
@@ -174,6 +174,7 @@ public class AlarmEventProvider extends ContentProvider
 
                 // list all custom events
                 List<EventSettings.EventAlias> events1 = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
+                events1.addAll(EventSettings.loadEvents(context, EventType.SHADOWLENGTH));
                 for (EventSettings.EventAlias event : events1)
                 {
                     Object[] row1 = createRow(context, event, true, columns, selection, selectionArgs);
@@ -264,7 +265,7 @@ public class AlarmEventProvider extends ContentProvider
                 break;
 
             default:
-                Log.w("AlarmEventsProvider", "queryEvents: unrecognized event: " + eventID);
+                Log.w("AlarmEventsProvider", "queryEvents: unrecognized event (1): " + eventID);
                 break;
         }
     }
@@ -926,7 +927,8 @@ public class AlarmEventProvider extends ContentProvider
 
     public static Calendar updateAlarmTime_shadowLengthEvent(Context context, @NonNull ShadowLengthEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        SuntimesClockData data = getData_shadowLengthEvent(context, event.getAngle(), event.getOffset(), location);
+        SuntimesClockData data = getData_shadowLengthEvent(context, location);
+        data.initCalculator(context);
         SuntimesCalculator calculator = data.calculator();
 
         Calendar alarmTime = Calendar.getInstance();
@@ -937,7 +939,7 @@ public class AlarmEventProvider extends ContentProvider
         data.calculate();
 
         eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
-                                      : calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength()));
+                                      : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
         if (eventTime != null)
         {
             eventTime.set(Calendar.SECOND, 0);
@@ -960,7 +962,7 @@ public class AlarmEventProvider extends ContentProvider
             data.setTodayIs(day);
             data.calculate();
             eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
-                                          : calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength()));
+                                          : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
             if (eventTime != null)
             {
                 eventTime.set(Calendar.SECOND, 0);
@@ -971,12 +973,11 @@ public class AlarmEventProvider extends ContentProvider
         return eventTime;
     }
 
-    private static SuntimesClockData getData_shadowLengthEvent(Context context, double length, int offset, @NonNull Location location)
+    private static SuntimesClockData getData_shadowLengthEvent(Context context, @NonNull Location location)
     {
         SuntimesClockData data = new SuntimesClockData(context, 0);
         data.setLocation(location);
         data.setTodayIs(Calendar.getInstance());
-        //data.setOffset(offset);
         return data;
     }
 
@@ -1033,7 +1034,10 @@ public class AlarmEventProvider extends ContentProvider
                     return EventType.SOLAREVENT;
                 }
             }
-            for (String aliasID : EventSettings.loadEventList(context, EventType.SUN_ELEVATION)) {
+            Set<String> eventList = EventSettings.loadEventList(context, EventType.SUN_ELEVATION);
+            eventList.addAll(EventSettings.loadEventList(context, EventType.SHADOWLENGTH));
+            for (String aliasID : eventList)
+            {
                 if (eventID.startsWith(aliasID)) {
                     return EventType.EVENTALIAS;
                 }
