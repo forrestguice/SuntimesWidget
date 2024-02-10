@@ -886,6 +886,9 @@
     <string name="configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->
     <string name="configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->
 
+    <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
     <string name="importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->

@@ -359,9 +359,9 @@ public class EventListHelper
         {
             switch (menuItem.getItemId())
             {
-                case R.id.addEvent:
-                    addEvent();
-                    return true;
+                //case R.id.addEvent:
+                //    addEvent();
+                //    return true;
 
                 case R.id.editEvent:
                     editEvent(getEventID());
@@ -386,7 +386,7 @@ public class EventListHelper
     });
 
     public void addEvent() {
-        addEvent(AlarmEventProvider.EventType.SHADOWLENGTH);
+        addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
     }
     public void addEvent(AlarmEventProvider.EventType type)
     {
