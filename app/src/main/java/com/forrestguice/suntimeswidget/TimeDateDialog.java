@@ -227,6 +227,11 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         onCanceled = listener;
     }
 
+    private DialogInterface.OnShowListener onShowListener;
+    public void setOnShowListener( DialogInterface.OnShowListener listener ) {
+        onShowListener = listener;
+    }
+
     public boolean isToday()
     {
         Calendar date = Calendar.getInstance(timezone);
@@ -248,8 +253,12 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     protected DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
-        public void onShow(DialogInterface dialog) {
+        public void onShow(DialogInterface dialog)
+        {
             ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+            if (onShowListener != null) {
+                onShowListener.onShow(dialog);
+            }
         }
     };
 
