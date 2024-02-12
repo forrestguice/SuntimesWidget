@@ -151,6 +151,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return new Pair<>(sun, moon);
     }
 
+    public long findDateForPosition(Context context, int position)
+    {
+        if (position < 0) {
+            position = 0;     // clamp invalid positions
+        }
+        if (position > MAX_POSITIONS) {
+            position = MAX_POSITIONS;
+        }
+
+        Calendar calendar = null;
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = initData(context, position);
+        if (data != null && data.first != null) {
+            calendar = data.first.calendar();
+        }
+        return (calendar != null) ? calendar.getTimeInMillis() : -1;
+    }
+
     public int findPositionForDate(Context context, long dateMillis)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data_today = initData(context, TODAY_POSITION);

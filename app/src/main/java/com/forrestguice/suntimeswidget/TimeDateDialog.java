@@ -165,7 +165,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
         if (mode == WidgetSettings.DateMode.CURRENT_DATE)
         {
-            init(Calendar.getInstance(timezone));
+            init(getInitialDateTime());
 
         } else {
             WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
@@ -310,4 +310,17 @@ public class TimeDateDialog extends BottomSheetDialogFragment
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
+
+    public static final String KEY_INITIAL_DATETIME = "initial_datetime";
+    public void setInitialDateTime(long datetime) {
+        getArguments().putLong(KEY_INITIAL_DATETIME, datetime);
+    }
+    public Calendar getInitialDateTime()
+    {
+        Calendar calendar = Calendar.getInstance(timezone);
+        long datetime = getArguments().getLong(KEY_INITIAL_DATETIME, calendar.getTimeInMillis());
+        calendar.setTimeInMillis(datetime);
+        return calendar;
+    }
+
 }

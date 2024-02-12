@@ -1420,8 +1420,11 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * showDate
      */
-    protected void showDate() {
-        showDate(-1L);
+    protected void showDate()
+    {
+        int position = card_layout.findFirstVisibleItemPosition();
+        long datetime = (position != CardAdapter.TODAY_POSITION) ? card_adapter.findDateForPosition(this, position) : -1L;
+        showDate(datetime);
     }
     protected void showDate(long datetime)
     {
@@ -1431,9 +1434,7 @@ public class SuntimesActivity extends AppCompatActivity
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
 
         if (datetime != -1) {
-            Calendar calendar = Calendar.getInstance(dataset.timezone());
-            calendar.setTimeInMillis(datetime);
-            datePicker.init(calendar);
+            datePicker.setInitialDateTime(datetime);
         }
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE_SEEK);
     }
