@@ -86,6 +86,12 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     protected void initViews(Context context, View dialogContent)
     {
         picker = (DatePicker) dialogContent.findViewById(R.id.appwidget_date_custom);
+        if (getArguments().containsKey(KEY_MIN_DATETIME)) {
+            picker.setMinDate(getArguments().getLong(KEY_MIN_DATETIME));
+        }
+        if (getArguments().containsKey(KEY_MAX_DATETIME)) {
+            picker.setMaxDate(getArguments().getLong(KEY_MAX_DATETIME));
+        }
 
         ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
@@ -318,6 +324,16 @@ public class TimeDateDialog extends BottomSheetDialogFragment
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
+    }
+
+    public static final String KEY_MIN_DATETIME = "min_datetime";
+    public void setMinDate(long datetime) {
+        getArguments().putLong(KEY_MIN_DATETIME, datetime);
+    }
+
+    public static final String KEY_MAX_DATETIME = "max_datetime";
+    public void setMaxDate(long datetime) {
+        getArguments().putLong(KEY_MAX_DATETIME, datetime);
     }
 
     public static final String KEY_INITIAL_DATETIME = "initial_datetime";

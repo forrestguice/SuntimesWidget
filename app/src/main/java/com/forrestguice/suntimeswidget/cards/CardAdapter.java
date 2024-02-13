@@ -24,6 +24,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearSmoothScroller;
@@ -163,9 +164,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         Calendar calendar = null;
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = initData(context, position);
         if (data != null && data.first != null) {
-            calendar = data.first.calendar();
+            calendar = data.first.dataActual.calendar();
         }
-        return (calendar != null) ? calendar.getTimeInMillis() : -1;
+        return (calendar != null) ? calendar.getTimeInMillis() : null;
     }
 
     public int findPositionForDate(Context context, long dateMillis)

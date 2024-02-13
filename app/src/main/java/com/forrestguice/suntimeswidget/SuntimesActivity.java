@@ -335,7 +335,7 @@ public class SuntimesActivity extends AppCompatActivity
                 configDate();
 
             } else if (action.equals(ACTION_SHOW_DATE)) {
-                showDate(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
+                showDate(intent.getLongExtra(EXTRA_SHOW_DATE, (Long) null));
 
             } else if (action.equals(ACTION_NOTE_SEEK)) {
                 String eventID = intent.getStringExtra(EXTRA_SOLAREVENT);
@@ -1423,17 +1423,19 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showDate()
     {
         int position = card_layout.findFirstVisibleItemPosition();
-        long datetime = (position != CardAdapter.TODAY_POSITION) ? card_adapter.findDateForPosition(this, position) : -1L;
+        Long datetime = (position != CardAdapter.TODAY_POSITION) ? card_adapter.findDateForPosition(this, position) : null;
         showDate(datetime);
     }
-    protected void showDate(long datetime)
+    protected void showDate(@Nullable Long datetime)
     {
         final TimeDateDialog datePicker = new TimeDateDialog();
         datePicker.setDialogTitle(getString(R.string.configAction_viewDate));
         datePicker.setTimezone(dataset.timezone());
+        datePicker.setMinDate( card_adapter.findDateForPosition(this, 0) );
+        datePicker.setMaxDate( card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1) );
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
 
-        if (datetime != -1) {
+        if (datetime != null) {
             datePicker.setInitialDateTime(datetime);
         }
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE_SEEK);
