@@ -561,4 +561,33 @@ public class CalculatorProviderTest0
         assertEquals(0, c0.get(Calendar.YEAR));
     }*/
 
+    @Test
+    public void test_SuntimesData_nowThen()
+    {
+        test_SuntimesData_nowThen(1863, Calendar.JULY, 4, 12, 30, 1);
+        test_SuntimesData_nowThen(-1000, Calendar.JULY, 4, 12, 30, 1);
+    }
+
+    public void test_SuntimesData_nowThen(int year, int month, int dayOfMonth, int hour, int minute, int second)
+    {
+        Calendar now = Calendar.getInstance();
+        now.set(Calendar.HOUR_OF_DAY, hour);
+        now.set(Calendar.MINUTE, minute);
+        now.set(Calendar.SECOND, second);
+
+        Calendar c0 = Calendar.getInstance();
+        c0.set(Calendar.YEAR, year);
+        c0.set(Calendar.MONTH, month);
+        c0.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        Calendar c1 = SuntimesData.nowThen(now, c0);
+        assertEquals(c1.get(Calendar.YEAR), c1.get(Calendar.YEAR));
+        assertEquals(month, c1.get(Calendar.MONTH));
+        assertEquals(dayOfMonth, c1.get(Calendar.DAY_OF_MONTH));
+
+        assertEquals(hour, c1.get(Calendar.HOUR_OF_DAY));
+        assertEquals(minute, c1.get(Calendar.MINUTE));
+        assertEquals(second, c1.get(Calendar.SECOND));
+    }
+
 }

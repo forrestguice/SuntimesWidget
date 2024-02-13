@@ -341,21 +341,17 @@ public class SuntimesData
      * @param date
      * @return
      */
-    public Calendar nowThen(Calendar date)
-    {
-        Calendar nowThen = now();
-        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
-        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
-        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
-        return nowThen;
+    public Calendar nowThen(Calendar date) {
+        return nowThen(now(), date);
     }
 
     public static Calendar nowThen(Calendar now, Calendar date)
     {
-        Calendar nowThen = (Calendar)now.clone();
-        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
-        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
-        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        Calendar nowThen = (Calendar) date.clone();
+        nowThen.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY));
+        nowThen.set(Calendar.MINUTE, now.get(Calendar.MINUTE));
+        nowThen.set(Calendar.SECOND, now.get(Calendar.SECOND));
+        nowThen.set(Calendar.MILLISECOND, now.get(Calendar.MILLISECOND));
         return nowThen;
     }
 
