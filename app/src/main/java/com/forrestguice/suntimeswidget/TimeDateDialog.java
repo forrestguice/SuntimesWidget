@@ -21,6 +21,7 @@ import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -86,11 +87,15 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     protected void initViews(Context context, View dialogContent)
     {
         picker = (DatePicker) dialogContent.findViewById(R.id.appwidget_date_custom);
-        if (getArguments().containsKey(KEY_MIN_DATETIME)) {
-            picker.setMinDate(getArguments().getLong(KEY_MIN_DATETIME));
-        }
-        if (getArguments().containsKey(KEY_MAX_DATETIME)) {
-            picker.setMaxDate(getArguments().getLong(KEY_MAX_DATETIME));
+
+        if (Build.VERSION.SDK_INT >= 11)
+        {
+            if (getArguments().containsKey(KEY_MIN_DATETIME)) {
+                picker.setMinDate(getArguments().getLong(KEY_MIN_DATETIME));
+            }
+            if (getArguments().containsKey(KEY_MAX_DATETIME)) {
+                picker.setMaxDate(getArguments().getLong(KEY_MAX_DATETIME));
+            }
         }
 
         ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
