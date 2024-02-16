@@ -18,7 +18,7 @@
 <hr />
 <hr />
 
-## Get Suntimes
+## Download
 {% include download.html %}
 
 ## Screenshots
