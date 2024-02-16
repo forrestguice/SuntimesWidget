@@ -17,6 +17,10 @@
 {% include donate.html %}
 <hr />
 <hr />
+
+## Get Suntimes
+{% include download.html %}
+
 ## Screenshots
 <p>{% include gallery_nav.html gallery_root = "gallery/" %}</p>
 <div>
