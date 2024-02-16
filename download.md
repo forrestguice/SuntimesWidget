@@ -2,7 +2,10 @@
 
 Suntimes is available from [F-Droid](https://f-droid.org), an installable catalogue of FOSS (Free and Open Source Software) applications for the Android platform.
 
-In addition to being included in the [official F-Droid repository](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/), Suntimes related apps can be installed from:
+<a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
+<img src="https://forrestguice.github.io/SuntimesWidget/assets/images/get-it-on-fdroid.png" alt="Get it on F-Droid" height="68" align="left" /></a><br /><br />
+
+In addition to being included in the official F-Droid repository, Suntimes related apps can be installed from:
 * [https://forrestguice.codeberg.page/SuntimesApps/repo](https://forrestguice.codeberg.page/SuntimesApps/repo)
 * [https://forrestguice.github.io/SuntimesApps/repo](https://forrestguice.github.io/SuntimesApps/repo)
 
