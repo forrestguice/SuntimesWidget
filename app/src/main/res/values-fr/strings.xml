@@ -176,7 +176,7 @@
     <string name="delta_weeks">s</string>    <!-- e.g. 2w -->
     <string name="delta_days">j</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
-    <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+    <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
     <string name="hence">dans <xliff:g id="timeSpan">%1$s</xliff:g></string>  <!-- e.g. 15d 23h from now -->
