@@ -31,4 +31,6 @@
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Choose Color</string>
 
+    <string name="delta_minutes">m</string>
+
 </resources>

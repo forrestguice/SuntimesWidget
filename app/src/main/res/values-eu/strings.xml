@@ -182,7 +182,7 @@
     <string name="delta_weeks">a</string>    <!-- e.g. 2w -->
     <string name="delta_days">e</string>     <!-- e.g. 1d -->
     <string name="delta_hours">o</string>    <!-- e.g. 2h -->
-    <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+    <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
     <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  barru</string>  <!-- e.g. 15d 23h from now -->
