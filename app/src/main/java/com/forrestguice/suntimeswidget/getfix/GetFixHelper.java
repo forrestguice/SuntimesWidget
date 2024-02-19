@@ -54,7 +54,7 @@ import java.util.ArrayList;
  * allows a single task to run at a time.
  */
 @SuppressWarnings("Convert2Diamond")
-public class GetFixHelper
+public class GetFixHelper implements LocationHelper
 {
     public static final String KEY_LOCATION_GETTINGFIX = "gettingfix";
     public static final String KEY_LOCATION_GOTFIX = "gotfix";
@@ -163,6 +163,16 @@ public class GetFixHelper
         }
     }
 
+    @Override
+    public boolean gettingFix() {
+        return gettingFix;
+    }
+
+    @Override
+    public void setGettingFix(boolean value) {
+        gettingFix = value;
+    }
+
     public void fallbackToLastLocation()
     {
         LocationManager locationManager = (LocationManager)myParent.getSystemService(Context.LOCATION_SERVICE);
@@ -186,6 +196,10 @@ public class GetFixHelper
                 Log.e("GetFixHelper", "unable to fallback to last location ... Permissions! we don't have them.. checkPermissions should be called before calling this method. " + e);
             }
         } else Log.w("GetFixHelper", "unable to fallback to last location ... LocationManager is null!");
+    }
+
+    public android.location.Location getLastKnownLocation(Context context) {
+        return GetFixHelper.lastKnownLocation(context);
     }
 
     public static android.location.Location lastKnownLocation(Context context)
@@ -225,7 +239,7 @@ public class GetFixHelper
         }
     }
 
-    public static boolean hasLocationPermission(Activity activity)
+    public boolean hasLocationPermission(Activity activity)
     {
         int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
         return (permission == PackageManager.PERMISSION_GRANTED);
@@ -427,9 +441,9 @@ public class GetFixHelper
      */
     public static class KeepTryingDialog extends DialogFragment
     {
-        private GetFixHelper helper;
-        public GetFixHelper getHelper() { return helper; }
-        public void setHelper( GetFixHelper helper ) { this.helper = helper; }
+        private LocationHelper helper;
+        public LocationHelper getHelper() { return helper; }
+        public void setHelper( LocationHelper helper ) { this.helper = helper; }
 
         @NonNull @Override
         public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -477,8 +491,8 @@ public class GetFixHelper
     {
         public EnableGPSDialog() {}
 
-        private GetFixHelper helper;
-        public void setHelper(GetFixHelper helper)
+        private LocationHelper helper;
+        public void setHelper(LocationHelper helper)
         {
             this.helper = helper;
         }
@@ -512,6 +526,11 @@ public class GetFixHelper
     {
         boolean allowPassive = AppSettings.loadPrefGpsPassiveMode(context);
         return isNetProviderEnabled(myParent) || isGPSProviderEnabled(myParent) || (allowPassive && isPassiveProviderEnabled(myParent));
+    }
+
+    @Override
+    public boolean hasFix() {
+        return gotFix;
     }
 
     public static boolean isGPSProviderEnabled(Context context)

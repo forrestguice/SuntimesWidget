@@ -73,6 +73,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.getfix.LocationHelper;
 import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
@@ -191,7 +192,7 @@ public class SuntimesActivity extends AppCompatActivity
     private SuntimesTheme appThemeOverride = null;
     private AppSettings.LocaleInfo localeInfo;
 
-    private GetFixHelper getFixHelper;
+    private LocationHelper getFixHelper;
 
     private com.forrestguice.suntimeswidget.calculator.core.Location location;
     protected SuntimesNotes notes;
@@ -1849,7 +1850,7 @@ public class SuntimesActivity extends AppCompatActivity
         String locationTitle = (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
 
         if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
-            locationPermissionWarning.setShouldShow(!GetFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions
+            locationPermissionWarning.setShouldShow(!getFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions
         }
 
         SpannableString locationSubtitle;

@@ -81,7 +81,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         setArguments(new Bundle());
     }
 
-    private GetFixHelper getFixHelper;
+    protected LocationHelper getFixHelper;
     private GetFixUI getFixUI_editMode = new GetFixUI()
     {
         @Override
@@ -330,7 +330,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         if (!getFixHelper.isLocationEnabled(getContext())) {
             icon = GetFixUI.ICON_GPS_DISABLED;
 
-        } else if (getFixHelper.gotFix) {
+        } else if (getFixHelper.hasFix()) {
             icon = GetFixUI.ICON_GPS_FOUND;
         }
         button_getfix.setImageResource(icon);
