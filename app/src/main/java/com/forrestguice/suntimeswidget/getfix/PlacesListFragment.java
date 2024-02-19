@@ -54,6 +54,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -73,6 +74,8 @@ import java.util.Locale;
 
 public class PlacesListFragment extends Fragment
 {
+    public static final String KEY_DIALOGTHEME = "dialogtheme";
+
     public static final String KEY_SELECTED_ROWID = "selectedRowID";
     public static final String KEY_FILTER_TEXT = "filterText";
     public static final String KEY_FILTER_EXCEPTIONS = "filterExceptions";
@@ -116,6 +119,19 @@ public class PlacesListFragment extends Fragment
         if (editDialog != null) {
             editDialog.setFragmentListener(onEditPlace);
         }
+    }
+
+    public void setDialogThemOverride(@Nullable Integer resID)
+    {
+        if (resID != null) {
+            getArguments().putInt(KEY_DIALOGTHEME, resID);
+        } else getArguments().remove(KEY_DIALOGTHEME);
+    }
+    @Nullable
+    protected Integer getDialogThemeOverride()
+    {
+        int resID = getArguments().getInt(KEY_DIALOGTHEME, -1);
+        return (resID >= 0 ? resID : null);
     }
 
     @Override
@@ -564,6 +580,7 @@ public class PlacesListFragment extends Fragment
     protected void addPlace(Context context)
     {
         PlacesEditFragment dialog = new PlacesEditFragment();
+        dialog.setDialogThemOverride(getDialogThemeOverride());
         dialog.setFragmentListener(onEditPlace);
         dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
     }
@@ -576,6 +593,7 @@ public class PlacesListFragment extends Fragment
             PlaceItem place = new PlaceItem(-1, location);
 
             PlacesEditFragment dialog = new PlacesEditFragment();
+            dialog.setDialogThemOverride(getDialogThemeOverride());
             dialog.setFragmentListener(onEditPlace);
             dialog.setPlace(place);
             dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
@@ -595,6 +613,7 @@ public class PlacesListFragment extends Fragment
             if (item != null && item.location != null && context != null)
             {
                 PlacesEditFragment dialog = new PlacesEditFragment();
+                dialog.setDialogThemOverride(getDialogThemeOverride());
                 dialog.setFragmentListener(onEditPlace);
                 dialog.setPlace(item);
                 dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);

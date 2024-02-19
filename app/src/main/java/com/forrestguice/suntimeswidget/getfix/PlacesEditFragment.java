@@ -46,7 +46,6 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
@@ -56,6 +55,8 @@ import java.util.regex.Pattern;
 
 public class PlacesEditFragment extends BottomSheetDialogFragment
 {
+    public static final String KEY_DIALOGTHEME = "dialogtheme";
+
     public static final String KEY_LOCATION = "location";
     public static final String KEY_LOCATION_LATITUDE = "locationLatitude";
     public static final String KEY_LOCATION_LONGITUDE = "locationLongitude";
@@ -161,11 +162,25 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         super.onResume();
     }
 
+    public void setDialogThemOverride(@Nullable Integer resID)
+    {
+        if (resID != null) {
+            getArguments().putInt(KEY_DIALOGTHEME, resID);
+        } else getArguments().remove(KEY_DIALOGTHEME);
+    }
+    @Nullable
+    protected Integer getDialogThemeOverride()
+    {
+        int resID = getArguments().getInt(KEY_DIALOGTHEME, -1);
+        return (resID >= 0 ? resID : null);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
-        View view = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_place, parent, false);
+        Integer appTheme = getDialogThemeOverride();
+        View view = ((appTheme != null) ? inflater.cloneInContext(new ContextThemeWrapper(getActivity(), appTheme)).inflate(R.layout.layout_dialog_place, parent, false)
+                                        : inflater.inflate(R.layout.layout_dialog_place, parent, false));
         initViews(getActivity(), view);
 
         if (savedInstanceState != null) {
