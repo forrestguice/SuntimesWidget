@@ -30,6 +30,8 @@ public class LocationHelperSettings
     public static final String PREF_KEY_LOCATION_MAX_ELAPSED = "getFix_maxElapsed";
     public static final String PREF_KEY_LOCATION_MAX_AGE = "getFix_maxAge";
 
+    public static final String PREF_KEY_LOCATION_TIME = "getFix_time";    // time of last automatic request
+
     public static final String PREF_KEY_LOCATION_PASSIVE = "getFix_passiveMode";
     public static final boolean PREF_DEF_LOCATION_PASSIVE = false;
 
@@ -89,6 +91,25 @@ public class LocationHelperSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_LOCATION_PASSIVE, PREF_DEF_LOCATION_PASSIVE);
+    }
+
+    public static boolean lastAutoLocationIsStale(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return timeSinceLastAutoLocationRequest(context) > LocationHelperSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
+    }
+    public static long timeSinceLastAutoLocationRequest(Context context) {
+        return System.currentTimeMillis() - lastAutoLocationRequest(context);
+    }
+    public static long lastAutoLocationRequest(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getLong(PREF_KEY_LOCATION_TIME, 0);
+    }
+    public static void saveLastAutoLocationRequest(Context context, long value)
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putLong(PREF_KEY_LOCATION_TIME, value);
+        pref.apply();
     }
 
 }

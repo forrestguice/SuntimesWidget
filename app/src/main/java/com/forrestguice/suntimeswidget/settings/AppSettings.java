@@ -47,7 +47,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 
-import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 
 import com.forrestguice.suntimeswidget.R;
@@ -163,7 +162,7 @@ public class AppSettings
     public static final String PREF_KEY_GETFIX_MINELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MIN_ELAPSED;
     public static final String PREF_KEY_GETFIX_MAXELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MAX_ELAPSED;
     public static final String PREF_KEY_GETFIX_MAXAGE = LocationHelperSettings.PREF_KEY_LOCATION_MAX_AGE;
-    public static final String PREF_KEY_GETFIX_TIME = "getFix_time";    // time of last automatic request
+    public static final String PREF_KEY_GETFIX_TIME = LocationHelperSettings.PREF_KEY_LOCATION_TIME;
     public static final String PREF_KEY_GETFIX_PASSIVE = LocationHelperSettings.PREF_KEY_LOCATION_PASSIVE;
 
     public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";
@@ -774,25 +773,6 @@ public class AppSettings
                 : (nightMode == AppCompatDelegate.MODE_NIGHT_YES) ? AppSettings.loadThemeDarkPref(context)
                 : (systemInNightMode(context) ? AppSettings.loadThemeDarkPref(context) : AppSettings.loadThemeLightPref(context));
         return ((override != null && !override.equals(THEME_DEFAULT)) ? override : null);
-    }
-
-    public static boolean lastAutoLocationIsStale(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return timeSinceLastAutoLocationRequest(context) > LocationHelperSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
-    }
-    public static long timeSinceLastAutoLocationRequest(Context context) {
-        return System.currentTimeMillis() - lastAutoLocationRequest(context);
-    }
-    public static long lastAutoLocationRequest(Context context)
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getLong(PREF_KEY_GETFIX_TIME, 0);
-    }
-    public static void saveLastAutoLocationRequest(Context context, long value)
-    {
-        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        pref.putLong(PREF_KEY_GETFIX_TIME, value);
-        pref.apply();
     }
 
     /**

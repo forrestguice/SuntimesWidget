@@ -74,6 +74,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.getfix.LocationHelper;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
@@ -522,7 +523,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         if ((WidgetSettings.loadLocationModePref(this, 0) == WidgetSettings.LocationMode.CURRENT_LOCATION)
-                && AppSettings.lastAutoLocationIsStale(SuntimesActivity.this))
+                && LocationHelperSettings.lastAutoLocationIsStale(SuntimesActivity.this))
         {
             card_view.post(new Runnable()
             {
@@ -1100,7 +1101,7 @@ public class SuntimesActivity extends AppCompatActivity
                     if (result != null)
                     {
                         com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
-                        AppSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
+                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
                         WidgetSettings.saveLocationPref(SuntimesActivity.this, 0, location);
 
                     } else {
