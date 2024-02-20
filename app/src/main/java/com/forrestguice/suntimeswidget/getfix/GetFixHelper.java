@@ -39,14 +39,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.lang.ref.WeakReference;
-import java.security.Security;
 import java.util.ArrayList;
 
 /**
@@ -106,13 +105,13 @@ public class GetFixHelper implements LocationHelper
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
                     getFixTask = new GetFixTask(myParent, this);
 
-                    int minElapsed = AppSettings.loadPrefGpsMinElapsed(prefs, GetFixTask.MIN_ELAPSED);
+                    int minElapsed = LocationHelperSettings.loadPrefGpsMinElapsed(prefs, GetFixTask.MIN_ELAPSED);
                     getFixTask.setMinElapsed(minElapsed);
 
-                    int maxElapsed = AppSettings.loadPrefGpsMaxElapsed(prefs, GetFixTask.MAX_ELAPSED);
+                    int maxElapsed = LocationHelperSettings.loadPrefGpsMaxElapsed(prefs, GetFixTask.MAX_ELAPSED);
                     getFixTask.setMaxElapsed(maxElapsed);
 
-                    int maxAge = AppSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
+                    int maxAge = LocationHelperSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
                     getFixTask.setMaxAge(maxAge);
 
                     //Log.d("GetFixHelper", "MinElapsed: " + minElapsed);
@@ -134,7 +133,7 @@ public class GetFixHelper implements LocationHelper
                             }
                         }
                     });
-                    getFixTask.executeTask(AppSettings.loadPrefGpsPassiveMode(myParent));
+                    getFixTask.executeTask(LocationHelperSettings.loadPrefGpsPassiveMode(myParent));
 
                 } else {
                     Log.w("GetFixHelper", "getFix called while GPS disabled; showing a prompt");
@@ -262,7 +261,7 @@ public class GetFixHelper implements LocationHelper
                 String permissionMessage = activity.getString(R.string.privacy_permission_location);
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setTitle(activity.getString(R.string.privacy_permissiondialog_title))
-                        .setMessage(SuntimesUtils.fromHtml(permissionMessage))
+                        .setMessage(fromHtml(permissionMessage))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                         {
                             public void onClick(DialogInterface dialog, int which)
@@ -524,7 +523,7 @@ public class GetFixHelper implements LocationHelper
 
     public boolean isLocationEnabled(Context context)
     {
-        boolean allowPassive = AppSettings.loadPrefGpsPassiveMode(context);
+        boolean allowPassive = LocationHelperSettings.loadPrefGpsPassiveMode(context);
         return isNetProviderEnabled(myParent) || isGPSProviderEnabled(myParent) || (allowPassive && isPassiveProviderEnabled(myParent));
     }
 
@@ -554,6 +553,19 @@ public class GetFixHelper implements LocationHelper
         final EnableGPSDialog dialog = new EnableGPSDialog();
         dialog.setHelper(this);
         dialog.show(myParent.getSupportFragmentManager(), DIALOGTAG_ENABLEGPS);
+    }
+
+
+    /**
+     * @param htmlString html markup
+     * @return an html span
+     */
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String htmlString )
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            return Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY);
+        else return Html.fromHtml(htmlString);
     }
 
 }

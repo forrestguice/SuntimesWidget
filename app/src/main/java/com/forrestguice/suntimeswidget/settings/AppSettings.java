@@ -48,7 +48,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
-import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -160,13 +160,11 @@ public class AppSettings
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
 
-    public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
-    public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
-    public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
+    public static final String PREF_KEY_GETFIX_MINELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MIN_ELAPSED;
+    public static final String PREF_KEY_GETFIX_MAXELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MAX_ELAPSED;
+    public static final String PREF_KEY_GETFIX_MAXAGE = LocationHelperSettings.PREF_KEY_LOCATION_MAX_AGE;
     public static final String PREF_KEY_GETFIX_TIME = "getFix_time";    // time of last automatic request
-
-    public static final String PREF_KEY_GETFIX_PASSIVE = "getFix_passiveMode";
-    public static final boolean PREF_DEF_GETFIX_PASSIVE = false;
+    public static final String PREF_KEY_GETFIX_PASSIVE = LocationHelperSettings.PREF_KEY_LOCATION_PASSIVE;
 
     public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";
     public static final boolean PREF_DEF_PLUGINS_ENABLESCAN = false;
@@ -780,7 +778,7 @@ public class AppSettings
 
     public static boolean lastAutoLocationIsStale(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return timeSinceLastAutoLocationRequest(context) > AppSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
+        return timeSinceLastAutoLocationRequest(context) > LocationHelperSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
     }
     public static long timeSinceLastAutoLocationRequest(Context context) {
         return System.currentTimeMillis() - lastAutoLocationRequest(context);
@@ -795,69 +793,6 @@ public class AppSettings
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putLong(PREF_KEY_GETFIX_TIME, value);
         pref.apply();
-    }
-
-    /**
-     * @param prefs an instance of SharedPreferences
-     * @param defaultValue the default max age value if pref can't be loaded
-     * @return the gps max age value (milliseconds)
-     */
-    public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
-    {
-        int retValue;
-        try {
-            String maxAgeString = prefs.getString(PREF_KEY_GETFIX_MAXAGE, defaultValue+"");
-            retValue = Integer.parseInt(maxAgeString);
-        } catch (NumberFormatException e) {
-            Log.e("loadPrefGPSMaxAge", "Bad setting! " + e);
-            retValue = defaultValue;
-        }
-        return retValue;
-    }
-
-    /**
-     * @param prefs an instance of SharedPreferences
-     * @param defaultValue the default min elapsed value if pref can't be loaded
-     * @return the gps min elapsed value (milliseconds)
-     */
-    public static int loadPrefGpsMinElapsed(SharedPreferences prefs, int defaultValue)
-    {
-        int retValue;
-        try {
-            String minAgeString = prefs.getString(PREF_KEY_GETFIX_MINELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(minAgeString);
-        } catch (NumberFormatException e) {
-            Log.e("loadPrefGPSMinElapsed", "Bad setting! " + e);
-            retValue = defaultValue;
-        }
-        return retValue;
-    }
-
-    /**
-     * @param prefs an instance of SharedPreferences
-     * @param defaultValue the default max elapsed value if pref can't be loaded
-     * @return the gps max elapsed value (milliseconds)
-     */
-    public static int loadPrefGpsMaxElapsed(SharedPreferences prefs, int defaultValue)
-    {
-        int retValue;
-        try {
-            String maxElapsedString = prefs.getString(PREF_KEY_GETFIX_MAXELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(maxElapsedString);
-        } catch (NumberFormatException e) {
-            Log.e("loadPrefGPSMaxElapsed", "Bad setting! " + e);
-            retValue = defaultValue;
-        }
-        return retValue;
-    }
-
-    /**
-     * @return true use the passive provider (don't prompt when other providers are disabled), false use the gps/network provider (prompt when disabled)
-     */
-    public static boolean loadPrefGpsPassiveMode( Context context )
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getBoolean(PREF_KEY_GETFIX_PASSIVE, PREF_DEF_GETFIX_PASSIVE);
     }
 
     /**

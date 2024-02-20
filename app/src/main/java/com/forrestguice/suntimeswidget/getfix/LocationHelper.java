@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
