@@ -502,7 +502,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
         if (getFixHelper != null)
         {
-            final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
+            final GetFixTaskListener cancelGetFixListener = new GetFixTaskListener()
             {
                 @Override
                 public void onCancelled()

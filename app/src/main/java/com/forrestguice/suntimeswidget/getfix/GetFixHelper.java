@@ -119,7 +119,7 @@ public class GetFixHelper implements LocationHelper
                     //Log.d("GetFixHelper", "MaxAge: " + maxAge);
 
                     getFixTask.addGetFixTaskListeners(listeners);
-                    getFixTask.addGetFixTaskListener( new GetFixTask.GetFixTaskListener()
+                    getFixTask.addGetFixTaskListener( new GetFixTaskListener()
                     {
                         @Override
                         public void onFinished(Location result)
@@ -358,8 +358,8 @@ public class GetFixHelper implements LocationHelper
         }
     }
 
-    private ArrayList<GetFixTask.GetFixTaskListener> listeners = new ArrayList<GetFixTask.GetFixTaskListener>();
-    public void addGetFixTaskListener( GetFixTask.GetFixTaskListener listener )
+    private ArrayList<GetFixTaskListener> listeners = new ArrayList<GetFixTaskListener>();
+    public void addGetFixTaskListener( GetFixTaskListener listener )
     {
         if (!listeners.contains(listener))
         {
@@ -370,7 +370,7 @@ public class GetFixHelper implements LocationHelper
             }
         }
     }
-    public void removeGetFixTaskListener( GetFixTask.GetFixTaskListener listener )
+    public void removeGetFixTaskListener( GetFixTaskListener listener )
     {
         listeners.remove(listener);
         if (getFixTask != null)

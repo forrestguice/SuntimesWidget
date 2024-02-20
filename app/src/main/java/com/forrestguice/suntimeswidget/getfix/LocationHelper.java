@@ -47,8 +47,8 @@ public interface LocationHelper
     void fallbackToLastLocation();
     android.location.Location getLastKnownLocation(Context context);
 
-    void addGetFixTaskListener( GetFixTask.GetFixTaskListener listener );
-    void removeGetFixTaskListener( GetFixTask.GetFixTaskListener listener );
+    void addGetFixTaskListener( GetFixTaskListener listener );
+    void removeGetFixTaskListener( GetFixTaskListener listener );
 
     boolean hasLocationPermission(Activity activity);
     void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);

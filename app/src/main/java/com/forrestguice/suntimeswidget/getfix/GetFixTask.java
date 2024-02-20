@@ -345,7 +345,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     }
     public void addGetFixTaskListeners( List<GetFixTaskListener> listeners )
     {
-        for (GetFixTask.GetFixTaskListener listener : listeners)
+        for (GetFixTaskListener listener : listeners)
         {
             addGetFixTaskListener(listener);
         }
@@ -374,14 +374,6 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             if (listener != null)
                 listener.onCancelled();
         }
-    }
-
-    @SuppressWarnings("EmptyMethod")
-    public static abstract class GetFixTaskListener
-    {
-        public void onStarted() {}
-        public void onFinished(Location result) {}
-        public void onCancelled() {}
     }
 
     /**
