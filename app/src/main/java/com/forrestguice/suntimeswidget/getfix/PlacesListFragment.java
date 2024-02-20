@@ -577,9 +577,17 @@ public class PlacesListFragment extends Fragment
         }
     }
 
+    public static class PlacesEditFragment0 extends PlacesEditFragment
+    {
+        @Nullable
+        protected LocationHelper createLocationHelper() {
+            return new GetFixHelper(getActivity(), getFixUI());
+        }
+    }
+
     protected void addPlace(Context context)
     {
-        PlacesEditFragment dialog = new PlacesEditFragment();
+        PlacesEditFragment0 dialog = new PlacesEditFragment0();
         dialog.setDialogThemOverride(getDialogThemeOverride());
         dialog.setFragmentListener(onEditPlace);
         dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
@@ -592,7 +600,7 @@ public class PlacesListFragment extends Fragment
             Location location = new Location("", item.location.getLatitude(), item.location.getLongitude(), item.location.getAltitude());
             PlaceItem place = new PlaceItem(-1, location);
 
-            PlacesEditFragment dialog = new PlacesEditFragment();
+            PlacesEditFragment0 dialog = new PlacesEditFragment0();
             dialog.setDialogThemOverride(getDialogThemeOverride());
             dialog.setFragmentListener(onEditPlace);
             dialog.setPlace(place);
@@ -612,7 +620,7 @@ public class PlacesListFragment extends Fragment
             Context context = getActivity();
             if (item != null && item.location != null && context != null)
             {
-                PlacesEditFragment dialog = new PlacesEditFragment();
+                PlacesEditFragment0 dialog = new PlacesEditFragment0();
                 dialog.setDialogThemOverride(getDialogThemeOverride());
                 dialog.setFragmentListener(onEditPlace);
                 dialog.setPlace(item);

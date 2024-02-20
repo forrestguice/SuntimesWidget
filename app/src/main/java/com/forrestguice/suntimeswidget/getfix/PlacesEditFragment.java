@@ -81,7 +81,18 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         setArguments(new Bundle());
     }
 
-    protected LocationHelper getFixHelper;
+    protected LocationHelper getFixHelper = null;
+    public void setLocationHelper( @Nullable LocationHelper helper ) {
+        getFixHelper = helper;
+    }
+    @Nullable
+    protected LocationHelper createLocationHelper() {
+        return null;
+    }
+
+    public GetFixUI getFixUI() {
+        return getFixUI_editMode;
+    }
     private GetFixUI getFixUI_editMode = new GetFixUI()
     {
         @Override
@@ -147,7 +158,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (getFixHelper != null) {
+            getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override
@@ -227,14 +240,17 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         button_getfix.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
-                getFixHelper.getFix(0);
+            public void onClick(View v) {
+                if (getFixHelper != null) {
+                    getFixHelper.getFix(0);
+                }
             }
         });
 
-        getFixHelper = new GetFixHelper(getActivity(), getFixUI_editMode);    // 0; getFixUI_editMode
-        getFixHelper.setFragment(this);
+        getFixHelper = createLocationHelper();
+        if (getFixHelper != null) {
+            getFixHelper.setFragment(this);
+        }
         updateGPSButtonIcons();
     }
 
@@ -259,7 +275,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         bundle.putString(KEY_LOCATION_LONGITUDE, text_locationLon.getText().toString());
         bundle.putString(KEY_LOCATION_ALTITUDE, text_locationAlt.getText().toString());
         bundle.putString(KEY_LOCATION_LABEL, text_locationName.getText().toString());
-        getFixHelper.saveSettings(bundle);
+        if (getFixHelper != null) {
+            getFixHelper.saveSettings(bundle);
+        }
         super.onSaveInstanceState(bundle);
     }
 
@@ -279,7 +297,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             else location = new com.forrestguice.suntimeswidget.calculator.core.Location(label, latitude, longitude);
             updateViews(location);
         }
-        getFixHelper.loadSettings(bundle);
+        if (getFixHelper != null) {
+            getFixHelper.loadSettings(bundle);
+        }
     }
 
     private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
@@ -321,19 +341,26 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     }
 
     public void cancelGetFix() {
-        getFixHelper.cancelGetFix();
+        if (getFixHelper != null) {
+            getFixHelper.cancelGetFix();
+        }
     }
 
     public void updateGPSButtonIcons()
     {
-        int icon = GetFixUI.ICON_GPS_SEARCHING;
-        if (!getFixHelper.isLocationEnabled(getContext())) {
-            icon = GetFixUI.ICON_GPS_DISABLED;
+        int icon = GetFixUI.ICON_GPS_DISABLED;
+        if (getFixHelper != null)
+        {
+            icon = GetFixUI.ICON_GPS_SEARCHING;
+            if (!getFixHelper.isLocationEnabled(getContext())) {
+                icon = GetFixUI.ICON_GPS_DISABLED;
 
-        } else if (getFixHelper.hasFix()) {
-            icon = GetFixUI.ICON_GPS_FOUND;
+            } else if (getFixHelper.hasFix()) {
+                icon = GetFixUI.ICON_GPS_FOUND;
+            }
         }
         button_getfix.setImageResource(icon);
+        button_getfix.setVisibility(getFixHelper != null ? View.VISIBLE : View.GONE);
     }
 
     public static Bundle bundleData( Uri data, String label )
@@ -473,22 +500,26 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             }
         }
 
-        final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
+        if (getFixHelper != null)
         {
-            @Override
-            public void onCancelled()
+            final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
             {
-                if (validInput)
+                @Override
+                public void onCancelled()
                 {
-                    if (listener != null) {
-                        listener.onAccepted(returnValue);
+                    if (validInput)
+                    {
+                        if (listener != null) {
+                            listener.onAccepted(returnValue);
+                        }
                     }
                 }
-            }
-        };
-        getFixHelper.removeGetFixTaskListener(cancelGetFixListener);
-        getFixHelper.addGetFixTaskListener(cancelGetFixListener);
-        getFixHelper.cancelGetFix();
+            };
+
+            getFixHelper.removeGetFixTaskListener(cancelGetFixListener);
+            getFixHelper.addGetFixTaskListener(cancelGetFixListener);
+            getFixHelper.cancelGetFix();
+        }
     }
 
     public boolean validateInput()
