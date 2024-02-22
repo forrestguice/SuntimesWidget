@@ -816,51 +816,6 @@ public class PlacesListFragment extends Fragment
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
 
-    public static class DeletePlaceTask extends AsyncTask<Long, Object, Boolean>
-    {
-        private GetFixDatabaseAdapter database;
-        private Long[] rowIDs = new Long[] { -1L };
-
-        public DeletePlaceTask(Context context) {
-            database = new GetFixDatabaseAdapter(context.getApplicationContext());
-        }
-
-        @Override
-        protected Boolean doInBackground(Long... params)
-        {
-            if (params.length > 0) {
-                rowIDs = params;
-            }
-
-            boolean result = false;
-            database.open();
-            for (long rowID : rowIDs)
-            {
-                if (rowID != -1) {
-                    result = database.removePlace(rowID);
-                }
-            }
-            database.close();
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result)
-        {
-            if (taskListener != null)
-                taskListener.onFinished(result, rowIDs);
-        }
-
-        private TaskListener taskListener = null;
-        public void setTaskListener( TaskListener listener ) {
-            taskListener = listener;
-        }
-        public static abstract class TaskListener
-        {
-            public void onFinished( boolean result, Long... rowIDs ) {}
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
