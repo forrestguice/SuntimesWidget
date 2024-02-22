@@ -21,14 +21,11 @@ package com.forrestguice.suntimeswidget.views;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.PopupMenu;
@@ -37,11 +34,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-
-import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-
-import java.util.Calendar;
 
 public class ViewUtils
 {
@@ -141,36 +133,6 @@ public class ViewUtils
         if (window != null) {
             View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
             decorView.setOnClickListener(null);
-        }
-    }
-
-    /**
-     * shareItem; copy event display string and formatted timestamp to the clipboard.
-     */
-    public static void shareItem(Context context, @Nullable String itemString, long itemMillis, boolean showTime, boolean showSeconds)
-    {
-        if (itemMillis != -1L)
-        {
-            Calendar itemTime = Calendar.getInstance();
-            itemTime.setTimeInMillis(itemMillis);
-
-            SuntimesUtils utils = new SuntimesUtils();
-            SuntimesUtils.initDisplayStrings(context);
-            String itemDisplay = context.getString(R.string.share_format, (itemString != null ? itemString : ""), utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            {
-                ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-                if (clipboard != null) {
-                    clipboard.setPrimaryClip(ClipData.newPlainText((itemString != null ? itemString : itemDisplay), itemDisplay));
-                }
-            } else {
-                android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-                if (clipboard != null) {
-                    clipboard.setText(itemDisplay);
-                }
-            }
-            Toast.makeText(context, itemDisplay, Toast.LENGTH_SHORT).show();
         }
     }
 
