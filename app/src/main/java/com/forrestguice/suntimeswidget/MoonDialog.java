@@ -1056,7 +1056,9 @@ public class MoonDialog extends BottomSheetDialogFragment
         long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
         if (itemMillis != -1L) {
             String displayString = (eventID != null ? SolarEvents.valueOf(eventID).getLongDisplayString() : null);
-            ViewUtils.shareItem(context, displayString, itemMillis);
+            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
+            ViewUtils.shareItem(context, displayString, itemMillis, showTime, showSeconds);
         }
     }
 

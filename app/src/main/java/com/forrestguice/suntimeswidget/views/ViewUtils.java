@@ -38,11 +38,8 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 
@@ -150,14 +147,12 @@ public class ViewUtils
     /**
      * shareItem; copy event display string and formatted timestamp to the clipboard.
      */
-    public static void shareItem(Context context, @Nullable String itemString, long itemMillis)
+    public static void shareItem(Context context, @Nullable String itemString, long itemMillis, boolean showTime, boolean showSeconds)
     {
         if (itemMillis != -1L)
         {
             Calendar itemTime = Calendar.getInstance();
             itemTime.setTimeInMillis(itemMillis);
-            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
             SuntimesUtils utils = new SuntimesUtils();
             SuntimesUtils.initDisplayStrings(context);
