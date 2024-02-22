@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Build;
+import android.preference.Preference;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
@@ -200,6 +201,40 @@ public class ViewUtils
                 return listener.onMenuItemClick(item);
             }
             return true;
+        }
+    }
+
+    /**
+     * ThrottledPreferenceClickListener
+     */
+    public static class ThrottledPreferenceClickListener implements Preference.OnPreferenceClickListener
+    {
+        protected long delayMs;
+        protected Long previousClickAt;
+        protected Preference.OnPreferenceClickListener listener;
+
+        public ThrottledPreferenceClickListener(@NonNull Preference.OnPreferenceClickListener listener) {
+            this(listener, 1000);
+        }
+
+        public ThrottledPreferenceClickListener(@NonNull Preference.OnPreferenceClickListener listener, long delayMs)
+        {
+            this.delayMs = delayMs;
+            this.listener = listener;
+            if (listener == null) {
+                throw new NullPointerException("OnPreferenceClickListener is null!");
+            }
+        }
+
+        @Override
+        public boolean onPreferenceClick(Preference preference)
+        {
+            long currentClickAt = System.currentTimeMillis();
+            if (previousClickAt == null || Math.abs(currentClickAt - previousClickAt) > delayMs) {
+                previousClickAt = currentClickAt;
+                return listener.onPreferenceClick(preference);
+            }
+            return false;
         }
     }
 
