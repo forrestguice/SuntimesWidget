@@ -477,7 +477,7 @@
     <string name="configLabel_general_calendarMode">Календарь:</string>          <!-- spinner label -->
     <string name="configLabel_general_calendarFormat">Формат даты:</string>          <!-- spinner label -->
     <string name="configLabel_general_calendarFormatPattern">Шаблон даты:</string>          <!-- edittext label -->
-    <string name="configHint_general_calendarFormatPattern">ММММ д, ГГГГ</string>       <!-- edittext hint -->
+    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint; suggests pattern symbols -->
     <string name="configLabel_general_calendarFormat_custom">Пользовательский (%s)</string>       <!-- spinner value -->
     <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->
     <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->
