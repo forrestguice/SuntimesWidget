@@ -297,7 +297,7 @@ public abstract class SuntimesLayout
     public static void getTextBounds(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull TextPaint textPaint, int maxWidth, @NonNull Rect result)
     {
         textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textSizeSp, context.getResources().getDisplayMetrics()));
-        StaticLayout layout = new StaticLayout(text, textPaint, maxWidth, Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
+        StaticLayout layout = getStaticLayout(text, textPaint, maxWidth);
         result.set(0, 0, layout.getWidth(), layout.getHeight());
         //Log.d("DEBUG", "getTextBounds: " + staticLayout.getWidth() + " x " + staticLayout.getHeight() + " @ " + textSizeSp + "sp" + " with max width of " + maxWidth );
     }
@@ -305,8 +305,17 @@ public abstract class SuntimesLayout
     public static int getLineCount(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull TextPaint textPaint, int maxWidth, @NonNull Rect result)
     {
         textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textSizeSp, context.getResources().getDisplayMetrics()));
-        StaticLayout layout = new StaticLayout(text, textPaint, maxWidth, Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
-        return layout.getLineCount();
+        return getStaticLayout(text, textPaint, maxWidth).getLineCount();
+    }
+
+    public static StaticLayout getStaticLayout(String text, TextPaint textPaint, int maxWidth)
+    {
+        //return new StaticLayout(text, textPaint, maxWidth, Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
+        StaticLayout.Builder builder = StaticLayout.Builder.obtain(text, 0, text.length(), textPaint, maxWidth);
+        builder.setAlignment(Layout.Alignment.ALIGN_CENTER);
+        builder.setIncludePad(true);
+        builder.setLineSpacing(0, 1);   // 0,1 defaults
+        return builder.build();
     }
 
 }
