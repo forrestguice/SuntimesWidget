@@ -1,5 +1,13 @@
 ### ~
 
+### v0.15.12 (2024-03-01)
+* increases the range of supported dates from +-2.5 years to +-500 years (#770).
+* fixes bug where date selector allows selecting unsupported dates (#770), and other miscellaneous UI changes.
+* fixes bug where alarm screen back button overlaps the dismiss button (#777).
+* fixes bug in date widget where the scaled text is not centered (#763).
+* fixes ambiguity in minutes abbreviation; replaces "m" with "min" for all translations that default to metric (#773).
+* updates translation to Russian (ru) (#775 by Adelechka).
+
 ### v0.15.11 (2024-02-05)
 * adds "create/restore backup" option; saves all configuration data as json text (#757).
 * adds "export/import widget" option; save/load individual widget configurations.
