@@ -310,12 +310,17 @@ public abstract class SuntimesLayout
 
     public static StaticLayout getStaticLayout(String text, TextPaint textPaint, int maxWidth)
     {
-        //return new StaticLayout(text, textPaint, maxWidth, Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
-        StaticLayout.Builder builder = StaticLayout.Builder.obtain(text, 0, text.length(), textPaint, maxWidth);
-        builder.setAlignment(Layout.Alignment.ALIGN_CENTER);
-        builder.setIncludePad(true);
-        builder.setLineSpacing(0, 1);   // 0,1 defaults
-        return builder.build();
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            StaticLayout.Builder builder = StaticLayout.Builder.obtain(text, 0, text.length(), textPaint, maxWidth);
+            builder.setAlignment(Layout.Alignment.ALIGN_CENTER);
+            builder.setIncludePad(true);
+            builder.setLineSpacing(0, 1);   // 0,1 defaults
+            return builder.build();
+
+        } else {
+            return new StaticLayout(text, textPaint, maxWidth, Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
+        }
     }
 
 }
