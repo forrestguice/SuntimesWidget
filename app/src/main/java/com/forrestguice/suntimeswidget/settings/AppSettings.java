@@ -215,6 +215,9 @@ public class AppSettings
             for (String key : INT_KEYS) {
                 types.put(key, Integer.class);
             }
+            for (String key : LONG_KEYS) {
+                types.put(key, Long.class);
+            }
             for (String key : BOOL_KEYS) {
                 types.put(key, Boolean.class);
             }
