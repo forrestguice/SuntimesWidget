@@ -1,5 +1,8 @@
 ### ~
 
+### v0.15.13 (2024-03-15)
+* fixes app crash when launching the app after using "restore backup" (#783).
+
 ### v0.15.12 (2024-03-01)
 * increases the range of supported dates from +-2.5 years to +-500 years (#770).
 * fixes bug where date selector allows selecting unsupported dates (#770), and other miscellaneous UI changes.

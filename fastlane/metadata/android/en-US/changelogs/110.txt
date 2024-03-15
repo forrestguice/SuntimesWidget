@@ -1,0 +1,1 @@
+- fixes app crash after using "restore backup".
