@@ -103,7 +103,20 @@ public class LocationHelperSettings
     public static long lastAutoLocationRequest(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getLong(PREF_KEY_LOCATION_TIME, 0);
+        long t = 0;
+        try {
+            t = pref.getLong(PREF_KEY_LOCATION_TIME, 0);
+
+        } catch (ClassCastException e) {
+            try {
+                t = Long.parseLong(pref.getString(PREF_KEY_LOCATION_TIME, "0"));
+                Log.w("lastAutoLocationRequest", "lastAutoLocationRequest has the wrong type! found Long as String.");
+
+            } catch (NumberFormatException | ClassCastException e1) {
+                Log.e("lastAutoLocationRequest", "Failed to get last auto location request time: " + e1);
+            }
+        }
+        return t;
     }
     public static void saveLastAutoLocationRequest(Context context, long value)
     {
