@@ -127,6 +127,19 @@
             android:defaultValue="@string/def_app_ui_showdatasource" />
 
         <CheckBoxPreference
+            android:key="appwidget_0_general_showcompare"
+            android:title="@string/configLabel_general_showComparison"
+            android:summary="@string/configLabel_general_showComparison_summary"
+            android:defaultValue="@string/def_appwidget_0_general_showcompare" />
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="appwidget_0_general_comparemode"
+            android:title="@string/configLabel_general_compareMode"
+            android:summary="%s"
+            android:entries="@array/compareMode_display" android:entryValues="@array/compareMode_values"
+            android:defaultValue="@string/def_appwidget_0_general_comparemode" />
+
+        <CheckBoxPreference
             android:key="app_ui_showlightmap"
             android:title="@string/configLabel_ui_showLightmap"
             android:summary="@string/configLabel_ui_showLightmap_summary"

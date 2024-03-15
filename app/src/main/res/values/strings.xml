@@ -631,6 +631,16 @@
     <string name="compareMode_tomorrow">Tomorrow</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Compare Against:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+
+    <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
+        <item>@string/compareMode_yesterday</item>
+        <item>@string/compareMode_tomorrow</item>
+    </string-array>
+    <string-array name="compareMode_values" translatable="false">  <!-- one-to-one with compareMode_display -->
+        <item>YESTERDAY</item>
+        <item>TOMORROW</item>
+    </string-array>
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->
@@ -2522,6 +2532,8 @@
     <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
     <string name="def_appwidget_0_general_altitude_enabled" translatable="false">true</string>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
+    <string name="def_appwidget_0_general_showcompare" translatable="false">true</string>
+    <string name="def_appwidget_0_general_comparemode" translatable="false">TOMORROW</string>
     <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
     <string name="def_appwidget_0_general_showhours" translatable="false">true</string>
     <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
