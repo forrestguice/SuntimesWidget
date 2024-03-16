@@ -139,6 +139,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             sun.putData(eventID, d);
         }
         sun.setTodayIs(date);
+        for (String id : sun.getDataModes()) {
+            sun.getData(id).setCompareMode(options.comparisonMode);
+        }
         sun.calculateData();
 
         SuntimesMoonData moon = null;
@@ -597,6 +600,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showWarnings = AppSettings.PREF_DEF_UI_SHOWWARNINGS;
         public boolean showMoon = AppSettings.PREF_DEF_UI_SHOWMOON;
         public boolean showLightmap = AppSettings.PREF_DEF_UI_SHOWLIGHTMAP;
+        public boolean showComparison = WidgetSettings.PREF_DEF_GENERAL_SHOWCOMPARE;
+        public WidgetSettings.CompareMode comparisonMode = WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE;
 
         public boolean[] showFields = null;
         public boolean showActual = true;
@@ -631,6 +636,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             showWarnings = AppSettings.loadShowWarningsPref(context);
             showMoon = AppSettings.loadShowMoonPref(context);
             showLightmap = AppSettings.loadShowLightmapPref(context);
+            showComparison = WidgetSettings.loadShowComparePref(context, 0);
+            comparisonMode = WidgetSettings.loadCompareModePref(context, 0);
 
             showFields = AppSettings.loadShowFieldsPref(context);
             showActual = showFields[AppSettings.FIELD_ACTUAL];
