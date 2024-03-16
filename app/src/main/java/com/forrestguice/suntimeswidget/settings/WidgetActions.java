@@ -135,6 +135,27 @@ public class WidgetActions
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_COLOR,
     };
 
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo() {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return new String[0];
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return new String[0];
+            }
+        };
+    }
+
     private static Map<String,Class> types = null;
     public static Map<String,Class> getPrefTypes()
     {

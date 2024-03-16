@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.calendar;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Map;
@@ -80,6 +81,27 @@ public class CalendarSettings
     public static final String[] BOOL_KEYS = {
             PREF_PREFIX_KEY_CALENDAR + PREF_KEY_CALENDAR_SHOWDATE
     };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo() {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return new String[0];
+            }
+            public String[] longKeys() {
+                return new String[0];
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return BOOL_KEYS;
+            }
+        };
+    }
 
     private static Map<String,Class> types = null;
     public static Map<String,Class> getPrefTypes()

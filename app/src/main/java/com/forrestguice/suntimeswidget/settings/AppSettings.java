@@ -192,13 +192,13 @@ public class AppSettings
             PREF_KEY_UI_EMPHASIZEFIELD, PREF_KEY_UI_SHOWFIELDS, PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_UI_TIMEZONESORT,
             PREF_KEY_GETFIX_MINELAPSED, PREF_KEY_GETFIX_MAXELAPSED, PREF_KEY_GETFIX_MAXAGE, PREF_KEY_GETFIX_PASSIVE,
             PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG, PREF_KEY_DIALOG_DONOTSHOWAGAIN,
-            // PREF_KEY_GETFIX_TIME,
+            //PREF_KEY_GETFIX_TIME,
     };
     public static final String[] INT_KEYS = new String[] {
             PREF_KEY_UI_SHOWFIELDS
     };
     public static final String[] LONG_KEYS = new String[] {
-            // PREF_KEY_GETFIX_TIME    // commented; TODO: does it actually make sense to preserve this value across installations? #783
+            //PREF_KEY_GETFIX_TIME    // commented; TODO: does it actually make sense to preserve this value across installations? #783
     };
     public static final String[] BOOL_KEYS = new String[]
     {
@@ -206,6 +206,28 @@ public class AppSettings
             PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
             PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_GETFIX_PASSIVE, PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG_DONOTSHOWAGAIN
     };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo()
+        {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return LONG_KEYS;
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return BOOL_KEYS;
+            }
+        };
+    }
 
     private static Map<String,Class> types = null;
     public static Map<String,Class> getPrefTypes()
