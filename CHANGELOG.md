@@ -1,6 +1,7 @@
 ### ~
 
 ### v0.15.13 (2024-03-15)
+* adds app options to show daylight comparison (today/tomorrow) (#773).
 * fixes app crash when launching the app after using "restore backup" (#783).
 
 ### v0.15.12 (2024-03-01)
