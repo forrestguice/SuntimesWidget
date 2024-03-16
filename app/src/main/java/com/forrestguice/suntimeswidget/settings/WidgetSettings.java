@@ -311,6 +311,8 @@ public class WidgetSettings
             PREF_PREFIX_KEY_DATE + PREF_KEY_NEXTUPDATE,
 
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_MODE,
+
+            PREF_KEY_NEXTUPDATE
     };
     public static String[] BOOL_KEYS = new String[]
     {
