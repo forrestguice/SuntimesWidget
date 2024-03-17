@@ -1076,7 +1076,7 @@
     <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "On", "Off" -->
     <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
-    <string name="help_battery_optimization_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#battery-optimization</string>
+    <string name="help_battery_optimization_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/alarms/batteryopt</string>
     <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
         <item>Samsung</item>
         <item>OnePlus</item>
@@ -1880,7 +1880,7 @@
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
       \n\nFor best results select an image matching these properties.
     </string>
-    <string name="help_worldmap_background_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#world-map</string>
+    <string name="help_worldmap_background_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/worldmap</string>
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
@@ -2220,17 +2220,17 @@
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+        <a href="https://forrestguice.codeberg.page/Suntimes/donate">pay as you like</a>.
     ]]></string>
     <string name="app_source_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
     ]]></xliff:g></string>
     <string name="app_license_about">Suntimes is free and open-source software.</string>   <!-- displayed by welcome dialog -->
     <string name="app_license_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/blob/master/LICENSE">github.com/forrestguice/SuntimesWidget/blob/master/LICENSE</a>
+        <a href="https://forrestguice.codeberg.page/Suntimes/license">https://forrestguice.codeberg.page/Suntimes/license</a>
     ]]></xliff:g></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
+        <a href="https://forrestguice.codeberg.page/Suntimes">https://forrestguice.codeberg.page/Suntimes</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
@@ -2316,7 +2316,7 @@
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>    <!-- TODO: added section "Date Widgets:", add "%em, %et, %eT, %eA" (#599) to online-help -->
-    <string name="help_substitutions_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#data-substitutions</string>
+    <string name="help_substitutions_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions</string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -2461,7 +2461,7 @@
         <br/>
         <b>Extras:</b> An <em>&amp;</em> delimited string containing extra values. Supports <em>%s</em>ubstitutions.<br/><br/>Values may be <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> or String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
     ]]></string>
-    <string name="help_action_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#actions</string>
+    <string name="help_action_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/actions</string>
     <string name="help_widgetlist"><![CDATA[
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
           To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
@@ -2492,7 +2492,7 @@
     <string name="privacy_permissiondialog_ignore">Ignore</string>
     <string name="privacy_permissiondialog_title">Permissions</string>
     <string name="privacy_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
+        <a href="https://forrestguice.codeberg.page/Suntimes/privacy">https://forrestguice.codeberg.page/Suntimes/privacy</a>
     ]]></xliff:g></string>
     <string name="privacyTab">Privacy</string>
 
@@ -2525,7 +2525,7 @@
         For more information about available choices, or extending the app to support other libraries, see the online help.
     ]]>
     </string>
-    <string name="help_datasources_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#data-sources</string>
+    <string name="help_datasources_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/datasources</string>
 
     <!-- pref defaults -->
     <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
