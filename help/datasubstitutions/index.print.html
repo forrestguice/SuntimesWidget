@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.8">
+    <meta name="generator" content="Relearn 5.25.0+tip">
+    <meta name="description" content="">
+    <meta name="author" content="Forrest Guice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Data Substitutions :: Suntimes">
+    <meta name="twitter:description" content="">
+    <meta property="og:title" content="Data Substitutions :: Suntimes">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions/index.html">
+    <meta property="og:site_name" content="Suntimes">
+    <title>Data Substitutions :: Suntimes</title>
+    <link href="https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions/index.html" rel="canonical" type="text/html" title="Data Substitutions :: Suntimes">
+    <link href="/Suntimes/help/datasubstitutions/index.xml" rel="alternate" type="application/rss+xml" title="Data Substitutions :: Suntimes">
+    <link href="/Suntimes/images/logo.png?1710744922" rel="icon" type="image/png">
+    <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
+    <link href="/Suntimes/css/fontawesome-all.min.css?1710744923" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fontawesome-all.min.css?1710744923" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/nucleus.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/auto-complete.css?1710744923" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/auto-complete.css?1710744923" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/perfect-scrollbar.min.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/fonts.css?1710744923" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fonts.css?1710744923" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/theme.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/theme-dark-theme.css?1710744923" rel="stylesheet" id="R-variant-style">
+    <link href="/Suntimes/css/chroma-relearn-dark.css?1710744923" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="/Suntimes/css/variant.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/print.css?1710744923" rel="stylesheet" media="print">
+    <link href="/Suntimes/css/format-print.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/ie.css?1710744923" rel="stylesheet">
+    <script src="/Suntimes/js/url.js?1710744923"></script>
+    <script src="/Suntimes/js/variant.js?1710744923"></script>
+    <script>
+      // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      window.index_js_url="/Suntimes/index.search.js";
+      var root_url="/";
+      var baseUri=root_url.replace(/\/$/, '');
+      window.relearn = window.relearn || {};
+      window.relearn.baseUriFull='https:\/\/forrestguice.codeberg.page\/Suntimes/';
+      // variant stuff
+      window.relearn.themeVariantModifier='';
+      window.variants && variants.init( [ 'dark-theme', 'light-theme' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+  </head>
+  <body class="mobile-support print disableInlineCopyToClipboard" data-url="/Suntimes/help/datasubstitutions/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/index.html"><span itemprop="name">Suntimes</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/index.html"><span itemprop="name">Help</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Data Substitutions</span><meta itemprop="position" content="3"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable chapter narrow" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="chapter">
+            <header class="headline">
+            </header>
+<div class="article-subheading">Chapter 4</div>
+<h1 id="data-substitutions">Data Substitutions</h1>
+
+<p>Suntimes supports limited <code>%</code>substitutions, a set of tags that are replaced with values from the data set.
+Substitutions may be used within widget title text, or within action data or extras.</p>
+
+<ul class="children children-li children-sort-weight">
+	
+<li><a href="/Suntimes/help/datasubstitutions/allsubstitions/index.html">Available Substitions</a></li>
+<li><a href="/Suntimes/help/datasubstitutions/examples/index.html">Examples</a></li>
+</ul>
+
+            <footer class="footline">
+            </footer>
+          </article>
+
+          <section>
+            <h1 class="a11y-only">Subsections of Data Substitutions</h1>
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="available-substitions">Available Substitions</h1>
+
+<p><b>Date/Time:</b></p>
+<ul>
+<li><code>%t</code> for time zone (id) (e.g. US/Arizona)</li>
+<li><code>%d</code> for formatted date (e.g. February 12)</li>
+<li><code>%dd</code> for day (short) (e.g. Mon)</li>
+<li><code>%dD</code> for day (long) (e.g. Monday)</li>
+<li><code>%dY</code> for year (e.g. 2018)</li>
+<li><code>%dt</code> for formatted time (of last update)</li>
+<li><code>%dT</code> for formatted time with seconds (of last update)</li>
+<li><code>%dm</code> for time in milliseconds (of last update)</li>
+<li><code>%eot</code> for formatted &rsquo;equation of time&rsquo; (of last update)</li>
+<li><code>%eot_m</code> for &rsquo;equation of time&rsquo; milliseconds (of last update)</li>
+</ul>
+<p><b>Location:</b></p>
+<ul>
+<li><code>%loc</code> for label (e.g. Phoenix)</li>
+<li><code>%lat</code> for latitude</li>
+<li><code>%lon</code> for longitude</li>
+<li><code>%lel</code> for elevation (e.g. 385 meters)</li>
+</ul>
+<p><b>Misc:</b></p>
+<ul>
+<li><code>%s</code> for data source (e.g. sunrisesunsetlib)</li>
+<li><code>%id</code> for appWidgetID</li>
+</ul>
+<p><b>Sun Widgets:</b></p>
+<ul>
+<li><code>%m</code> for mode (short) (e.g. Civil)</li>
+<li><code>%M</code> for mode (long) (e.g. Civil Twilight)</li>
+<li><code>%o</code> for order (e.g. Last/Next, Today)</li>
+<li><code>%em@&lt;event&gt;</code> event milliseconds</li>
+<li><code>%et@&lt;event&gt;</code> event formatted time</li>
+<li><code>%eT@&lt;event&gt;</code> event formatted time (with seconds)</li>
+<li><code>%eA@&lt;event&gt;</code> event altitude</li>
+<li><code>%eZ@&lt;event&gt;</code> event azimuth</li>
+<li><code>%eD@&lt;event&gt;</code> event declination</li>
+<li><code>%eR@&lt;event&gt;</code> event right ascension</li>
+</ul>
+<p>where <code>&lt;event&gt;</code> is:</p>
+<table>
+<tr><th>Sun Widgets</th><th>Sun Position Widgets</th></tr>
+<tr><td>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>&lt;event&gt;</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rising</td>
+<td><code>sr</code></td>
+</tr>
+<tr>
+<td>setting</td>
+<td><code>ss</code></td>
+</tr>
+<tr>
+<td>noon</td>
+<td><code>sn</code></td>
+</tr>
+</tbody>
+</table>
+</td><td>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>rising</th>
+<th>setting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>civil twilight</td>
+<td><code>cr</code></td>
+<td><code>cs</code></td>
+</tr>
+<tr>
+<td>nautical twilight</td>
+<td><code>nr</code></td>
+<td><code>ns</code></td>
+</tr>
+<tr>
+<td>astronomical twilight</td>
+<td><code>ar</code></td>
+<td><code>as</code></td>
+</tr>
+<tr>
+<td>blue hour 4deg</td>
+<td><code>b4r</code></td>
+<td><code>b4s</code></td>
+</tr>
+<tr>
+<td>blue hour 8deg</td>
+<td><code>b8r</code></td>
+<td><code>b8s</code></td>
+</tr>
+<tr>
+<td>golden hour</td>
+<td><code>gr</code></td>
+<td><code>gs</code></td>
+</tr>
+</tbody>
+</table>
+</td></tr> 
+</table>
+<p><b>Moon Widgets:</b></p>
+<ul>
+<li><code>%i</code> for moon illumination (e.g. 25%)</li>
+<li><code>%M</code> for moon phase (e.g. Waxing Crescent)</li>
+<li><code>%o</code> for order (e.g. Last/Next, Today)</li>
+</ul>
+<p><b>Solstice Widgets:</b></p>
+<ul>
+<li><code>%m</code> for mode (short) (e.g. Solstice)</li>
+<li><code>%M</code> for mode (long) (e.g. Winter Solstice)</li>
+<li><code>%o</code> for order (e.g. Closest Event, Upcoming Event)</li>
+</ul>
+
+            <footer class="footline">
+            </footer>
+          </article>
+
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="examples">Examples</h1>
+
+<p><code>%loc</code>, <code>%M</code>, or <code>%t</code> can be used to include the location name, event name, or time zone as part of a widget&rsquo;s title.</p>
+<p><code>%dm</code> and <code>%em@&lt;event&gt;</code> can be used to pass time (milliseconds) as part of an action; e.g. uri <code>content://com.android.calendar/time/%dm</code> opens the calendar app.</p>
+<p><code>%lat</code> and <code>%lon</code> can be used to pass the location as part of an action; e.g. uri <code>geo:%lat,%lon</code> opens the map app.</p>
+
+            <footer class="footline">
+            </footer>
+          </article>
+
+          </section>
+        </div>
+      </main>
+    </div>
+    <script src="/Suntimes/js/clipboard.min.js?1710744923" defer></script>
+    <script src="/Suntimes/js/perfect-scrollbar.min.js?1710744923" defer></script>
+    <script src="/Suntimes/js/theme.js?1710744923" defer></script>
+  </body>
+</html>

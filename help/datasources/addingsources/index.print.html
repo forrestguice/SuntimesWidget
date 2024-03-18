@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.8">
+    <meta name="generator" content="Relearn 5.25.0+tip">
+    <meta name="description" content="">
+    <meta name="author" content="Forrest Guice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Adding Data Sources :: Suntimes">
+    <meta name="twitter:description" content="The app can be extended to add additional data sources by implementing the SuntimesCalculator interface.">
+    <meta property="og:title" content="Adding Data Sources :: Suntimes">
+    <meta property="og:description" content="The app can be extended to add additional data sources by implementing the SuntimesCalculator interface.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://forrestguice.codeberg.page/Suntimes/help/datasources/addingsources/index.html">
+    <meta property="article:section" content="Data Sources :: Suntimes">
+    <meta property="article:published_time" content="2024-03-16T16:03:27-07:00">
+    <meta property="article:modified_time" content="2024-03-16T16:03:27-07:00">
+    <meta property="og:site_name" content="Suntimes">
+    <title>Adding Data Sources :: Suntimes</title>
+    <link href="https://forrestguice.codeberg.page/Suntimes/help/datasources/addingsources/index.html" rel="canonical" type="text/html" title="Adding Data Sources :: Suntimes">
+    <link href="/Suntimes/help/datasources/addingsources/index.xml" rel="alternate" type="application/rss+xml" title="Adding Data Sources :: Suntimes">
+    <link href="/Suntimes/images/logo.png?1710744922" rel="icon" type="image/png">
+    <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
+    <link href="/Suntimes/css/fontawesome-all.min.css?1710744923" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fontawesome-all.min.css?1710744923" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/nucleus.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/auto-complete.css?1710744923" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/auto-complete.css?1710744923" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/perfect-scrollbar.min.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/fonts.css?1710744923" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fonts.css?1710744923" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/theme.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/theme-dark-theme.css?1710744923" rel="stylesheet" id="R-variant-style">
+    <link href="/Suntimes/css/chroma-relearn-dark.css?1710744923" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="/Suntimes/css/variant.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/print.css?1710744923" rel="stylesheet" media="print">
+    <link href="/Suntimes/css/format-print.css?1710744923" rel="stylesheet">
+    <link href="/Suntimes/css/ie.css?1710744923" rel="stylesheet">
+    <script src="/Suntimes/js/url.js?1710744923"></script>
+    <script src="/Suntimes/js/variant.js?1710744923"></script>
+    <script>
+      // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      window.index_js_url="/Suntimes/index.search.js";
+      var root_url="/";
+      var baseUri=root_url.replace(/\/$/, '');
+      window.relearn = window.relearn || {};
+      window.relearn.baseUriFull='https:\/\/forrestguice.codeberg.page\/Suntimes/';
+      // variant stuff
+      window.relearn.themeVariantModifier='';
+      window.variants && variants.init( [ 'dark-theme', 'light-theme' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+  </head>
+  <body class="mobile-support print disableInlineCopyToClipboard" data-url="/Suntimes/help/datasources/addingsources/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/index.html"><span itemprop="name">Suntimes</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/index.html"><span itemprop="name">Help</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/datasources/index.html"><span itemprop="name">Data Sources</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Adding Data Sources</span><meta itemprop="position" content="4"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable default" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="adding-data-sources">Adding Data Sources</h1>
+
+<p>The app can be extended to add additional data sources by implementing the <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces#suntimescalculator" target="_blank">SuntimesCalculator</a> interface.</p>
+
+            <footer class="footline">
+            </footer>
+          </article>
+
+        </div>
+      </main>
+    </div>
+    <script src="/Suntimes/js/clipboard.min.js?1710744923" defer></script>
+    <script src="/Suntimes/js/perfect-scrollbar.min.js?1710744923" defer></script>
+    <script src="/Suntimes/js/theme.js?1710744923" defer></script>
+  </body>
+</html>

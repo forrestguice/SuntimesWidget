@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Help on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/index.html</link>
+    <description>Recent content in Help on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Mar 2024 16:16:14 -0700</lastBuildDate>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Actions</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/actions/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:00:20 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/actions/index.html</guid>
+      <description>Suntimes can perform user-defined actions when a widget is clicked, or when an alarm or notification is shown or dismissed.
+Add Actions </description>
+    </item>
+    <item>
+      <title>Alarms</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 15:50:03 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/index.html</guid>
+      <description>Suntimes Alarms is an alarm clock with support for daily repeating alarms and notifications.
+Battery Optimization Notification Settings </description>
+    </item>
+    <item>
+      <title>Data Sources</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/datasources/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:03:27 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/datasources/index.html</guid>
+      <description>Suntimes uses third-party libraries to perform astronomical calculations.
+The data source settings allow for choosing between different libraries (or choosing between different algorithms offered by those libraries). These are advanced settings that affect the speed and accuracy of calculations, and may limit which features are available.
+Available Data Sources Adding Data Sources </description>
+    </item>
+    <item>
+      <title>Data Substitutions</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:10:59 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions/index.html</guid>
+      <description>Suntimes supports limited %substitutions, a set of tags that are replaced with values from the data set. Substitutions may be used within widget title text, or within action data or extras.
+Available Substitions Examples </description>
+    </item>
+    <item>
+      <title>Worldmap</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/worldmap/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:16:14 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/worldmap/index.html</guid>
+      <description>Suntimes can be configured to display a custom world map background.
+Download Backgrounds Creating Backgrounds </description>
+    </item>
+  </channel>
+</rss>

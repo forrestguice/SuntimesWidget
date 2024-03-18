@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Alarms on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/index.html</link>
+    <description>Recent content in Alarms on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Mar 2024 15:50:03 -0700</lastBuildDate>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/alarms/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Battery Optimization</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/batteryopt/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 15:49:54 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/batteryopt/index.html</guid>
+      <description>Suntimes must be not optimized for alarms to work reliably. Settings &amp;gt; Apps &amp;gt; Suntimes &amp;gt; Battery &amp;gt; Unrestricted
+On most devices the optimized setting may delay alarms up to 15 minutes. Other devices may restrict alarms without special configuration.
+The following devices are affected: Asus, Blackview, Huawei, LENOVO, Meizu, OnePlus, OPPO, realme, Samsung, Sony, Unihertz, Vivo, WIKO, and Xiaomi. Check https://dontkillmyapp.com/ for solutions.</description>
+    </item>
+    <item>
+      <title>Notification Settings</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/notificationsettings/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 15:50:03 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/notificationsettings/index.html</guid>
+      <description>Notifications must be enabled for alarms to display correctly. Settings &amp;gt; Apps &amp;gt; Suntimes &amp;gt; Notifications &amp;gt; Show Notifications</description>
+    </item>
+  </channel>
+</rss>

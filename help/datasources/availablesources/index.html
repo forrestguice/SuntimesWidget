@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.8">
+    <meta name="generator" content="Relearn 5.25.0+tip">
+    <meta name="description" content="">
+    <meta name="author" content="Forrest Guice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Available Data Sources :: Suntimes">
+    <meta name="twitter:description" content="Library Description sunrisesunsetlib Not Recommended Somewhat inaccurate and sometimes buggy. Does not support altitude, seconds-based calculation, solstice, equinox, or sun position. Based on &ldquo;Almanac for Computers&rdquo; by the USNO. github.com/mikereedell/sunrisesunsetlib-java ca.rmen.sunrisesunset Partially Recommended Similar to sunrisesunsetlib but with reasonable precision. Does not support altitude, solstice, equinox, or sun position. Based on the algorithms published by NOAA. github.com/caarmen/SunriseSunset time4a-simple Not Recommended Somewhat inaccurate. Does not support altitude. Based on &ldquo;Almanac for Computers&rdquo; by the USNO.">
+    <meta property="og:title" content="Available Data Sources :: Suntimes">
+    <meta property="og:description" content="Library Description sunrisesunsetlib Not Recommended Somewhat inaccurate and sometimes buggy. Does not support altitude, seconds-based calculation, solstice, equinox, or sun position. Based on &ldquo;Almanac for Computers&rdquo; by the USNO. github.com/mikereedell/sunrisesunsetlib-java ca.rmen.sunrisesunset Partially Recommended Similar to sunrisesunsetlib but with reasonable precision. Does not support altitude, solstice, equinox, or sun position. Based on the algorithms published by NOAA. github.com/caarmen/SunriseSunset time4a-simple Not Recommended Somewhat inaccurate. Does not support altitude. Based on &ldquo;Almanac for Computers&rdquo; by the USNO.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://forrestguice.codeberg.page/Suntimes/help/datasources/availablesources/index.html">
+    <meta property="article:section" content="Data Sources :: Suntimes">
+    <meta property="article:published_time" content="2024-03-16T16:03:18-07:00">
+    <meta property="article:modified_time" content="2024-03-16T16:03:18-07:00">
+    <meta property="og:site_name" content="Suntimes">
+    <title>Available Data Sources :: Suntimes</title>
+    <link href="/Suntimes/help/datasources/availablesources/index.xml" rel="alternate" type="application/rss+xml" title="Available Data Sources :: Suntimes">
+    <link href="/Suntimes/help/datasources/availablesources/index.print.html" rel="alternate" type="text/html" title="Available Data Sources :: Suntimes">
+    <link href="/Suntimes/images/logo.png?1710744922" rel="icon" type="image/png">
+    <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
+    <link href="/Suntimes/css/fontawesome-all.min.css?1710744922" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fontawesome-all.min.css?1710744922" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/nucleus.css?1710744922" rel="stylesheet">
+    <link href="/Suntimes/css/auto-complete.css?1710744922" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/auto-complete.css?1710744922" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/perfect-scrollbar.min.css?1710744922" rel="stylesheet">
+    <link href="/Suntimes/css/fonts.css?1710744922" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fonts.css?1710744922" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/theme.css?1710744922" rel="stylesheet">
+    <link href="/Suntimes/css/theme-dark-theme.css?1710744922" rel="stylesheet" id="R-variant-style">
+    <link href="/Suntimes/css/chroma-relearn-dark.css?1710744922" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="/Suntimes/css/variant.css?1710744922" rel="stylesheet">
+    <link href="/Suntimes/css/print.css?1710744922" rel="stylesheet" media="print">
+    <link href="/Suntimes/css/ie.css?1710744922" rel="stylesheet">
+    <script src="/Suntimes/js/url.js?1710744922"></script>
+    <script src="/Suntimes/js/variant.js?1710744922"></script>
+    <script>
+      // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      window.index_js_url="/Suntimes/index.search.js";
+      var root_url="/";
+      var baseUri=root_url.replace(/\/$/, '');
+      window.relearn = window.relearn || {};
+      window.relearn.baseUriFull='https:\/\/forrestguice.codeberg.page\/Suntimes/';
+      // variant stuff
+      window.relearn.themeVariantModifier='';
+      window.variants && variants.init( [ 'dark-theme', 'light-theme' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+  </head>
+  <body class="mobile-support html disableInlineCopyToClipboard" data-url="/Suntimes/help/datasources/availablesources/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper"> 
+                </div>
+              </div>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/index.html"><span itemprop="name">Suntimes</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/index.html"><span itemprop="name">Help</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/datasources/index.html"><span itemprop="name">Data Sources</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Available Data Sources</span><meta itemprop="position" content="4"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-print" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/Suntimes/help/datasources/availablesources/index.print.html" title="Print whole chapter (CTRL&#43;ALT&#43;p)"><i class="fa-fw fas fa-print"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/Suntimes/help/datasources/index.html" title="Data Sources (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/Suntimes/help/datasources/addingsources/index.html" title="Adding Data Sources (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable default" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="available-data-sources">Available Data Sources</h1>
+
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sunrisesunsetlib</code></td>
+<td><em><strong><sup>Not Recommended</sup></strong></em></td>
+<td>Somewhat inaccurate and sometimes buggy. Does not support altitude, seconds-based calculation, solstice, equinox, or sun position. Based on &ldquo;Almanac for Computers&rdquo; by the USNO. <a href="github.com/mikereedell/sunrisesunsetlib-java">github.com/mikereedell/sunrisesunsetlib-java</a></td>
+</tr>
+<tr>
+<td><code>ca.rmen.sunrisesunset</code></td>
+<td><em><strong><sup>Partially Recommended</sup></strong></em></td>
+<td>Similar to <code>sunrisesunsetlib</code> but with reasonable precision. Does not support altitude, solstice, equinox, or sun position. Based on the algorithms published by NOAA. <a href="github.com/caarmen/SunriseSunset">github.com/caarmen/SunriseSunset</a></td>
+</tr>
+<tr>
+<td><code>time4a-simple</code></td>
+<td><em><strong><sup>Not Recommended</sup></strong></em></td>
+<td>Somewhat inaccurate.  Does not support altitude. Based on &ldquo;Almanac for Computers&rdquo; by the USNO.</td>
+</tr>
+<tr>
+<td><code>time4a-noaa</code></td>
+<td><em><strong><sup>Partially Recommended</sup></strong></em></td>
+<td>Same algorithm used by <code>ca.rmen.sunrisesunset</code> with reasonable precision. Does not support altitude. Based on the algorithms published by NOAA.</td>
+</tr>
+<tr>
+<td><code>time4a-cc</code></td>
+<td><em><strong><sup>Recommended</sup></strong></em></td>
+<td>Good precision taking the altitude of locations into account. Based on &ldquo;Calendrical Calculations&rdquo; by Dershowitz/Reingold. Supports all features.</td>
+</tr>
+<tr>
+<td><code>time4a-time4j</code></td>
+<td><em><strong><sup>Recommended Default</sup></strong></em></td>
+<td>Best precision taking the altitude of locations, the elliptic shape of the earth and typical weather conditions into account. Based on &ldquo;Astronomical Algorithm&rdquo; by Jean Meeus. Supports all features. <a href="github.com/MenoData/Time4A">github.com/MenoData/Time4A</a></td>
+</tr>
+</tbody>
+</table>
+<p>A few important details:</p>
+<ul>
+<li>Do not expect precision better than minutes. The app hides seconds by default (but this can be enabled).</li>
+<li>The precision of the USNO and NOAA algorithms tends to be very inaccurate in polar regions.</li>
+<li>The <code>time4j</code> and <code>cc</code> algorithms may differ substantially (up to 10 minutes) from algorithms that do not account for altitude.</li>
+<li>One difference between the <code>time4j</code> and <code>cc</code> algorithms is that <code>cc</code> only assumes the altitude of the observer by an approximated geodetic model, while <code>time4j</code> does it using a spheroid (WGS84) and the assumption of a standard atmosphere (for refraction).</li>
+<li>None of these algorithms are able to account for local topology (a mountain directly in front of you), or deviating local weather conditions.</li>
+</ul>
+
+            <footer class="footline">
+            </footer>
+          </article>
+        </div>
+      </main>
+    </div>
+    <aside id="R-sidebar" class="default-animation">
+      <div id="R-header-topbar" class="default-animation"></div>
+
+
+      <div id="R-header-wrapper" class="default-animation">
+        <div id="R-header" class="default-animation">
+<a id="R-logo" href="https://forrestguice.codeberg.page/Suntimes/"><img src="https://forrestguice.codeberg.page/Suntimes//images/logo.png" width="128px" height="128px" /></a>
+
+        </div>
+        
+      </div>
+
+
+      <div id="R-homelinks" class="default-animation homelinks">
+        <ul>
+          <li><a class="padding" href="/Suntimes/index.html"><span style='font-size:1.5rem'><b>Suntimes</b></span></a></li>
+        </ul>
+        <hr class="padding">
+      </div>
+      <div id="R-content-wrapper" class="highlightable">
+        <div id="R-topics">
+          <ul class="enlarge morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/download/index.html" class=""><a class="padding" href="/Suntimes/download/index.html">Download</a></li>
+          <li data-nav-id="/Suntimes/help/index.html" class="parent "><a class="padding" href="/Suntimes/help/index.html">Help</a><ul id="R-subsections-7ddc2c3e2cb52a293678470c01b99070" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/actions/index.html" class=""><a class="padding" href="/Suntimes/help/actions/index.html">Actions</a><ul id="R-subsections-cd7e7461e1f8fd9edf212f613ac79bd0" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/actions/addaction/index.html" class=""><a class="padding" href="/Suntimes/help/actions/addaction/index.html">Add Actions</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/alarms/index.html" class=""><a class="padding" href="/Suntimes/help/alarms/index.html">Alarms</a><ul id="R-subsections-fc4d72ba6b0564f887d612ee4358b328" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/alarms/batteryopt/index.html" class=""><a class="padding" href="/Suntimes/help/alarms/batteryopt/index.html">Battery Optimization</a></li>
+          <li data-nav-id="/Suntimes/help/alarms/notificationsettings/index.html" class=""><a class="padding" href="/Suntimes/help/alarms/notificationsettings/index.html">Notification Settings</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/datasources/index.html" class="parent "><a class="padding" href="/Suntimes/help/datasources/index.html">Data Sources</a><ul id="R-subsections-89214b0d04f6b92ffff008ad8deec4f0" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/datasources/availablesources/index.html" class="active"><a class="padding" href="/Suntimes/help/datasources/availablesources/index.html">Available Data Sources</a></li>
+          <li data-nav-id="/Suntimes/help/datasources/addingsources/index.html" class=""><a class="padding" href="/Suntimes/help/datasources/addingsources/index.html">Adding Data Sources</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/datasubstitutions/index.html" class=""><a class="padding" href="/Suntimes/help/datasubstitutions/index.html">Data Substitutions</a><ul id="R-subsections-be06ffc5a8425828bbb9f784e6666678" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/datasubstitutions/allsubstitions/index.html" class=""><a class="padding" href="/Suntimes/help/datasubstitutions/allsubstitions/index.html">Available Substitions</a></li>
+          <li data-nav-id="/Suntimes/help/datasubstitutions/examples/index.html" class=""><a class="padding" href="/Suntimes/help/datasubstitutions/examples/index.html">Examples</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/worldmap/index.html" class=""><a class="padding" href="/Suntimes/help/worldmap/index.html">Worldmap</a><ul id="R-subsections-42cbb960a0dea10d459f12489e66c5b2" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/worldmap/downloadbackgrounds/index.html" class=""><a class="padding" href="/Suntimes/help/worldmap/downloadbackgrounds/index.html">Download Backgrounds</a></li>
+          <li data-nav-id="/Suntimes/help/worldmap/createbackgrounds/index.html" class=""><a class="padding" href="/Suntimes/help/worldmap/createbackgrounds/index.html">Creating Backgrounds</a></li></ul></li></ul></li>
+          </ul>
+        </div>
+
+
+        <hr>
+        <div id="R-shortcuts">
+          <div class="nav-title padding"></div>
+          <ul class="space">
+            <li><a class="padding" href="https://github.com/forrestguice/SuntimesWidget"><i class='fab fa-fw fa-github'></i> GitHub</a></li>
+            <li><a class="padding" href="/Suntimes/license/index.html"><i class='fas fa-fw fa-file-contract'></i> License</a></li>
+            <li><a class="padding" href="/Suntimes/privacy/index.html"><i class='fas fa-fw fa-lock'></i> Privacy</a></li>
+          </ul>
+        </div>
+
+
+
+        <hr>
+	<div id="R-header-wrapper">
+        <form action="/Suntimes/search.html" method="get"><div class="searchbox default-animation">
+          <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+          <label class="a11y-only" for="R-search-by">Search</label>
+          <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
+          <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
+        </div></form>
+        <script>
+          var contentLangs=['en'];
+        </script>
+        <script src="/Suntimes/js/auto-complete.js?1710744922" defer></script>
+        <script src="/Suntimes/js/lunr/lunr.min.js?1710744922" defer></script>
+        <script src="/Suntimes/js/lunr/lunr.stemmer.support.min.js?1710744922" defer></script>
+        <script src="/Suntimes/js/lunr/lunr.multi.min.js?1710744922" defer></script>
+        <script src="/Suntimes/js/lunr/lunr.en.min.js?1710744922" defer></script>
+        <script src="/Suntimes/js/search.js?1710744922" defer></script>
+	</div>
+        <div class="padding footermargin footerLangSwitch footerVariantSwitch footerVisitedLinks footerFooter showVariantSwitch showFooter"></div>
+        <div id="R-menu-footer">
+          <hr class="padding default-animation footerLangSwitch footerVariantSwitch footerVisitedLinks footerFooter showVariantSwitch showFooter">
+          <div id="R-prefooter" class="footerLangSwitch footerVariantSwitch footerVisitedLinks showVariantSwitch">
+            <ul>
+              <li id="R-select-language-container" class="footerLangSwitch">
+                <div class="padding menu-control">
+                  <i class="fas fa-language fa-fw"></i>
+                  <span>&nbsp;</span>
+                  <div class="control-style">
+                    <label class="a11y-only" for="R-select-language">Language</label>
+                    <select id="R-select-language" onchange="location = baseUri + this.value;">
+                      <option id="R-en" value="/Suntimes/help/datasources/availablesources/index.html" lang="en" selected></option>
+                    </select>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </li>
+              <li id="R-select-variant-container" class="footerVariantSwitch showVariantSwitch">
+                <div class="padding menu-control">
+                  <i class="fas fa-palette fa-fw"></i>
+                  <span>&nbsp;</span>
+                  <div class="control-style">
+                    <label class="a11y-only" for="R-select-variant">Theme</label>
+                    <select id="R-select-variant" onchange="window.variants && variants.changeVariant( this.value );">
+                      <option id="R-dark-theme" value="dark-theme" selected>Dark Theme</option>
+                      <option id="R-light-theme" value="light-theme">Light Theme</option>
+                    </select>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <script>window.variants && variants.markSelectedVariant();</script>
+              </li>
+              <li class="footerVisitedLinks">
+                <div class="padding menu-control">
+                  <i class="fas fa-history fa-fw"></i>
+                  <span>&nbsp;</span>
+                  <div class="control-style">
+                    <button onclick="clearHistory();">Clear History</button>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div id="R-footer" class="footerFooter showFooter">
+	    <p>This website built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> using <a href="https://gohugo.io/">Hugo</a></p>
+
+	    <p>Copyright &#169; 2014-2024 Forrest Guice
+<p>
+
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <script src="/Suntimes/js/clipboard.min.js?1710744922" defer></script>
+    <script src="/Suntimes/js/perfect-scrollbar.min.js?1710744922" defer></script>
+    <script src="/Suntimes/js/theme.js?1710744922" defer></script>
+  </body>
+</html>

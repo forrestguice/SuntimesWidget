@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/index.html</link>
+    <description>Recent content on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Mar 2024 18:53:18 -0700</lastBuildDate>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Get Suntimes</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/download/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 18:53:18 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/download/index.html</guid>
+      <description>Install with F-Droid Suntimes is available from F-Droid, an installable catalogue of FOSS (Free and Open Source Software) applications for the Android platform.
+In addition to being included in the official F-Droid repository, Suntimes related apps can also be installed from:
+https://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo These repositories can be added to your F-Droid client as an alternate download source. Note: these additional repos are the same and differ only in their hosting.</description>
+    </item>
+    <item>
+      <title>Help</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:16:14 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/index.html</guid>
+      <description>Documentation on some of Suntimes more technical features can be found here. Links to these help topics are also included within the app (look for Online Help).
+Actions Alarms Data Sources Data Substitutions Worldmap </description>
+    </item>
+  </channel>
+</rss>
