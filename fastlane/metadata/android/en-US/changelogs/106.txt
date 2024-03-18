@@ -1,2 +1,0 @@
-- fixes navigation bugs when using D-pad (Android TV).
-- updates translations to Simplified Chinese, and Traditional Chinese.

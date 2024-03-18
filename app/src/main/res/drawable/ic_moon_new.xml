@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<shape android:shape="oval" xmlns:android="http://schemas.android.com/apk/res/android">
-    <size android:width="24dp" android:height="24dp" />
-    <solid android:color="@color/moonIcon_color_new" />
-
-    <stroke android:width="@dimen/moonIcon_stroke_full"
-            android:color="@color/moonIcon_color_new_border" />
-</shape>

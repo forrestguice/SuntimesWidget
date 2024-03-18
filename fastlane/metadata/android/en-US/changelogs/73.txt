@@ -1,4 +1,0 @@
-- updates translation to Catalan and Spanish.
-- updates translation to Dutch.
-- updates translation to Norwegian.
-- removes READ_EXTERNAL_STORAGE permission (api≥19); no longer required when playing audio from external storage (#472).

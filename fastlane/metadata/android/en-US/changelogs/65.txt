@@ -1,3 +1,0 @@
-- fixes bug where deleted locations would reappear (#430).
-- updates translation to Norwegian.
-- updates translations to Polish and Esperanto.

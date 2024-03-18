@@ -1,2 +1,0 @@
-- increases the range of supported dates.
-- updates translation to Russian.

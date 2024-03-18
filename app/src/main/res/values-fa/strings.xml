@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="default_location_label">Tehran</string>
-    <string name="default_location_latitude">35.70251</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">51.35131</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">900</string>          <!-- meters -->
-    <string name="default_timezone">Asia/Tehran</string>         <!-- tzid -->
-</resources>

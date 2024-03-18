@@ -1,3 +1,0 @@
-- adds "backup" and "restore backup" options (#757).
-- updates translation to Polish and Esperanto.
-- updates translations to Simplified Chinese, and Traditional Chinese.

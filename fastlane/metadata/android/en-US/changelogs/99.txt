@@ -1,3 +1,0 @@
-- miscellaneous bug fixes.
-- adds themed alarm icon (Android 13+), and adaptive shortcut icons.
-- updates translations to Simplified Chinese, and Traditional Chinese.

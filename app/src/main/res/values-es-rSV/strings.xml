@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="http://schemas.android.com/tools">
-
-    <string name="default_location_label">San Salvador</string>
-    <string name="default_location_latitude">13.6914</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">-89.2847</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">1019</string>         <!-- meters -->
-
-</resources>

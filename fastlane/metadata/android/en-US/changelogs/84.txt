@@ -1,8 +1,0 @@
-- adds playback to the sun position dialog (#519), and azimuth and altitude to the main view (#524).
-- adds support for add-on alarms (#516); alarms on a given date; and 'Power Off Alarms' (#426).
-- adds Azimuthal world map with custom center, and custom map background (#493).
-- adds widget options to 'scale text and icons' (large widgets), 'fill entire cell' or 'align base'.
-- adds widget options to 'use the app location', and override the 12h/24h setting.
-- adds 'localize to hemisphere' option; invert moon icons for southern hemisphere (#526).
-- adds 'tropical year' to the solstice dialog.
-- misc dialog improvements; navigate between dialogs or addons with the selected date/time.

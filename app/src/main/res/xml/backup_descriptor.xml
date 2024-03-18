@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<full-backup-content>
-    <include domain="sharedpref" path="com.forrestguice.suntimeswidget.themes.xml"/>       <!-- backup themes -->
-    <include domain="sharedpref" path="com.forrestguice.suntimeswidget_preferences.xml"/>  <!-- backup app settings -->
-</full-backup-content>

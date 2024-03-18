@@ -1,2 +1,0 @@
-- fixes bug "Widget Title Substitution %lel uses meters only" (#410).
-- fixes NullPointerException when refreshing location (#408).

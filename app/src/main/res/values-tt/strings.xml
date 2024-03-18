@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="default_location_label">Kazan</string>
-    <string name="default_location_latitude">55.79638</string>         <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">49.10888</string>        <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">60</string>               <!-- meters -->
-    <string name="default_timezone">Europe/Moscow</string>         <!-- tzid -->
-</resources>

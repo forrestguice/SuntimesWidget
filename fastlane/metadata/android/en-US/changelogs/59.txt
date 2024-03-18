@@ -1,4 +1,0 @@
-- adds "gradually increase volume" option to Suntimes Alarms.
-- updates translation to Brazilian Portuguese.
-- updates translations to Polish and Esperanto.
-- misc ContentProvider related bug fixes.

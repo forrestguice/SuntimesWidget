@@ -1,6 +1,0 @@
-- major improvements to the SuntimesAlarms UI (#355, #413, #416, #424).
-- adds SuntimesAlarms actions; trigger a user-defined action when an alarm sounds or is dismissed; extends widget "On Tap" functionality.
-- improves support for polar regions; it is now possible to schedule alarms for infrequently occurring twilight events.
-- improves place selection; adds search places; delete individual places (#419).
-- improves color selection; adds RGB color picker, adds "recent colors" palette.
-- adds "lunar noon" and "lunar midnight" to notes and alarms.

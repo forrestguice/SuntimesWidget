@@ -1,2 +1,0 @@
-- fixes crash at high latitudes (#623).
-- updates translation to Polish and Esperanto.

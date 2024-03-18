@@ -1,5 +1,0 @@
-* adds support for playing alarm sounds from the file system (mp3, ogg, etc).
-* fixes bug "alarm sound fails to play from external storage" (#326).
-* new permission: READ_EXTERNAL_STORAGE. This permission is needed to play sounds located on the SD card (#326).
-* improves language resolution for Spanish locales (#147).
-* improves the About Dialog (better translation credits).

@@ -1,1 +1,0 @@
-- adds support for sidereal time (GMST, LMST).

@@ -1,2 +1,0 @@
-- fixes bug "sun position widget does not render midnight sun" (#421).
-- fixes app crash when using fallback to "last location" (#420).

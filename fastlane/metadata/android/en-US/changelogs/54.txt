@@ -1,2 +1,0 @@
-* fixes bug "Notifications don't respect Do Not Disturb" (#369).
-* updates translation to Norwegian (nb) (#370).

@@ -1,2 +1,0 @@
-* fixes bug "can't get location while gps is working and has a fix" (#373).
-* updates translation to Norwegian (nb) (#374).

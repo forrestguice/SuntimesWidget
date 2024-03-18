@@ -1,4 +1,0 @@
-- adds "Show Header Icon" and "Show Header Text" options.
-- fixes bug "twilight duration fails to switch to the next event" (#508).
-- fixes bug "unable to select default themes" when overriding the app (#510).
-- fixes app crash when highlighting table rows that are hidden.

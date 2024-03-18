@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="default_location_label">Kashgar</string>
-    <string name="default_location_latitude">39.47514</string>     <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">75.99195</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">1270</string>         <!-- meters -->
-    <string name="default_timezone">Asia/Kashgar</string>         <!-- tzid -->
-</resources>

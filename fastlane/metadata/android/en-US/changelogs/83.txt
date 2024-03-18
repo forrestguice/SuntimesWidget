@@ -1,3 +1,0 @@
-- adds help to general settings.
-- updates translation to Norwegian.
-- updates translations to Simplified Chinese, and Traditional Chinese.

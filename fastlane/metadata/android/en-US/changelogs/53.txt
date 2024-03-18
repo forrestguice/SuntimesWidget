@@ -1,3 +1,0 @@
-* fixes app crash (moon phase alarms) (#365).
-* updates translation to Norwegian (nb) (#366 by FTno).
-* updates translations to Polish (pl) and Esperanto (eo) (#367 by Verdulo).

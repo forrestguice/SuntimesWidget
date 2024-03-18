@@ -1,5 +1,0 @@
-* adds "Suntimes Alarms", an alarm clock with support for daily repeating alarms and notifications.
-* adds a clock widget that displays solar time (local mean time, apparent solar time), or time in a given timezone.
-* adds a "share" action to the World Map dialog (exports to png).
-* new permission: BOOT_COMPLETED. This permission is needed to restore active alarms after reboot. [PERMISSION]
-* new permission: VIBRATE. This permission is used by alarm notifications. [PERMISSION]

@@ -1,3 +1,0 @@
-- adds translation to Simplified Chinese.
-- updates translation to Traditional Chinese.
-- improves alarm notifications (more descriptive).

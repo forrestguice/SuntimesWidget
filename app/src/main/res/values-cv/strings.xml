@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="default_location_label">Cheboksary</string>
-    <string name="default_location_latitude">56.15384</string>         <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">47.24776</string>        <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">150</string>              <!-- meters -->
-    <string name="default_timezone">Etc/GMT+3</string>         <!-- tzid -->
-</resources>

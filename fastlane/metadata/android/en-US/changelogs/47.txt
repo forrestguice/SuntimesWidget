@@ -1,6 +1,0 @@
-* adds "Notifications" and "Volumes" preferences to the Alarm settings.
-* adds a warning to Suntimes Alarms when notifications are disabled. Notifications are required for alarms to display correctly (#333).
-* fixes bug "unable to dismiss alarm when notifications are disabled" (#333).
-* fixes bug "Suntimes Alarms uses elevation even if unchecked" (#336).
-* fixes bug "worldmap dialog fails to apply themed foreground color" (#337).
-* updates translations to Polish (pl) and Esperanto (eo).

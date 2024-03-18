@@ -1,2 +1,0 @@
-* fixes app crash when supplied with invalid data (bad URI, alarmID, or widgetID) ("Intent resolution bugs"; #353).
-* updates translation to Brazilian Portuguese (pt-br) (#350).

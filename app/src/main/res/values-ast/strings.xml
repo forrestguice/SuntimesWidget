@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="default_location_label">Oviedo</string>
-    <string name="default_location_latitude">43.36135</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">-5.85050</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">232</string>         <!-- meters -->
-    <string name="default_timezone">Europe/Madrid</string>         <!-- tzid -->
-</resources>

@@ -1,9 +1,0 @@
-- adds "Welcome Dialog" (configuration wizard).
-- adds "Text Size" settings, and "High Contrast" app themes.
-- adds "Quick Settings" clock and event tiles.
-- adds "Date" widget (Coptic, Ethiopian, Gregorian, Hebrew, Julian, Solar Hijiri, Thai Solar).
-- adds support for "Cross-Quarter Days", and "Custom Sun Altitude" events (alarms and widgets).
-- adds "Quick Notifications", and other alarm enhancements and UI fixes.
-- adds support for "Alarm Challenges" (answer easy math, or scan an NFC tag), and "Snooze Limit".
-- enhances the Sun Position dialog; adds "Altitude graph", and "Seek altitude".
-- enhances the Moon dialog; adds "lunar noon", swipe-able rising view, and basic playback.

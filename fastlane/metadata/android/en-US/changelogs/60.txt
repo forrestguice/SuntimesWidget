@@ -1,3 +1,0 @@
-- adds ability to schedule alarms using solar time (#403).
-- improved integration for add-ons (adds ContentProvider to access user-defined themes).
-- fixes bug where the AlarmNotifications service continues running after scheduling is completed.

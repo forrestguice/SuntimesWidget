@@ -1,2 +1,0 @@
-- updates translation to Italian.
-- updates translation to French.

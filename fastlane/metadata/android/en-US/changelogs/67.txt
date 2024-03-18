@@ -1,3 +1,0 @@
-- fixes crash when copying or editing places (#443).
-- adds an object height slider (shadow length) to the sun position dialog.
-- updates translation to Brazilian Portuguese.

@@ -1,6 +1,0 @@
-- adds themed icon (Android 13).
-- adds calendars to the date widget.
-- fixes bug "widgets crash with Lawnchair" (#690).
-- fixes bug "app crash when showing moon dialog from shortcut" (#691).
-- updates translation to Norwegian.
-- updates translations to Simplified Chinese, and Traditional Chinese.

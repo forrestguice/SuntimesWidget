@@ -1,2 +1,0 @@
-- adds a notification for dismissing repeating alarms early (#387).
-- fixes the appearance of "action modes" displayed by various dialogs.

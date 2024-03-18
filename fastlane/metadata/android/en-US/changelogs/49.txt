@@ -1,2 +1,0 @@
-* fixes bug "half hour and 45-minute time zones are listed incorrectly" (#346).
-* fixes bug "content provider uses a stale configuration" (#347).

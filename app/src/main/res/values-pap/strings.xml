@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="default_location_label">Willemstad, Curacao</string>
-    <string name="default_location_latitude">12.11018</string>       <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">-68.95539</string>     <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">0</string>              <!-- meters -->
-    <string name="default_timezone">AST</string>         <!-- tzid -->
-</resources>

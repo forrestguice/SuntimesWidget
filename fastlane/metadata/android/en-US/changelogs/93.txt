@@ -1,5 +1,0 @@
-- adds "update all" to widget actions (#625).
-- fixes crash when the default alarm ringtone is unavailable (#634).
-- updates translation to Czech.
-- updates translation to German.
-- updates translation to Norwegian.

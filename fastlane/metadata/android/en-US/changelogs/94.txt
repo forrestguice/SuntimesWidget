@@ -1,8 +1,0 @@
-- adds "update all" to widget actions.
-- adds "abbreviated month names" widget option.
-- fixes crash when the default alarm ringtone is unavailable (#634).
-- fixes bug "BOOT_COMPLETED fails to reschedule stale alarms" (#641).
-- fixes bug "alarms do not compensate for time zone changes" (#643).
-- updates translation to Czech.
-- updates translation to German.
-- updates translation to Norwegian.

@@ -1,3 +1,0 @@
-- miscellaneous alarm bug fixes and reliability improvements.
-- updates translations to Simplified Chinese, and Traditional Chinese.
-- updates translation to Norwegian.

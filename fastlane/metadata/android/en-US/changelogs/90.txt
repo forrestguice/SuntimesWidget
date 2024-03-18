@@ -1,3 +1,0 @@
-- fixes crash when changing an alarm's time/event (#605).
-- fixes bug where units setting is ignored (altitude displayed in feet) (#604).
-- updates translation to Czech.

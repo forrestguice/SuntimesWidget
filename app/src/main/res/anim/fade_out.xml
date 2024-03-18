@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<set xmlns:android="http://schemas.android.com/apk/res/android">
-    <alpha android:duration="@integer/anim_fadeout_duration"
-           android:fromAlpha="@dimen/anim_slideout_fade_fromalpha"
-           android:toAlpha="@dimen/anim_slideout_fade_toalpha" />
-</set>
