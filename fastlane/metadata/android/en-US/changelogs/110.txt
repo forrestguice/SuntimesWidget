@@ -1,2 +1,3 @@
-- adds app options to show daylight comparison (today/tomorrow).
 - fixes app crash after using "restore backup" (#783).
+- increases the maximum before/after alarm offset.
+- adds app options to show daylight comparison (today/tomorrow).

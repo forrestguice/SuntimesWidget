@@ -1,8 +1,11 @@
 ### ~
 
-### v0.15.13 (2024-03-15)
+### v0.15.13 (2024-03-19)
 * adds app options to show daylight comparison (today/tomorrow) (#773).
+* increases the maximum before/after alarm offset (#779); fixes localization of display values.
 * fixes app crash when launching the app after using "restore backup" (#783).
+* replaces links to "online help" and improves help presentation; the app's website is now hosted on Codeberg (https://forrestguice.codeberg.page/Suntimes/) (#629).
+* now mirroring git repository to Codeberg (https://codeberg.org/forrestguice/Suntimes) (#629).
 
 ### v0.15.12 (2024-03-01)
 * increases the range of supported dates from +-2.5 years to +-500 years (#770).
