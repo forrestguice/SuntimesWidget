@@ -246,6 +246,12 @@ table {
     background-color: var(--INTERNAL-MAIN-BG-color);
 }
 
+a.lightbox-link:hover,
+a.lightbox-link:active,
+a.lightbox-linka:focus {
+    color: var(--INTERNAL-CODE-INLINE-color);
+}
+
 .lightbox-back img{
     background-color: var(--INTERNAL-MAIN-BG-color);
 }

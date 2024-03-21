@@ -1,7 +1,7 @@
 var relearn_search_index = [
   {
     "breadcrumb": "Suntimes \u003e Help \u003e Worldmap",
-    "content": "To use backgrounds… Save full-sized images somewhere on your device, then open with Set background. Suntimes uses URI permissions to access images stored on the sdcard.\nProjection Map Backgrounds (click for full-size image) Equidistant Rectangular Equidistant Azimuthal Made with Natural Earth. https://www.naturalearthdata.com/about/terms-of-use/\nNASA Earth Observatory. Blue Marble: Next Generation. https://visibleearth.nasa.gov/view_cat.php?categoryID=1484\n",
+    "content": "To use backgrounds… Store full-sized images somewhere on your device, then open with Set background. Suntimes uses URI permissions to access images stored on the sdcard.\nProjection Map Backgrounds (click for full-size image) Equidistant Rectangular Equidistant Azimuthal Made with Natural Earth. https://www.naturalearthdata.com/about/terms-of-use/\nNASA Earth Observatory. Blue Marble: Next Generation. https://visibleearth.nasa.gov/view_cat.php?categoryID=1484\n",
     "description": "",
     "tags": null,
     "title": "Download Backgrounds",
@@ -33,7 +33,7 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help \u003e Alarms",
-    "content": "Suntimes must be not optimized for alarms to work reliably. Settings \u003e Apps \u003e Suntimes \u003e Battery \u003e Unrestricted\nOn most devices the optimized setting may delay alarms up to 15 minutes. Other devices may restrict alarms without special configuration.\nThe following devices are affected: Asus, Blackview, Huawei, LENOVO, Meizu, OnePlus, OPPO, realme, Samsung, Sony, Unihertz, Vivo, WIKO, and Xiaomi. Check https://dontkillmyapp.com/ for solutions.\n",
+    "content": "Suntimes must be not optimized for alarms to work reliably.\nSettings -\u003e Apps -\u003e Suntimes -\u003e Battery -\u003e Unrestricted\nOn most devices the optimized setting may delay alarms up to 15 minutes. Other devices may restrict alarms without special configuration.\nThe following devices are affected: Asus, Blackview, Huawei, LENOVO, Meizu, OnePlus, OPPO, realme, Samsung, Sony, Unihertz, Vivo, WIKO, and Xiaomi. Check https://dontkillmyapp.com/ for solutions.\n",
     "description": "",
     "tags": null,
     "title": "Battery Optimization",
@@ -81,7 +81,7 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help \u003e Alarms",
-    "content": "Notifications must be enabled for alarms to display correctly. Settings \u003e Apps \u003e Suntimes \u003e Notifications \u003e Show Notifications\n",
+    "content": "Notifications must be enabled for alarms to display correctly.\nSettings -\u003e Apps -\u003e Suntimes -\u003e Notifications -\u003e Show Notifications\n",
     "description": "",
     "tags": null,
     "title": "Notification Settings",
@@ -97,7 +97,7 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help",
-    "content": "Suntimes uses third-party libraries to perform astronomical calculations.\nThe data source settings allow for choosing between different libraries (or choosing between different algorithms offered by those libraries). These are advanced settings that affect the speed and accuracy of calculations, and may limit which features are available.\nAvailable Data Sources Adding Data Sources ",
+    "content": "Suntimes uses third-party libraries to perform astronomical calculations.\nThe data source settings allow for choosing between different libraries (or choosing between different algorithms offered by those libraries).\nThese are advanced settings that affect the speed and accuracy of calculations, and may limit which features are available.\nAvailable Data Sources Adding Data Sources ",
     "description": "",
     "tags": null,
     "title": "Data Sources",
@@ -105,7 +105,7 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help",
-    "content": "Suntimes supports limited %substitutions, a set of tags that are replaced with values from the data set. Substitutions may be used within widget title text, or within action data or extras.\nAvailable Substitions Examples ",
+    "content": "Suntimes supports limited %substitutions, a set of tags that are replaced with values from the data set.\nSubstitutions may be used within widget titles, alarm notes, or within action data or extras.\nAvailable Substitions Examples ",
     "description": "",
     "tags": null,
     "title": "Data Substitutions",
@@ -113,7 +113,7 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help",
-    "content": "Suntimes can be configured to display a custom world map background.\nDownload Backgrounds Creating Backgrounds ",
+    "content": " Set Background Suntimes can be configured to display a custom world map background.\nDownload Backgrounds Creating Backgrounds Use : -\u003e Center -\u003e Set Background to change the map’s background image.\n",
     "description": "",
     "tags": null,
     "title": "Worldmap",

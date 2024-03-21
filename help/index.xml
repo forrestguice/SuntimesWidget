@@ -30,7 +30,8 @@ Battery Optimization Notification Settings </description>
       <pubDate>Sat, 16 Mar 2024 16:03:27 -0700</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/datasources/index.html</guid>
       <description>Suntimes uses third-party libraries to perform astronomical calculations.
-The data source settings allow for choosing between different libraries (or choosing between different algorithms offered by those libraries). These are advanced settings that affect the speed and accuracy of calculations, and may limit which features are available.
+The data source settings allow for choosing between different libraries (or choosing between different algorithms offered by those libraries).
+These are advanced settings that affect the speed and accuracy of calculations, and may limit which features are available.
 Available Data Sources Adding Data Sources </description>
     </item>
     <item>
@@ -38,7 +39,8 @@ Available Data Sources Adding Data Sources </description>
       <link>https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions/index.html</link>
       <pubDate>Sat, 16 Mar 2024 16:10:59 -0700</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions/index.html</guid>
-      <description>Suntimes supports limited %substitutions, a set of tags that are replaced with values from the data set. Substitutions may be used within widget title text, or within action data or extras.
+      <description>Suntimes supports limited %substitutions, a set of tags that are replaced with values from the data set.
+Substitutions may be used within widget titles, alarm notes, or within action data or extras.
 Available Substitions Examples </description>
     </item>
     <item>
@@ -46,8 +48,8 @@ Available Substitions Examples </description>
       <link>https://forrestguice.codeberg.page/Suntimes/help/worldmap/index.html</link>
       <pubDate>Sat, 16 Mar 2024 16:16:14 -0700</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/worldmap/index.html</guid>
-      <description>Suntimes can be configured to display a custom world map background.
-Download Backgrounds Creating Backgrounds </description>
+      <description>Set Background Suntimes can be configured to display a custom world map background.
+Download Backgrounds Creating Backgrounds Use : -&amp;gt; Center -&amp;gt; Set Background to change the map&amp;rsquo;s background image.</description>
     </item>
   </channel>
 </rss>
