@@ -49,7 +49,10 @@ Available Substitions Examples </description>
       <pubDate>Sat, 16 Mar 2024 16:16:14 -0700</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/worldmap/index.html</guid>
       <description>Set Background Suntimes can be configured to display a custom world map background.
-Download Backgrounds Creating Backgrounds Use : -&amp;gt; Center -&amp;gt; Set Background to change the map&amp;rsquo;s background image.</description>
+Download Backgrounds Creating Backgrounds Use : -&amp;gt; Center -&amp;gt; Set Background to change the map&amp;rsquo;s background image.
+Play Suntimes is able to animate the world map at different rates.
+15m; frames are 15 minutes apart. 1d; frames are 24 hours apart. Press and to step through map frames one at a time.
+Press to start the animation, to stop it, and to reset to the current moment.</description>
     </item>
   </channel>
 </rss>

@@ -113,7 +113,7 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help",
-    "content": " Set Background Suntimes can be configured to display a custom world map background.\nDownload Backgrounds Creating Backgrounds Use : -\u003e Center -\u003e Set Background to change the map’s background image.\n",
+    "content": " Set Background Suntimes can be configured to display a custom world map background.\nDownload Backgrounds Creating Backgrounds Use : -\u003e Center -\u003e Set Background to change the map’s background image.\nPlay Suntimes is able to animate the world map at different rates.\n15m; frames are 15 minutes apart. 1d; frames are 24 hours apart. Press and to step through map frames one at a time.\nPress to start the animation, to stop it, and to reset to the current moment.\nShare (Record) Suntimes can share individual map frames, or record all frames in an animation.\nUse : -\u003e Share to share the current map view.\nTo record an animation, long press to start the animation and begin recording. When finished, press (where the play button was previously) to stop the animation and share the frames.\n",
     "description": "",
     "tags": null,
     "title": "Worldmap",
