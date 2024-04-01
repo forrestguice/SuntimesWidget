@@ -673,7 +673,7 @@
     <string name="configLabel_action_launch_datatype">نوع MIME:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_datatype">نص عادي</string> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_extras">إضافات:</string>                 <!-- edittext label -->
-    
+
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
     <string name="configLabel_action_item">%1$s %2$s</string>
@@ -682,7 +682,7 @@
 
     <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
     <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    
+
     <string name="addaction_error_id">يجب ألا يكون معرف الـID فارغًا (أو يحتوي على مسافات).</string>
     <string name="addaction_error_title">يجب ألا يكون نص العرض فارغًا.</string>
     <string name="addaction_error_exists">المعرف مأخوذ بالفعل. سيتم استبدال هذا الإجراء.</string>
@@ -719,7 +719,7 @@
 
     <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
     <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
-    
+
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">السمات</string>
     <string name="configLabel_widgetThemeListSelect">حدد سمة</string>
@@ -728,9 +728,9 @@
     <string name="configAction_editTheme">تحرير</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">حذف</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">نسخ</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">@string/configAction_export</string>    
-    <string name="configAction_shareTheme">@string/configAction_share</string>      
-    <string name="configAction_importThemes">@string/configAction_import</string>  
+    <string name="configAction_exportThemes">@string/configAction_export</string>
+    <string name="configAction_shareTheme">@string/configAction_share</string>
+    <string name="configAction_importThemes">@string/configAction_import</string>
 
     <string name="widgetThemes_dark">داكن</string>                                <!-- default widget theme name -->
     <string name="widgetThemes_dark_transparent">داكن (شفاف)</string>      <!-- default widget theme name -->
@@ -908,7 +908,7 @@
     <string name="editevent_dialog_id_hint">الحدث ID</string>
     <string name="editevent_dialog_id_error">@string/addaction_error_id</string>
     <string name="editevent_dialog_uri_hint">URI الحدث</string>
-    
+
     <string name="editevent_dialog_showevent">عرض هذا الحدث داخل التطبيق.</string>
     <string name="editevent_dialog_showevent_off">لن يتم عرض هذا الحدث بعد الآن.</string>
 
@@ -1013,7 +1013,7 @@
     <string name="deletealarm_dialog_cancel">إلغاء</string>    <!-- button -->
     <string name="deletealarm_toast_success"><xliff:g id="type" example="إشعار">%1$s</xliff:g> في <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) تم حذفه.</string> <!-- toast msg -->
     <string name="deletealarm_toast_success1"><xliff:g id="type" example="إشعار">%1$s</xliff:g> تم حذفه.</string> <!-- toast msg -->
-    
+
     <string name="discardchanges_dialog_message">هناك تغييرات غير محفوظة.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">تجاهل</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">إلغاء</string>                           <!-- button -->
@@ -1117,7 +1117,7 @@
     <string name="configLabel_alarms_bootcompleted_action_message">جارٍ إعادة جدولة التنبيهات والإشعارات..</string>
 
     <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
-    
+
     <string name="configLabel_alarms_silenceAfter">كتم الصوت بعد</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
 
@@ -1286,9 +1286,9 @@
 
     <!-- App Setting: UI -->
 
-    <string name="configLabel_ui">واجهة المستخدم</string>                      
-    <string name="configLabel_ui_fields">عرض</string>                
-    <string name="configLabel_ui_fields1">أحداث مخصصة</string>                
+    <string name="configLabel_ui">واجهة المستخدم</string>
+    <string name="configLabel_ui_fields">عرض</string>
+    <string name="configLabel_ui_fields1">أحداث مخصصة</string>
     <string name="configLabel_ui_misc">متفرقات</string>
 
     <!-- App Setting: Verbose Accessibility -->
@@ -1312,7 +1312,7 @@
     <string name="configLabel_ui_showmoon_noon_summary">عرض زوال القمر ومنتصف الليل القمري كجزء من أطوار القمر.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">الأعمدة (المراحل)</string>   
+    <string name="configLabel_ui_showmoon_phase_columns">الأعمدة (المراحل)</string>
     <string name="configLabel_ui_showmoon_phase_columns_2">2</string>
     <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
     <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
@@ -1389,7 +1389,7 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">السمة الفاتحة</string>
     <string name="appThemes_darkTheme">السمة الداكنة</string>
-    <string name="appThemes_nightMode">السمة الفاتحة / السمة الداكنة (وضع الليل)</string>  
+    <string name="appThemes_nightMode">السمة الفاتحة / السمة الداكنة (وضع الليل)</string>
     <string name="appThemes_systemDefault">الافتراضي للنظام</string>
     <string name="appThemes_systemDefault1">التباين (الافتراضي للنظام)</string>
     <string name="appThemes_darkTheme1">التباين (الداكن)</string>
@@ -1649,13 +1649,13 @@
         <item>SORT_BY_DISPLAYNAME</item>
     </string-array>
 
-    <string name="timezone_sort_contextAction">ترتيب المناطق الزمنية</string>           
-    <string name="timezone_sort_msg">تم ترتيب المناطق الزمنية (%1$s).</string>      
+    <string name="timezone_sort_contextAction">ترتيب المناطق الزمنية</string>
+    <string name="timezone_sort_msg">تم ترتيب المناطق الزمنية (%1$s).</string>
 
     <!-- App Setting: location fix time limit -->
     <string name="configLabel_getFix_maxElapse">الحد الزمني لتحديد الموقع</string>
     <string name="configLabel_getFix_maxElapse_summary">التخلي بعد <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
-    <string-array name="getFix_maxElapse_display">  
+    <string-array name="getFix_maxElapse_display">
         <item>15 ثانية</item>
         <item>30 ثانية</item>
         <item>1 دقيقة</item>
@@ -1671,11 +1671,11 @@
         <item>300000</item>
         <item>600000</item>
     </string-array>
-        
+
     <!-- App Setting: location fix max age -->
     <string name="configLabel_getFix_maxAge">الحد الأقصى لعمر الموقع الأخير</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="دقيقة واحدة">%s</xliff:g> يُعتبر حديثًا</string>
-    <string-array name="getFix_maxAge_display">   
+    <string-array name="getFix_maxAge_display">
         <item>لا شيء</item>
         <item>دقيقة واحدة</item>
         <item>5 دقائق</item>
@@ -1706,7 +1706,7 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">التقاويم</string>   
+    <string name="configLabel_calendars">التقاويم</string>
     <string name="configLabel_calendars_enabled">تكامل التقويم</string>
 
     <!-- App Setting: passive location mode -->
@@ -1714,11 +1714,11 @@
     <string name="configLabel_getFix_passiveMode_summary">استخدام مزود الموقع السلبي.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">اللغة</string>   
+    <string name="configLabel_locale">اللغة</string>
 
     <string name="configLabel_localeMode">الوضع</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="اللغة النظامية">%s</xliff:g></string>
-    <string-array name="localeMode_display">                      
+    <string-array name="localeMode_display">
         <item>النظام</item>
         <item>معرفة المستخدم</item>
     </string-array>
@@ -1732,6 +1732,7 @@
     <string name="configLabel_localeSelect">Language</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
+        <item>Arabic</item>
         <item>English</item>
         <item>Esperanto</item>
         <item>French</item>
@@ -1751,6 +1752,7 @@
         <item>Simplified Chinese</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
+        <item>العربية</item>
         <item>English</item>
         <item>Esperanto</item>
         <item>Français</item>
@@ -1770,6 +1772,7 @@
         <item>简体中文</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
+        <item>ar</item>
         <item>en</item>
         <item>eo</item>
         <item>fr</item>
@@ -1790,6 +1793,7 @@
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
+        <item><![CDATA[<a href=https://github.com/mstfelg>Alelg</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Jej>Jej</a>|<a href=https://github.com/Aloha>Aloha</a>|<a href=https://github.com/ldmpub>ldmpub</a>|<a href=https://github.com/grenagit>grenagit</a>]]></item>
         <item><![CDATA[<a href=https://github.com/HerHde>Henrik "HerHde" Hüttemann</a>|<a href=https://github.com/Wolkenschieber>Wolkenschieber</a>|<a href=https://github.com/xnumad>xnumad</a>|<a href=https://github.com/cstrsk>CSTRSK</a>]]></item>
@@ -1926,10 +1930,10 @@
 
     <string name="configLabel_schedalarm_mode">جدولة تنبيه لـ</string>
     <string name="configLabel_schednotify_mode">جدولة إشعار لـ</string>
-    <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  
-    <string name="schedalarm_dialog_tab_event">الحدث</string>                     
-    <string name="schedalarm_dialog_tab_time">الوقت</string>                     
-    <string name="schedalarm_dialog_ok">جدولة</string>                          
+    <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>
+    <string name="schedalarm_dialog_tab_event">الحدث</string>
+    <string name="schedalarm_dialog_tab_time">الوقت</string>
+    <string name="schedalarm_dialog_ok">جدولة</string>
     <string name="schedalarm_dialog_cancel">إلغاء</string>
     <string name="schedalarm_dialog_error">لم يتم تعيين التنبيه…</string>
     <string name="schedalarm_dialog_error2">لا يمكن تعيين التنبيه…</string>
@@ -2117,10 +2121,10 @@
     <string name="gps_lastfix_title_set">الموقع المُعد</string>   <!-- may appear as place name when location set by intent -->   <!-- TODO: changed from "Set Position" to "Configured Position" -->
     <string name="gps_lastfix_title_cached">الموقع السابق</string>  <!-- may appear as place name after location mode is changed away from 'current location'  -->
     <string name="gps_lastfix_title_found">الموقع الأخير</string>    <!-- may appear as place name when location set by lookup -->
-    <string name="gps_lastfix_title_searching">الحصول على الموقع</string> 
-    <string name="gps_lastfix_toast_notfound">فشل في الحصول على الموقع؛ الرجوع إلى آخر موقع معروف.</string> 
-    <string name="gps_lastfix_toast_cancelled">تم إلغاء تحديث الموقع.</string> 
-    
+    <string name="gps_lastfix_title_searching">الحصول على الموقع</string>
+    <string name="gps_lastfix_toast_notfound">فشل في الحصول على الموقع؛ الرجوع إلى آخر موقع معروف.</string>
+    <string name="gps_lastfix_toast_cancelled">تم إلغاء تحديث الموقع.</string>
+
     <!-- Dialog: KeepTrying Location? -->
     <string name="gps_keeptrying_title">لا موقع</string>
     <string name="gps_keeptrying_msg">تعذر الحصول على الموقع.</string> <!-- TODO: "get a fix" to "get location" -->
@@ -2167,7 +2171,7 @@
     <string name="locationclear_dialog_message">هل أنت متأكد أنك تريد مسح قائمة المواقع؟</string>
     <string name="locationclear_dialog_ok">مسح</string>
     <string name="locationclear_dialog_cancel">إلغاء</string>
-    
+
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">جارٍ مسح المواقع</string>
     <string name="locationcleared_dialog_message">جارٍ مسح قائمة المواقع…</string>
@@ -2259,8 +2263,8 @@
     ]]></string>
     <string name="app_legal2"><![CDATA[<b>الترجمات إلى:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> من قبل <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
-    <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string> 
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>، و<xliff:g id="authorName">%2$s</xliff:g></string> 
+    <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>، و<xliff:g id="authorName">%2$s</xliff:g></string>
     <string name="creditsTab">الاعتمادات</string>
     <string name="app_legal3"><![CDATA[ <b>المكتبات:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
     <string name="libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
@@ -2275,7 +2279,7 @@
     <string-array name="app_media">
         <item><![CDATA[ NASA Earth Observatory. <i>Blue Marble: Next Generation</i>. ]]></item>
     </string-array>
-    
+
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">تخطي</string>
     <string name="welcome_action_prev">السابق</string>
