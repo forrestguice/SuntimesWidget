@@ -31,6 +31,7 @@
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
+    <string name="configAction_lightGraph">Light Graph</string>   <!-- TODO -->
     <string name="configAction_lineGraph">Altitude Graph</string>
     <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->
@@ -500,6 +501,7 @@
     <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->
 
+    <string name="widgetMode3x2_lightgraph">@string/configAction_lightGraph</string>     <!-- setting -->
     <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
     <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
