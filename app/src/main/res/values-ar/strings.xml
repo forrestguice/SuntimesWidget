@@ -569,10 +569,6 @@
     <string name="configAction_editPlace">تحرير</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">حفظ</string>         <!-- button (contentDescription) -->
 
-    <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
-
     <!-- Widget Setting: timezone -->
     <string name="timezoneMode_standard">التوقيت القياسي</string>                   <!-- setting -->
     <string name="timezoneMode_current">توقيت النظام</string>               <!-- setting -->
