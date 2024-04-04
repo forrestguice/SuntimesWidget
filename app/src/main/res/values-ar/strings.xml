@@ -162,27 +162,27 @@
     <string name="until_end">حتى نهاية</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. plural applies to time component (next line) -->
-        <item quantity="zero">في</item>    <!-- TODO: verify -->
+        <item quantity="zero">في</item>
         <item quantity="one">في</item>
-        <item quantity="two">في</item>     <!-- TODO: verify -->
-        <item quantity="few">في</item>     <!-- TODO: verify -->
-        <item quantity="many">في</item>    <!-- TODO: verify -->
+        <item quantity="two">في</item>
+        <item quantity="few">في</item>
+        <item quantity="many">في</item>
         <item quantity="other">في</item>
     </plurals>
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. plural applies to time component (next line) -->
-        <item quantity="zero">%1$s قبل</item>  <!-- TODO: verify -->
+        <item quantity="zero">%1$s قبل</item>
         <item quantity="one">%1$s قبل</item>
-        <item quantity="two">%1$s قبل</item>   <!-- TODO: verify -->
-        <item quantity="few">%1$s قبل</item>   <!-- TODO: verify -->
-        <item quantity="many">%1$s قبل</item>  <!-- TODO: verify -->
+        <item quantity="two">%1$s قبل</item>
+        <item quantity="few">%1$s قبل</item>
+        <item quantity="many">%1$s قبل</item>
         <item quantity="other">%1$s قبل</item>
     </plurals>
     <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. plural applies to time component (next line) -->
-        <item quantity="zero">%1$s بعد</item>    <!-- TODO: verify -->
+        <item quantity="zero">%1$s بعد</item>
         <item quantity="one">%1$s بعد</item>
-        <item quantity="two">%1$s بعد</item>     <!-- TODO: verify -->
-        <item quantity="few">%1$s بعد</item>     <!-- TODO: verify -->
-        <item quantity="many">%1$s بعد</item>    <!-- TODO: verify -->
+        <item quantity="two">%1$s بعد</item>
+        <item quantity="few">%1$s بعد</item>
+        <item quantity="many">%1$s بعد</item>
         <item quantity="other">%1$s بعد</item>
     </plurals>
 
@@ -275,44 +275,44 @@
     <string name="units_feet">قدم</string>
     <string name="units_feet_short">قدم</string>
     <plurals name="units_feet_long">
-        <item quantity="zero">%s feet</item>   <!-- TODO -->
-        <item quantity="one">قدم</item>
-        <item quantity="two">%s feet</item>    <!-- TODO -->
-        <item quantity="few">%s feet</item>    <!-- TODO -->
-        <item quantity="many">%s feet</item>   <!-- TODO -->
+        <item quantity="zero">%s قدمٍ</item>
+        <item quantity="one">قدم واحدة</item>
+        <item quantity="two">قدمان</item>
+        <item quantity="few">%s أقدام</item>
+        <item quantity="many">%s قدماً</item>
         <item quantity="other">%s قدم</item>
     </plurals>
 
     <string name="units_miles">ميلاً</string>
     <string name="units_miles_short">ميل</string>
     <plurals name="units_miles_long">
-        <item quantity="zero">%s miles</item>   <!-- TODO -->
+        <item quantity="zero">%s ميلٍ</item>
         <item quantity="one">ميل واحد</item>
-        <item quantity="two">%s miles</item>    <!-- TODO -->
-        <item quantity="few">%s miles</item>    <!-- TODO -->
-        <item quantity="many">%s miles</item>   <!-- TODO -->
+        <item quantity="two">ميلان</item>
+        <item quantity="few">%s أميال</item>
+        <item quantity="many">%s ميلاً</item>
         <item quantity="other">%s ميلاً</item>
     </plurals>
 
     <string name="units_meters">meters</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
-        <item quantity="zero">%s meters</item>   <!-- TODO -->
+        <item quantity="zero">%s مترٍ</item>
         <item quantity="one">متر واحد</item>
-        <item quantity="two">%s meters</item>    <!-- TODO -->
-        <item quantity="few">%s meters</item>    <!-- TODO -->
-        <item quantity="many">%s meters</item>   <!-- TODO -->
+        <item quantity="two">متران</item>
+        <item quantity="few">%s أمتار</item>
+        <item quantity="many">%s متراً</item>
         <item quantity="other">%s متراً</item>
     </plurals>
 
     <string name="units_kilometers">كيلومتراً</string>
     <string name="units_kilometers_short">كم</string>
     <plurals name="units_kilometers_long">
-        <item quantity="zero">%s kilometers</item>    <!-- TODO -->
+        <item quantity="zero">%s كيلومتر</item>
         <item quantity="one">كيلومتر واحد</item>
-        <item quantity="two">%s kilometers</item>   <!-- TODO -->
-        <item quantity="few">%s kilometers</item>     <!-- TODO -->
-        <item quantity="many">%s kilometers</item>    <!-- TODO -->
+        <item quantity="two">كيلومتران</item>
+        <item quantity="few">%s كيلومترات</item>
+        <item quantity="many">%s كيلومتراً</item>
         <item quantity="other">%s كيلومتراً</item>
     </plurals>
 
@@ -916,11 +916,11 @@
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
     <string name="importevents_toast_success">تم استيراد <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
-        <item quantity="zero">%d events</item>    <!-- TODO -->
-        <item quantity="one">%d حدث</item>
-        <item quantity="two">%d events</item>     <!-- TODO -->
-        <item quantity="few">%d events</item>     <!-- TODO -->
-        <item quantity="many">%d events</item>    <!-- TODO -->
+        <item quantity="zero">%d حدثٍ</item>
+        <item quantity="one">حدث واحد</item>
+        <item quantity="two">حدثان</item>
+        <item quantity="few">%d أحداث</item>
+        <item quantity="many">%d حدثاً</item>
         <item quantity="other">%d حدثاً</item>
     </plurals>
 
@@ -1049,11 +1049,11 @@
     <string name="importalarms_msg_warning">قد يؤدي استيراد التنبيهات إلى إعادة بعض الإعدادات إلى القيم الافتراضية.\n\nقد تحتاج إلى (إعادة) تحديد الأصوات والإجراءات.</string> <!-- toast msg -->
     <string name="importalarms_toast_success">تم استيراد <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->   <!-- uses alarmPlural -->  <!-- TODO: fix inconsistent translation -->
     <plurals name="alarmPlural">
-        <item quantity="zero">%d alarms</item>    <!-- TODO -->
-        <item quantity="one">%d تنبيه</item>
-        <item quantity="two">%d alarms</item>     <!-- TODO -->
-        <item quantity="few">%d alarms</item>     <!-- TODO -->
-        <item quantity="many">%d alarms</item>    <!-- TODO -->
+        <item quantity="zero">%d منبهٍ</item>
+        <item quantity="one">منبه واحد</item>
+        <item quantity="two">منبهان</item>
+        <item quantity="few">%d منبهات</item>
+        <item quantity="many">%d منبهات</item>
         <item quantity="other">%d تنبيهات</item>
     </plurals>
 
@@ -1161,39 +1161,39 @@
     <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> تذكير</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="units_hours">
-        <item quantity="zero">%d hours</item>    <!-- TODO -->
-        <item quantity="one">%d ساعة</item>
-        <item quantity="two">%d hours</item>    <!-- TODO -->
-        <item quantity="few">%d hours</item>    <!-- TODO -->
-        <item quantity="many">%d hours</item>    <!-- TODO -->
+        <item quantity="zero">%d ساعةٍ</item>
+        <item quantity="one">ساعة واحدة</item>
+        <item quantity="two">ساعتان</item>
+        <item quantity="few">%d ساعات</item>
+        <item quantity="many">%d ساعة</item>
         <item quantity="other">%d ساعة</item>
     </plurals>
 
     <plurals name="units_minutes">
-        <item quantity="zero">%d minutes</item>    <!-- TODO -->
-        <item quantity="one">%d دقيقة</item>
-        <item quantity="two">%d minutes</item>    <!-- TODO -->
-        <item quantity="few">%d minutes</item>    <!-- TODO -->
-        <item quantity="many">%d minutes</item>    <!-- TODO -->
+        <item quantity="zero">%d دقيقةٍ</item>
+        <item quantity="one">دقيقة واحدة</item>
+        <item quantity="two">دقيقتان</item>
+        <item quantity="few">%d دقائق</item>
+        <item quantity="many">%d دقيقةً</item>
         <item quantity="other">%d دقيقة</item>
     </plurals>
 
     <plurals name="units_seconds">
-        <item quantity="zero">%d seconds</item>    <!-- TODO -->
-        <item quantity="one">%d ثانية</item>
-        <item quantity="two">%d seconds</item>    <!-- TODO -->
-        <item quantity="few">%d seconds</item>    <!-- TODO -->
-        <item quantity="many">%d seconds</item>    <!-- TODO -->
+        <item quantity="zero">%d ثانيةٍ</item>
+        <item quantity="one">ثانية واحدة</item>
+        <item quantity="two">ثانيتان</item>
+        <item quantity="few">%d ثوانٍ</item>
+        <item quantity="many">%d ثانية</item>
         <item quantity="other">%d ثانية</item>
     </plurals>
 
     <plurals name="units_days">
-        <item quantity="zero">%s days</item>    <!-- TODO -->
-        <item quantity="one">%s يوم</item>
-        <item quantity="two">%s days</item>    <!-- TODO -->
-        <item quantity="few">%s days</item>    <!-- TODO -->
-        <item quantity="many">%s days</item>    <!-- TODO -->
-        <item quantity="other">%s يوم</item>
+        <item quantity="zero">%s يومٍ</item>
+        <item quantity="one">يوم واحد</item>
+        <item quantity="two">يومان</item>
+        <item quantity="few">%s أيام</item>
+        <item quantity="many">%s يوماً</item>
+        <item quantity="other">%s يوماً</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
     <string name="configLabel_alarmMisc">متفرقات</string>
@@ -1283,12 +1283,12 @@
     <string name="configLabel_places_build_summary">فحص المواقع وإضافة المدن إلى قاعدة البيانات.</string>
 
     <plurals name="placePlural">
-        <item quantity="zero">%d places</item>    <!-- TODO -->
-        <item quantity="one">%d مكان</item>
-        <item quantity="two">%d places</item>    <!-- TODO -->
+        <item quantity="zero">%d مكانٍ</item>
+        <item quantity="one">مكانُ واحد</item>
+        <item quantity="two">مكانان</item>
         <item quantity="few">%d أماكن</item>
-        <item quantity="many">%d مكان</item>
-        <item quantity="other">%d مكان</item>
+        <item quantity="many">%d مكاناً</item>
+        <item quantity="other">%d مكاناً</item>
     </plurals>
 
     <string name="configAction_addPlace">إضافة</string>              <!-- button (contentDescription) -->
@@ -1643,24 +1643,24 @@
     <string name="configLabel_localeSelect">Language</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
-        <item>English</item>
-        <item>Esperanto</item>
-        <item>French</item>
-        <item>German</item>
-        <item>Hungarian</item>
-        <item>Italian</item>
-        <item>Polish</item>
-        <item>Spanish</item>
-        <item>Catalan</item>
-        <item>Basque</item>
-        <item>Norwegian</item>
-        <item>Traditional Chinese</item>
-        <item>Portuguese</item>
-        <item>Russian</item>
-        <item>Dutch</item>
-        <item>Czech</item>
-        <item>Simplified Chinese</item>
-        <item>Arabic</item>    <!-- TODO: these should be the various language names as understood in Arabic -->
+		<item>الإنجليزية</item>
+		<item>الإسبرانتو</item>
+		<item>الفرنسية</item>
+		<item>الألمانية</item>
+		<item>الهنغارية</item>
+		<item>الإيطالية</item>
+		<item>البولندية</item>
+		<item>الإسبانية</item>
+		<item>الكاتالونية</item>
+		<item>الباسكية</item>
+		<item>النرويجية</item>
+		<item>الصينية التقليدية</item>
+		<item>البرتغالية</item>
+		<item>الروسية</item>
+		<item>الهولندية</item>
+		<item>التشيكية</item>
+		<item>الصينية المبسطة</item>
+		<item>العربية</item>
     </string-array>
 
     <!-- position formats -->
@@ -2008,9 +2008,9 @@
     <string name="locationdelete_dialog_title1">هل تريد إزالة المواقع؟</string> <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">هل أنت متأكد أنك تريد إزالة %s؟</string>
     <plurals name="locationdelete_dialog_success">
-        <item quantity="zero">%d places were removed.</item>    <!-- TODO -->
+        <item quantity="zero">لم يُزال أي مكان.</item>
         <item quantity="one">تمت إزالة المكان.</item>
-        <item quantity="two">%d places were removed.</item>     <!-- TODO -->
+        <item quantity="two">أُزيل مكانان</item>
         <item quantity="other">تمت إزالة %d مكان.</item>
         <item quantity="few">تمت إزالة %d مكان.</item>
         <item quantity="many">تمت إزالة %d مكان.</item>
@@ -2057,11 +2057,11 @@
     <string name="msg_import_label_file">ملف</string> <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">
-        <item quantity="zero">%d themes</item>    <!-- TODO -->
-        <item quantity="one">%d سمة</item>
-        <item quantity="two">%d themes</item>     <!-- TODO -->
-        <item quantity="few">%d themes</item>     <!-- TODO -->
-        <item quantity="many">%d themes</item>    <!-- TODO -->
+        <item quantity="zero">لا سمة</item>
+        <item quantity="one">سمة واحدة</item>
+        <item quantity="two">سمتان</item>
+        <item quantity="few">%d سمات</item>
+        <item quantity="many">%d سمةً</item>
         <item quantity="other">%d سمات</item>
     </plurals>
 
