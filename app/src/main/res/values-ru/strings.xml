@@ -1541,6 +1541,7 @@
         <item>Голландский</item>
         <item>Чешский</item>
         <item>Китайский (упрощенный)</item>
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
