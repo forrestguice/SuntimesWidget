@@ -1,5 +1,8 @@
 ### ~
 
+### v0.15.14 (2024-04-08)
+* adds translation to Arabic (ar) (contributed by Alelg) (#786).
+
 ### v0.15.13 (2024-03-19)
 * adds app options to show daylight comparison (today/tomorrow) (#773).
 * increases the maximum before/after alarm offset (#779); fixes localization of display values.
