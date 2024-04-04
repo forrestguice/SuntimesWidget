@@ -1188,11 +1188,11 @@
     </plurals>
 
     <plurals name="units_days">
-        <item quantity="zero">%d days</item>    <!-- TODO -->
+        <item quantity="zero">%s days</item>    <!-- TODO -->
         <item quantity="one">%s يوم</item>
-        <item quantity="two">%d days</item>    <!-- TODO -->
-        <item quantity="few">%d days</item>    <!-- TODO -->
-        <item quantity="many">%d days</item>    <!-- TODO -->
+        <item quantity="two">%s days</item>    <!-- TODO -->
+        <item quantity="few">%s days</item>    <!-- TODO -->
+        <item quantity="many">%s days</item>    <!-- TODO -->
         <item quantity="other">%s يوم</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
