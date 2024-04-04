@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.graph;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,30 +39,70 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
+import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
+import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWLABELS;
+import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
+import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWAXIS;
+import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
+import static com.forrestguice.suntimeswidget.graph.LightGraphView.DEF_KEY_GRAPH_SHOWPOINTS;
+import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWPOINTS;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID;
 
 public class LightGraphDialog extends BottomSheetDialogFragment
 {
+    public static final String MAPTAG_LIGHTGRAPH = "_lightgraph";
+
     public static final String DIALOGTAG_HELP = "lightgraph_help";
     protected static SuntimesUtils utils = new SuntimesUtils();
 
-    protected TextView text_title;
+    protected TextView text_title, text_time;
+    protected LightGraphView graph;
+    protected LightMapView lightmap;
+    protected ProgressBar progress;
     protected ImageButton btn_menu;
 
-    protected LightGraphView.LightGraphOptions options = new LightGraphView.LightGraphOptions();
+    protected LightGraphView.LightGraphOptions options; // = new LightGraphView.LightGraphOptions();
 
     public LightGraphDialog() {
         setArguments(new Bundle());
+    }
+
+    protected SuntimesRiseSetDataset data = null;
+    public SuntimesRiseSetDataset getData() {
+        return data;
+    }
+    public void setData(Context context, SuntimesRiseSetDataset data) {
+        setData(context, data, true);
+    }
+    public void setData(Context context, SuntimesRiseSetDataset data, boolean updateNow)
+    {
+        this.data = data;
+        if (isAdded())
+        {
+            graph.setData(data);
+            if (updateNow) {
+                updateViews(getActivity());
+            }
+        }
     }
 
     @NonNull @Override
@@ -87,16 +128,41 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
         ContextThemeWrapper context = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
-        View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_equinox1, parent, false);
+        View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_lightgraph, parent, false);
+
+        progress = (ProgressBar) v.findViewById(R.id.progress);
+
+        lightmap = (LightMapView) v.findViewById(R.id.info_time_lightmap);
+        if (lightmap != null) {
+            lightmap.setData(data);
+        }
+
+        graph = (LightGraphView) v.findViewById(R.id.info_time_lightgraph);
+        if (graph != null)
+        {
+            options = graph.getOptions();
+            options.init(context);
+
+            graph.setTaskListener(new LightGraphView.LightGraphTaskListener() {
+                public void onProgress(boolean value) {
+                    showProgress(value);
+                }
+            });
+            graph.setData(data);    // returns immediately; makes async call to updateViews when data is actually set
+        }
         initLocale(context);
-        options.init(context);
 
-        text_title = (TextView)v.findViewById(R.id.text_title1);
-        btn_menu = (ImageButton)v.findViewById(R.id.menu_button);
-
+        text_title = (TextView) v.findViewById(R.id.dialog_title);
         if (text_title != null) {
             //text_title.setOnClickListener(onTitleClicked);
         }
+
+        text_time = (TextView) v.findViewById(R.id.info_time_graph);
+        if (text_time != null) {
+            text_time.setOnClickListener(onTimeClicked);
+        }
+
+        btn_menu = (ImageButton) v.findViewById(R.id.menu_button);
         if (btn_menu != null)
         {
             TooltipCompat.setTooltipText(btn_menu, btn_menu.getContentDescription());
@@ -105,8 +171,6 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                 btn_menu.setFocusableInTouchMode(true);
             }
         }
-
-        // TODO: init graph
 
         if (savedState != null) {
             loadState(savedState);
@@ -121,7 +185,17 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     public void onResume()
     {
         super.onResume();
+        if (graph != null) {
+            graph.onResume();
+        }
         expandSheet(getDialog());
+    }
+
+    @Override
+    public void onStop()
+    {
+        stopUpdateTask();
+        super.onStop();
     }
 
     private void expandSheet(DialogInterface dialog)
@@ -148,7 +222,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         if (dialog != null)
         {
             BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(sheetFrameID);
             if (layout != null)
             {
                 BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
@@ -160,8 +234,8 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         }
         return null;
     }
-
     private final int peekViewID =  R.id.info_equinoxsolstice_flipper1;  // TODO: peek view
+    private final int sheetFrameID = android.support.design.R.id.design_bottom_sheet;  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
 
     private final DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
         @Override
@@ -169,12 +243,14 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             Context context = getContext();
             if (context != null) {
                 updateViews(getContext());
-                text_title.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        ViewUtils.initPeekHeight(getDialog(), peekViewID);
-                    }
-                });
+                if (text_title != null) {
+                    text_title.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ViewUtils.initPeekHeight(getDialog(), peekViewID);
+                        }
+                    });
+                }
             } else Log.w("LightGraphDialog.onShow", "null context! skipping update");
         }
     };
@@ -220,22 +296,127 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         }
     }
 
+
+    protected void showProgress(boolean value)
+    {
+        if (progress != null) {
+            progress.setVisibility(value ? View.VISIBLE : View.GONE);
+        }
+    }
+
     public void updateViews(Context context)
     {
-        /*showEmptyView(!isImplemented(card_adapter.initData(context, EquinoxDatasetAdapter.CENTER_POSITION)));
-        int position = card_adapter.highlightNote(context);
-        if (position != -1 && !userSwappedCard()) {
-            card_view.setLayoutFrozen(false);
-            card_view.scrollToPosition(position);
-            card_view.setLayoutFrozen(false);
-        }*/
-        // TODO: update views
+        stopUpdateTask();
+        updateTimeViews(context);
+        updateGraphViews(context);
+        startUpdateTask();
         Log.d("DEBUG", "LightGraphDialog updated");
     }
 
-    protected void updateViews(Context context, SuntimesRiseSetDataset data) {
-        text_title.setText(utils.calendarDateYearDisplayString(context, data.calendar()).toString());
+    public void updateTimeViews(Context context)
+    {
+        //WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID)
+
+        if (context == null) {
+            return;
+        }
+
+        Calendar now = Calendar.getInstance();
+        long nowMillis = now.getTimeInMillis();
+        long mapTimeMillis = nowMillis;
+
+        if (graph.isAnimated() || graph.getOffsetDays() != 0) {
+            mapTimeMillis = getMapTime(now.getTimeInMillis());
+        }
+
+        String suffix = "";
+        boolean nowIsAfter = false;
+
+        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+        TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
+                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+        Calendar mapTime = Calendar.getInstance(tz);
+
+        mapTime.setTimeInMillis(mapTimeMillis);
+        nowIsAfter = now.after(mapTime);
+
+        boolean isOffset = Math.abs(nowMillis - mapTimeMillis) > 60 * 1000;
+        if (isOffset) {
+            suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+        }
+
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        if (text_time != null)
+        {
+            String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
+            if (suffix.isEmpty())
+                text_time.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
+            else text_time.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, Color.RED));    // TODO: warning color
+        }
+
+        /*if (offsetTime != null)
+        {
+            if (isOffset) {
+                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
+                offsetText.setSuffix("");
+                String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
+                offsetTime.setText(displayString);
+            } else {
+                offsetTime.setText(" \n ");
+            }
+        }*/
     }
+
+    private long getMapTime(long now)
+    {
+        long offsetMillis = graph.getOffsetDays() * 24 * 60 * 60 * 1000;
+        return ((graph.getNow() == -1) ? now : graph.getNow() + offsetMillis);
+    }
+
+    public void updateGraphViews(Context context)
+    {
+        if (context != null)
+        {
+            options.axisX_labels_show = options.axisY_labels_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
+            options.axisX_show = options.axisY_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
+            options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
+            options.gridX_major_show = options.gridY_major_show = false;
+            options.sunPath_show_points = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWPOINTS);
+        }
+        if (graph != null) {
+            graph.updateViews(true);
+        }
+    }
+
+    private void startUpdateTask()
+    {
+        stopUpdateTask();
+        if (graph != null) {
+            graph.post(updateTask);
+        }
+    }
+    private void stopUpdateTask()
+    {
+        if (graph != null) {
+            graph.removeCallbacks(updateTask);
+        }
+    }
+
+    public static final int UPDATE_RATE = 3000;
+    private final Runnable updateTask = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (data != null && !graph.isAnimated()) {
+                updateTimeViews(getActivity());
+                updateGraphViews(getActivity());
+            }
+            if (graph != null) {
+                graph.postDelayed(this, UPDATE_RATE);
+            }
+        }
+    };
 
     @Override
     public void onSaveInstanceState( Bundle outState )
@@ -285,14 +466,22 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         Menu menu = popup.getMenu();
 
-        /*MenuItem trackingItem = menu.findItem(R.id.action_tracking_mode);
-        if (trackingItem != null) {
-            stripMenuItemLabel(trackingItem);
-            updateTrackingMenu(trackingItem.getSubMenu(), WidgetSettings.loadTrackingModePref(context, 0));
+        MenuItem graphOption_showGrid = menu.findItem(R.id.graphOption_showGrid);
+        if (graphOption_showGrid != null) {
+            graphOption_showGrid.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID));
         }
-        MenuItem crossQuarterItem = menu.findItem(R.id.action_crossquarterdays);
-        crossQuarterItem.setChecked(AppSettings.loadShowCrossQuarterPref(context));
-        */
+        MenuItem graphOption_showLabels = menu.findItem(R.id.graphOption_showLabels);
+        if (graphOption_showLabels != null) {
+            graphOption_showLabels.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS));
+        }
+        MenuItem graphOption_showAxis = menu.findItem(R.id.graphOption_showAxis);
+        if (graphOption_showAxis != null) {
+            graphOption_showAxis.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS));
+        }
+        MenuItem graphOption_showPoints = menu.findItem(R.id.graphOption_showPoints);
+        if (graphOption_showPoints != null) {
+            graphOption_showPoints.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWPOINTS));
+        }
     }
 
     private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
@@ -300,8 +489,43 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
+            Context context = getActivity();
+            boolean toggledValue;
+
             switch (item.getItemId())
             {
+                case R.id.graphOption_showPoints:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWPOINTS);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews(context);
+                    return true;
+
+                case R.id.graphOption_showAxis:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews(context);
+                    return true;
+
+                case R.id.graphOption_showGrid:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews(context);
+                    return true;
+
+                case R.id.graphOption_showLabels:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews(context);
+                    return true;
+
+                case R.id.action_timezone:
+                    showTimeZoneMenu(context, text_time);
+                    return true;
+
                 case R.id.action_share:
                     shareItem(getContext());
                     return true;
@@ -315,6 +539,41 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             }
         }
     });
+
+
+
+    private final View.OnClickListener onTimeClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            showTimeZoneMenu(getActivity(), text_time);
+        }
+    };
+    protected boolean showTimeZoneMenu(Context context, View view)
+    {
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.lightgraphmenu_tz, onTimeZoneMenuClick);
+        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID));
+        menu.show();
+        return true;
+    }
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context != null) {
+                String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
+                if (tzID != null) {
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, tzID);
+                    setData(context, data, false);    // reconstructs year data using given timezone
+                    updateViews(getActivity());
+                }
+                return (tzID != null);
+            } else return false;
+        }
+    });
+
 
     protected void shareItem(Context context)
     {

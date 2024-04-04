@@ -2,6 +2,40 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/optionsSubMenu"
+        android:icon="?attr/icActionGraph"
+        android:title="@string/configAction_options"
+        app:showAsAction="never">
+        <menu>
+
+            <item android:id="@+id/graphOption_showGrid"
+                android:title="@string/graph_option_grid"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showLabels"
+                android:title="@string/graph_option_labels"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showAxis"
+                android:title="@string/graph_option_axis"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showPoints"
+                android:title="@string/graph_option_points"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+        </menu>
+    </item>
+
+    <item android:id="@+id/action_timezone"
+        android:icon="?attr/icActionTime"
+        android:title="@string/configLabel_timezone"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_share"
         android:title="@string/configAction_share"
         android:icon="?attr/icActionShare"

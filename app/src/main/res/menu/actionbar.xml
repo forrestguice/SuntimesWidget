@@ -42,6 +42,11 @@
           android:title="@string/configAction_sunDialog"
           app:showAsAction="never" />
 
+    <item android:id="@+id/action_lightgraph"
+        android:icon="@drawable/ic_sun"
+        android:title="@string/configAction_lightGraphDialog"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_equinox"
           android:icon="?attr/icActionAbout"
           android:title="@string/configAction_equinoxDialog"

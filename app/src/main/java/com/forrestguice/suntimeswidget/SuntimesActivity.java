@@ -75,6 +75,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.getfix.LocationHelper;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
+import com.forrestguice.suntimeswidget.graph.LightGraphDialog;
 import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
@@ -180,6 +181,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_DATE_CONFIG = "dateconfig";
     private static final String DIALOGTAG_DATE_SEEK = "dateselect";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
+    private static final String DIALOGTAG_LIGHTGRAPH = "lightgraph";
     private static final String DIALOGTAG_WORLDMAP = "worldmap";
     private static final String DIALOGTAG_EQUINOX = "equinox";
     private static final String DIALOGTAG_MOON = "moon";
@@ -1410,6 +1412,10 @@ public class SuntimesActivity extends AppCompatActivity
                 showLightMapDialog();
                 return true;
 
+            case R.id.action_lightgraph:
+                showLightGraphDialog();
+                return true;
+
             case R.id.action_worldmap:
                 showWorldMapDialog();
                 return true;
@@ -2321,7 +2327,28 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * Show the lightmap dialog.
+     * Show the lightgraph dialog.
+     * @return
+     */
+    protected LightGraphDialog showLightGraphDialog()
+    {
+        final LightGraphDialog dialog = new LightGraphDialog();
+        dialog.setDialogListener(new LightGraphDialog.DialogListener());    // TODO: listener
+
+        if (dataset != null) {
+            dialog.setData(SuntimesActivity.this, dataset);
+        } else {
+            SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(SuntimesActivity.this);
+            data.calculateData();
+            dialog.setData(SuntimesActivity.this, data);
+        }
+
+        dialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTGRAPH);
+        return dialog;
+    }
+
+    /**
+     * Show the sun position dialog.
      */
     protected LightMapDialog showLightMapDialog()
     {

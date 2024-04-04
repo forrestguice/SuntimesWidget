@@ -46,6 +46,7 @@ import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_FILL
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWAXIS;
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWMOON;
+import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
 
 /**
  * A 3x2 sunlight graph
@@ -102,7 +103,7 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         LightGraphView.LightGraphTask drawTask = new LightGraphView.LightGraphTask();
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
         options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
-        Bitmap bitmap = drawTask.makeBitmap( LightGraphView.LightGraphTask.createYearData(dataset), SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options );
+        Bitmap bitmap = drawTask.makeBitmap( LightGraphView.LightGraphTask.createYearData(context, dataset), SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options );
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_graph, bitmap);
             //Log.d("DEBUG", "graph is " + bitmap.getWidth() + " x " + bitmap.getHeight());
@@ -116,7 +117,7 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, int appWidgetId)
     {
         super.themeViews(context, views, appWidgetId);
-        //options.axisX_labels_show = options.axisY_labels_show = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        options.axisX_labels_show = options.axisY_labels_show = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
     }
 
     @SuppressLint("ResourceType")
@@ -144,21 +145,21 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         options.graph_width = 365;    // days
         options.graph_height = 24;    // hours
         options.graph_x_offset = options.graph_y_offset = 0;
-        //options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
-        options.gridX_minor_show = options.gridY_minor_show = false;
+
+        options.axisX_show = options.axisY_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
+        options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
+
+        //options.gridX_minor_show = options.gridY_minor_show = false;
         //options.axisX_labels_show = options.axisY_labels_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWLABELS);
-        options.axisX_labels_show = options.axisY_labels_show = true;
-        //options.axisX_show = options.axisY_show = options.gridY_major_show = options.gridX_major_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWAXIS);
-        options.axisX_show = options.axisY_show = true;
+        //options.axisX_labels_show = options.axisY_labels_show = true;
+        //options.axisX_show = options.axisY_show = true;
+
         options.gridX_major_show = options.gridY_major_show = false;
         options.axisX_width = options.axisY_width = 365;
-
 
         options.sunPath_show_points = true;
         options.sunPath_show_line = true;
         options.sunPath_show_fill = true; //WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
-        //options.moonPath_show_line = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON);
-        //options.moonPath_show_fill = options.sunPath_show_fill;
 
         themeViewsAzimuthElevationText(context, views, theme);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)

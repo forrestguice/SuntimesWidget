@@ -29,6 +29,8 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -39,31 +41,35 @@ import android.util.Pair;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import net.time4j.calendar.astro.SolarTime;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
+
+import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
 
 /**
  * LightGraphView
  */
 public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 {
+    public static final String PREF_KEY_GRAPH_SHOWPOINTS = "showPoints";
+    public static final boolean DEF_KEY_GRAPH_SHOWPOINTS = true;
+
     public static final int MINUTES_IN_DAY = 24 * 60;
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
@@ -73,7 +79,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
     private LightGraphOptions options;
-    private SuntimesRiseSetDataset data = null;
+    private SuntimesRiseSetDataset data0 = null;
+    private SuntimesRiseSetDataset[] data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
 
@@ -155,8 +162,40 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         options.colorPointStroke = theme.getGraphPointStrokeColor();
     }
 
-    public void setData(@Nullable SuntimesRiseSetDataset data) {
-        this.data = data;
+    public void setData(@Nullable SuntimesRiseSetDataset value)
+    {
+        this.data0 = value;
+        this.data = null;
+
+        if (graphListener != null) {
+            graphListener.onProgress(true);
+        }
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        final Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Context context = getContext();
+                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+                TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone()
+                        : WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
+
+                data = LightGraphTask.createYearData(getContext(), data0, timezone);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        updateViews(true);
+                        if (graphListener != null) {
+                            graphListener.onProgress(false);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -167,36 +206,36 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         long timeSinceLastUpdate = (System.currentTimeMillis() - lastUpdate);
         if (forceUpdate || timeSinceLastUpdate >= maxUpdateRate)
         {
-            updateViews(data);
+            updateViews();
             lastUpdate = System.currentTimeMillis();
         }
     }
 
-    /**
-     * @param data an instance of SuntimesRiseSetDataset
-     */
-    public void updateViews(@Nullable SuntimesRiseSetDataset data)
+    public void updateViews()
     {
-        setData(data);
-
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
-            Log.w(LightGraphView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(LightGraphView.this.hashCode())  +  ") .. restarting task.");
+            Log.w(LightGraphView.class.getSimpleName(), "updateViews: task already running: " + data0 + " (" + Integer.toHexString(LightGraphView.this.hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
-        } else Log.d(LightGraphView.class.getSimpleName(), "updateViews: starting task " + data);
+        } else Log.d(LightGraphView.class.getSimpleName(), "updateViews: starting task " + data0);
 
         if (getWidth() == 0 || getHeight() == 0) {
             //Log.d(LightGraphView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
             return;
         }
 
+        if (data == null) {
+            return;
+        }
+
         drawTask = new LightGraphTask();
+        drawTask.setData(data);
         drawTask.setListener(drawTaskListener);
 
         if (Build.VERSION.SDK_INT >= 11) {
-            drawTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
+            drawTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
         } else {
-            drawTask.execute(data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
+            drawTask.execute(data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
         }
     }
 
@@ -208,16 +247,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 graphListener.onStarted();
             }
         }
-
-        /*@Override
-        public void onDataModified(SuntimesRiseSetDataset data)
-        {
-            Log.d(LightGraphView.class.getSimpleName(), "LightGraphView.updateViews: onDataModified: " + Integer.toHexString(LightGraphView.this.hashCode()));
-            LightGraphView.this.data = data;
-            if (graphListener != null) {
-                graphListener.onDataModified(data);
-            }
-        }*/
 
         @Override
         public void onFrame(Bitmap frame, long offsetDays) {
@@ -295,11 +324,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         if (updateTime)
         {
             options.now = -1;
-            if (data != null) {
-                Calendar calendar = Calendar.getInstance(data.timezone());
-                data.setTodayIs(calendar);
-                data.calculateData();
-            }
+            //if (data0 != null) {
+                //Calendar calendar = Calendar.getInstance(data0.timezone());
+                //data0.setTodayIs(calendar);
+                //data0.calculateData();
+            //}
         }
         updateViews(true);
     }
@@ -307,9 +336,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (data != null) {
+        if (data0 != null) {
             //Log.d(LightGraphView.class.getSimpleName(), "onAttachedToWindow: update views " + data);
-            updateViews(data);
+            updateViews(true);
         }
     }
 
@@ -371,7 +400,13 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     {
         private LightGraphOptions options;
 
-        //private SuntimesRiseSetDataset t_data = null;
+        protected SuntimesRiseSetDataset[] yearData = null;
+        public void setData(SuntimesRiseSetDataset[] data) {
+            yearData = data;
+        }
+        public void invalidData() {
+            yearData = null;
+        }
 
         /**
          * @param params 0: SuntimesRiseSetDataset,
@@ -413,7 +448,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             long time0 = System.nanoTime();
             options.offsetDays = initialOffset;
 
-            SuntimesRiseSetDataset[] yearData = createYearData(data0);
             if (yearData != null)
             {
                 int i = 0;
@@ -448,13 +482,23 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         }
 
         @Nullable
-        public static SuntimesRiseSetDataset[] createYearData(@Nullable SuntimesRiseSetDataset data0)
+        public static SuntimesRiseSetDataset[] createYearData(Context context, @Nullable SuntimesRiseSetDataset data0) {
+            return createYearData(context, data0, null);
+        }
+
+        @Nullable
+        public static SuntimesRiseSetDataset[] createYearData(Context context, @Nullable SuntimesRiseSetDataset data0, @Nullable TimeZone timezone)
         {
             if (data0 != null && data0.dataActual != null)
             {
+                long bench_start = System.nanoTime();
                 SuntimesRiseSetDataset[] yearData = new SuntimesRiseSetDataset[366];
 
-                Calendar date0 = Calendar.getInstance(data0.calendar().getTimeZone());
+                if (timezone == null) {
+                    timezone = data0.calendar().getTimeZone();
+                }
+
+                Calendar date0 = Calendar.getInstance(timezone);
                 date0.setTimeInMillis(data0.calendar().getTimeInMillis());
                 date0.set(Calendar.MONTH, 0);
                 date0.set(Calendar.DAY_OF_MONTH, 1);
@@ -462,20 +506,19 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
                 for (int i = 0; i < yearData.length; i++)
                 {
-                    Calendar date = Calendar.getInstance();
+                    Calendar date = Calendar.getInstance(timezone);
                     date.setTimeInMillis(date0.getTimeInMillis());
                     date.add(Calendar.DATE, i);
 
                     SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0);
+                    data.setTimeZone(context, timezone);
                     data.setTodayIs(date);
                     data.calculateData();
                     yearData[i] = data;
                 }
 
-                //if (!data0.isCalculated()) {
-                //    data0.calculateData();
-                //}
-
+                long bench_end = System.nanoTime();
+                Log.d("BENCH", "make light graph (data) :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
                 return yearData;
             }
             return null;
@@ -499,7 +542,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
             if (yearData != null)
             {
-                Calendar now = Calendar.getInstance(); // graphTime(yearData[0], options);
+                Calendar now = Calendar.getInstance(yearData[0].timezone()); // graphTime(yearData[0], options);
                 options.location = yearData[0].location();
 
                 drawPaths(now, yearData, c, paintPath, options);
@@ -507,11 +550,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 drawAxisUnder(now, yearData, c, p, options);
                 drawAxisOver(now, yearData, c, p, options);
                 drawLabels(now, yearData, c, paintText, options);
-                drawNow(now, yearData[0].calculator(), c, p, options);
+                drawNow(now, c, p, options);
             }
 
             long bench_end = System.nanoTime();
-            Log.d("BENCH", "make line graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+            Log.d("BENCH", "make light graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
             return b;
         }
         protected void initPaint()
@@ -634,24 +677,23 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             drawRect(c, p);
         }
 
-        protected void drawNow(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LightGraphOptions options)
+        protected void drawNow(Calendar now, Canvas c, Paint p, LightGraphOptions options)
         {
             if (options.option_drawNow > 0)
             {
-                int pointRadius = (options.option_drawNow_pointSizePx <= 0) ? (int)(c.getWidth() * (20 / (float)MINUTES_IN_DAY)) : options.option_drawNow_pointSizePx;
+                int pointRadius = (options.option_drawNow_pointSizePx <= 0) ? (int)(c.getWidth() * (5 / 365d)) : options.option_drawNow_pointSizePx;
                 int pointStroke = (int)Math.ceil(pointRadius / 3d);
 
                 switch (options.option_drawNow)
                 {
                     case LightGraphOptions.DRAW_NOW2:
                         DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
-                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, Color.TRANSPARENT, options.colorPointStroke, dashed);
+                        drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, options.colorPointStroke, dashed);
                         break;
 
                     case LightGraphOptions.DRAW_NOW1:
                     default:
-                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, options.colorPointFill, options.colorPointStroke, null);
-                        Log.d("DEBUG", "drawing now");
+                        drawPoint(now, pointRadius, pointStroke, c, p, options.colorPointFill, options.colorPointStroke, null);
                         //drawVerticalLine(now, calculator, c, p, pointStroke, options.colorPointFill, null);
                         break;
                 }
@@ -703,10 +745,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             {
                 HashMap<Path, Double> sunFill = createSunPath(now, data, mode, rising, c, options, true, sun_paths, sun_hours);
                 p.setStyle(Paint.Style.FILL);
-                for (Path path : sunFill.keySet())
-                {
-                    //boolean isDay = (sunFill.get(path) >= 0);
-                    //p.setAlpha(isDay ? options.sunPath_color_day_closed_alpha : options.sunPath_color_night_closed_alpha);
+                for (Path path : sunFill.keySet()) {
                     c.drawPath(path, p);
                 }
             }
@@ -1025,15 +1064,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        private Calendar lmt = null;
-        private Calendar lmt(Location location)
-        {
-            if (lmt == null) {
-                lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, location));
-            }
-            return lmt;
-        }
-
         protected void drawGridY(Calendar now, SuntimesRiseSetDataset[] data, Canvas c, Paint p, float interval, LightGraphOptions options)
         {
             int n = 365;
@@ -1053,19 +1083,13 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             int h = c.getHeight();
             c.drawRect(0, 0, w, h, p);
         }
-
-        protected void drawPoint(Calendar calendar, SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect) {
-            if (calendar != null) {
-                drawPoint(calendar.getTimeInMillis(), calculator, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
+        protected void drawPoint(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect) {
+            if (calendar != null)
+            {
+                double day = calendar.get(Calendar.DAY_OF_YEAR);
+                double hour = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d) + (calendar.get(Calendar.SECOND) / (60d * 60d));
+                drawPoint(day, hour, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
             }
-        }
-        protected void drawPoint(long time, SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
-        {
-            Calendar lmt = lmt(calculator.getLocation());
-            lmt.setTimeInMillis(time);
-            double day = lmt.get(Calendar.DAY_OF_YEAR);
-            double hour = lmt.get(Calendar.HOUR_OF_DAY);
-            drawPoint(day, hour, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
         }
         protected void drawPoint(double day, double hour, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
         {
@@ -1092,16 +1116,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         }
 
         protected void drawVerticalLine(Calendar calendar, SuntimesCalculator calculator, Canvas c, Paint p, int lineWidth, int lineColor, DashPathEffect lineEffect) {
-            if (calendar != null) {
-                drawVerticalLine(calendar.getTimeInMillis(), calculator, c, p, lineWidth, lineColor, lineEffect);
+            if (calendar != null)
+            {
+                double day = calendar.get(Calendar.DAY_OF_YEAR);
+                drawVerticalLine(day, c, p, lineWidth, lineColor, lineEffect);
             }
-        }
-        protected void drawVerticalLine(long time, SuntimesCalculator calculator, Canvas c, Paint p, int lineWidth, int lineColor, DashPathEffect lineEffect)
-        {
-            Calendar lmt = lmt(calculator.getLocation());
-            lmt.setTimeInMillis(time);
-            double day = lmt.get(Calendar.DAY_OF_YEAR);
-            drawVerticalLine(day, c, p, lineWidth, lineColor, lineEffect);
         }
         protected void drawVerticalLine(double day, Canvas c, Paint p, int lineWidth, int lineColor, @Nullable DashPathEffect lineEffect)
         {
@@ -1133,14 +1152,14 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     public static abstract class LightGraphTaskListener
     {
         public void onStarted() {}
-        //public void onDataModified(SuntimesRiseSetDataset data) {}
         public void onFrame(Bitmap frame, long offsetDays) {}
         public void afterFrame(Bitmap frame, long offsetDays) {}
         public void onFinished(Bitmap result) {}
+        public void onProgress(boolean value) {}
     }
 
     private LightGraphTaskListener graphListener = null;
-    public void setMapTaskListener( LightGraphTaskListener listener ) {
+    public void setTaskListener( LightGraphTaskListener listener ) {
         graphListener = listener;
     }
 
@@ -1207,7 +1226,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
         public boolean sunPath_show_line = true;
         public boolean sunPath_show_fill = true;
-        public boolean sunPath_show_points = false;
+        public boolean sunPath_show_points = DEF_KEY_GRAPH_SHOWPOINTS;
         public int sunPath_color_day = Color.YELLOW;
         public int sunPath_color_day_closed = Color.YELLOW;
         public int sunPath_color_day_closed_alpha = 200;
@@ -1257,8 +1276,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                     R.attr.graphColor_axis,                 // 7
                     R.attr.graphColor_grid,                 // 8
                     R.attr.graphColor_labels,               // 9
-                    //R.attr.moonriseColor,                   // 10
-                    //R.attr.moonsetColor                     // 11
             };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             colorDay = colorBackground = sunPath_color_day = sunPath_color_day_closed = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
@@ -1271,8 +1288,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, typedArray.getResourceId(7, R.color.graphColor_axis_dark));
             gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, typedArray.getResourceId(8, R.color.graphColor_grid_dark));
             axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, typedArray.getResourceId(9, R.color.graphColor_labels_dark));
-            //moonPath_color_day = moonPath_color_day_closed = ContextCompat.getColor(context, typedArray.getResourceId(10, R.color.moonIcon_color_rising_dark));
-            //moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, typedArray.getResourceId(11, R.color.moonIcon_color_setting_dark));
             typedArray.recycle();
             init(context);
         }
@@ -1303,8 +1318,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, R.color.graphColor_axis_dark);
             gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, R.color.graphColor_grid_dark);
             axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, R.color.graphColor_labels_dark);
-            //moonPath_color_day = moonPath_color_day_closed = ContextCompat.getColor(context, R.color.moonIcon_color_rising_dark);
-            //moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, R.color.moonIcon_color_setting_dark);
             init(context);
         }
 
@@ -1320,8 +1333,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, R.color.graphColor_axis_light);
             gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, R.color.graphColor_grid_light);
             axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, R.color.graphColor_labels_light);
-            //moonPath_color_day = moonPath_color_day_closed = ContextCompat.getColor(context, R.color.moonIcon_color_rising_light);
-            //moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, R.color.moonIcon_color_setting_light);
             init(context);
         }
 
