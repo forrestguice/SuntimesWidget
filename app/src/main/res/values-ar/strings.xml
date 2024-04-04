@@ -255,10 +255,6 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">متري</string>
     <string name="lengthUnits_imperial">إنگليزي</string>
-    <string-array name="lengthUnits_values" translatable="false">
-        <item>METRIC</item>
-        <item>IMPERIAL</item>
-    </string-array>
     <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
         <item>@string/lengthUnits_metric</item>
         <item>@string/lengthUnits_imperial</item>
@@ -635,10 +631,6 @@
     <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
         <item>@string/compareMode_yesterday</item>
         <item>@string/compareMode_tomorrow</item>
-    </string-array>
-    <string-array name="compareMode_values" translatable="false">  <!-- one-to-one with compareMode_display -->
-        <item>YESTERDAY</item>
-        <item>TOMORROW</item>
     </string-array>
 
     <!-- Widget Setting: tracking mode -->
@@ -1033,10 +1025,6 @@
     <string name="alarmDismiss_none">بدون</string>                         <!-- alarm setting -->
     <string name="alarmDismiss_none_long">لا يوجد تحدي</string>            <!-- chip label -->
     <string name="alarmDismiss_math">مسائل رياضية سهلة</string>           <!-- alarm setting -->
-    <string-array name="dismissChallenge_values" translatable="false">
-        <item>NONE</item>
-        <item>MATH</item>
-    </string-array>
     <string-array name="dismissChallenge_display"> <!-- one-to-one with dismissChallenge_values -->
         <item>@string/alarmDismiss_none</item>
         <item>@string/alarmDismiss_math</item>
@@ -1078,25 +1066,6 @@
     <string name="configLabel_alarms_autostart_off">مُعطَّل.\nقد تفشل التنبيهات في العمل بعد إعادة التشغيل.</string>
     <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "مُفعل", "مُعطَّل" -->
     <string name="autostartWarning"><xliff:g id="warningTag">[w] التشغيل التلقائي معطل!\nقد تفشل التنبيهات في العمل بعد إعادة التشغيل.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
-
-    <string name="help_battery_optimization_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/alarms/batteryopt</string>
-    <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
-        <item>Samsung</item>
-        <item>OnePlus</item>
-        <item>Huawei</item>
-        <item>Xiaomi</item>
-        <item>Meizu</item>
-        <item>Asus</item>
-        <item>WIKO</item>
-        <item>LENOVO</item>
-        <item>OPPO</item>
-        <item>Vivo</item>
-        <item>realme</item>
-        <item>Blackview</item>
-        <item>Sony</item>
-        <item>Unihertz</item>
-        <!--<item>Google</item>--> <!-- uncomment to test with emulator -->
-    </string-array>
 
     <string name="configLabel_alarms_notifications">الإشعارات</string>
     <string name="configLabel_alarms_notifications_on">مُفعل</string>
@@ -1141,16 +1110,10 @@
     <string name="configLabel_alarms_hardwarebuttons">أزرار الأجهزة</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="تأجيل">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
-        <item>تجاهل</item>
-        <item>كتم الصوت</item>
-        <item>تأجيل</item>
-        <item>عدم فعل شيء</item>
-    </string-array>
-    <string-array name="alarm_hardwarebutton_actions_values" translatable="false">
-        <item>suntimeswidget.alarm.dismiss</item>
-        <item>suntimeswidget.alarm.silent</item>
-        <item>suntimeswidget.alarm.snooze</item>
-        <item>suntimeswidget.alarm.none</item>
+        <item>تجاهل</item>        <!-- dismiss -->
+        <item>كتم الصوت</item>    <!-- silent -->
+        <item>تأجيل</item>        <!-- snooze -->
+        <item>عدم فعل شيء</item>  <!-- none -->
     </string-array>
 
     <string name="configLabel_alarmSounds">الأصوات</string>            <!-- group title -->
@@ -1348,17 +1311,6 @@
         <item>@string/timeMode_blue8</item>
         <item>@string/timeMode_blue4</item>
     </string-array>
-    <string-array name="emphasizefield_values" translatable="false">  <!-- one-to-one with headerText_display -->
-        <item>NONE</item>
-        <item>GOLD</item>
-        <item>NOON</item>
-        <item>OFFICIAL</item>   <!-- TimeMode enum names -->
-        <item>CIVIL</item>
-        <item>NAUTICAL</item>
-        <item>ASTRONOMICAL</item>
-        <item>BLUE8</item>
-        <item>BLUE4</item>
-    </string-array>
 
     <!-- App Setting: show headers -->
     <string name="configLabel_ui_showheaders">الترويسات</string>              <!-- group title -->
@@ -1366,14 +1318,9 @@
     <string name="configLabel_ui_showheader_text">أظهر نص الترويسة</string> <!-- checkbox label -->
     <string name="configLabel_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
     <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
-        <item>بدون</item>
-        <item>علامات</item>
-        <item>السمت</item>
-    </string-array>
-    <string-array name="headerText_values" translatable="false">  <!-- one-to-one with headerText_display -->
-        <item>0</item>   <!-- 0: none -->
-        <item>1</item>   <!-- 1: labels -->
-        <item>2</item>   <!-- 2: azimuth -->
+        <item>بدون</item>     <!-- 0: none -->
+        <item>علامات</item>    <!-- 1: labels -->
+        <item>السمت</item>    <!-- 2: azimuth -->
     </string-array>
 
     <!-- App Setting: show golden hour -->
@@ -1397,22 +1344,11 @@
         <item>@string/appThemes_nightMode</item>
         <item>@string/appThemes_systemDefault</item>
     </string-array>
-    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
-        <item>light</item>
-        <item>dark</item>
-        <item>daynight</item>
-        <item>system</item>
-    </string-array>
 
     <string-array name="appThemes_light_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
         <item>@string/configLabel_tagDefault</item>
         <item>@string/appThemes_systemDefault1</item>
         <item>@string/appThemes_lightTheme1</item>
-    </string-array>
-    <string-array name="appThemes_light_values" translatable="false">  <!-- config values (one-to-one with appThemes_dark_display) -->
-        <item>default</item>
-        <item>contrast_system</item>
-        <item>contrast_light</item>
     </string-array>
 
     <string-array name="appThemes_dark_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
@@ -1420,22 +1356,12 @@
         <item>@string/appThemes_systemDefault1</item>
         <item>@string/appThemes_darkTheme1</item>
     </string-array>
-    <string-array name="appThemes_dark_values" translatable="false">  <!-- config values (one-to-one with appThemes_dark_display) -->
-        <item>default</item>
-        <item>contrast_system</item>
-        <item>contrast_dark</item>
-    </string-array>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
         <item>@string/timeFormatMode_system</item>
         <item>@string/timeFormatMode_12hr</item>
         <item>@string/timeFormatMode_24hr</item>
-    </string-array>
-    <string-array name="timeFormatMode_values" translatable="false">  <!-- one-to-one with timeFormatMode_display -->
-        <item>MODE_SYSTEM</item>
-        <item>MODE_12HR</item>
-        <item>MODE_24HR</item>
     </string-array>
 
     <!-- App Setting: text size -->
@@ -1453,23 +1379,12 @@
         <item>@string/textSize_large</item>
         <item>@string/textSize_xlarge</item>
     </string-array>
-    <string-array name="textSize_values" translatable="false">  <!-- one-to-one with textSize_display -->
-        <item>SMALL</item>
-        <item>NORMAL</item>
-        <item>LARGE</item>
-        <item>XLARGE</item>
-    </string-array>
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
         <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
-    </string-array>
-    <string-array name="solsticeTrackingMode_values" translatable="false">  <!-- one-to-one with solsticeTrackingMode_display -->
-        <item>RECENT</item>
-        <item>CLOSEST</item>
-        <item>SOONEST</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -1480,14 +1395,6 @@
         <item>@string/configActionDesc_setDate</item>
         <item>@string/configActionDesc_swapCards</item>
         <item>@string/configActionDesc_resetNote</item>
-    </string-array>
-    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
-        <item>NOTHING</item>
-        <item>SHOW_CALENDAR</item>
-        <item>ALARM</item>
-        <item>CONFIG_DATE</item>
-        <item>SWAP_CARD</item>
-        <item>RESET_NOTE</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
@@ -1500,15 +1407,6 @@
         <item>@string/configActionDesc_prevNote</item>
         <item>@string/configActionDesc_resetNote</item>
     </string-array>
-    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
-        <item>NOTHING</item>
-        <item>SHOW_CALENDAR</item>
-        <item>ALARM</item>
-        <item>TIMEZONE</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-        <item>RESET_NOTE</item>
-    </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
@@ -1517,13 +1415,6 @@
         <item>@string/configActionDesc_nextNote</item>
         <item>@string/configActionDesc_prevNote</item>
         <item>@string/configActionDesc_resetNote</item>
-    </string-array>
-    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-        <item>RESET_NOTE</item>
     </string-array>
 
     <string name="configActionDesc_doNothing">لا تفعل شيئًا</string>
@@ -1639,11 +1530,6 @@
         <item>@string/timezone_sort_byId</item>
         <item>@string/timezone_sort_byName</item>
     </string-array>
-    <string-array name="timezoneSort_values" translatable="false">   <!-- config values (one-to-one with timezoneSort_display) -->
-        <item>SORT_BY_OFFSET</item>
-        <item>SORT_BY_ID</item>
-        <item>SORT_BY_DISPLAYNAME</item>
-    </string-array>
 
     <string name="timezone_sort_contextAction">ترتيب المناطق الزمنية</string>
     <string name="timezone_sort_msg">تم ترتيب المناطق الزمنية (%1$s).</string>
@@ -1652,30 +1538,21 @@
     <string name="configLabel_getFix_maxElapse">الحد الزمني لتحديد الموقع</string>
     <string name="configLabel_getFix_maxElapse_summary">التخلي بعد <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">
-        <item>15 ثانية</item>
-        <item>30 ثانية</item>
-        <item>1 دقيقة</item>
-        <item>5 دقائق</item>
-        <item>10 دقائق</item>
-    </string-array>
-
-
-    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
-        <item>15000</item>
-        <item>30000></item>
-        <item>60000</item>
-        <item>300000</item>
-        <item>600000</item>
+        <item>15 ثانية</item>    <!-- 15000 ms-->
+        <item>30 ثانية</item>    <!-- 30000 ms-->
+        <item>1 دقيقة</item>     <!-- 60000 ms-->
+        <item>5 دقائق</item>     <!-- 300000 ms-->
+        <item>10 دقائق</item>    <!-- 600000 ms-->
     </string-array>
 
     <!-- App Setting: location fix max age -->
     <string name="configLabel_getFix_maxAge">الحد الأقصى لعمر الموقع الأخير</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="دقيقة واحدة">%s</xliff:g> يُعتبر حديثًا</string>
     <string-array name="getFix_maxAge_display">
-        <item>لا شيء</item>
-        <item>دقيقة واحدة</item>
-        <item>5 دقائق</item>
-        <item>15 دقيقة</item>
+        <item>لا شيء</item>               <!-- 0 -->
+        <item>دقيقة واحدة</item>         <!-- 60000 -->
+        <item>5 دقائق</item>             <!-- 300000 -->
+        <item>15 دقيقة</item>            <!-- 900000 -->
         <item>ساعة واحدة</item>
         <item>4 ساعات</item>
         <item>12 ساعة</item>
@@ -1684,21 +1561,6 @@
         <item>أسبوع واحد (168 ساعة)</item>
         <item>شهر واحد (672 ساعة)</item>
         <item>أي عمر</item>
-    </string-array>
-
-    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
-        <item>0</item>
-        <item>60000</item>
-        <item>300000</item>
-        <item>900000</item>
-        <item>3600000</item>
-        <item>14400000</item>
-        <item>43200000</item>
-        <item>86400000</item>
-        <item>172800000</item>
-        <item>604800000</item>
-        <item>2419200000</item>
-        <item>-1</item>
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1715,13 +1577,8 @@
     <string name="configLabel_localeMode">الوضع</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="اللغة النظامية">%s</xliff:g></string>
     <string-array name="localeMode_display">
-        <item>النظام</item>
-        <item>معرفة المستخدم</item>
-    </string-array>
-
-    <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
-        <item>SYSTEM_LOCALE</item>
-        <item>CUSTOM_LOCALE</item>
+        <item>النظام</item>            <!-- system locale -->
+        <item>معرفة المستخدم</item>    <!-- custom locale -->
     </string-array>
 
     <!-- App Setting: custom Locale -->
@@ -1745,7 +1602,7 @@
         <item>Dutch</item>
         <item>Czech</item>
         <item>Simplified Chinese</item>
-        <item>Arabic</item>    <!-- TODO -->
+        <item>Arabic</item>    <!-- TODO: these should be the various language names as understood in Arabic -->
     </string-array>
 
     <!-- position formats -->
@@ -1838,7 +1695,6 @@
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
       \n\nلنتائج أفضل، اختر صورة بالمواصفات الآتية
     </string>
-    <string name="help_worldmap_background_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/worldmap</string>
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
@@ -2275,8 +2131,6 @@
                 * <b>%o</b> للترتيب (مثال: الحدث الأقرب، الحدث القادم) <br/>
     ]]></string> <!-- TODO: added section "Date Widgets:", add "%em, %et, %eT, %eA" (#599) to online-help -->
 
-    <string name="help_substitutions_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions</string>
-
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic2">%2$s</xliff:g>
@@ -2441,8 +2295,6 @@
         هذه الميزة متاحة الآن كتطبيق <a href="moreInfoLink">منفصل</a>.
     ]]></string>
 
-    <string name="help_shadowlength" translatable="false">[Icon Shadow] %1$s</string>     <!-- e.g. [Icon] [configLabel_general_observerheight_summary] -->
-
    <string name="privacy_policy0"><![CDATA[<b>الخصوصية:</b><br/>Suntimes لا تقوم بجمع أو تخزين أو نقل بيانات المستخدم الشخصية. لا يحتوي على <b>إعلانات</b>، <b>تحليلات</b>، <b>متتبعات</b>، أو <b>أذونات غير ضرورية</b>.]]></string>  <!-- brief statement (welcome dialog) -->
 <string name="privacy_policy"><![CDATA[<b>الخصوصية:</b><br/>Suntimes لا تقوم بجمع أو تخزين أو نقل بيانات المستخدم الشخصية. لا يحتوي على <b>إعلانات</b>، <b>تحليلات</b>، <b>متتبعات</b>، أو <b>أذونات غير ضرورية</b>. <br/><br/>يتم تكوين التطبيق من بيانات الموقع. هذه المعلومات (وغيرها من بيانات التكوين المستخدمة من قبل التطبيق) تُخزن محليًا ولا تغادر الجهاز.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>  <!-- full statement (about dialog) -->
 <string name="privacy_permission_location"><![CDATA[Suntimes تستخدم أذونة <b>الموقع</b> لتحديد خط الطول والعرض الحاليين الخاصين بك.<br/><br/>هذه الأذونة اختيارية؛ يتم تكوين الموقع يدويًا افتراضيًا.]]></string>
@@ -2486,64 +2338,7 @@
     ]]>
     </string>
 
-    <string name="help_datasources_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/datasources</string>
-
     <!-- pref defaults -->
-    <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
-    <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
-    <string name="def_appwidget_0_general_altitude_enabled" translatable="false">true</string>
-    <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
-    <string name="def_appwidget_0_general_showcompare" translatable="false">true</string>
-    <string name="def_appwidget_0_general_comparemode" translatable="false">TOMORROW</string>
-    <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
-    <string name="def_appwidget_0_general_showhours" translatable="false">true</string>
-    <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
-    <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
-    <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
-    <string name="def_appwidget_0_general_observerheight" translatable="false">1.8288</string>
-    <string name="def_appwidget_0_general_localize_hemisphere" translatable="false">true</string>
-
-    <string name="def_app_plugins_enabled" translatable="false">false</string>
-
-    <string name="def_app_appearance_textsize" translatable="false">NORMAL</string>
-    <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
-    <string name="def_app_locale" translatable="false">en</string>
-
-    <string name="def_getFix_maxElapsed" translatable="false">60000</string>
-    <string name="def_getFix_maxAge" translatable="false">300000</string>
-    <string name="def_getFix_passiveMode" translatable="false">false</string>
-
-    <string name="def_app_ui_showwarnings" translatable="false">true</string>
-    <string name="def_app_ui_showmoon" translatable="false">true</string>
-    <string name="def_app_ui_showmoon_noon" translatable="false">false</string>
-    <string name="def_app_ui_showequinox" translatable="false">true</string>
-    <string name="def_app_ui_showcrossquarter" translatable="false">true</string>
-    <string name="def_app_ui_showlightmap" translatable="false">true</string>
-    <string name="def_app_ui_showgoldhour" translatable="false">true</string>
-    <string name="def_app_ui_showbluehour" translatable="false">false</string>
-    <string name="def_app_ui_showheader_icon" translatable="false">true</string>
     <string name="def_app_ui_showheader_text">1</string>  <!-- 1: labels -->
-    <string name="def_app_ui_emphasizefield" translatable="false">OFFICIAL</string>
-    <string name="def_app_ui_showdatasource" translatable="false">true</string>
-    <string name="def_app_ui_showmapbutton" translatable="false">true</string>
-    <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
-    <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
-    <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
-    <string name="def_app_ui_clocktapaction" translatable="false">RESET_NOTE</string>
-    <string name="def_app_appearance_theme" translatable="false">system</string>
-    <string name="def_app_accessibility_verbose" translatable="false">false</string>
-
-    <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
-    <string name="def_app_alarms_timeout" translatable="false">1200000</string>    <!-- timeout after 20m -->
-    <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
-    <string name="def_app_alarms_snoozeLimit" translatable="false">0</string>      <!-- no snooze limit -->
-    <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
-    <string name="def_app_alarms_fadein" translatable="false">10000</string>       <!-- fade-in 10s to full volume -->
-    <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
-    <string name="def_app_alarms_autodismiss" translatable="false">30000</string>    <!-- auto-dismiss after 30s -->
-    <string name="def_app_alarms_autoenable" translatable="false">false</string>   <!-- automatically enable new alarms (false) -->
-    <string name="def_app_alarms_allringtones" translatable="false">false</string>   <!-- show all ringtones during selection (ignore ringtone type) -->
-    <string name="def_app_alarms_showlauncher" translatable="false">true</string>
-    <string name="def_app_alarms_dismiss_challenge" translatable="false">NONE</string>
 
 </resources>
