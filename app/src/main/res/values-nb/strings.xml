@@ -1356,6 +1356,7 @@
         <item>Nederlandsk</item>
         <item>Tsjekkisk</item>
         <item>Forenklet kinesisk</item>
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
