@@ -1823,12 +1823,7 @@
         %s is available gratis, but if it has proven its value, please
         <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
     ]]></string>    <!-- TODO -->
-    <string name="app_source_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
-    ]]></xliff:g></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
-    ]]></xliff:g></string>
+
     <string name="app_legal1"><![CDATA[
         <b>Zdrojový kód:</b><br />
         Copyright &#169 2014-2024 Forrest Guice <br />
@@ -2077,9 +2072,6 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Vyžádat oprávnění nyní?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorovat</string>
     <string name="privacy_permissiondialog_title">Oprávnění</string>
-    <string name="privacy_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
-    ]]></xliff:g></string>
     <string name="privacyTab">Sourkomí</string>
 
     <string name="security_dialog_title">Bezpečnostní upozornění</string>

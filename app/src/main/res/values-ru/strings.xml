@@ -1900,12 +1900,7 @@
         %s предоставляется бесплатно, но если приложение оказалось полезным,
         <a href="https://forrestguice.github.io/SuntimesWidget/donate">то можете пожертвовать деньги на ваше усмотрение</a>.
     ]]></string>
-    <string name="app_source_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
-    ]]></xliff:g></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
-    ]]></xliff:g></string>
+
     <string name="app_legal1"><![CDATA[
         <b>Исходный код:</b><br />
         Copyright &#169 2014-2024 Forrest Guice <br />

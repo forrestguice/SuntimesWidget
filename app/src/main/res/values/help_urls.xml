@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+    
+    <string name="help_app_url">https://forrestguice.codeberg.page/Suntimes</string>
+    <string name="help_license_url">https://forrestguice.codeberg.page/Suntimes/license</string>
+    <string name="help_privacy_url">https://forrestguice.codeberg.page/Suntimes/privacy</string>
+    <string name="help_donate_url">https://forrestguice.codeberg.page/Suntimes/donate</string>
+    <string name="help_support_url">https://github.com/forrestguice/SuntimesWidget/issues</string>
+
+    <string name="help_action_url">https://forrestguice.codeberg.page/Suntimes/help/actions</string>
+    <string name="help_battery_optimization_url">https://forrestguice.codeberg.page/Suntimes/help/alarms/batteryopt</string>
+    <string name="help_datasources_url">https://forrestguice.codeberg.page/Suntimes/help/datasources</string>
+    <string name="help_substitutions_url">https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions</string>
+    <string name="help_worldmap_background_url">https://forrestguice.codeberg.page/Suntimes/help/worldmap</string>
+
+    <string name="app_url"><xliff:g id="url"><![CDATA[
+        <a href="https://forrestguice.codeberg.page/Suntimes">https://forrestguice.codeberg.page/Suntimes</a>
+    ]]></xliff:g></string>
+
+    <string name="privacy_url"><xliff:g id="url"><![CDATA[
+        <a href="https://forrestguice.codeberg.page/Suntimes/privacy">https://forrestguice.codeberg.page/Suntimes/privacy</a>
+    ]]></xliff:g></string>
+
+    <string name="app_license_url"><xliff:g id="url"><![CDATA[
+        <a href="https://forrestguice.codeberg.page/Suntimes/license">https://forrestguice.codeberg.page/Suntimes/license</a>
+    ]]></xliff:g></string>
+
+    <string name="app_source_url"><xliff:g id="url"><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
+    ]]></xliff:g></string>
+
+</resources>
