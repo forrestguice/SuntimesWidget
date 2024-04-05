@@ -1371,6 +1371,7 @@
         <item>Olandese</item>
         <item>Czech</item>  <!-- TODO -->
         <item>Simplified Chinese</item> <!-- TODO -->
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>  <!-- these should be language/locale names as written/understood in Italian -->
 
     <!-- position formats -->

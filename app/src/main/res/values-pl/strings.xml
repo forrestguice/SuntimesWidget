@@ -1358,6 +1358,7 @@
         <item>Holenderski</item>
         <item>Czeski</item>
         <item>Chiński uproszczony</item>
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>
 
     <!-- position formats -->

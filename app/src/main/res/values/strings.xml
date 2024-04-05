@@ -1730,6 +1730,7 @@
         <item>Dutch</item>
         <item>Czech</item>
         <item>Simplified Chinese</item>
+        <item>Arabic</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -1749,6 +1750,7 @@
         <item>Nederlands</item>
         <item>Čeština</item>
         <item>简体中文</item>
+        <item>العربية</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1768,6 +1770,7 @@
         <item>nl</item>
         <item>cs</item>
         <item>zh_CN</item>
+        <item>ar</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
@@ -1787,6 +1790,7 @@
         <item><![CDATA[<a href=https://github.com/Joppla>Joppla</a>]]></item>
         <item><![CDATA[<a href=https://github.com/utaxiu>utaxiu</a>]]></item>
         <item><![CDATA[<a href=https://github.com/jamesliu96>James Liu</a>|<a href=https://github.com/sr093906>sr093906</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/mstfelg>Alelg</a>]]></item>
     </string-array>
 
     <!-- position formats -->

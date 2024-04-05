@@ -7,4 +7,2402 @@
     <string name="default_location_altitude">36</string>         <!-- meters -->
     <string name="default_timezone">Africa/Cairo</string>         <!-- tzid -->
 
+    <!-- MAIN ACTIVITY -->
+
+    <!-- Action Bar
+         The text that appears in the overflow menu / menuItem contentDescription.
+    -->
+    <string name="configAction_refreshLocation">تحديث</string>
+    <string name="configAction_addLocation">الموقع</string>
+    <string name="configAction_mapLocation">أظهر الخريطة</string>
+    <string name="configAction_mapLocation_chooser">أظهر الموقع باستعمال</string>
+    <string name="configAction_mapLocation_noapp">تعذر العثور على تطبيق خرائط!</string>
+    <string name="configAction_showCalendar">التقويم</string>
+    <string name="configAction_setAlarm">ضبط منبه</string>
+    <string name="configAction_setTimeZone">ضبط منطقة زمنية</string>
+    <string name="configAction_setDate">ضبط تاريخ</string>
+    <string name="configAction_viewDate">معاينة التاريخ</string>
+    <string name="configAction_viewDateWith">معاينة التاريخ</string>
+    <string name="configAction_share">مشاركة</string>
+    <string name="configAction_export">تصدير</string>
+    <string name="configAction_import">استيراد</string>
+    <string name="configAction_info">مزيد معلومات</string>    <!-- TODO -->
+    <string name="configAction_sunDialog">موقع الشمس</string>
+    <string name="configAction_equinoxDialog">الانقلاب / الاعتدال الشمسي</string>
+    <string name="configAction_worldMap">خريطة العالم</string>
+    <string name="configAction_lineGraph">رسم الارتفاع البياني</string>
+    <string name="configAction_seekAltitude">تفحص الارتفاع</string>        <!-- checkbox label -->
+    <string name="configAction_search">بحث</string>        <!-- button (contentDescription) -->
+    <string name="configAction_deselect">مسح التحديد</string>
+    <string name="configAction_moon">القمر</string>
+    <string name="configAction_help">مساعدة</string>
+    <string name="configAction_onlineHelp">مساعدة على الإنترنت</string>
+    <string name="configAction_appDetails">معلومات التطبيق</string>
+    <string name="configAction_overflow">مزيد</string>
+    <string name="configAction_options">خيارات</string>
+    <string name="configAction_settings">إعدادات</string>
+    <string name="configAction_aboutWidget">حول</string>
+
+    <!-- Shortcuts -->
+
+    <string name="shortcut_suninfo_short">@string/configAction_sunDialog</string>
+    <string name="shortcut_suninfo_long">@string/configAction_sunDialog</string>
+    <string name="shortcut_suninfo_disabled">@string/configAction_sunDialog</string>
+
+    <string name="shortcut_mooninfo_short">@string/configAction_moon</string>
+    <string name="shortcut_mooninfo_long">@string/configAction_moon</string>
+    <string name="shortcut_mooninfo_disabled">@string/configAction_moon</string>
+
+    <string name="shortcut_widgetlist_short">@string/configLabel_widgetList</string>
+    <string name="shortcut_widgetlist_long">@string/configLabel_widgetList</string>
+    <string name="shortcut_widgetlist_disabled">@string/configLabel_widgetList</string>
+
+    <string name="shortcut_themelist_short">@string/configLabel_widgetThemeList</string>
+    <string name="shortcut_themelist_long">@string/configLabel_widgetThemeList</string>
+    <string name="shortcut_themelist_disabled">@string/configLabel_widgetThemeList</string>
+
+    <string name="shortcut_worldmap_short">@string/configAction_worldMap</string>
+    <string name="shortcut_worldmap_long">@string/configAction_worldMap</string>
+    <string name="shortcut_worldmap_disabled">@string/configAction_worldMap</string>
+
+    <string name="shortcut_alarmclock_addalarm_short">@string/alarmMode_alarm</string>
+    <string name="shortcut_alarmclock_addalarm_long">@string/alarmMode_alarm</string>
+    <string name="shortcut_alarmclock_addalarm_disabled">@string/alarmMode_alarm</string>
+
+    <string name="shortcut_alarmclock_addnotify_short">@string/alarmMode_notification</string>
+    <string name="shortcut_alarmclock_addnotify_long">@string/alarmMode_notification</string>
+    <string name="shortcut_alarmclock_addnotify_disabled">@string/alarmMode_notification</string>
+
+    <string name="shortcut_alarmclock_addnotify1_short">@string/alarmMode_notification1</string>
+    <string name="shortcut_alarmclock_addnotify1_long">@string/alarmMode_notification1</string>
+    <string name="shortcut_alarmclock_addnotify1_disabled">@string/alarmMode_notification1</string>
+
+    <!-- Button: Next/Prev Date
+         The next/prev button contentDescription (accessibility).
+    -->
+    <string name="nextDay">اليوم التالي</string>
+    <string name="prevDay">اليوم السابق</string>
+    <string name="nextYear">السنة التالية</string>
+    <string name="prevYear">السنة الماضية</string>
+
+    <!-- Warnings -->
+    <string name="spanTag_warning">‏تحذير!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+
+    <!-- Field: timezone
+         The time zone field that appears below the clock (main activity).
+    -->
+    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g>المنطقة الزمنية قد تكون غير صحيحة بالنسبة لموقعك.</string>  <!-- snackbar message -->
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> هي <xliff:g id="timeSpan">%s</xliff:g> من التوقيت المحلي(<xliff:g id="locationName">%s</xliff:g>).</string>
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> بالتوقيت الصيفي</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> dst</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> معادلة الوقت</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar_short"><xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> eot</string>  <!-- timezone dialog label -->
+
+    <!-- Field: date
+         The date field that appears above the table (main activity).
+         e.g. [dateDesc] \n [date]
+             where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
+             where [date] is a dateString formatted by app using user's locale
+    -->
+    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> التاريخ مضبوط ليوم غير تاريخ اليوم.</string>  <!-- snackbar message -->
+
+    <!-- DateDesc: some day in the past (appears in dateField) -->
+    <string name="past_today">الماضي</string>
+    <string name="past_n">يوماً مضى (%1$s)</string>
+
+    <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
+    <string name="yesterday">الأمس</string>
+    <string name="today">اليوم</string>
+    <string name="tomorrow">غداً</string>
+
+    <!-- DateDesc: some day in the future (appears in dateField) -->
+    <string name="future_today">المستقبل</string>
+    <string name="future_n">يوماً في المستقبل (%1$s)</string>
+
+    <!-- Field: length of day
+         The hours in the day field(s) that appears below the table (main activity)
+    -->
+    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> في اليوم</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> من الضياء المستفاد</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_twilight1"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g></string>
+    <string name="length_twilight1e_pos"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [+<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
+    <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
+    <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
+    <string name="length_delimiter">|</string>
+
+    <string name="timeMode_tropical_year">سنة استوائية</string>
+    <string name="length_tropical_year"><xliff:g id="timeSpan1" example="365d 5h 41m">%1$s</xliff:g>\n<xliff:g id="fractionalDays" example="365.24">%2$s</xliff:g></string>
+
+    <!-- Field: moon illumination (as seen in moon widget) -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
+    <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>
+
+    <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
+         e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
+         The relative order is defined by the layout (layout/info_time_daydelta.xml).
+    -->
+    <string name="delta_day_tomorrow">غداً سيكون</string>
+    <string name="delta_day_yesterday">الأمس كان</string>
+    <string name="delta_day_shorter">أقصر</string>
+    <string name="delta_day_longer">أطول</string>
+
+    <!-- NotePrefix: since/until/untilEnd
+         The note prefix text. e.g.
+                  4 hr
+                 until
+                  sunset
+         The relative order is defined by the layout (layout/info_time_note.xml).
+    -->
+    <string name="since">منذ</string>
+    <string name="until">حتى</string>
+    <string name="until_end">حتى نهاية</string>
+
+    <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. plural applies to time component (next line) -->
+        <item quantity="zero">في</item>
+        <item quantity="one">في</item>
+        <item quantity="two">في</item>
+        <item quantity="few">في</item>
+        <item quantity="many">في</item>
+        <item quantity="other">في</item>
+    </plurals>
+    <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. plural applies to time component (next line) -->
+        <item quantity="zero">%1$s قبل</item>
+        <item quantity="one">%1$s قبل</item>
+        <item quantity="two">%1$s قبل</item>
+        <item quantity="few">%1$s قبل</item>
+        <item quantity="many">%1$s قبل</item>
+        <item quantity="other">%1$s قبل</item>
+    </plurals>
+    <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. plural applies to time component (next line) -->
+        <item quantity="zero">%1$s بعد</item>
+        <item quantity="one">%1$s بعد</item>
+        <item quantity="two">%1$s بعد</item>
+        <item quantity="few">%1$s بعد</item>
+        <item quantity="many">%1$s بعد</item>
+        <item quantity="other">%1$s بعد</item>
+    </plurals>
+
+    <string name="offset_before_msg">%1$s قبل %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_after_msg">%1$s بعد %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
+    <string name="offset_before_msg1">{0} قبل {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->
+    <string name="offset_after_msg1">{0} بعد {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->
+
+    <string name="offset_button_before">قبل</string>    <!-- button label; [1h] [5m] [before] (-) -->
+    <string name="offset_button_after">بعد</string>      <!-- button label; [1h] [5m] [after] (+) -->
+
+    <!-- NoteBody: sunset/sunrise/twilight string
+         The note body text; appears next to the prefix (layout/info_time_note.xml)
+    -->
+    <string name="until_astroTwilight">الشفق الفلكي</string>
+    <string name="until_civilTwilight">الشفق المدني</string>
+    <string name="until_nauticalTwilight">الشفق البحري</string>
+    <string name="until_sunrise">الشروق</string>
+    <string name="until_noon">زوال الشمس</string>
+    <string name="until_sunset">الغروب</string>
+    <string name="untilEnd_civilTwilight">الشفق المدني</string>
+    <string name="untilEnd_nauticalTwilight">الشفق البحري</string>
+    <string name="untilEnd_astroTwilight">الشفق الفلكي</string>
+    <string name="until_goldhour">الساعة الذهبية</string>
+    <string name="untilEnd_goldhour">الساعة الذهبية</string>
+    <string name="until_bluehour">الساعة الزرقاء</string>
+    <string name="untilEnd_bluehour">الساعة الزرقاء</string>
+    <string name="until_moonrise">بزوغ القمر</string>
+    <string name="until_moonset">أفول القمر</string>
+    <string name="until_moonnoon">زوال القمر</string>
+    <string name="until_moonnight">منتصف الليل القمري</string>
+
+    <!-- Table -->
+    <string name="sunrise">الشروق</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">شروق</string>                          <!-- table title -->
+    <string name="sunset">الغروب</string>                               <!-- contentDescription -->
+    <string name="sunset_short">غروب</string>                            <!-- table title -->
+    <string name="moonrise">بزوغ القمر</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">بزوغ</string>                             <!-- table title -->
+    <string name="moonset">أفول القمر</string>                             <!-- contentDescription -->
+    <string name="moonset_short">أفول</string>                             <!-- table title -->
+
+    <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
+    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_years">سنة</string>    <!-- e.g. 1y -->
+    <string name="delta_weeks">أسبوع</string>    <!-- e.g. 2w -->
+    <string name="delta_days">يوم</string>     <!-- e.g. 1d -->
+    <string name="delta_hours">س</string>    <!-- e.g. 2h -->
+    <string name="delta_minutes">د</string>  <!-- e.g. 3m -->
+    <string name="delta_seconds">ث</string>  <!-- e.g. 4s -->
+
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  من الآن</string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  مضى</string>         <!-- e.g. 1y 15d 12h ago -->
+
+    <!-- misc time values: might be displayed in a timeField in place of an actual time -->
+    <string name="time_none">بدون</string>  <!-- no time / time does not occur -->
+    <string name="time_loading">…</string>  <!-- calculating / time is loading -->
+    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+    <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
+    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
+    <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
+    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->
+    <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
+    <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
+    <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
+    <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
+    <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
+    <string name="datetime_format_verylong1"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>] [<xliff:g id="suffix" example="Future">%3$s</xliff:g>]</string>  <!-- datetime_format and timezone (+suffix) -->
+    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
+    <!--<string name="date_any">Any Date</string>-->   <!-- no particular date; unset date -->
+
+    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
+    <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+
+    <!-- location display formats -->
+    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
+    <string name="location_format_alttag">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>                                            <!-- altitude as a tag, e.g. [1600m] -->
+    <string name="location_format_latlon"><xliff:g id="latitude">%1$s</xliff:g>, <xliff:g id="longitude">%2$s</xliff:g></string>            <!-- latitude, longitude -->
+    <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
+
+    <!-- distances (meters, feet, etc) -->
+    <string name="lengthUnits_metric">متري</string>
+    <string name="lengthUnits_imperial">إنگليزي</string>
+    <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
+        <item>@string/lengthUnits_metric</item>
+        <item>@string/lengthUnits_imperial</item>
+    </string-array>
+
+    <string name="units_feet">قدم</string>
+    <string name="units_feet_short">قدم</string>
+    <plurals name="units_feet_long">
+        <item quantity="zero">%s قدمٍ</item>
+        <item quantity="one">قدم واحدة</item>
+        <item quantity="two">قدمان</item>
+        <item quantity="few">%s أقدام</item>
+        <item quantity="many">%s قدماً</item>
+        <item quantity="other">%s قدم</item>
+    </plurals>
+
+    <string name="units_miles">ميلاً</string>
+    <string name="units_miles_short">ميل</string>
+    <plurals name="units_miles_long">
+        <item quantity="zero">%s ميلٍ</item>
+        <item quantity="one">ميل واحد</item>
+        <item quantity="two">ميلان</item>
+        <item quantity="few">%s أميال</item>
+        <item quantity="many">%s ميلاً</item>
+        <item quantity="other">%s ميلاً</item>
+    </plurals>
+
+    <string name="units_meters">meters</string>
+    <string name="units_meters_short">m</string>
+    <plurals name="units_meters_long">
+        <item quantity="zero">%s مترٍ</item>
+        <item quantity="one">متر واحد</item>
+        <item quantity="two">متران</item>
+        <item quantity="few">%s أمتار</item>
+        <item quantity="many">%s متراً</item>
+        <item quantity="other">%s متراً</item>
+    </plurals>
+
+    <string name="units_kilometers">كيلومتراً</string>
+    <string name="units_kilometers_short">كم</string>
+    <plurals name="units_kilometers_long">
+        <item quantity="zero">%s كيلومتر</item>
+        <item quantity="one">كيلومتر واحد</item>
+        <item quantity="two">كيلومتران</item>
+        <item quantity="few">%s كيلومترات</item>
+        <item quantity="many">%s كيلومتراً</item>
+        <item quantity="other">%s كيلومتراً</item>
+    </plurals>
+
+    <!--
+         WIDGET CONFIG
+    -->
+
+    <string name="configAction_restoreDefaults">استعادة القيم الافتراضية</string>   <!-- button / menu text -->
+
+    <string name="configLabel_tagDefault">[افتراضي]</string>
+    <string name="configLabel_tagPlugin">[إضافة]</string>
+    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
+
+    <!-- WidgetConfig Activity -->
+    <string name="configAction_addWidget">إضافة ودجة</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">إعادة التهيئة</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">إعادة تهيئة الودجة</string>      <!-- used as title when reconfiguring -->
+    <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
+    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+    <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
+    <string name="configLabel_datewidget0">@string/app_name_datewidget0</string>                  <!-- used as title when adding -->
+    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
+    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
+
+    <!-- Widget Setting: general -->
+    <string name="configLabel_general">عام</string>                <!-- group title -->
+    <string name="configLabel_general_calculator">مصدر البيانات:</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator_sun">مصدر بيانات الشمس:</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">مصدر بيانات الشمس</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_help">مصادر البيانات</string>    <!-- preference title / help button text -->
+
+    <string name="configLabel_general_timeFormatMode">صيغة التوقيت:</string>         <!-- spinner label -->
+
+    <string name="configLabel_general_altitude_enabled">استعمل الارتفاع</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">طبّق التدقيقات المبنية على الارتفاع.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_localize_hemisphere">وطّن بالنسبة لنصف الكرة الأرضية</string>        <!-- checkbox label -->
+    <string name="configLabel_general_localize_hemisphere_summary">طبّق التوطين بالنسبة لنصف الكرة الأرضية (علامات المواسم, أيقونات طور القمر).</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_lengthUnits">وحدات الطول</string>        <!-- spinner label -->
+
+    <string name="configLabel_general_showSeconds">أظهر الثواني</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">أدرج الثواني عند إظهار الوقت.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showTimeDate">أظهر الوقت (مع التواريخ)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">أدرج الوقت عند إظهار التواريخ.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showAbbrMonth">أسماء الأشهر المختصرة</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showAbbrMonth_summary">أظهر أسماء الأشهر مختصرة عند عرض التاريخ.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_showWeeks">أظهر الأسابيع</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">قسم الفترات الزمنية الأطول من 7 أيام إلى أسابيع (مثلاً: 15يوم تصبح 2أسبوع 1يوم).</string>    <!-- checkbox label -->
+
+    <string name="configLabel_general_showHours">أظهر الساعات</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">أظهر الساعات والدقائق في الفترات الزمنية الأطول من يوم.</string>    <!-- checkbox label -->
+    <string name="configLabel_general_observerheight">ظل الأجسام</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary">أظهر طول ظل الأجسام ذو الارتفاع <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_dayOffset">تعويض اليوم</string>        <!-- edittext label -->
+    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
+
+    <!-- Widget Setting: advanced / experimental -->
+    <string name="configLabel_advanced">متقدم</string>                        <!-- group title -->
+    <string name="configLabel_experimental">تجريبي</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">إضافات مصادر البيانات</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">ابحث وحمّل الإضافات.</string>   <!-- pref summary -->
+
+    <!-- Widget Setting: appearance -->
+    <string name="configLabel_widgetlayout">النسق</string>           <!-- group title -->
+    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+        <!--<item>Fill</item>-->
+        <item>أعلى اليسار</item>
+        <item>الأعلى</item>
+        <item>أعلى اليمين</item>
+        <item>اليسار</item>
+        <item>الوسط</item>
+        <item>اليمين</item>
+        <item>أسفل اليسار</item>
+        <item>الأسفل</item>
+        <item>أسفل اليمين</item>
+    </string-array>
+
+    <!-- Widget Setting: appearance -->
+    <string name="configLabel_appearance">المظهر</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">المظهر</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_theme">النسق:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">تبديل المخطط لملء الفراغ</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleText">تحجيم النص والأيقونات</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleBase">املأ كامل الخلية</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_gravity">محاذاة القاعدة:</string>  <!-- spinner label -->
+    <string name="configLabel_appearance_showLabels">إظهار العلامات</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">إظهار العنوان</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_titleText">العنوان:</string>              <!-- edittext label -->
+    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: riseSetOrder -->
+    <string name="configLabel_general_riseSetOrder">الترتيب:</string>     <!-- label -->
+    <string name="risesetorder_today">اليوم</string>                    <!-- setting -->
+    <string name="risesetorder_lastnext">الأخيرة / القادمة</string>           <!-- setting -->
+
+    <!-- Widget Setting: time mode -->
+    <string name="timeMode_noon_short">زوال</string>                    <!-- setting -->
+    <string name="timeMode_noon">زوال الشمس</string>                    <!-- setting -->
+    <string name="timeMode_official_short">الفعلي</string>              <!-- setting -->
+    <string name="timeMode_official">الوقت الفعلي</string>               <!-- setting -->
+    <string name="timeMode_civil_short">المدني</string>                  <!-- setting -->
+    <string name="timeMode_civil">الشفق المدني</string>               <!-- setting -->
+    <string name="timeMode_nautical_short">البحري</string>            <!-- setting -->
+    <string name="timeMode_nautical">الشفق البحري</string>         <!-- setting -->
+    <string name="timeMode_astronomical_short">الفلكي</string>    <!-- setting -->
+    <string name="timeMode_astronomical">الشفق الفلكي</string> <!-- setting -->
+    <string name="timeMode_night">ليل</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">نهار</string>                       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_golden_short">ذهبية</string>                <!-- setting -->
+    <string name="timeMode_golden">الساعة الذهبية</string>                 <!-- setting -->
+    <string name="timeMode_blue8_short">زرقاء (8°)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">الساعة الزرقاء (8°)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">زرقاء (4°)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">الساعة الزرقاء (4°)</string>                     <!-- setting -->
+    <string name="timeMode_none">بدون</string>                 <!-- label -->
+
+    <string name="timeMode_equinox_vernal">اعتدال الربيع</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">الاعتدال</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">اعتدال الخريف</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">الاعتدال</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">انقلاب الصيف</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer_short">الانقلاب</string>     <!-- setting -->
+    <string name="timeMode_solstice_winter">انقلاب الشتاء</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">الانقلاب</string>     <!-- setting -->
+
+    <string name="timeMode_cross_midwinter">إمبولك (نصف الربيع)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   <!-- TODO -->
+    <string name="timeMode_cross_midwinter_short">نصف الربيع</string>       <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer">لوغناساد (نصف الصيف)</string>  <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer_short">نصف الصيف</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midspring">بيلتان (نصف الربيع)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->   <!-- TODO -->
+    <string name="timeMode_cross_midspring_short">نصف الربيع</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal">سامهين (نصف الخريف)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal_short">نصف الخريف</string>     <!-- setting -->    <!-- TODO -->
+
+    <string name="timeMode_moon">القمر</string>                               <!-- label -->
+    <string name="timeMode_moon_new">محاق</string>                               <!-- setting -->
+    <string name="timeMode_moon_new_short">محاق</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">هلال متزايد</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">هلال متزايد</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">تربيع متزايد</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">تربيع متزايد</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">أحدب متزايد</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">أحدب متزايد</string>                     <!-- label -->
+    <string name="timeMode_moon_full">بدر</string>                             <!-- setting -->
+    <string name="timeMode_moon_full_short">بدر</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">أحدب متناقص</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">أحدب متناقص</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">تربيع متناقص</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">تربيع متناقص</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">هلال متناقص</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">هلال متناقص</string>                     <!-- label -->
+
+    <string name="timeMode_moon_super">قمر أكبر</string>               <!-- label -->
+    <string name="timeMode_moon_micro">قمر أصغر</string>               <!-- label -->
+    <string name="timeMode_moon_superfull">بدر أكبر</string>                             <!-- setting -->
+    <string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>     <!-- label -->
+    <string name="timeMode_moon_supernew">محاق أكبر</string>                             <!-- setting -->
+    <string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>     <!-- label -->
+    <string name="timeMode_moon_microfull">بدر أصغر</string>                             <!-- setting -->
+    <string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>     <!-- label -->
+    <string name="timeMode_moon_micronew">بدر أصغر</string>                             <!-- setting -->
+    <string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>     <!-- label -->
+
+    <string name="timeMode_moon_perigee">@string/label_perigee</string>                             <!-- label -->
+    <string name="timeMode_moon_apogee">@string/label_apogee</string>                             <!-- label -->
+    <string name="label_apogee">ذروة</string>
+    <string name="label_perigee">حضيض</string>
+
+    <string name="configLabel_general_timeMode">الوضع:</string>          <!-- spinner label -->
+
+    <!-- Widget Setting: calendar -->
+    <string name="configLabel_general_showDate">أظهر التاريخ</string>   <!-- group title -->
+    <string name="configLabel_general_calendar">التقويم</string>   <!-- group title -->
+    <string name="configLabel_general_calendarMode">التقويم:</string>          <!-- spinner label -->
+    <string name="configLabel_general_calendarFormat">صيغة التاريخ:</string>          <!-- spinner label -->
+    <string name="configLabel_general_calendarFormatPattern">نمط التاريخ:</string>          <!-- edittext label -->
+    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->
+    <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->
+    <string name="configAction_editCalendarFormat">تعديل</string>                        <!-- button (contentDescription) -->
+
+    <!-- Widget Setting: layout mode -->
+    <string name="widgetMode1x1_sunrise">شروق فقط</string>             <!-- setting -->
+    <string name="widgetMode1x1_sunset">غروب فقط</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">شروق وغروب (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">شروق وغروب (2)</string>  <!-- setting -->
+    <string name="widgetMode3x1_sunrise_sunset_noon">شروق، غروب، وزوال</string>  <!-- setting -->
+
+    <string name="widgetMode1x1_altaz">الارتفاع والسمت</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">الصعود والنزول</string>     <!-- setting -->
+    <string name="widgetMode1x1_distance">المسافة الحالية</string>     <!-- setting -->
+    <string name="widgetMode1x1_apsis">الذروة والحضيض القادمتان</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonday">يوم القمر</string>     <!-- setting -->
+
+    <string name="widgetMode3x1_lightmap_large">الخريطة الضوئية</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_medium">الخريطة الضوئية (وسط)</string>     <!-- setting -->
+    <string name="widgetMode3x1_lightmap_small">الخريطة الضوئية (صغيرة)</string>     <!-- setting -->
+
+    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
+
+    <string name="widgetMode_sunPosMap_simplerectangular">خريطة بسيطة</string>  <!-- setting -->  <!-- TODO: "Basic" to "Basic Map" -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">القطب [الشمالي]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">القطب [الجنوبي]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">الرخام الأزرق</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">إسقاط سمتي متساوي الأبعاد</string>     <!-- setting -->
+
+    <string name="worldmap_projection_equirectangular">إسقاط مستطيلي متساوي الأبعاد</string>
+    <string name="worldmap_projection_equiazimuthal">إسقاط سمتي متساوي الأبعاد</string>
+
+    <string name="widgetMode1x1_moonriseset">بزوغ القمر وأفوله</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">طور القمر ونوره</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">طور القمر فقط</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">نور القمر فقط</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">الطور التالي</string>     <!-- setting -->
+
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->
+
+    <!-- Widget Setting: widget tap action -->
+    <string name="actionMode_doNothing">لا تفعل شيئاً</string>           <!-- setting -->
+    <string name="actionMode_update">حدث الودجة</string>           <!-- setting -->
+    <string name="actionMode_update_all">حدث كل ودجة</string>           <!-- setting -->
+    <string name="actionMode_config">إعادة ضبط الودجة</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">طبق إجراءً</string>      <!-- setting -->  <!-- TODO: update -->
+    <string name="actionMode_flipToNextItem">قلب المعاينة</string>      <!-- setting -->
+
+    <string name="launchType_activity">النشاط</string>           <!-- setting -->
+    <string name="launchType_broadcast">الإذاعة</string>           <!-- setting -->
+    <string name="launchType_service">الخدمة</string>           <!-- setting -->
+
+    <string name="expandMore">أكثر</string>  <!-- contentDescription -->
+    <string name="expandLess">أقل</string>  <!-- contentDescription -->
+    <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->
+    <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->
+
+    <string name="configLabel_action">الإجراء</string>                  <!-- group title -->
+    <string name="configLabel_action_onTap">عند الضغط:</string>                    <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">عند الضغط على الساعة</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">عند الضغط على المذكرة</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">عند الضغط على التاريخ</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">عند الضغط المطول على التاريخ</string>   <!-- spinner label -->
+
+    <!-- Widget Setting: location -->
+    <string name="locationMode_current">الحالي (آخر معروف)</string>  <!-- setting -->
+    <string name="locationMode_custom">محدد من قبل المستخدم</string>           <!-- setting -->
+
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> الصلاحيات المطلوبة للموقع مطلوبة لتحديث الموقع الحالي.</string>           <!-- snackbar text -->
+
+    <string name="configLabel_location">الموقع</string>               <!-- group title -->
+    <string name="configLabel_location_mode">الوضع:</string>                      <!-- spinner label -->
+    <string name="configLabel_location_lat">خط العرض:</string>                   <!-- edittext label -->
+    <string name="configHint_location_lat">الدرجات العشرية</string>      <!-- edittext hint -->
+    <string name="configLabel_location_lon">خط الطول:</string>                          <!-- edittext label -->
+    <string name="configHint_location_lon">الدرجات العشرية</string> <!-- edittext hint -->
+    <string name="configLabel_location_alt">الارتفاع:</string>                          <!-- edittext label -->
+    <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
+    <string name="configLabel_location_name">الاسم:</string>                      <!-- edittext label -->
+    <string name="configHint_location_name">(اختياري)</string>                  <!-- edittext hint -->
+    <string name="configHint_location_name0">اسم المكان</string>                  <!-- edittext hint -->
+    <string name="configLabel_location_fromapp">استخدم موقع التطبيق</string>                  <!-- checkbox text -->
+
+    <string name="configAction_getFix">احصل على الموقع</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">تحرير</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">حفظ</string>         <!-- button (contentDescription) -->
+
+    <!-- Widget Setting: timezone -->
+    <string name="timezoneMode_standard">التوقيت القياسي</string>                   <!-- setting -->
+    <string name="timezoneMode_current">توقيت النظام</string>               <!-- setting -->
+    <string name="timezoneMode_custom">معرفة المستخدم</string>                    <!-- setting -->
+
+    <string name="time_lmst">الوقت المحلي الأسترالي</string>                  <!-- timezone label -->
+    <string name="time_gmst">الوقت الأسترالي الأخضر</string>              <!-- timezone label -->
+    <string name="time_utc">التوقيت العالمي المنسق</string>            <!-- timezone label -->
+    <string name="time_localMean">الوقت المحلي المتوسط</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">الوقت الشمسي الظاهر</string>              <!-- setting / custom timezone id -->
+
+    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
+    <string name="configAction_suggestTimeZone">توصية بتوقيت منطقة زمنية</string>
+
+    <string name="configLabel_timezone">منطقة زمنية</string>             <!-- group title -->
+    <string name="configLabel_timezone_mode">الوضع:</string>                     <!-- spinner label -->
+    <string name="configLabel_timezone_custom">منطقة الزمن:</string>              <!-- spinner label -->
+    <string name="configLabel_timezone_standard">التوقيت القياسي:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_fromapp">استخدام توقيت التطبيق</string>                  <!-- checkbox text -->
+
+    <!-- Widget Setting: timeFormat mode -->
+    <string name="timeFormatMode_system">تنسيق النظام</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12 ساعة</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24 ساعة</string>                  <!-- setting -->
+    <string name="timeFormatMode_suntimes">@string/app_name</string>     <!-- setting -->
+
+    <string name="configLabel_timeFormatMode">صيغة الوقت</string>             <!-- preference label -->
+    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+
+    <!-- Widget Setting: calendar mode -->
+    <string name="calendarMode_coptic">القبطي</string>
+    <string name="calendarMode_ethiopian">الحبشي</string>
+    <string name="calendarMode_gregorian">الميلادي</string>
+    <string name="calendarMode_hebrew">العبري</string>
+    <string name="calendarMode_hijri_diyanet">الهجري (التركي)</string>
+    <string name="calendarMode_hijri_umalqura">الهجري (أم القرى)</string>
+    <string name="calendarMode_julian">اليولياني</string>
+    <string name="calendarMode_persian">الفارسي (الهجري الشمسي)</string>
+    <string name="calendarMode_thaisolar">التايلاندي الشمسي</string>
+    <string name="calendarMode_chinese">الصيني</string>
+    <string name="calendarMode_korean">الكوري</string>
+    <string name="calendarMode_vietnamese">الفيتنامي</string>
+    <string name="calendarMode_minguo">المنجو</string>
+    <string name="calendarMode_indian">الهندي</string>
+    <string name="calendarMode_japanese">الياباني</string>
+
+    <!-- Widget Setting: date mode -->
+    <string name="dateMode_current">اليوم</string>                  <!-- setting -->
+    <string name="dateMode_custom">محدد من قبل المستخدم</string>            <!-- setting -->
+
+    <string name="configLabel_date">إعدادات التاريخ</string>                      <!-- group title -->
+    <string name="configLabel_date_mode">الوضع:</string>                         <!-- spinner label -->
+    <string name="configLabel_date_custom">التاريخ:</string>                       <!-- dateSelector label -->
+
+    <!-- Widget Setting: compare mode -->
+    <string name="compareMode_yesterday">الأمس</string>                     <!-- setting -->
+    <string name="compareMode_tomorrow">الغد</string>                       <!-- setting -->
+    <string name="configLabel_general_compareMode">المقارنة مع</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">إظهار المقارنة</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">قارن كمية الضوء لهذا اليوم مع اليوم الحالي أو الغد.</string>  <!-- checkbox label -->  <!-- TODO -->
+
+    <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
+        <item>@string/compareMode_yesterday</item>
+        <item>@string/compareMode_tomorrow</item>
+    </string-array>
+
+    <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_recent">الحدث الأخير</string>                   <!-- setting -->
+    <string name="trackingMode_closest">الحدث الأقرب</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">الحدث القادم</string>                <!-- setting -->
+    <string name="configLabel_general_trackingMode">تتبع:</string>            <!-- spinner label -->
+
+    <!-- Widget Setting: timeMode override -->
+    <string name="configLabel_general_timeMode_override">وضع تجاوز التتبع</string>     <!-- checkbox label -->
+
+    <!-- Widget Settings: noon -->
+    <string name="configLabel_general_showNoon">إظهار الظهر الشمسي</string>        <!-- checkbox label -->
+
+    <!-- Widget Setting: Launch App -->
+    <string name="configLabel_action_id">الرقم المعرف:</string>                 <!-- edittext label -->
+    <string name="configLabel_action_launch">الفئة:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch" /> <!-- التلميح editText (والافتراضي) -->
+    <string name="configLabel_action_launch_package">الحزمة:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_package" />               <!-- edittext label -->
+    <string name="configHint_action_launch_title">عنوان الإجراء</string>                 <!-- edittext hint -->
+    <string name="configHint_action_launch_desc">وصف قصير</string>                 <!-- edittext hint -->
+    <string name="configLabel_action_launch_type">النوع:</string>                 <!-- spinner label -->
+    <string name="configLabel_action_launch_action">الإجراء:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_action">&lt;لا شيء&gt;</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_data">البيانات:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_data">&lt;لا شيء&gt;</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_datatype">نوع MIME:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_datatype">نص عادي</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_extras">إضافات:</string>                 <!-- edittext label -->
+
+    <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
+
+    <string name="configLabel_action_item">%1$s %2$s</string>
+    <string name="configLabel_action_item_desc">(%1$s)</string>
+    <string name="configLabel_action_item_none">لا إجراء</string>
+
+    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+
+    <string name="addaction_error_id">يجب ألا يكون معرف الـID فارغًا (أو يحتوي على مسافات).</string>
+    <string name="addaction_error_title">يجب ألا يكون نص العرض فارغًا.</string>
+    <string name="addaction_error_exists">المعرف مأخوذ بالفعل. سيتم استبدال هذا الإجراء.</string>
+
+    <string name="delaction_dialog_msg">هل أنت متأكد من رغبتك في حذف %1$s (%2$s)؟</string>
+    <string name="delaction_dialog_msg1">لا يمكن حذف الإجراءات الافتراضية.\n\nالعودة إلى الإعدادات الافتراضية؟</string>
+    <string name="delaction_dialog_ok">حذف</string>
+    <string name="delaction_dialog_ok1">عودة</string>
+    <string name="delaction_dialog_cancel">إلغاء</string>
+
+    <string name="clearactions_dialog_msg">هل أنت متأكد من رغبتك في إعادة الضبط إلى الإعدادات الافتراضية؟\n\nسيتم إزالة جميع الإجراءات المخصصة.</string>
+    <string name="clearactions_dialog_ok">مسح</string>
+    <string name="clearactions_dialog_cancel">@string/dialog_cancel</string>
+    <string name="clearactions_toast">تمت إعادة الإجراءات إلى الإعدادات الافتراضية.</string>
+
+    <string name="saveaction_dialog_title">إضافة إجراء</string>
+    <string name="saveaction_dialog_ok">حفظ</string>
+    <string name="saveaction_dialog_cancel">@string/dialog_cancel</string>
+    <string name="saveaction_dialog_suggest">اقتراح</string>
+    <string name="saveaction_toast">تم حفظ الإجراء \"%1$s\" (%2$s).</string>
+
+    <string name="loadaction_dialog_title">الإجراءات</string>
+    <string name="loadaction_toast">تم تحميل الإجراء \"%1$s\".</string>
+
+    <string name="startaction_failed_toast">فشل في بدء %s!</string>         <!-- error toast -->
+
+    <string name="configAction_addAction">إضافة</string>           <!-- button (contentDescription) -->
+    <string name="configAction_editAction">تحرير</string>           <!-- button (contentDescription) -->
+    <string name="configAction_testAction">اختبار</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAction">حفظ</string>         <!-- button (contentDescription) -->
+    <string name="configAction_loadAction">تحميل</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteAction">حذف</string>         <!-- button (contentDescription) -->
+    <string name="configAction_clearActions">مسح الكل</string>         <!-- button (contentDescription) -->
+
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
+
+    <!-- App Setting: WidgetThemes -->
+    <string name="configLabel_widgetThemeList">السمات</string>
+    <string name="configLabel_widgetThemeListSelect">حدد سمة</string>
+    <string name="configAction_addTheme">إضافة</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectTheme">تحديد</string>     <!-- button (contentDescription) -->
+    <string name="configAction_editTheme">تحرير</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">حذف</string>     <!-- button (contentDescription) -->
+    <string name="configAction_copyTheme">نسخ</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>
+    <string name="configAction_shareTheme">@string/configAction_share</string>
+    <string name="configAction_importThemes">@string/configAction_import</string>
+
+    <string name="widgetThemes_dark">داكن</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark_transparent">داكن (شفاف)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_dark_translucent">داكن (شفاف جزئيًا)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_light">فاتح</string>                              <!-- default widget theme name -->
+    <string name="widgetThemes_light_transparent">فاتح (شفاف)</string>    <!-- default widget theme name -->
+
+    <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
+    <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
+    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (نسخ)</string>                            <!-- copied theme name (display string) -->
+
+    <string name="addtheme_toast_success">أضيف <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
+    <string name="edittheme_toast_success">حفظ <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
+    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> حذف.</string> <!-- toast msg -->
+
+    <string name="edittheme_error_themeName_empty">يجب أن يكون المعرف فريدًا (مطلوب).</string>        <!-- error hint (themeName empty) -->
+    <string name="edittheme_error_themeName_unique">يجب أن يكون المعرف فريدًا (مأخوذ بالفعل).</string>  <!-- error hint (themeName taken) -->
+    <string name="edittheme_error_displaytext">يجب ألا يكون نص العرض فارغًا.</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_textsize_min">يجب أن يكون الحجم ≥ <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->  <!-- TODO: drop "an integer"  -->
+    <string name="edittheme_error_textsize_max">يجب أن يكون الحجم ≤ <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->    <!-- TODO: drop "an integer" -->
+    <string name="edittheme_flag_default">افتراضي</string>  <!-- content description -->
+
+    <string name="deletetheme_dialog_title">حذف السمة</string>        <!-- dialog title -->
+    <string name="deletetheme_dialog_message">هل أنت متأكد من رغبتك في حذف <xliff:g id="themeName">%1$s</xliff:g>؟</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_ok">حذف</string>        <!-- button -->
+    <string name="deletetheme_dialog_cancel">إلغاء</string>    <!-- button -->
+
+    <string name="configLabel_widgetThemeAdd">إضافة سمة</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">تحرير السمة</string>   <!-- title text -->
+    <string name="configAction_saveTheme">حفظ</string>           <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">اختيار اللون</string> <!-- button (contentDescription) -->
+
+    <string name="configLabel_themeBackgroundId">القاعدة:</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackground_light">فاتح</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">داكن</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_trans">شفاف</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">اللون</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">اللون</string>      <!-- color label -->
+
+    <string name="configLabel_themeColorTitle">لون العنوان</string>     <!-- color label -->
+    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
+
+    <string name="configLabel_themeColorText">لون النص</string>       <!-- color label -->
+    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeColorSpring">الربيع</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">الصيف</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">الخريف</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">الشتاء</string> <!-- color label -->
+
+    <string name="configLabel_themeColorAccent">لون السمت</string> <!-- color label -->
+    <string name="configLabel_themeColorAction">لون الإجراء</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMapBackground">خلفية الخريطة</string> <!-- color label -->
+    <string name="configLabel_themeColorMapForeground">مقدمة الخريطة</string> <!-- color label -->
+    <string name="configLabel_themeColorMapSunShadow">ظل الشمس</string> <!-- color label -->
+    <string name="configLabel_themeColorMapMoonHighlight">نور القمر</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonrise">بزوغ القمر</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">أفول القمر</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">تزايد القمر</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">تناقص القمر</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">بدر</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">محاق</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">بدر (النص)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonNewText">محاق (النص)</string> <!-- color label -->     <!-- TODO -->
+
+    <string name="configLabel_themeColorSunrise">شروق الشمس</string> <!-- color label -->
+    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
+
+    <string name="configLabel_themeColorSunset">غروب الشمس</string>   <!-- color label -->
+    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorNoon">الزوال</string>      <!-- color label -->
+    <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
+
+    <string name="configLabel_themeColorFill">تعبئة</string>         <!-- color label -->
+    <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorBorder">حدود</string>         <!-- color label -->
+    <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeBorderWidthRiseSet">عرض الحدود (الشروق/الغروب)</string>  <!-- size label -->
+    <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
+    <string name="configLabel_themeBorderWidthNoon">عرض الحدود (الزوال)</string>         <!-- size label -->
+    <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
+
+    <string name="configLabel_themeColorSuffix">لون اللاحقة</string>   <!-- color label -->
+    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
+
+    <string name="configLabel_themeColorTime">لون النص2</string>      <!-- color label -->
+    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
+
+    <string name="configLabel_themeSizeTitle">حجم العنوان:</string>  <!-- edit label -->
+    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTitle">عريض</string>          <!-- checkbox label -->
+
+    <string name="configLabel_themeSizeText">حجم النص:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeSizeTime">حجم الوقت:</string>    <!-- edit label -->
+    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeBoldTime">عريض</string>          <!-- checkbox label -->
+
+    <string name="configLabel_themeSizeSuffix">حجم اللاحقة:</string> <!-- edit label -->
+    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themePadding">الهامش:</string>            <!-- edit label -->
+    <string name="configHint_themePadding">[يسار، أعلى، يمين، أسفل]</string> <!-- edit hint -->
+
+    <string name="configLabel_themeID">معرف:</string>                      <!-- edit label -->
+    <string name="configHint_themeID">معرف النسق</string>                  <!-- edit hint -->
+
+    <string name="configLabel_themeName">العرض:</string>               <!-- edit label -->
+    <string name="configHint_themeName">التسمية</string>                   <!-- edit hint -->
+
+    <string name="widgetLabel_azimuth">السمت</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">السمت</string>                   <!-- label -->
+    <string name="widgetLabel_altitude">الارتفاع</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">ارتفاع</string>               <!-- label -->
+    <string name="widgetLabel_altitude_symbol">∠</string>               <!-- label/suffix -->
+
+    <string name="widgetLabel_rightAscension">الصعود القائم</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->
+    <string name="widgetLabel_declination">النزول</string>           <!-- label -->
+    <string name="widgetLabel_declination_short">نزول</string>           <!-- label -->
+    <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
+    <string name="widgetLabel_distance">المسافة</string>           <!-- label -->
+
+    <!--
+         CUSTOM EVENTS
+    -->
+    <string name="eventType_sun_elevation">الشمس (ارتفاع)</string>
+    <string name="eventlist_dialog_title">أحداث مخصصة</string>
+
+    <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="configLabel_event_alarmitem_desc">%1$s</string>
+
+    <string name="eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
+    <string name="eventalias_title_tag_rising" >↑</string>
+    <string name="eventalias_title_tag_setting">↓</string>
+
+    <string name="sunevent_title">الشمس</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
+    <string name="sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
+    <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> في <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
+    <string name="sunevent_title_format1">%1$s %2$s %3$s</string>      <!-- (custom) sun event title; e.g. "5m before Sun 6°" -->   <!-- TODO -->
+    <string name="sunevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> at <xliff:g id="angle">%3$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->  <!-- TODO -->
+    <string name="sunevent_phrase_gender">أخرى</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+
+    <string name="configLabel_manageEvents">إدارة الأحداث</string>  <!-- settings activity / pref -->
+    <string name="configLabel_manageEvents_summary">إضافة أو إزالة الأحداث المخصصة.</string>
+    <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>
+
+    <string name="configAction_manageEvents">الأحداث المخصصة</string>
+    <string name="configAction_selectEvent">تحديد</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addEvent">إضافة</string>           <!-- button (contentDescription) -->
+    <string name="configAction_editEvent">تعديل</string>           <!-- button (contentDescription) -->
+    <string name="configAction_saveEvent">حفظ</string>           <!-- button (contentDescription) -->
+    <string name="configAction_deleteEvent">حذف</string>           <!-- button (contentDescription) -->
+    <string name="configAction_clearEvents">مسح</string>           <!-- button (contentDescription) -->
+
+    <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
+    <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="importevents_toast_success">تم استيراد <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <plurals name="eventPlural">
+        <item quantity="zero">%d حدثٍ</item>
+        <item quantity="one">حدث واحد</item>
+        <item quantity="two">حدثان</item>
+        <item quantity="few">%d أحداث</item>
+        <item quantity="many">%d حدثاً</item>
+        <item quantity="other">%d حدثاً</item>
+    </plurals>
+
+    <string name="editevent_dialog_id_label">ID</string>
+    <string name="editevent_dialog_id_hint">الحدث ID</string>
+    <string name="editevent_dialog_id_error">@string/addaction_error_id</string>
+    <string name="editevent_dialog_uri_hint">URI الحدث</string>
+
+    <string name="editevent_dialog_showevent">عرض هذا الحدث داخل التطبيق.</string>
+    <string name="editevent_dialog_showevent_off">لن يتم عرض هذا الحدث بعد الآن.</string>
+
+    <string name="editevent_dialog_title">حدث</string>    <!-- 'add event' title -->
+    <string name="editevent_dialog_title1">حدث</string>    <!-- 'edit event' title -->
+    <string name="editevent_dialog_label_label">تسمية</string>
+    <string name="editevent_dialog_label_hint">تسمية الحدث</string>
+    <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
+    <string name="editevent_dialog_label_suggested">زاوية مخصصة</string>
+
+    <string name="editevent_dialog_angle">الزاوية</string>
+    <string name="editevent_dialog_angle_hint">-6</string>
+    <string name="editevent_dialog_angle_suffix">°</string>
+    <string name="editevent_dialog_angle_error">الزاوية مطلوبة!</string>
+
+    <string name="delevent_dialog_msg">هل أنت متأكد من رغبتك في حذف %1$s (%2$s)؟\n\nالإنذارات، الإشعارات، أو الودجتات المستخدمة بهذا الحدث قد لا تعمل بعد الآن ويجب إعادة تعيينها.</string>
+    <string name="delevent_dialog_ok">حذف</string>
+    <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
+
+    <string name="clearevents_dialog_msg">هل أنت متأكد من رغبتك في مسح الأحداث المخصصة؟\n\nالإنذارات، الإشعارات، أو الودجتات المستخدمة بهذه الأحداث قد لا تعمل بعد الآن ويجب إعادة تعيينها.</string>
+    <string name="clearevents_dialog_ok">مسح</string>
+    <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
+    <string name="clearevents_toast">تم مسح الأحداث المخصصة.</string>
+
+    <!--
+         ALARM CLOCK
+    -->
+    <string name="configLabel_alarmClock">المنبهات</string>            <!-- group title -->
+    <string name="configLabel_alarmClock_emptyMsg">لا توجد منبهات</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="configAction_addAlarm">ضبط منبه</string>               <!-- button (contentDescription) -->
+    <string name="configAction_addNotification">ضبط إشعار</string> <!-- button (contentDescription) -->
+    <string name="configAction_editAlarm">تعديل</string>               <!-- button (contentDescription) -->
+    <string name="configAction_deleteAlarm">حذف</string>               <!-- button (contentDescription) -->
+    <string name="configAction_clearAlarms">مسح</string>                <!-- action button / menu item -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
+    <string name="configAction_exportAlarms">@string/configAction_export</string>                <!-- action button / menu item -->
+    <string name="configAction_importAlarms">@string/configAction_import</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms">فرز</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_by_time">وقت المنبه</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_by_creation">تاريخ الإنشاء</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_enabled_first">التمكين أولاً</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_offset">عرض الإزاحة</string>                <!-- action button / menu item -->
+    <string name="configAction_clearOffset">مسح</string>                <!-- action button / menu item -->
+    <string name="configAction_clearDate">مسح</string>                <!-- action button / menu item -->
+    <string name="configAction_setAlarmOffset">تعيين الإزاحة (قبل/بعد)</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmType">تعيين النوع</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLabel">تعيين التسمية</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmNote">تعيين الملاحظة</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmDismissChallenge">تعيين التحدي للتجاوز</string>         <!-- button (contentDescription) -->
+    <string name="configAction_configAlarmDismissChallenge">تكوين التحدي للتجاوز</string>         <!-- button (contentDescription) -->
+    <string name="configAction_testAlarmDismissChallenge">اختبار التحدي للتجاوز</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLocation">تعيين الموقع</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmRepeat">تعيين التكرار</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmEvent">تعيين الحدث</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmTime">تجاوز الوقت</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmAction">تعيين الإجراء</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmSound">تعيين الصوت</string>         <!-- button (contentDescription) -->
+    <string name="configAction_alarmMenu">قائمة المنبهات</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAlarm">حفظ</string>               <!-- button (contentDescription) -->
+    <string name="configAction_enableAlarm">حفظ وتمكين</string>               <!-- button (contentDescription) -->
+    <string name="configAction_disableAlarm">حفظ وتعطيل</string>               <!-- button (contentDescription) -->
+    <string name="configAction_undo">تراجع</string>               <!-- button (contentDescription) -->
+
+    <string name="alarmAction_dismiss">تجاهل</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss_early">تجاهل المنبه</string>                <!-- notification action button; context specific "Dismiss Early", same as "Dismiss Alarm Early", or "Dismiss Alarm" -->
+    <string name="alarmAction_snooze">إرجاء</string>                  <!-- notification action button -->
+    <string name="alarmAction_timeout">انتهاء الوقت</string>                  <!-- notification action button -->
+
+    <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
+    <string name="alarmAction_silencedMsg">تم كتم المنبه</string>          <!-- toast message -->
+    <string name="alarmAction_snoozeMsg">غفوة لمدة <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
+    <string name="alarmAction_timeoutMsg">انتهى وقت المنبه.</string>     <!-- notification msg -->
+    <string name="alarmAction_upcomingMsg">منبه قادم</string>     <!-- notification msg -->
+    <string name="alarmAction_alertFailedMsg">فشل تشغيل الصوت!</string>         <!-- error toast -->
+
+    <string name="configLabel_alarmQuick_notification">@string/alarmMode_notification1</string>               <!-- group title -->
+    <string name="alarmMode_alarm">منبه</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification">تنبيه</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification1">تنبيه سريع</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification2">تنبيه (ثابت)</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+
+    <string name="configLabel_alarmEdit_beforeAlertTray">قبل التنبيه:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_scheduleTray">الجدولة:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_onAlertTray">عند التنبيه:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_onDismissTray">عند الإغلاق:</string>               <!-- group title -->
+
+    <string name="alarmOption_vibrate">اهتزاز</string>                <!-- checkbox text -->
+    <string name="alarmOption_ringtone_none">بدون صوت</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">نغمة رنين</string>          <!-- menu item; Select a "Ringtone" -->
+    <string name="alarmOption_ringtone_file">ملف صوتي</string>          <!-- menu item; Select an "Audio File" -->
+    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[رمز]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
+    <string name="alarmOption_action_label"><xliff:g id="icon">[رمز]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- action label format -->
+    <string name="alarmOption_solarevent_none">وقت الساعة</string>          <!-- ringtone label (none) -->
+
+    <string name="alarmOption_repeat">كرر</string>                <!-- checkbox text; an alarm that repeats -->
+    <string name="alarmOption_repeat_none">بدون تكرار</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
+    <string name="alarmOption_repeat_all">كل يوم</string>         <!-- label text; an alarm that repeats every day -->
+
+    <string name="deletealarm_dialog_title">حذف</string>        <!-- dialog title -->
+    <string name="deletealarm_dialog_message">هل أنت متأكد من رغبتك في حذف <xliff:g id="type">%1$s</xliff:g> في <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)؟</string>   <!-- dialog msg -->
+    <string name="deletealarm_dialog_ok">حذف</string>        <!-- button -->
+    <string name="deletealarm_dialog_cancel">إلغاء</string>    <!-- button -->
+    <string name="deletealarm_toast_success"><xliff:g id="type" example="إشعار">%1$s</xliff:g> في <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) تم حذفه.</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success1"><xliff:g id="type" example="إشعار">%1$s</xliff:g> تم حذفه.</string> <!-- toast msg -->
+
+    <string name="discardchanges_dialog_message">هناك تغييرات غير محفوظة.</string>      <!-- dialog message -->
+    <string name="discardchanges_dialog_ok">تجاهل</string>                              <!-- button -->
+    <string name="discardchanges_dialog_cancel">إلغاء</string>                           <!-- button -->
+    <string name="discardchanges_dialog_neutral">حفظ</string>                            <!-- button -->
+
+    <string name="clearalarms_dialog_title">مسح التنبيهات</string>        <!-- dialog title -->
+    <string name="clearalarms_dialog_message">هل أنت متأكد أنك تريد حذف جميع التنبيهات؟</string>   <!-- dialog msg -->
+    <string name="clearalarms_dialog_ok">مسح</string>        <!-- button -->
+    <string name="clearalarms_dialog_cancel">إلغاء</string>    <!-- button -->
+    <string name="clearalarms_toast_success">تم مسح التنبيهات.</string> <!-- toast msg -->
+
+    <string name="importalarms_title_warning">تحذير الاستيراد</string> <!-- dialog title -->
+    <string name="importalarms_msg_warning">قد يؤدي استيراد التنبيهات إلى إعادة بعض الإعدادات إلى القيم الافتراضية.\n\nقد تحتاج إلى (إعادة) تحديد الأصوات والإجراءات.</string> <!-- toast msg -->
+    <string name="importalarms_toast_success">تم استيراد <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->   <!-- uses alarmPlural -->  <!-- TODO: fix inconsistent translation -->
+    <plurals name="alarmPlural">
+        <item quantity="zero">%d منبهٍ</item>
+        <item quantity="one">منبه واحد</item>
+        <item quantity="two">منبهان</item>
+        <item quantity="few">%d منبهات</item>
+        <item quantity="many">%d منبهات</item>
+        <item quantity="other">%d تنبيهات</item>
+    </plurals>
+
+    <string name="configLabel_alarms_dismissChallenge">تحدي لإيقاف التنبيه</string>            <!-- pref title -->
+    <string name="alarmDismiss_none">بدون</string>                         <!-- alarm setting -->
+    <string name="alarmDismiss_none_long">لا يوجد تحدي</string>            <!-- chip label -->
+    <string name="alarmDismiss_math">مسائل رياضية سهلة</string>           <!-- alarm setting -->
+    <string-array name="dismissChallenge_display"> <!-- one-to-one with dismissChallenge_values -->
+        <item>@string/alarmDismiss_none</item>
+        <item>@string/alarmDismiss_math</item>
+    </string-array>
+
+    <string name="alarmlabel_dialog_title">تسمية</string>        <!-- dialog title -->
+    <string name="alarmlabel_dialog_ok">تطبيق</string>        <!-- button -->
+    <string name="alarmlabel_dialog_cancel">إلغاء</string>    <!-- button -->
+    <string name="alarmlabel_hint">تسمية</string>        <!-- EditText hint -->
+
+    <string name="alarmnote_dialog_title">ملاحظة</string>        <!-- dialog title -->
+
+    <string name="alarmrepeat_dialog_title">تكرار التنبيه</string>        <!-- dialog title -->
+    <string name="alarmrepeat_dialog_ok">تطبيق</string>        <!-- button -->
+    <string name="alarmrepeat_dialog_cancel">إلغاء</string>    <!-- button -->
+
+    <string name="alarmtime_dialog_title">وقت التنبيه</string>        <!-- dialog title -->
+    <string name="alarmtime_dialog_ok">تجاوز</string>        <!-- button -->
+    <string name="alarmtime_dialog_cancel">إلغاء</string>    <!-- button -->
+    <string name="alarmtime_dialog_message">هل ترغب في تجاوز وقت التنبيه؟\n\nلن يتم جدولة هذا التنبيه بواسطة الحدث بعد الآن.</string>   <!-- dialog msg -->
+
+    <string name="alarmoffset_dialog_title">إزاحة التنبيه</string>        <!-- dialog title -->
+    <string name="alarmoffset_dialog_ok">تطبيق</string>        <!-- button -->
+    <string name="alarmoffset_dialog_cancel">إلغاء</string>    <!-- button -->
+
+    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> ضبط إلى <xliff:g id="duration" example="8h">%2$s</xliff:g> من الآن.</string> <!-- toast msg -->
+    <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> في <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
+
+    <string name="configLabel_alarms_optWhiteList">تحسين البطارية</string>
+    <string name="configLabel_alarms_optWhiteList_listed">غير مُحسَّن (مُوصَى به)</string>
+    <string name="configLabel_alarms_optWhiteList_unlisted">تحسين استخدام البطارية.\nقد تتأخر التنبيهات حتى 15 دقيقة.</string>
+    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> وضع سوني STAMINA مفعل.\nقد تفشل التنبيهات في العمل بشكل موثوق.</string>  <!-- snackbar message (sony devices only) -->
+    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">تحسين استخدام البطارية.\nقد تفشل التنبيهات في العمل بشكل موثوق.</string>
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> يجب أن يكون "غير مُحسَّن" للحصول على أفضل النتائج.</string>
+    <string name="help_battery_optimization_aggressive">هذا الجهاز هو جهاز <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>، وقد يتطلب تكوين إضافي للعمل بشكل صحيح.</string>
+
+    <string name="configLabel_alarms_autostart">تشغيل تلقائي</string>
+    <string name="configLabel_alarms_autostart_on">مُفعل</string>
+    <string name="configLabel_alarms_autostart_off">مُعطَّل.\nقد تفشل التنبيهات في العمل بعد إعادة التشغيل.</string>
+    <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "مُفعل", "مُعطَّل" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] التشغيل التلقائي معطل!\nقد تفشل التنبيهات في العمل بعد إعادة التشغيل.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+
+    <string name="configLabel_alarms_notifications">الإشعارات</string>
+    <string name="configLabel_alarms_notifications_on">مُفعل</string>
+    <string name="configLabel_alarms_notifications_off">مُعطَّل.\nقد تفشل التنبيهات في العرض بشكل صحيح.</string>
+    <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "مُفعل", "مُعطَّل" -->
+    <string name="configLabel_alarms_notifications_summary1">على شاشة القفل: %1$s</string>    <!-- "على شاشة القفل: مُعطَّل -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> الإشعارات مُعطلة. قد تفشل التنبيهات في العرض بشكل صحيح.</string>  <!-- snackbar message -->
+
+    <string name="configLabel_alarms_bootcompleted">اكتمال التمهيد</string>
+    <string name="configLabel_alarms_bootcompleted_summary">تُعيد التنبيهات تلقائيًا بعد بضع دقائق من إعادة التشغيل.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="configLabel_alarms_bootcompleted_info">آخر تشغيل في <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> بعد التمهيد (استغرقت <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="configLabel_alarms_bootcompleted_info_never">أبدًا</string>
+    <string name="configLabel_alarms_bootcompleted_action_confirm">إعادة جدولة جميع التنبيهات والإشعارات؟</string>
+    <string name="configLabel_alarms_bootcompleted_action_message">جارٍ إعادة جدولة التنبيهات والإشعارات..</string>
+
+    <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
+
+    <string name="configLabel_alarms_silenceAfter">كتم الصوت بعد</string>
+    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_timeoutAfter">انتهاء المهلة بعد</string>
+    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_autoDismissAfter">التجاوب التلقائي بعد</string>
+    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 ثانية">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_snoozeLimit">حد الإرجاع</string>
+    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="بلا حدود">%s</xliff:g></string>
+    <string name="configLabel_alarms_snoozeLimit_none">بلا حدود</string>
+
+    <string name="configLabel_alarms_snooze">إرجاع لمدة</string>
+    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_upcoming">تذكير خلال</string>
+    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
+    <string name="configLabel_alarms_upcoming_checkbox">إظهار إشعارات تذكير بالمنبه.</string>
+
+    <string name="configLabel_alarms_fadein">زيادة الصوت تدريجياً</string>
+    <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 ثانية">%s</xliff:g></string>
+    <string name="configLabel_alarms_fadein_disabled">إيقاف</string>
+
+    <string name="configLabel_alarms_hardwarebuttons">أزرار الأجهزة</string>
+    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="تأجيل">%s</xliff:g></string>
+    <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
+        <item>تجاهل</item>        <!-- dismiss -->
+        <item>كتم الصوت</item>    <!-- silent -->
+        <item>تأجيل</item>        <!-- snooze -->
+        <item>عدم فعل شيء</item>  <!-- none -->
+    </string-array>
+
+    <string name="configLabel_alarmSounds">الأصوات</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">مستويات الصوت</string>
+    <string name="configLabel_alarms_allRingtones">عرض كل النغمات الرنينية</string>
+    <string name="configLabel_alarms_allRingtones_summary">عرض جميع الأصوات النظامية أثناء الاختيار (تجاهل نوع النغمة الرنينية).</string>
+
+    <string name="no_reminder">أبدًا</string>
+    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> تذكير</string>   <!-- chip label; e.g. "12h reminder" -->
+
+    <plurals name="units_hours">
+        <item quantity="zero">%d ساعةٍ</item>
+        <item quantity="one">ساعة واحدة</item>
+        <item quantity="two">ساعتان</item>
+        <item quantity="few">%d ساعات</item>
+        <item quantity="many">%d ساعة</item>
+        <item quantity="other">%d ساعة</item>
+    </plurals>
+
+    <plurals name="units_minutes">
+        <item quantity="zero">%d دقيقةٍ</item>
+        <item quantity="one">دقيقة واحدة</item>
+        <item quantity="two">دقيقتان</item>
+        <item quantity="few">%d دقائق</item>
+        <item quantity="many">%d دقيقةً</item>
+        <item quantity="other">%d دقيقة</item>
+    </plurals>
+
+    <plurals name="units_seconds">
+        <item quantity="zero">%d ثانيةٍ</item>
+        <item quantity="one">ثانية واحدة</item>
+        <item quantity="two">ثانيتان</item>
+        <item quantity="few">%d ثوانٍ</item>
+        <item quantity="many">%d ثانية</item>
+        <item quantity="other">%d ثانية</item>
+    </plurals>
+
+    <plurals name="units_days">
+        <item quantity="zero">%s يومٍ</item>
+        <item quantity="one">يوم واحد</item>
+        <item quantity="two">يومان</item>
+        <item quantity="few">%s أيام</item>
+        <item quantity="many">%s يوماً</item>
+        <item quantity="other">%s يوماً</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
+
+    <string name="configLabel_alarmMisc">متفرقات</string>
+    <string name="configLabel_alarms_showlauncher">أيقونة المشغل</string>
+    <string name="configLabel_alarms_showlauncher_summary">عرض أيقونة ساعة التنبيه في صينية التطبيقات.</string>
+
+    <string name="configLabel_alarms_poweroffalarms">تنبيه التشغيل</string>
+    <string name="configLabel_alarms_poweroffalarms_summary">استيقظ الجهاز من وضعية التشغيل.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
+
+    <!--
+         APP SETTINGS
+    -->
+
+    <!--App Setting: WidgetList -->
+    <string name="configLabel_widgetList">ودجة</string>               <!-- group title -->
+    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="configLabel_widgetList_itemTitlePattern2" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M]]></xliff:g></string> <!-- the pattern used when generating date widget titles -->
+    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="configLabel_widgetList_itemSummaryPattern1"><xliff:g id="widgetType">%1$s</xliff:g></string>
+    <string name="configLabel_widgetListHelp_title">مساعدة</string>               <!-- always the first item in the widgetList -->
+    <string name="configLabel_widgetListHelp_summary">أظهر مساعدة الودجة</string>
+    <string name="configLabel_widgetList_emptyMsg">لا ودجة</string>          <!-- a label that is displayed in place of an empty listview -->
+
+    <string name="configAction_createBackup">إنشاء نسخة احتياطية</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="configAction_restoreBackup">استعادة النسخة الاحتياطية</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="restorebackup_dialog_item_alarmitems">التنبيهات</string>
+    <string name="restorebackup_dialog_item_appsettings">إعدادات التطبيق</string>
+    <string name="restorebackup_dialog_item_widgetsettings">إعدادات الودجات</string>
+    <string name="restorebackup_dialog_item_widgetthemes">سمات الودجات</string>
+    <string name="restorebackup_dialog_item_placeitems">الأماكن</string>
+    <string name="restorebackup_dialog_item_eventitems">الفعاليات</string>
+    <string name="restorebackup_dialog_item_actions">الإجراءات</string>
+
+    <string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>
+    <string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>
+
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+
+    <string name="exportwidget_dialog_title">تصدير الإعدادات</string>
+    <string name="exportwidget_dialog_message">جارٍ تصدير إعدادات الودج إلى ملف.</string>
+    <string name="importwidget_dialog_title">استيراد الإعدادات</string>
+    <string name="importwidget_dialog_message">جارٍ استيراد إعدادات الودج من الملف.</string>
+    <string name="importwidget_dialog_title1">تم العثور على الإعدادات،\nولكنها لودجات أخرى…</string>
+    <string name="importwidget_dialog_title2">تم العثور على عدة إعدادات…</string>
+
+    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when widgetClassName is missing -->
+
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>استعادة النسخ الاحتياطي</b>. سيتم تخزين الإعدادات المستوردة مؤقتًا واستعادتها لاحقًا عند الطلب من قبل المشغل.<br/>]]></string>
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>التخمين الأفضل</b>. سيتم تطبيق الإعدادات المستوردة على الودجات الحالية حسب النوع.<br/>]]></string>
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>الاستيراد المباشر</b>. سيتم تطبيق الإعدادات المستوردة مباشرة. هذا يعمل بشكل صحيح فقط إذا لم تتغير معرّفات الودج.<br/>]]></string>
+    <string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
+
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>مسح</b>. سيتم مسح المنبهات قبل الاستيراد من النسخ الاحتياطي.<br/>]]></string>
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>الاحتفاظ بالقائمة الحالية</b>. سيتم الاحتفاظ بالمنبهات الحالية (قد تنتج نسخًا متكررة).<br/>]]></string>
+
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>مسح</b>. سيتم مسح الأماكن قبل الاستيراد من النسخ الاحتياطي.<br/>]]></string>
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>الاحتفاظ بالقائمة الحالية</b>. سيتم الاحتفاظ بالأماكن الحالية (قد تنتج نسخًا متكررة).<br/>]]></string>
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>تجاهل القائمة الحالية</b>. ستتم إضافة الأماكن إذا لم تكن موجودة بالفعل (تجاهل القائمة الحالية).<br/>]]></string>
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>الكتابة فوق القائمة الحالية</b>. ستتم تحديث الأماكن إذا كانت موجودة بالفعل.<br/>]]></string>
+
+    <plurals name="itemsPlural">
+        <item quantity="zero">%d items</item>    <!-- TODO -->
+        <item quantity="one">%d عنصر</item>
+        <item quantity="two">%d items</item>    <!-- TODO -->
+        <item quantity="few">%d عناصر</item>
+        <item quantity="many">%d عنصر</item>
+        <item quantity="other">%d عنصر</item>
+    </plurals>
+    <plurals name="widgetPlural">
+        <item quantity="zero">%d widgets</item>    <!-- TODO -->
+        <item quantity="one">%d ويدجت</item>
+        <item quantity="two">%d widgets</item>    <!-- TODO -->
+        <item quantity="few">%d ويدجت</item>
+        <item quantity="many">%d ويدجت</item>
+        <item quantity="other">%d ويدجت</item>
+    </plurals>
+
+    <!-- App Setting: Places -->
+    <string name="configLabel_places">الأماكن</string>                           <!-- group title -->
+    <string name="configLabel_places_manage">إدارة الأماكن</string>             <!-- group title -->
+    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>  <!-- a label that is displayed in place of an empty listview -->
+    <string name="configLabel_places_build">إضافة الأماكن العالمية</string>
+    <string name="configLabel_places_build_summary">فحص المواقع وإضافة المدن إلى قاعدة البيانات.</string>
+
+    <plurals name="placePlural">
+        <item quantity="zero">%d مكانٍ</item>
+        <item quantity="one">مكانُ واحد</item>
+        <item quantity="two">مكانان</item>
+        <item quantity="few">%d أماكن</item>
+        <item quantity="many">%d مكاناً</item>
+        <item quantity="other">%d مكاناً</item>
+    </plurals>
+
+    <string name="configAction_addPlace">إضافة</string>              <!-- button (contentDescription) -->
+    <string name="configAction_copyPlace">نسخ</string>            <!-- button (contentDescription) -->
+    <string name="configAction_selectPlace">تحديد</string>        <!-- button (contentDescription) -->
+    <string name="configAction_searchPlace">البحث</string>        <!-- button (contentDescription) -->
+    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="configAction_deletePlace">حذف</string>        <!-- button (contentDescription) -->
+    <string name="configAction_clearPlaces">مسح</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+
+    <!-- App Setting: UI -->
+
+    <string name="configLabel_ui">واجهة المستخدم</string>
+    <string name="configLabel_ui_fields">عرض</string>
+    <string name="configLabel_ui_fields1">أحداث مخصصة</string>
+    <string name="configLabel_ui_misc">متفرقات</string>
+
+    <!-- App Setting: Verbose Accessibility -->
+    <string name="configLabel_accessibility_verbose">تفاصيل مفصلة للوصول</string>
+    <string name="configLabel_accessibility_verbose_summary">الإعلان عن التغييرات التلقائية في واجهة المستخدم.</string>
+
+    <!-- App Setting: UI Warnings -->
+    <string name="configLabel_ui_showWarnings">عرض التحذيرات</string>
+    <string name="configLabel_ui_showWarnings_summary">عرض رسائل تحذير التهيئة.</string>
+
+    <!-- App Setting: Show Lightmap -->
+    <string name="configLabel_ui_showLightmap">عرض الخريطة الضوئية</string>
+    <string name="configLabel_ui_showLightmap_summary">عرض رسم بياني مكدس لفترات النهار والليل والفجر.</string>
+
+    <!-- App Setting: Show Moon -->
+    <string name="configLabel_ui_showmoon">عرض القمر</string>
+    <string name="configLabel_ui_showmoon_summary">عرض أوقات بزوغ وأفول القمر ومراحله ونوره.</string>
+
+    <!-- App Setting: Show Lunar Noon -->
+    <string name="configLabel_ui_showmoon_noon">عرض زوال القمر</string>
+    <string name="configLabel_ui_showmoon_noon_summary">عرض زوال القمر ومنتصف الليل القمري كجزء من أطوار القمر.</string>
+
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">الأعمدة (المراحل)</string>
+    <string name="configLabel_ui_showmoon_phase_columns_2">2</string>
+    <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
+    <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
+
+    <!-- App Setting: Show Cross Quarter days -->
+    <string name="configLabel_ui_showCrossQuarter">الأيام المابين ربعية</string>
+    <string name="configLabel_ui_showCrossQuarter_summary">تضمين النقاط الوسيطة بين الانقلابات والاعتدالات.</string>
+
+    <!-- App Setting: Show Equinox / Solstice -->
+    <string name="configLabel_ui_showEquinox">عرض الانقلاب / الاعتدال</string>
+    <string name="configLabel_ui_showEquinox_summary">عرض الوقت حتى الانقلاب أو الاعتدال التالي.</string>
+
+    <!-- App Setting: Solstice Tracking Mode -->
+    <string name="configLabel_ui_solsticeTrackingMode">تتبع الانقلاب</string>
+    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="حدث قادم">%s</xliff:g></string>
+
+    <!-- App Setting: show data source -->
+    <string name="configLabel_ui_showdatasource">عرض مصدر البيانات</string>
+    <string name="configLabel_ui_showdatasource_summary">عرض تسمية تشير إلى الإعدادات الحالية.</string>
+
+    <!-- App Setting: show map button -->
+    <string name="configLabel_ui_showmapbutton">عرض زر الخريطة</string>
+    <string name="configLabel_ui_showmapbutton_summary">عرض زر شريط الأدوات الذي يفتح تطبيق الخرائط الافتراضي.</string>
+
+
+    <!-- App Setting: emphasize field -->
+    <string name="configLabel_ui_emphasizefield_text">إبراز الحقول</string>              <!-- checkbox label -->
+    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string-array name="emphasizefield_display">                      <!-- one-to-one with headerText_values -->
+        <item>@string/timeMode_none</item>
+        <item>@string/timeMode_golden</item>
+        <item>@string/timeMode_noon</item>
+        <item>@string/timeMode_official</item>
+        <item>@string/timeMode_civil</item>
+        <item>@string/timeMode_nautical</item>
+        <item>@string/timeMode_astronomical</item>
+        <item>@string/timeMode_blue8</item>
+        <item>@string/timeMode_blue4</item>
+    </string-array>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">الترويسات</string>              <!-- group title -->
+    <string name="configLabel_ui_showheader_icon">أظهر أيقونة الترويسة</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text">أظهر نص الترويسة</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
+    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+        <item>بدون</item>     <!-- 0: none -->
+        <item>علامات</item>    <!-- 1: labels -->
+        <item>السمت</item>    <!-- 2: azimuth -->
+    </string-array>
+
+    <!-- App Setting: show golden hour -->
+    <string name="configLabel_ui_showgoldhour">الساعة الذهبية</string>
+
+    <!-- App Setting: show blue hour -->
+    <string name="configLabel_ui_showbluehour">الساعة الزرقاء</string>
+
+    <!-- App Setting: UI Theme -->
+    <string name="appThemes_lightTheme">السمة الفاتحة</string>
+    <string name="appThemes_darkTheme">السمة الداكنة</string>
+    <string name="appThemes_nightMode">السمة الفاتحة / السمة الداكنة (وضع الليل)</string>
+    <string name="appThemes_systemDefault">الافتراضي للنظام</string>
+    <string name="appThemes_systemDefault1">التباين (الافتراضي للنظام)</string>
+    <string name="appThemes_darkTheme1">التباين (الداكن)</string>
+    <string name="appThemes_lightTheme1">التباين (الفاتح)</string>
+
+    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
+        <item>@string/appThemes_lightTheme</item>
+        <item>@string/appThemes_darkTheme</item>
+        <item>@string/appThemes_nightMode</item>
+        <item>@string/appThemes_systemDefault</item>
+    </string-array>
+
+    <string-array name="appThemes_light_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
+        <item>@string/configLabel_tagDefault</item>
+        <item>@string/appThemes_systemDefault1</item>
+        <item>@string/appThemes_lightTheme1</item>
+    </string-array>
+
+    <string-array name="appThemes_dark_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
+        <item>@string/configLabel_tagDefault</item>
+        <item>@string/appThemes_systemDefault1</item>
+        <item>@string/appThemes_darkTheme1</item>
+    </string-array>
+
+    <!-- App Setting: time format -->
+    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
+        <item>@string/timeFormatMode_system</item>
+        <item>@string/timeFormatMode_12hr</item>
+        <item>@string/timeFormatMode_24hr</item>
+    </string-array>
+
+    <!-- App Setting: text size -->
+    <string name="configLabel_ui_textsize">حجم النص</string>
+    <string name="configLabel_ui_textsize_summary">%s</string>
+
+    <string name="textSize_small">صغير</string>
+    <string name="textSize_normal">عادي</string>
+    <string name="textSize_large">كبير</string>
+    <string name="textSize_xlarge">كبير جداً</string>
+
+    <string-array name="textSize_display">                      <!-- one-to-one with textSize_values -->
+        <item>@string/textSize_small</item>
+        <item>@string/textSize_normal</item>
+        <item>@string/textSize_large</item>
+        <item>@string/textSize_xlarge</item>
+    </string-array>
+
+    <!-- App Setting: solstice tracking mode -->
+    <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+        <item>@string/trackingMode_recent</item>
+        <item>@string/trackingMode_closest</item>
+        <item>@string/trackingMode_soonest</item>
+    </string-array>
+
+    <!-- App Setting: Date "on tap" action -->
+    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
+        <item>@string/configActionDesc_doNothing</item>
+        <item>@string/configActionDesc_showCalendar</item>
+        <item>@string/configActionDesc_setAlarm</item>
+        <item>@string/configActionDesc_setDate</item>
+        <item>@string/configActionDesc_swapCards</item>
+        <item>@string/configActionDesc_resetNote</item>
+    </string-array>
+
+    <!-- App Setting: Clock UI "on tap" action -->
+    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
+        <item>@string/configActionDesc_doNothing</item>
+        <item>@string/configActionDesc_showCalendar</item>
+        <item>@string/configActionDesc_setAlarm</item>
+        <item>@string/configActionDesc_setTimeZone</item>
+        <item>@string/configActionDesc_nextNote</item>
+        <item>@string/configActionDesc_prevNote</item>
+        <item>@string/configActionDesc_resetNote</item>
+    </string-array>
+
+    <!-- App Setting: Note UI "on tap" action -->
+    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
+        <item>@string/configActionDesc_doNothing</item>
+        <item>@string/configActionDesc_setAlarmForNote</item>
+        <item>@string/configActionDesc_nextNote</item>
+        <item>@string/configActionDesc_prevNote</item>
+        <item>@string/configActionDesc_resetNote</item>
+    </string-array>
+
+    <string name="configActionDesc_doNothing">لا تفعل شيئًا</string>
+    <string name="configActionDesc_nextNote">عرض المذكرة التالية</string>
+    <string name="configActionDesc_prevNote">عرض المذكرة السابقة</string>
+    <string name="configActionDesc_resetNote">عرض الحدث القادم</string>
+    <string name="configActionDesc_showCalendar">فتح التقويم</string>
+    <string name="configActionDesc_mapLocation">عرض الموقع على الخريطة</string>
+    <string name="configActionDesc_setAlarm">ضبط منبه</string>
+    <string name="configActionDesc_worldMap">عرض الخريطة العالمية</string>
+    <string name="configActionDesc_equinoxDialog">عرض الانقلابات</string>
+    <string name="configActionDesc_moon">عرض القمر</string>
+    <string name="configActionDesc_sunDialog">عرض الشمس</string>
+    <string name="configActionDesc_setDate">ضبط التاريخ</string>
+    <string name="configActionDesc_setTimeZone">ضبط المنطقة الزمنية</string>
+    <string name="configActionDesc_setLocation">ضبط الموقع</string>
+    <string name="configActionDesc_swapCards">تبديل البطاقات (اليوم / الغد)</string>
+    <string name="configActionDesc_nextCard">عرض البطاقة التالية</string>
+    <string name="configActionDesc_prevCard">عرض البطاقة السابقة</string>
+    <string name="configActionDesc_showCard">@string/configAction_viewDate</string>
+    <string name="configActionDesc_setAlarmForNote">ضبط منبه للمذكرة</string>
+    <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
+    <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
+    <string name="configActionDesc_alarmList">قائمة المنبهات</string>
+    <string name="configActionDesc_themeList">قائمة السمات</string>
+    <string name="configActionDesc_actionList">قائمة الإجراءات</string>
+    <string name="configActionDesc_widgetList">قائمة الودجات</string>
+    <string name="configActionDesc_nextSunrise">عرض شروق الشمس التالي</string>
+    <string name="configActionDesc_nextSunset">عرض غروب الشمس التالي</string>
+    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="configActionDesc_settings">@string/configAction_settings</string>
+
+    <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
+        <item>@string/configActionDesc_doNothing</item>
+        <item>@string/app_name</item>
+
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+
+        <item>@string/app_name_alarmclock</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+
+        <item>@string/configAction_showCalendar</item>
+        <item>@string/configAction_mapLocation</item>
+        <item>@string/configLabel_alarmClock</item>
+        <item>@string/configLabel_alarmClock</item>
+        <item>@string/app_name</item>
+    </string-array>
+    <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
+        <item>@string/configActionDesc_doNothing</item>
+        <item>@string/configActionDesc_setAlarm</item>
+
+        <item>@string/configActionDesc_nextCard</item>
+        <item>@string/configActionDesc_prevCard</item>
+        <item>@string/configActionDesc_swapCards</item>
+        <item>@string/configActionDesc_showCard</item>
+
+        <item>@string/configActionDesc_nextNote</item>
+        <item>@string/configActionDesc_prevNote</item>
+        <item>@string/configActionDesc_resetNote</item>
+        <item>@string/configActionDesc_nextSunrise</item>
+        <item>@string/configActionDesc_nextSunset</item>
+
+        <item>@string/configActionDesc_setDate</item>
+        <item>@string/configActionDesc_setLocation</item>
+        <item>@string/configActionDesc_setTimeZone</item>
+
+        <item>@string/configActionDesc_worldMap</item>
+        <item>@string/configActionDesc_equinoxDialog</item>
+        <item>@string/configActionDesc_moon</item>
+        <item>@string/configActionDesc_sunDialog</item>
+
+        <item>@string/configActionDesc_alarmList</item>
+        <item>@string/configActionDesc_themeList</item>
+        <item>@string/configActionDesc_actionList</item>
+        <item>@string/configActionDesc_widgetList</item>
+        <item>@string/configActionDesc_settings</item>
+
+        <item>@string/configActionDesc_showCalendar</item>
+        <item>@string/configActionDesc_mapLocation</item>
+        <item>@string/configActionDesc_alarmSnooze</item>
+        <item>@string/configActionDesc_alarmDismiss</item>
+        <item>@string/configActionDesc_updateWidgets</item>
+    </string-array>
+
+    <!-- App Setting: time zone sort modes -->
+    <string name="timezone_sort_byOffset">بالتعويض</string>
+    <string name="timezone_sort_byId">بالمعرف</string>
+    <string name="timezone_sort_byName">بالاسم</string>
+
+    <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
+        <item>@string/timezone_sort_byOffset</item>
+        <item>@string/timezone_sort_byId</item>
+        <item>@string/timezone_sort_byName</item>
+    </string-array>
+
+    <string name="timezone_sort_contextAction">ترتيب المناطق الزمنية</string>
+    <string name="timezone_sort_msg">تم ترتيب المناطق الزمنية (%1$s).</string>
+
+    <!-- App Setting: location fix time limit -->
+    <string name="configLabel_getFix_maxElapse">الحد الزمني لتحديد الموقع</string>
+    <string name="configLabel_getFix_maxElapse_summary">التخلي بعد <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="getFix_maxElapse_display">
+        <item>15 ثانية</item>    <!-- 15000 ms-->
+        <item>30 ثانية</item>    <!-- 30000 ms-->
+        <item>1 دقيقة</item>     <!-- 60000 ms-->
+        <item>5 دقائق</item>     <!-- 300000 ms-->
+        <item>10 دقائق</item>    <!-- 600000 ms-->
+    </string-array>
+
+    <!-- App Setting: location fix max age -->
+    <string name="configLabel_getFix_maxAge">الحد الأقصى لعمر الموقع الأخير</string>
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="دقيقة واحدة">%s</xliff:g> يُعتبر حديثًا</string>
+    <string-array name="getFix_maxAge_display">
+        <item>لا شيء</item>               <!-- 0 -->
+        <item>دقيقة واحدة</item>         <!-- 60000 -->
+        <item>5 دقائق</item>             <!-- 300000 -->
+        <item>15 دقيقة</item>            <!-- 900000 -->
+        <item>ساعة واحدة</item>
+        <item>4 ساعات</item>
+        <item>12 ساعة</item>
+        <item>يوم واحد (24 ساعة)</item>
+        <item>يومان (48 ساعة)</item>
+        <item>أسبوع واحد (168 ساعة)</item>
+        <item>شهر واحد (672 ساعة)</item>
+        <item>أي عمر</item>
+    </string-array>
+
+    <!-- App Setting: calendars -->
+    <string name="configLabel_calendars">التقاويم</string>
+    <string name="configLabel_calendars_enabled">تكامل التقويم</string>
+
+    <!-- App Setting: passive location mode -->
+    <string name="configLabel_getFix_passiveMode">الموقع السلبي</string>
+    <string name="configLabel_getFix_passiveMode_summary">استخدام مزود الموقع السلبي.</string>
+
+    <!-- App Setting: locale mode -->
+    <string name="configLabel_locale">اللغة</string>
+
+    <string name="configLabel_localeMode">الوضع</string>
+    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="اللغة النظامية">%s</xliff:g></string>
+    <string-array name="localeMode_display">
+        <item>النظام</item>            <!-- system locale -->
+        <item>معرفة المستخدم</item>    <!-- custom locale -->
+    </string-array>
+
+    <!-- App Setting: custom Locale -->
+    <string name="configLabel_localeSelect">Language</string>
+    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
+		<item>الإنجليزية</item>
+		<item>الإسبرانتو</item>
+		<item>الفرنسية</item>
+		<item>الألمانية</item>
+		<item>الهنغارية</item>
+		<item>الإيطالية</item>
+		<item>البولندية</item>
+		<item>الإسبانية</item>
+		<item>الكاتالونية</item>
+		<item>الباسكية</item>
+		<item>النرويجية</item>
+		<item>الصينية التقليدية</item>
+		<item>البرتغالية</item>
+		<item>الروسية</item>
+		<item>الهولندية</item>
+		<item>التشيكية</item>
+		<item>الصينية المبسطة</item>
+		<item>العربية</item>
+    </string-array>
+
+    <!-- position formats -->
+    <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
+    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
+    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
+    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g>&#160;<xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+    <string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
+
+    <!-- cardinal directions -->
+    <string-array name="directions_short">  <!-- one-to-one with directions_long -->
+        <item>N</item>
+        <item>NNE</item>
+        <item>NE</item>
+        <item>ENE</item>
+        <item>E</item>
+        <item>ESE</item>
+        <item>SE</item>
+        <item>SSE</item>
+        <item>S</item>
+        <item>SSW</item>
+        <item>SW</item>
+        <item>WSW</item>
+        <item>W</item>
+        <item>WNW</item>
+        <item>NW</item>
+        <item>NNW</item>
+        <item>N</item>
+    </string-array>
+    <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+        <item>North</item>
+        <item>North North East</item>
+        <item>North East</item>
+        <item>East North East</item>
+        <item>East</item>
+        <item>East South East</item>
+        <item>South East</item>
+        <item>South South East</item>
+        <item>South</item>
+        <item>South South West</item>
+        <item>South West</item>
+        <item>West South West</item>
+        <item>West</item>
+        <item>West North West</item>
+        <item>North West</item>
+        <item>North North West</item>
+        <item>North</item>
+    </string-array>
+
+    <!--
+      DIALOGS
+    -->
+
+    <!-- Dialog: World Map -->
+    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_action_play">تشغيل</string> <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_pause">إيقاف مؤقت</string> <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_record">تسجيل</string> <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_next">التالي</string> <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_prev">السابق</string> <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_reset">إعادة تعيين</string> <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_menu">الخيارات</string> <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_option_sunlight">ضوء الشمس</string>
+    <string name="worldmap_dialog_option_moonlight">ضوء القمر</string>
+    <string name="worldmap_dialog_option_all">الكل</string>
+    <string name="worldmap_dialog_option_location">الموقع</string>
+    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_option_center">توسيط على الموقع</string>
+    <string name="worldmap_dialog_option_center_current">التوسيط: %s</string>
+    <string name="worldmap_dialog_option_center_msg">تم تعيين مركز الخريطة إلى الموقع الحالي \n[%s]</string> <!-- toast message; center set to... -->
+    <string name="worldmap_dialog_option_center_clear">إعادة تعيين مركز الخريطة</string>
+    <string name="worldmap_dialog_option_center_clear_msg">تمت إعادة تعيين مركز الخريطة إلى الافتراضي \n[%s]</string>
+    <string name="worldmap_dialog_option_background">تعيين الخلفية</string>
+    <string name="worldmap_dialog_option_background_clear">مسح الخلفية</string>
+    <string name="worldmap_dialog_option_background_warning0">هذه الصورة لها نسبة ارتفاع خاطئة.. المتوقع %2$s، لكن العثور على %1$s!</string> <!-- toast message; aspect ratio warning -->
+    <string name="worldmap_dialog_option_background_error0">فشل في فتح خلفية الخريطة.</string> <!-- toast message; io error -->
+    <string name="worldmap_dialog_option_latitudes">خطوط رئيسية</string>
+    <string name="worldmap_dialog_option_minorgrid">شبكة خطوط الطول والعرض</string>
+    <string name="worldmap_dialog_option_debuglines">خطوط تصحيح الأخطاء</string>
+    <string name="worldmap_dialog_option_tintmap">تلوين</string>
+       <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
+    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="configAction_recordMap">@string/worldmap_dialog_action_record</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nلنتائج أفضل، اختر صورة بالمواصفات الآتية
+    </string>
+
+    <!-- Dialog: Light Map -->
+    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+
+    <string name="graph_option_grid">الشبكة</string>
+    <string name="graph_option_labels">التسميات</string>
+    <string name="graph_option_axis">المحاور</string>
+    <string name="graph_option_filledpath">المسار الممتلئ</string>
+    <string name="graph_option_moon">عرض القمر</string>
+
+    <string name="seekAltitude_configHint">درجات</string>
+
+    <string name="seekAltitude_suffix">°∠</string>
+    <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>
+    <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
+    <string name="seekAltitude_setting">@string/eventalias_title_tag_setting</string>
+    <string name="seekAltitude_setting_contentDescription">@string/sunset</string>
+
+    <!-- Dialog: Moon -->
+    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_controls">Playback Controls</string>
+
+    <!-- Dialog: Set Alarm -->
+
+    <string name="configLabel_schedalarm_mode">جدولة تنبيه لـ</string>
+    <string name="configLabel_schednotify_mode">جدولة إشعار لـ</string>
+    <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>
+    <string name="schedalarm_dialog_tab_event">الحدث</string>
+    <string name="schedalarm_dialog_tab_time">الوقت</string>
+    <string name="schedalarm_dialog_ok">جدولة</string>
+    <string name="schedalarm_dialog_cancel">إلغاء</string>
+    <string name="schedalarm_dialog_error">لم يتم تعيين التنبيه…</string>
+    <string name="schedalarm_dialog_error2">لا يمكن تعيين التنبيه…</string>
+    <string name="schedalarm_dialog_note">حوالي <xliff:g id="timetext" example="6h 30m">%s</xliff:g> من الآن.</string>
+    <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m">%s</xliff:g> من الآن</string>
+    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="الشفق البحري">%s</xliff:g> لا يحدث.</string>
+   <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
+    <string name="schedalarm_labelformat2"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g></string>
+    <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
+        <item>الشفق الفلكي</item>
+        <item>الشفق البحري</item>
+        <item>الساعة الزرقاء</item>
+        <item>الشفق المدني</item>
+        <item>الساعة الزرقاء</item>
+        <item>شروق الشمس</item>
+        <item>الساعة الذهبية</item>
+        <item>زوال الشمس</item>
+        <item>الساعة الذهبية</item>
+        <item>غروب الشمس</item>
+        <item>الساعة الزرقاء</item>
+        <item>الشفق المدني</item>
+        <item>الساعة الزرقاء</item>
+        <item>الشفق البحري</item>
+        <item>الشفق الفلكي</item>
+        <item>بزوغ القمر</item>
+        <item>أفول القمر</item>
+        <item>محاق</item>
+        <item>الربع الأول</item>
+        <item>بدر</item>
+        <item>الربع الثالث</item>
+        <item>اعتدال الربيع</item>
+        <item>انقلاب الصيف</item>
+        <item>@string/solarevents_event_equinox_autumnal</item>
+        <item>انقلاب الشتاء</item>
+        <item>زوال القمر</item>
+        <item>منتصف الليل القمري</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
+    </string-array>
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- short labels; ending may be ellipsed (so the beginning should be distinct)  -->
+        <item>الشفق الفلكي الصباحي (البداية)</item>
+        <item>الشفق البحري الصباحي (البداية)</item>
+        <item>الساعة الزرقاء الصباحية (البداية)</item>
+        <item>الشفق المدني الصباحي (البداية)</item>
+        <item>الساعة الزرقاء الصباحية (النهاية)</item>
+        <item>شروق الشمس</item>
+        <item>الساعة الذهبية الصباحية (النهاية)</item>
+        <item>زوال الشمس</item>
+        <item>الساعة الذهبية المسائية (البداية)</item>
+        <item>غروب الشمس</item>
+        <item>الساعة الزرقاء المسائية (البداية)</item>
+        <item>الشفق المدني المسائي (النهاية)</item>
+        <item>الساعة الزرقاء المسائية (النهاية)</item>
+        <item>الشفق البحري المسائي (النهاية)</item>
+        <item>الشفق الفلكي المسائي (النهاية)</item>
+        <item>بزوغ القمر</item>
+        <item>أفول القمر</item>
+        <item>محاق</item>
+        <item>الربع الأول</item>
+        <item>بدر</item>
+        <item>الربع الثالث</item>
+        <item>اعتدال الربيع</item>
+        <item>انقلاب الصيف</item>
+        <item>@string/solarevents_event_equinox_autumnal</item>
+        <item>انقلاب الشتاء</item>
+        <item>زوال القمر</item>
+        <item>منتصف الليل القمري</item>
+       <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
+    </string-array>
+    <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>بداية الشفق الفلكي الصباحي</item>
+        <item>بداية الشفق البحري الصباحي</item>
+        <item>بداية الساعة الزرقاء الصباحية</item>
+        <item>بداية الشفق المدني الصباحي</item>
+        <item>نهاية الساعة الزرقاء الصباحية</item>
+        <item>شروق الشمس</item>
+        <item>نهاية الساعة الذهبية الصباحية</item>
+        <item>زوال الشمس</item>
+        <item>بداية الساعة الذهبية المسائية</item>
+        <item>غروب الشمس</item>
+        <item>بداية الساعة الزرقاء المسائية</item>
+        <item>نهاية الشفق المدني المسائي</item>
+        <item>نهاية الساعة الزرقاء المسائية</item>
+        <item>نهاية الشفق البحري المسائي</item>
+        <item>نهاية الشفق الفلكي المسائي</item>
+        <item>شروق القمر</item>
+        <item>غروب القمر</item>
+        <item>القمر الجديد</item>
+        <item>الربع الأول</item>
+        <item>القمر الكامل</item>
+        <item>الربع الثالث</item>
+        <item>اعتدال الربيع</item>
+        <item>انقلاب الصيف</item>
+        <item>@string/solarevents_event_equinox_autumnal</item>    <!-- autumn equinox; using @string/ here so en_US may easily override -->
+        <item>انقلاب شتوي</item>
+        <item>زوال القمر</item>
+        <item>lunar midnight</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
+    </string-array>
+    <string name="solarevents_event_equinox_autumnal">autumn equinox</string>   <!-- solarevents_* array value; optional if arrays are overridden by translation -->
+
+    <string-array name="solarevents_gender">   <!-- one-to-one with solarevents_long1; values used by SelectFormat (api24+) -->
+        <item>other</item>    <!-- start of astronomical twilight -->
+        <item>other</item>    <!-- start of nautical twilight -->
+        <item>other</item>    <!-- start of morning blue hour -->
+        <item>other</item>    <!-- start of civil twilight -->
+        <item>other</item>    <!-- end of morning blue hour -->
+        <item>other</item>    <!-- sunrise -->
+        <item>other</item>    <!-- start of golden hour -->
+        <item>other</item>    <!-- solar noon -->
+        <item>other</item>    <!-- end of golden hour -->
+        <item>other</item>    <!-- sunset -->
+        <item>other</item>    <!-- start of evening blue hour -->
+        <item>other</item>    <!-- end of civil twilight -->
+        <item>other</item>    <!-- end of evening blue hour -->
+        <item>other</item>    <!-- end of nautical twilight -->
+        <item>other</item>    <!-- end of astronomical twilight -->
+        <item>female</item>   <!-- moonrise -->
+        <item>female</item>   <!-- moonset -->
+        <item>female</item>   <!-- new moon -->
+        <item>other</item>    <!-- first quarter -->
+        <item>female</item>   <!-- full moon -->
+        <item>other</item>    <!-- third quarter -->
+        <item>other</item>    <!-- spring solstice -->
+        <item>other</item>    <!-- summer solstice -->
+        <item>other</item>    <!-- autumn equinox -->
+        <item>other</item>    <!-- winter solstice -->
+        <item>other</item>    <!-- lunar noon -->
+        <item>female</item>   <!-- lunar midnight -->
+        <item>other</item>    <!-- cross spring -->
+        <item>other</item>    <!-- cross summer -->
+        <item>other</item>    <!-- cross autumn -->
+        <item>other</item>    <!-- cross winter -->
+    </string-array>
+    <integer-array name="solarevents_quantity">   <!-- one-to-one with solarevents_short; values used by SelectFormat (api24+) -->
+        <item>1</item>    <!-- start of astronomical twilight -->
+        <item>1</item>    <!-- start of nautical twilight -->
+        <item>1</item>    <!-- start of morning blue hour -->
+        <item>1</item>    <!-- start of civil twilight -->
+        <item>1</item>    <!-- end of morning blue hour -->
+        <item>1</item>    <!-- sunrise -->
+        <item>1</item>    <!-- start of golden hour -->
+        <item>1</item>    <!-- solar noon -->
+        <item>1</item>    <!-- end of golden hour -->
+        <item>1</item>    <!-- sunset -->
+        <item>1</item>    <!-- start of evening blue hour -->
+        <item>1</item>    <!-- end of civil twilight -->
+        <item>1</item>    <!-- end of evening blue hour -->
+        <item>1</item>    <!-- end of nautical twilight -->
+        <item>1</item>    <!-- end of astronomical twilight -->
+        <item>1</item>    <!-- moonrise -->
+        <item>1</item>    <!-- moonset -->
+        <item>1</item>    <!-- new moon -->
+        <item>1</item>    <!-- first quarter -->
+        <item>1</item>    <!-- full moon -->
+        <item>1</item>    <!-- third quarter -->
+        <item>1</item>    <!-- spring solstice -->
+        <item>1</item>    <!-- summer solstice -->
+        <item>1</item>    <!-- autumn equinox -->
+        <item>1</item>    <!-- winter solstice -->
+        <item>1</item>    <!-- lunar noon -->
+        <item>1</item>    <!-- lunar midnight -->
+        <item>1</item>    <!-- cross spring -->
+        <item>1</item>    <!-- cross summer -->
+        <item>1</item>    <!-- cross autumn -->
+        <item>1</item>    <!-- cross winter -->
+    </integer-array>
+    <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
+    <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
+
+    <!-- Dialog: Enable Location? -->
+    <string name="gps_dialog_msg">تم تعطيل الموقع. هل ترغب في تفعيله؟</string>
+    <string name="gps_dialog_ok">نعم</string>
+    <string name="gps_dialog_cancel">لا</string>
+
+    <!-- gps_lastfix (current location mode) -->
+    <string name="gps_lastfix_title_set">الموقع المُعد</string>   <!-- may appear as place name when location set by intent -->   <!-- TODO: changed from "Set Position" to "Configured Position" -->
+    <string name="gps_lastfix_title_cached">الموقع السابق</string>  <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="gps_lastfix_title_found">الموقع الأخير</string>    <!-- may appear as place name when location set by lookup -->
+    <string name="gps_lastfix_title_searching">الحصول على الموقع</string>
+    <string name="gps_lastfix_toast_notfound">فشل في الحصول على الموقع؛ الرجوع إلى آخر موقع معروف.</string>
+    <string name="gps_lastfix_toast_cancelled">تم إلغاء تحديث الموقع.</string>
+
+    <!-- Dialog: KeepTrying Location? -->
+    <string name="gps_keeptrying_title">لا موقع</string>
+    <string name="gps_keeptrying_msg">تعذر الحصول على الموقع.</string> <!-- TODO: "get a fix" to "get location" -->
+    <string name="gps_keeptrying_ok">محاولة مستمرة</string>
+    <string name="gps_keeptrying_cancel">الاستسلام</string>
+    <string name="gps_keeptrying_fallback">استخدام الموقع السابق</string>
+
+    <!-- Dialog: Use Date -->
+    <string name="timedate_dialog_title">تعيين التاريخ</string>
+    <string name="timedate_dialog_ok">تعيين</string>
+    <string name="timedate_dialog_cancel">إلغاء</string>
+
+    <!-- Dialog: Use Timezone -->
+    <string name="timezone_dialog_title">المنطقة الزمنية</string>
+    <string name="timezone_dialog_ok">تعيين</string>
+    <string name="timezone_dialog_cancel">إلغاء</string>
+
+    <!-- Dialog: Set Location -->
+    <string name="location_dialog_title">الموقع</string>
+    <string name="location_dialog_ok">تحديث</string>
+    <string name="location_dialog_cancel">إلغاء</string>
+    <string name="location_dialog_error_lat">هذا ليس عرضًا جغرافيًا صالحًا.</string>
+    <string name="location_dialog_error_lon">هذا ليس طولًا جغرافيًا صالحًا.</string>
+    <string name="location_dialog_error_alt">هذا ليس ارتفاعًا صالحًا.</string>
+    <string name="location_dialog_error_name">أدخل اسم المكان.</string>
+
+    <string name="location_dialog_toast_copied">تم النسخ إلى الحافظة<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+
+    <!-- Dialog: Delete Place -->
+    <string name="locationdelete_dialog_title">هل تريد إزالة المكان؟</string> <!-- title; remove 1 place -->
+    <string name="locationdelete_dialog_title1">هل تريد إزالة المواقع؟</string> <!-- title; remove multiple places -->
+    <string name="locationdelete_dialog_message">هل أنت متأكد أنك تريد إزالة %s؟</string>
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="zero">لم يُزال أي مكان.</item>
+        <item quantity="one">تمت إزالة المكان.</item>
+        <item quantity="two">أُزيل مكانان</item>
+        <item quantity="other">تمت إزالة %d مكان.</item>
+        <item quantity="few">تمت إزالة %d مكان.</item>
+        <item quantity="many">تمت إزالة %d مكان.</item>
+    </plurals>
+    <string name="locationdelete_dialog_ok">إزالة</string>
+    <string name="locationdelete_dialog_cancel">إلغاء</string>
+
+    <!-- Dialog: Clear Places -->
+    <string name="locationclear_dialog_title">هل تريد مسح المواقع؟</string>
+    <string name="locationclear_dialog_message">هل أنت متأكد أنك تريد مسح قائمة المواقع؟</string>
+    <string name="locationclear_dialog_ok">مسح</string>
+    <string name="locationclear_dialog_cancel">إلغاء</string>
+
+    <!-- Dialog: Clear Places (progress) -->
+    <string name="locationcleared_dialog_title">جارٍ مسح المواقع</string>
+    <string name="locationcleared_dialog_message">جارٍ مسح قائمة المواقع…</string>
+    <string name="locationcleared_toast_success">تم مسح قائمة المواقع بنجاح.</string>
+
+    <!-- Dialog: Build Places List (progress) -->
+    <string name="locationbuild_dialog_title">جارٍ بناء قاعدة البيانات</string>
+    <string name="locationbuild_dialog_message">جارٍ بناء قائمة المواقع…</string>
+    <string name="locationbuild_toast_success">تمت إضافة <xliff:g id="n">%1$s</xliff:g> مكان.</string>
+
+    <!-- Dialog: Export Places -->
+    <string name="locationexport_dialog_title">جارٍ تصدير المواقع</string>
+    <string name="locationexport_dialog_message">جارٍ تصدير المواقع إلى ملف csv.</string>
+
+    <!-- Dialog: Export Themes -->
+    <string name="themesexport_dialog_title">جارٍ تصدير السمات</string>
+    <string name="themesexport_dialog_message">جارٍ تصدير السمات إلى الملف.</string>
+
+    <!-- Dialog: Import / Export -->
+    <string name="msg_export_success">تم الحفظ إلى <xliff:g id="filepath">%s</xliff:g></string> <!-- TODO: update -->
+    <string name="msg_export_failure">فشل التصدير إلى <xliff:g id="filepath">%s</xliff:g>!</string>
+    <string name="msg_export_to">التصدير بواسطة</string> <!-- title displayed over "share action" chooser -->
+
+    <!-- Dialog: Import Themes -->
+    <string name="themesimport_dialog_title">جارٍ استيراد السمات</string>
+    <string name="themesimport_dialog_message">جارٍ استيراد السمات من الملف…</string>
+
+    <string name="msg_import_success">تم استيراد <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="msg_import_failure">فشل الاستيراد من <xliff:g id="filepath">%s</xliff:g>!</string>
+    <string name="msg_import_noresults">تم تخطي الاستيراد؛ لم يتم العثور على سمات جديدة.</string>
+    <string name="msg_import_label_file">ملف</string> <!-- used in import failure messages; e.g. "Import from file failed!" -->
+
+    <plurals name="themePlural">
+        <item quantity="zero">لا سمة</item>
+        <item quantity="one">سمة واحدة</item>
+        <item quantity="two">سمتان</item>
+        <item quantity="few">%d سمات</item>
+        <item quantity="many">%d سمةً</item>
+        <item quantity="other">%d سمات</item>
+    </plurals>
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">اختر لوناً</string>
+    <string name="color_dialog_ok">اختر</string>
+    <string name="color_dialog_cancel">ألغِ</string>
+    <string name="color_dialog_tab1">1</string>
+    <string name="color_dialog_tab2">2</string>
+    <string name="color_dialog_tab3">3</string>
+    <string name="color_dialog_label_r">R</string>
+    <string name="color_dialog_label_g">G</string>
+    <string name="color_dialog_label_b">B</string>
+    <string name="color_dialog_label_a">A</string>
+    <string name="color_dialog_hint_rgba">0–255</string>
+    <string name="color_dialog_hint_hex">#FFFFFF</string>
+
+    <!-- Dialog: About -->
+    <string name="about_dialog_title">حول التطبيق</string>
+    <string name="app_name">أوقات الشمس</string>
+    <string name="app_name_alarmclock">منبهات أوقات الشمس</string>
+    <string name="app_name_widget0">ويدجت أوقات الشمس</string>
+    <string name="app_name_widget1">ويدجت أوقات الشمس (قابل للانقلاب)</string>
+    <string name="app_name_widget2">ويدجت موضع الشمس</string>
+    <string name="app_name_clockwidget0">ويدجت الساعة</string>
+    <string name="app_name_datewidget0">ويدجت التاريخ</string>
+    <string name="app_name_clocktile">بلاطة الساعة</string>
+    <string name="app_name_eventtile">بلاطة الحدث التالي</string>
+    <string name="app_name_solsticewidget0">ويدجت الانقلاب الشتوي</string>
+    <string name="app_name_moonwidget0">ويدجت القمر</string>
+    <string name="app_version"><![CDATA[<b>الإصدار:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_shortdesc">يعرض أوقات الشروق والغروب للشمس والقمر.</string>
+    <string name="app_support_url"><![CDATA[
+        <b>الدعم:</b> قم بزيارة
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">متعقب المشكلات</a> لتقديم طلب.
+    ]]></string>
+    <string name="app_donate_url"><![CDATA[
+        %s متاح مجانًا، ولكن إذا أثبتت قيمته، يُرجى
+        <a href="https://forrestguice.codeberg.page/Suntimes/donate">الدفع بالمبلغ الذي تريده</a>.
+    ]]></string>
+    <string name="app_source_url"><xliff:g id="url"><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
+    ]]></xliff:g></string>
+    <string name="app_license_about">أوقات الشمس هو برنامج مجاني ومفتوح المصدر.</string> <!-- displayed by welcome dialog -->
+    <string name="app_license_url"><xliff:g id="url"><![CDATA[
+        <a href="https://forrestguice.codeberg.page/Suntimes/license">https://forrestguice.codeberg.page/Suntimes/license</a>
+    ]]></xliff:g></string>
+    <string name="app_url"><xliff:g id="url"><![CDATA[
+        <a href="https://forrestguice.codeberg.page/Suntimes">https://forrestguice.codeberg.page/Suntimes</a>
+    ]]></xliff:g></string>
+    <string name="app_legal1"><![CDATA[
+        <b>الشفرة المصدرية:</b><br />
+        حقوق النشر &#169 2014-2024 Forest Guice <br />
+        الشفرة المصدرية متاحة بموجب GPLv3.
+    ]]></string>
+    <string name="app_legal2"><![CDATA[<b>الترجمات إلى:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> من قبل <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>، و<xliff:g id="authorName">%2$s</xliff:g></string>
+    <string name="creditsTab">الاعتمادات</string>
+    <string name="app_legal3"><![CDATA[ <b>المكتبات:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
+    <string-array name="app_libraries">
+        <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
+        <item><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]></item>
+        <item><![CDATA[ github.com/caarmen/SunriseSunset ]]></item>
+        <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
+        <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
+    </string-array>
+    <string name="app_about_media"><![CDATA[ <b>وسائل الإعلام:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string-array name="app_media">
+        <item><![CDATA[ NASA Earth Observatory. <i>Blue Marble: Next Generation</i>. ]]></item>
+    </string-array>
+
+    <!-- Dialog: Welcome / Initial setup -->
+    <string name="welcome_action_skip">تخطي</string>
+    <string name="welcome_action_prev">السابق</string>
+    <string name="welcome_action_next">التالي</string>
+    <string name="welcome_action_done">انتهاء</string>
+    <string name="welcome_message">@string/app_shortdesc</string>
+    <string name="welcome_pref_title">شاشة الترحيب</string>
+    <string name="welcome_pref_summary">ابدأ الإعداد الأولي للتطبيق.</string>
+
+    <!-- Dialog: Help -->
+    <string name="help_dialog_title">المساعدة</string>
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>تبديل التخطيطات لملء المساحة المتاحة</big><br/><br/>
+      <i><b>[مُمكّن]</b></i> سيقوم الويدجت بالتبديل بين التخطيطات اعتمادًا على المساحة المتاحة.<br/><br/>
+      <i><b>[مُعطّل]</b></i> يحتفظ الويدجت بتخطيطه الأولي عند تغيير الحجم. استخدم هذا مع الخيار "<i>تكبير النصوص والرموز</i>" للويدجتات الكبيرة الإضافية.
+    ]]></string>
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      تم إنشاء هذا الويدجت بتخطيط <b>%1$s</b> <em>أولي</em>.<br/></br/>
+    ]]></string>
+    <string name="help_appearance_title"><![CDATA[
+        يتم دعم الاستبدالات التالية للعنوان:<br/>
+        <br/>
+        <b>جميع الويدجتات:</b> <br />
+                * <b>%d</b> للتاريخ (مثال: 12 فبراير) <br/>
+                * <b>%dd</b> لليوم (قصير) (مثال: الاثنين) <br/>
+                * <b>%dD</b> لليوم (طويل) (مثال: الاثنين) <br/>
+                * <b>%dY</b> للسنة (مثال: 2018) <br/>
+                * <b>%dt</b> للوقت (آخر تحديث) <br/>
+                * <b>%dT</b> للوقت بالثواني (آخر تحديث) <br/>
+                * <b>%dm</b> للمللي ثانية (آخر تحديث) <br/>
+                <br/>
+                * <b>%loc</b> للتسمية (مثال: فينيكس) <br />
+                * <b>%lat</b> للخط العرض <br />
+                * <b>%lon</b> للخط الطول <br/>
+                * <b>%lel</b> للارتفاع (مثال: 385 متر) <br/>
+                <br/>
+                * <b>%s</b> لمصدر البيانات (مثال: sunrisesunsetlib) <br/>
+                * <b>%t</b> للمنطقة الزمنية (المعرف) (مثال: US/Arizona) <br/>
+                * <b>%id</b> لمعرف الويدجت التطبيقي <br/>
+         <br/>
+         <b>ويدجتات التاريخ:</b> <br/>
+                * <b>%M</b> للوضع (مثال: ميلادي) <br/>
+         <br/>
+         <b>ويدجتات الشمس:</b> <br/>
+                * <b>%m</b> للوضع (قصير) (مثال: مدني) <br/>
+                * <b>%M</b> للوضع (طويل) (مثال: الشفق المدني) <br/>
+                * <b>%o</b> للترتيب (مثال: الأخير/التالي، اليوم) <br/>
+         <br/>
+         <b>ويدجتات القمر:</b> <br/>
+                * <b>%i</b> لإضاءة القمر (مثال: 25%) <br/>
+                * <b>%M</b> لمرحلة القمر (مثال: هلال متزايد) <br/>
+                * <b>%o</b> للترتيب (مثال: الأخير/التالي، اليوم) <br/>
+         <br/>
+         <b>ويدجتات الانقلاب الشتوي:</b> <br/>
+                * <b>%m</b> للوضع (قصير) (مثال: الانقلاب الشتوي) <br/>
+                * <b>%M</b> للوضع (طويل) (مثال: الانقلاب الشتوي) <br/>
+                * <b>%o</b> للترتيب (مثال: الحدث الأقرب، الحدث القادم) <br/>
+    ]]></string> <!-- TODO: added section "Date Widgets:", add "%em, %et, %eT, %eA" (#599) to online-help -->
+
+    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g>
+    </string>
+    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g>
+    </string>
+    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
+        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
+        <xliff:g id="help_topic4">%4$s</xliff:g>
+    </string>
+
+    <string name="help_general_calendarFormatPattern"><![CDATA[
+      <b>نمط تنسيق التاريخ:</b> نمط لتنسيق التاريخ.<br/>
+      <br/>قد تختلف العناصر المتاحة بين التقاويم، ولكن عادة ما تشمل..<br/>
+      <br/>
+      <b>E</b> : يوم من الأسبوع <br/>
+      <b>d</b> : يوم من الشهر <br/>
+      <b>D</b> : يوم من السنة <br/>
+      <b>F</b> : يوم أسبوعي في الشهر <br/>
+      <b>M</b> : شهر من السنة <br/>
+      <b>y</b> : سنة من العصر <br/>
+      <b>G</b> : عصر <br/>
+      <br/>
+    ]]></string>
+
+    <string name="help_general_moondialog"><![CDATA[
+          \n[Icon Rising]  بزوغ القمر \t\t[Icon Noon]  زوال القمر
+          \n[Icon Setting]  افول القمر \t\t[Icon Midnight]  منتصف الليل القمري
+          \n\nمشاركة [Icon Share] ستنسخ النص إلى الحافظة.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>إمبولك (الربع الفاصل):</b> نقطة منتصف الطريق بين الانقلاب الشتوي وميزان الربيع؛ <em>فبراير</em> [northern hemisphere]، أو <em>أغسطس</em> [southern hemisphere].<br/><br/>
+          <b>بيلتان (الربع الفاصل):</b> نقطة منتصف الطريق بين ميزان الربيع والانقلاب الصيفي؛ <em>مايو</em> [northern hemisphere]، أو <em>نوفمبر</em> [southern hemisphere].<br/><br/>
+          <b>لوناسا (الربع الفاصل):</b> نقطة منتصف الطريق بين الانقلاب الصيفي والميزان الخريفي؛ <em>أغسطس</em> [northern hemisphere]، أو <em>فبراير</em> [southern hemisphere].<br/><br/>
+          <b>سمهوين (الربع الفاصل):</b> نقطة منتصف الطريق بين الميزان الخريفي والانقلاب الشتوي؛ <em>نوفمبر</em> [northern hemisphere]، أو <em>مايو</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO -->
+
+    <string name="help_eventlist"><![CDATA[
+          [Icon OK] اختر حدثاً مخصصاً .\n
+          [Icon Add] أضف، [Icon Edit] عدل، أو [Icon Delete] احذف.\n
+          \nالأحداث الخاصة بالإمكان عرضها في التطبيق، أو في الويدجت، أو تُستعمل لجدولة تنبيهات وإشعارات.\n
+          [Icon View] الأحداث المعلمة سيعرضها التطبيق.
+    ]]></string>
+
+    <string name="help_alarms_edit"><![CDATA[
+      [Icon Back] للإلغاء دون إجراء تغييرات.<br/>
+      [Icon Save] للحفظ، و [Icon Done] للحفظ والتمكين.<br/>
+      [Icon Cancel] للحفظ والتعطيل.<br/>
+      [Icon Delete] للإلغاء والحذف.<br/>
+      <br/>
+      [Icon Offset] يظهر عندما يتم تعيين الوقت المجدول بتعويض قبل أو بعد وقت الحدث.
+]]></string>
+
+    <string name="help_general_dst"><![CDATA[
+        <b>Day Light Saving:</b> [Icon DST] يُعرض عندما يتم تطبيق الوقت الحالي <b>DST</b>، أو تم تعديله بواسطة قاعدة مماثلة.<br/><br/>
+    ]]></string>
+    <string name="help_general_actualTime"><![CDATA[
+        <b>Actual Time:</b> الوقت التقريبي لشروق الشمس وغروبها.<br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
+        <b>Civil Twilight:</b> الشمس على بُعد 6 درجات تحت الأفق؛ تكون النجوم الألمع واضحة. يوجد كافة الضوء اللازم لمعظم الأنشطة في الهواء الطلق دون الحاجة إلى إضاءة.<br/><br/>
+        <b>Nautical Twilight:</b> الشمس على بُعد 12 درجة تحت الأفق؛ يبدأ تلاشي ملامح الأجسام والأفق. لا يوجد كافة الضوء اللازم لمعظم الأنشطة في الهواء الطلق دون الحاجة إلى إضاءة.<br/><br/>
+        <b>Astronomical Twilight:</b> الشمس على بُعد 18 درجة تحت الأفق. الظلام الكامل لليل.<br/>
+    ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+        <b>Today:</b> أوقات حدوث الشروق والغروب لتاريخ اليوم.<br/><br/>
+        <b>Last / Next:</b> وقت آخر حدث، والحدث القادم.<br/>
+    ]]></string>
+
+    <string name="help_general_timeMode2"><![CDATA[
+      <b>انقلاب الربيع:</b> بداية الربيع الفلكي؛ <em>مارس</em> [نصف الكرة الشمالي]، أو <em>سبتمبر</em> [نصف الكرة الجنوبي]. يُسمى أيضًا استواء مارس.<br/><br/>
+      <b>انقلاب الصيف:</b> بداية الصيف الفلكي؛ <em>يونيو</em> [نصف الكرة الشمالي]، أو <em>ديسمبر</em> [نصف الكرة الجنوبي]. يُسمى أيضًا الانقلاب الشمالي.<br/><br/>
+      <b>اعتدال الخريف:</b> بداية الخريف الفلكي؛ <em>سبتمبر</em> [نصف الكرة الشمالي]، أو <em>مارس</em> [نصف الكرة الجنوبي]. يُسمى أيضًا استواء سبتمبر.<br/><br/>
+      <b>انقلاب الشتاء:</b> بداية الشتاء الفلكي؛ <em>ديسمبر</em> [نصف الكرة الشمالي]، أو <em>يونيو</em> [نصف الكرة الجنوبي]. يُسمى أيضًا الانقلاب الجنوبي.<br/>
+]]></string>   <!-- help contents: solstice/equinoxes (quarter days) -->
+
+<string name="help_general_tropicalyear"><![CDATA[
+      <b>السنة الاستوائية:</b> دورة كاملة للفصول الأربعة. يُقاس طول الـ <em>السنة الاستوائية</em> من استواء مارس إلى الاستواء التالي. يبلغ طوله <em>~365.24 يومًا</em> في المتوسط، مع طول دقيق يتغير كل عام (يصل إلى 30 دقيقة).<br/>
+]]></string>
+
+<string name="help_general_solartime"><![CDATA[
+      <b>الوقت الشمس الظاهري:</b> وقت الساعة الشمسية. الوقت المحدد عن طريق تتبع حركة الشمس الظاهرة بالنسبة لخط الطول والعرض المعطى.
+      <br/><br/>
+      حركة الشمس الظاهرة ليست ثابتة. تتغير موسميًا بسبب ميلان السمت وانحراف مدار الأرض.
+      طول كل يوم شمسي ظاهري، المقاس من الظهر إلى الظهر التالي، قد يكون أطول أو أقصر قليلاً من 24 ساعة (يصل إلى 30 ثانية).
+      هذه التغييرات الصغيرة تتراكم مع كل يوم مرورًا (وتتوسط على مدى السنة).
+      <br/><br/>
+
+      <b>التوقيت المحلي:</b> الوقت الساعي المحلي. الوقت المحدد من موقع الشمس الوسطى بالنسبة لخط الطول المعطى.
+      <br/><br/>
+      حركة الشمس الوسطى تصحح لميل السمت وانحراف المدار وهي متساوية.
+      طول كل يوم شمسي وسطي هو بالضبط 24 ساعة.<br/><br/>
+
+      <b>معادلة الوقت:</b> الفرق بين الوقت الساعي المحلي ووقت الساعة الشمسية الظاهرة.
+      هذا هو التغيير المتراكم لليوم الشمسي الظاهري.
+      <br/><br/>
+      يمكن أن يختلف وقت الساعة الشمسية الظاهرة عن الوقت الساعي المحلي بما يصل إلى 16 دقيقة اعتمادًا على الموسم.
+      <br/><br/>
+
+      <i>يستخدم هذا التطبيق خوارزمية لحساب معادلة الوقت (واستنتاج الوقت الشمسي الظاهري).
+      يُستخدم موقعك لتحديد الوقت الساعي المحلي.</i>
+      <br/><br/>
+]]></string> <!-- TODO -->
+
+    <string name="help_general_daylength"><![CDATA[
+    <b>طول النهار:</b> كمية الوقت بين شروق الشمس وغروبها.<br/><br/>
+    <b>الضوء المستخدم:</b> كمية الوقت بين الفجر والغسق المدنيين.<br/>
+]]></string>
+<string name="help_general_moonillum"><![CDATA[
+    <b>إضاءة القمر:</b> يعرض الصفحة الرئيسية إضاءة القمر عند ظهيرة القمر، بينما يعرض حوار القمر الإضاءة الحالية للقمر.<br/>
+]]></string>   <!-- TODO: deprecated -->
+<string name="help_general_goldhour"><![CDATA[
+    <b>الساعة الذهبية:</b> تكون الشمس بين 6 درجات فوق أو تحت الأفق. في الصباح، تبدأ الساعة الذهبية مع الفجر المدني وتنتهي بعد وقت قصير من شروق الشمس. في المساء، تبدأ الساعة الذهبية قبل وقت قصير من غروب الشمس وتنتهي مع الغسق المدني.<br/>
+]]></string>
+<string name="help_general_bluehour"><![CDATA[
+    <b>الساعة الزرقاء:</b> تكون الشمس بين 8 درجات و 4 درجات تحت الأفق. يقع بداية ونهاية الساعة الزرقاء بين الفجر البحري والفجر المدني.<br/>
+]]></string>
+<string name="help_action_launch"><![CDATA[
+    جميع الحقول اختيارية (يمكن ترك القيم فارغة لـ <em>نية ضمنية</em>).
+    <br/>
+    <br/>
+    <b>الإجراء:</b> سلسلة إجراء.<br/><small>مثال: <em>android.intent.action.VIEW</em></small>
+    <br/>
+    <br/>
+    <b>الحزمة:</b> اسم حزمة.<br/><small>مثال: <em>app.package.name</em></small>
+    <br/>
+    <br/>
+    <b>الفئة:</b> اسم فئة كامل.<br/><small>مثال: <em>app.package.name.MainActivity</em></small>
+    <br/>
+    <br/>
+    <b>البيانات:</b> يوري يحتوي على بيانات مرفقة أو يشير إليها. يدعم الاستبدالات <em>%s</em>. <small>مثال: <em>geo:%lat,%lon</em></small>
+    <br/>
+    <br/>
+    <b>نوع Mime:</b> نوع mime للبيانات المرفقة.
+    <br/>
+    <br/>
+    <b>إضافات:</b> سلسلة محددة بواسطة <em>&amp;</em> تحتوي على قيم إضافية. يدعم الاستبدالات <em>%s</em>.<br/><br/>القيم يمكن أن تكون <em>int</em>، <em>long</em>، <em>double</em>، <em>float</em>، <em>boolean</em> أو String. <small>مثال: <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
+]]></string>
+<string name="help_widgetlist"><![CDATA[
+    لـ <b>إضافة</b> أو <b>إزالة</b> عنصر واجهة المستخدم يجب عليك الانتقال إلى شاشة البداية.<br/><br/>
+    لـ <b>إعادة تكوين</b> عنصر واجهة المستخدم الحالي يمكنك اختيار من القائمة التالية.<br/>
+]]></string>
+
+    <!--<string name="help_alarmclock" />-->
+     <string name="help_themelist">
+        [Icon Add] إضافة سمة جديدة أو [Icon Copy] نسخ من سمة موجودة.\n
+        \n
+        [Icon Edit] تحرير أو [Icon Delete] حذف السمات.\n
+        السمات [Icon Default] الافتراضية لا يمكن تعديلها.\n
+    </string>
+
+    <string name="help_calendar"><![CDATA[تزويد التطبيق بالأحداث إلى تطبيق التقويم (مراحل القمر، والانقلابات الشمسية، والاعتدالات).<br />
+        <br />
+        <u><b><font color="#ff9900">تم إزالة دمج التقويم في الإصدار 0.10.0.</font></b></u><br />
+        <br />
+        هذه الميزة متاحة الآن كتطبيق <a href="moreInfoLink">منفصل</a>.
+    ]]></string>
+
+   <string name="privacy_policy0"><![CDATA[<b>الخصوصية:</b><br/>Suntimes لا تقوم بجمع أو تخزين أو نقل بيانات المستخدم الشخصية. لا يحتوي على <b>إعلانات</b>، <b>تحليلات</b>، <b>متتبعات</b>، أو <b>أذونات غير ضرورية</b>.]]></string>  <!-- brief statement (welcome dialog) -->
+<string name="privacy_policy"><![CDATA[<b>الخصوصية:</b><br/>Suntimes لا تقوم بجمع أو تخزين أو نقل بيانات المستخدم الشخصية. لا يحتوي على <b>إعلانات</b>، <b>تحليلات</b>، <b>متتبعات</b>، أو <b>أذونات غير ضرورية</b>. <br/><br/>يتم تكوين التطبيق من بيانات الموقع. هذه المعلومات (وغيرها من بيانات التكوين المستخدمة من قبل التطبيق) تُخزن محليًا ولا تغادر الجهاز.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>  <!-- full statement (about dialog) -->
+<string name="privacy_permission_location"><![CDATA[Suntimes تستخدم أذونة <b>الموقع</b> لتحديد خط الطول والعرض الحاليين الخاصين بك.<br/><br/>هذه الأذونة اختيارية؛ يتم تكوين الموقع يدويًا افتراضيًا.]]></string>
+<string name="privacy_permission_storage"><![CDATA[Suntimes تستخدم أذونات <b>التخزين الخارجي</b> لنسخ البيانات أو تصديرها إلى ملف (على سبيل المثال، الأماكن، السمات).]]></string>
+<string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms تستخدم أذونة <b>التخزين الخارجي</b> لتشغيل الأصوات الموجودة على بطاقة SD.<br/><br/>هذه الأذونة اختيارية؛ سيتم تشغيل الصوت الافتراضي إذا تم رفض الوصول. لا يلزم هذا الإذن لأصوات النظام (تخزين الوسائط).]]></string>
+<string name="privacy_permissiondialog_prompt"><![CDATA[هل ترغب في طلب الأذونات الآن؟]]></string>
+<string name="privacy_permissiondialog_ignore">تجاهل</string>
+<string name="privacy_permissiondialog_title">الأذونات</string>
+<string name="privacy_url"><xliff:g id="url"><![CDATA[
+    <a href="https://forrestguice.codeberg.page/Suntimes/privacy">https://forrestguice.codeberg.page/Suntimes/privacy</a>
+]]></xliff:g></string>
+<string name="privacyTab">الخصوصية</string>
+
+    <string name="security_dialog_title">تنبيه أمان</string>
+    <string name="security_duplicate_permissions">الإذن الذي ينتمي إلى Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nمعرف أيضًا من خلال: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="feature_not_supported_by_api">هذه الميزة غير مدعومة بواسطة واجهة برمجة التطبيقات %1$s.</string>
+    <string name="feature_not_supported_by_source">هذه الميزة غير مدعومة بواسطة مصدر البيانات الحالي.</string>
+    <string name="reboot_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتفعيل التغييرات.</string>    <!-- toast; device off/on may be required -->
+    <string name="restart_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتحقيق التأثير الكامل للتغييرات.</string>   <!-- toast; app restart may be required -->
+
+    <string name="dialog_ok">موافق</string>
+    <string name="dialog_cancel">إلغاء</string>
+    <string name="dialog_msg_donotshowagain">لا تظهر هذه الرسالة مرة أخرى</string>  <!-- checkbox text -->
+
+    <!-- calculator implementations -->
+    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="calculator_displayString_time4a_simple">آلة حاسبة بسيطة، سريعة نسبياً، لكنها غير دقيقة.</string>
+    <string name="calculator_displayString_time4a_noaa">تتبع خوارزميات نشرتها الإدارة الوطنية للمحيطات والغلاف الجوي.</string>
+    <string name="calculator_displayString_time4a_cc">تتبع خوارزميات نشرتها Dershowitz/Reingold في كتابهم "Calendrical Calculations" (الطبعة الثالثة).</string>
+    <string name="calculator_displayString_time4a_4j">مستندة إلى الحسابات الفلكية التي نشرها Jean Meeus في كتابه "Astronomical Algorithms" (الطبعة الثانية).</string>
+    <string name="help_datasources">
+        <![CDATA[
+        يستخدم Suntimes مكتبات من جهات خارجية لأداء الحسابات الفلكية.<br/>
+        <br/>
+        إعداد <b>مصدر البيانات</b> يتيح اختيار بين مكتبات مختلفة (أو اختيار بين خوارزميات مختلفة تقدمها تلك المكتبات). الافتراضي هو <b>time4a-time4j</b>.<br/>
+        <br/>
+        يؤثر هذا الإعداد على سرعة ودقة الحسابات، وقد يقتصر على الميزات المتاحة. <br/>
+        <br/>
+        لمزيد من المعلومات حول الخيارات المتاحة، أو توسيع التطبيق لدعم مكتبات أخرى، انظر إلى المساعدة عبر الإنترنت.
+    ]]>
+    </string>
+
+    <!-- pref defaults -->
+    <string name="def_app_ui_showheader_text">1</string>  <!-- 1: labels -->
+
 </resources>
