@@ -2096,26 +2096,18 @@
     <string name="app_shortdesc">يعرض أوقات الشروق والغروب للشمس والقمر.</string>
     <string name="app_support_url"><![CDATA[
         <b>الدعم:</b> قم بزيارة
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">متعقب المشكلات</a> لتقديم طلب.
+        <a href="%1$s">متعقب المشكلات</a> لتقديم طلب.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s متاح مجانًا، ولكن إذا أثبتت قيمته، يُرجى
-        <a href="https://forrestguice.codeberg.page/Suntimes/donate">الدفع بالمبلغ الذي تريده</a>.
+        <a href="%2$s">الدفع بالمبلغ الذي تريده</a>.
     ]]></string>
-    <string name="app_source_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
-    ]]></xliff:g></string>
     <string name="app_license_about">أوقات الشمس هو برنامج مجاني ومفتوح المصدر.</string> <!-- displayed by welcome dialog -->
-    <string name="app_license_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.codeberg.page/Suntimes/license">https://forrestguice.codeberg.page/Suntimes/license</a>
-    ]]></xliff:g></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.codeberg.page/Suntimes">https://forrestguice.codeberg.page/Suntimes</a>
-    ]]></xliff:g></string>
+
     <string name="app_legal1"><![CDATA[
-        <b>الشفرة المصدرية:</b><br />
-        حقوق النشر &#169 2014-2024 Forest Guice <br />
-        الشفرة المصدرية متاحة بموجب GPLv3.
+        <b>الشفرة المصدرية:</b><br/>
+        حقوق النشر 2014-2024 Forrest Guice &#169
+        <br/>الشفرة المصدرية متاحة بموجب GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[<b>الترجمات إلى:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> من قبل <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
@@ -2367,9 +2359,6 @@
 <string name="privacy_permissiondialog_prompt"><![CDATA[هل ترغب في طلب الأذونات الآن؟]]></string>
 <string name="privacy_permissiondialog_ignore">تجاهل</string>
 <string name="privacy_permissiondialog_title">الأذونات</string>
-<string name="privacy_url"><xliff:g id="url"><![CDATA[
-    <a href="https://forrestguice.codeberg.page/Suntimes/privacy">https://forrestguice.codeberg.page/Suntimes/privacy</a>
-]]></xliff:g></string>
 <string name="privacyTab">الخصوصية</string>
 
     <string name="security_dialog_title">تنبيه أمان</string>
