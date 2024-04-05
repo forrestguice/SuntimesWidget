@@ -445,7 +445,7 @@ public class WelcomeActivity extends AppCompatActivity
                 for (int resID : textViews) {
                     TextView text = (TextView) view.findViewById(resID);
                     if (text != null) {
-                        text.setText(SuntimesUtils.fromHtml(text.getText().toString()));
+                        text.setText(SuntimesUtils.fromHtml(AboutActivity.anchor(text.getText().toString())));
                         text.setMovementMethod(LinkMovementMethod.getInstance());
                     }
                 }

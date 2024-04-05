@@ -75,7 +75,7 @@ public class CalendarPrefsFragment extends PreferenceFragment
                 {
                     Activity activity = getActivity();
                     if (activity != null) {
-                        AboutDialog.openLink(activity, AboutDialog.ADDONS_URL);
+                        AboutDialog.openLink(activity, getString(R.string.help_addons_url));
                         activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                     }
                     return false;
