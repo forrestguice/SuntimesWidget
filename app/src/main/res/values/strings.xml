@@ -2214,11 +2214,11 @@
     <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
     <string name="app_support_url"><![CDATA[
         <b>Support:</b> visit the
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
+        <a href="%1$s">issue tracker</a> to submit a request.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.codeberg.page/Suntimes/donate">pay as you like</a>.
+        <a href="%2$s">pay as you like</a>.
     ]]></string>
 
     <string name="app_license_about">Suntimes is free and open-source software.</string>   <!-- displayed by welcome dialog -->

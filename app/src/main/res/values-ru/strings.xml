@@ -1894,11 +1894,11 @@
     <string name="app_shortdesc">Показывает время солнечного и лунного освещения.</string>
     <string name="app_support_url"><![CDATA[
         <b>Поддержка:</b> посетите
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">трекер отслеживания проблем</a> на GitHub для создания запроса.
+        <a href="%1$s">трекер отслеживания проблем</a> на GitHub для создания запроса.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s предоставляется бесплатно, но если приложение оказалось полезным,
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">то можете пожертвовать деньги на ваше усмотрение</a>.
+        <a href="%2$s">то можете пожертвовать деньги на ваше усмотрение</a>.
     ]]></string>
 
     <string name="app_legal1"><![CDATA[

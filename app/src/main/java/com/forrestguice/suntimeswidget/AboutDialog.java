@@ -186,7 +186,7 @@ public class AboutDialog extends BottomSheetDialogFragment
 
         TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
         supportView.setMovementMethod(LinkMovementMethod.getInstance());
-        supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url)));
+        supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url, context.getString(R.string.help_support_url))));
 
         TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);
         legalView1.setMovementMethod(LinkMovementMethod.getInstance());

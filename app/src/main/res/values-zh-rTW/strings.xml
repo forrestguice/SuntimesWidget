@@ -1717,11 +1717,11 @@
     <string name="app_shortdesc">展示太陽和月亮的時間。</string>
     <string name="app_support_url"><![CDATA[
         <b>支援:</b> 訪問
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">問題追踪器</a> 提交一個請求。
+        <a href="%1$s">問題追踪器</a> 提交一個請求。
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s 免費使用，如果您認為它有價值，請
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">隨意付費</a>。
+        <a href="%2$s">隨意付費</a>。
     ]]></string>
     <string name="app_legal1"><![CDATA[
         <b>原始碼:</b><br />

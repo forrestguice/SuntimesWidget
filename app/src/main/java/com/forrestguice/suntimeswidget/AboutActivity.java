@@ -235,14 +235,14 @@ public class AboutActivity extends AppCompatActivity
             TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
             if (supportView != null) {
                 supportView.setMovementMethod(LinkMovementMethod.getInstance());
-                supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url)));
+                supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url, context.getString(R.string.help_support_url))));
             }
 
             final TextView donateView = (TextView) dialogContent.findViewById(R.id.txt_donate_url);
             if (donateView != null) {
                 donateView.setVisibility(View.GONE);
                 donateView.setMovementMethod(LinkMovementMethod.getInstance());
-                donateView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name))));
+                donateView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name), context.getString(R.string.help_donate_url))));
             }
 
             CheckBox checkDonate = (CheckBox) dialogContent.findViewById(R.id.check_donate);

@@ -1685,11 +1685,11 @@
     <string name="app_shortdesc">Montras tempojn de lumadoj de Suno kaj Luno.</string>
     <string name="app_support_url"><![CDATA[
         <b>Subteno:</b> vizitu la
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
+        <a href="%1$s">erar-spurilon</a> por raporti problemon.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         La aplikaĵo %s estas disponebla senpage, sed se ĝi utilas al vi, bonvolu
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">konsideri donaci ajnan monkvanton</a>.
+        <a href="%2$s">konsideri donaci ajnan monkvanton</a>.
     ]]></string>
     <string name="app_license_about">La aplikaĵo Suntempoj estas libera kaj malfermkoda programaro.</string>   <!-- displayed by welcome dialog -->-->
     <string name="app_legal1"><![CDATA[

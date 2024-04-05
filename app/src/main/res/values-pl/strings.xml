@@ -1712,10 +1712,10 @@
     <string name="app_name_moonwidget0">Czasy Słońca: Księżyc</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
-    <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
+    <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="%1$s">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="app_donate_url"><![CDATA[
         Aplikacja %s jest udostępniana bezpłatnie, ale jeżeli jest ona dla Ciebie użyteczna, prosimy
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">rozważyć wpłatę dowolnej kwoty</a>.
+        <a href="%2$s">rozważyć wpłatę dowolnej kwoty</a>.
     ]]></string>
     <string name="app_license_about">Aplikacja Czasy Słońca jest wolnym i otwartoźródłowym oprogramowaniem.</string>   <!-- displayed by welcome dialog -->-->
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2024 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
