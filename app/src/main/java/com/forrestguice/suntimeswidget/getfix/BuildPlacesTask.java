@@ -151,7 +151,8 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             ArrayList<String> items = new ArrayList<>(Arrays.asList(r.getStringArray(groupID)));    // base case
             if (items.size() > 0)
             {
-                for (String item : items) {
+                for (String item : items)
+                {
                     Location location = csvItemToLocation(item);
                     if (location != null) {
                         locations.add(location);
@@ -191,9 +192,13 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     }
 
     @Nullable
-    private Location csvItemToLocation(String csv_item)
+    public static Location csvItemToLocation(String csv_item)
     {
-        String[] parts = csv_item.split(",");
+        if (csv_item == null) {
+            return null;
+        }
+
+        String[] parts = splitCSV(csv_item, ','); // csv_item.split(",");
         if (parts.length < 3) {
             Log.e("BuildPlacesTask", "Ignoring malformed line; " + csv_item);
             return null;
