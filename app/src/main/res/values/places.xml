@@ -142,7 +142,7 @@
         <item>"Bjalistoko", 53.1324, 23.1592, 139</item>
         <item>"Berlin", 52.5243, 13.4105, 40.0</item>
         <item>"Bergen", 60.38713, 5.32006, 0</item>
-        <item>"Birkirkara, Malta", 35.8957, 14.4478, 62</item>
+        <item>\"Birkirkara, Malta\", 35.8957, 14.4478, 62</item>
         <item>"Bjalistoko", 53.1324, 23.1592, 139</item>
         <item>"Budapest", 47.4811, 18.9902, 225</item>
         <item>"Bucharest", 44.4378, 26.0245, 94</item>
@@ -199,7 +199,7 @@
     </string-array>
     <string-array name="places_EU_UK">
         <item>"Cardiff", 51.5022, -3.2694, 51</item>
-        <item>"Douglas, Isle of Man", 54.15705, -4.47684, 0</item>
+        <item>\"Douglas, Isle of Man\", 54.15705, -4.47684, 0</item>
         <item>"Glasgow", 55.86111, -4.25000, 8</item>
         <item>"London", 51.5073, -0.1276, 18</item>
         <item>"Truro", 50.2648, -5.0827, 64</item>
@@ -208,21 +208,21 @@
     <!-- North America -->
     <string-array name="places_NA">
         <item>"Charlotte Amalie", 18.3412, -64.9479, 37</item>
-        <item>"Fort-de-France, Martinique", 14.603, -61.0677, 0</item>
+        <item>\"Fort-de-France, Martinique\", 14.603, -61.0677, 0</item>
         <item>"Havana", 23.0504, -82.6129, 0</item>
-        <item>"Kingston, Jamaica", 18.0179, -76.8356, 18</item>
-        <item>"Little Bay, Montserrat", 16.8002, -62.2136, 0</item>
-        <item>"Les Abymes, Guadeloupe", 16.26914, -61.50965, 0</item>
-        <item>"Marigot, Saint Martin", 18.07346, -63.08373, 0</item>
+        <item>\"Kingston, Jamaica\", 18.0179, -76.8356, 18</item>
+        <item>\"Little Bay, Montserrat\", 16.8002, -62.2136, 0</item>
+        <item>\"Les Abymes, Guadeloupe\", 16.26914, -61.50965, 0</item>
+        <item>\"Marigot, Saint Martin\", 18.07346, -63.08373, 0</item>
         <item>"México City", 19.3204, -99.2926, 2904</item>
         <item>"Nassau", 25.0322, -77.4763, 6</item>
         <item>"Nuuk", 64.1789, -51.7412, 5</item>
-        <item>"Philipsburg, Sint Maarten", 18.02419, -63.05048, 0</item>
+        <item>\"Philipsburg, Sint Maarten\", 18.02419, -63.05048, 0</item>
         <item>"Port-au-Prince", 18.54242, -72.33583, 0</item>
         <item>"Road Town", 18.4243, -64.6333, 255</item>
         <item>"San Juan", 18.3848, -66.1283, 30</item>
         <item>"Santo Domingo", 18.4803, -70.0169, 12</item>
-        <item>"St. George's, Bermuda", 32.37944, -64.67777, 0</item>
+        <item>\"St. George\'s, Bermuda\", 32.37944, -64.67777, 0</item>
     </string-array>
     <string-array name="places_NA_CA">
         <item>"Kuujjuaq", 58.1, -68.4, 40</item>
@@ -231,28 +231,28 @@
         <item>"Toronto", 43.6159, -79.3769, 78</item>
     </string-array>
     <string-array name="places_NA_US">
-        <item>"Kykotsmovi, AZ", 35.87379, -110.6009, 1731</item>
-        <item>"Kotzebue, AK", 66.89488, -162.59726, 6</item>
+        <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731</item>
+        <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6</item>
         <item>"Los Angeles", 34.05094, -118.2506, 93</item>
         <item>"New York City", 40.68620, -74.02619, 0</item>
         <item>"Phoenix", 33.45579, -111.94580, 385</item>
-        <item>"Ponemah, MN", 48.01935, -94.90867, 365</item>
-        <item>"Porcupine, SD", 43.2770, -102.4068, 1007</item>
-        <item>"Tahlequah, OK", 35.9045, -95.0135, 251</item>
-        <item>"Towaoc, CO", 37.20138, -108.72988, 1731</item>
-        <item>"Window Rock, AZ", 35.6668, -109.0821, 2044</item>
+        <item>\"Ponemah, MN\", 48.01935, -94.90867, 365</item>
+        <item>\"Porcupine, SD\", 43.2770, -102.4068, 1007</item>
+        <item>\"Tahlequah, OK\", 35.9045, -95.0135, 251</item>
+        <item>\"Towaoc, CO\", 37.20138, -108.72988, 1731</item>
+        <item>\"Window Rock, AZ\", 35.6668, -109.0821, 2044</item>
     </string-array>
 
     <!-- Oceania -->
     <string-array name="places_OC">
         <item>"Apia", -13.8600, 171.8031, 0</item>
         <item>"Auckland", -36.8468, 174.8256, 39</item>
-        <item>"Hagåtña, Guam", 13.47916, 144.75, 0</item>
+        <item>\"Hagåtña, Guam\", 13.47916, 144.75, 0</item>
         <item>"Honiara", -9.4351, 159.9382, 67</item>
         <item>"Honolulu", 21.3280, -157.8691, 0</item>
         <item>"Pago Pago", -14.27176, -170.70223, 0</item>
         <item>"Palikir", 6.9192, 158.1412, 20</item>
-        <item>"Papeete, Tahiti", -17.53653, -149.56887, 0</item>
+        <item>\"Papeete, Tahiti\", -17.53653, -149.56887, 0</item>
         <item>"Suva", -18.14857, 178.42384, 0</item>
         <item>"Sydney", -33.8981, 151.2328, 40</item>
     </string-array>
@@ -265,11 +265,11 @@
         <item>"Caracas", 10.49474, -66.89362, 900</item>
         <item>"Cayenne", 4.9436, -52.33112, 0</item>
         <item>"Guatemala City", 14.61333, -90.53527, 1500</item>
-        <item>"Kralendijk, Bonaire", 12.14558, -68.27616, 0</item>
+        <item>\"Kralendijk, Bonaire\", 12.14558, -68.27616, 0</item>
         <item>"Lima", -12.0553, -77.0802, 77</item>
         <item>"Managua", 12.0961, -86.3985, 410</item>
         <item>"Montevideo", -34.8198, -56.3702, 17</item>
-        <item>"Oranjestad, Aruba", 12.51578, -70.03545, 0</item>
+        <item>\"Oranjestad, Aruba\", 12.51578, -70.03545, 0</item>
         <item>"Panama City", 9.0831, -79.5924, 98</item>
         <item>"Paramaribo", 5.84737, -55.16054, 0</item>
         <item>"Santiago", -33.4724, -70.9100, 635</item>
@@ -279,7 +279,7 @@
         <item>"Sucre", -19.0206, -65.3298, 2841</item>
         <item>"Tegucigalpa", 14.09372, -87.2016, 990</item>
         <item>"Quito", -0.1865, -78.5706, 4092.0</item>
-        <item>"Willemstad, Curaçao", 12.11018, -68.95539, 0</item>
+        <item>\"Willemstad, Curaçao\", 12.11018, -68.95539, 0</item>
     </string-array>
 
     <!-- Unsorted -->

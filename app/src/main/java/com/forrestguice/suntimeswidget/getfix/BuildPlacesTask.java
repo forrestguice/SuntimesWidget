@@ -223,6 +223,27 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         return new Location(label, lat, lon, alt);
     }
 
+    public static String[] splitCSV(String value, Character delimiter)
+    {
+        ArrayList<String> parts = new ArrayList<>();
+        boolean quoted = false;
+        int j = 0;
+        for (int i=0; i<value.length(); i++)
+        {
+            if (value.charAt(i) == '\"') {
+                quoted = !quoted;
+
+            } else if (value.charAt(i) == delimiter) {
+                if (!quoted) {
+                    parts.add(value.substring(j, i));
+                    j = i + 1;
+                }
+            }
+        }
+        parts.add(value.substring(j));
+        return parts.toArray(new String[0]);
+    }
+
     /**
      * Pass a URI to build from file, groups[] to build from resources, or null for both to build
      * from internal locales.
