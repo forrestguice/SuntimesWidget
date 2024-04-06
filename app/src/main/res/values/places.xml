@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="place_label_AF">Africa</string>
+    <string name="place_label_AS">Asia</string>
+    <string name="place_label_AS_CN">Asia (China)</string>
+    <string name="place_label_EU">Europe</string>
+    <string name="place_label_EU_ES">Europe (Spain)</string>
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>
+    <string name="place_label_NA">North America</string>
+    <string name="place_label_NA_CA">North America (Canada)</string>
+    <string name="place_label_NA_US">North America (US)</string>
+    <string name="place_label_OC">Oceania</string>
+    <string name="place_label_SA">South and Central America</string>
+    <string name="place_label_unsorted">Other</string>
+
+    <!-- Place Groups; each place_group* item should contain: label_name, group_name -->
+    <string-array name="place_groups">
+        <item>place_label_AF, place_group_AF</item>
+        <item>place_label_AS, place_group_AS</item>
+        <item>place_label_EU, place_group_EU</item>
+        <item>place_label_NA, place_group_NA</item>
+        <item>place_label_OC, place_group_OC</item>
+        <item>place_label_SA, place_group_SA</item>
+        <item>place_label_unsorted, place_group_unsorted</item>
+    </string-array>
+
+    <string-array name="place_group_AF">
+        <item>place_label_AF, places_AF</item>                <!-- Africa (unsorted) -->
+    </string-array>
+    <string-array name="place_group_AS">
+        <item>place_label_AS, places_AS</item>                <!-- Asia (unsorted) -->
+        <item>place_label_AS_CN, places_AS_CN</item>          <!-- Asia; China -->
+    </string-array>
+    <string-array name="place_group_EU">
+        <item>place_label_EU, places_EU</item>                <!-- Europe (unsorted) -->
+        <item>place_label_EU_ES, places_EU_ES</item>          <!-- Europe; Spain -->
+        <item>place_label_EU_UK, places_EU_UK</item>          <!-- Europe; United Kingdom -->
+    </string-array>
+    <string-array name="place_group_NA">
+        <item>place_label_NA, places_NA</item>                <!-- North America (unsorted) -->
+        <item>place_label_NA_CA, places_NA_CA</item>          <!-- North America; Canada -->
+        <item>place_label_NA_US, places_NA_US</item>          <!-- North America; US -->
+    </string-array>
+    <string-array name="place_group_OC">
+        <item>place_label_OC, places_OC</item>                <!-- Oceania (unsorted) -->
+    </string-array>
+    <string-array name="place_group_SA">
+        <item>place_label_SA, places_SA</item>                <!-- South and Central America (unsorted) -->
+    </string-array>
+    <string-array name="place_group_unsorted">
+        <item>place_label_unsorted, places_unsorted</item>    <!-- all others -->
+    </string-array>
+
+    <!-- Africa -->
+    <string-array name="places_AF">
+        <item>"Algiers", 36.74782, 3.07333, 0</item>
+        <item>"Bamako", 12.66148, -7.99798, 350</item>
+        <item>"Bangui", 34.36195, 18.58294, 370</item>
+        <item>"Brazzaville", -4.27758, 15.24504, 320</item>
+        <item>"Bujumbura", -3.37672, 29.38364, 774</item>
+        <item>"Cairo", 30.0594, 31.2234, 36</item>
+        <item>"Casablanca", 33.56592, -7.61412, 0</item>
+        <item>"Conakry", 19.57276, -13.60708, 0</item>
+        <item>"Dakar", 14.76354, -17.47550, 0</item>
+        <item>"Dar es Salaam", -6.81361, 39.30010, 0</item>
+        <item>"Douala", 4.0359, 9.7074, 18</item>
+        <item>"Harare", -17.8165, 30.9167, 1433</item>
+        <item>"Johannesburg", -26.2069, 28.0438, 1755</item>
+        <item>"Kampala", 0.3138, 32.5290, 1203</item>
+        <item>"Kigali", -1.96446, 30.07506, 1567</item>
+        <item>"Kinshasa", -4.45418, 15.28757, 240</item>
+        <item>"Lagos", 6.5482, 3.2574, 27</item>
+        <item>"Luanda", -8.80879, 13.22332, 0</item>
+        <item>"Lusaka", -15.4167, 28.2036, 1262</item>
+        <item>"Maputo", -25.97148, 32.57326, 47</item>
+        <item>"Marrakesh", 31.62649, -7.99649, 466</item>
+        <item>"Nairobi", -1.3047, 36.7073, 1860</item>
+        <item>"Niamey", 13.5127, 2.0489, 192</item>
+        <item>"Nouakchott", 18.07932, -15.96449, 7</item>
+        <item>"Tripoli", 32.89500, 13.18431, 81</item>
+        <item>"Tunis", 36.82443, 10.17103, 0</item>
+        <item>"Windhoek", -22.5637, 16.9921, 1617</item>
+    </string-array>
+
+    <!-- Asia -->
+    <string-array name="places_AS">
+        <item>"Ahmedabad", 23.0203, 72.5097, 49</item>
+        <item>"Almaty", 43.21613, 76.91578, 500</item>
+        <item>"Ashgabat", 37.9375, 58.38, 219</item>
+        <item>"Baghdad", 33.27353, 44.38063, 34</item>
+        <item>"Baku", 40.39404, 49.8658, -28</item>
+        <item>"Bangkok", 13.75653, 100.49333, 2</item>
+        <item>"Beirut", 33.87861, 35.48003, 0</item>
+        <item>"Bishkek", 42.87954, 74.60022, 800</item>
+        <item>"Damascus", 33.51378, 36.27654, 680</item>
+        <item>"Dhaka", 23.7806, 90.3492, 3</item>
+        <item>"Dubai", 25.23561, 55.29685, 0</item>
+        <item>"Dushanbe", 38.60366, 68.78098, 823</item>
+        <item>"Guwahati", 26.1429, 91.5627, 49</item>
+        <item>"Hanoi", 21.0226, 105.8019, 15</item>
+        <item>"Ho Chi Minh City", 10.74745, 106.62460, 19</item>
+        <item>"Jakarta", -6.2297, 106.7594, 20</item>
+        <item>"Jerusalem", 31.7962, 35.1053, 643</item>
+        <item>"Kabul", 34.51569, 69.13544, 1791</item>
+        <item>"Karachi", 25.0108, 66.7845, 97</item>
+        <item>"Kathmandu", 27.73078, 85.32092, 1400</item>
+        <item>"Kokrajhar", 26.4018, 90.2607, 51</item>
+        <item>"Kolkata", 22.6754, 88.0884, 6</item>
+        <item>"Manila", 14.5964, 120.9094, 0</item>
+        <item>"Mumbai", 19.1246, 72.7932, 0</item>
+        <item>"Nicosia", 35.1922, 33.3273, 140</item>
+        <item>"Phnom Penh", 11.57604, 104.92290, 27</item>
+        <item>"Pyongyang", 39.0291, 125.6720, 28</item>
+        <item>"Seoul", 37.5650, 126.8494, 14</item>
+        <item>"Singapore", 1.2976, 103.9053, 10</item>
+        <item>"Taipei", 25.0330, 121.5654, 0</item>
+        <item>"Tashkent", 41.31026, 69.2805, 455</item>
+        <item>"Tehran", 35.70251, 51.35131, 900</item>
+        <item>"Tokyo", 35.6732, 139.5703, 49</item>
+        <item>"Ulaanbaatar", 47.90029, 106.94324, 1350</item>
+        <item>"Yakutsk", 62.02538, 129.73172, 95</item>
+        <item>"Yangon", 16.79525, 96.15955, 23</item>
+    </string-array>
+    <string-array name="places_AS_CN">
+        <item>"Beijing", 39.9042, 116.4074, 0</item>
+        <item>"Hong Kong", 22.3576, 113.9809, 0</item>
+        <item>"Kashgar", 39.47514, 75.99195, 1270</item>
+        <item>"Lhasa", 29.6487, 91.0052, 3649</item>
+        <item>"Macau", 22.1634, 113.5284, 0</item>
+        <item>"Shanghai", 31.2231, 120.9163, 0</item>
+        <item>"Ürümqi", 44.03198, 87.80816, 862</item>
+    </string-array>
+
+    <!-- Europe -->
+    <string-array name="places_EU">
+        <item>"Alghero", 40.55984, 8.31647, 7</item>
+        <item>"Amsterdam", 52.3745, 4.758, 0</item>
+        <item>"Athens", 37.9908, 23.7033, 41</item>
+        <item>"Berlin", 52.5243, 13.4105, 40.0</item>
+        <item>"Bergen", 60.38713, 5.32006, 0</item>
+        <item>"Birkirkara, Malta", 35.8957, 14.4478, 62</item>
+        <item>"Bjalistoko", 53.1324, 23.1592, 139</item>
+        <item>"Budapest", 47.4811, 18.9902, 225</item>
+        <item>"Bucharest", 44.4378, 26.0245, 94</item>
+        <item>"Brussels", 50.8549, 4.3053, 86</item>
+        <item>"Cagliari", 39.22138, 9.11069, 4</item>
+        <item>"Chur", 46.8531, 9.4978, 564</item>
+        <item>"Chisinau", 46.9998, 28.7881, 215</item>
+        <item>"Copenhagen", 55.6712, 12.4907, 9</item>
+        <item>"Dublin", 51.5073, -6.3245, 85</item>
+        <item>"Grozny", 43.3125, 45.698611, 130</item>
+        <item>"Helsinki", 60.1639, 24.9001, 0</item>
+        <item>"Istanbul", 41.0039, 28.4517, 0</item>
+        <item>"Kazan", 55.79638, 49.10888, 60</item>
+        <item>"Kyiv", 50.4496, 30.5252, 179</item>
+        <item>"Lisbon", 38.7436, -9.1952, 84</item>
+        <item>"Luxembourg", 49.61056, 6.13048, 230</item>
+        <item>"Minsk", 53.8838, 27.4548, 242</item>
+        <item>"Monaco", 43.73233, 7.42731, 0</item>
+        <item>"Moscow", 55.7656, 37.6040, 186</item>
+        <item>"Oslo", 59.8937, 10.6450, 0</item>
+        <item>"Paris", 48.8566, 2.3518, 41</item>
+        <item>"Prague", 50.0595, 14.3255, 361</item>
+        <item>"Reykjavik", 64.1322, -21.9224, 17</item>
+        <item>"Rennes", 48.1159, -1.7234, 46</item>
+        <item>"Rīga", 56.9713, 23.9890, 7</item>
+        <item>"Roma", 41.9099, 12.3959, 79</item>
+        <item>"Sarajevo", 43.8937, 18.3129, 546</item>
+        <item>"Schaan", 47.1521, 9.5201, 557</item>
+        <item>"Sofia", 42.6953, 23.1838, 695</item>
+        <item>"Stockholm", 59.3260, 17.8474, 20</item>
+        <item>"Tallinn", 59.4248, 24.5981, 17</item>
+        <item>"Tbilisi", 41.74824, 44.78995, 380</item>
+        <item>"Tiranë", 41.3309, 19.7828, 84</item>
+        <item>"Tórshavn", 62.01692, -6.75492, 0</item>
+        <item>"Udine", 46.06595, 13.23763, 113</item>
+        <item>"Vienna", 48.19992, 16.36757, 151</item>
+        <item>"Warszawa", 52.2319, 21.0067, 143</item>
+        <item>"Vilnius", 54.7000, 25.1128, 170</item>
+        <item>"Yerevan", 40.1533, 44.4185, 865</item>
+        <item>"Zagreb", 45.8401, 15.8942, 330</item>
+        <item>"Zurich", 47.3774, 8.4666, 559</item>
+    </string-array>
+    <string-array name="places_EU_ES">
+        <item>"A Coruña", 43.36914, -8.4092, 0</item>
+        <item>"Barcelona", 41.3825, 2.1769, 31</item>
+        <item>"Euskal Herriko erdigunea", 42.883008, -1.935491, 1258</item>
+        <item>"Oviedo", 43.36135, -5.85050, 232</item>
+        <item>"Madrid", 40.4378, -3.8196, 681</item>
+    </string-array>
+    <string-array name="places_EU_UK">
+        <item>"Cardiff", 51.5022, -3.2694, 51</item>
+        <item>"Douglas, Isle of Man", 54.15705, -4.47684, 0</item>
+        <item>"Glasgow", 55.86111, -4.25000, 8</item>
+        <item>"London", 51.5073, -0.1276, 18</item>
+        <item>"Truro", 50.2648, -5.0827, 64</item>
+    </string-array>
+
+    <!-- North America -->
+    <string-array name="places_NA">
+        <item>"Charlotte Amalie", 18.3412, -64.9479, 37</item>
+        <item>"Fort-de-France, Martinique", 14.603, -61.0677, 0</item>
+        <item>"Havana", 23.0504, -82.6129, 0</item>
+        <item>"Kingston, Jamaica", 18.0179, -76.8356, 18</item>
+        <item>"Little Bay, Montserrat", 16.8002, -62.2136, 0</item>
+        <item>"Les Abymes, Guadeloupe", 16.26914, -61.50965, 0</item>
+        <item>"Marigot, Saint Martin", 18.07346, -63.08373, 0</item>
+        <item>"México City", 19.3204, -99.2926, 2904</item>
+        <item>"Nassau", 25.0322, -77.4763, 6</item>
+        <item>"Nuuk", 64.1789, -51.7412, 5</item>
+        <item>"Philipsburg, Sint Maarten", 18.02419, -63.05048, 0</item>
+        <item>"Port-au-Prince", 18.54242, -72.33583, 0</item>
+        <item>"Road Town", 18.4243, -64.6333, 255</item>
+        <item>"San Juan", 18.3848, -66.1283, 30</item>
+        <item>"Santo Domingo", 18.4803, -70.0169, 12</item>
+        <item>"St. George's, Bermuda", 32.37944, -64.67777, 0</item>
+    </string-array>
+    <string-array name="places_NA_CA">
+        <item>"Montreal", 45.5600, -73.8521, 30</item>
+        <item>"Toronto", 43.6159, -79.3769, 78</item>
+    </string-array>
+    <string-array name="places_NA_US">
+        <item>"Kykotsmovi", 35.87379, -110.6009, 1731</item>
+        <item>"Los Angeles", 34.05094, -118.2506, 93</item>
+        <item>"New York City", 40.68620, -74.02619, 0</item>
+        <item>"Phoenix", 33.45579, -111.94580, 385</item>
+        <item>"Porcupine, SD", 43.2770, -102.4068, 1007</item>
+        <item>"Tahlequah, OK", 35.9045, -95.0135, 251</item>
+        <item>"Tségháhoodzání (Window Rock)", 35.6668, -109.0821, 2044</item>
+    </string-array>
+
+    <!-- Oceania -->
+    <string-array name="places_OC">
+        <item>"Apia", -13.8600, 171.8031, 0</item>
+        <item>"Auckland", -36.8468, 174.8256, 39</item>
+        <item>"Hagåtña, Guam", 13.47916, 144.75, 0</item>
+        <item>"Honiara", -9.4351, 159.9382, 67</item>
+        <item>"Honolulu", 21.3280, -157.8691, 0</item>
+        <item>"Pago Pago", -14.27176, -170.70223, 0</item>
+        <item>"Palikir", 6.9192, 158.1412, 20</item>
+        <item>"Papeete, Tahiti", -17.53653, -149.56887, 0</item>
+        <item>"Sydney", -33.8981, 151.2328, 40</item>
+    </string-array>
+
+    <!-- South and Central America -->
+    <string-array name="places_SA">
+        <item>"Asuncion", -25.2968, -57.6681, 65</item>
+        <item>"Bogotá", 4.71111, -74.07222, 2640</item>
+        <item>"Buenos Aires", -34.6156, -58.5734, 29</item>
+        <item>"Caracas", 10.49474, -66.89362, 900</item>
+        <item>"Cayenne", 4.9436, -52.33112, 0</item>
+        <item>"Guatemala City", 14.61333, -90.53527, 1500</item>
+        <item>"Kralendijk, Bonaire", 12.14558, -68.27616, 0</item>
+        <item>"Lima", -12.0553, -77.0802, 77</item>
+        <item>"Managua", 12.0961, -86.3985, 410</item>
+        <item>"Montevideo", -34.8198, -56.3702, 17</item>
+        <item>"Oranjestad, Aruba", 12.51578, -70.03545, 0</item>
+        <item>"Panama City", 9.0831, -79.5924, 98</item>
+        <item>"Paramaribo", 5.84737, -55.16054, 0</item>
+        <item>"Santiago", -33.4724, -70.9100, 635</item>
+        <item>"São Paulo", -23.6821, -46.8754, 815</item>
+        <item>"San José", 9.9356, -84.1483, 1017</item>
+        <item>"San Salvador", 13.6914, -89.2847, 1019</item>
+        <item>"Sucre", -19.0206, -65.3298, 2841</item>
+        <item>"Tegucigalpa", 14.09372, -87.2016, 990</item>
+        <item>"Quito", -0.1865, -78.5706, 4092.0</item>
+        <item>"Willemstad, Curaçao", 12.11018, -68.95539, 0</item>
+    </string-array>
+
+    <!-- Unsorted -->
+    <string-array name="places_unsorted">
+    </string-array>
+
+</resources>
