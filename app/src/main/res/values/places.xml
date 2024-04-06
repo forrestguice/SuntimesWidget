@@ -12,44 +12,44 @@
     <string name="place_label_NA_US">North America (US)</string>
     <string name="place_label_OC">Oceania</string>
     <string name="place_label_SA">South and Central America</string>
-    <string name="place_label_unsorted">Other</string>
+    <string name="place_label_other">Other</string>
 
-    <!-- Place Groups; each place_group* item should contain: label_name, group_name -->
+    <!-- Place Groups; each place_group* item should contain: group_name, label_name -->
     <string-array name="place_groups">
-        <item>place_label_AF, place_group_AF</item>
-        <item>place_label_AS, place_group_AS</item>
-        <item>place_label_EU, place_group_EU</item>
-        <item>place_label_NA, place_group_NA</item>
-        <item>place_label_OC, place_group_OC</item>
-        <item>place_label_SA, place_group_SA</item>
-        <item>place_label_unsorted, place_group_unsorted</item>
+        <item>place_group_AF, place_label_AF</item>
+        <item>place_group_AS, place_label_AS</item>
+        <item>place_group_EU, place_label_EU</item>
+        <item>place_group_NA, place_label_NA</item>
+        <item>place_group_OC, place_label_OC</item>
+        <item>place_group_SA, place_label_SA</item>
+        <item>place_group_unsorted, place_label_other</item>
     </string-array>
 
     <string-array name="place_group_AF">
-        <item>place_label_AF, places_AF</item>                <!-- Africa (unsorted) -->
+        <item>places_AF, place_label_AF</item>                <!-- Africa (unsorted) -->
     </string-array>
     <string-array name="place_group_AS">
-        <item>place_label_AS, places_AS</item>                <!-- Asia (unsorted) -->
-        <item>place_label_AS_CN, places_AS_CN</item>          <!-- Asia; China -->
+        <item>places_AS, place_label_AS</item>                <!-- Asia (unsorted) -->
+        <item>places_AS_CN, place_label_AS_CN</item>          <!-- Asia; China -->
     </string-array>
     <string-array name="place_group_EU">
-        <item>place_label_EU, places_EU</item>                <!-- Europe (unsorted) -->
-        <item>place_label_EU_ES, places_EU_ES</item>          <!-- Europe; Spain -->
-        <item>place_label_EU_UK, places_EU_UK</item>          <!-- Europe; United Kingdom -->
+        <item>places_EU, place_label_EU</item>                <!-- Europe (unsorted) -->
+        <item>places_EU_ES, place_label_EU_ES</item>          <!-- Europe; Spain -->
+        <item>places_EU_UK, place_label_EU_UK</item>          <!-- Europe; United Kingdom -->
     </string-array>
     <string-array name="place_group_NA">
-        <item>place_label_NA, places_NA</item>                <!-- North America (unsorted) -->
-        <item>place_label_NA_CA, places_NA_CA</item>          <!-- North America; Canada -->
-        <item>place_label_NA_US, places_NA_US</item>          <!-- North America; US -->
+        <item>places_NA, place_label_NA</item>                <!-- North America (unsorted) -->
+        <item>places_NA_CA, place_label_NA_CA</item>          <!-- North America; Canada -->
+        <item>places_NA_US, place_label_NA_US</item>          <!-- North America; US -->
     </string-array>
     <string-array name="place_group_OC">
-        <item>place_label_OC, places_OC</item>                <!-- Oceania (unsorted) -->
+        <item>places_OC, place_label_OC</item>                <!-- Oceania (unsorted) -->
     </string-array>
     <string-array name="place_group_SA">
-        <item>place_label_SA, places_SA</item>                <!-- South and Central America (unsorted) -->
+        <item>places_SA, place_label_SA</item>                <!-- South and Central America (unsorted) -->
     </string-array>
     <string-array name="place_group_unsorted">
-        <item>place_label_unsorted, places_unsorted</item>    <!-- all others -->
+        <item>places_unsorted, place_label_other</item>    <!-- all others -->
     </string-array>
 
     <!-- Africa -->
