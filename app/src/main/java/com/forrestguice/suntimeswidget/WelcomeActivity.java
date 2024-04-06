@@ -685,7 +685,7 @@ public class WelcomeActivity extends AppCompatActivity
             {
                 BuildPlacesTask task = new BuildPlacesTask(getActivity());
                 task.setTaskListener(buildPlacesListener);
-                task.execute();
+                task.execute(false, null, new String[0]);    // TODO: selectable
             }
         };
         private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()

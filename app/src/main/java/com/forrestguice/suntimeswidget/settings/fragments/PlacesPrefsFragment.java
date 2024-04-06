@@ -199,7 +199,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                 {
                     buildPlacesTask = new BuildPlacesTask(myParent);
                     buildPlacesTask.setTaskListener(buildPlacesListener);
-                    buildPlacesTask.execute();
+                    buildPlacesTask.execute(false, null, new String[0]);    // TODO: selectable
                     return true;
                 }
                 return false;

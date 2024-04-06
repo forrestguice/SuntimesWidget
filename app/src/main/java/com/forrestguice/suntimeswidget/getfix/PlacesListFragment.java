@@ -1012,7 +1012,7 @@ public class PlacesListFragment extends Fragment
     {
         BuildPlacesTask task = new BuildPlacesTask(context);
         task.setTaskListener(buildPlacesListener);
-        task.execute();
+        task.execute(false, null, new String[0]);    // TODO: selectable
     }
     private BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
     {

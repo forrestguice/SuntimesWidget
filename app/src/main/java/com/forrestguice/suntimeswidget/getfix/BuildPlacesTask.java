@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -44,6 +43,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
@@ -116,6 +116,51 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         }
     }
 
+    private void addPlacesFromGroup(Context context, @NonNull String[] groups, @NonNull ArrayList<Location> locations)
+    {
+        if (groups.length == 0) {
+            addPlacesFromGroup(context, (String) null, locations);
+        } else {
+            for (String group : groups) {
+                addPlacesFromGroup(context, group, locations);
+            }
+        }
+    }
+
+    private void addPlacesFromGroup(Context context, @Nullable String fromGroup, @NonNull ArrayList<Location> locations)
+    {
+        Resources r = context.getResources();
+        int groupID = (fromGroup == null) ? 0
+                : r.getIdentifier(fromGroup, "array", context.getPackageName());
+
+        if (fromGroup == null || (fromGroup.startsWith("place_group_") && groupID != 0))
+        {
+            String[] groups = fromGroup != null
+                    ? r.getStringArray(groupID)
+                    : r.getStringArray(R.array.place_groups);
+
+            for (String groupItem : groups)
+            {
+                String[] parts = groupItem.split(",");
+                if (parts.length > 0) {
+                    addPlacesFromGroup(context, parts[0].trim(), locations);    // recursive call
+                }
+            }
+
+        } else if (groupID != 0) {
+            ArrayList<String> items = new ArrayList<>(Arrays.asList(r.getStringArray(groupID)));    // base case
+            if (items.size() > 0)
+            {
+                for (String item : items) {
+                    Location location = csvItemToLocation(item);
+                    if (location != null) {
+                        locations.add(location);
+                    }
+                }
+            }
+        }
+    }
+
     private void addPlacesFromUri(Context context, @NonNull Uri uri, @NonNull ArrayList<Location> locations)
     {
         try {
@@ -128,37 +173,8 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                 String line = reader.readLine();
                 while (line != null)
                 {
-                    String[] parts = line.split(",");
-                    if (parts.length < 3) {
-                        Log.e("BuildPlacesTask", "Ignoring malformed line; " + line);
-                        line = reader.readLine();
-                        continue;
-                    }
-
-                    String label = parts[0];
-                    if (label.startsWith("\"")) {
-                        label = label.substring(1);
-                    }
-                    if (label.endsWith("\"")) {
-                        label = label.substring(0, label.length()-1);
-                    }
-
-                    String lat, lon;
-                    String alt = "0";
-                    try {
-                        lat = "" + Double.parseDouble(parts[1]);
-                        lon = "" + Double.parseDouble(parts[2]);
-                        if (parts.length >= 4) {
-                            alt = "" + Double.parseDouble(parts[3]);
-                        }
-                    } catch (NumberFormatException e) {
-                        Log.e("BuildPlacesTask", "Ignoring line " + line + " .. " + e);
-                        line = reader.readLine();
-                        continue;
-                    }
-
-                    Location location = new Location(label, lat, lon, alt);
-                    if (!locations.contains(location)) {
+                    Location location = csvItemToLocation(line);
+                    if (location != null && !locations.contains(location)) {
                         locations.add(location);
                     }
                     line = reader.readLine();
@@ -174,7 +190,47 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         }
     }
 
-    private int buildPlaces(@Nullable Uri uri)
+    @Nullable
+    private Location csvItemToLocation(String csv_item)
+    {
+        String[] parts = csv_item.split(",");
+        if (parts.length < 3) {
+            Log.e("BuildPlacesTask", "Ignoring malformed line; " + csv_item);
+            return null;
+        }
+
+        String label = parts[0];
+        if (label.startsWith("\"")) {
+            label = label.substring(1);
+        }
+        if (label.endsWith("\"")) {
+            label = label.substring(0, label.length()-1);
+        }
+
+        String lat, lon;
+        String alt = "0";
+        try {
+            lat = "" + Double.parseDouble(parts[1]);
+            lon = "" + Double.parseDouble(parts[2]);
+            if (parts.length >= 4) {
+                alt = "" + Double.parseDouble(parts[3]);
+            }
+        } catch (NumberFormatException e) {
+            Log.e("BuildPlacesTask", "Ignoring line " + csv_item + " .. " + e);
+            return null;
+        }
+
+        return new Location(label, lat, lon, alt);
+    }
+
+    /**
+     * Pass a URI to build from file, groups[] to build from resources, or null for both to build
+     * from internal locales.
+     * @param uri optional source uri; null to skip
+     * @param groups optional group list; null to skip, or pass an empty list to add all
+     * @return the number of items added to the database
+     */
+    private int buildPlaces(@Nullable Uri uri, @Nullable String[] groups)
     {
         int result = 0;
         ArrayList<Location> locations = new ArrayList<>();
@@ -184,6 +240,8 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
 
             if (uri != null) {
                 addPlacesFromUri(context, uri, locations);
+            } else if (groups != null) {
+                addPlacesFromGroup(context, groups, locations);
             } else {
                 addPlacesFromRes(context, locations);
             }
@@ -234,8 +292,13 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             param_source = (Uri)params[1];
         }
 
+        String[] param_groups = null;
+        if (params.length > 2) {
+            param_groups = (String[])params[2];
+        }
+
         int result = param_clearPlaces ? clearPlaces()
-                                       : buildPlaces(param_source);
+                                       : buildPlaces(param_source, param_groups);
 
         long endTime = System.currentTimeMillis();
         while ((endTime - startTime) < MIN_WAIT_TIME || isPaused)
