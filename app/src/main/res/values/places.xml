@@ -118,6 +118,7 @@
         <item>"Tashkent", 41.31026, 69.2805, 455</item>
         <item>"Tehran", 35.70251, 51.35131, 900</item>
         <item>"Tokyo", 35.6732, 139.5703, 49</item>
+        <item>"Ufa", 54.72611, 55.9475, 150</item>
         <item>"Ulaanbaatar", 47.90029, 106.94324, 1350</item>
         <item>"Yakutsk", 62.02538, 129.73172, 95</item>
         <item>"Yangon", 16.79525, 96.15955, 23</item>
@@ -134,9 +135,11 @@
 
     <!-- Europe -->
     <string-array name="places_EU">
+        <item>"Ajaccio", 41.91805, 8.73605, 0</item>
         <item>"Alghero", 40.55984, 8.31647, 7</item>
         <item>"Amsterdam", 52.3745, 4.758, 0</item>
         <item>"Athens", 37.9908, 23.7033, 41</item>
+        <item>"Bjalistoko", 53.1324, 23.1592, 139</item>
         <item>"Berlin", 52.5243, 13.4105, 40.0</item>
         <item>"Bergen", 60.38713, 5.32006, 0</item>
         <item>"Birkirkara, Malta", 35.8957, 14.4478, 62</item>
@@ -145,6 +148,7 @@
         <item>"Bucharest", 44.4378, 26.0245, 94</item>
         <item>"Brussels", 50.8549, 4.3053, 86</item>
         <item>"Cagliari", 39.22138, 9.11069, 4</item>
+        <item>"Cheboksary", 56.15384, 47.24776, 150</item>
         <item>"Chur", 46.8531, 9.4978, 564</item>
         <item>"Chisinau", 46.9998, 28.7881, 215</item>
         <item>"Copenhagen", 55.6712, 12.4907, 9</item>
@@ -159,20 +163,23 @@
         <item>"Minsk", 53.8838, 27.4548, 242</item>
         <item>"Monaco", 43.73233, 7.42731, 0</item>
         <item>"Moscow", 55.7656, 37.6040, 186</item>
+        <item>"Naples", 40.83526, 14.2515, 0</item>
         <item>"Oslo", 59.8937, 10.6450, 0</item>
         <item>"Paris", 48.8566, 2.3518, 41</item>
         <item>"Prague", 50.0595, 14.3255, 361</item>
         <item>"Reykjavik", 64.1322, -21.9224, 17</item>
         <item>"Rennes", 48.1159, -1.7234, 46</item>
         <item>"Rīga", 56.9713, 23.9890, 7</item>
-        <item>"Roma", 41.9099, 12.3959, 79</item>
+        <item>"Rome", 41.9099, 12.3959, 79</item>
         <item>"Sarajevo", 43.8937, 18.3129, 546</item>
         <item>"Schaan", 47.1521, 9.5201, 557</item>
+        <item>"Sevastopol", 44.61195, 33.49049, 100</item>
         <item>"Sofia", 42.6953, 23.1838, 695</item>
         <item>"Stockholm", 59.3260, 17.8474, 20</item>
         <item>"Tallinn", 59.4248, 24.5981, 17</item>
         <item>"Tbilisi", 41.74824, 44.78995, 380</item>
         <item>"Tiranë", 41.3309, 19.7828, 84</item>
+        <item>"Toulouse", 43.60437, 1.44327, 151</item>
         <item>"Tórshavn", 62.01692, -6.75492, 0</item>
         <item>"Udine", 46.06595, 13.23763, 113</item>
         <item>"Vienna", 48.19992, 16.36757, 151</item>
@@ -188,6 +195,7 @@
         <item>"Euskal Herriko erdigunea", 42.883008, -1.935491, 1258</item>
         <item>"Oviedo", 43.36135, -5.85050, 232</item>
         <item>"Madrid", 40.4378, -3.8196, 681</item>
+        <item>"Zaragoza", 41.64881, -0.87935, 243</item>
     </string-array>
     <string-array name="places_EU_UK">
         <item>"Cardiff", 51.5022, -3.2694, 51</item>
@@ -217,17 +225,22 @@
         <item>"St. George's, Bermuda", 32.37944, -64.67777, 0</item>
     </string-array>
     <string-array name="places_NA_CA">
+        <item>"Kuujjuaq", 58.1, -68.4, 40</item>
         <item>"Montreal", 45.5600, -73.8521, 30</item>
+        <item>"Québec", 46.8579, -71.4861, 213</item>
         <item>"Toronto", 43.6159, -79.3769, 78</item>
     </string-array>
     <string-array name="places_NA_US">
-        <item>"Kykotsmovi", 35.87379, -110.6009, 1731</item>
+        <item>"Kykotsmovi, AZ", 35.87379, -110.6009, 1731</item>
+        <item>"Kotzebue, AK", 66.89488, -162.59726, 6</item>
         <item>"Los Angeles", 34.05094, -118.2506, 93</item>
         <item>"New York City", 40.68620, -74.02619, 0</item>
         <item>"Phoenix", 33.45579, -111.94580, 385</item>
+        <item>"Ponemah, MN", 48.01935, -94.90867, 365</item>
         <item>"Porcupine, SD", 43.2770, -102.4068, 1007</item>
         <item>"Tahlequah, OK", 35.9045, -95.0135, 251</item>
-        <item>"Tségháhoodzání (Window Rock)", 35.6668, -109.0821, 2044</item>
+        <item>"Towaoc, CO", 37.20138, -108.72988, 1731</item>
+        <item>"Window Rock, AZ", 35.6668, -109.0821, 2044</item>
     </string-array>
 
     <!-- Oceania -->
@@ -240,6 +253,7 @@
         <item>"Pago Pago", -14.27176, -170.70223, 0</item>
         <item>"Palikir", 6.9192, 158.1412, 20</item>
         <item>"Papeete, Tahiti", -17.53653, -149.56887, 0</item>
+        <item>"Suva", -18.14857, 178.42384, 0</item>
         <item>"Sydney", -33.8981, 151.2328, 40</item>
     </string-array>
 
