@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -29,7 +30,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.Pair;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
@@ -121,8 +124,10 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         if (groups.length == 0) {
             addPlacesFromGroup(context, (String) null, locations);
         } else {
-            for (String group : groups) {
-                addPlacesFromGroup(context, group, locations);
+            for (String groupItem : groups)
+            {
+                String[] parts = groupItem.split(",");
+                addPlacesFromGroup(context, parts[0], locations);
             }
         }
     }
@@ -376,7 +381,84 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             taskListener.onFinished(result);
     }
 
+    /**
+     * OpenFileIntent
+     */
     public static Intent buildPlacesOpenFileIntent() {
         return ExportTask.getOpenFileIntent("text/*");
     }
+
+    /**
+     * promptAddWorldPlaces
+     */
+    public static void promptAddWorldPlaces(final Context context, final BuildPlacesTask.TaskListener l)
+    {
+        BuildPlacesTask.chooseGroups(context, new BuildPlacesTask.ChooseGroupsDialogListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which, String[] groups, boolean[] checked)
+            {
+                ArrayList<String> items = new ArrayList<>();
+                for (int i=0; i<groups.length; i++) {
+                    if (checked[i]) {
+                        items.add(groups[i]);
+                    }
+                }
+                BuildPlacesTask task = new BuildPlacesTask(context);
+                task.setTaskListener(l);
+                task.execute(false, null, items.toArray(new String[0]));
+            }
+        });
+    }
+
+    /**
+     * ChooseGroups
+     */
+    public static void chooseGroups(final Context context, @NonNull final ChooseGroupsDialogListener onClickListener)
+    {
+        String[] groups = context.getResources().getStringArray(R.array.place_groups);
+        chooseGroups(context, groups, onClickListener);
+    }
+    public static void chooseGroups(final Context context, final String[] groups,  @NonNull final ChooseGroupsDialogListener onClickListener)
+    {
+        final ArrayList<Pair<Integer,CharSequence>> items = new ArrayList<>();
+        final boolean[] checked = new boolean[groups.length];
+        for (int i=0; i<groups.length; i++)
+        {
+            checked[i] = true;
+            String[] itemParts = (groups[i] != null) ? groups[i].split(",") : new String[] {""};
+            int labelID = (itemParts.length > 1) ? context.getResources().getIdentifier(itemParts[1].trim(), "string", context.getPackageName()) : 0;
+            String label = (labelID != 0 ? context.getString(labelID) : "");
+            items.add(new Pair<Integer, CharSequence>(i, label));
+        }
+
+        CharSequence[] displayStrings = new CharSequence[items.size()];
+        for (int i=0; i<displayStrings.length; i++) {
+            displayStrings[i] = items.get(i).second;
+        }
+
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.configLabel_places_build))
+                .setIcon(R.drawable.ic_action_map)
+                .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        int i = items.get(which).first;
+                        checked[i] = isChecked;
+                    }
+                })
+                .setPositiveButton(context.getString(R.string.configLabel_places_build), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        onClickListener.onClick(dialog, AlertDialog.BUTTON_POSITIVE, groups, checked);
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+
+    public interface ChooseGroupsDialogListener {
+        void onClick(DialogInterface dialog, int which, String[] groups, boolean[] checked);
+    }
+
 }
