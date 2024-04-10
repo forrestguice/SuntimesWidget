@@ -681,11 +681,8 @@ public class WelcomeActivity extends AppCompatActivity
         private final View.OnClickListener onAddPlacesClicked = new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
-                BuildPlacesTask task = new BuildPlacesTask(getActivity());
-                task.setTaskListener(buildPlacesListener);
-                task.execute();
+            public void onClick(View v) {
+                BuildPlacesTask.promptAddWorldPlaces(getActivity(), buildPlacesListener);
             }
         };
         private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
