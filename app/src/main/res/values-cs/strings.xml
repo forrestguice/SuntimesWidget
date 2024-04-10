@@ -27,6 +27,7 @@
     <string name="configAction_share">Sdílet</string>
     <string name="configAction_export">Exportovat</string>
     <string name="configAction_import">Importovat</string>
+    <string name="configAction_info">More Info</string>   <!-- TODO -->
     <string name="configAction_sunDialog">Poloha slunce</string>
     <string name="configAction_equinoxDialog">Slunovrat / Rovnodennost</string>
     <string name="configAction_worldMap">Mapa světa</string>
@@ -625,6 +626,7 @@
     <string name="compareMode_tomorrow">Zítřku</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Porovnat oproti:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Zobrazit porovnání</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Nedávná událost</string>                   <!-- setting -->
@@ -773,6 +775,9 @@
     <string name="configLabel_themeColorMoonWaning">Couvající</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Úplný</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Nov</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Východ slunce</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1217,6 +1222,23 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
+    <string name="place_label_AF">Africa</string>    <!-- TODO -->
+    <string name="place_label_AS">Asia</string>    <!-- TODO -->
+    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
+    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
+    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
+    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
+    <string name="place_label_EU">Europe</string>    <!-- TODO -->
+    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
+    <string name="place_label_NA">North America</string>    <!-- TODO -->
+    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
+    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
+    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
+    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
+    <string name="place_label_other">Other</string>    <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Uživatelské prostředí</string>                       <!-- group title -->
