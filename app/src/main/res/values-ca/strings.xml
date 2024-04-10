@@ -1708,11 +1708,11 @@
     <string name="app_shortdesc">Mostra les hores de l\'alba, capvespre, llum crepuscular i lunar.</string>
     <string name="app_support_url"><![CDATA[
         <b>Suport:</b> visita el
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguiment d\'incidències</a> per enviar una petició.
+        <a href="%1$s">seguiment d\'incidències</a> per enviar una petició.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+        <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
     <string name="app_legal1"><![CDATA[
     <b>Codi font:</b><br />

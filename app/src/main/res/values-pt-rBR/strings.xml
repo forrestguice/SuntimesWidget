@@ -1760,15 +1760,12 @@
     <string name="app_shortdesc">Exibe horários de luz solar e lunar.</string>
     <string name="app_support_url"><![CDATA[
         <b>Suporte:</b> visite
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">o gerenciador de ocorrências</a> para enviar uma solicitação.
+        <a href="%1$s">o gerenciador de ocorrências</a> para enviar uma solicitação.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+        <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
-    ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Código Aberto:</b><br />
         Direitos Reservados a &#169 2014-2024 Forrest Guice <br />

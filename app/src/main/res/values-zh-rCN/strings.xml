@@ -1718,15 +1718,12 @@
     <string name="app_shortdesc">展示太阳和月亮的时间。</string>
     <string name="app_support_url"><![CDATA[
         <b>支持:</b> 访问
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">问题追踪器</a> 提交一个请求。
+        <a href="%1$s">问题追踪器</a> 提交一个请求。
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s 免费使用，如果您认为它有价值，请
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">随意付费</a>。
+        <a href="%2$s">随意付费</a>。
     ]]></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
-    ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>源代码:</b><br />
         Copyright &#169 2014-2024 Forrest Guice <br />

@@ -1694,11 +1694,11 @@
     <string name="app_shortdesc">Muestra las horas del amanecer, noche, luz crepuscular y lunar.</string>
     <string name="app_support_url"><![CDATA[
     <b>Soporte:</b> visita el
-    <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguimiento de incidencias</a> para enviar una petición.
+    <a href="%1$s">seguimiento de incidencias</a> para enviar una petición.
 ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+        <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
     <string name="app_legal1"><![CDATA[
     <b>Código fuente:</b> <br />

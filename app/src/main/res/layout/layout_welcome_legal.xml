@@ -61,7 +61,7 @@
                 android:gravity="start" android:layout_gravity="start"
                 android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/app_license_url" />
+                android:text="@string/help_license_url" />
 
             <TextView
                 android:id="@+id/text3" android:textSize="?attr/text_size_small"
@@ -73,7 +73,7 @@
                 android:id="@+id/link3" android:textSize="?attr/text_size_small"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="start" android:layout_margin="8dp" android:layout_gravity="start"
-                android:text="@string/privacy_url" />
+                android:text="@string/help_privacy_url" />
 
             <View
                 android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                 android:gravity="start" android:layout_gravity="start"
                 android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
                 android:layout_marginBottom="2dp" android:layout_marginTop="0dp"
-                android:text="@string/app_url" android:textSize="?attr/text_size_small" />
+                android:text="@string/help_app_url" android:textSize="?attr/text_size_small" />
 
             <LinearLayout android:orientation="horizontal"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
