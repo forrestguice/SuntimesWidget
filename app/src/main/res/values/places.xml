@@ -39,6 +39,7 @@
     </string-array>
     <string-array name="place_group_OC">
         <item>places_OC, place_label_OC</item>                <!-- Oceania (unsorted) -->
+        <item>places_OC_AU, place_label_OC_AU</item>                <!-- Oceania (unsorted) -->
     </string-array>
     <string-array name="place_group_SA">
         <item>places_SA, place_label_SA</item>                <!-- South and Central America (unsorted) -->
@@ -318,6 +319,16 @@
         <item>"Palikir", 6.9192, 158.1412, 20</item>
         <item>\"Papeete, Tahiti\", -17.53653, -149.56887, 0</item>
         <item>"Suva", -18.14857, 178.42384, 0</item>
+    </string-array>
+
+    <string-array name="places_OC_AU">
+        <item>"Adelaide", -34.94418, 138.50037, 0</item>
+        <item>"Brisbane", -27.47464, 153.02998, 32</item>
+        <item>"Canberra", -35.30676, 149.12177, 578</item>
+        <item>"Darwin", -12.43165, 130.83440, 0</item>
+        <item>"Hobart", -42.88881, 147.33821, 0</item>
+        <item>"Melbourne", -37.81100, 144.95491, 31</item>
+        <item>"Perth", -31.96644, 115.83743, 0</item>
         <item>"Sydney", -33.8981, 151.2328, 40</item>
     </string-array>
 

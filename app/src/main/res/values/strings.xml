@@ -1287,6 +1287,7 @@
     <string name="place_label_NA_CA">North America (Canada)</string>
     <string name="place_label_NA_US">North America (US)</string>
     <string name="place_label_OC">Oceania</string>
+    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
     <string name="place_label_SA">South and Central America</string>
     <string name="place_label_other">Other</string>
 
