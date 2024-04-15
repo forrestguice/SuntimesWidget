@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help_url">@string/help_cb_url</string>       <!-- must end with / -->
+
+    <!-- Help Paths (these should be prefixed by `help_url`) -->
+    <string name="help_action_path" translatable="false">actions</string>
+    <string name="help_battery_optimization_path" translatable="false">alarms/batteryopt</string>
+    <string name="help_datasources_path" translatable="false">datasources</string>
+    <string name="help_substitutions_path" translatable="false">datasubstitutions</string>
+    <string name="help_worldmap_background_path" translatable="false">worldmap</string>
+
+    <!-- App Links -->
+    <string name="help_app_url">@string/help_app_cb_url</string>
+    <string name="help_addons_url">@string/help_addons_cb_url</string>
+    <string name="help_license_url">@string/help_license_cb_url</string>
+    <string name="help_privacy_url">@string/help_privacy_cb_url</string>
+    <string name="help_donate_url">@string/help_donate_cb_url</string>
+
+    <string name="help_support_url">@string/help_support_gh_url</string>
+    <string name="help_source_url">@string/help_support_gh_url</string>
+    <string name="help_changelog_url">@string/help_changelog_gh_url</string>
+    <string name="help_commit_url">@string/help_commit_gh_url</string>
+
+    <!-- GitHub (mirror) -->
+    <string name="help_gh_url" translatable="false">https://forrestguice.github.io/Suntimes/help/</string>   <!-- must end with / -->
+    <string name="help_app_gh_url" translatable="false">https://forrestguice.github.io/Suntimes/</string>
+    <string name="help_addons_gh_url" translatable="false">https://forrestguice.github.io/Suntimes/</string>
+    <string name="help_license_gh_url" translatable="false">https://forrestguice.github.io/Suntimes/license</string>
+    <string name="help_privacy_gh_url" translatable="false">https://forrestguice.github.io/Suntimes/privacy</string>
+    <string name="help_donate_gh_url" translatable="false">https://forrestguice.github.io/Suntimes/donate</string>
+
+    <string name="help_support_gh_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/issues</string>
+    <string name="help_source_gh_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/</string>
+    <string name="help_changelog_gh_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/blob/master/CHANGELOG.md</string>
+    <string name="help_commit_gh_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/commit/</string>
+
+    <!-- Codeberg (mirror) -->
+    <string name="help_cb_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/</string>   <!-- must end with / -->
+    <string name="help_app_cb_url" translatable="false">https://forrestguice.codeberg.page/Suntimes</string>
+    <string name="help_addons_cb_url" translatable="false">https://forrestguice.codeberg.page/Suntimes</string>
+    <string name="help_license_cb_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/license</string>
+    <string name="help_privacy_cb_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/privacy</string>
+    <string name="help_donate_cb_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/donate</string>
+
+</resources>
