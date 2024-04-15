@@ -1,1 +1,2 @@
 - adds translation to Arabic.
+- adds to "world places", and organizes places by continent.

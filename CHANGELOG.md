@@ -1,7 +1,10 @@
 ### ~
 
-### v0.15.14 (2024-04-08)
+### v0.15.14 (2024-04-15)
 * adds translation to Arabic (ar) (contributed by Alelg) (#786).
+* adds to list of world places, and allows adding world places by continent (#785).
+* adds mirror for help urls and website; some locales may point to GitHub hosted resources instead (#629).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#788 by James Liu).
 
 ### v0.15.13 (2024-03-19)
 * adds app options to show daylight comparison (today/tomorrow) (#773).
