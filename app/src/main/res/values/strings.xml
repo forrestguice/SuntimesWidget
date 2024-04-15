@@ -1274,6 +1274,7 @@
 
     <string name="place_label_AN">Antarctica</string>
     <string name="place_label_AF">Africa</string>
+    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN">Asia (China)</string>
     <string name="place_label_AS_IN">Asia (India)</string>

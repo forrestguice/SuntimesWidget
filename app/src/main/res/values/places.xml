@@ -18,6 +18,7 @@
     </string-array>
     <string-array name="place_group_AF">
         <item>places_AF, place_label_AF</item>                <!-- Africa (unsorted) -->
+        <item>places_AF_EG, place_label_AF_EG</item>          <!-- Africa; Egypt -->
     </string-array>
     <string-array name="place_group_AS">
         <item>places_AS, place_label_AS</item>                <!-- Asia (unsorted) -->
@@ -296,15 +297,19 @@
     </string-array>
     <string-array name="places_NA_US">
         <item>\"Anchorage, AK\", 34.05094, -118.2506, 31</item>
+        <item>"Chicago", 41.86859, -87.61582, 176</item>
+        <item>"Houston", 29.76010, -95.37176, 32</item>
         <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731</item>
         <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6</item>
         <item>"Los Angeles", 34.05094, -118.2506, 93</item>
         <item>"New York City", 40.68620, -74.02619, 0</item>
+        <item>"Philadelphia", 39.94704, -75.15252, 12</item>
         <item>"Phoenix", 33.45579, -111.94580, 385</item>
         <item>\"Ponemah, MN\", 48.01935, -94.90867, 365</item>
         <item>\"Porcupine, SD\", 43.2770, -102.4068, 1007</item>
         <item>\"Tahlequah, OK\", 35.9045, -95.0135, 251</item>
         <item>\"Towaoc, CO\", 37.20138, -108.72988, 1731</item>
+        <item>"San Francisco", 37.80907, -122.41289, 0</item>
         <item>\"Window Rock, AZ\", 35.6668, -109.0821, 2044</item>
     </string-array>
 
@@ -320,7 +325,6 @@
         <item>\"Papeete, Tahiti\", -17.53653, -149.56887, 0</item>
         <item>"Suva", -18.14857, 178.42384, 0</item>
     </string-array>
-
     <string-array name="places_OC_AU">
         <item>"Adelaide", -34.94418, 138.50037, 0</item>
         <item>"Brisbane", -27.47464, 153.02998, 32</item>
