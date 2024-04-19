@@ -26,7 +26,7 @@
     <string name="configAction_share">分享</string>
     <string name="configAction_export">匯出</string>
     <string name="configAction_import">匯入</string>
-    <string name="configAction_info">More Info</string>   <!-- TODO -->
+    <string name="configAction_info">更多資訊</string>
     <string name="configAction_sunDialog">太陽位置</string>
     <string name="configAction_equinoxDialog">至點/分點</string>
     <string name="configAction_worldMap">世界地圖</string>
@@ -579,7 +579,7 @@
     <string name="compareMode_tomorrow">明天</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">對比:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">顯示對比</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">將今天的日光量與今天或明日相比較。</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">近期事件</string>                   <!-- setting -->
@@ -728,8 +728,8 @@
     <string name="configLabel_themeColorMoonFull">滿月顏色</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">新月顏色</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
-    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
+    <string name="configLabel_themeColorMoonFullText">完整（文本）</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">新（文本）</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">日出顏色</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1156,23 +1156,23 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
-    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
-    <string name="place_label_AF">Africa</string>    <!-- TODO -->
-    <string name="place_label_AS">Asia</string>    <!-- TODO -->
-    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
-    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
-    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
-    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
-    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
-    <string name="place_label_EU">Europe</string>    <!-- TODO -->
-    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
-    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
-    <string name="place_label_NA">North America</string>    <!-- TODO -->
-    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
-    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
-    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
-    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
-    <string name="place_label_other">Other</string>    <!-- TODO -->
+    <string name="place_label_AN">南極洲</string>
+    <string name="place_label_AF">非洲</string>
+    <string name="place_label_AS">亞洲</string>
+    <string name="place_label_AS_CN">亞洲（中國）</string>
+    <string name="place_label_AS_IN">亞洲（印度）</string>
+    <string name="place_label_AS_JP">亞洲（日本）</string>
+    <string name="place_label_AS_SA">亞洲（沙烏地阿拉伯）</string>
+    <string name="place_label_AS_VN">亞洲（越南）</string>
+    <string name="place_label_EU">歐洲</string>
+    <string name="place_label_EU_ES">歐洲（西班牙）</string>
+    <string name="place_label_EU_UK">歐洲（英國）</string>
+    <string name="place_label_NA">北美洲</string>
+    <string name="place_label_NA_CA">北美洲（加拿大）</string>
+    <string name="place_label_NA_US">北美洲（美國）</string>
+    <string name="place_label_OC">大洋洲</string>
+    <string name="place_label_SA">南美洲及中美洲</string>
+    <string name="place_label_other">其他</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">用戶介面</string>                       <!-- group title -->
