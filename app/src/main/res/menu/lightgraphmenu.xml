@@ -28,6 +28,21 @@
                 android:checkable="true"
                 app:showAsAction="never" />
 
+            <item android:id="@+id/graphOption_showCivil"
+                android:title="@string/timeMode_civil"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showNautical"
+                android:title="@string/timeMode_nautical"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showAstro"
+                android:title="@string/timeMode_astronomical"
+                android:checkable="true"
+                app:showAsAction="never" />
+
         </menu>
     </item>
 

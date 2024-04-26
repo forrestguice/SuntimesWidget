@@ -23,8 +23,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -45,7 +47,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -60,8 +62,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 
-import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
-
 /**
  * LightGraphView
  */
@@ -69,6 +69,15 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 {
     public static final String PREF_KEY_GRAPH_SHOWPOINTS = "showPoints";
     public static final boolean DEF_KEY_GRAPH_SHOWPOINTS = true;
+
+    public static final String PREF_KEY_GRAPH_SHOWCIVIL = "showCivil";
+    public static final boolean DEF_KEY_GRAPH_SHOWCIVIL = true;
+
+    public static final String PREF_KEY_GRAPH_SHOWNAUTICAL = "showNautical";
+    public static final boolean DEF_KEY_GRAPH_SHOWNAUTICAL = true;
+
+    public static final String PREF_KEY_GRAPH_SHOWASTRO = "showAstro";
+    public static final boolean DEF_KEY_GRAPH_SHOWASTRO = true;
 
     public static final int MINUTES_IN_DAY = 24 * 60;
 
@@ -179,9 +188,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             public void run()
             {
                 Context context = getContext();
-                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
-                TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone()
-                        : WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
+                String tzId = WidgetTimezones.LocalMeanTime.TIMEZONEID; //WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+                TimeZone timezone = //WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() :
+                        WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
 
                 data = LightGraphTask.createYearData(getContext(), data0, timezone);
                 handler.post(new Runnable() {
@@ -196,6 +205,13 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 });
             }
         });
+    }
+
+    public SuntimesRiseSetDataset getData0() {
+        return data0;
+    }
+    public SuntimesRiseSetDataset[] getData() {
+        return this.data;
     }
 
     /**
@@ -715,21 +731,38 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         {
             if (options.sunPath_show_line || options.sunPath_show_fill)
             {
-                paintPath.setColor(options.colorCivil);
-                drawPath(now, data, WidgetSettings.TimeMode.OFFICIAL, true, c, paintPath, options);
-                drawPath(now, data, WidgetSettings.TimeMode.OFFICIAL, false, c, paintPath, options);
+                WidgetSettings.TimeMode nightBoundary = WidgetSettings.TimeMode.OFFICIAL;
+                paintPath.setColor(options.colorNight);
+                drawPath(now, data, nightBoundary, true, c, paintPath, options);
+                drawPath(now, data, nightBoundary, false, c, paintPath, options);
 
-                paintPath.setColor(options.colorNautical);
-                drawPath(now, data, WidgetSettings.TimeMode.CIVIL, true, c, paintPath, options);
-                drawPath(now, data, WidgetSettings.TimeMode.CIVIL, false, c, paintPath, options);
+                if (options.showCivil)
+                {
+                    nightBoundary = WidgetSettings.TimeMode.CIVIL;
+                    paintPath.setColor(options.colorCivil);
+                    drawPath(now, data, WidgetSettings.TimeMode.OFFICIAL, true, c, paintPath, options);
+                    drawPath(now, data, WidgetSettings.TimeMode.OFFICIAL, false, c, paintPath, options);
+                }
 
-                paintPath.setColor(options.colorAstro);
-                drawPath(now, data, WidgetSettings.TimeMode.NAUTICAL, true, c, paintPath, options);
-                drawPath(now, data, WidgetSettings.TimeMode.NAUTICAL, false, c, paintPath, options);
+                if (options.showNautical)
+                {
+                    nightBoundary = WidgetSettings.TimeMode.NAUTICAL;
+                    paintPath.setColor(options.colorNautical);
+                    drawPath(now, data, WidgetSettings.TimeMode.CIVIL, true, c, paintPath, options);
+                    drawPath(now, data, WidgetSettings.TimeMode.CIVIL, false, c, paintPath, options);
+                }
+
+                if (options.showAstro)
+                {
+                    nightBoundary = WidgetSettings.TimeMode.ASTRONOMICAL;
+                    paintPath.setColor(options.colorAstro);
+                    drawPath(now, data, WidgetSettings.TimeMode.NAUTICAL, true, c, paintPath, options);
+                    drawPath(now, data, WidgetSettings.TimeMode.NAUTICAL, false, c, paintPath, options);
+                }
 
                 paintPath.setColor(options.colorNight);
-                drawPath(now, data, WidgetSettings.TimeMode.ASTRONOMICAL, true, c, paintPath, options);
-                drawPath(now, data, WidgetSettings.TimeMode.ASTRONOMICAL, false, c, paintPath, options);
+                drawPath(now, data, nightBoundary, true, c, paintPath, options);
+                drawPath(now, data, nightBoundary, false, c, paintPath, options);
 
                 drawPathPoints(c, p, options);
             }
@@ -764,51 +797,46 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        private final Map<String, Pair<Double,Double>> sunrise_earliest = new HashMap<>();
-        private final Map<String, Pair<Double,Double>> sunset_earliest = new HashMap<>();
-        private final Map<String, Pair<Double,Double>> sunrise_latest = new HashMap<>();
-        private final Map<String, Pair<Double,Double>> sunset_latest = new HashMap<>();
-
         private void trackMinMax(String mode, boolean rising, double hour, double day)
         {
             if (rising)
             {
-                Pair<Double,Double> value = sunrise_earliest.get(mode);
+                Pair<Double,Double> value = options.t_sunrise_earliest.get(mode);
                 if (value == null || hour < value.second) {
-                    sunrise_earliest.put(mode, new Pair<>(day, hour));
+                    options.t_sunrise_earliest.put(mode, new Pair<>(day, hour));
                 }
-                value = sunrise_latest.get(mode);
+                value = options.t_sunrise_latest.get(mode);
                 if (value == null || hour > value.second) {
-                    sunrise_latest.put(mode, new Pair<>(day, hour));
+                    options.t_sunrise_latest.put(mode, new Pair<>(day, hour));
                 }
 
             } else {
-                Pair<Double,Double> value = sunset_earliest.get(mode);
+                Pair<Double,Double> value = options.t_sunset_earliest.get(mode);
                 if (value == null || hour < value.second) {
-                    sunset_earliest.put(mode, new Pair<>(day, hour));
+                    options.t_sunset_earliest.put(mode, new Pair<>(day, hour));
                 }
-                value = sunset_latest.get(mode);
+                value = options.t_sunset_latest.get(mode);
                 if (value == null || hour > value.second) {
-                    sunset_latest.put(mode, new Pair<>(day, hour));
+                    options.t_sunset_latest.put(mode, new Pair<>(day, hour));
                 }
             }
         }
         private void resetMinMax(String mode, boolean rising) {
             if (rising) {
-                sunrise_earliest.remove(mode);
-                sunrise_latest.remove(mode);
+                options.t_sunrise_earliest.remove(mode);
+                options.t_sunrise_latest.remove(mode);
             } else {
-                sunset_earliest.remove(mode);
-                sunset_latest.remove(mode);
+                options.t_sunset_earliest.remove(mode);
+                options.t_sunset_latest.remove(mode);
             }
         }
         private void publishMinMax(String mode, Canvas c, LightGraphOptions options)
         {
             Pair<Double,Double>[] points = new Pair[] {
-                    sunrise_earliest.get(mode),
-                    sunrise_latest.get(mode),
-                    sunset_earliest.get(mode),
-                    sunset_latest.get(mode)
+                    options.t_sunrise_earliest.get(mode),
+                    options.t_sunrise_latest.get(mode),
+                    options.t_sunset_earliest.get(mode),
+                    options.t_sunset_latest.get(mode)
             };
 
             ArrayList<float[]> p = new ArrayList<>();
@@ -900,11 +928,12 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         protected void drawLabels(Calendar now, SuntimesRiseSetDataset[] data, Canvas c, Paint p, LightGraphOptions options)
         {
             if (options.axisY_labels_show) {
-                drawAxisYLabels(c, p, options);
+                drawXLabels(c, p, options);
             }
             if (options.axisX_labels_show) {
-                drawAxisXLabels(c, p, options);
+                drawYLabels(c, p, options);
             }
+            drawSeasonsBar(c, p, options);
         }
 
         protected void drawAxisUnder(Calendar now, SuntimesRiseSetDataset[] data, Canvas c, Paint p, LightGraphOptions options)
@@ -966,20 +995,75 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         protected void drawAxisX(Canvas c, Paint p, LightGraphOptions options)
         {
             ArrayList<Double> hours = new ArrayList<>();
-            //hours.add(6d);
 
+            //for (int i=1; i<24; i++) {
+            //    hours.add((double) i);
+            //}
+
+            hours.add(0d);
+            //hours.add(3d);
+            hours.add(6d);
+            //hours.add(9d);
             hours.add(12d);
-            //hours.add(18d);
+            //hours.add(15d);
+            hours.add(18d);
+            //hours.add(21d);
+
+            Calendar calendar0 = Calendar.getInstance(options.timezone);
+            Calendar calendar = Calendar.getInstance(yearData[0].timezone());
 
             int w = c.getWidth();
             for (Double hour : hours)
             {
-                float y = (float) hoursToBitmapCoords(c, hour, options);
+                calendar0.set(Calendar.HOUR_OF_DAY, hour.intValue());
+                calendar0.set(Calendar.MINUTE, (int)((hour - hour.intValue()) * 60d));
+                calendar0.set(Calendar.SECOND, 0);
+                calendar0.set(Calendar.MILLISECOND, 0);
+
+                calendar.setTimeInMillis(calendar0.getTimeInMillis());
+                double h = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d);
+                float y = (float) hoursToBitmapCoords(c, h, options);
                 c.drawLine(0, y, w, y, p);
             }
         }
+        protected void drawXLabels(Canvas c, Paint p, LightGraphOptions options)
+        {
+            float textSize = textSize(c, options.axisY_labels_textsize_ratio);
+            float left = (float)(c.getWidth() - (1.5 * textSize));
+
+            p.setColor(options.axisY_labels_bgcolor);
+            p.setAlpha(128);
+            c.drawRect(left, 0, left + (int)(1.5 * textSize), c.getHeight(), p);
+            p.setAlpha(255);
+
+            Calendar calendar0 = Calendar.getInstance(options.timezone);
+            Calendar calendar = Calendar.getInstance(yearData[0].timezone());
+
+            int i = (int) options.axisY_labels_interval;
+            while (i < 24)
+            {
+                calendar0.set(Calendar.HOUR_OF_DAY, i);
+                calendar0.set(Calendar.MINUTE, 0);
+                calendar0.set(Calendar.SECOND, 0);
+                calendar0.set(Calendar.MILLISECOND, 0);
+
+                calendar.setTimeInMillis(calendar0.getTimeInMillis());
+                double h = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d);
+                float y = (float) hoursToBitmapCoords(c, h, options);
+
+                p.setColor(options.axisY_labels_color);
+                p.setTextSize(textSize);
+                String label = ((options.is24 || i == 12) ? i : (i % 12)) + "";
+                c.drawText(label, left + (textSize * 0.75f), y + textSize/3 , p);
+                i += options.axisY_labels_interval;
+            }
+        }
+
+
         protected void drawAxisY(Calendar now, SuntimesRiseSetDataset[] data, Canvas c, Paint p, LightGraphOptions options)
         {
+            boolean showCrossQuarter = false;
+
             SuntimesCalculator calculator = data[0].calculator();
             ArrayList<Calendar> events = new ArrayList<>();
             events.add(calculator.getSpringEquinoxForYear(data[0].calendar()));
@@ -994,7 +1078,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 Calendar event = events.get(i);
                 float x = (float) daysToBitmapCoords(c, event.get(Calendar.DAY_OF_YEAR), options);
                 c.drawLine(x, 0, x, h, p);
-                c.drawLine((x + x0)/2, 0, (x + x0)/2, h, p);
+                if (showCrossQuarter) {
+                    c.drawLine((x + x0)/2, 0, (x + x0)/2, h, p);
+                }
                 x0 = x;
             }
         }
@@ -1004,7 +1090,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             return (float)(Math.sqrt(c.getWidth() * (c.getWidth()/2d)) / ratio);
         }
 
-        protected void drawAxisXLabels(Canvas c, Paint p, LightGraphOptions options)
+        protected void drawYLabels(Canvas c, Paint p, LightGraphOptions options)
         {
             int n = 365;    // days
             int h = c.getHeight();
@@ -1027,26 +1113,41 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 i += options.axisX_labels_interval;
             }
         }
-        protected void drawAxisYLabels(Canvas c, Paint p, LightGraphOptions options)
+
+        public Shader makeGradient(int x0, int gradientWidth, int gradientStart, int gradientEnd) {
+            return new LinearGradient(x0, 0, x0 + gradientWidth, 0, gradientStart, gradientEnd, Shader.TileMode.CLAMP);
+        }
+
+        private final Shader[] seasonGradients = new Shader[4];
+        protected void drawSeasonsBar(Canvas c, Paint p, LightGraphOptions options)
         {
-            float textSize = textSize(c, options.axisY_labels_textsize_ratio);
-            float left = (float)(c.getWidth() - (1.5 * textSize));
+            int gradientWidth = (int)(c.getWidth() / 4d);
+            int[] gradientColors = (options.location.getLatitudeAsDouble() < 0)
+                    ? new int[] { options.colorSummer, options.colorAutumn, options.colorWinter, options.colorSpring, options.colorSummer}
+                    : new int[] { options.colorWinter, options.colorSpring, options.colorSummer, options.colorAutumn, options.colorWinter};
 
-            p.setColor(options.axisY_labels_bgcolor);
-            p.setAlpha(128);
-            c.drawRect(left, 0, left + (int)(1.5 * textSize), c.getHeight(), p);
-            p.setAlpha(255);
-
-            int i = (int) options.axisY_labels_interval;
-            while (i < 24)
-            {
-                float y = (float) hoursToBitmapCoords(c, i, options);
-                p.setColor(options.axisY_labels_color);
-                p.setTextSize(textSize);
-                String label = ((options.is24 || i == 12) ? i : (i % 12)) + "";
-                c.drawText(label, left + (textSize * 0.75f), y + textSize/3 , p);
-                i += options.axisY_labels_interval;
+            for (int i=0; i<4; i++) {
+                if (seasonGradients[i] == null) {
+                    seasonGradients[i] = makeGradient(gradientWidth * i, gradientWidth, gradientColors[i], gradientColors[i+1]);
+                }
             }
+
+            Shader shader0 = p.getShader();
+            p.setDither(true);
+
+            int y0 = c.getHeight() - 65;
+            int y1 = c.getHeight() - 50;
+
+            int x0, x1 = 0;
+            for (int i=0; i < seasonGradients.length; i++)
+            {
+                x0 = x1;
+                x1 = x0 + gradientWidth;
+                p.setShader(seasonGradients[i]);
+                c.drawRect(x0, y0, x1, y1, p);
+            }
+
+            p.setShader(shader0);
         }
 
         protected void drawGridX(Canvas c, Paint p, float interval, LightGraphOptions options)
@@ -1240,6 +1341,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public int sunPath_points_color = Color.MAGENTA;
         public float sunPath_points_width = 150;
 
+        public boolean showCivil = true, showNautical = true, showAstro = true;
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorBackground;
         public int colorPointFill, colorPointStroke;
@@ -1261,6 +1363,14 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public int anim_frameOffsetDays = 1;         // each frame 1 day apart
         public Lock anim_lock = null;
 
+        public TimeZone timezone = null;
+        public int colorSpring, colorSummer, colorAutumn, colorWinter;
+
+        public final Map<String, Pair<Double,Double>> t_sunrise_earliest = new HashMap<>();
+        public final Map<String, Pair<Double,Double>> t_sunset_earliest = new HashMap<>();
+        public final Map<String, Pair<Double,Double>> t_sunrise_latest = new HashMap<>();
+        public final Map<String, Pair<Double,Double>> t_sunset_latest = new HashMap<>();
+
         public LightGraphOptions() {}
 
         @SuppressWarnings("ResourceType")
@@ -1276,6 +1386,10 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                     R.attr.graphColor_axis,                 // 7
                     R.attr.graphColor_grid,                 // 8
                     R.attr.graphColor_labels,               // 9
+                    R.attr.springColor,                     // 10
+                    R.attr.summerColor,                     // 11
+                    R.attr.fallColor,                       // 12
+                    R.attr.winterColor,                     // 13
             };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             colorDay = colorBackground = sunPath_color_day = sunPath_color_day_closed = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
@@ -1288,6 +1402,12 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, typedArray.getResourceId(7, R.color.graphColor_axis_dark));
             gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, typedArray.getResourceId(8, R.color.graphColor_grid_dark));
             axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, typedArray.getResourceId(9, R.color.graphColor_labels_dark));
+
+            colorSpring = ContextCompat.getColor(context, typedArray.getResourceId(10, R.color.springColor_dark));
+            colorSummer = ContextCompat.getColor(context, typedArray.getResourceId(11, R.color.summerColor_dark));
+            colorAutumn = ContextCompat.getColor(context, typedArray.getResourceId(12, R.color.fallColor_dark));
+            colorWinter = ContextCompat.getColor(context, typedArray.getResourceId(13, R.color.winterColor_dark));
+
             typedArray.recycle();
             init(context);
         }
@@ -1318,6 +1438,12 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, R.color.graphColor_axis_dark);
             gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, R.color.graphColor_grid_dark);
             axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, R.color.graphColor_labels_dark);
+
+            colorSpring = ContextCompat.getColor(context, R.color.springColor_dark);
+            colorSummer = ContextCompat.getColor(context, R.color.summerColor_dark);
+            colorAutumn = ContextCompat.getColor(context, R.color.fallColor_dark);
+            colorWinter = ContextCompat.getColor(context, R.color.winterColor_dark);
+
             init(context);
         }
 
@@ -1333,6 +1459,12 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, R.color.graphColor_axis_light);
             gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, R.color.graphColor_grid_light);
             axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, R.color.graphColor_labels_light);
+
+            colorSpring = ContextCompat.getColor(context, R.color.springColor_light);
+            colorSummer = ContextCompat.getColor(context, R.color.summerColor_light);
+            colorAutumn = ContextCompat.getColor(context, R.color.fallColor_light);
+            colorWinter = ContextCompat.getColor(context, R.color.winterColor_light);
+
             init(context);
         }
 
