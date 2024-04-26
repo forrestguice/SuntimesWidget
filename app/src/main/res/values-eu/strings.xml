@@ -27,6 +27,7 @@
     <string name="configAction_share">Share</string>    <!-- TODO -->
     <string name="configAction_export">Esportatu</string>
     <string name="configAction_import">Inportatu</string>
+    <string name="configAction_info">More Info</string>   <!-- TODO -->
     <string name="configAction_sunDialog">Eguzkiaren kokapena</string>
     <string name="configAction_equinoxDialog">Solstizioak / Ekinokzioak</string>
     <string name="configAction_worldMap">Munduko mapa</string>
@@ -572,6 +573,7 @@
     <string name="compareMode_tomorrow">Bihar</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Honekin alderatu:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Konparazioa erakutsi</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
@@ -719,6 +721,9 @@
     <string name="configLabel_themeColorMoonWaning">Ilbeheraren kolorea</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Ilbetearen kolorea</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Ilberriaren kolorea</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Egunsentiaren kolorea</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1150,6 +1155,24 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
+    <string name="place_label_AF">Africa</string>    <!-- TODO -->
+    <string name="place_label_AS">Asia</string>    <!-- TODO -->
+    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
+    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
+    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
+    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
+    <string name="place_label_EU">Europe</string>    <!-- TODO -->
+    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
+    <string name="place_label_NA">North America</string>    <!-- TODO -->
+    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
+    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
+    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
+    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
+    <string name="place_label_other">Other</string>    <!-- TODO -->
+
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Erabiltzailearen interfazea</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
@@ -1365,6 +1388,7 @@
         <item>Dutch</item>  <!-- TODO -->
         <item>Czech</item>  <!-- TODO -->
         <item>Simplified Chinese</item> <!-- TODO -->
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1718,15 +1742,12 @@
     <string name="app_shortdesc">Eguzki eta ilargiaren argiaren denborak erakusten ditu.</string>
     <string name="app_support_url"><![CDATA[
         <b>Laguntza:</b> joan zaitez
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">arazoen jarraitzailera</a> eskaera bat bidaltzeko.
+        <a href="%1$s">arazoen jarraitzailera</a> eskaera bat bidaltzeko.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+        <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
-    ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Iturburu kodea:</b><br />
         Copyright &#169 2014-2024 Forrest Guice <br />

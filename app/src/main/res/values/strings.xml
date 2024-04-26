@@ -27,7 +27,7 @@
     <string name="configAction_share">Share</string>
     <string name="configAction_export">Export</string>
     <string name="configAction_import">Import</string>
-    <string name="configAction_info">More Info</string>    <!-- TODO -->
+    <string name="configAction_info">More Info</string>
     <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
@@ -634,7 +634,7 @@
     <string name="compareMode_tomorrow">Tomorrow</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Compare Against</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->
 
     <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
         <item>@string/compareMode_yesterday</item>
@@ -793,8 +793,8 @@
     <string name="configLabel_themeColorMoonFull">Full</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">New</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
-    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Sunrise</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1079,7 +1079,6 @@
     <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "On", "Off" -->
     <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
-    <string name="help_battery_optimization_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/alarms/batteryopt</string>
     <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
         <item>Samsung</item>
         <item>OnePlus</item>
@@ -1276,6 +1275,25 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarctica</string>
+    <string name="place_label_AF">Africa</string>
+    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
+    <string name="place_label_AS">Asia</string>
+    <string name="place_label_AS_CN">Asia (China)</string>
+    <string name="place_label_AS_IN">Asia (India)</string>
+    <string name="place_label_AS_JP">Asia (Japan)</string>
+    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>
+    <string name="place_label_EU">Europe</string>
+    <string name="place_label_EU_ES">Europe (Spain)</string>
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>
+    <string name="place_label_NA">North America</string>
+    <string name="place_label_NA_CA">North America (Canada)</string>
+    <string name="place_label_NA_US">North America (US)</string>
+    <string name="place_label_OC">Oceania</string>
+    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
+    <string name="place_label_SA">South and Central America</string>
+    <string name="place_label_other">Other</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
@@ -1304,7 +1322,7 @@
     <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>
     <string name="configLabel_ui_showmoon_phase_columns_2">2</string>
     <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
     <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
@@ -1734,6 +1752,7 @@
         <item>Dutch</item>
         <item>Czech</item>
         <item>Simplified Chinese</item>
+        <item>Arabic</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -1753,6 +1772,7 @@
         <item>Nederlands</item>
         <item>Čeština</item>
         <item>简体中文</item>
+        <item>العربية</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1772,6 +1792,7 @@
         <item>nl</item>
         <item>cs</item>
         <item>zh_CN</item>
+        <item>ar</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
@@ -1791,6 +1812,7 @@
         <item><![CDATA[<a href=https://github.com/Joppla>Joppla</a>]]></item>
         <item><![CDATA[<a href=https://github.com/utaxiu>utaxiu</a>]]></item>
         <item><![CDATA[<a href=https://github.com/jamesliu96>James Liu</a>|<a href=https://github.com/sr093906>sr093906</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/mstfelg>Alelg</a>]]></item>
     </string-array>
 
     <!-- position formats -->
@@ -1883,7 +1905,6 @@
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
       \n\nFor best results select an image matching these properties.
     </string>
-    <string name="help_worldmap_background_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/worldmap</string>
 
     <!-- Dialog: Light Graph -->
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
@@ -2224,22 +2245,15 @@
     <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
     <string name="app_support_url"><![CDATA[
         <b>Support:</b> visit the
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
+        <a href="%1$s">issue tracker</a> to submit a request.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.codeberg.page/Suntimes/donate">pay as you like</a>.
+        <a href="%2$s">pay as you like</a>.
     ]]></string>
-    <string name="app_source_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
-    ]]></xliff:g></string>
+
     <string name="app_license_about">Suntimes is free and open-source software.</string>   <!-- displayed by welcome dialog -->
-    <string name="app_license_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.codeberg.page/Suntimes/license">https://forrestguice.codeberg.page/Suntimes/license</a>
-    ]]></xliff:g></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.codeberg.page/Suntimes">https://forrestguice.codeberg.page/Suntimes</a>
-    ]]></xliff:g></string>
+
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
         Copyright &#169 2014-2024 Forrest Guice <br />
@@ -2324,7 +2338,6 @@
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>    <!-- TODO: added section "Date Widgets:", add "%em, %et, %eT, %eA" (#599) to online-help -->
-    <string name="help_substitutions_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions</string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -2469,7 +2482,7 @@
         <br/>
         <b>Extras:</b> An <em>&amp;</em> delimited string containing extra values. Supports <em>%s</em>ubstitutions.<br/><br/>Values may be <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> or String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
     ]]></string>
-    <string name="help_action_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/actions</string>
+
     <string name="help_widgetlist"><![CDATA[
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
           To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
@@ -2499,9 +2512,6 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignore</string>
     <string name="privacy_permissiondialog_title">Permissions</string>
-    <string name="privacy_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.codeberg.page/Suntimes/privacy">https://forrestguice.codeberg.page/Suntimes/privacy</a>
-    ]]></xliff:g></string>
     <string name="privacyTab">Privacy</string>
 
     <string name="security_dialog_title">Security Alert</string>
@@ -2533,7 +2543,6 @@
         For more information about available choices, or extending the app to support other libraries, see the online help.
     ]]>
     </string>
-    <string name="help_datasources_url" translatable="false">https://forrestguice.codeberg.page/Suntimes/help/datasources</string>
 
     <!-- pref defaults -->
     <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>

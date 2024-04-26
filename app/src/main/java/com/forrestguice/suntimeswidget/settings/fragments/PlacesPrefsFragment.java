@@ -197,9 +197,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
             {
                 if (myParent != null)
                 {
-                    buildPlacesTask = new BuildPlacesTask(myParent);
-                    buildPlacesTask.setTaskListener(buildPlacesListener);
-                    buildPlacesTask.execute();
+                    BuildPlacesTask.promptAddWorldPlaces(myParent, buildPlacesListener);
                     return true;
                 }
                 return false;

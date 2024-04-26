@@ -1008,13 +1008,10 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void addWorldPlaces(Context context)
-    {
-        BuildPlacesTask task = new BuildPlacesTask(context);
-        task.setTaskListener(buildPlacesListener);
-        task.execute();
+    public void addWorldPlaces(final Context context) {
+        BuildPlacesTask.promptAddWorldPlaces(context, buildPlacesListener);
     }
-    private BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+    private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
     {
         @Override
         public void onStarted()

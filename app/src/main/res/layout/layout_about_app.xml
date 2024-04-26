@@ -76,7 +76,7 @@
             android:layout_marginTop="0dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-            android:text="@string/app_url"
+            android:text="@string/help_app_url"
             android:autoLink="web" />
 
         <View android:visibility="gone"

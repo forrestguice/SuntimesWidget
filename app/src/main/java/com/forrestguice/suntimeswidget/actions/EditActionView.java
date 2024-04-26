@@ -893,7 +893,7 @@ public class EditActionView extends LinearLayout
         {
             Context context = getContext();
             if (context != null) {
-                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_action_url))));
+                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_url) + context.getString(R.string.help_action_path))));
             }
         }
     };
