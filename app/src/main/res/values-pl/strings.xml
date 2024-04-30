@@ -345,7 +345,7 @@
     <string name="timeMode_nautical">Żeglarski świt/zmierzch</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomiczny</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomiczny świt/zmierzch</string> <!-- setting -->
-    <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_night">Noc astronomiczna</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Dzień</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_golden_short">Złota</string>                <!-- setting -->
     <string name="timeMode_golden">Złota godzina</string>                 <!-- setting -->
