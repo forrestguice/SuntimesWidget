@@ -212,15 +212,11 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 
         if (todayIsNotToday())
         {
-            int year = todayIs.get(Calendar.YEAR);
-            int month = todayIs.get(Calendar.MONTH);
-            int day = todayIs.get(Calendar.DAY_OF_MONTH);
-            for (int i=0; i<calendar.length; i++)
-            {
-                calendar[i].set(year, month, day);
+            for (int i=0; i<calendar.length; i++) {
+                calendar[i].setTimeInMillis(todayIs.getTimeInMillis());
             }
-            todaysCalendar.set(year, month, day);
-            otherCalendar.set(year, month, day);
+            todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
         }
 
         switch (compareMode)

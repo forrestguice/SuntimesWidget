@@ -189,10 +189,12 @@ Norwegian translation by <u>FTno</u>.<br/>
 Italian translation by <u>Matteo Caoduro</u> and <u>GiovaGa</u>.<br/>
 Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>, and <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
 Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
-Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
+Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>, and <u><a href=https://github.com/Adelechka>Adelechka</a></u>.<br />
 Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
 Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>, and <u><a href=https://github.com/sr093906>sr093906</a></u>.<br />
+Arabic translation by <u><a href=https://github.com/mstfelg>Alelg</a></u>.<br />
+
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

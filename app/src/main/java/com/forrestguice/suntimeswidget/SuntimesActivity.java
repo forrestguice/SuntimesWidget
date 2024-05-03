@@ -74,6 +74,8 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.getfix.LocationHelper;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
@@ -193,7 +195,7 @@ public class SuntimesActivity extends AppCompatActivity
     private AppSettings.LocaleInfo localeInfo;
     private SuntimesNavigation navigation;
 
-    private GetFixHelper getFixHelper;
+    private LocationHelper getFixHelper;
 
     private com.forrestguice.suntimeswidget.calculator.core.Location location;
     protected SuntimesNotes notes;
@@ -337,7 +339,7 @@ public class SuntimesActivity extends AppCompatActivity
                 configDate();
 
             } else if (action.equals(ACTION_SHOW_DATE)) {
-                showDate(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
+                showDate(intent.getLongExtra(EXTRA_SHOW_DATE, (Long) null));
 
             } else if (action.equals(ACTION_NOTE_SEEK)) {
                 String eventID = intent.getStringExtra(EXTRA_SOLAREVENT);
@@ -523,7 +525,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         if ((WidgetSettings.loadLocationModePref(this, 0) == WidgetSettings.LocationMode.CURRENT_LOCATION)
-                && AppSettings.lastAutoLocationIsStale(SuntimesActivity.this))
+                && LocationHelperSettings.lastAutoLocationIsStale(SuntimesActivity.this))
         {
             card_view.post(new Runnable()
             {
@@ -1108,7 +1110,7 @@ public class SuntimesActivity extends AppCompatActivity
                     if (result != null)
                     {
                         com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
-                        AppSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
+                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
                         WidgetSettings.saveLocationPref(SuntimesActivity.this, 0, location);
 
                     } else {
@@ -1429,20 +1431,23 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * showDate
      */
-    protected void showDate() {
-        showDate(-1L);
+    protected void showDate()
+    {
+        int position = card_layout.findFirstVisibleItemPosition();
+        Long datetime = (position != CardAdapter.TODAY_POSITION) ? card_adapter.findDateForPosition(this, position) : null;
+        showDate(datetime);
     }
-    protected void showDate(long datetime)
+    protected void showDate(@Nullable Long datetime)
     {
         final TimeDateDialog datePicker = new TimeDateDialog();
         datePicker.setDialogTitle(getString(R.string.configAction_viewDate));
         datePicker.setTimezone(dataset.timezone());
+        datePicker.setMinDate( card_adapter.findDateForPosition(this, 0) );
+        datePicker.setMaxDate( card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1) );
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
 
-        if (datetime != -1) {
-            Calendar calendar = Calendar.getInstance(dataset.timezone());
-            calendar.setTimeInMillis(datetime);
-            datePicker.init(calendar);
+        if (datetime != null) {
+            datePicker.setInitialDateTime(datetime);
         }
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE_SEEK);
     }
@@ -1855,7 +1860,7 @@ public class SuntimesActivity extends AppCompatActivity
         String locationTitle = (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
 
         if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
-            locationPermissionWarning.setShouldShow(!GetFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions
+            locationPermissionWarning.setShouldShow(!getFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions
         }
 
         SpannableString locationSubtitle;

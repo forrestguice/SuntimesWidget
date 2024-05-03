@@ -311,6 +311,8 @@ public class WidgetSettings
             PREF_PREFIX_KEY_DATE + PREF_KEY_NEXTUPDATE,
 
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_MODE,
+
+            PREF_KEY_NEXTUPDATE
     };
     public static String[] BOOL_KEYS = new String[]
     {
@@ -345,6 +347,27 @@ public class WidgetSettings
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_OFFSET,
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGLEVEL,
     };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo() {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return LONG_KEYS;
+            }
+            public String[] floatKeys() {
+                return FLOAT_KEYS;
+            }
+            public String[] boolKeys() {
+                return BOOL_KEYS;
+            }
+        };
+    }
 
     private static Map<String,Class> types = null;
     public static Map<String,Class> getPrefTypes()

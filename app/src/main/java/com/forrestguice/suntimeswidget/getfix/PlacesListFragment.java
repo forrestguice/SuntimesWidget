@@ -54,6 +54,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -73,6 +74,8 @@ import java.util.Locale;
 
 public class PlacesListFragment extends Fragment
 {
+    public static final String KEY_DIALOGTHEME = "dialogtheme";
+
     public static final String KEY_SELECTED_ROWID = "selectedRowID";
     public static final String KEY_FILTER_TEXT = "filterText";
     public static final String KEY_FILTER_EXCEPTIONS = "filterExceptions";
@@ -116,6 +119,19 @@ public class PlacesListFragment extends Fragment
         if (editDialog != null) {
             editDialog.setFragmentListener(onEditPlace);
         }
+    }
+
+    public void setDialogThemOverride(@Nullable Integer resID)
+    {
+        if (resID != null) {
+            getArguments().putInt(KEY_DIALOGTHEME, resID);
+        } else getArguments().remove(KEY_DIALOGTHEME);
+    }
+    @Nullable
+    protected Integer getDialogThemeOverride()
+    {
+        int resID = getArguments().getInt(KEY_DIALOGTHEME, -1);
+        return (resID >= 0 ? resID : null);
     }
 
     @Override
@@ -561,9 +577,18 @@ public class PlacesListFragment extends Fragment
         }
     }
 
+    public static class PlacesEditFragment0 extends PlacesEditFragment
+    {
+        @Nullable
+        protected LocationHelper createLocationHelper() {
+            return new GetFixHelper(getActivity(), getFixUI());
+        }
+    }
+
     protected void addPlace(Context context)
     {
-        PlacesEditFragment dialog = new PlacesEditFragment();
+        PlacesEditFragment0 dialog = new PlacesEditFragment0();
+        dialog.setDialogThemOverride(getDialogThemeOverride());
         dialog.setFragmentListener(onEditPlace);
         dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
     }
@@ -575,7 +600,8 @@ public class PlacesListFragment extends Fragment
             Location location = new Location("", item.location.getLatitude(), item.location.getLongitude(), item.location.getAltitude());
             PlaceItem place = new PlaceItem(-1, location);
 
-            PlacesEditFragment dialog = new PlacesEditFragment();
+            PlacesEditFragment0 dialog = new PlacesEditFragment0();
+            dialog.setDialogThemOverride(getDialogThemeOverride());
             dialog.setFragmentListener(onEditPlace);
             dialog.setPlace(place);
             dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
@@ -594,7 +620,8 @@ public class PlacesListFragment extends Fragment
             Context context = getActivity();
             if (item != null && item.location != null && context != null)
             {
-                PlacesEditFragment dialog = new PlacesEditFragment();
+                PlacesEditFragment0 dialog = new PlacesEditFragment0();
+                dialog.setDialogThemOverride(getDialogThemeOverride());
                 dialog.setFragmentListener(onEditPlace);
                 dialog.setPlace(item);
                 dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
@@ -789,51 +816,6 @@ public class PlacesListFragment extends Fragment
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
 
-    public static class DeletePlaceTask extends AsyncTask<Long, Object, Boolean>
-    {
-        private GetFixDatabaseAdapter database;
-        private Long[] rowIDs = new Long[] { -1L };
-
-        public DeletePlaceTask(Context context) {
-            database = new GetFixDatabaseAdapter(context.getApplicationContext());
-        }
-
-        @Override
-        protected Boolean doInBackground(Long... params)
-        {
-            if (params.length > 0) {
-                rowIDs = params;
-            }
-
-            boolean result = false;
-            database.open();
-            for (long rowID : rowIDs)
-            {
-                if (rowID != -1) {
-                    result = database.removePlace(rowID);
-                }
-            }
-            database.close();
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result)
-        {
-            if (taskListener != null)
-                taskListener.onFinished(result, rowIDs);
-        }
-
-        private TaskListener taskListener = null;
-        public void setTaskListener( TaskListener listener ) {
-            taskListener = listener;
-        }
-        public static abstract class TaskListener
-        {
-            public void onFinished( boolean result, Long... rowIDs ) {}
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1026,13 +1008,10 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void addWorldPlaces(Context context)
-    {
-        BuildPlacesTask task = new BuildPlacesTask(context);
-        task.setTaskListener(buildPlacesListener);
-        task.execute();
+    public void addWorldPlaces(final Context context) {
+        BuildPlacesTask.promptAddWorldPlaces(context, buildPlacesListener);
     }
-    private BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+    private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
     {
         @Override
         public void onStarted()

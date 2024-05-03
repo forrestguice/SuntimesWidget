@@ -1,5 +1,36 @@
 ### ~
 
+### v0.15.14 (2024-04-15)
+* adds translation to Arabic (ar) (contributed by Alelg) (#786).
+* adds to list of world places, and allows adding world places by continent (#785).
+* adds mirror for help urls and website; some locales may point to GitHub hosted resources instead (#629).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#788 by James Liu).
+
+### v0.15.13 (2024-03-19)
+* adds app options to show daylight comparison (today/tomorrow) (#773).
+* increases the maximum before/after alarm offset (#779); fixes localization of display values.
+* fixes app crash when launching the app after using "restore backup" (#783).
+* replaces links to "online help" and improves help presentation; the app's website is now hosted on Codeberg (https://forrestguice.codeberg.page/Suntimes/) (#629).
+* now mirroring git repository to Codeberg (https://codeberg.org/forrestguice/Suntimes) (#629).
+
+### v0.15.12 (2024-03-01)
+* increases the range of supported dates from +-2.5 years to +-500 years (#770).
+* fixes bug where date selector allows selecting unsupported dates (#770), and other miscellaneous UI changes.
+* fixes bug where alarm screen back button overlaps the dismiss button (#777).
+* fixes bug in date widget where the scaled text is not centered (#763).
+* fixes ambiguity in minutes abbreviation; replaces "m" with "min" for all translations that default to metric (#773).
+* updates translation to Russian (ru) (#775 by Adelechka).
+
+### v0.15.11 (2024-02-05)
+* adds "create/restore backup" option; saves all configuration data as json text (#757).
+* adds "export/import widget" option; save/load individual widget configurations.
+* adds support for restoring all widgets from backup (requires launcher implementing `AppWidgetManager.ACTION_APPWIDGET_RESTORED`).
+* adds donation link to the about dialog; adds Liberapay to donation options (#574); https://liberapay.com/forrestguice/
+* fixes bug in date widget where the scaled text is too large (#763).
+* increments `CalculatorProviderContract` version 6 -> 7; adds columns for event position data.
+* updates translation to Polish and Esperanto (eo, pl) (#761, #769 by Verdulo).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#765 by James Liu).
+
 ### v0.15.10 (2024-01-14)
 * adds layouts and resources for very small screens (#727); experimental support for wearables.
 * adds 'columns' setting to moon dialog; 2, 3 or 4 columns.

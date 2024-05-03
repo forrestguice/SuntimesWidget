@@ -27,6 +27,8 @@
     <integer name="anim_alarmitem_timeout0_duration">1750</integer>
     <integer name="anim_alarmitem_timeout1_duration">1000</integer>
 
+    <dimen name="alarmdismiss_margin">16dp</dimen>
+
     <dimen name="alarmcard_corners_controls">8dp</dimen>
     <dimen name="alarmcard_corners_pressed">8dp</dimen>
     <dimen name="alarmcard_corners_enabled">8dp</dimen>

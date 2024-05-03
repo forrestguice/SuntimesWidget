@@ -29,6 +29,7 @@
     <string name="configAction_share">Compartir</string>
     <string name="configAction_export">Exportar</string>
     <string name="configAction_import">Importar</string>
+    <string name="configAction_info">More Info</string>   <!-- TODO -->
     <string name="configAction_sunDialog">Posición del Sol</string>
     <string name="configAction_equinoxDialog">Solsticio / Equinoccio</string>
     <string name="configAction_worldMap">Mapa del mundo</string>
@@ -179,7 +180,7 @@
     <string name="delta_weeks">se</string>    <!-- e.g. 2w -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
-    <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+    <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
     <string name="hence">Dentro de <xliff:g id="timeSpan">%1$s</xliff:g></string>
@@ -561,6 +562,7 @@
     <string name="compareMode_tomorrow">Mañana</string>                       
     <string name="configLabel_general_compareMode">Comparar con:</string>
     <string name="configLabel_general_showComparison">Mostrar comparación</string>
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
 
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
@@ -709,6 +711,9 @@
     <string name="configLabel_themeColorMoonWaning">Color de Luna  menguante</string>
     <string name="configLabel_themeColorMoonFull">Color de Luna llena</string>
     <string name="configLabel_themeColorMoonNew">Color de Luna nueva</string>
+
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Color del alba</string>
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>
@@ -1136,6 +1141,23 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
+    <string name="place_label_AF">Africa</string>    <!-- TODO -->
+    <string name="place_label_AS">Asia</string>    <!-- TODO -->
+    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
+    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
+    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
+    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
+    <string name="place_label_EU">Europe</string>    <!-- TODO -->
+    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
+    <string name="place_label_NA">North America</string>    <!-- TODO -->
+    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
+    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
+    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
+    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
+    <string name="place_label_other">Other</string>    <!-- TODO -->
     
     <string name="configLabel_ui">Interfaz de usuario</string>
     <string name="configLabel_ui_fields">Mostrar</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
@@ -1342,6 +1364,7 @@
         <item>Holandés</item>
         <item>Czech</item>  <!-- TODO -->
         <item>Simplified Chinese</item> <!-- TODO -->
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>
 
     
@@ -1693,11 +1716,11 @@
     <string name="app_shortdesc">Muestra las horas del amanecer, noche, luz crepuscular y lunar.</string>
     <string name="app_support_url"><![CDATA[
     <b>Soporte:</b> visita el
-    <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguimiento de incidencias</a> para enviar una petición.
+    <a href="%1$s">seguimiento de incidencias</a> para enviar una petición.
 ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+        <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
     <string name="app_legal1"><![CDATA[
     <b>Código fuente:</b> <br />

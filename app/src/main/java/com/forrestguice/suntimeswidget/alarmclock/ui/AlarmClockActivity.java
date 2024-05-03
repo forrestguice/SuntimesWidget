@@ -271,8 +271,14 @@ public class AlarmClockActivity extends AppCompatActivity
                 {
                     if (data != null)
                     {
-                        long alarmID = ContentUris.parseId(data);
-                        list.reloadAdapter((alarmID != -1 ? alarmID : null));
+                        Long alarmID;
+                        try {
+                            alarmID = ContentUris.parseId(data);
+                        } catch (NumberFormatException e) {
+                            alarmID = null;
+                            Log.e(TAG, "updateReceiver.onReceive: invalid data! " + e);
+                        }
+                        list.reloadAdapter((alarmID != null && alarmID != -1 ? alarmID : null));
                         Log.d("DEBUG", "adapter reloaded: " + alarmID);
 
                     } else Log.e(TAG, "updateReceiver.onReceive: null data!");
@@ -327,16 +333,26 @@ public class AlarmClockActivity extends AppCompatActivity
                 handleIntent_snoozeAlarm(intent);
 
             } else if (param_action.equals(AlarmNotifications.ACTION_DELETE)) {
-                if (param_data != null) {
-                    list.notifyAlarmDeleted(ContentUris.parseId(param_data));
+                if (param_data != null)
+                {
+                    try {
+                        list.notifyAlarmDeleted(ContentUris.parseId(param_data));
+                    } catch (NumberFormatException e) {
+                        Log.e(TAG, "handleIntent: invalid data! " + e);
+                    }
                 } else {
                     list.notifyAlarmsCleared();
                     selectItem = false;
                 }
             }
         } else {
-            if (param_data != null) {
-                list.notifyAlarmUpdated(ContentUris.parseId(param_data));
+            if (param_data != null)
+            {
+                try {
+                    list.notifyAlarmUpdated(ContentUris.parseId(param_data));
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "handleIntent: invalid data! " + e);
+                }
             }
         }
 
@@ -401,7 +417,14 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void handleIntent_dismissAlarms(Intent intent, Uri param_data)
     {
-        Long alarmID = (param_data != null) ? ContentUris.parseId(param_data) : null;
+        Long alarmID;
+        try {
+            alarmID = (param_data != null) ? ContentUris.parseId(param_data) : null;
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "handleIntent: invalid data! " + e);
+            alarmID = null;
+        }
+
         if (alarmID != null) {
             Log.i(TAG, "ACTION_DISMISS_ALARM: " + param_data);
             sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmID)));

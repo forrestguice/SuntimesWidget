@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.NumberPicker;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 @TargetApi(11)
 public class AlarmOffsetDialog extends DialogFragment
@@ -123,6 +124,7 @@ public class AlarmOffsetDialog extends DialogFragment
             }
         });
 
+        initLocale(myParent);
         initViews(myParent, dialogContent);
         if (savedInstanceState != null) {
             loadSettings(savedInstanceState);
@@ -142,13 +144,37 @@ public class AlarmOffsetDialog extends DialogFragment
     private NumberPicker pickerOffsetMinutes, pickerOffsetHours, pickerOffsetDays;
 
     private static String[] minuteStrings = new String[] {"  ", "1m", "5m", "10m", "15m", "20m", "25m", "30m", "35m", "40m", "45m", "50m", "55m"};
-    private static int[] minuteValues = new int[] {0, 1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55};
+    private static final int[] minuteValues = new int[] {0, 1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55};
 
-    private static String[] hourStrings = new String[] {"  ", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h", "12h"};
-    private static int[] hourValues = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    private static String[] hourStrings = new String[] {"  ", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h", "18h", "19h", "20h", "21h", "22h"};
+    private static final int[] hourValues = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22};
 
     private static String[] dayStrings = new String[] {"  ", "1d", "2d", "3d", "4d", "5d", "6d", "7d", "8d", "9d", "10d", "11d", "12d", "13d", "14d", "15d", "16d", "17d", "18d", "19d"};
-    private static int[] dayValues = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
+    private static final int[] dayValues = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
+
+    protected void initLocale(Context context)
+    {
+        SuntimesUtils.initDisplayStrings(context);
+        SuntimesUtils utils = new SuntimesUtils();
+
+        minuteStrings = new String[minuteValues.length];
+        minuteStrings[0] = " ";
+        for (int i=1; i<minuteValues.length; i++) {
+            minuteStrings[i] = utils.timeDeltaLongDisplayString(minuteValues[i] * 1000 * 60);
+        }
+
+        hourStrings = new String[hourValues.length];
+        hourStrings[0] = " ";
+        for (int i=1; i<hourValues.length; i++) {
+            hourStrings[i] = utils.timeDeltaLongDisplayString(hourValues[i] * 1000 * 60 * 60);
+        }
+
+        dayStrings = new String[dayValues.length];
+        dayStrings[0] = " ";
+        for (int i=1; i<dayValues.length; i++) {
+            dayStrings[i] = utils.timeDeltaLongDisplayString(dayValues[i] * 1000 * 60 * 60 * 24);
+        }
+    }
 
     protected void initViews( final Context context, View dialogContent )
     {

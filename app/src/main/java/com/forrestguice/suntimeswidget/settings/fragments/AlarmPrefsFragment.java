@@ -487,7 +487,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                             @Override
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                String url = context.getString(R.string.help_battery_optimization_url);
+                                String url = context.getString(R.string.help_url) + context.getString(R.string.help_battery_optimization_path);
                                 /*if (isAggressive) {
                                     url += "-" + Build.MANUFACTURER;
                                 }*/

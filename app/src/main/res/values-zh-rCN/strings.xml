@@ -26,6 +26,7 @@
     <string name="configAction_share">分享</string>
     <string name="configAction_export">导出</string>
     <string name="configAction_import">导入</string>
+    <string name="configAction_info">更多信息</string>
     <string name="configAction_sunDialog">太阳位置</string>
     <string name="configAction_equinoxDialog">至点/分点</string>
     <string name="configAction_worldMap">世界地图</string>
@@ -578,6 +579,7 @@
     <string name="compareMode_tomorrow">明天</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">对比:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">显示对比</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">将今天的日照量与今天或明天进行比较。</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">近期事件</string>                   <!-- setting -->
@@ -725,6 +727,9 @@
     <string name="configLabel_themeColorMoonWaning">亏凸月颜色</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">满月颜色</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">新月颜色</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">完整（文本）</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">新（文本）</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">日出颜色</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1151,6 +1156,24 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">南极洲</string>
+    <string name="place_label_AF">非洲</string>
+    <string name="place_label_AS">亚洲</string>
+    <string name="place_label_AS_CN">亚洲（中国）</string>
+    <string name="place_label_AS_IN">亚洲（印度）</string>
+    <string name="place_label_AS_JP">亚洲（日本）</string>
+    <string name="place_label_AS_SA">亚洲（沙特阿拉伯）</string>
+    <string name="place_label_AS_VN">亚洲（越南）</string>
+    <string name="place_label_EU">欧洲</string>
+    <string name="place_label_EU_ES">欧洲（西班牙）</string>
+    <string name="place_label_EU_UK">欧洲（英国）</string>
+    <string name="place_label_NA">北美洲</string>
+    <string name="place_label_NA_CA">北美洲（加拿大）</string>
+    <string name="place_label_NA_US">北美洲（美国）</string>
+    <string name="place_label_OC">大洋洲</string>
+    <string name="place_label_SA">南美洲和中美洲</string>
+    <string name="place_label_other">其他</string>
+
     <!-- App Setting: UI -->
     <string name="configLabel_ui">用户界面</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">显示</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
@@ -1366,6 +1389,7 @@
         <item>荷兰语</item>
         <item>捷克语</item>
         <item>简体中文</item>
+        <item>阿拉伯语</item>
     </string-array>
 
     <!-- position formats -->
@@ -1717,15 +1741,12 @@
     <string name="app_shortdesc">展示太阳和月亮的时间。</string>
     <string name="app_support_url"><![CDATA[
         <b>支持:</b> 访问
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">问题追踪器</a> 提交一个请求。
+        <a href="%1$s">问题追踪器</a> 提交一个请求。
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s 免费使用，如果您认为它有价值，请
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">随意付费</a>。
+        <a href="%2$s">随意付费</a>。
     ]]></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
-    ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>源代码:</b><br />
         Copyright &#169 2014-2024 Forrest Guice <br />

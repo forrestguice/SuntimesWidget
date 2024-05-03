@@ -26,6 +26,7 @@
     <string name="configAction_share">Udostępnij</string>
     <string name="configAction_export">Eksportuj</string>
     <string name="configAction_import">Importuj</string>
+    <string name="configAction_info">More Info</string>   <!-- TODO -->
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
     <string name="configAction_worldMap">Mapa świata</string>
@@ -570,6 +571,7 @@
     <string name="compareMode_tomorrow">Jutro</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Porównaj z:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Pokaż porównanie</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">poprzednie</string>                   <!-- setting -->
@@ -717,6 +719,9 @@
     <string name="configLabel_themeColorMoonWaning">Kolor malejącego</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Kolor pełni</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Kolor nowiu</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1092,53 +1097,53 @@
     <string name="configLabel_widgetListHelp_summary">Pokaż pomoc dot. widżetów</string>
     <string name="configLabel_widgetList_emptyMsg">Brak widżetów</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
-    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
-    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
-    <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
-    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
+    <string name="configAction_createBackup">Utwórz kopię zapasową</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="configAction_restoreBackup">Przywróć z kopii zapasowej</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarmy</string>
+    <string name="restorebackup_dialog_item_appsettings">Ustawienia aplikacji</string>
+    <string name="restorebackup_dialog_item_widgetsettings">Ustawienia widżetów</string>
+    <string name="restorebackup_dialog_item_widgetthemes">Skórki widżetów</string>
+    <string name="restorebackup_dialog_item_placeitems">Miejsca</string>
+    <string name="restorebackup_dialog_item_eventitems">Wydarzenia</string>
+    <string name="restorebackup_dialog_item_actions">Akcje</string>
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
     <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
     <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
-    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
-    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="exportwidget_dialog_title">Eksport ustawień</string>
+    <string name="exportwidget_dialog_message">Eksportowanie ustawień widżetów do pliku.</string>
+    <string name="importwidget_dialog_title">Import ustawień</string>
+    <string name="importwidget_dialog_message">Importowanie ustawień widżetów z pliku.</string>
+    <string name="importwidget_dialog_title1">Znaleziono ustawienia,\nale z innych widżetów…</string>
+    <string name="importwidget_dialog_title2">Znaleziono wiele ustawień…</string>
     <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_unknown">(nieznany)</string>   <!-- shown as item when type cannot be determined -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Przywróć z kopii</b>. Zaimportowane ustawienia zostaną teraz zapisane i przywrócone później – kiedy poprosi o nie program uruchomieniowy.<br/>]]></string>
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Próbuj zgadnąć</b>. Zaimportowane ustawienia zostaną zastosowane do istniejących widżetów według rodzajów.<br/>]]></string>
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Bezpośredni import</b>. Zaimportowane ustawienia zostaną zastosowane bezpośrednio. Zadziała to tylko dla widżetów o niezmienionych identyfikatorach.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
 
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Wyczyść</b>. Istniejące alarmy zostaną usunięte przed zaimportowaniem alarmów z kopii zapasowej.<br/>]]></string>
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Zachowaj istniejące</b>. Istniejące alarmy zostaną zachowane (może dać duplikaty).<br/>]]></string>
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Wyczyść</b>. Istniejące miejsca zostaną usunięte przed zaimportowaniem miejsc z kopii zapasowej.<br/>]]></string>
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Zachowaj istniejące</b>. Istniejące miejsca zostaną zachowane (może dać duplikaty).<br/>]]></string>
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignoruj istniejące</b>. Tylko nieistniejące miejsca zostaną dodane (ignorowanie istniejących).<br/>]]></string>
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Nadpisz istniejące</b>. Tylko istniejące miejsca zostaną zaktualizowane.<br/>]]></string>
 
     <plurals name="itemsPlural">
-        <item quantity="one">%d item</item>
-        <item quantity="other">%d items</item>
-        <item quantity="few">%d items</item>
-        <item quantity="many">%d items</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d obiekt</item>
+        <item quantity="other">%d obiektów</item>
+        <item quantity="few">%d obiekty</item>
+        <item quantity="many">%d obiektów</item>
+    </plurals>
     <plurals name="widgetPlural">
-        <item quantity="one">%d widget</item>
-        <item quantity="other">%d widgets</item>
-        <item quantity="few">%d widgets</item>
-        <item quantity="many">%d widgets</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d widżet</item>
+        <item quantity="other">%d widżetów</item>
+        <item quantity="few">%d widżety</item>
+        <item quantity="many">%d widżetów</item>
+    </plurals>
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Miejsca</string>                           <!-- group title -->
@@ -1163,6 +1168,24 @@
     <string name="configAction_clearPlaces">Czyść</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+
+    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
+    <string name="place_label_AF">Africa</string>    <!-- TODO -->
+    <string name="place_label_AS">Asia</string>    <!-- TODO -->
+    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
+    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
+    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
+    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
+    <string name="place_label_EU">Europe</string>    <!-- TODO -->
+    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
+    <string name="place_label_NA">North America</string>    <!-- TODO -->
+    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
+    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
+    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
+    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
+    <string name="place_label_other">Other</string>    <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
@@ -1238,7 +1261,7 @@
     <string name="appThemes_darkTheme">Ciemny motyw</string>
     <string name="appThemes_nightMode">Jasny / Ciemny (w nocy)</string>
     <string name="appThemes_systemDefault">Domyślny systemowy</string>
-    <string name="appThemes_systemDefault1">kontrastowy (domyślny systemowy)</string>
+    <string name="appThemes_systemDefault1">Kontrastowy (domyślny systemowy)</string>
     <string name="appThemes_darkTheme1">Kontrastowy (ciemny)</string>
     <string name="appThemes_lightTheme1">Kontrastowy (jasny)</string>
 
@@ -1358,6 +1381,7 @@
         <item>Holenderski</item>
         <item>Czeski</item>
         <item>Chiński uproszczony</item>
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1674,7 +1698,7 @@
     <string name="msg_import_success">Zaimportowano <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Nie udało się zaimportować z <xliff:g id="filepath">%s</xliff:g>!</string>
     <string name="msg_import_noresults">Pominięto importowanie; nie znaleziono nowych skórek.</string>
-    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
+    <string name="msg_import_label_file">pliku</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">
         <item quantity="one">%d skórkę</item>
@@ -1712,11 +1736,11 @@
     <string name="app_name_moonwidget0">Czasy Słońca: Księżyc</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
-    <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
+    <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="%1$s">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="app_donate_url"><![CDATA[
-        %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
-    ]]></string>    <!-- TODO -->
+        Aplikacja %s jest udostępniana bezpłatnie, ale jeżeli jest ona dla Ciebie użyteczna, prosimy
+        <a href="%2$s">rozważyć wpłatę dowolnej kwoty</a>.
+    ]]></string>
     <string name="app_license_about">Aplikacja Czasy Słońca jest wolnym i otwartoźródłowym oprogramowaniem.</string>   <!-- displayed by welcome dialog -->-->
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2024 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
 

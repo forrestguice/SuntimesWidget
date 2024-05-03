@@ -1014,7 +1014,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_worldmap_background_url))));
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_url) + context.getString(R.string.help_worldmap_background_path))));
                         }
                     })
                     .setNegativeButton(context.getString(R.string.dialog_cancel), null);
