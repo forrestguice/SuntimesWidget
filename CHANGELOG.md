@@ -1,5 +1,93 @@
 ### ~
 
+### v0.15.14 (2024-04-15)
+* adds translation to Arabic (ar) (contributed by Alelg) (#786).
+* adds to list of world places, and allows adding world places by continent (#785).
+* adds mirror for help urls and website; some locales may point to GitHub hosted resources instead (#629).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#788 by James Liu).
+
+### v0.15.13 (2024-03-19)
+* adds app options to show daylight comparison (today/tomorrow) (#773).
+* increases the maximum before/after alarm offset (#779); fixes localization of display values.
+* fixes app crash when launching the app after using "restore backup" (#783).
+* replaces links to "online help" and improves help presentation; the app's website is now hosted on Codeberg (https://forrestguice.codeberg.page/Suntimes/) (#629).
+* now mirroring git repository to Codeberg (https://codeberg.org/forrestguice/Suntimes) (#629).
+
+### v0.15.12 (2024-03-01)
+* increases the range of supported dates from +-2.5 years to +-500 years (#770).
+* fixes bug where date selector allows selecting unsupported dates (#770), and other miscellaneous UI changes.
+* fixes bug where alarm screen back button overlaps the dismiss button (#777).
+* fixes bug in date widget where the scaled text is not centered (#763).
+* fixes ambiguity in minutes abbreviation; replaces "m" with "min" for all translations that default to metric (#773).
+* updates translation to Russian (ru) (#775 by Adelechka).
+
+### v0.15.11 (2024-02-05)
+* adds "create/restore backup" option; saves all configuration data as json text (#757).
+* adds "export/import widget" option; save/load individual widget configurations.
+* adds support for restoring all widgets from backup (requires launcher implementing `AppWidgetManager.ACTION_APPWIDGET_RESTORED`).
+* adds donation link to the about dialog; adds Liberapay to donation options (#574); https://liberapay.com/forrestguice/
+* fixes bug in date widget where the scaled text is too large (#763).
+* increments `CalculatorProviderContract` version 6 -> 7; adds columns for event position data.
+* updates translation to Polish and Esperanto (eo, pl) (#761, #769 by Verdulo).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#765 by James Liu).
+
+### v0.15.10 (2024-01-14)
+* adds layouts and resources for very small screens (#727); experimental support for wearables.
+* adds 'columns' setting to moon dialog; 2, 3 or 4 columns.
+* fixes app crash when tapping on the date field (#751).
+* fixes bug "can't interact with app after install (flashes/strobes)" (#760).
+* fixes bug "custom date format is not saved"; adds calendar format pattern "EE, MMM d" (#759).
+* fixes bug where the solstice widget displays "cross-quarter days" when disabled by the app (#755).
+* fixes bug where moon dialog content is clipped (#754).
+* increments `CalculatorProviderContract` version 5 -> 6; fixes columns for "cross-quarter days".
+* changes "header labels" default to "none" for translations with longer strings (de, fr, hu, nb, nl, pt_BR) (#754).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#752 by James Liu).
+
+### v0.15.9 (2023-12-03)
+* adds a `back` button to the alarm dismiss activity (#750).
+* fixes navigation bugs when using D-pad (Android TV).
+* fixes app crash after changing `data source` (#743).
+* fixes bug where toolbar fails to apply text size setting.
+* fixes bug where alarm dismiss challenge is shown after alarm has timed-out.
+* fixes default colors to improve contrast and readability (#744).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#745 by James Liu).
+
+### v0.15.8 (2023-10-24)
+* adds a warning when the app is configured to "current location" but location permissions are denied (#733).
+* changes the location label when switching away from "current location" mode (#733).
+* fixes bug in "current location" mode; the location automatically refreshes when the activity is resumed (#733).
+* fixes bug where the time zone selector shows the wrong system time zone (#733).
+* fixes bug where the alarm event icon and text are out of alignment.
+* refactors alarm adapter click listeners (bind rowID instead of position).
+* updates translation to Hungarian (hu) (#736 by titanicbobo).
+
+### v0.15.7 (2023-09-10)
+* adds a warning to SuntimesAlarms when the "Autostart" setting is disabled (Xiomi devices only) (#730).
+* fixes bug "time refreshes aren't happening properly" (#705).
+* fixes bug where the update loop continues running in the background after the activity is no longer visible.
+* fixes bugs where rapidly clicking triggers actions more than once (throttled click listeners).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#728 by James Liu).
+
+### v0.15.6 (2023-07-21)
+* improves time zone defaults (localized default values).
+* improves time zone recommendations; fixes recommendation when place names contain spaces or special characters.
+* adds "recommend time zone" action to time zone dialog.
+* fixes time zone list to show the correct display name and offset when day light saving is applied.
+* fixes app crash when addons attempt to open settings with an invalid fragment.
+* changes labels for cross-quarter days (#719); Imbolc, Beltane, Lughnasadh, Samhain.
+* changes snooze notification so that it no longer triggers fullscreen intent (#724).
+* updates translation to Polish and Esperanto (eo, pl) (#722 by Verdulo).
+* updates translation to Brazilian Portuguese (pt-br) (#721 by naoliv).
+
+### v0.15.5 (2023-07-01)
+* adds Hijri calendar to the date widget (#714).
+* fixes bug where alarms using Apparent Solar Time drift over time (#715).
+* fixes bug where app dialogs display Apparent Solar Time with reduced accuracy.
+* fixes bug where actions fail to apply all available %substitutions.
+* fixes bug where actions fail to apply the correct `extra type` to %substitutions.
+* increases max snooze from 59 to 120 minutes; increases max "auto dismiss" from 59 to 300 seconds.
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#716 by James Liu).
+
 ### v0.15.4 (2023-06-03)
 * adds support for Android TV.
 * adds "current location" mode to widgets (#707); widgets use the "last known" location from any provider.

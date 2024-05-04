@@ -22,7 +22,7 @@
 
 	<android.support.constraint.ConstraintLayout
 		android:layout_width="match_parent" android:layout_height="match_parent"
-		android:orientation="vertical" android:padding="16dp" android:animateLayoutChanges="true">
+		android:orientation="vertical" android:animateLayoutChanges="true">
 
 		<TextView
 			style="@style/TextAppearance.AppCompat.Large" android:textSize="?attr/text_size_huge"
@@ -32,6 +32,7 @@
 			app:layout_constraintVertical_chainStyle="spread"
 			app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
+			android:layout_marginTop="@dimen/alarmdismiss_margin" android:layout_marginStart="@dimen/alarmdismiss_margin" android:layout_marginEnd="@dimen/alarmdismiss_margin"
 			tools:text="Alarm" />
 
 		<LinearLayout android:id="@+id/layout_alarm_label2"
@@ -46,6 +47,7 @@
 				style="@style/TextAppearance.AppCompat.Small"
 				android:id="@+id/txt_alarm_offset" android:textSize="?attr/text_size_small"
 				android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/alarmdismiss_margin" android:layout_marginEnd="@dimen/alarmdismiss_margin"
 				android:gravity="bottom|center_horizontal" tools:text="30m before" />
 
 			<TextView
@@ -58,6 +60,7 @@
 				style="@style/TextAppearance.AppCompat.Medium"
 				android:id="@+id/txt_alarm_label2"
 				android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/alarmdismiss_margin" android:layout_marginEnd="@dimen/alarmdismiss_margin"
 				android:gravity="top|center_horizontal"
 				tools:text="Sunrise" />
 
@@ -103,6 +106,7 @@
 			<TextView android:id="@+id/txt_alarm_note"
 				style="@style/TextAppearance.AppCompat.Small" android:textSize="?attr/text_size_large"
 				android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
 				android:gravity="bottom|center_horizontal" tools:text="a note that might be more\nthan one line long\neven several\nlines" />
 
 		</LinearLayout>
@@ -110,6 +114,7 @@
 		<TextView android:id="@+id/txt_clock_time"
 			style="@style/SunsetTimeTextView" android:textSize="?attr/text_size_enormous" android:textStyle="bold"
 			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/alarmdismiss_margin" android:layout_marginEnd="@dimen/alarmdismiss_margin"
 			android:gravity="center"
 			app:layout_constraintVertical_bias="0.65"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +132,7 @@
 
 			app:layout_constraintEnd_toStartOf="@+id/btn_dismiss"
 			app:layout_constraintHorizontal_chainStyle="spread"
-			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/layout_back"
 			app:layout_constraintTop_toTopOf="@+id/btn_dismiss"
 			app:layout_constraintBottom_toBottomOf="@+id/btn_dismiss" />
 
@@ -144,13 +149,30 @@
 
 		<TextView android:id="@+id/txt_snooze" android:visibility="visible"
 			style="@style/TextAppearance.AppCompat.Small"
-			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:layout_width="0dp" android:layout_height="wrap_content"
 			android:gravity="center"
-
-			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/layout_back" android:layout_marginBottom="@dimen/alarmdismiss_margin"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
 			tools:text="Snoozing for 10m" />
+
+		<FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_gravity="bottom|start"
+			app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+			android:animateLayoutChanges="true"
+			android:id="@+id/layout_back">
+
+			<android.support.design.widget.FloatingActionButton
+				android:id="@+id/btn_back" android:visibility="visible"
+				android:layout_width="match_parent" android:layout_height="match_parent"
+				android:layout_gravity="bottom|start" android:layout_margin="8dp"
+				android:src="?attr/icActionBack" android:scaleType="center"
+				android:contentDescription="@android:string/cancel"
+				app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
+				app:fabSize="normal" app:useCompatPadding="true"
+				app:layout_dodgeInsetEdges="bottom" />
+
+		</FrameLayout>
 
 	</android.support.constraint.ConstraintLayout>
 

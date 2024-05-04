@@ -69,6 +69,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -712,7 +713,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             c++;
         }
 
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -721,7 +722,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 onDismissChallengeResult(itemID);
                 return true;
             }
-        });
+        }));
 
         SuntimesUtils.forceActionBarIcons(popup.getMenu());
         popup.show();
@@ -746,7 +747,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.alarmsound, popup.getMenu());
 
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -767,7 +768,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 }
                 return false;
             }
-        });
+        }));
         SuntimesUtils.forceActionBarIcons(popup.getMenu());
         popup.show();
     }
@@ -963,7 +964,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         AlarmLabelDialog dialog = new AlarmLabelDialog();
         dialog.setDialogTitle(getString(R.string.alarmnote_dialog_title));
         dialog.setMultiLine(true);
-        dialog.setShowHelp(true, SuntimesUtils.fromHtml(getString(R.string.help_appearance_title)), getString(R.string.help_substitutions_url), HELPTAG_SUBSTITUTIONS);
+        dialog.setShowHelp(true, SuntimesUtils.fromHtml(getString(R.string.help_appearance_title)), getString(R.string.help_url) + getString(R.string.help_substitutions_path), HELPTAG_SUBSTITUTIONS);
         dialog.setAccentColor(colorAlarmEnabled);
         dialog.setLabel(item.note);
         dialog.setOnAcceptedListener(onNoteChanged);

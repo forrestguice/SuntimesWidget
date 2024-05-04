@@ -5,6 +5,7 @@
     <string name="default_location_latitude">40.4378</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-3.8196</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">681</string>         <!-- meters -->
+    <string name="default_timezone">Europe/Madrid</string>         <!-- tzid -->
 
     <!-- Note: This file contains the es-ES translation -->
 
@@ -28,6 +29,7 @@
     <string name="configAction_share">Compartir</string>
     <string name="configAction_export">Exportar</string>
     <string name="configAction_import">Importar</string>
+    <string name="configAction_info">More Info</string>   <!-- TODO -->
     <string name="configAction_sunDialog">Posición del Sol</string>
     <string name="configAction_equinoxDialog">Solsticio / Equinoccio</string>
     <string name="configAction_worldMap">Mapa del mundo</string>
@@ -38,6 +40,7 @@
     <string name="configAction_moon">Luna</string>
     <string name="configAction_help">Ayuda</string>
     <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">Más</string>
     <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Configuración</string>
@@ -177,7 +180,7 @@
     <string name="delta_weeks">se</string>    <!-- e.g. 2w -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
-    <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+    <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
     <string name="hence">Dentro de <xliff:g id="timeSpan">%1$s</xliff:g></string>
@@ -354,14 +357,14 @@
     <string name="timeMode_solstice_winter">Solsticio de invierno</string>    
     <string name="timeMode_solstice_winter_short">Solsticio</string>
 
-    <string name="timeMode_cross_spring">Spring Cross-Quarter</string>      <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_spring_short">Cross-Quarter</string>       <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal">Autumn Cross-Quarter</string>  <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer">Summer Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter">Winter Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midwinter">Imbolc (Cross-Quarter)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   <!-- TODO -->
+    <string name="timeMode_cross_midwinter_short">Cross-Quarter</string>       <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer">Lughnasadh (Cross-Quarter)</string>  <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midspring">Beltane (Cross-Quarter)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->   <!-- TODO -->
+    <string name="timeMode_cross_midspring_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal">Samhain (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="timeMode_moon">Luna</string>                     
     <string name="timeMode_moon_new">Luna nueva</string>               
@@ -481,7 +484,9 @@
 
     
     <string name="locationMode_current">Actual (última conocida)</string>  
-    <string name="locationMode_custom">Definida por usuario</string>           
+    <string name="locationMode_custom">Definida por usuario</string>
+
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
 
     <string name="configLabel_location">Opciones de ubicación</string>               <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Modo:</string>                      
@@ -557,6 +562,7 @@
     <string name="compareMode_tomorrow">Mañana</string>                       
     <string name="configLabel_general_compareMode">Comparar con:</string>
     <string name="configLabel_general_showComparison">Mostrar comparación</string>
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
 
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
@@ -642,6 +648,12 @@
     <string name="configAction_shareTheme">@string/configAction_share</string>
     <string name="configAction_importThemes">@string/configAction_import</string>
 
+    <string name="widgetThemes_dark">Oscuro</string>                                <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_dark_transparent">Oscuro (transparente)</string>      <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_dark_translucent">Oscuro (translúcido)</string>      <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_light">Claro</string>                              <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_light_transparent">Claro (transparente)</string>    <!-- default widget theme name --> <!-- TODO: review -->
+
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copia)</string>
@@ -699,6 +711,9 @@
     <string name="configLabel_themeColorMoonWaning">Color de Luna  menguante</string>
     <string name="configLabel_themeColorMoonFull">Color de Luna llena</string>
     <string name="configLabel_themeColorMoonNew">Color de Luna nueva</string>
+
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Color del alba</string>
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>
@@ -960,6 +975,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Notificaciones</string>
     <string name="configLabel_alarms_notifications_on">Activadas</string>
     <string name="configLabel_alarms_notifications_off">Apagadas. Las alarmas pueden no mostrarse correctamente.</string>
@@ -1053,9 +1074,52 @@
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Ayuda</string>
     <string name="configLabel_widgetListHelp_summary">Mostrar ayuda del widget</string>
-    <string name="configLabel_widgetList_emptyMsg">Sin widgets</string>          <!-- a label that is displayed in place of an empty listview -->  
+    <string name="configLabel_widgetList_emptyMsg">Sin widgets</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    
+    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
+    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
+    <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
+    <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
+    <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
+
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
+    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
+    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+
+    <plurals name="itemsPlural">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>  <!-- TODO -->
+    <plurals name="widgetPlural">
+        <item quantity="one">%d widget</item>
+        <item quantity="other">%d widgets</item>
+    </plurals>  <!-- TODO -->
+
     <string name="configLabel_places">Lugares</string>
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_build">Añadir sitios del mundo</string>
@@ -1077,6 +1141,23 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
+    <string name="place_label_AF">Africa</string>    <!-- TODO -->
+    <string name="place_label_AS">Asia</string>    <!-- TODO -->
+    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
+    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
+    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
+    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
+    <string name="place_label_EU">Europe</string>    <!-- TODO -->
+    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
+    <string name="place_label_NA">North America</string>    <!-- TODO -->
+    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
+    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
+    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
+    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
+    <string name="place_label_other">Other</string>    <!-- TODO -->
     
     <string name="configLabel_ui">Interfaz de usuario</string>
     <string name="configLabel_ui_fields">Mostrar</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
@@ -1097,11 +1178,13 @@
 
     
     <string name="configLabel_ui_showmoon">Mostrar la Luna</string>
-    <string name="configLabel_ui_showmoon_summary">Muestra los momentos de salida y puesta, fase e iluminación.</string>
+    <string name="configLabel_ui_showmoon_summary">Muestra los momentos de salida y puesta, fase e iluminación.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
 
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
     <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
 
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
@@ -1142,8 +1225,8 @@
     <string name="appThemes_nightMode">Tema claro/Tema oscuro (modo&#160;noche)</string>
     <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
     <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
-    <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
-    <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
+    <string name="appThemes_darkTheme1">Contrast (Oscuro)</string>   <!-- TODO -->
+    <string name="appThemes_lightTheme1">Contrast (Claro)</string>   <!-- TODO -->
     
     <string-array name="timeFormatMode_display">                      
         <item>@string/timeFormatMode_system</item>
@@ -1281,6 +1364,7 @@
         <item>Holandés</item>
         <item>Czech</item>  <!-- TODO -->
         <item>Simplified Chinese</item> <!-- TODO -->
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>
 
     
@@ -1435,10 +1519,10 @@
         <item>Solsticio de invierno</item>
         <item>Mediodía lunar</item>    
         <item>Medianoche lunar</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">      <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>Amanecer astronómico</item>
@@ -1468,10 +1552,10 @@
         <item>Solsticio de invierno</item>
         <item>Mediodía lunar</item>    
         <item>Medianoche lunar</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">      <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>Amanecer astronómico</item>
@@ -1501,10 +1585,10 @@
         <item>Solsticio de invierno</item>
         <item>Mediodía lunar</item>
         <item>Medianoche lunar</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>    <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
@@ -1514,6 +1598,7 @@
 
     
     <string name="gps_lastfix_title_set">Configurar posición</string>
+    <string name="gps_lastfix_title_cached">Última posición</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Última posición</string>
     <string name="gps_lastfix_title_searching">Obteniendo posición</string>
     <string name="gps_lastfix_toast_notfound">El GPS no pudo obtener posición; utilizando la última posición conocida.</string>  <!-- TODO: removed "GPS" -->
@@ -1593,7 +1678,8 @@
 
     <string name="msg_import_success">Importado <xliff:g id="themePlural">%s</xliff:g>.</string>  
     <string name="msg_import_failure">¡La importación desde <xliff:g id="filepath">%s</xliff:g> falló!</string>  
-    <string name="msg_import_noresults">La importación no se ha realizado; no se encontraron temas nuevos.</string>  
+    <string name="msg_import_noresults">La importación no se ha realizado; no se encontraron temas nuevos.</string>
+    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">
         <item quantity="one">%d tema</item>
@@ -1630,11 +1716,15 @@
     <string name="app_shortdesc">Muestra las horas del amanecer, noche, luz crepuscular y lunar.</string>
     <string name="app_support_url"><![CDATA[
     <b>Soporte:</b> visita el
-    <a href="https://github.com/forrestguice/SuntimesWidget/issues">seguimiento de incidencias</a> para enviar una petición.
+    <a href="%1$s">seguimiento de incidencias</a> para enviar una petición.
 ]]></string>
+    <string name="app_donate_url"><![CDATA[
+        %s is available gratis, but if it has proven its value, please
+        <a href="%2$s">pay as you like</a>.
+    ]]></string>    <!-- TODO -->
     <string name="app_legal1"><![CDATA[
     <b>Código fuente:</b> <br />
-    Copyright &#169 2014-2023 Forrest Guice <br />
+    Copyright &#169 2014-2024 Forrest Guice <br />
     Código fuente disponible bajo GPLv3.
 ]]></string>
 

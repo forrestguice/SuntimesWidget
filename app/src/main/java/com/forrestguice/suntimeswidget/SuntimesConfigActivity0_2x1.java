@@ -37,6 +37,11 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
     }
 
     @Override
+    protected Class getWidgetClass() {
+        return SuntimesWidget0_2x1.class;
+    }
+
+    @Override
     protected void initViews( Context context )
     {
         super.initViews(context);
@@ -49,7 +54,7 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
     @Override
     protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        Intent updateIntent = new Intent(context, SuntimesWidget0_2x1.class);
+        Intent updateIntent = new Intent(context, getWidgetClass());
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(updateIntent);

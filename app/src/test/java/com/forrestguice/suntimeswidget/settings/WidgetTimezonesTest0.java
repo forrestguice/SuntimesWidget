@@ -52,6 +52,7 @@ import static junit.framework.Assert.assertTrue;
  * non-instrumented tests moved from androidTest/settings/WidgetTimezonesTest
  */
 @SuppressWarnings("ConstantConditions")
+@Category(UnlistedTest.class)
 public class WidgetTimezonesTest0
 {
     public static Location TEST_LOCATION = new Location("test","35", "-112");

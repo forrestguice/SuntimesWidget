@@ -5,49 +5,43 @@
     android:background="?attr/dialogBackground"
     android:paddingBottom="48dp">
 
-    <FrameLayout android:id="@+id/icon_layout"
-        android:layout_width="0dp" android:layout_height="0dp"
-        android:gravity="center" android:orientation="vertical" android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/text_layout"
-        app:layout_constraintVertical_chainStyle="spread"
-        app:layout_constraintVertical_weight="1">
-
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="128dp" android:layout_height="128dp" android:layout_margin="8dp"
-            android:scaleType="fitCenter" android:layout_gravity="center"
-            android:src="@drawable/ic_action_suntimes_huge"
-            tools:ignore="ContentDescription" />
-
-        <Button android:id="@+id/button_about"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:text="@string/configAction_aboutWidget" android:layout_margin="8dp"
-            android:layout_gravity="start|bottom"
-            android:onClick="showAbout" />
-
-    </FrameLayout>
-
     <ScrollView android:id="@+id/text_layout"
         android:layout_width="0dp" android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/welcomeActivity_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon_layout"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="2">
 
         <LinearLayout android:orientation="vertical"
             android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-            <TextView android:visibility="gone"
-                android:id="@+id/link0" android:textSize="?attr/text_size_small"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:gravity="start" android:layout_margin="8dp" android:layout_gravity="start"
-                android:text="@string/app_url" />
+            <LinearLayout android:id="@+id/icon_layout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_horizontal" android:orientation="vertical" android:layout_marginTop="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/text_layout"
+                app:layout_constraintVertical_chainStyle="spread"
+                app:layout_constraintVertical_weight="1">
 
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="@dimen/welcomeIcon_size" android:layout_height="@dimen/welcomeIcon_size" android:layout_marginTop="8dp"
+                    android:scaleType="fitCenter" android:layout_gravity="center"
+                    android:src="@drawable/ic_action_suntimes_huge"
+                    tools:ignore="ContentDescription" />
+
+                <Button android:id="@+id/button_about"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:text="@string/configAction_aboutWidget"
+                    android:layout_gravity="start|bottom"
+                    android:onClick="showAbout" />
+
+            </LinearLayout>
+            
             <TextView
                 android:id="@+id/text1" android:textSize="?attr/text_size_large"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -67,7 +61,7 @@
                 android:gravity="start" android:layout_gravity="start"
                 android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/app_license_url" />
+                android:text="@string/help_license_url" />
 
             <TextView
                 android:id="@+id/text3" android:textSize="?attr/text_size_small"
@@ -79,7 +73,41 @@
                 android:id="@+id/link3" android:textSize="?attr/text_size_small"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="start" android:layout_margin="8dp" android:layout_gravity="start"
-                android:text="@string/privacy_url" />
+                android:text="@string/help_privacy_url" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="16dp" android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp" android:layout_marginRight="8dp" />
+
+            <TextView android:id="@+id/link0"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:gravity="start" android:layout_gravity="start"
+                android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
+                android:layout_marginBottom="2dp" android:layout_marginTop="0dp"
+                android:text="@string/help_app_url" android:textSize="?attr/text_size_small" />
+
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp" android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
+                android:animateLayoutChanges="true">
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/check_donate"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
+                    android:button="?attr/checkFavorite" android:paddingLeft="8dp"
+                    android:checked="false"
+                    tools:ignore="@string/expandMore" />
+
+                <TextView android:id="@+id/link4"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:textSize="?attr/text_size_small"
+                    android:text="@string/app_donate_url" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

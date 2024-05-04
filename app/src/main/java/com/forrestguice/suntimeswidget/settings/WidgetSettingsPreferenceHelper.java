@@ -158,6 +158,23 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
             return;
         }
 
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWCOMPARE))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveShowComparePref(context, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWCOMPARE));
+            return;
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_COMPAREMODE))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.CompareMode mode = WidgetSettings.CompareMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE.name()));
+            WidgetSettings.saveCompareModePref(context, 0, mode);
+            return;
+        }
+
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE))
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,

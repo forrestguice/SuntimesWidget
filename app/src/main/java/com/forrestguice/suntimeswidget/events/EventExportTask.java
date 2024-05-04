@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -65,26 +65,31 @@ public class EventExportTask extends ExportTask
         return items;
     }
 
-
     @Override
     protected boolean export(Context context, BufferedOutputStream out) throws IOException
     {
         if (items != null)
         {
             numEntries = items.length;
-            out.write("[".getBytes());
-            for (int i=0; i<items.length; i++)
-            {
-                String jsonString = EventImportTask.EventAliasJson.toJson(items[i]);
-                out.write(jsonString.getBytes());
-                if (i != items.length-1) {
-                    out.write(", ".getBytes());
-                }
-            }
-            out.write("]".getBytes());
+            writeEventItemsJSONArray(context, items, out);
             return true;
         }
         return false;
+    }
+
+    public static void writeEventItemsJSONArray(Context context, EventSettings.EventAlias[] items, BufferedOutputStream out) throws IOException
+    {
+        out.write("[".getBytes());
+        for (int i=0; i<items.length; i++)
+        {
+            String jsonString = EventImportTask.EventAliasJson.toJson(items[i]);
+            out.write(jsonString.getBytes());
+            if (i != items.length-1) {
+                out.write(", ".getBytes());
+            }
+        }
+        out.write("]".getBytes());
+        out.flush();
     }
 
 }

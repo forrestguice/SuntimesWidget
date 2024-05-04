@@ -77,8 +77,34 @@
                 android:layout_marginTop="0dp"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-                android:text="@string/app_url"
+                android:text="@string/help_app_url"
                 android:autoLink="web" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="4dp" android:layout_marginBottom="4dp" />
+
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp" android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
+                android:animateLayoutChanges="true">
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/check_donate"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
+                    android:button="?attr/checkFavorite" android:paddingLeft="8dp"
+                    android:checked="false"
+                    tools:ignore="@string/expandMore" />
+
+                <TextView android:id="@+id/txt_donate_url" android:visibility="gone"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:textSize="?attr/text_size_small"
+                    android:text="@string/app_donate_url" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

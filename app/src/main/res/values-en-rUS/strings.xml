@@ -6,10 +6,10 @@
     <string name="default_location_longitude">-111.94580</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">385</string>           <!-- meters -->
     <string name="default_units_length">IMPERIAL</string>                <!-- METRIC, IMPERIAL, USC -->
+    <string name="default_timezone">America/Phoenix</string>        <!-- tzid -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal">Fall Cross-Quarter</string>  <!-- setting -->
     <string name="solarevents_event_equinox_autumnal">fall equinox</string>
 
     <!-- App Setting: WidgetThemes -->
@@ -30,5 +30,7 @@
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Choose Color</string>
+
+    <string name="delta_minutes">m</string>
 
 </resources>

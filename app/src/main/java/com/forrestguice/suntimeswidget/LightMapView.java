@@ -178,17 +178,18 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
             //Log.d("DEBUG", "updateViews: canceling existing task..");
-            //Log.w(LightMapView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(LightMapView.this.hashCode())  +  ") .. restarting task.");
+            //Log.w(LightMapView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(getColors().hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
         } //else Log.d(LightMapView.class.getSimpleName(), "updateViews: starting task " + data);
 
         if (getWidth() == 0 || getHeight() == 0) {
-            Log.w(LightMapView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
+            Log.w(LightMapView.class.getSimpleName(), "updateViews: width or height 0; skipping update.. :: view-" + Integer.toHexString(getColors().hashCode()));
             return;
         }
 
         if (useMainThread)
         {
+            //Log.d("DEBUG", "updating lightmap on main thread.. " + getWidth() + "x" + getHeight() + " @ " + getNow() + " :: view-" + Integer.toHexString(getColors().hashCode()));
             LightMapTask draw = new LightMapTask();
             Bitmap b = draw.makeBitmap(data, getWidth(), getHeight(), colors);
             drawTaskListener.onFinished(b);
@@ -203,7 +204,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     private final LightMapTaskListener drawTaskListener = new LightMapTaskListener() {
         @Override
         public void onStarted() {
-            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onStarted: " + Integer.toHexString(LightMapView.this.hashCode()));
+            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onStarted: " + Integer.toHexString(getColors().hashCode()));
             if (mapListener != null) {
                 mapListener.onStarted();
             }
@@ -211,7 +212,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         @Override
         public void onDataModified(SuntimesRiseSetDataset data) {
-            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onDataModified: " + Integer.toHexString(LightMapView.this.hashCode()));
+            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onDataModified: " + Integer.toHexString(getColors().hashCode()));
             LightMapView.this.data = data;
             if (mapListener != null) {
                 mapListener.onDataModified(data);
@@ -220,7 +221,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         @Override
         public void onFrame(Bitmap frame, long offsetMinutes) {
-            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onFrame: " + Integer.toHexString(LightMapView.this.hashCode()));
+            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onFrame: " + Integer.toHexString(getColors().hashCode()));
             setImageBitmap(frame);
             if (mapListener != null) {
                 mapListener.onFrame(frame, offsetMinutes);
@@ -229,12 +230,12 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         @Override
         public void afterFrame(Bitmap frame, long offsetMinutes) {
-            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: afterFrame: " + Integer.toHexString(LightMapView.this.hashCode()));
+            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: afterFrame: " + Integer.toHexString(getColors().hashCode()));
         }
 
         @Override
         public void onFinished(Bitmap frame) {
-            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onFinished: " + Integer.toHexString(LightMapView.this.hashCode()));
+            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onFinished: " + Integer.toHexString(getColors().hashCode()));
             setImageBitmap(frame);
             if (mapListener != null) {
                 mapListener.onFinished(frame);
@@ -307,7 +308,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (data != null) {
-            //Log.d(LightMapView.class.getSimpleName(), "onAttachedToWindow: update views " + data);
+            //Log.d("DEBUG", "onAttachedToWindow: update views :: view-" + Integer.toHexString(getColors().hashCode()));
             updateViews(data);
         }
     }
@@ -317,7 +318,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     {
         super.onDetachedFromWindow();
         if (drawTask != null) {
-            //Log.d(LightMapView.class.getSimpleName(), "onDetachedFromWindow: cancel task " + Integer.toHexString(LightMapView.this.hashCode()));
+            //Log.d("DEBUG", "onDetachedFromWindow: cancel task :: view-" + Integer.toHexString(getColors().hashCode()));
             drawTask.cancel(true);
         }
     }
@@ -626,14 +627,17 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             {
                 mapTime = Calendar.getInstance(data != null ? data.timezone() : TimeZone.getDefault());
                 mapTime.setTimeInMillis(options.now);       // preset time
+                //Log.d("DEBUG", "lightmap time: preset: " + mapTime.getTimeInMillis() + " :: view-" + Integer.toHexString(options.hashCode()));
 
             } else if (data != null) {
                 mapTime = data.nowThen(data.calendar());    // the current time (maybe on some other day)
                 options.now = mapTime.getTimeInMillis();
+                //Log.d("DEBUG", "lightmap time: from data: " + mapTime.getTimeInMillis() + " :: view-" + Integer.toHexString(options.hashCode()));
 
             } else {
                 mapTime = Calendar.getInstance();
                 options.now = mapTime.getTimeInMillis();
+                //Log.d("DEBUG", "lightmap time: now: " + mapTime.getTimeInMillis() + " :: view-" + Integer.toHexString(options.hashCode()));
             }
 
             long minutes = options.offsetMinutes;

@@ -27,7 +27,6 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -42,10 +41,8 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Pair;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +52,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
@@ -69,6 +67,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.moon.MoonApsisView;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -302,9 +301,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         mediaAnchor = dialogView.findViewById(R.id.dialogTopRightAnchor);
 
         menuButton = (ImageButton) dialogView.findViewById(R.id.menu_button);
-        if (menuButton != null) {
+        if (menuButton != null)
+        {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(onMenuClicked);
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.setFocusableInTouchMode(true);
+            }
         }
 
         if (context != null) {
@@ -659,12 +662,12 @@ public class MoonDialog extends BottomSheetDialogFragment
         moonriseset.setShowLunarNoon(!value);
     }
 
-    private final View.OnClickListener onMenuClicked = new View.OnClickListener() {
+    private final View.OnClickListener onMenuClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showOverflowMenu(getActivity(), v);
         }
-    };
+    });
 
     /**
      * Overflow Menu
@@ -683,14 +686,37 @@ public class MoonDialog extends BottomSheetDialogFragment
         if (lunarNoonItem != null) {
             lunarNoonItem.setChecked(AppSettings.loadShowLunarNoonPref(context));
         }
+
+        MenuItem columnItem;
+        switch (moonphases.numColumns())
+        {
+            case 2: columnItem = menu.findItem(R.id.action_phase_columns_2); break;
+            case 3: columnItem = menu.findItem(R.id.action_phase_columns_3); break;
+            case 4: default: columnItem = menu.findItem(R.id.action_phase_columns_4); break;
+        }
+        if (columnItem != null) {
+            columnItem.setChecked(true);
+        }
     }
-    private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
             switch (item.getItemId())
             {
+                case R.id.action_phase_columns_2:
+                    saveMoonPhaseColumns(2);
+                    return true;
+
+                case R.id.action_phase_columns_3:
+                    saveMoonPhaseColumns(3);
+                    return true;
+
+                case R.id.action_phase_columns_4:
+                    saveMoonPhaseColumns(4);
+                    return true;
+
                 case R.id.action_show_controls:
                     showMediaPopup(getActivity(), text_dialogTimeOffset);
                     return true;
@@ -707,7 +733,14 @@ public class MoonDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
+
+    protected void saveMoonPhaseColumns(int numColumns)
+    {
+        AppSettings.saveMoonPhaseColumnsPref(getActivity(), numColumns);
+        moonphases.setNumColumns(numColumns);
+        moonphases.onSizeChanged(moonphases.getWidth(), moonphases.getHeight(), moonphases.getWidth(), moonphases.getHeight());
+    }
 
     /**
      * MediaMenu
@@ -785,6 +818,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         if (inflater != null)
         {
+            @SuppressLint("InflateParams")
             final View popupView = inflater.inflate(R.layout.layout_popup_mediacontrol, null);
             if (popupView != null)
             {
@@ -931,6 +965,11 @@ public class MoonDialog extends BottomSheetDialogFragment
         Menu m = menu.getMenu();
         setDataToMenu(m, data);
 
+        MenuItem alarmItem = m.findItem(R.id.action_alarm);
+        if (alarmItem != null) {
+            alarmItem.setVisible(AlarmSettings.hasAlarmSupport(context));
+        }
+
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
         if (addonSubmenuItem != null) {
             List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
@@ -952,7 +991,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -1010,7 +1049,7 @@ public class MoonDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected void shareItem(Context context, Intent itemData)
     {
@@ -1018,7 +1057,9 @@ public class MoonDialog extends BottomSheetDialogFragment
         long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
         if (itemMillis != -1L) {
             String displayString = (eventID != null ? SolarEvents.valueOf(eventID).getLongDisplayString() : null);
-            ViewUtils.shareItem(context, displayString, itemMillis);
+            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
+            ShareUtils.shareItem(context, displayString, itemMillis, showTime, showSeconds);
         }
     }
 

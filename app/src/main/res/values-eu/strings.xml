@@ -5,6 +5,8 @@
     <string name="default_location_latitude">42.883008</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-1.935491</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">1258</string>         <!-- meters -->
+    <string name="default_timezone">Europe/Madrid</string>         <!-- tzid -->
+
 
     <!-- MAIN ACTIVITY -->
 
@@ -25,6 +27,7 @@
     <string name="configAction_share">Share</string>    <!-- TODO -->
     <string name="configAction_export">Esportatu</string>
     <string name="configAction_import">Inportatu</string>
+    <string name="configAction_info">More Info</string>   <!-- TODO -->
     <string name="configAction_sunDialog">Eguzkiaren kokapena</string>
     <string name="configAction_equinoxDialog">Solstizioak / Ekinokzioak</string>
     <string name="configAction_worldMap">Munduko mapa</string>
@@ -35,6 +38,7 @@
     <string name="configAction_moon">Ilargia</string>
     <string name="configAction_help">Laguntza</string>
     <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
     <string name="configAction_overflow">More</string>  <!-- TODO -->
     <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Ezarpenak</string>
@@ -179,7 +183,7 @@
     <string name="delta_weeks">a</string>    <!-- e.g. 2w -->
     <string name="delta_days">e</string>     <!-- e.g. 1d -->
     <string name="delta_hours">o</string>    <!-- e.g. 2h -->
-    <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+    <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
     <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  barru</string>  <!-- e.g. 15d 23h from now -->
@@ -362,14 +366,14 @@
     <string name="timeMode_solstice_winter">Neguko solstizioa</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstizioa</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">Spring Cross-Quarter</string>      <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_spring_short">Cross-Quarter</string>       <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal">Autumn Cross-Quarter</string>  <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_autumnal_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer">Summer Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_summer_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter">Winter Cross-Quarter</string>    <!-- setting -->  <!-- TODO -->
-    <string name="timeMode_cross_winter_short">Cross-Quarter</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeMode_cross_midwinter">Imbolc (Cross-Quarter)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   <!-- TODO -->
+    <string name="timeMode_cross_midwinter_short">Cross-Quarter</string>       <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer">Lughnasadh (Cross-Quarter)</string>  <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midspring">Beltane (Cross-Quarter)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->   <!-- TODO -->
+    <string name="timeMode_cross_midspring_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal">Samhain (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="timeMode_moon">Ilargia</string>                               <!-- label -->
     <string name="timeMode_moon_new">Ilberria</string>                               <!-- setting -->
@@ -492,6 +496,8 @@
     <string name="locationMode_current">Oraingoa (azken ezaguna)</string>  <!-- setting -->
     <string name="locationMode_custom">Erabiltzaileak ezarritakoa</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+
     <string name="configLabel_location">Kokapenaren ezarpenak</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
     <string name="configLabel_location_mode">Modua:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitudea:</string>                   <!-- edittext label -->
@@ -567,6 +573,7 @@
     <string name="compareMode_tomorrow">Bihar</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Honekin alderatu:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Konparazioa erakutsi</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
@@ -651,6 +658,12 @@
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
+    <string name="widgetThemes_dark">Iluna</string>                                <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_dark_transparent">Iluna (gardena)</string>      <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_dark_translucent">Iluna (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_light">Argia</string>                              <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_light_transparent">Argia (gardena)</string>    <!-- default widget theme name --> <!-- TODO: review -->
+
     <string name="addtheme_custname">itxura_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (kopia)</string>                            <!-- copied theme name (display string) -->
@@ -708,6 +721,9 @@
     <string name="configLabel_themeColorMoonWaning">Ilbeheraren kolorea</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Ilbetearen kolorea</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Ilberriaren kolorea</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Egunsentiaren kolorea</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -971,6 +987,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
     <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
     <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
@@ -1067,6 +1089,50 @@
     <string name="configLabel_widgetListHelp_summary">Widgetaren laguntza erakutsi</string>
     <string name="configLabel_widgetList_emptyMsg">Widgetik ez</string> <!-- a label that is displayed in place of an empty listview -->
 
+    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
+    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
+    <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
+    <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
+    <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
+
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
+    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
+    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
+    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+
+    <plurals name="itemsPlural">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>  <!-- TODO -->
+    <plurals name="widgetPlural">
+        <item quantity="one">%d widget</item>
+        <item quantity="other">%d widgets</item>
+    </plurals>  <!-- TODO -->
+
     <!-- App Setting: Places -->
     <string name="configLabel_places">Tokiak</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
@@ -1089,6 +1155,24 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
+    <string name="place_label_AF">Africa</string>    <!-- TODO -->
+    <string name="place_label_AS">Asia</string>    <!-- TODO -->
+    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
+    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
+    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
+    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
+    <string name="place_label_EU">Europe</string>    <!-- TODO -->
+    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
+    <string name="place_label_NA">North America</string>    <!-- TODO -->
+    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
+    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
+    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
+    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
+    <string name="place_label_other">Other</string>    <!-- TODO -->
+
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Erabiltzailearen interfazea</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
@@ -1109,11 +1193,14 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Ilargia erakutsi</string>
-    <string name="configLabel_ui_showmoon_summary">Irteera, ezkutatze, ilargialdi eta argiztapena erakutsi.</string>
+    <string name="configLabel_ui_showmoon_summary">Irteera, ezkutatze, ilargialdi eta argiztapena erakutsi.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
     <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
@@ -1161,8 +1248,8 @@
     <string name="appThemes_nightMode">Argia / iluna (Gau&#160;modua)</string>
     <string name="appThemes_systemDefault">System default</string>  <!-- TODO -->
     <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
-    <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
-    <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
+    <string name="appThemes_darkTheme1">Contrast (Iluna)</string>   <!-- TODO -->
+    <string name="appThemes_lightTheme1">Contrast (Argia)</string>   <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1301,6 +1388,7 @@
         <item>Dutch</item>  <!-- TODO -->
         <item>Czech</item>  <!-- TODO -->
         <item>Simplified Chinese</item> <!-- TODO -->
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1456,10 +1544,10 @@
         <item>neguko solstizioa</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>goizeko krepuskulu astronomikoa (hasiera)</item>
@@ -1489,10 +1577,10 @@
         <item>neguko solstizioa</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>goizeko krepuskulu astronomikoa (hasiera)</item>
@@ -1522,10 +1610,10 @@
         <item>neguko solstizioa</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>    <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
@@ -1535,6 +1623,7 @@
 
     <!-- gps_lastfix (current location mode) -->
     <string name="gps_lastfix_title_set">Kokapena ezarri</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Azken kokapena</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
     <string name="gps_lastfix_title_found">Azken kokapena</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Kokapena eskuratzen</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
@@ -1615,6 +1704,7 @@
     <string name="msg_import_success"><xliff:g id="themePlural">%s</xliff:g> inportatuta.</string>
     <string name="msg_import_failure"><xliff:g id="filepath">%s</xliff:g>(e)tik inportatzeak huts egin du!</string>
     <string name="msg_import_noresults">Inportazioa eten da; ez da gai berri gehiagorik aurkitu.</string>
+    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">
         <item quantity="one">gai %d</item>
@@ -1652,14 +1742,15 @@
     <string name="app_shortdesc">Eguzki eta ilargiaren argiaren denborak erakusten ditu.</string>
     <string name="app_support_url"><![CDATA[
         <b>Laguntza:</b> joan zaitez
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">arazoen jarraitzailera</a> eskaera bat bidaltzeko.
+        <a href="%1$s">arazoen jarraitzailera</a> eskaera bat bidaltzeko.
     ]]></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
-    ]]></xliff:g></string>
+    <string name="app_donate_url"><![CDATA[
+        %s is available gratis, but if it has proven its value, please
+        <a href="%2$s">pay as you like</a>.
+    ]]></string>    <!-- TODO -->
     <string name="app_legal1"><![CDATA[
         <b>Iturburu kodea:</b><br />
-        Copyright &#169 2014-2023 Forrest Guice <br />
+        Copyright &#169 2014-2024 Forrest Guice <br />
         Iturburu kodea GPLv3 lizentziapean eskuragarri dago.
     ]]></string>
 

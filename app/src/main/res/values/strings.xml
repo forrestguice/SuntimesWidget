@@ -6,6 +6,7 @@
     <string name="default_location_longitude">-74.02619</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>         <!-- meters -->
     <string name="default_units_length">METRIC</string>         <!-- METRIC, IMPERIAL, USC -->
+    <string name="default_timezone">America/New_York</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 
@@ -26,6 +27,7 @@
     <string name="configAction_share">Share</string>
     <string name="configAction_export">Export</string>
     <string name="configAction_import">Import</string>
+    <string name="configAction_info">More Info</string>
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
@@ -36,6 +38,7 @@
     <string name="configAction_moon">Moon</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_onlineHelp">Online Help</string>
+    <string name="configAction_appDetails">App info</string>
     <string name="configAction_overflow">More</string>
     <string name="configAction_options">Options</string>
     <string name="configAction_settings">Settings</string>
@@ -217,7 +220,7 @@
     <string name="delta_weeks">w</string>    <!-- e.g. 2w -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
-    <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+    <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
     <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  from now</string>  <!-- e.g. 15d 23h from now -->
@@ -419,14 +422,14 @@
     <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">Spring Cross-Quarter</string>      <!-- setting -->
-    <string name="timeMode_cross_spring_short">Cross-Quarter</string>       <!-- setting -->
-    <string name="timeMode_cross_autumnal">Autumn Cross-Quarter</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal_short">Cross-Quarter</string>     <!-- setting -->
-    <string name="timeMode_cross_summer">Summer Cross-Quarter</string>    <!-- setting -->
-    <string name="timeMode_cross_summer_short">Cross-Quarter</string>     <!-- setting -->
-    <string name="timeMode_cross_winter">Winter Cross-Quarter</string>    <!-- setting -->
-    <string name="timeMode_cross_winter_short">Cross-Quarter</string>     <!-- setting -->
+    <string name="timeMode_cross_midwinter">Imbolc (Cross-Quarter)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   <!-- TODO -->
+    <string name="timeMode_cross_midwinter_short">Cross-Quarter</string>       <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer">Lughnasadh (Cross-Quarter)</string>  <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midspring">Beltane (Cross-Quarter)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->   <!-- TODO -->
+    <string name="timeMode_cross_midspring_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal">Samhain (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="timeMode_moon">Moon</string>                               <!-- label -->
     <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->
@@ -549,6 +552,8 @@
     <string name="locationMode_current">Current (last known)</string>  <!-- setting -->
     <string name="locationMode_custom">User Defined</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->
+
     <string name="configLabel_location">Location</string>               <!-- group title -->
     <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitude:</string>                   <!-- edittext label -->
@@ -624,8 +629,18 @@
     <!-- Widget Setting: compare mode -->
     <string name="compareMode_yesterday">Yesterday</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Tomorrow</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Compare Against:</string>    <!-- spinner label -->
+    <string name="configLabel_general_compareMode">Compare Against</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->
+
+    <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
+        <item>@string/compareMode_yesterday</item>
+        <item>@string/compareMode_tomorrow</item>
+    </string-array>
+    <string-array name="compareMode_values" translatable="false">  <!-- one-to-one with compareMode_display -->
+        <item>YESTERDAY</item>
+        <item>TOMORROW</item>
+    </string-array>
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->
@@ -711,6 +726,12 @@
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
+    <string name="widgetThemes_dark">Dark</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_dark_translucent">Dark (translucent)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_light">Light</string>                              <!-- default widget theme name -->
+    <string name="widgetThemes_light_transparent">Light (transparent)</string>    <!-- default widget theme name -->
+
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
@@ -768,6 +789,9 @@
     <string name="configLabel_themeColorMoonWaning">Waning</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Full</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">New</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Sunrise</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1046,7 +1070,12 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>
     <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>
 
-    <string name="help_battery_optimization_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#battery-optimization</string>
+    <string name="configLabel_alarms_autostart">Autostart</string>
+    <string name="configLabel_alarms_autostart_on">On</string>
+    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>
+    <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+
     <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
         <item>Samsung</item>
         <item>OnePlus</item>
@@ -1171,6 +1200,54 @@
     <string name="configLabel_widgetListHelp_summary">Show widget help</string>
     <string name="configLabel_widgetList_emptyMsg">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->
 
+    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>
+    <string name="restorebackup_dialog_item_appsettings">App Settings</string>
+    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string>
+    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string>
+    <string name="restorebackup_dialog_item_placeitems">Places</string>
+    <string name="restorebackup_dialog_item_eventitems">Events</string>
+    <string name="restorebackup_dialog_item_actions">Actions</string>
+    <string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>
+    <string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>
+
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="exportwidget_dialog_title">Export Settings</string>
+    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>
+    <string name="importwidget_dialog_title">Import Settings</string>
+    <string name="importwidget_dialog_message">Importing widget settings from file.</string>
+    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>
+    <string name="importwidget_dialog_title2">Found multiple settings…</string>
+    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when widgetClassName is missing -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string>
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string>
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string>
+    <string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
+
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string>
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string>
+
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string>
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string>
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string>
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string>
+
+    <plurals name="itemsPlural">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+        <item quantity="few">%d items</item>
+        <item quantity="many">%d items</item>
+    </plurals>
+    <plurals name="widgetPlural">
+        <item quantity="one">%d widget</item>
+        <item quantity="other">%d widgets</item>
+        <item quantity="few">%d widgets</item>
+        <item quantity="many">%d widgets</item>
+    </plurals>
+
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->
@@ -1195,6 +1272,25 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarctica</string>
+    <string name="place_label_AF">Africa</string>
+    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
+    <string name="place_label_AS">Asia</string>
+    <string name="place_label_AS_CN">Asia (China)</string>
+    <string name="place_label_AS_IN">Asia (India)</string>
+    <string name="place_label_AS_JP">Asia (Japan)</string>
+    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>
+    <string name="place_label_EU">Europe</string>
+    <string name="place_label_EU_ES">Europe (Spain)</string>
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>
+    <string name="place_label_NA">North America</string>
+    <string name="place_label_NA_CA">North America (Canada)</string>
+    <string name="place_label_NA_US">North America (US)</string>
+    <string name="place_label_OC">Oceania</string>
+    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
+    <string name="place_label_SA">South and Central America</string>
+    <string name="place_label_other">Other</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
@@ -1216,11 +1312,17 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Show Moon</string>
-    <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>
+    <string name="configLabel_ui_showmoon_summary">Show moon rise and set times, phase, and illumination.</string>   <!-- TODO: update to include "moon" at start of summary; the summary may be displayed with a checkbox on its own -->
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>
     <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>
+
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>
+    <string name="configLabel_ui_showmoon_phase_columns_2">2</string>
+    <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
+    <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
@@ -1647,6 +1749,7 @@
         <item>Dutch</item>
         <item>Czech</item>
         <item>Simplified Chinese</item>
+        <item>Arabic</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -1666,6 +1769,7 @@
         <item>Nederlands</item>
         <item>Čeština</item>
         <item>简体中文</item>
+        <item>العربية</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1685,13 +1789,14 @@
         <item>nl</item>
         <item>cs</item>
         <item>zh_CN</item>
+        <item>ar</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
         <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Jej>Jej</a>|<a href=https://github.com/Aloha>Aloha</a>|<a href=https://github.com/ldmpub>ldmpub</a>|<a href=https://github.com/grenagit>grenagit</a>]]></item>
         <item><![CDATA[<a href=https://github.com/HerHde>Henrik "HerHde" Hüttemann</a>|<a href=https://github.com/Wolkenschieber>Wolkenschieber</a>|<a href=https://github.com/xnumad>xnumad</a>|<a href=https://github.com/cstrsk>CSTRSK</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/Erci>Erci</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/Erci>Erci</a>|<a href=https://github.com/titanicbobo>titanicbobo</a>]]></item>
         <item><![CDATA[<a href=https://github.com/cao->Matteo Caoduro</a>|<a href=https://github.com/GiovaGa>GiovaGa</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>|<a href=https://github.com/gnusuari0>gnusuari0</a>]]></item>
@@ -1700,10 +1805,11 @@
         <item><![CDATA[<a href=https://github.com/FTno>FTno</a>]]></item>
         <item><![CDATA[<a href=https://github.com/pggdt>ft42</a>|<a href=https://github.com/jamesliu96>James Liu</a>]]></item>
         <item><![CDATA[<a href=https://github.com/NetoSilva>Neto Silva</a>|<a href=https://github.com/naoliv>Nelson&#160;A.&#160;de&#160;Oliveira</a>|<a href=https://github.com/efraletti>Enrico S. B. Fraletti</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>|<a href=https://github.com/Adelechka>Adelechka</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Joppla>Joppla</a>]]></item>
         <item><![CDATA[<a href=https://github.com/utaxiu>utaxiu</a>]]></item>
         <item><![CDATA[<a href=https://github.com/jamesliu96>James Liu</a>|<a href=https://github.com/sr093906>sr093906</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/mstfelg>Alelg</a>]]></item>
     </string-array>
 
     <!-- position formats -->
@@ -1796,7 +1902,6 @@
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
       \n\nFor best results select an image matching these properties.
     </string>
-    <string name="help_worldmap_background_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#world-map</string>
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
@@ -1862,10 +1967,10 @@
         <item>winter solstice</item>
         <item>lunar noon</item>
         <item>lunar midnight</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- short labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>morning astronomical twilight (start)</item>
@@ -1895,10 +2000,10 @@
         <item>winter solstice</item>
         <item>lunar noon</item>
         <item>lunar midnight</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>start of morning astronomical twilight</item>
@@ -1928,10 +2033,10 @@
         <item>winter solstice</item>
         <item>lunar noon</item>
         <item>lunar midnight</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string name="solarevents_event_equinox_autumnal">autumn equinox</string>   <!-- solarevents_* array value; optional if arrays are overridden by translation -->
 
@@ -2010,7 +2115,8 @@
     <string name="gps_dialog_cancel">No</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Set Position</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_set">Configured Position</string>               <!-- may appear as place name when location set by intent -->   <!-- TODO: changed from "Set Position" to "Configured Position" -->
+    <string name="gps_lastfix_title_cached">Previous Position</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
     <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by lookup -->
     <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while lookup in progress -->
     <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after failing to get a location -->
@@ -2093,6 +2199,7 @@
     <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_import_noresults">Import skipped; no new themes were found.</string>
+    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">
         <item quantity="one">%d theme</item>
@@ -2130,21 +2237,18 @@
     <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
     <string name="app_support_url"><![CDATA[
         <b>Support:</b> visit the
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
+        <a href="%1$s">issue tracker</a> to submit a request.
     ]]></string>
-    <string name="app_source_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
-    ]]></xliff:g></string>
+    <string name="app_donate_url"><![CDATA[
+        %s is available gratis, but if it has proven its value, please
+        <a href="%2$s">pay as you like</a>.
+    ]]></string>
+
     <string name="app_license_about">Suntimes is free and open-source software.</string>   <!-- displayed by welcome dialog -->
-    <string name="app_license_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/blob/master/LICENSE">github.com/forrestguice/SuntimesWidget/blob/master/LICENSE</a>
-    ]]></xliff:g></string>
-    <string name="app_url"><xliff:g id="url"><![CDATA[
-        <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
-    ]]></xliff:g></string>
+
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
-        Copyright &#169 2014-2023 Forrest Guice <br />
+        Copyright &#169 2014-2024 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
 
@@ -2226,7 +2330,6 @@
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>    <!-- TODO: added section "Date Widgets:", add "%em, %et, %eT, %eA" (#599) to online-help -->
-    <string name="help_substitutions_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#data-substitutions</string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -2265,11 +2368,11 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
-          <b>Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
-          <b>Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
-          <b>Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->
+          <b>Imbolc (Cross-Quarter):</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
+          <b>Beltane (Cross-Quarter):</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
+          <b>Lughnasadh (Cross-Quarter):</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
+          <b>Samhain (Cross-Quarter):</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO -->
 
     <string name="help_eventlist"><![CDATA[
           [Icon OK] Choose a custom event.\n
@@ -2371,7 +2474,7 @@
         <br/>
         <b>Extras:</b> An <em>&amp;</em> delimited string containing extra values. Supports <em>%s</em>ubstitutions.<br/><br/>Values may be <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> or String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
     ]]></string>
-    <string name="help_action_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#actions</string>
+
     <string name="help_widgetlist"><![CDATA[
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
           To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
@@ -2401,9 +2504,6 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignore</string>
     <string name="privacy_permissiondialog_title">Permissions</string>
-    <string name="privacy_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
-    ]]></xliff:g></string>
     <string name="privacyTab">Privacy</string>
 
     <string name="security_dialog_title">Security Alert</string>
@@ -2435,13 +2535,14 @@
         For more information about available choices, or extending the app to support other libraries, see the online help.
     ]]>
     </string>
-    <string name="help_datasources_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#data-sources</string>
 
     <!-- pref defaults -->
     <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
     <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
     <string name="def_appwidget_0_general_altitude_enabled" translatable="false">true</string>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
+    <string name="def_appwidget_0_general_showcompare" translatable="false">true</string>
+    <string name="def_appwidget_0_general_comparemode" translatable="false">TOMORROW</string>
     <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
     <string name="def_appwidget_0_general_showhours" translatable="false">true</string>
     <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
@@ -2469,7 +2570,7 @@
     <string name="def_app_ui_showgoldhour" translatable="false">true</string>
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showheader_icon" translatable="false">true</string>
-    <string name="def_app_ui_showheader_text" translatable="false">1</string>  <!-- 1: labels -->
+    <string name="def_app_ui_showheader_text">1</string>  <!-- 1: labels -->
     <string name="def_app_ui_emphasizefield" translatable="false">OFFICIAL</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_showmapbutton" translatable="false">true</string>

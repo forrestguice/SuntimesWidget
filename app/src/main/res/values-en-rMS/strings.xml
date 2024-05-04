@@ -5,5 +5,6 @@
     <string name="default_location_latitude">16.8002</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-62.2136</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>         <!-- meters -->
+    <string name="default_timezone">Etc/GMT+10</string>         <!-- tzid -->
 
 </resources>

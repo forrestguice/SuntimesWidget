@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/info_sun_layout"
+    android:layout_width="0dp" android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
+    app:layout_constraintTop_toBottomOf="@+id/info_time_solar"
+    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
+
+    <include layout="@layout/layout_dialog_lightmap_suninfo" />
+
+</android.support.constraint.ConstraintLayout>

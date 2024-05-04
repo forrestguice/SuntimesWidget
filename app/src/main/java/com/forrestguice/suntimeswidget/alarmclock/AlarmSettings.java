@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -42,14 +42,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.lang.ref.WeakReference;
+import java.util.Map;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 
@@ -59,6 +62,7 @@ import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 public class AlarmSettings
 {
     public static final String PREF_KEY_ALARM_CATEGORY = "app_alarms_category";
+    public static final String PREF_KEY_ALARM_AUTOSTART = "app_alarms_autostart";
     public static final String PREF_KEY_ALARM_BATTERYOPT = "app_alarms_batterytopt";
     public static final String PREF_KEY_ALARM_NOTIFICATIONS = "app_alarms_notifications";
     public static final String PREF_KEY_ALARM_VOLUMES = "app_alarms_volumes";
@@ -135,7 +139,96 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_DISMISS_CHALLENGE = "app_alarms_dismiss_challenge";
     public static final DismissChallenge PREF_DEF_ALARM_DISMISS_CHALLENGE = DismissChallenge.NONE;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static final String[] ALL_KEYS = new String[]
+    {
+            PREF_KEY_ALARM_CATEGORY, PREF_KEY_ALARM_AUTOSTART,
+            PREF_KEY_ALARM_BATTERYOPT, PREF_KEY_ALARM_NOTIFICATIONS,
+            PREF_KEY_ALARM_VOLUMES, PREF_KEY_ALARM_HARDAREBUTTON_ACTION,
+            PREF_KEY_ALARM_SILENCEAFTER, PREF_KEY_ALARM_TIMEOUT,
+            PREF_KEY_ALARM_SNOOZE, PREF_KEY_ALARM_SNOOZE_LIMIT,
+            PREF_KEY_ALARM_UPCOMING, PREF_KEY_ALARM_AUTODISMISS,
+            PREF_KEY_ALARM_AUTOENABLE, PREF_KEY_ALARM_AUTOVIBRATE,
+            PREF_KEY_ALARM_RINGTONE_URI_ALARM, PREF_KEY_ALARM_RINGTONE_NAME_ALARM,
+            PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION,
+            PREF_KEY_ALARM_ALLRINGTONES, PREF_KEY_ALARM_SHOWLAUNCHER,
+            PREF_KEY_ALARM_POWEROFFALARMS, PREF_KEY_ALARM_UPCOMING_ALARMID,
+            PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET,
+            PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_DISMISS_CHALLENGE,
+            PREF_KEY_ALARM_SORT, PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
+            PREF_KEY_ALARM_BOOTCOMPLETED, PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, PREF_KEY_ALARM_BOOTCOMPLETED_DURATION, PREF_KEY_ALARM_BOOTCOMPLETED_RESULT,
+    };
+    public static final String[] LONG_KEYS = new String[] {
+            PREF_KEY_ALARM_UPCOMING_ALARMID,
+            PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET,
+            PREF_KEY_ALARM_BOOTCOMPLETED, PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, PREF_KEY_ALARM_BOOTCOMPLETED_DURATION,
+    };
+    public static final String[] INT_KEYS = new String[] {
+            PREF_KEY_ALARM_SILENCEAFTER, PREF_KEY_ALARM_TIMEOUT,
+            PREF_KEY_ALARM_SNOOZE, PREF_KEY_ALARM_SNOOZE_LIMIT,
+            PREF_KEY_ALARM_UPCOMING, PREF_KEY_ALARM_AUTODISMISS,
+            PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_SORT,
+    };
+    public static final String[] BOOL_KEYS = new String[]
+    {
+            PREF_KEY_ALARM_AUTOENABLE, PREF_KEY_ALARM_AUTOVIBRATE,
+            PREF_KEY_ALARM_ALLRINGTONES, PREF_KEY_ALARM_SHOWLAUNCHER, PREF_KEY_ALARM_POWEROFFALARMS,
+            PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
+            PREF_KEY_ALARM_BOOTCOMPLETED_RESULT
+    };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo() {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return LONG_KEYS;
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return BOOL_KEYS;
+            }
+        };
+    }
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : LONG_KEYS) {
+                types.put(key, Long.class);
+            }
+            for (String key : INT_KEYS) {
+                types.put(key, Integer.class);
+            }
+            for (String key : BOOL_KEYS) {
+                types.put(key, Boolean.class);
+            }
+
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static boolean hasAlarmSupport(Context context) {
+        return !AppSettings.isTelevision(context);
+    }
 
     public static int loadPrefAlarmSort(Context context)
     {
@@ -265,7 +358,7 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getInt(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE_LIMIT);
+            return prefs.getInt(PREF_KEY_ALARM_SNOOZE_LIMIT, PREF_DEF_ALARM_SNOOZE_LIMIT);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_SNOOZE_LIMIT, PREF_DEF_ALARM_SNOOZE_LIMIT);
     }
 
@@ -524,6 +617,63 @@ public class AlarmSettings
     }
     public static boolean isSony() {
         return "sony".equalsIgnoreCase(Build.MANUFACTURER);
+    }
+
+    /**
+     * https://dontkillmyapp.com/xiomi
+     * @return true autostart is disabled (xiomi devices only)
+     */
+    public static boolean isAutostartDisabled(Context context)
+    {
+        if (isXiomi()) {
+            return (XiomiAutostartDetect.getAutostartState_xiomi(context) == XiomiAutostartDetect.STATE_DISABLED);
+        } else return false;
+    }
+    public static boolean hasAutostartSettings(Context context) {
+        return isXiomi();
+    }
+    public static void openAutostartSettings(Context context)
+    {
+        Intent intent = getAutostartSettingsIntent(context);
+        if (intent != null) {
+            try {
+                context.startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Log.e("AlarmSettings", "Failed to launch autostart settings Intent: " + e);
+            }
+        } else Log.e("AlarmSettings", "Failed to launch autostart settings Intent: null");
+    }
+
+    @Nullable
+    public static Intent getAutostartSettingsIntent(Context context) {
+        if (isXiomi()) {
+            return getAutostartSettingsIntent_xiomi(context);
+        } else return null;
+    }
+
+    public static Intent getAutostartSettingsIntent_xiomi(Context context) {
+        return new Intent().setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
+    }
+    public static boolean isXiomi() {
+        return "xiomi".equalsIgnoreCase(Build.MANUFACTURER);
+    }
+
+    public static CharSequence autostartMessage(Context context)
+    {
+        if (AlarmSettings.isAutostartDisabled(context))
+        {
+            int[] colorAttrs = { R.attr.tagColor_warning };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
+            typedArray.recycle();
+
+            String disabledString = context.getString(R.string.configLabel_alarms_autostart_off);
+            String summaryString = context.getString(R.string.configLabel_alarms_autostart_summary, disabledString);
+            return SuntimesUtils.createColorSpan(null, summaryString, disabledString, colorWarning);
+
+        } else {
+            return context.getString(R.string.configLabel_alarms_autostart_summary, context.getString(R.string.configLabel_alarms_autostart_on));
+        }
     }
 
     public static CharSequence batteryOptimizationMessage(Context context)

@@ -82,7 +82,9 @@
 
             <FrameLayout android:id="@+id/chip_event_offset" android:contentDescription="@string/configAction_setAlarmOffset"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
-                android:orientation="horizontal" android:gravity="start|center_vertical">
+                android:orientation="horizontal" android:gravity="start|center_vertical"
+                android:background="?attr/selectableItemBackground"
+                android:focusable="true" android:clickable="true">
 
                 <TextView
                     android:id="@+id/edit_event_offset" style="@style/ChipText" android:gravity="center"

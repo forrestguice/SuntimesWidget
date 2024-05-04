@@ -14,16 +14,16 @@
 
         <RelativeLayout
             android:id="@+id/text_date_layout"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center" android:layout_gravity="center">
 
             <TextView style="@style/WidgetTimeTextView"
                 android:id="@+id/text_date"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
-                android:paddingTop="0dp" android:paddingBottom="0dp"
-                android:layout_gravity="end"
-                android:text=""
-                tools:text="April 12, 2022" />
+                android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:padding="0dp"
+                android:layout_gravity="center" android:gravity="center"
+                android:text="" tools:text="April 12, 2022" />
 
             <TextView android:id="@+id/text_date_extras" android:visibility="visible"
                 style="@style/WidgetSuffixTextView"

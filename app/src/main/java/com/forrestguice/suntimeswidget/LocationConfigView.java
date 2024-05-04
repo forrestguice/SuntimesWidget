@@ -48,12 +48,15 @@ import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.getfix.GetFixTaskListener;
+import com.forrestguice.suntimeswidget.getfix.LocationHelper;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
-import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.LocationListTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -154,12 +157,8 @@ public class LocationConfigView extends LinearLayout
         return new com.forrestguice.suntimeswidget.calculator.core.Location(name, latitude, longitude, altitude, units == WidgetSettings.LengthUnit.METRIC);
     }
 
-    public WidgetSettings.LocationMode getLocationMode()
-    {
-        final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
-        //noinspection UnnecessaryLocalVariable
-        WidgetSettings.LocationMode locationMode = locationModes[ spinner_locationMode.getSelectedItemPosition() ];
-        return locationMode;
+    public WidgetSettings.LocationMode getLocationMode() {
+        return (WidgetSettings.LocationMode) spinner_locationMode.getSelectedItem();
     }
 
     /**
@@ -267,6 +266,7 @@ public class LocationConfigView extends LinearLayout
             getFixHelper.cancelGetFix();
         }
 
+        LocationViewMode previousMode = this.mode;
         this.mode = mode;
         switch (mode)
         {
@@ -371,6 +371,11 @@ public class LocationConfigView extends LinearLayout
                 button_save.setVisibility(View.GONE);
                 button_cancel.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
+
+                if (previousMode == LocationViewMode.MODE_AUTO) {
+                    text_locationName.setText(myParent.getString(R.string.gps_lastfix_title_cached));
+                    populateLocationList();
+                }
                 break;
         }
         if (viewListener != null) {
@@ -406,7 +411,7 @@ public class LocationConfigView extends LinearLayout
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
-    private GetFixUI getFixUI_editMode = new GetFixUI()
+    private final GetFixUI getFixUI_editMode = new GetFixUI()
     {
         @Override
         public void enableUI(boolean value)
@@ -471,7 +476,7 @@ public class LocationConfigView extends LinearLayout
 
     private ImageButton button_auto;
     private ProgressBar progress_auto;
-    private GetFixUI getFixUI_autoMode = new GetFixUI()
+    private final GetFixUI getFixUI_autoMode = new GetFixUI()
     {
         @Override
         public void enableUI(boolean value)
@@ -486,9 +491,12 @@ public class LocationConfigView extends LinearLayout
         public void updateUI(Location... locations)
         {
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
-            text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
-            text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-            text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
+            if (locations != null && locations.length > 0 && locations[0] != null)
+            {
+                text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
+                text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+                text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
+            }
         }
 
         @Override
@@ -512,7 +520,7 @@ public class LocationConfigView extends LinearLayout
         }
     };
 
-    private GetFixHelper getFixHelper;
+    private LocationHelper getFixHelper;
     private SimpleCursorAdapter getFixAdapter;
 
     /**
@@ -655,7 +663,7 @@ public class LocationConfigView extends LinearLayout
             {
                 icon = GetFixUI.ICON_GPS_DISABLED;
 
-            } else if (getFixHelper.gotFix) {
+            } else if (getFixHelper.hasFix()) {
                 icon = GetFixUI.ICON_GPS_FOUND;
             }
         }
@@ -1147,13 +1155,12 @@ public class LocationConfigView extends LinearLayout
     /**
      * the location mode (auto, custom) has been selected from a spinner.
      */
-    private Spinner.OnItemSelectedListener onLocationModeSelected = new Spinner.OnItemSelectedListener()
+    private final Spinner.OnItemSelectedListener onLocationModeSelected = new Spinner.OnItemSelectedListener()
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            final WidgetSettings.LocationMode[] locationModes = WidgetSettings.LocationMode.values();
-            WidgetSettings.LocationMode locationMode = locationModes[parent.getSelectedItemPosition()];
-            //Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
+            WidgetSettings.LocationMode locationMode = (WidgetSettings.LocationMode) parent.getItemAtPosition(position);
+            Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
 
             LocationViewMode dialogMode;
             if (locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION)
@@ -1183,7 +1190,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * a custom location has been selected from a spinner.
      */
-    private Spinner.OnItemSelectedListener onCustomLocationSelected = new Spinner.OnItemSelectedListener()
+    private final Spinner.OnItemSelectedListener onCustomLocationSelected = new Spinner.OnItemSelectedListener()
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
@@ -1198,7 +1205,7 @@ public class LocationConfigView extends LinearLayout
         public void onNothingSelected(AdapterView<?> parent) {}
     };
 
-    private View.OnClickListener onListButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onListButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
@@ -1213,13 +1220,16 @@ public class LocationConfigView extends LinearLayout
         onListButtonClickListener = listener;
     }
 
-    private View.OnClickListener onEditCancelButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onEditCancelButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
         {
             updateViews();   // reset changes
             setMode(LocationViewMode.MODE_CUSTOM_SELECT);
+            if (AppSettings.isTelevision(getContext())) {
+                button_edit.requestFocus();
+            }
         }
     };
 
@@ -1239,7 +1249,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * the custom location edit button has been clicked.
      */
-    private View.OnClickListener onEditButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onEditButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
@@ -1251,7 +1261,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * the custom location add button has been clicked.
      */
-    private View.OnClickListener onAddButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onAddButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
@@ -1265,7 +1275,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * the custom location save button has been clicked.
      */
-    private View.OnClickListener onSaveButtonClicked = new View.OnClickListener()
+    private final View.OnClickListener onSaveButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
@@ -1275,9 +1285,12 @@ public class LocationConfigView extends LinearLayout
             {
                 setMode(LocationViewMode.MODE_CUSTOM_SELECT);
                 populateLocationList();
+                if (AppSettings.isTelevision(getContext())) {
+                    button_edit.requestFocus();
+                }
             }
 
-            final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
+            final GetFixTaskListener cancelGetFixListener = new GetFixTaskListener()
             {
                 @Override
                 public void onCancelled()
@@ -1286,6 +1299,9 @@ public class LocationConfigView extends LinearLayout
                     {
                         setMode(LocationViewMode.MODE_CUSTOM_SELECT);
                         populateLocationList();
+                        if (AppSettings.isTelevision(getContext())) {
+                            button_edit.requestFocus();
+                        }
                     }
                 }
             };
@@ -1298,7 +1314,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * the auto location button has been clicked.
      */
-    private View.OnClickListener onAutoButtonClicked = new OnClickListener()
+    private final View.OnClickListener onAutoButtonClicked = new OnClickListener()
     {
         @Override
         public void onClick(View view)

@@ -144,6 +144,7 @@ Version `0.9.*` contained the following additional permissions (removed in v0.10
 Do you find value in this software? Pay as you feel. 
 
 [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
+<noscript><a href="https://liberapay.com/forrestguice/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
 
 I want to express my thanks to those who have sent me something. This is greatly appreciated.
 
@@ -156,7 +157,7 @@ When reporting a bug **please be detailed as possible**. What did you expect the
 
 ## Legal Stuff
 
-Copyright &#169; 2014-2023 Forrest Guice<br/>
+Copyright &#169; 2014-2024 Forrest Guice<br/>
 
 The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
@@ -188,10 +189,12 @@ Norwegian translation by <u>FTno</u>.<br/>
 Italian translation by <u>Matteo Caoduro</u> and <u>GiovaGa</u>.<br/>
 Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>, and <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
 Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
-Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
+Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>, and <u><a href=https://github.com/Adelechka>Adelechka</a></u>.<br />
 Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
 Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>, and <u><a href=https://github.com/sr093906>sr093906</a></u>.<br />
+Arabic translation by <u><a href=https://github.com/mstfelg>Alelg</a></u>.<br />
+
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

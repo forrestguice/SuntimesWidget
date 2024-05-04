@@ -4,4 +4,5 @@
     <string name="default_location_latitude">14.76354</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-17.47550</string>  <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>           <!-- meters -->
+    <string name="default_timezone">Africa/Dakar</string>         <!-- tzid -->
 </resources>

@@ -2,7 +2,9 @@
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_moonriseset"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:orientation="vertical" android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground"
+    android:focusable="true" android:clickable="true"
     android:paddingLeft="8dp" android:paddingRight="8dp" android:paddingTop="8dp" android:paddingBottom="16dp">
 
     <ImageView android:id="@+id/icon_time_moonriseset"

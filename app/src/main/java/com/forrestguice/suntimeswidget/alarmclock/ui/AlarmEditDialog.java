@@ -52,6 +52,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
@@ -314,7 +315,7 @@ public class AlarmEditDialog extends DialogFragment
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.alarmtype, menu.getMenu());
 
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -336,7 +337,7 @@ public class AlarmEditDialog extends DialogFragment
                 notifyItemChanged();
                 return true;
             }
-        });
+        }));
 
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
@@ -359,7 +360,7 @@ public class AlarmEditDialog extends DialogFragment
             }
         }
 
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -374,14 +375,19 @@ public class AlarmEditDialog extends DialogFragment
                         return false;
                 }
             }
-        });
+        }));
 
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
     }
 
-    public static void confirmDeleteAlarm(final Context context, final AlarmClockItem item, DialogInterface.OnClickListener onDeleteConfirmed)
+    public static void confirmDeleteAlarm(@Nullable final Context context, @Nullable final AlarmClockItem item, DialogInterface.OnClickListener onDeleteConfirmed)
     {
+        if (context == null || item == null) {
+            Log.w("AlarmEditDialog", "confirmDeleteAlarm: null context or item! confirmation message was not shown.");
+            return;
+        }
+
         int[] attrs = { R.attr.icActionDelete };
         TypedArray a = context.obtainStyledAttributes(attrs);
         int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
@@ -439,106 +445,106 @@ public class AlarmEditDialog extends DialogFragment
 
     private View.OnClickListener showAlarmTypeMenu()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAlarmTypeMenu(getActivity(), item, v);
             }
-        };
+        });
     }
 
     private View.OnClickListener showOverflowMenu()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showOverflowMenu(getActivity(), item, v);
             }
-        };
+        });
     }
 
     private View.OnClickListener pickLabel()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestLabel(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickNote()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestNote(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickOffset()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestOffset(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickEvent()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestSolarEvent(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickLocation()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestLocation(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickRepeating()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestRepetition(item);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickRingtone()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestRingtone(item);
                 }
             }
-        };
+        });
     }
 
     public void triggerPreviewOffset() {
@@ -640,26 +646,26 @@ public class AlarmEditDialog extends DialogFragment
 
     private View.OnClickListener pickAction(final int actionNum)
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestAction(item, actionNum);
                 }
             }
-        };
+        });
     }
 
     private View.OnClickListener pickDismissChallenge()
     {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestDismissChallenge(item);
                 }
             }
-        };
+        });
     }
 
     private CompoundButton.OnCheckedChangeListener pickReminder()

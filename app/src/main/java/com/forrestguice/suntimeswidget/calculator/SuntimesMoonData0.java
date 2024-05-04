@@ -107,8 +107,8 @@ public class SuntimesMoonData0 extends SuntimesData
         otherCalendar = Calendar.getInstance(timezone);
         if (todayIsNotToday())
         {
-            todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
         }
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();

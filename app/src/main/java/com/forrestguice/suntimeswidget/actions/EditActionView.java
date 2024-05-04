@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -540,7 +541,7 @@ public class EditActionView extends LinearLayout
         menu.show();
     }
 
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
@@ -563,7 +564,7 @@ public class EditActionView extends LinearLayout
                     return false;
             }
         }
-    };
+    });
 
     public void saveIntent()
     {
@@ -892,7 +893,7 @@ public class EditActionView extends LinearLayout
         {
             Context context = getContext();
             if (context != null) {
-                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_action_url))));
+                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_url) + context.getString(R.string.help_action_path))));
             }
         }
     };

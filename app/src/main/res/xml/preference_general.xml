@@ -68,7 +68,8 @@
             android:title="@string/configLabel_general_calculator_help"
             android:icon="?attr/icActionHelp"
             app:helpText="@string/help_datasources"
-            app:helpLink="@string/help_datasources_url"
+            app:helpLink="@string/help_url"
+            app:helpPath="@string/help_datasources_path"
             app:moreHelpButtonText="@string/configAction_onlineHelp"
             />
 

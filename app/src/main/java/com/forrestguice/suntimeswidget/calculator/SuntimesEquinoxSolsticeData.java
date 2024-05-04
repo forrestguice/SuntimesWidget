@@ -195,9 +195,9 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
 
         if (todayIsNotToday())
         {
-            lastYearCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            thisYearCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            nextYearCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            lastYearCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            thisYearCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            nextYearCalendar.setTimeInMillis(todayIs.getTimeInMillis());
         }
 
         lastYearCalendar.add(Calendar.YEAR, -1);

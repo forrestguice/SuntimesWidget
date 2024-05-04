@@ -28,7 +28,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -57,7 +56,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
-import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
@@ -142,6 +140,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION = "BatteryOptimizationWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION_SONY = "BatteryOptimizationWarning_sony";
+    public static final String WARNINGID_AUTOSTART= "AutostartWarning";
 
     private AlarmListDialog list;
 
@@ -152,7 +151,8 @@ public class AlarmClockActivity extends AppCompatActivity
     private SuntimesWarning notificationWarning;
     private SuntimesWarning batteryOptimizationWarning = null;   // remains null for api < 23
     private SuntimesWarning batteryOptimizationWarning_sony = null;   // remains null for non-sony devices
-    private List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
+    private SuntimesWarning autostartWarning = null;    // remains null for non-xiomi devices
+    private final List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
 
     private AppSettings.LocaleInfo localeInfo;
 
@@ -269,8 +269,14 @@ public class AlarmClockActivity extends AppCompatActivity
                 {
                     if (data != null)
                     {
-                        long alarmID = ContentUris.parseId(data);
-                        list.reloadAdapter((alarmID != -1 ? alarmID : null));
+                        Long alarmID;
+                        try {
+                            alarmID = ContentUris.parseId(data);
+                        } catch (NumberFormatException e) {
+                            alarmID = null;
+                            Log.e(TAG, "updateReceiver.onReceive: invalid data! " + e);
+                        }
+                        list.reloadAdapter((alarmID != null && alarmID != -1 ? alarmID : null));
                         Log.d("DEBUG", "adapter reloaded: " + alarmID);
 
                     } else Log.e(TAG, "updateReceiver.onReceive: null data!");
@@ -325,16 +331,26 @@ public class AlarmClockActivity extends AppCompatActivity
                 handleIntent_snoozeAlarm(intent);
 
             } else if (param_action.equals(AlarmNotifications.ACTION_DELETE)) {
-                if (param_data != null) {
-                    list.notifyAlarmDeleted(ContentUris.parseId(param_data));
+                if (param_data != null)
+                {
+                    try {
+                        list.notifyAlarmDeleted(ContentUris.parseId(param_data));
+                    } catch (NumberFormatException e) {
+                        Log.e(TAG, "handleIntent: invalid data! " + e);
+                    }
                 } else {
                     list.notifyAlarmsCleared();
                     selectItem = false;
                 }
             }
         } else {
-            if (param_data != null) {
-                list.notifyAlarmUpdated(ContentUris.parseId(param_data));
+            if (param_data != null)
+            {
+                try {
+                    list.notifyAlarmUpdated(ContentUris.parseId(param_data));
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "handleIntent: invalid data! " + e);
+                }
             }
         }
 
@@ -399,7 +415,14 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void handleIntent_dismissAlarms(Intent intent, Uri param_data)
     {
-        Long alarmID = (param_data != null) ? ContentUris.parseId(param_data) : null;
+        Long alarmID;
+        try {
+            alarmID = (param_data != null) ? ContentUris.parseId(param_data) : null;
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "handleIntent: invalid data! " + e);
+            alarmID = null;
+        }
+
         if (alarmID != null) {
             Log.i(TAG, "ACTION_DISMISS_ALARM: " + param_data);
             sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmID)));
@@ -901,6 +924,12 @@ public class AlarmClockActivity extends AppCompatActivity
             warnings.add(batteryOptimizationWarning_sony);
         }
 
+        if (AlarmSettings.isXiomi())
+        {
+            autostartWarning = new SuntimesWarning(WARNINGID_AUTOSTART);
+            warnings.add(autostartWarning);
+        }
+
         restoreWarnings(savedState);
     }
     private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
@@ -963,6 +992,21 @@ public class AlarmClockActivity extends AppCompatActivity
             return;
         }
 
+        if (showWarnings && autostartWarning != null
+                && autostartWarning.shouldShow() && !autostartWarning.wasDismissed())
+        {
+            autostartWarning.initWarning(this, addButton, getString(R.string.autostartWarning));
+            autostartWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_autostart), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    AlarmSettings.openAutostartSettings(AlarmClockActivity.this);
+                }
+            });
+            autostartWarning.show();
+            return;
+        }
+
         // no warnings shown; clear previous (stale) messages
         for (SuntimesWarning warning : warnings) {
             warning.dismiss();
@@ -982,6 +1026,9 @@ public class AlarmClockActivity extends AppCompatActivity
         }
         if (batteryOptimizationWarning_sony != null) {
             batteryOptimizationWarning_sony.setShouldShow(AlarmSettings.isSonyStaminaModeEnabled(this));
+        }
+        if (autostartWarning != null) {
+            autostartWarning.setShouldShow(AlarmSettings.isAutostartDisabled(this));
         }
         showWarnings();
     }

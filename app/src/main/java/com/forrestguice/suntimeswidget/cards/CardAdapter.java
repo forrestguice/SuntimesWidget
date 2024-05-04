@@ -24,6 +24,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearSmoothScroller;
@@ -47,6 +48,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -83,7 +85,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         a.recycle();
     }
 
-    public static final int MAX_POSITIONS = 2000;
+    public static final int MAX_POSITIONS = 400000;    // +-550 years (400000 / 365 / 2)
     public static final int TODAY_POSITION = (MAX_POSITIONS / 2);      // middle position is today
     @SuppressLint("UseSparseArrays")
     private HashMap<Integer, Pair<SuntimesRiseSetDataset, SuntimesMoonData>> data = new HashMap<>();
@@ -137,6 +139,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             sun.putData(eventID, d);
         }
         sun.setTodayIs(date);
+        for (String id : sun.getDataModes()) {
+            sun.getData(id).setCompareMode(options.comparisonMode);
+        }
         sun.calculateData();
 
         SuntimesMoonData moon = null;
@@ -148,6 +153,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         }
 
         return new Pair<>(sun, moon);
+    }
+
+    public long findDateForPosition(Context context, int position)
+    {
+        if (position < 0) {
+            position = 0;     // clamp invalid positions
+        }
+        if (position > MAX_POSITIONS) {
+            position = MAX_POSITIONS;
+        }
+
+        Calendar calendar = null;
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = initData(context, position);
+        if (data != null && data.first != null) {
+            calendar = data.first.dataActual.calendar();
+        }
+        return (calendar != null) ? calendar.getTimeInMillis() : null;
     }
 
     public int findPositionForDate(Context context, long dateMillis)
@@ -355,12 +377,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     }
 
     private View.OnClickListener onDateClick(final int position) {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onDateClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onDateLongClick(final int position) {
         return new View.OnLongClickListener() {
@@ -371,12 +393,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onSunriseHeaderClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onSunriseHeaderClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onSunriseHeaderLongClick(final int position)
     {
@@ -388,12 +410,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onSunsetHeaderClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onSunsetHeaderClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onSunsetHeaderLongClick(final int position)
     {
@@ -405,12 +427,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onNoonHeaderClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onNoonHeaderClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onNoonHeaderLongClick(final int position)
     {
@@ -422,12 +444,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onMoonHeaderClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onMoonHeaderClick(CardAdapter.this, position);
             }
-        };
+        });
     }
     private View.OnLongClickListener onMoonHeaderLongClick(final int position)
     {
@@ -439,12 +461,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onLightmapClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onLightmapClick(CardAdapter.this, position);
             }
-        };
+            });
     }
     private View.OnLongClickListener onLightmapLongClick(final int position)
     {
@@ -456,30 +478,30 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         };
     }
     private View.OnClickListener onNextClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //adapterListener.onNextClick(CardAdapter.this, position);
                 onCenterClick(position).onClick(v);
             }
-        };
+        });
     }
     private View.OnClickListener onPrevClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //adapterListener.onPrevClick(CardAdapter.this, position);
                 onCenterClick(position).onClick(v);
             }
-        };
+        });
     }
     private View.OnClickListener onCenterClick(final int position) {
-        return  new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapterListener.onCenterClick(CardAdapter.this, position);
             }
-        };
+        });
     }
 
     /**
@@ -578,6 +600,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showWarnings = AppSettings.PREF_DEF_UI_SHOWWARNINGS;
         public boolean showMoon = AppSettings.PREF_DEF_UI_SHOWMOON;
         public boolean showLightmap = AppSettings.PREF_DEF_UI_SHOWLIGHTMAP;
+        public boolean showComparison = WidgetSettings.PREF_DEF_GENERAL_SHOWCOMPARE;
+        public WidgetSettings.CompareMode comparisonMode = WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE;
 
         public boolean[] showFields = null;
         public boolean showActual = true;
@@ -612,6 +636,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             showWarnings = AppSettings.loadShowWarningsPref(context);
             showMoon = AppSettings.loadShowMoonPref(context);
             showLightmap = AppSettings.loadShowLightmapPref(context);
+            showComparison = WidgetSettings.loadShowComparePref(context, 0);
+            comparisonMode = WidgetSettings.loadCompareModePref(context, 0);
 
             showFields = AppSettings.loadShowFieldsPref(context);
             showActual = showFields[AppSettings.FIELD_ACTUAL];

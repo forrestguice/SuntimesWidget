@@ -158,7 +158,7 @@ public class AlarmEvent
 
         @Nullable
         public String getSummary() {
-            return (event != null ? "" : summary);
+            return (event != null ? null : summary);
         }
 
         @Nullable

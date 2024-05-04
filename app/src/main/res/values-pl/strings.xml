@@ -5,6 +5,7 @@
     <string name="default_location_latitude">52.2319</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">21.0067</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">143</string>         <!-- meters -->
+    <string name="default_timezone">Europe/Warsaw</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 
@@ -25,6 +26,7 @@
     <string name="configAction_share">Udostępnij</string>
     <string name="configAction_export">Eksportuj</string>
     <string name="configAction_import">Importuj</string>
+    <string name="configAction_info">Więcej informacji</string>
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
     <string name="configAction_worldMap">Mapa świata</string>
@@ -35,6 +37,7 @@
     <string name="configAction_moon">Księżyc</string>
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_onlineHelp">Pomoc online</string>
+    <string name="configAction_appDetails">Informacje o aplikacji</string>
     <string name="configAction_overflow">Więcej</string>
     <string name="configAction_options">Opcje</string>
     <string name="configAction_settings">Ustawienia</string>
@@ -342,7 +345,7 @@
     <string name="timeMode_nautical">Żeglarski świt/zmierzch</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomiczny</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomiczny świt/zmierzch</string> <!-- setting -->
-    <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_night">Noc astronomiczna</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Dzień</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_golden_short">Złota</string>                <!-- setting -->
     <string name="timeMode_golden">Złota godzina</string>                 <!-- setting -->
@@ -361,14 +364,14 @@
     <string name="timeMode_solstice_winter">Zimowe przesilenie</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Przesilenie</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">Półmetek wiosny</string>      <!-- setting -->
-    <string name="timeMode_cross_spring_short">Półmetek wiosny</string>       <!-- setting -->
-    <string name="timeMode_cross_autumnal">Półmetek jesieni</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal_short">Półmetek jesieni</string>     <!-- setting -->
-    <string name="timeMode_cross_summer">Półmetek lata</string>    <!-- setting -->
-    <string name="timeMode_cross_summer_short">Półmetek lata</string>     <!-- setting -->
-    <string name="timeMode_cross_winter">Półmetek zimy</string>    <!-- setting -->
-    <string name="timeMode_cross_winter_short">Półmetek zimy</string>     <!-- setting --> 
+    <string name="timeMode_cross_midwinter">Półmetek zimy</string>      <!-- setting -->
+    <string name="timeMode_cross_midwinter_short">Półmetek zimy</string>       <!-- setting -->
+    <string name="timeMode_cross_midsummer">Półmetek lata</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer_short">Półmetek lata</string>     <!-- setting -->
+    <string name="timeMode_cross_midspring">Półmetek wiosny</string>    <!-- setting -->
+    <string name="timeMode_cross_midspring_short">Półmetek wiosny</string>     <!-- setting -->
+    <string name="timeMode_cross_midautumnal">Półmetek jesieni</string>    <!-- setting -->
+    <string name="timeMode_cross_midautumnal_short">Półmetek jesieni</string>     <!-- setting -->
 
     <string name="timeMode_moon">Księżyc</string>                               <!-- label -->
     <string name="timeMode_moon_new">Nów</string>                               <!-- setting -->
@@ -491,6 +494,8 @@
     <string name="locationMode_current">Obecna (ostatnia znana)</string>  <!-- setting -->
     <string name="locationMode_custom">Użytkownika</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Uprawnienie na dostęp do lokalizacji jest niezbędne do aktualizacji Twojego bieżącego położenia.</string>           <!-- snackbar text -->
+
     <string name="configLabel_location">Lokalizacja</string>              <!-- group title -->
     <string name="configLabel_location_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_location_lat">Szerokość:</string>                  <!-- edittext label -->
@@ -541,8 +546,8 @@
     <string name="calendarMode_ethiopian">etiopski</string>
     <string name="calendarMode_gregorian">gregoriański</string>
     <string name="calendarMode_hebrew">żydowski</string>
-    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
-    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_diyanet">muzułmański (turecki)</string>
+    <string name="calendarMode_hijri_umalqura">muzułmański (Umm al-Qura)</string>
     <string name="calendarMode_julian">juliański</string>
     <string name="calendarMode_persian">perski (irański)</string>
     <string name="calendarMode_thaisolar">tajski solarny</string>
@@ -566,6 +571,7 @@
     <string name="compareMode_tomorrow">Jutro</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Porównaj z:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Pokaż porównanie</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Porównaj ilość światła słonecznego dzisiaj z wczoraj lub jutrem.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">poprzednie</string>                   <!-- setting -->
@@ -650,6 +656,12 @@
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
+    <string name="widgetThemes_dark">Ciemna</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark_transparent">Ciemna (przezroczysta)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_dark_translucent">Ciemna (półprzezroczysta)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_light">Jasna</string>                              <!-- default widget theme name -->
+    <string name="widgetThemes_light_transparent">Jasna (przezroczysta)</string>    <!-- default widget theme name -->
+
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (kopia)</string>                            <!-- copied theme name (display string) -->
@@ -707,6 +719,9 @@
     <string name="configLabel_themeColorMoonWaning">Kolor malejącego</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Kolor pełni</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Kolor nowiu</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Pełnia (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">Nów (tekst)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -974,6 +989,12 @@
     <string name="help_battery_optimization">Ustaw aplikację <xliff:g id="appName">%s</xliff:g> jako „nie zoptymalizowaną” dla jej poprawnego działania.</string>
     <string name="help_battery_optimization_aggressive">To jest urządzenie <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, które może wymagać dodatkowej konfiguracji dla bezawaryjnego działania.</string>
 
+    <string name="configLabel_alarms_autostart">Uruchomienie przy starcie</string>
+    <string name="configLabel_alarms_autostart_on">wł.</string>
+    <string name="configLabel_alarms_autostart_off">wył.\nAlarmy mogą nie działać po ponownym uruchomieniu.</string>
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Uruchomienie przy starcie urządzenia jest wyłączone!\nAlarmy mogą nie działać po ponownym uruchomieniu.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+
     <string name="configLabel_alarms_notifications">Powiadomienia</string>
     <string name="configLabel_alarms_notifications_on">Włączone</string>
     <string name="configLabel_alarms_notifications_off">Wyłączone.\nAlarmy mogą nie wyświetlić się poprawnie.</string>
@@ -1076,6 +1097,54 @@
     <string name="configLabel_widgetListHelp_summary">Pokaż pomoc dot. widżetów</string>
     <string name="configLabel_widgetList_emptyMsg">Brak widżetów</string>          <!-- a label that is displayed in place of an empty listview -->
 
+    <string name="configAction_createBackup">Utwórz kopię zapasową</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="configAction_restoreBackup">Przywróć z kopii zapasowej</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarmy</string>
+    <string name="restorebackup_dialog_item_appsettings">Ustawienia aplikacji</string>
+    <string name="restorebackup_dialog_item_widgetsettings">Ustawienia widżetów</string>
+    <string name="restorebackup_dialog_item_widgetthemes">Skórki widżetów</string>
+    <string name="restorebackup_dialog_item_placeitems">Miejsca</string>
+    <string name="restorebackup_dialog_item_eventitems">Wydarzenia</string>
+    <string name="restorebackup_dialog_item_actions">Akcje</string>
+    <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
+    <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
+
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="exportwidget_dialog_title">Eksport ustawień</string>
+    <string name="exportwidget_dialog_message">Eksportowanie ustawień widżetów do pliku.</string>
+    <string name="importwidget_dialog_title">Import ustawień</string>
+    <string name="importwidget_dialog_message">Importowanie ustawień widżetów z pliku.</string>
+    <string name="importwidget_dialog_title1">Znaleziono ustawienia,\nale z innych widżetów…</string>
+    <string name="importwidget_dialog_title2">Znaleziono wiele ustawień…</string>
+    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="importwidget_dialog_item_unknown">(nieznany)</string>   <!-- shown as item when type cannot be determined -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Przywróć z kopii</b>. Zaimportowane ustawienia zostaną teraz zapisane i przywrócone później – kiedy poprosi o nie program uruchomieniowy.<br/>]]></string>
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Próbuj zgadnąć</b>. Zaimportowane ustawienia zostaną zastosowane do istniejących widżetów według rodzajów.<br/>]]></string>
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Bezpośredni import</b>. Zaimportowane ustawienia zostaną zastosowane bezpośrednio. Zadziała to tylko dla widżetów o niezmienionych identyfikatorach.<br/>]]></string>
+    <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Wyczyść</b>. Istniejące alarmy zostaną usunięte przed zaimportowaniem alarmów z kopii zapasowej.<br/>]]></string>
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Zachowaj istniejące</b>. Istniejące alarmy zostaną zachowane (może dać duplikaty).<br/>]]></string>
+
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Wyczyść</b>. Istniejące miejsca zostaną usunięte przed zaimportowaniem miejsc z kopii zapasowej.<br/>]]></string>
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Zachowaj istniejące</b>. Istniejące miejsca zostaną zachowane (może dać duplikaty).<br/>]]></string>
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignoruj istniejące</b>. Tylko nieistniejące miejsca zostaną dodane (ignorowanie istniejących).<br/>]]></string>
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Nadpisz istniejące</b>. Tylko istniejące miejsca zostaną zaktualizowane.<br/>]]></string>
+
+    <plurals name="itemsPlural">
+        <item quantity="one">%d obiekt</item>
+        <item quantity="other">%d obiektów</item>
+        <item quantity="few">%d obiekty</item>
+        <item quantity="many">%d obiektów</item>
+    </plurals>
+    <plurals name="widgetPlural">
+        <item quantity="one">%d widżet</item>
+        <item quantity="other">%d widżetów</item>
+        <item quantity="few">%d widżety</item>
+        <item quantity="many">%d widżetów</item>
+    </plurals>
+
     <!-- App Setting: Places -->
     <string name="configLabel_places">Miejsca</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Zarządzaj miejscami</string>             <!-- group title -->
@@ -1100,6 +1169,24 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarktyda</string>
+    <string name="place_label_AF">Afryka</string>
+    <string name="place_label_AS">Azja</string>
+    <string name="place_label_AS_CN">Azja (Chiny)</string>
+    <string name="place_label_AS_IN">Azja (Indie)</string>
+    <string name="place_label_AS_JP">Azja (Japonia)</string>
+    <string name="place_label_AS_SA">Azja (Arabia Saudyjska)</string>
+    <string name="place_label_AS_VN">Azja (Wietnam)</string>
+    <string name="place_label_EU">Europa</string>
+    <string name="place_label_EU_ES">Europa (Hiszpania)</string>
+    <string name="place_label_EU_UK">Europa (Wielka Brytania)</string>
+    <string name="place_label_NA">Ameryka Północna</string>
+    <string name="place_label_NA_CA">Ameryka Północna (Kanada)</string>
+    <string name="place_label_NA_US">Ameryka Północna (USA)</string> 
+    <string name="place_label_OC">Oceania</string>
+    <string name="place_label_SA">Ameryka Centralna i Południowa</string>
+    <string name="place_label_other">Inne</string>
+
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Wyświetlanie</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
@@ -1120,11 +1207,14 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Wyświetl dane Księżyca</string>
-    <string name="configLabel_ui_showmoon_summary">Wyświetla czasu wschodu i zachodu Księżyca, fazę i oświetlenie.</string>
+    <string name="configLabel_ui_showmoon_summary">Księżyc: wyświetla czasu wschodu i zachodu, fazę i oświetlenie.</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Wyświetl kulminacje Księżyca</string>
-    <string name="configLabel_ui_showmoon_noon_summary">Wyświetl górowanie i dołowanie Księżyca w oknie “Księżyc”.</string>
+    <string name="configLabel_ui_showmoon_noon_summary">Wyświetl górowanie i dołowanie Księżyca w oknie „Księżyc”.</string>
+
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Kolumny (fazy)</string>
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Pólmetki pór roku</string>
@@ -1171,7 +1261,7 @@
     <string name="appThemes_darkTheme">Ciemny motyw</string>
     <string name="appThemes_nightMode">Jasny / Ciemny (w nocy)</string>
     <string name="appThemes_systemDefault">Domyślny systemowy</string>
-    <string name="appThemes_systemDefault1">kontrastowy (domyślny systemowy)</string>
+    <string name="appThemes_systemDefault1">Kontrastowy (domyślny systemowy)</string>
     <string name="appThemes_darkTheme1">Kontrastowy (ciemny)</string>
     <string name="appThemes_lightTheme1">Kontrastowy (jasny)</string>
 
@@ -1291,6 +1381,7 @@
         <item>Holenderski</item>
         <item>Czeski</item>
         <item>Chiński uproszczony</item>
+        <item>Arabski</item>
     </string-array>
 
     <!-- position formats -->
@@ -1445,10 +1536,10 @@
         <item>przesilenie zimowe</item>
         <item>górowanie Księżyca</item>
         <item>dołowanie Księżyca</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>świt astronomiczny</item>
@@ -1478,10 +1569,10 @@
         <item>przesilenie zimowe</item>
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>świt astronomiczny</item>
@@ -1511,10 +1602,10 @@
         <item>przesilenie zimowe</item>
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
-        <item>@string/timeMode_cross_spring</item>
-        <item>@string/timeMode_cross_summer</item>
-        <item>@string/timeMode_cross_autumnal</item>
-        <item>@string/timeMode_cross_winter</item>
+        <item>@string/timeMode_cross_midwinter</item>
+        <item>@string/timeMode_cross_midspring</item>
+        <item>@string/timeMode_cross_midsummer</item>
+        <item>@string/timeMode_cross_midautumnal</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1523,8 +1614,9 @@
     <string name="gps_dialog_cancel">Nie</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Ustaw lokalizację</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_found">Ostatnia lokalizacja</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_set">Ustawiona lokalizację</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Poprzednia lokalizacja</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="gps_lastfix_title_found">Obecna lokalizacja</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Ustalanie lokalizacji</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Nie udało się określić Twojej lokalizacji, powrót do ostatniej znanej lokalizacji.</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">Anulowano odświeżanie lokalizacji.</string> <!-- displayed briefly when gps refresh cancelled -->
@@ -1606,6 +1698,7 @@
     <string name="msg_import_success">Zaimportowano <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Nie udało się zaimportować z <xliff:g id="filepath">%s</xliff:g>!</string>
     <string name="msg_import_noresults">Pominięto importowanie; nie znaleziono nowych skórek.</string>
+    <string name="msg_import_label_file">pliku</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">
         <item quantity="one">%d skórkę</item>
@@ -1643,9 +1736,13 @@
     <string name="app_name_moonwidget0">Czasy Słońca: Księżyc</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
-    <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
+    <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="%1$s">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
+    <string name="app_donate_url"><![CDATA[
+        Aplikacja %s jest udostępniana bezpłatnie, ale jeżeli jest ona dla Ciebie użyteczna, prosimy
+        <a href="%2$s">rozważyć wpłatę dowolnej kwoty</a>.
+    ]]></string>
     <string name="app_license_about">Aplikacja Czasy Słońca jest wolnym i otwartoźródłowym oprogramowaniem.</string>   <!-- displayed by welcome dialog -->-->
-    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2022 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
+    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2024 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
 
     <string name="app_legal2"><![CDATA[<b>Tłumaczenia na:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
@@ -1732,10 +1829,10 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Półmetek wiosny:</b> punkt dokładnie pomiędzy zimowym przesileniem i wiosenną równonocą; ma miejsce w <em>lutym</em> na półkuli północnej i w <em>sierpniu</em> na półkuli południowej.<br/><br/>
-          <b>Półmetek lata:</b> punkt dokładnie pomiędzy wiosenną równonocą i letnim przesileniem; ma miejsce w <em>maju</em> na półkuli północnej i w <em>listopadzie</em> na półkuli południowej.<br/><br/>
-          <b>Półmetek jesieni:</b> punkt dokładnie pomiędzy letnim przesileniem i jesienną równonocą; ma miejsce w <em>sierpniu</em> na półkuli północnej i w <em>lutym</em> na półkuli południowej.<br/><br/>
-          <b>Półmetek zimy:</b> punkt dokładnie pomiędzy jesienną równonocą i zimowym przesileniem; ma miejsce w <em>listopadzie</em> na półkuli północnej i w <em>maju</em> na półkuli południowej.<br/>
+          <b>Półmetek astronomicznej zimy:</b> punkt dokładnie pomiędzy zimowym przesileniem i wiosenną równonocą; ma miejsce w <em>lutym</em> na półkuli północnej i w <em>sierpniu</em> na półkuli południowej. Zbiega się z wiccańskim świętem Imbolc.<br/><br/>
+          <b>Półmetek astronomicznej wiosny:</b> punkt dokładnie pomiędzy wiosenną równonocą i letnim przesileniem; ma miejsce w <em>maju</em> na półkuli północnej i w <em>listopadzie</em> na półkuli południowej. Zbiega się z wiccańskim świętem Beltane.<br/><br/>
+          <b>Półmetek astronomicznego lata:</b> punkt dokładnie pomiędzy letnim przesileniem i jesienną równonocą; ma miejsce w <em>sierpniu</em> na półkuli północnej i w <em>lutym</em> na półkuli południowej. Zbiega się z wiccańskim świętem Lúnasa.<br/><br/>
+          <b>Półmetek astronomicznej jesieni:</b> punkt dokładnie pomiędzy jesienną równonocą i zimowym przesileniem; ma miejsce w <em>listopadzie</em> na półkuli północnej i w <em>maju</em> na półkuli południowej. Zbiega się z wiccańskim świętem Samhain.<br/>
     ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[

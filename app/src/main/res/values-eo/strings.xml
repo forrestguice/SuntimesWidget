@@ -4,6 +4,7 @@
     <string name="default_location_latitude">53.1324</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">23.1592</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">139</string>        <!-- meters -->
+    <string name="default_timezone">Etc/GMT+2</string>         <!-- tzid -->
 
     <!-- MAIN ACTIVITY -->
 
@@ -24,6 +25,7 @@
     <string name="configAction_share">Kunhavigi</string>
     <string name="configAction_export">Elporti</string>
     <string name="configAction_import">Enporti</string>
+    <string name="configAction_info">Pliaj informoj</string>
     <string name="configAction_sunDialog">Pozicio de Suno</string>
     <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
     <string name="configAction_worldMap">Mondmapo</string>
@@ -34,6 +36,7 @@
     <string name="configAction_moon">Luno</string>
     <string name="configAction_help">Helpo</string>
     <string name="configAction_onlineHelp">Helpo enrete</string>
+    <string name="configAction_appDetails">Aplikaĵ-informoj</string>
     <string name="configAction_overflow">Pli</string>
     <string name="configAction_options">Agordi…</string>
     <string name="configAction_settings">Agordoj</string>
@@ -171,7 +174,7 @@
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g>&#8239;<xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">sem</string>    <!-- e.g. 2w -->
-    <string name="delta_days">t</string>     <!-- e.g. 1d -->
+    <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
@@ -346,14 +349,14 @@
     <string name="timeMode_solstice_winter">Vintra sunekstremo</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstico</string>     <!-- setting -->
 
-    <string name="timeMode_cross_spring">Mezo de printempo</string>      <!-- setting -->
-    <string name="timeMode_cross_spring_short">Printemp-mezo</string>       <!-- setting -->
-    <string name="timeMode_cross_autumnal">Mezo de aŭtuno</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal_short">Aŭtun-mezo</string>     <!-- setting -->
-    <string name="timeMode_cross_summer">Somer-mezo</string>     <!-- setting -->
-    <string name="timeMode_cross_summer_short">Somer-mezo</string>     <!-- setting -->
-    <string name="timeMode_cross_winter">Mezo de vintro</string>    <!-- setting -->
-    <string name="timeMode_cross_winter_short">Vintr-mezo</string>     <!-- setting -->
+    <string name="timeMode_cross_midwinter">Mezo de vintro</string>      <!-- setting -->
+    <string name="timeMode_cross_midwinter_short">Imbolko</string>       <!-- setting -->
+    <string name="timeMode_cross_midsummer">Mezo de somero</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer_short">Lunaso</string>     <!-- setting -->
+    <string name="timeMode_cross_midspring">Mezo de printempo</string>     <!-- setting -->
+    <string name="timeMode_cross_midspring_short">Belteno</string>     <!-- setting -->
+    <string name="timeMode_cross_midautumnal">Mezo de aŭtuno</string>    <!-- setting -->
+    <string name="timeMode_cross_midautumnal_short">Saveno</string>     <!-- setting -->
 
     <string name="timeMode_moon">Luno</string>                                          <!-- label -->
     <string name="timeMode_moon_new">Nova Luno</string>                                  <!-- setting -->
@@ -483,6 +486,8 @@
     <string name="locationMode_current">Aktuala (laste konata)</string>  <!-- setting -->
     <string name="locationMode_custom">Propra</string>           <!-- setting -->
 
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Permeso por determini pozicion estas necesa por aktualigi vian nunan lokon.</string>           <!-- snackbar text -->
+
     <string name="configLabel_location">Lokoj</string>              <!-- group title -->
     <string name="configLabel_location_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_location_lat">Latitudo:</string>                  <!-- edittext label -->
@@ -534,8 +539,8 @@
     <string name="calendarMode_ethiopian">Etiopa</string>
     <string name="calendarMode_gregorian">Gregoria</string>
     <string name="calendarMode_hebrew">Juda (Hebrea)</string>
-    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
-    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_diyanet">Islama (turka)</string>
+    <string name="calendarMode_hijri_umalqura">Islama (Umm al-Qura)</string>
     <string name="calendarMode_julian">Julia</string>
     <string name="calendarMode_persian">Persa (Irana)</string>
     <string name="calendarMode_thaisolar">Tajlanda suna</string>
@@ -559,6 +564,7 @@
     <string name="compareMode_tomorrow">Morgaŭ</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Kompari kun:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Montri komparon</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Kompari kvanton de taglumo hodiaŭ kun hieraŭ aŭ moragaŭ.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">antaŭa</string>                   <!-- setting -->
@@ -643,6 +649,12 @@
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
+    <string name="widgetThemes_dark">Malhela</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark_transparent">Malhela (travidebla)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_dark_translucent">Malhela (duon-travidebla)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_light">Hela</string>                              <!-- default widget theme name -->
+    <string name="widgetThemes_light_transparent">Hela (travidebla)</string>    <!-- default widget theme name -->
+
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (kopio)</string>                            <!-- copied theme name (display string) -->
@@ -700,6 +712,9 @@
     <string name="configLabel_themeColorMoonWaning">Koloro de malkreskanta</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Koloro de plenluno</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Koloro de novluno</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Plenluno (teksto)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">Novluno (teksto)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -964,6 +979,12 @@
     <string name="help_battery_optimization">Estas konsilinde agordi la aplikaĵon <xliff:g id="appName">%s</xliff:g> kiel “ne optimumigitan”.</string>
     <string name="help_battery_optimization_aggressive">Tio ĉi estas aparato <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, kiu povas bezoni plian agordadon por funkcii ĝuste.</string>
 
+    <string name="configLabel_alarms_autostart">Memstarto</string>
+    <string name="configLabel_alarms_autostart_on">jes</string>
+    <string name="configLabel_alarms_autostart_off">ne.\nAlarmoj povos ne funkcii post restarto.</string>
+    <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w] Memstarto estas malŝaltita!\nAlarmoj povos ne funkcii post restarto.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+
     <string name="configLabel_alarms_notifications">Sciigoj</string>
     <string name="configLabel_alarms_notifications_on">Aktivaj</string>
     <string name="configLabel_alarms_notifications_off">Malaktivaj.\nAlarmoj povas ne vidiĝi ĝuste.</string>
@@ -1058,6 +1079,50 @@
     <string name="configLabel_widgetListHelp_summary">Montri helpon pri fenestraĵoj</string>
     <string name="configLabel_widgetList_emptyMsg">Neniu fenestraĵo</string>          <!-- a label that is displayed in place of an empty listview -->
 
+    <string name="configAction_createBackup">Fari sekurkopion</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="configAction_restoreBackup">Restarigi sekurkopion</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarmoj</string>
+    <string name="restorebackup_dialog_item_appsettings">Agordoj pri aplikaĵo</string>
+    <string name="restorebackup_dialog_item_widgetsettings">Agordoj pri fenestraĵoj</string>
+    <string name="restorebackup_dialog_item_widgetthemes">Etosoj de fenestraĵoj</string>
+    <string name="restorebackup_dialog_item_placeitems">Lokoj</string>
+    <string name="restorebackup_dialog_item_eventitems">Okazaĵoj</string>
+    <string name="restorebackup_dialog_item_actions">Agoj</string>
+    <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
+    <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
+
+    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="exportwidget_dialog_title">Elporti agordojn</string>
+    <string name="exportwidget_dialog_message">Elportado de agordoj pri fenestraĵoj al dosiero.</string>
+    <string name="importwidget_dialog_title">Enporti agordojn</string>
+    <string name="importwidget_dialog_message">Enportado de agordoj pri fenestraĵoj el dosiero.</string>
+    <string name="importwidget_dialog_title1">Trovis agordojn,\nsed por aliaj fenestraĵoj…</string>
+    <string name="importwidget_dialog_title2">Trovis plurajn agordojn…</string>
+    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="importwidget_dialog_item_unknown">(nekonata)</string>   <!-- shown as item when type cannot be determined -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restarigi sekurkopion</b>. Enportotaj agordoj estos konservitaj nun kaj restarigitaj poste – se petitaj de la aplikaĵlanĉilo.<br/>]]></string>
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Konjekti</b>. Enportotaj agordoj estos aplikitaj al la ekzistantaj fenestraĵoj laŭ speco.<br/>]]></string>
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Senpere enporti</b>. Enportotaj agordoj estos senpere aplikitaj. Funkcias ĝuste nur se identigiloj de fenestraĵoj ne ŝanĝiĝis.<br/>]]></string>
+    <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+    
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Forviŝi</b>. Alarmoj estos forigitaj antaŭ enporti ilin el sekurkopio.<br/>]]></string>
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Teni ekzistantajn</b>. La ekzistantaj alarmoj teniĝos (povas kaŭzi duobligitajn alarmojn).<br/>]]></string>
+
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Forviŝi</b>. Lokoj estos forigitaj antaŭ enporti ilin el sekurkopio.<br/>]]></string>
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Teni ekzistantajn</b>. Ekzistantaj lokoj teniĝos (povas kaŭzi duobligitajn lokojn).<br/>]]></string>
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignori ekzistantajn</b>. Nur neekzistantaj lokoj estos aldonitaj (ignori ekzistantajn).<br/>]]></string>
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Superskribi ekzistantajn</b>. Nur ekzistantaj lokoj estos ĝisdatigitaj.<br/>]]></string>
+
+    <plurals name="itemsPlural">
+        <item quantity="one">%d objekto</item>
+        <item quantity="other">%d objektoj</item>
+    </plurals>
+    <plurals name="widgetPlural">
+        <item quantity="one">%d fenestraĵo</item>
+        <item quantity="other">%d fenestraĵoj</item>
+    </plurals>
+
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Administri lokojn</string>             <!-- group title -->
@@ -1080,6 +1145,24 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarkto</string>
+    <string name="place_label_AF">Afriko</string>
+    <string name="place_label_AS">Azio</string>
+    <string name="place_label_AS_CN">Azio (Ĉinujo)</string>
+    <string name="place_label_AS_IN">Azio (Hindujo)</string>
+    <string name="place_label_AS_JP">Azio (Japanujo)</string>
+    <string name="place_label_AS_SA">Azio (Sauda Arabujo)</string>
+    <string name="place_label_AS_VN">Azio (Vjetnamujo)</string>
+    <string name="place_label_EU">Eŭropo</string>
+    <string name="place_label_EU_ES">Eŭropo (Hispanujo)</string>
+    <string name="place_label_EU_UK">Eŭropo (Britujo)</string>
+    <string name="place_label_NA">Nordameriko</string>
+    <string name="place_label_NA_CA">Nordameriko (Kanado)</string>
+    <string name="place_label_NA_US">Nordameriko (Usono)</string>
+    <string name="place_label_OC">Oceanio</string>
+    <string name="place_label_SA">Sudameriko kaj Centra Ameriko</string>
+    <string name="place_label_other">Aliaj</string>
+
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Vidigo</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
@@ -1100,11 +1183,14 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Montri lunajn informojn</string>
-    <string name="configLabel_ui_showmoon_summary">Montri tempojn de lun-leviĝo, lun-subiro, fazon kaj prilumecon.</string>
+    <string name="configLabel_ui_showmoon_summary">Luno: montri tempojn de leviĝo, subiro, fazon kaj prilumecon.</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Montri plej(mal)supron de Luno</string>
     <string name="configLabel_ui_showmoon_noon_summary">Montri plejsupron kaj plejmalsupron de Luno en la dialogujo “lunaj informoj”.</string>
+
+    <!-- App Setting: Moon Phase Columns -->
+    <string name="configLabel_ui_showmoon_phase_columns">Kolumnoj (fazoj)</string>
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Jarsezon-mezoj</string>
@@ -1149,14 +1235,14 @@
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Hela etoso</string>
     <string name="appThemes_darkTheme">Malhela etoso</string>
-    <string name="appThemes_nightMode">hela / malhela (dum nokta reĝimo)</string>
-    <string name="appThemes_systemDefault">laŭ operaciumo</string>
-    <string name="appThemes_systemDefault1">kontrasta (laŭ operaciumo)</string>
-    <string name="appThemes_darkTheme1">kontrasta (malhela)</string>
-    <string name="appThemes_lightTheme1">kontrasta (hela)</string>
+    <string name="appThemes_nightMode">Hela / Malhela (dum nokta reĝimo)</string>
+    <string name="appThemes_systemDefault">Laŭ operaciumo</string>
+    <string name="appThemes_systemDefault1">Kontrasta (laŭ operaciumo)</string>
+    <string name="appThemes_darkTheme1">Kontrasta (malhela)</string>
+    <string name="appThemes_lightTheme1">Kontrasta (hela)</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>hela</item>
-        <item>malhela</item>
+        <item>Hela</item>
+        <item>Malhela</item>
         <item>@string/appThemes_nightMode</item>
         <item>@string/appThemes_systemDefault</item>
     </string-array>
@@ -1446,6 +1532,7 @@
         <item>Nederlanda</item>
         <item>Ĉeĥa</item>
         <item>Ĉina simpligita</item>
+        <item>Araba</item>
     </string-array>
 
     <!-- position formats -->
@@ -1502,8 +1589,9 @@
     <string name="gps_dialog_cancel">Ne</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Pozicio agordita</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_found">Pozicio determinita</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_set">Agordita pozicio</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Antaŭa pozicio</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="gps_lastfix_title_found">Aktuala pozicio</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Determinado de pozicio</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Pozici-trova servo ne povas determini vian aktualan pozicion, reagordante al la lasta konata pozicio.</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">Aktualigo de via pozicio ĉesigita.</string> <!-- displayed briefly when gps refresh cancelled -->
@@ -1573,8 +1661,8 @@
 
     <!-- Dialog: Export -->
     <string name="msg_export_success">Provizore kopiita al <xliff:g id="filepath">%s</xliff:g></string>
-    <string name="msg_export_failure">Eksporti al <xliff:g id="filepath">%s</xliff:g> malsukcesis!</string>
-    <string name="msg_export_to">Eksporti per</string>  <!-- title displayed over "share action" chooser -->
+    <string name="msg_export_failure">Elportado al <xliff:g id="filepath">%s</xliff:g> malsukcesis!</string>
+    <string name="msg_export_to">Elporti per</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
     <string name="themesimport_dialog_title">Enporti etosojn</string>
@@ -1583,6 +1671,7 @@
     <string name="msg_import_success">Enportis <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Fiaskis enporti el <xliff:g id="filepath">%s</xliff:g>!</string>
     <string name="msg_import_noresults">Enportis nenion; ne trovis novajn etosojn.</string>
+    <string name="msg_import_label_file">dosiero</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">
         <item quantity="one">%d etoson</item>
@@ -1620,11 +1709,15 @@
     <string name="app_shortdesc">Montras tempojn de lumadoj de Suno kaj Luno.</string>
     <string name="app_support_url"><![CDATA[
         <b>Subteno:</b> vizitu la
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
+        <a href="%1$s">erar-spurilon</a> por raporti problemon.
+    ]]></string>
+    <string name="app_donate_url"><![CDATA[
+        La aplikaĵo %s estas disponebla senpage, sed se ĝi utilas al vi, bonvolu
+        <a href="%2$s">konsideri donaci ajnan monkvanton</a>.
     ]]></string>
     <string name="app_license_about">La aplikaĵo Suntempoj estas libera kaj malfermkoda programaro.</string>   <!-- displayed by welcome dialog -->-->
     <string name="app_legal1"><![CDATA[
-        Aŭtorrajto &#169 2014-2023 Forrest GUICE <br />
+        Aŭtorrajto &#169 2014-2024 Forrest GUICE <br />
         Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
 
@@ -1715,10 +1808,10 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Mezo de printempo:</b> mezpunkto inter vintra sunekstremo kaj printempa tegnoktegaleco; okazas en <em>Februaro</em> sur la norda duonsfero kaj en <em>Aŭgusto</em> sur la suda duonsfero.<br/><br/>
-          <b>Mezo de somero:</b> mezpunkto inter printempa tagnoktegaleco kaj somera sunekstremo; okazas en <em>Majo</em> sur la norda duonsfero kaj en <em>Novembro</em> sur la suda duonsfero.<br/><br/>
-          <b>Mezo de aŭtuno:</b> mezpunkto inter somera sunekstremo kaj aŭtuna tagnoktegaleco; okazas en <em>Aŭgusto</em> sur la norda duonsfero kaj en <em>Februaro</em> sur la suda duonsfero.<br/><br/>
-          <b>Mezo de vintro:</b> mezpunkto inter aŭtuna tagnoktegaleco kaj vintra sunekstremo; okazas en <em>Novembro</em> sur la norda duonsfero kaj en <em>Majo</em> sur la suda duonsfero.<br/>
+          <b>Mezo de astronomia vintro:</b> mezpunkto inter vintra sunekstremo kaj printempa tegnoktegaleco; okazas en <em>Februaro</em> sur la norda duonsfero kaj en <em>Aŭgusto</em> sur la suda duonsfero. Koincidas kun la vika festo Imbolko.<br/><br/>
+          <b>Mezo de astronomia printempo:</b> mezpunkto inter printempa tagnoktegaleco kaj somera sunekstremo; okazas en <em>Majo</em> sur la norda duonsfero kaj en <em>Novembro</em> sur la suda duonsfero. Koincidas kun la vika festo Belteno.<br/><br/>
+          <b>Mezo de astronomia somero:</b> mezpunkto inter somera sunekstremo kaj aŭtuna tagnoktegaleco; okazas en <em>Aŭgusto</em> sur la norda duonsfero kaj en <em>Februaro</em> sur la suda duonsfero. Koincidas kun la vika festo Lunaso.<br/><br/>
+          <b>Mezo de astronomia aŭtuno:</b> mezpunkto inter aŭtuna tagnoktegaleco kaj vintra sunekstremo; okazas en <em>Novembro</em> sur la norda duonsfero kaj en <em>Majo</em> sur la suda duonsfero. Koincidas kun la vika festo Saveno.<br/>
     ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[
@@ -1815,10 +1908,10 @@
     <b>Ekstraj:</b> ĉeno enhavanta pliajn valorojn apartigitajn per la signo <em>&amp;</em>. Subtenas <em>%a</em>nstataŭigojn.<br/><br/>Valoroj povas esti <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> aŭ String. <small>ekz. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>]]></string>
     <string name="help_widgetlist"><![CDATA[
           Por <b>aldoni novan fenestraĵon</b>, iru al la ĉefekrano.<br/><br/>
-          Por <b>reagordi ekzistan fenestraĵon</b>, elektu ĝin el la jena listo.<br/>
+          Por <b>reagordi ekzistantan fenestraĵon</b>, elektu ĝin el la jena listo.<br/>
     ]]></string>
     <string name="help_themelist">
-          [Icon Add] Krei novan etoson aŭ [Icon Copy] kopii ekzistan.\n
+          [Icon Add] Krei novan etoson aŭ [Icon Copy] kopii ekzistantan.\n
           \n
           [Icon Edit] Redakti aŭ [Icon Delete] forigi etosojn.\n
           Oni ne povas modifii [Icon Default] implicitajn etosojn.

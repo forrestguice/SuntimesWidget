@@ -2,7 +2,7 @@
 
 1. [Donations](#donations)
 2. [Bug Reports and Feature Requests](#bug-reports-and-feature-requests)
-3. [Spread the Word](#spread-the-word)
+3. [Spread the Word](#spread-the-word)
 4. [Translations](#translations)
 5. [Plugins and Addons](#plugins-and-addons)
 6. [Other](#other)

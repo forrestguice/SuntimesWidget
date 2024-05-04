@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -168,7 +169,12 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
 
         Context context = contextRef.get();
         SuntimesEquinoxSolsticeData data = initData(context, position);
-        holder.button_menu.setOnClickListener(onMenuClick(holder.button_menu, position, data.timeMode(), data.eventCalendarThisYear().getTimeInMillis()));
+        Calendar calendar = data.eventCalendarThisYear();
+        if (calendar == null) {
+            calendar = Calendar.getInstance();
+            Log.e("DEBUG", "calendar is null!");
+        }
+        holder.button_menu.setOnClickListener(onMenuClick(holder.button_menu, position, data.timeMode(), calendar.getTimeInMillis()));
     }
 
     private void detachListeners(EquinoxDataViewHolder holder)
@@ -200,14 +206,14 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     protected Integer selected_position = null;
 
     private View.OnClickListener onMenuClick(final View v, final int position, final WidgetSettings.SolsticeEquinoxMode selection, final long selectionTime) {
-        return new View.OnClickListener() {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (adapterListener != null) {
                     adapterListener.onMenuClick(v, position, selection, selectionTime);
                 }
             }
-        };
+        });
     }
 
     public int highlightNote(Context context)
