@@ -654,7 +654,7 @@
     <string name="compareMode_tomorrow">الغد</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">المقارنة مع</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">إظهار المقارنة</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">قارن كمية الضوء لهذا اليوم مع اليوم الحالي أو الغد.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">قارن كمية الضوء لهذا اليوم مع اليوم الحالي أو الغد.</string>  <!-- checkbox label -->  <!-- TODO: verify/fix (the original `en` value contained a typo) ; this should read "Compare the amount of daylight today against yesterday or tomorrow." -->
 
     <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
         <item>@string/compareMode_yesterday</item>

@@ -565,7 +565,7 @@
     <string name="compareMode_tomorrow">Demà</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Comparar amb:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Mostrar comparació</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->

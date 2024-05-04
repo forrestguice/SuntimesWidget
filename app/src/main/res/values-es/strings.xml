@@ -562,7 +562,7 @@
     <string name="compareMode_tomorrow">Mañana</string>                       
     <string name="configLabel_general_compareMode">Comparar con:</string>
     <string name="configLabel_general_showComparison">Mostrar comparación</string>
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
 
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->

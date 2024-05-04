@@ -631,7 +631,7 @@
     <string name="compareMode_tomorrow">Tomorrow</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Compare Against</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->
 
     <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
         <item>@string/compareMode_yesterday</item>
