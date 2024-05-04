@@ -26,7 +26,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -45,8 +44,8 @@ import java.lang.ref.WeakReference;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesNavigation
 {
-    private static int anim_in = R.anim.fade_in;
-    private static int anim_out = R.anim.fade_in;
+    private static int anim_in = R.anim.transition_swap_in;
+    private static int anim_out = R.anim.transition_swap_out;
 
     private WeakReference<Activity> activityRef;
 
