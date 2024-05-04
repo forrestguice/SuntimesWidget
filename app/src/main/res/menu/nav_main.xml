@@ -6,7 +6,7 @@
 
         <item android:id="@+id/action_suntimes"
             android:icon="@drawable/ic_action_suntimes"
-            android:title="@string/app_name" />
+            android:title="@string/configAction_clock" />
 
         <!--<item android:id="@+id/action_worldclock"
             android:icon="@drawable/ic_action_time"

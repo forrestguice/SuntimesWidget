@@ -129,49 +129,39 @@ public class SuntimesNavigation
             if (activity != null)
             {
                 closeNavigationDrawer();
-                switch (item.getItemId())
-                {
-                    case R.id.action_suntimes:
-                        activity.getWindow().getDecorView().postDelayed(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
+
+                final int itemID = item.getItemId();
+                activity.getWindow().getDecorView().postDelayed(
+                        new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                switch (itemID)
+                                {
+                                    case R.id.action_suntimes:
                                         showSuntimes(activity);
-                                    }
-                                }, 250);
-                        return true;
+                                        break;
 
-                    case R.id.action_alarms:
-                        activity.getWindow().getDecorView().postDelayed(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
+                                    case R.id.action_alarms:
                                         showSuntimesAlarms(activity);
-                                    }
-                                }, 250);
-                        return true;
+                                        break;
 
-                    case R.id.action_settings:
-                        activity.getWindow().getDecorView().postDelayed(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
+                                    case R.id.action_settings:
                                         showSettings(activity);
-                                    }
-                                }, 250);
-                        return true;
+                                        break;
 
-                    case R.id.action_about:
-                        activity.getWindow().getDecorView().postDelayed(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
+                                    case R.id.action_about:
                                         showAbout(activity);
-                                    }
-                                }, 250);
-                        return true;
+                                        break;
+                                }
+                            }
+                        }, 250);
 
-                    default: return false;
+                for (int navItemID : NAV_MENU_ITEMS) {
+                    if (itemID == navItemID) {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -240,8 +230,11 @@ public class SuntimesNavigation
         overridePendingTransition(activity);
     }
 
-
-    public static void updateNavMenuItems(Context context, Menu menu)
+    /**
+     * updates navigation items in overflow menus; with simple navigation these items are
+     * hidden (shown in the sidebar instead).
+     */
+    public static void updateMenuNavigationItems(Context context, Menu menu)
     {
         if (menu != null && context != null)
         {
@@ -255,7 +248,10 @@ public class SuntimesNavigation
             }
         }
     }
+
     public static final int[] NAV_MENU_ITEMS = new int[] {
+            R.id.action_suntimes,
+            R.id.action_alarms,
             R.id.action_settings,
             R.id.action_about
     };

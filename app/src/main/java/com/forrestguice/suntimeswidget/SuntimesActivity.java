@@ -1163,7 +1163,7 @@ public class SuntimesActivity extends AppCompatActivity
                 }
             }
 
-            SuntimesNavigation.updateNavMenuItems(context, actionBarMenu);
+            SuntimesNavigation.updateMenuNavigationItems(context, actionBarMenu);
         }
     }
 

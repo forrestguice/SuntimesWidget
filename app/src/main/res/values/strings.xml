@@ -42,6 +42,7 @@
     <string name="configAction_overflow">More</string>
     <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
     <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
+    <string name="configAction_clock">Clock</string>    <!-- TODO -->
     <string name="configAction_options">Options</string>
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
@@ -392,7 +393,7 @@
 
     <!-- Setting: navigation -->
     <string name="configLabel_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode">Navigation</string>      <!-- spinner label -->    <!-- TODO -->
+    <string name="configLabel_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
 
     <string name="configLabel_navMode_simple">Simple (legacy)</string>   <!-- TODO -->
     <string name="configLabel_navMode_sidebar">Sidebar</string>   <!-- TODO -->

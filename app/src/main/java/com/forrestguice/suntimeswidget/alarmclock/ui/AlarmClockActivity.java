@@ -1045,7 +1045,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.alarmclock, menu);
-        SuntimesNavigation.updateNavMenuItems(this, menu);
+        SuntimesNavigation.updateMenuNavigationItems(this, menu);
         return true;
     }
 
