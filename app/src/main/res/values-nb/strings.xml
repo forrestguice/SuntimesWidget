@@ -576,7 +576,7 @@
     <string name="compareMode_tomorrow">I morgen</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Sammenlign med:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Vis sammenligning</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Nylig hendelse</string>                   <!-- setting -->
