@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -121,6 +122,18 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID = "app_alarms_systemtz_id";
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET = "app_alarms_systemtz_offset";
 
+    public static final String PREF_KEY_ALARM_BRIGHTMODE = "app_alarms_bright";
+    public static final boolean PREF_DEF_ALARM_BRIGHTMODE = true;
+
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_FADEIN = "app_alarms_bright_fadeinMillis";
+    public static final int PREF_DEF_ALARM_BRIGHTMODE_FADEIN = 1000 * 60;   // 60 s
+
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR = "app_alarms_bright_colorend";
+    public static final int PREF_DEF_ALARM_BRIGHTMODE_STARTCOLOR = Color.BLACK;
+
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR = "app_alarms_bright_colorstart";
+    public static final int PREF_DEF_ALARM_BRIGHTMODE_ENDCOLOR = Color.WHITE;
+
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
     public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
 
@@ -155,6 +168,7 @@ public class AlarmSettings
             PREF_KEY_ALARM_ALLRINGTONES, PREF_KEY_ALARM_SHOWLAUNCHER,
             PREF_KEY_ALARM_POWEROFFALARMS, PREF_KEY_ALARM_UPCOMING_ALARMID,
             PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET,
+            PREF_KEY_ALARM_BRIGHTMODE, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR,
             PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_DISMISS_CHALLENGE,
             PREF_KEY_ALARM_SORT, PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
             PREF_KEY_ALARM_BOOTCOMPLETED, PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, PREF_KEY_ALARM_BOOTCOMPLETED_DURATION, PREF_KEY_ALARM_BOOTCOMPLETED_RESULT,
@@ -169,13 +183,15 @@ public class AlarmSettings
             PREF_KEY_ALARM_SNOOZE, PREF_KEY_ALARM_SNOOZE_LIMIT,
             PREF_KEY_ALARM_UPCOMING, PREF_KEY_ALARM_AUTODISMISS,
             PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_SORT,
+            PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR,
     };
     public static final String[] BOOL_KEYS = new String[]
     {
             PREF_KEY_ALARM_AUTOENABLE, PREF_KEY_ALARM_AUTOVIBRATE,
             PREF_KEY_ALARM_ALLRINGTONES, PREF_KEY_ALARM_SHOWLAUNCHER, PREF_KEY_ALARM_POWEROFFALARMS,
             PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
-            PREF_KEY_ALARM_BOOTCOMPLETED_RESULT
+            PREF_KEY_ALARM_BOOTCOMPLETED_RESULT,
+            PREF_KEY_ALARM_BRIGHTMODE,
     };
 
     public static PrefTypeInfo getPrefTypeInfo()
@@ -384,6 +400,36 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(PREF_KEY_ALARM_ALLRINGTONES, PREF_DEF_ALARM_ALLRINGTONES);
+    }
+
+    public static boolean loadPrefAlarmBrightMode(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_BRIGHTMODE, PREF_DEF_ALARM_BRIGHTMODE);
+    }
+
+    public static long loadPrefAlarmBrightFadeIn(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
+    }
+
+    public static int[] loadPrefAlarmBrightColors(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return new int[] {
+                    prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_DEF_ALARM_BRIGHTMODE_STARTCOLOR),
+                    prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR, PREF_DEF_ALARM_BRIGHTMODE_ENDCOLOR)
+            };
+        } else {
+            return new int[]{
+                    (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_DEF_ALARM_BRIGHTMODE_STARTCOLOR),
+                    (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR, PREF_DEF_ALARM_BRIGHTMODE_ENDCOLOR)
+            };
+        }
     }
 
     public static long loadPrefAlarmFadeIn(Context context)

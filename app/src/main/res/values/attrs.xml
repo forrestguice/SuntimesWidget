@@ -224,6 +224,12 @@
         <attr name="hintText" />
     </declare-styleable>
 
+    <declare-styleable name="AlarmButton">
+        <attr name="android:text" />
+        <attr name="android:src" />
+        <attr name="dragActivatedDirection" format="string" />
+    </declare-styleable>
+
     <declare-styleable name="MillisecondPickerPreference">
         <attr name="mode" format="enum">
             <enum name="seconds" value="20"/>
