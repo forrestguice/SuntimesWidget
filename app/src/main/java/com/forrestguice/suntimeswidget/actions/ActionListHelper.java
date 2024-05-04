@@ -567,6 +567,30 @@ public class ActionListHelper
                 } else if (item.hasTag(SuntimesActionsContract.TAG_SUNTIMES)) {
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
 
+                } else if (item.hasTag(SuntimesActionsContract.TAG_CALENDAR)) {
+                    int[] attrs = { R.attr.icActionCalendar };
+                    TypedArray a = getContext().obtainStyledAttributes(attrs);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_calendar)));
+                    a.recycle();
+
+                } else if (item.hasTag(SuntimesActionsContract.TAG_LOCATION)) {
+                    int[] attrs = { R.attr.icActionPlace };
+                    TypedArray a = getContext().obtainStyledAttributes(attrs);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_place)));
+                    a.recycle();
+
+                } else if (item.hasTag(SuntimesActionsContract.TAG_ALARM)) {
+                    int[] attrs = { R.attr.icActionAlarm };
+                    TypedArray a = getContext().obtainStyledAttributes(attrs);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_alarms)));
+                    a.recycle();
+
+                } else if (item.hasTag(SuntimesActionsContract.TAG_SETTINGS)) {
+                    int[] attrs = { R.attr.icActionSettings };
+                    TypedArray a = getContext().obtainStyledAttributes(attrs);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_settings)));
+                    a.recycle();
+
                 } else {
                     int[] attrs = { R.attr.icActionExtension };
                     TypedArray a = getContext().obtainStyledAttributes(attrs);

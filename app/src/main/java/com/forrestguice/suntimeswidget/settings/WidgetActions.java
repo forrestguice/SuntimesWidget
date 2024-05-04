@@ -27,6 +27,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.CalendarContract;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -57,7 +59,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_ALARM;
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_CALENDAR;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_DEFAULT;
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_LOCATION;
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_SETTINGS;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_SUNTIMES;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_SUNTIMESALARMS;
 
@@ -801,17 +807,29 @@ public class WidgetActions
         SHOW_DIALOG_MOON("Suntimes", "Moon Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         SHOW_DIALOG_SUN("Suntimes", "Sun Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
-        OPEN_ALARM_LIST("Suntimes Alarms", "Alarm List", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        OPEN_ALARM_LIST("Alarms", "Alarm List", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
         OPEN_THEME_LIST("Suntimes", "Theme List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         OPEN_ACTION_LIST("Suntimes", "Action List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         OPEN_WIDGET_LIST("Suntimes", "Widget List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         OPEN_SETTINGS("Suntimes", "Settings", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
-        SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT}, true),
-        SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true),
-        SNOOZE_ALARM("Suntimes Alarms", "Snooze", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
-        DISMISS_ALARM("Suntimes Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
-        UPDATE_WIDGETS("Suntimes", "Update widgets", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true);
+        SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT, TAG_CALENDAR}, true),
+        SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT, TAG_LOCATION}, true),
+        SNOOZE_ALARM("Alarms", "Snooze", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
+        DISMISS_ALARM("Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
+        UPDATE_WIDGETS("Suntimes", "Update widgets", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+
+        CREATE_CALENDAR_EVENT_RISING("Calendar Event", "Create a calendar event (rising time)", new String[] {TAG_DEFAULT, TAG_CALENDAR}, true),
+        CREATE_CALENDAR_EVENT_SETTING("Calendar Event", "Create a calendar event (setting time)", new String[] {TAG_DEFAULT, TAG_CALENDAR}, true),
+
+        SUNTIMES_ALARM_LIST("Suntimes Alarms", "Alarm List", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        OPEN_TIMER_LIST("Alarms", "Timer List", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
+
+        ANDROID_SETTINGS_DATE("Android", "Date Settings", new String[] {TAG_DEFAULT, TAG_SETTINGS}, true),
+        ANDROID_SETTINGS_DISPLAY("Android", "Display Settings", new String[] {TAG_DEFAULT, TAG_SETTINGS}, true),
+        ANDROID_SETTINGS_LOCALE("Android", "Locale Settings", new String[] {TAG_DEFAULT, TAG_SETTINGS}, true),
+        ANDROID_SETTINGS_LOCATION("Android", "Location Settings", new String[] {TAG_DEFAULT, TAG_SETTINGS}, true),
+        ;
 
         private String title, desc;
         private String[] tags;
@@ -856,7 +874,7 @@ public class WidgetActions
             SuntimesAction[] actions = SuntimesAction.values();  // TODO
             String[] titles = context.getResources().getStringArray(R.array.tapActions_titles);
             String[] desc = context.getResources().getStringArray(R.array.tapActions_display);
-            for (int i=0; i<desc.length; i++)
+            for (int i=0; i < desc.length; i++)
             {
                 if (i < actions.length)
                 {
@@ -912,7 +930,9 @@ public class WidgetActions
                     launchString = WidgetThemeListActivity.class.getName();
                     break;
 
-                case OPEN_ALARM_LIST: launchString = AlarmClockActivity.class.getName(); break;
+                case SUNTIMES_ALARM_LIST: launchString = AlarmClockActivity.class.getName(); break;
+                case OPEN_ALARM_LIST: launchString = null; launchAction = "android.intent.action.SHOW_ALARMS"; break;
+                case OPEN_TIMER_LIST: launchAction = "android.intent.action.SHOW_TIMERS"; break;
                 case OPEN_WIDGET_LIST: launchString = SuntimesWidgetListActivity.class.getName(); break;
                 case OPEN_SETTINGS: launchString = SuntimesSettingsActivity.class.getName(); break;
 
@@ -945,6 +965,26 @@ public class WidgetActions
                     launchAction = SuntimesActivity.ACTION_CARD_SHOW;
                     launchExtras = SuntimesActivity.EXTRA_SHOW_DATE + "=%dm";
                     break;
+
+                case CREATE_CALENDAR_EVENT_RISING:
+                case CREATE_CALENDAR_EVENT_SETTING:
+                    launchString = null;
+                    launchAction = Intent.ACTION_INSERT;
+                    launchData = CalendarContract.Events.CONTENT_URI.toString();
+                    if (Build.VERSION.SDK_INT >= 14)
+                    {
+                        String eventString = (this == CREATE_CALENDAR_EVENT_RISING ? "sr" : "ss");
+                        launchExtras = CalendarContract.Events.TITLE  + "=%M"
+                                + "&" + CalendarContract.Events.EVENT_LOCATION + "=%loc"
+                                + "&" + CalendarContract.EXTRA_EVENT_BEGIN_TIME + "=%em@" + eventString + "L"
+                                + "&" + CalendarContract.EXTRA_EVENT_END_TIME + "=%em@" + eventString + "L";
+                    }
+                    break;
+
+                case ANDROID_SETTINGS_DATE: launchString = null; launchAction = Settings.ACTION_DATE_SETTINGS; break;
+                case ANDROID_SETTINGS_DISPLAY: launchString = null; launchAction = Settings.ACTION_DISPLAY_SETTINGS; break;
+                case ANDROID_SETTINGS_LOCALE: launchString = null; launchAction = Settings.ACTION_LOCALE_SETTINGS; break;
+                case ANDROID_SETTINGS_LOCATION: launchString = null; launchAction = Settings.ACTION_LOCATION_SOURCE_SETTINGS; break;
 
                 case NOTHING:
                     launchType = null;
@@ -1024,4 +1064,5 @@ public class WidgetActions
         System.arraycopy(b, 0, result, a.length, b.length);
         return result;
     }
+
 }
