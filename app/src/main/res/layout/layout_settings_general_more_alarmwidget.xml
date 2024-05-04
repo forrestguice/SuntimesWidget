@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout android:id="@+id/check_showIcons_layout" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingTop="@dimen/settingsGroup_padding">
+
+        <CheckBox
+            android:id="@+id/check_showIcons"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Show Icons" android:textSize="?attr/text_size_small" />   <!-- TODO: i18n -->
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/check_enabledOnly_layout" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingTop="@dimen/settingsGroup_padding">
+
+        <CheckBox
+            android:id="@+id/check_enabledOnly"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Show enabled items only" android:textSize="?attr/text_size_small" />   <!-- TODO: i18n -->
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/choose_alarmtypes_layout" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingRight="8dp" android:paddingLeft="8dp" android:layout_marginTop="@dimen/settingsGroup_padding"
+        android:gravity="center_vertical">
+
+        <LinearLayout style="@style/ChipTray"
+            android:animateLayoutChanges="true"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <TextView style="@style/ChipText1"
+                android:id="@+id/chip_alarmtypes_alarm"
+                android:drawableStart="?attr/icActionAlarm"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/alarmMode_alarm" android:textSize="?attr/text_size_small" />
+
+            <TextView style="@style/ChipText1"
+                android:id="@+id/chip_alarmtypes_notification"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:drawableStart="?attr/icActionNotification"
+                android:text="@string/alarmMode_notification" android:textSize="?attr/text_size_small" />
+
+            <View
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="0dp" />
+
+            <TextView style="@style/ChipText1" android:minHeight="32dp" android:minWidth="32dp"
+                android:id="@+id/chip_alarmtypes_add"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text=" +" android:textSize="?attr/text_size_small"
+                android:gravity="center" />   <!-- TODO: i18n -->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/spin_sortOrder_layout" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/spin_sortOrder_label" android:labelFor="@+id/spin_sortOrder"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="?attr/text_size_small"
+            android:text="Sort by" />   <!-- TODO -->
+
+        <Spinner
+            android:id="@+id/spin_sortOrder"
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:dropDownVerticalOffset="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

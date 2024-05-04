@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 
 import org.json.JSONObject;
 
@@ -536,6 +537,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId, boolean includeMetadata)
     {
         Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
+        prefTypes.putAll(AlarmWidgetSettings.getPrefTypes());
         prefTypes.putAll(CalendarSettings.getPrefTypes());
         prefTypes.putAll(WidgetActions.getPrefTypes());
         prefTypes.putAll(WorldMapWidgetSettings.getPrefTypes());

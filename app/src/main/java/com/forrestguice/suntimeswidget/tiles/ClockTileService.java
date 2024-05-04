@@ -139,7 +139,7 @@ public class ClockTileService extends SuntimesTileService
             stopUpdateTask();
         }
         updateTask = updateTask(dialog);
-        handler.postDelayed(updateTask, UPDATE_RATE);
+        handler.postDelayed(updateTask, updateTaskRateMs());
     }
 
     protected void stopUpdateTask()
@@ -169,11 +169,14 @@ public class ClockTileService extends SuntimesTileService
             public void run()
             {
                 updateDialogViews(getApplicationContext(), dialog);
-                handler.postDelayed(this, UPDATE_RATE);
+                handler.postDelayed(this, updateTaskRateMs());
             }
         };
     }
     public static final int UPDATE_RATE = 3000;     // update rate: 3s
+    public int updateTaskRateMs() {
+        return UPDATE_RATE;
+    }
 
     protected SpannableStringBuilder formatDialogTitle(Context context)
     {

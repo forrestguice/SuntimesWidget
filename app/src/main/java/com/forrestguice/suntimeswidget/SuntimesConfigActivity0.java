@@ -83,6 +83,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.actions.EditActionView;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
@@ -171,8 +172,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
 
-    protected TextView label_1x1mode, label_2x1mode, label_3x1mode, label_3x2mode, label_3x3mode;
-    protected Spinner spinner_1x1mode, spinner_2x1mode, spinner_3x1mode, spinner_3x2mode, spinner_3x3mode;
+    protected TextView label_1x1mode, label_2x1mode, label_2x2mode, label_3x1mode, label_3x2mode, label_3x3mode;
+    protected Spinner spinner_1x1mode, spinner_2x1mode, spinner_2x2mode, spinner_3x1mode, spinner_3x2mode, spinner_3x3mode;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_scaleText;
     protected CheckBox checkbox_scaleBase;
@@ -298,6 +299,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         saveTimezoneSettings(context);
         saveAppearanceSettings(context);
         saveActionSettings(context);
+        saveMoreGeneralSettings(context);
         saveMetadata(context);
     }
 
@@ -311,6 +313,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         locationConfig.loadSettings(context);
         loadLayoutSettings(context);
         loadGeneralSettings(context);
+        loadMoreGeneralSettings(context);
         loadCalendarSettings(context);
         loadAppearanceSettings(context);
         loadTimezoneSettings(context);
@@ -448,6 +451,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
             //setConfigActivityTitle(getString(R.string.configAction_reconfigWidget));
         }
+
+        initMoreGeneralSettings(context);
 
         //
         // widget: onTap
@@ -686,7 +691,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         //
-        // widget: 1x1, 2x1, 3x1, 3x2, 3x3 widget modes
+        // widget: 1x1, 2x1, 2x2, 3x1, 3x2, 3x3 widget modes
         //
         label_1x1mode = (TextView) findViewById(R.id.appwidget_appearance_1x1mode_label);
         spinner_1x1mode = (Spinner) findViewById(R.id.appwidget_appearance_1x1mode);
@@ -695,6 +700,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         label_2x1mode = (TextView) findViewById(R.id.appwidget_appearance_2x1mode_label);
         spinner_2x1mode = (Spinner) findViewById(R.id.appwidget_appearance_2x1mode);
         initWidgetMode2x1(context);
+
+        label_2x2mode = (TextView) findViewById(R.id.appwidget_appearance_2x2mode_label);
+        spinner_2x2mode = (Spinner) findViewById(R.id.appwidget_appearance_2x2mode);
+        initWidgetMode2x2(context);
 
         label_3x1mode = (TextView) findViewById(R.id.appwidget_appearance_3x1mode_label);
         spinner_3x1mode = (Spinner) findViewById(R.id.appwidget_appearance_3x1mode);
@@ -1032,6 +1041,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // EMPTY
     }
 
+    protected void initWidgetMode2x2(Context context) {
+        // EMPTY
+    }
+    protected void loadWidgetMode2x2(Context context) {
+        // EMPTY
+    }
+    protected void saveWidgetMode2x2(Context context) {
+        // EMPTY
+    }
+
     protected void initWidgetMode3x1(Context context)
     {
         if (spinner_3x1mode != null) {
@@ -1120,6 +1139,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected View[] getSecondaryWidgetModeViews() {
         return new View[] { label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
     }
+
+    protected void initMoreGeneralSettings(final Context context) { /* EMPTY */ }
+    protected void saveMoreGeneralSettings(final Context context) { /* EMPTY */ }
+    protected void loadMoreGeneralSettings(final Context context) { /* EMPTY */ }
 
     protected void initCalendarMode(final Context context) { /* EMPTY */ }
     protected void saveCalendarSettings(Context context) {
@@ -1938,7 +1961,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_onTap.setSelection(actionMode.ordinal(supportedActionModes()));
 
         // load: launch activity
-        edit_launchIntent.loadIntent(context, appWidgetId, null);
+        edit_launchIntent.loadIntent(context, appWidgetId, null, launchActionIntentDefaults());
+    }
+
+    protected ContentValues launchActionIntentDefaults() {
+        return WidgetActions.defaultLaunchPrefValues();
     }
 
     /**
@@ -2373,6 +2400,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void hideLocationSettings()
+    {
+        View settings = findViewById(R.id.appwidget_location_layout);
+        if (settings != null) {
+            settings.setVisibility(View.GONE);
+        }
+    }
+    
     protected void hideTimeZoneSettings()
     {
         View settings = findViewById(R.id.appwidget_timezone_layout);
@@ -2580,6 +2615,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showMoreGeneralSettings(boolean showUI) {
+        View layout = findViewById(R.id.appwidget_general_moreOptions_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
      */
     protected void showOptionLocalizeHemisphere(boolean showUI) {
         View layout = findViewById(R.id.appwidget_general_localize_hemisphere_layout);
@@ -2641,6 +2686,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void showOption2x1LayoutMode(boolean show)
     {
         View layout_mode = findViewById(R.id.appwidget_appearance_2x1mode_layout);
+        if (layout_mode != null) {
+            layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    protected void showOption2x2LayoutMode(boolean show)
+    {
+        View layout_mode = findViewById(R.id.appwidget_appearance_2x2mode_layout);
         if (layout_mode != null) {
             layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
         }

@@ -34,6 +34,7 @@ import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
@@ -175,6 +176,10 @@ public class SuntimesWidget0 extends AppWidgetProvider
                 }
             }*/
 
+        } else if (action != null && action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
+            Log.d(TAG, "onReceive: suntimeswidget.alarm.ui.update :: " + getClass());
+            onAlarmUpdateUIBroadcast(context);
+
         } else if (action != null && action.equals(SUNTIMES_THEME_UPDATE)) {
             String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);
             Log.d(TAG, "onReceive: SUNTIMES_THEME_UPDATE :: " + getClass() + " :: " + themeName);
@@ -208,6 +213,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
             Log.d(TAG, "onReceive: unhandled :: " + action + " :: " + getClass());
         }
     }
+
+    protected void onAlarmUpdateUIBroadcast(Context context) {}
 
     public boolean isClickAction(String action)
     {

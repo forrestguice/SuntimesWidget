@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 
@@ -289,8 +290,8 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             default:   // backup import (writes to backup prefix, individual widgets restore themselves later when triggered)
                 c += importWidgetSettings(context, WidgetSettingsMetadata.BACKUP_PREFIX_KEY, true, report, contentValues);
                 WidgetSettingsImportTask.restoreFromBackup(context,
-                        new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID},    // these lines should be the same
-                        new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID});   // because the ids are unchanged
+                        new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID, AlarmTileService.ALARMTILE_APPWIDGET_ID},    // these lines should be the same
+                        new int[] {0, ClockTileService.CLOCKTILE_APPWIDGET_ID, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID, AlarmTileService.ALARMTILE_APPWIDGET_ID});   // because the ids are unchanged
                 break;
         }
         return c;
@@ -454,6 +455,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         widgetIds.add(0);
         widgetIds.add(ClockTileService.CLOCKTILE_APPWIDGET_ID);
         widgetIds.add(NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID);
+        widgetIds.add(AlarmTileService.ALARMTILE_APPWIDGET_ID);
 
         Map<Integer, ContentValues> suggested = new HashMap<>();
         for (Integer appWidgetId : widgetIds)

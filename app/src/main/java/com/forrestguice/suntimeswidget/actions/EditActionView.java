@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget.actions;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -633,17 +634,20 @@ public class EditActionView extends LinearLayout
      * @param context Context
      * @param id Intent id (or null)
      */
-    public void loadIntent(Context context, int appWidgetId, @Nullable String id)
+    public void loadIntent(Context context, int appWidgetId, @Nullable String id) {
+        loadIntent(context, appWidgetId, id, WidgetActions.defaultLaunchPrefValues());
+    }
+    public void loadIntent(Context context, int appWidgetId, @Nullable String id, ContentValues defaults)
     {
-        String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-        String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
-        String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
-        String packageString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
-        String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
-        String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
-        String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
-        String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
-        String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+        String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE));
+        String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC));
+        String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null, defLaunchPrefValue(defaults, ""));
+        String packageString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE));
+        String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE));
+        String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION));
+        String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA));
+        String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE));
+        String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS));
         Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         Set<String> tagSet = WidgetActions.loadActionTags(context, appWidgetId, id);
 
@@ -663,6 +667,13 @@ public class EditActionView extends LinearLayout
         lastLoadedID = id;
     }
     private String lastLoadedID = null;
+
+    public static String defLaunchPrefValue(@NonNull ContentValues values, String key)
+    {
+        if (values.containsKey(key)) {
+            return values.getAsString(key);
+        } else return WidgetActions.defaultLaunchPrefValue(key);
+    }
 
     /**
      * restoreDefaults

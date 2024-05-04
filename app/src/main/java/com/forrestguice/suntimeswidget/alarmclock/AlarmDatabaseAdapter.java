@@ -665,32 +665,39 @@ public class AlarmDatabaseAdapter
             if (rowIDs.length > 0)
             {
                 db.open();
-                Cursor cursor0 = db.getAlarm(rowIDs[0]);
-                if (cursor0 != null)
-                {
-                    cursor0.moveToFirst();
-                    if (!cursor0.isAfterLast())
-                    {
-                        ContentValues itemValues = new ContentValues();
-                        DatabaseUtils.cursorRowToContentValues(cursor0, itemValues);
-                        item = new AlarmClockItem(contextRef.get(), itemValues);
-
-                        Cursor cursor1 = db.getAlarmState(rowIDs[0]);
-                        if (cursor1 != null)
-                        {
-                            cursor1.moveToFirst();
-                            if (!cursor1.isAfterLast())
-                            {
-                                ContentValues stateValues = new ContentValues();
-                                DatabaseUtils.cursorRowToContentValues(cursor1, stateValues);
-                                item.state = new AlarmState(stateValues);
-                            }
-                            cursor1.close();
-                        }
-                    }
-                    cursor0.close();
-                }
+                item = loadAlarmClockItem(contextRef.get(), db, rowIDs[0]);
                 db.close();
+            }
+            return item;
+        }
+
+        public static AlarmClockItem loadAlarmClockItem(Context context, AlarmDatabaseAdapter db, long rowId)
+        {
+            AlarmClockItem item = null;
+            Cursor cursor0 = db.getAlarm(rowId);
+            if (cursor0 != null)
+            {
+                cursor0.moveToFirst();
+                if (!cursor0.isAfterLast())
+                {
+                    ContentValues itemValues = new ContentValues();
+                    DatabaseUtils.cursorRowToContentValues(cursor0, itemValues);
+                    item = new AlarmClockItem(context, itemValues);
+
+                    Cursor cursor1 = db.getAlarmState(rowId);
+                    if (cursor1 != null)
+                    {
+                        cursor1.moveToFirst();
+                        if (!cursor1.isAfterLast())
+                        {
+                            ContentValues stateValues = new ContentValues();
+                            DatabaseUtils.cursorRowToContentValues(cursor1, stateValues);
+                            item.state = new AlarmState(stateValues);
+                        }
+                        cursor1.close();
+                    }
+                }
+                cursor0.close();
             }
             return item;
         }
