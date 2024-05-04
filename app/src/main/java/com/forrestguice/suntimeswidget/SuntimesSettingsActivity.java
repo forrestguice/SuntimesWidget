@@ -464,7 +464,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
         {
-            if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
+            if (key.equals(AppSettings.PREF_KEY_NAVIGATION_MODE) || key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
                     || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME) || key.equals(PREF_KEY_APPEARANCE_THEME_DARK) || key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT))
             {
                 //Log.d("SettingsActivity", "theme/locale change detected; restarting activity");

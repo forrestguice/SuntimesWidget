@@ -150,6 +150,11 @@ public class UIPrefsFragment extends PreferenceFragment
             manage_events.setOrder(-91);
         }
 
+        Preference navigation = fragment.findPreference("app_navigation_mode");
+        if (navigation != null) {
+            navigation.setOnPreferenceChangeListener(onNavigationChanged(fragment.getActivity(), navigation));
+        }
+
         PreferenceCategory category = (PreferenceCategory) fragment.findPreference("custom_events");
         initPref_ui_customevents((SuntimesSettingsActivity) activity, category);
 
@@ -221,6 +226,17 @@ public class UIPrefsFragment extends PreferenceFragment
                             });
                     confirm.show();
                 }
+                return true;
+            }
+        };
+    }
+
+    protected static Preference.OnPreferenceChangeListener onNavigationChanged(final Context context, final Preference pref)
+    {
+        return new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };
