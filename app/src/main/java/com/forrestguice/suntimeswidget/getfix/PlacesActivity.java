@@ -76,6 +76,7 @@ public class PlacesActivity extends AppCompatActivity
 
         FragmentManager fragments = getSupportFragmentManager();
         list = (PlacesListFragment) fragments.findFragmentById(R.id.placesListFragment);
+        list.setDialogThemOverride(AppSettings.loadTheme(this));
         list.setFragmentListener(listFragmentListener);
 
         Intent intent = getIntent();

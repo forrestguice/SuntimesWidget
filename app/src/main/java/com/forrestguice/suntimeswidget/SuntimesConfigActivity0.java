@@ -3000,7 +3000,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.help_substitutions_url))));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.help_url) + getString(R.string.help_substitutions_path))));
         }
     };
 

@@ -21,14 +21,12 @@ package com.forrestguice.suntimeswidget.views;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Build;
+import android.preference.Preference;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.PopupMenu;
@@ -37,14 +35,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-
-import com.forrestguice.suntimeswidget.views.Toast;
-
-import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-
-import java.util.Calendar;
 
 public class ViewUtils
 {
@@ -148,38 +138,6 @@ public class ViewUtils
     }
 
     /**
-     * shareItem; copy event display string and formatted timestamp to the clipboard.
-     */
-    public static void shareItem(Context context, @Nullable String itemString, long itemMillis)
-    {
-        if (itemMillis != -1L)
-        {
-            Calendar itemTime = Calendar.getInstance();
-            itemTime.setTimeInMillis(itemMillis);
-            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
-
-            SuntimesUtils utils = new SuntimesUtils();
-            SuntimesUtils.initDisplayStrings(context);
-            String itemDisplay = context.getString(R.string.share_format, (itemString != null ? itemString : ""), utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            {
-                ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-                if (clipboard != null) {
-                    clipboard.setPrimaryClip(ClipData.newPlainText((itemString != null ? itemString : itemDisplay), itemDisplay));
-                }
-            } else {
-                android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-                if (clipboard != null) {
-                    clipboard.setText(itemDisplay);
-                }
-            }
-            Toast.makeText(context, itemDisplay, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
      * ThrottledClickListener
      */
     public static class ThrottledClickListener implements View.OnClickListener
@@ -243,6 +201,40 @@ public class ViewUtils
                 return listener.onMenuItemClick(item);
             }
             return true;
+        }
+    }
+
+    /**
+     * ThrottledPreferenceClickListener
+     */
+    public static class ThrottledPreferenceClickListener implements Preference.OnPreferenceClickListener
+    {
+        protected long delayMs;
+        protected Long previousClickAt;
+        protected Preference.OnPreferenceClickListener listener;
+
+        public ThrottledPreferenceClickListener(@NonNull Preference.OnPreferenceClickListener listener) {
+            this(listener, 1000);
+        }
+
+        public ThrottledPreferenceClickListener(@NonNull Preference.OnPreferenceClickListener listener, long delayMs)
+        {
+            this.delayMs = delayMs;
+            this.listener = listener;
+            if (listener == null) {
+                throw new NullPointerException("OnPreferenceClickListener is null!");
+            }
+        }
+
+        @Override
+        public boolean onPreferenceClick(Preference preference)
+        {
+            long currentClickAt = System.currentTimeMillis();
+            if (previousClickAt == null || Math.abs(currentClickAt - previousClickAt) > delayMs) {
+                previousClickAt = currentClickAt;
+                return listener.onPreferenceClick(preference);
+            }
+            return false;
         }
     }
 

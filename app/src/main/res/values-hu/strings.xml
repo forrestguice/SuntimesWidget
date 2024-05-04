@@ -26,6 +26,7 @@
     <string name="configAction_share">Megosztás</string>
     <string name="configAction_export">Exportálás</string>
     <string name="configAction_import">Importálás</string>
+    <string name="configAction_info">More Info</string>   <!-- TODO -->
     <string name="configAction_sunDialog">Nap helyzete</string>
     <string name="configAction_equinoxDialog">Napford. / N-É egyenl.</string>
     <string name="configAction_worldMap">Világtérkép</string>
@@ -555,7 +556,8 @@
     <string name="compareMode_yesterday">Tegnap</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Holnap</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Hasonlítsa össze:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Összehasonlítás mutatása</string>  <!-- checkbox label --> 
+    <string name="configLabel_general_showComparison">Összehasonlítás mutatása</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Legutóbbi esemény</string>                   <!-- setting -->   
@@ -703,6 +705,9 @@
     <string name="configLabel_themeColorMoonWaning">Fogyó</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Teli</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Új</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
 
     <string name="configLabel_themeColorSunrise">Napkelte</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1130,6 +1135,24 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
+    <string name="place_label_AF">Africa</string>    <!-- TODO -->
+    <string name="place_label_AS">Asia</string>    <!-- TODO -->
+    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
+    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
+    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
+    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
+    <string name="place_label_EU">Europe</string>    <!-- TODO -->
+    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
+    <string name="place_label_NA">North America</string>    <!-- TODO -->
+    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
+    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
+    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
+    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
+    <string name="place_label_other">Other</string>    <!-- TODO -->
+
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Felhasználói felület</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Megjelenítés</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
@@ -1338,6 +1361,7 @@
         <item>Holland</item>
         <item>Cseh</item>
         <item>Kínai (egyszerűsített)</item>
+        <item>Arabic</item>    <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1686,11 +1710,11 @@
     <string name="app_shortdesc">Megjeleníti a napfény- és holdfényidőket.</string> 
     <string name="app_support_url"><![CDATA[
         <b>Támogatás:</b> keresse fel a
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">problémakövetőt</a> kérések benyújtásához.
+        <a href="%1$s">problémakövetőt</a> kérések benyújtásához.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+        <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
     <string name="app_legal1"><![CDATA[
         <b>Forráskód:</b><br />

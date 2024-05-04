@@ -108,6 +108,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     public LightMapView lightmap;
     public View lightmapLayout;
 
+    public TextView txt_comparison;
+
     public int position = RecyclerView.NO_POSITION;
 
     public CardViewHolder(View view, CardAdapter.CardAdapterOptions options)
@@ -135,6 +137,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         moonClickArea = view.findViewById(R.id.moonphase_clickArea);
         moonrise = (MoonRiseSetView) view.findViewById(R.id.moonriseset_view);
         moonrise.setShowExtraField(false);
+
+        txt_comparison = (TextView) view.findViewById(R.id.text_comparison);
 
         rows = new ArrayList<>();
         rows.add(row_actual = new TimeFieldRow(view, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual));
@@ -300,6 +304,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             updateDayLengthViews(context, txt_daylength, sun.dataActual.dayLengthToday(), R.string.length_day, options.showSeconds, options.color_textTimeDelta);
             updateDayLengthViews(context, txt_lightlength, sun.dataCivil.dayLengthToday(), R.string.length_light, options.showSeconds, options.color_textTimeDelta);
 
+            if (txt_comparison != null) {
+                txt_comparison.setVisibility(options.showComparison ? View.VISIBLE : View.GONE);
+                txt_comparison.setText(options.showComparison ? comparisonDisplayString(context, sun.dataActual, options) : "");
+            }
+
             // date field
             Date data_date = sun.dataActual.date();
             DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(context.getApplicationContext());   // Apr 11, 2016
@@ -358,6 +367,14 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         //Log.d("DEBUG", "bindDataToPosition: " + sun.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
 
         toggleNextPrevButtons(position);
+    }
+
+    protected CharSequence comparisonDisplayString(Context context, SuntimesRiseSetData data, CardAdapter.CardAdapterOptions options)
+    {
+        SuntimesUtils.TimeDisplayText deltaText = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
+        String deltaString = deltaText.getValue() + " " + deltaText.getUnits();
+        String compareString = data.dayDeltaPrefix() + " " + deltaString + deltaText.getSuffix();
+        return SuntimesUtils.createBoldColorSpan(null, compareString, deltaString, options.color_textTimeDelta);
     }
 
     public void toggleNextPrevButtons(int position)

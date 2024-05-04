@@ -47,8 +47,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 
-import com.forrestguice.suntimeswidget.getfix.GetFixTask;
-import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -160,13 +159,11 @@ public class AppSettings
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
 
-    public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
-    public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
-    public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
-    public static final String PREF_KEY_GETFIX_TIME = "getFix_time";    // time of last automatic request
-
-    public static final String PREF_KEY_GETFIX_PASSIVE = "getFix_passiveMode";
-    public static final boolean PREF_DEF_GETFIX_PASSIVE = false;
+    public static final String PREF_KEY_GETFIX_MINELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MIN_ELAPSED;
+    public static final String PREF_KEY_GETFIX_MAXELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MAX_ELAPSED;
+    public static final String PREF_KEY_GETFIX_MAXAGE = LocationHelperSettings.PREF_KEY_LOCATION_MAX_AGE;
+    public static final String PREF_KEY_GETFIX_TIME = LocationHelperSettings.PREF_KEY_LOCATION_TIME;
+    public static final String PREF_KEY_GETFIX_PASSIVE = LocationHelperSettings.PREF_KEY_LOCATION_PASSIVE;
 
     public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";
     public static final boolean PREF_DEF_PLUGINS_ENABLESCAN = false;
@@ -193,14 +190,15 @@ public class AppSettings
             PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
             PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON, PREF_KEY_UI_SHOWHEADER_TEXT,
             PREF_KEY_UI_EMPHASIZEFIELD, PREF_KEY_UI_SHOWFIELDS, PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_UI_TIMEZONESORT,
-            PREF_KEY_GETFIX_MINELAPSED, PREF_KEY_GETFIX_MAXELAPSED, PREF_KEY_GETFIX_MAXAGE, PREF_KEY_GETFIX_TIME, PREF_KEY_GETFIX_PASSIVE,
-            PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG, PREF_KEY_DIALOG_DONOTSHOWAGAIN
+            PREF_KEY_GETFIX_MINELAPSED, PREF_KEY_GETFIX_MAXELAPSED, PREF_KEY_GETFIX_MAXAGE, PREF_KEY_GETFIX_PASSIVE,
+            PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG, PREF_KEY_DIALOG_DONOTSHOWAGAIN,
+            //PREF_KEY_GETFIX_TIME,
     };
     public static final String[] INT_KEYS = new String[] {
             PREF_KEY_UI_SHOWFIELDS
     };
     public static final String[] LONG_KEYS = new String[] {
-            PREF_KEY_GETFIX_TIME
+            //PREF_KEY_GETFIX_TIME    // commented; TODO: does it actually make sense to preserve this value across installations? #783
     };
     public static final String[] BOOL_KEYS = new String[]
     {
@@ -208,6 +206,28 @@ public class AppSettings
             PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
             PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_GETFIX_PASSIVE, PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG_DONOTSHOWAGAIN
     };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo()
+        {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return LONG_KEYS;
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return BOOL_KEYS;
+            }
+        };
+    }
 
     private static Map<String,Class> types = null;
     public static Map<String,Class> getPrefTypes()
@@ -217,6 +237,9 @@ public class AppSettings
             types = new TreeMap<>();
             for (String key : INT_KEYS) {
                 types.put(key, Integer.class);
+            }
+            for (String key : LONG_KEYS) {
+                types.put(key, Long.class);
             }
             for (String key : BOOL_KEYS) {
                 types.put(key, Boolean.class);
@@ -776,88 +799,6 @@ public class AppSettings
                 : (nightMode == AppCompatDelegate.MODE_NIGHT_YES) ? AppSettings.loadThemeDarkPref(context)
                 : (systemInNightMode(context) ? AppSettings.loadThemeDarkPref(context) : AppSettings.loadThemeLightPref(context));
         return ((override != null && !override.equals(THEME_DEFAULT)) ? override : null);
-    }
-
-    public static boolean lastAutoLocationIsStale(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return timeSinceLastAutoLocationRequest(context) > AppSettings.loadPrefGpsMaxAge(prefs, GetFixTask.MAX_AGE);
-    }
-    public static long timeSinceLastAutoLocationRequest(Context context) {
-        return System.currentTimeMillis() - lastAutoLocationRequest(context);
-    }
-    public static long lastAutoLocationRequest(Context context)
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getLong(PREF_KEY_GETFIX_TIME, 0);
-    }
-    public static void saveLastAutoLocationRequest(Context context, long value)
-    {
-        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        pref.putLong(PREF_KEY_GETFIX_TIME, value);
-        pref.apply();
-    }
-
-    /**
-     * @param prefs an instance of SharedPreferences
-     * @param defaultValue the default max age value if pref can't be loaded
-     * @return the gps max age value (milliseconds)
-     */
-    public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
-    {
-        int retValue;
-        try {
-            String maxAgeString = prefs.getString(PREF_KEY_GETFIX_MAXAGE, defaultValue+"");
-            retValue = Integer.parseInt(maxAgeString);
-        } catch (NumberFormatException e) {
-            Log.e("loadPrefGPSMaxAge", "Bad setting! " + e);
-            retValue = defaultValue;
-        }
-        return retValue;
-    }
-
-    /**
-     * @param prefs an instance of SharedPreferences
-     * @param defaultValue the default min elapsed value if pref can't be loaded
-     * @return the gps min elapsed value (milliseconds)
-     */
-    public static int loadPrefGpsMinElapsed(SharedPreferences prefs, int defaultValue)
-    {
-        int retValue;
-        try {
-            String minAgeString = prefs.getString(PREF_KEY_GETFIX_MINELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(minAgeString);
-        } catch (NumberFormatException e) {
-            Log.e("loadPrefGPSMinElapsed", "Bad setting! " + e);
-            retValue = defaultValue;
-        }
-        return retValue;
-    }
-
-    /**
-     * @param prefs an instance of SharedPreferences
-     * @param defaultValue the default max elapsed value if pref can't be loaded
-     * @return the gps max elapsed value (milliseconds)
-     */
-    public static int loadPrefGpsMaxElapsed(SharedPreferences prefs, int defaultValue)
-    {
-        int retValue;
-        try {
-            String maxElapsedString = prefs.getString(PREF_KEY_GETFIX_MAXELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(maxElapsedString);
-        } catch (NumberFormatException e) {
-            Log.e("loadPrefGPSMaxElapsed", "Bad setting! " + e);
-            retValue = defaultValue;
-        }
-        return retValue;
-    }
-
-    /**
-     * @return true use the passive provider (don't prompt when other providers are disabled), false use the gps/network provider (prompt when disabled)
-     */
-    public static boolean loadPrefGpsPassiveMode( Context context )
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getBoolean(PREF_KEY_GETFIX_PASSIVE, PREF_DEF_GETFIX_PASSIVE);
     }
 
     /**

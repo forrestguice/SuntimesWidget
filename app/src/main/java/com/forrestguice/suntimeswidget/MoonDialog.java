@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.moon.MoonApsisView;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -1056,7 +1057,9 @@ public class MoonDialog extends BottomSheetDialogFragment
         long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
         if (itemMillis != -1L) {
             String displayString = (eventID != null ? SolarEvents.valueOf(eventID).getLongDisplayString() : null);
-            ViewUtils.shareItem(context, displayString, itemMillis);
+            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
+            ShareUtils.shareItem(context, displayString, itemMillis, showTime, showSeconds);
         }
     }
 

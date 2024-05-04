@@ -25,6 +25,7 @@
     <string name="configAction_share">Kunhavigi</string>
     <string name="configAction_export">Elporti</string>
     <string name="configAction_import">Enporti</string>
+    <string name="configAction_info">Pliaj informoj</string>
     <string name="configAction_sunDialog">Pozicio de Suno</string>
     <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
     <string name="configAction_worldMap">Mondmapo</string>
@@ -173,7 +174,7 @@
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g>&#8239;<xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">sem</string>    <!-- e.g. 2w -->
-    <string name="delta_days">t</string>     <!-- e.g. 1d -->
+    <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
@@ -563,6 +564,7 @@
     <string name="compareMode_tomorrow">Morgaŭ</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Kompari kun:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Montri komparon</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Kompari kvanton de taglumo hodiaŭ kun hieraŭ aŭ moragaŭ.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">antaŭa</string>                   <!-- setting -->
@@ -710,6 +712,9 @@
     <string name="configLabel_themeColorMoonWaning">Koloro de malkreskanta</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Koloro de plenluno</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Koloro de novluno</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Plenluno (teksto)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">Novluno (teksto)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1140,6 +1145,24 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarkto</string>
+    <string name="place_label_AF">Afriko</string>
+    <string name="place_label_AS">Azio</string>
+    <string name="place_label_AS_CN">Azio (Ĉinujo)</string>
+    <string name="place_label_AS_IN">Azio (Hindujo)</string>
+    <string name="place_label_AS_JP">Azio (Japanujo)</string>
+    <string name="place_label_AS_SA">Azio (Sauda Arabujo)</string>
+    <string name="place_label_AS_VN">Azio (Vjetnamujo)</string>
+    <string name="place_label_EU">Eŭropo</string>
+    <string name="place_label_EU_ES">Eŭropo (Hispanujo)</string>
+    <string name="place_label_EU_UK">Eŭropo (Britujo)</string>
+    <string name="place_label_NA">Nordameriko</string>
+    <string name="place_label_NA_CA">Nordameriko (Kanado)</string>
+    <string name="place_label_NA_US">Nordameriko (Usono)</string>
+    <string name="place_label_OC">Oceanio</string>
+    <string name="place_label_SA">Sudameriko kaj Centra Ameriko</string>
+    <string name="place_label_other">Aliaj</string>
+
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Vidigo</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
@@ -1509,6 +1532,7 @@
         <item>Nederlanda</item>
         <item>Ĉeĥa</item>
         <item>Ĉina simpligita</item>
+        <item>Araba</item>
     </string-array>
 
     <!-- position formats -->
@@ -1685,11 +1709,11 @@
     <string name="app_shortdesc">Montras tempojn de lumadoj de Suno kaj Luno.</string>
     <string name="app_support_url"><![CDATA[
         <b>Subteno:</b> vizitu la
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
+        <a href="%1$s">erar-spurilon</a> por raporti problemon.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
         La aplikaĵo %s estas disponebla senpage, sed se ĝi utilas al vi, bonvolu
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">konsideri donaci ajnan monkvanton</a>.
+        <a href="%2$s">konsideri donaci ajnan monkvanton</a>.
     ]]></string>
     <string name="app_license_about">La aplikaĵo Suntempoj estas libera kaj malfermkoda programaro.</string>   <!-- displayed by welcome dialog -->-->
     <string name="app_legal1"><![CDATA[

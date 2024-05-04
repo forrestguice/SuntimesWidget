@@ -26,6 +26,7 @@
   <string name="configAction_share">Teilen</string>
   <string name="configAction_export">Exportieren</string>
   <string name="configAction_import">Importieren</string>
+  <string name="configAction_info">More Info</string>   <!-- TODO -->
   <string name="configAction_sunDialog">Sonnenstand</string>
   <string name="configAction_equinoxDialog">Sonnenwende / Tag-Nacht-Gleiche</string>
   <string name="configAction_worldMap">Weltkarte</string>
@@ -177,7 +178,7 @@
   <string name="delta_weeks">w</string>    <!-- e.g. 2w -->
   <string name="delta_days">d</string>     <!-- e.g. 1d -->
   <string name="delta_hours">h</string>    <!-- e.g. 2h -->
-  <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
+  <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
   <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
   <string name="hence">in  <xliff:g id="timeSpan">%1$s</xliff:g></string>  <!-- e.g. 15d 23h from now -->
@@ -556,6 +557,7 @@
   <string name="compareMode_tomorrow">Morgen</string>                       <!-- setting -->
   <string name="configLabel_general_compareMode">Vergleiche mit:</string>    <!-- spinner label -->
   <string name="configLabel_general_showComparison">Zeige Vergleich</string>  <!-- checkbox label -->
+  <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
   <!-- Widget Setting: tracking mode -->
   <string name="trackingMode_recent">Letztes Ereignis</string>                   <!-- setting -->
@@ -721,6 +723,9 @@
   <string name="configLabel_themeColorMoonWaning">Farbe des abnehmenden Mondes</string> <!-- color label -->
   <string name="configLabel_themeColorMoonFull">Vollmondfarbe</string> <!-- color label -->
   <string name="configLabel_themeColorMoonNew">Neumondfarbe</string> <!-- color label -->
+
+  <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
+  <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
 
   <string name="configLabel_themeColorSunrise">Sonnenaufgangsfarbe</string> <!-- color label -->
   <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1153,6 +1158,24 @@
   <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
   <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+  <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
+  <string name="place_label_AF">Africa</string>    <!-- TODO -->
+  <string name="place_label_AS">Asia</string>    <!-- TODO -->
+  <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
+  <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
+  <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
+  <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
+  <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
+  <string name="place_label_EU">Europe</string>    <!-- TODO -->
+  <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
+  <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
+  <string name="place_label_NA">North America</string>    <!-- TODO -->
+  <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
+  <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
+  <string name="place_label_OC">Oceania</string>    <!-- TODO -->
+  <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
+  <string name="place_label_other">Other</string>    <!-- TODO -->
+
   <!-- App Setting: UI -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->
   <string name="configLabel_ui_fields">Anzeige</string>                <!-- group title, followed  by a list of "[X] <Twilight Event>" fields -->
@@ -1348,6 +1371,7 @@
       <item>Niederländisch</item>
       <item>Tschechisch</item>
       <item>Vereinfachtes Chinesisch</item>
+      <item>Arabic</item>    <!-- TODO -->
   </string-array>
 
   <!--<string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>-->  <!-- e.g. 45° -->
@@ -1695,11 +1719,11 @@
   <string name="app_shortdesc">Eine App, die Auf- und Untergangszeiten von Sonne und Mond anzeigt.</string>
   <string name="app_support_url"><![CDATA[
       <b>Unterst&uuml;tzung:</b> besuchen Sie
-      <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> um eine Anfrage zu stellen.
+      <a href="%1$s">issue tracker</a> um eine Anfrage zu stellen.
   ]]></string>
   <string name="app_donate_url"><![CDATA[
         %s is available gratis, but if it has proven its value, please
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">pay as you like</a>.
+        <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
   <string name="app_legal1"><![CDATA[
       Copyright &#169 2014-2024 Forrest Guice <br />

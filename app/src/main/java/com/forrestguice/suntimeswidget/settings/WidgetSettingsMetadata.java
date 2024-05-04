@@ -75,6 +75,27 @@ public class WidgetSettingsMetadata
             PREF_PREFIX_KEY_META + PREF_KEY_META_HEIGHT_MAX,
     };
 
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo() {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return new String[0];
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return new String[0];
+            }
+        };
+    }
+
     private static Map<String,Class> types = null;
     public static Map<String,Class> getPrefTypes()
     {

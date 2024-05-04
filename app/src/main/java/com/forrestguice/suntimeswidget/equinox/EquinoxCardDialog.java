@@ -312,9 +312,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     private SuntimesTheme themeOverride = null;
     public void themeViews(Context context, SuntimesTheme theme)
     {
-        if (theme != null) {
+        if (theme != null)
+        {
             themeOverride = theme;
-            themeViews(context);
+            if (isAdded()) {
+                themeViews(context);
+            }
         }
     }
 

@@ -19,12 +19,14 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
@@ -37,6 +39,9 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 @LargeTest
@@ -273,6 +278,54 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             allTrue &= b;
         }
         assertTrue("The format of " + tag1 + " is INVALID! locale: " + AppSettings.getLocale().toString(), allTrue);
+    }
+
+    @Test
+    public void test_places()
+    {
+        Context context = activityRule.getActivity();
+        Resources r = context.getResources();
+
+        String[] groups = r.getStringArray(R.array.place_groups);
+        for (String group : groups) {
+            test_placeGroup(context, group);
+        }
+
+    }
+
+    protected void test_placeGroup(Context context, String groupItem)
+    {
+        assertNotNull(groupItem);
+        String[] groupParts = groupItem.split(",");
+        assertEquals(2, groupParts.length);
+
+        String groupName = groupParts[0].trim();
+        assertFalse(groupName.isEmpty());
+        int groupID = context.getResources().getIdentifier(groupName, "array", context.getPackageName());
+        assertTrue(groupName + " must reference an array resource!", groupID != 0);
+
+        String labelName = groupParts[1].trim();
+        assertFalse(labelName.isEmpty());
+        int labelID = context.getResources().getIdentifier(labelName, "string", context.getPackageName());
+        assertTrue(labelName + " must reference a string resource!", labelID != 0);
+
+        String[] items = context.getResources().getStringArray(groupID);
+        if (groupName.startsWith("place_group"))
+        {
+            for (String item : items) {
+                test_placeGroup(context, item);
+            }
+        }
+
+        if (groupName.startsWith("places"))
+        {
+            for (String item : items)
+            {
+                assertNotNull(item);
+                String[] itemParts = BuildPlacesTask.splitCSV(item, ','); //item.split(",");
+                assertEquals(item + " should have 4 parts but has " + itemParts.length, 4, itemParts.length);
+            }
+        }
     }
 
 }

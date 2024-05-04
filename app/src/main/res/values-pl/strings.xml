@@ -26,6 +26,7 @@
     <string name="configAction_share">Udostępnij</string>
     <string name="configAction_export">Eksportuj</string>
     <string name="configAction_import">Importuj</string>
+    <string name="configAction_info">Więcej informacji</string>
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
     <string name="configAction_worldMap">Mapa świata</string>
@@ -344,7 +345,7 @@
     <string name="timeMode_nautical">Żeglarski świt/zmierzch</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomiczny</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomiczny świt/zmierzch</string> <!-- setting -->
-    <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_night">Noc astronomiczna</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Dzień</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_golden_short">Złota</string>                <!-- setting -->
     <string name="timeMode_golden">Złota godzina</string>                 <!-- setting -->
@@ -570,6 +571,7 @@
     <string name="compareMode_tomorrow">Jutro</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Porównaj z:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Pokaż porównanie</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Porównaj ilość światła słonecznego dzisiaj z wczoraj lub jutrem.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">poprzednie</string>                   <!-- setting -->
@@ -717,6 +719,9 @@
     <string name="configLabel_themeColorMoonWaning">Kolor malejącego</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Kolor pełni</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Kolor nowiu</string> <!-- color label -->
+
+    <string name="configLabel_themeColorMoonFullText">Pełnia (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">Nów (tekst)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1164,6 +1169,24 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
+    <string name="place_label_AN">Antarktyda</string>
+    <string name="place_label_AF">Afryka</string>
+    <string name="place_label_AS">Azja</string>
+    <string name="place_label_AS_CN">Azja (Chiny)</string>
+    <string name="place_label_AS_IN">Azja (Indie)</string>
+    <string name="place_label_AS_JP">Azja (Japonia)</string>
+    <string name="place_label_AS_SA">Azja (Arabia Saudyjska)</string>
+    <string name="place_label_AS_VN">Azja (Wietnam)</string>
+    <string name="place_label_EU">Europa</string>
+    <string name="place_label_EU_ES">Europa (Hiszpania)</string>
+    <string name="place_label_EU_UK">Europa (Wielka Brytania)</string>
+    <string name="place_label_NA">Ameryka Północna</string>
+    <string name="place_label_NA_CA">Ameryka Północna (Kanada)</string>
+    <string name="place_label_NA_US">Ameryka Północna (USA)</string> 
+    <string name="place_label_OC">Oceania</string>
+    <string name="place_label_SA">Ameryka Centralna i Południowa</string>
+    <string name="place_label_other">Inne</string>
+
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Wyświetlanie</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
@@ -1358,6 +1381,7 @@
         <item>Holenderski</item>
         <item>Czeski</item>
         <item>Chiński uproszczony</item>
+        <item>Arabski</item>
     </string-array>
 
     <!-- position formats -->
@@ -1712,10 +1736,10 @@
     <string name="app_name_moonwidget0">Czasy Słońca: Księżyc</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
-    <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
+    <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="%1$s">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="app_donate_url"><![CDATA[
         Aplikacja %s jest udostępniana bezpłatnie, ale jeżeli jest ona dla Ciebie użyteczna, prosimy
-        <a href="https://forrestguice.github.io/SuntimesWidget/donate">rozważyć wpłatę dowolnej kwoty</a>.
+        <a href="%2$s">rozważyć wpłatę dowolnej kwoty</a>.
     ]]></string>
     <string name="app_license_about">Aplikacja Czasy Słońca jest wolnym i otwartoźródłowym oprogramowaniem.</string>   <!-- displayed by welcome dialog -->-->
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2024 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>

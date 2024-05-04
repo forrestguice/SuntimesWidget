@@ -445,7 +445,7 @@ public class WelcomeActivity extends AppCompatActivity
                 for (int resID : textViews) {
                     TextView text = (TextView) view.findViewById(resID);
                     if (text != null) {
-                        text.setText(SuntimesUtils.fromHtml(text.getText().toString()));
+                        text.setText(SuntimesUtils.fromHtml(AboutActivity.anchor(text.getText().toString())));
                         text.setMovementMethod(LinkMovementMethod.getInstance());
                     }
                 }
@@ -453,7 +453,7 @@ public class WelcomeActivity extends AppCompatActivity
                 final TextView donateLink = (TextView) view.findViewById(R.id.link4);
                 if (donateLink != null) {
                     donateLink.setVisibility(View.GONE);
-                    donateLink.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name))));
+                    donateLink.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name), context.getString(R.string.help_donate_url))));
                 }
 
                 CheckBox donateCheck = (CheckBox) view.findViewById(R.id.check_donate);
@@ -681,11 +681,8 @@ public class WelcomeActivity extends AppCompatActivity
         private final View.OnClickListener onAddPlacesClicked = new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
-                BuildPlacesTask task = new BuildPlacesTask(getActivity());
-                task.setTaskListener(buildPlacesListener);
-                task.execute();
+            public void onClick(View v) {
+                BuildPlacesTask.promptAddWorldPlaces(getActivity(), buildPlacesListener);
             }
         };
         private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
