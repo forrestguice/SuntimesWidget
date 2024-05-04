@@ -205,8 +205,13 @@ public class EventSettings
         return id;
     }
 
-    public static String suggestEventLabel(@NonNull Context context, @Nullable String eventID) {
-        return context.getString(R.string.editevent_dialog_label_suggested);
+    public static String suggestEventLabel(@NonNull Context context, AlarmEventProvider.EventType eventType)
+    {
+        switch (eventType) {
+            case SHADOWLENGTH: return context.getString(R.string.editevent_dialog_label_suggested1);
+            case SUN_ELEVATION:
+            default: return context.getString(R.string.editevent_dialog_label_suggested);
+        }
     }
 
     public static EventAlias saveEvent(@NonNull Context context, @NonNull AlarmEventProvider.EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)

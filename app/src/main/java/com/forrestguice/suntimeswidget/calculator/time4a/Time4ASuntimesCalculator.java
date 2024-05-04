@@ -46,7 +46,7 @@ import java.util.TimeZone;
 
 public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 {
-    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION, FEATURE_RISESET1 };
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION, FEATURE_RISESET1, FEATURE_SHADOW };
 
     public abstract StdSolarCalculator getCalculator();
 
@@ -446,6 +446,22 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
         net.time4j.calendar.astro.SunPosition position = net.time4j.calendar.astro.SunPosition.at(moment, solarTime);
         return position.getShadowLength(objHeight);
+    }
+
+    @Override
+    public Calendar getTimeOfShadowBeforeNoon(Calendar date, double objHeight, double shadowLength)
+    {
+        PlainDate localDate = calendarToPlainDate(date);
+        ChronoFunction<CalendarDate, Moment> shadow = solarTime.timeOfShadowBeforeNoon(objHeight, shadowLength);
+        return momentToCalendar(localDate.get(shadow));
+    }
+
+    @Override
+    public Calendar getTimeOfShadowAfterNoon(Calendar date, double objHeight, double shadowLength)
+    {
+        PlainDate localDate = calendarToPlainDate(date);
+        ChronoFunction<CalendarDate, Moment> shadow = solarTime.timeOfShadowAfterNoon(objHeight, shadowLength);
+        return momentToCalendar(localDate.get(shadow));
     }
 
     @Override

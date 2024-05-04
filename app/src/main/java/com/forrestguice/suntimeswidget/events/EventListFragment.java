@@ -32,6 +32,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -139,8 +141,16 @@ public class EventListFragment extends Fragment
     {
         switch (item.getItemId())
         {
-            case R.id.addEvent:
-                helper.addEvent();
+            //case R.id.addEvent:
+            //    helper.addEvent();
+            //    return true;
+
+            case R.id.addEvent_sunEvent:
+                helper.addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
+                return true;
+
+            case R.id.addEvent_shadowEvent:
+                helper.addEvent(AlarmEventProvider.EventType.SHADOWLENGTH);
                 return true;
 
             case R.id.clearEvents:

@@ -6,7 +6,25 @@
         <item android:id="@+id/addEvent"
             android:title="@string/configAction_addEvent"
             android:icon="?attr/icActionNew"
-            app:showAsAction="ifRoom" />
+            app:showAsAction="ifRoom">
+
+            <menu>
+                <group>
+
+                    <item android:id="@+id/addEvent_sunEvent"
+                        android:title="@string/configAction_addEvent_sunEvent"
+                        android:icon="?attr/icActionNew"
+                        app:showAsAction="never" />
+
+                    <item android:id="@+id/addEvent_shadowEvent"
+                        android:title="@string/configAction_addEvent_shadowEvent"
+                        android:icon="?attr/icActionNew"
+                        app:showAsAction="never" />
+
+                </group>
+            </menu>
+
+        </item>
 
         <item android:id="@+id/clearEvents"
             android:title="@string/configAction_clearEvents"

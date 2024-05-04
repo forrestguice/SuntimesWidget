@@ -32,8 +32,10 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -135,12 +137,12 @@ public class AlarmEventProvider extends ContentProvider
                 break;
 
             case URIMATCH_EVENT:
-                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT");
+                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT: " + uri.getLastPathSegment());
                 retValue = queryEvents(uri.getLastPathSegment(), uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_EVENT_CALC:
-                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT_CALC");
+                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT_CALC: " + uri.getLastPathSegment());
                 retValue = calculateEvent(uri.getLastPathSegment(), uri, projection, selection, selectionArgs);
                 break;
 
@@ -172,6 +174,7 @@ public class AlarmEventProvider extends ContentProvider
 
                 // list all custom events
                 List<EventSettings.EventAlias> events1 = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
+                events1.addAll(EventSettings.loadEvents(context, EventType.SHADOWLENGTH));
                 for (EventSettings.EventAlias event : events1)
                 {
                     Object[] row1 = createRow(context, event, true, columns, selection, selectionArgs);
@@ -247,6 +250,13 @@ public class AlarmEventProvider extends ContentProvider
                 }
                 break;
 
+            case SHADOWLENGTH:
+                ShadowLengthEvent shadowEvent = ShadowLengthEvent.valueOf(eventID);
+                if (shadowEvent != null) {
+                    retValue.addRow(createRow(context, shadowEvent, columns, selectionMap));
+                }
+                break;
+
             case SOLAREVENT:
                 SolarEvents event0 = (eventID != null) ? SolarEvents.valueOf(eventID, null) : null;
                 if (event0 != null) {
@@ -255,7 +265,7 @@ public class AlarmEventProvider extends ContentProvider
                 break;
 
             default:
-                Log.w("AlarmEventsProvider", "queryEvents: unrecognized event: " + eventID);
+                Log.w("AlarmEventsProvider", "queryEvents: unrecognized event (1): " + eventID);
                 break;
         }
     }
@@ -467,6 +477,66 @@ public class AlarmEventProvider extends ContentProvider
     }
 
     /**
+     * createRow( shadowLength )
+     */
+    private Object[] createRow(@NonNull Context context, ShadowLengthEvent event, String[] columns, @Nullable HashMap<String,String> selectionMap)
+    {
+        Object[] row = new Object[columns.length];
+        for (int i=0; i<columns.length; i++)
+        {
+            switch (columns[i])
+            {
+                case COLUMN_EVENT_TIMEMILLIS:
+                    Location location = (selectionMap != null) ? CalculatorProvider.processSelection_location(selectionMap) : null;
+                    if (location == null) {
+                        location = WidgetSettings.loadLocationPref(context, 0);
+                    }
+                    String offsetString = selectionMap != null ? selectionMap.get(EXTRA_ALARM_OFFSET) : "0";
+                    long offset = offsetString != null ? Long.parseLong(offsetString) : 0L;
+                    boolean repeating = selectionMap != null && Boolean.parseBoolean(selectionMap.get(EXTRA_ALARM_REPEAT));
+                    Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
+                    ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
+
+                    Calendar calendar = updateAlarmTime_shadowLengthEvent(context, event, location, offset, repeating, repeatingDays, now);
+                    if (calendar != null) {
+                        row[i] = calendar.getTimeInMillis();
+                    }
+                    break;
+
+                case COLUMN_EVENT_NAME:
+                    row[i] = event.getEventName(context);
+                    break;
+                case COLUMN_EVENT_TITLE:
+                    row[i] = event.getEventTitle(context);
+                    break;
+                case COLUMN_EVENT_PHRASE:
+                    row[i] = event.getEventPhrase(context);
+                    break;
+                case COLUMN_EVENT_PHRASE_GENDER:
+                    row[i] = event.getEventGender(context);
+                    break;
+                case COLUMN_EVENT_PHRASE_QUANTITY:
+                    row[i] = 1;
+                    break;
+                case COLUMN_EVENT_SUPPORTS_REPEATING:
+                    row[i] = REPEAT_SUPPORT_DAILY;
+                    break;
+                case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
+                    row[i] = Boolean.toString(false);
+                    break;
+                case COLUMN_EVENT_REQUIRES_LOCATION:
+                    row[i] = Boolean.toString(true);
+                    break;
+                case COLUMN_EVENT_SUMMARY:
+                default:
+                    row[i] = event.getEventSummary(context);
+                    break;
+            }
+        }
+        return row;
+    }
+
+    /**
      * createRow( date+time )
      */
     private Object[] createRow(@NonNull Context context, long timedatemillis, String[] columns, @Nullable HashMap<String,String> selectionMap)
@@ -584,6 +654,17 @@ public class AlarmEventProvider extends ContentProvider
             return AlarmAddon.getEventCalcUri(AUTHORITY, getEventName(context));
         }
 
+        private static final SuntimesUtils utils = new SuntimesUtils();
+        public String offsetDisplay(Context context)
+        {
+            if (offset != 0)
+            {
+                SuntimesUtils.initDisplayStrings(context);
+                String offsetDisplay = utils.timeDeltaLongDisplayString(0, offset, false).getValue();
+                return context.getResources().getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int)angle, offsetDisplay);
+            } else return "";
+        }
+
         protected abstract String getEventName(Context context);
         protected abstract String getEventTitle(Context context);
         protected abstract String getEventPhrase(Context context);
@@ -625,17 +706,6 @@ public class AlarmEventProvider extends ContentProvider
             } else {
                 return context.getString(R.string.sunevent_summary_format1, offsetDisplay(context), context.getString(R.string.sunevent_title), angle.toString());
             }
-        }
-
-        private static final SuntimesUtils utils = new SuntimesUtils();
-        public String offsetDisplay(Context context)
-        {
-            if (offset != 0)
-            {
-                SuntimesUtils.initDisplayStrings(context);
-                String offsetDisplay = utils.timeDeltaLongDisplayString(0, offset, false).getValue();
-                return context.getResources().getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int)angle, offsetDisplay);
-            } else return "";
         }
 
         public static boolean isElevationEvent(String eventName) {
@@ -746,6 +816,176 @@ public class AlarmEventProvider extends ContentProvider
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
+     * ShadowLengthEvent
+     */
+    public static final class ShadowLengthEvent extends ElevationEvent
+    {
+        public static final String NAME_PREFIX = "SHADOW_";
+
+        public ShadowLengthEvent(double objHeight, double length, int offset, boolean rising)
+        {
+            super(0, offset, rising);
+            this.objHeight = objHeight;
+            this.length = length;
+        }
+
+        protected double length;    // meters
+        public double getLength() {
+            return length;
+        }
+
+        protected double objHeight;    // meters
+        public double getObjHeight() {
+            return objHeight;
+        }
+
+        @Override
+        protected String getEventTitle(Context context) {
+            return offsetDisplay(context) + context.getString(R.string.shadowevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+        }
+
+        @Override
+        protected String getEventPhrase(Context context) {
+            return offsetDisplay(context) + context.getString(R.string.shadowevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+        }
+
+        @Override
+        protected String getEventGender(Context context) {
+            return context.getString(R.string.shadowevent_phrase_gender);
+        }
+
+        @Override
+        protected String getEventSummary(Context context)
+        {
+            String height = SuntimesUtils.formatAsHeight(context, getObjHeight(), WidgetSettings.LengthUnit.METRIC, 1, false).getValue();
+            String length = SuntimesUtils.formatAsHeight(context, getLength(), WidgetSettings.LengthUnit.METRIC, 1, false).getUnits();
+
+            if (offset == 0) {
+                return offsetDisplay(context) + context.getString(R.string.shadowevent_summary_format, context.getString(R.string.shadowevent_title), height, length);
+            } else {
+                return context.getString(R.string.shadowevent_summary_format1, offsetDisplay(context), context.getString(R.string.shadowevent_title), height, length);
+            }
+        }
+
+        public static boolean isShadowLengthEvent(String eventName) {
+            return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
+        }
+
+        /**
+         * @return e.g. SHADOW_1:10r          (@ 10 meters (rising)),
+         *              SHADOW_1:10|-300000r  (5m before @ 10 meters (rising))
+         */
+        @Override
+        protected String getEventName(Context context) {
+            return getEventName(objHeight, length, offset, rising);
+        }
+        public static String getEventName(double objHeight, double length, int offset, @Nullable Boolean rising) {
+            String name = NAME_PREFIX
+                    + objHeight + ":" + length
+                    + ((offset != 0) ? "|" + (int)Math.ceil(offset / 1000d / 60d) : "");
+            if (rising != null) {
+                name += (rising ? SUFFIX_RISING : SUFFIX_SETTING);
+            }
+            return name;
+        }
+
+        @Nullable
+        public static ShadowLengthEvent valueOf(String eventName)
+        {
+            if (isShadowLengthEvent(eventName))
+            {
+                double height = 1, length = 1;
+                int offsetMinutes = 0;
+                boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
+                try {
+                    String contentString = eventName.substring(7, eventName.length() - (hasSuffix ? 1 : 0));    // SHADOW_<contentString>
+                    String[] contentParts = contentString.split("\\|");
+
+                    String[] shadowParts = contentParts[0].split(":");
+                    if (shadowParts.length > 1)
+                    {
+                        height = Double.parseDouble(shadowParts[0]);
+                        length = Double.parseDouble(shadowParts[1]);
+
+                    } else if (shadowParts.length > 0) {
+                        height = 1;
+                        length = Double.parseDouble(shadowParts[0]);
+                    }
+
+                    if (contentParts.length > 1) {
+                        offsetMinutes = Integer.parseInt(contentParts[1]);
+                    }
+
+                } catch (Exception e) {
+                    Log.e("ShadowLengthEvent", "createEvent: bad length: " + e);
+                    return null;
+                }
+                boolean rising = eventName.endsWith(SUFFIX_RISING);
+                return new ShadowLengthEvent(height, length, (offsetMinutes * 60 * 1000), rising);
+            } else return null;
+        }
+    }
+
+    public static Calendar updateAlarmTime_shadowLengthEvent(Context context, @NonNull ShadowLengthEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        SuntimesClockData data = getData_shadowLengthEvent(context, location);
+        data.initCalculator(context);
+        SuntimesCalculator calculator = data.calculator();
+
+        Calendar alarmTime = Calendar.getInstance();
+        Calendar eventTime = null;
+
+        Calendar day = Calendar.getInstance();
+        data.setTodayIs(day);
+        data.calculate();
+
+        eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
+                                      : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
+        if (eventTime != null)
+        {
+            eventTime.set(Calendar.SECOND, 0);
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+
+        int c = 0;
+        Set<Long> timestamps = new HashSet<>();
+        while (now.after(alarmTime)
+                || eventTime == null
+                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
+        {
+            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
+                Log.e(AlarmNotifications.TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
+            Log.w(AlarmNotifications.TAG, "updateAlarmTime: shadowLengthEvent advancing by 1 day..");
+            day.add(Calendar.DAY_OF_YEAR, 1);
+            data.setTodayIs(day);
+            data.calculate();
+            eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
+                                          : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
+            if (eventTime != null)
+            {
+                eventTime.set(Calendar.SECOND, 0);
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            }
+            c++;
+        }
+        return eventTime;
+    }
+
+    private static SuntimesClockData getData_shadowLengthEvent(Context context, @NonNull Location location)
+    {
+        SuntimesClockData data = new SuntimesClockData(context, 0);
+        data.setLocation(location);
+        data.setTodayIs(Calendar.getInstance());
+        return data;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
      * EventType
      */
     public static enum EventType
@@ -753,7 +993,8 @@ public class AlarmEventProvider extends ContentProvider
         DATE,
         EVENTALIAS,
         SOLAREVENT,
-        SUN_ELEVATION;
+        SUN_ELEVATION,
+        SHADOWLENGTH;
 
         private EventType() //String displayString)
         {
@@ -786,12 +1027,18 @@ public class AlarmEventProvider extends ContentProvider
             if (AlarmEventProvider.SunElevationEvent.isElevationEvent(eventID)) {
                 return EventType.SUN_ELEVATION;
             }
+            if (AlarmEventProvider.ShadowLengthEvent.isShadowLengthEvent(eventID)) {
+                return EventType.SHADOWLENGTH;
+            }
             for (SolarEvents event : SolarEvents.values()) {
                 if (event.name().startsWith(eventID)) {
                     return EventType.SOLAREVENT;
                 }
             }
-            for (String aliasID : EventSettings.loadEventList(context, EventType.SUN_ELEVATION)) {
+            Set<String> eventList = EventSettings.loadEventList(context, EventType.SUN_ELEVATION);
+            eventList.addAll(EventSettings.loadEventList(context, EventType.SHADOWLENGTH));
+            for (String aliasID : eventList)
+            {
                 if (eventID.startsWith(aliasID)) {
                     return EventType.EVENTALIAS;
                 }
@@ -799,7 +1046,11 @@ public class AlarmEventProvider extends ContentProvider
             return null;
         }
 
-        private static boolean isNumeric(@NonNull String eventID)
+        /**
+         * @param eventID eventID
+         * @return true all characters are numeric, false if any character is not [1,9]
+         */
+        protected static boolean isNumeric(@NonNull String eventID)
         {
             for (int i=0; i<eventID.length(); i++)
             {

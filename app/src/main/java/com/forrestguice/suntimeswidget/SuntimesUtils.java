@@ -1164,26 +1164,31 @@ public class SuntimesUtils
 
     public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)
     {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        String formatted;
+
         double value;
         String unitsString;
         switch (units)
         {
             case IMPERIAL:
                 value = WidgetSettings.LengthUnit.metersToFeet(meters);
-                unitsString = (shortForm ? context.getString(R.string.units_feet_short) : context.getString(R.string.units_feet));
+                formatted = formatter.format(value);
+                unitsString = (shortForm ? context.getString(R.string.units_feet_short)
+                                         : context.getResources().getQuantityString(R.plurals.units_feet_long, (int)value, formatted));
                 break;
 
             case METRIC:
             default:
                 value = meters;
-                unitsString = (shortForm ? context.getString(R.string.units_meters_short) : context.getString(R.string.units_meters));
+                formatted = formatter.format(value);
+                unitsString = (shortForm ? context.getString(R.string.units_meters_short)
+                                         : context.getResources().getQuantityString(R.plurals.units_meters_long, (int)value, formatted));
                 break;
         }
-
-        NumberFormat formatter = NumberFormat.getInstance();
-        formatter.setMinimumFractionDigits(0);
-        formatter.setMaximumFractionDigits(places);
-        return new TimeDisplayText(formatter.format(value), unitsString, "");
+        return new TimeDisplayText(formatted, unitsString, "");
     }
 
     public static TimeDisplayText formatAsDistance(Context context, double kilometers, WidgetSettings.LengthUnit units, int places, boolean shortForm)
