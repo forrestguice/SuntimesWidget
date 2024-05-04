@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    tools:ignore="UnusedAttribute"
+
+    android:widgetCategory="home_screen|keyguard"
+    android:previewImage="@drawable/clockwidget_1x1_preview"
+    android:resizeMode="horizontal|vertical"
+    android:initialKeyguardLayout="@layout/layout_widget_alarm_2x2_0"
+
+    android:minWidth="@dimen/widget_size_minWidth3x1" android:minHeight="@dimen/widget_size_minWidth2x1"
+    android:minResizeWidth="@dimen/widget_size_minWidth" android:minResizeHeight="@dimen/widget_size_minHeight"
+    android:updatePeriodMillis="@integer/widget_updateInterval"
+    android:initialLayout="@layout/layout_widget_alarm_2x2_0"
+    android:configure="com.forrestguice.suntimeswidget.widgets.AlarmWidget0ConfigActivity_3x2">
+
+</appwidget-provider>    <!-- TODO: preview -->

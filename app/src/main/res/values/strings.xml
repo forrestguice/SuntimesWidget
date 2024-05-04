@@ -538,6 +538,11 @@
     <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->
 
+    <string name="widgetMode1x1_nextalarm">Next Alarm</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode2x2_nextalarm">Next Alarm (details)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode2x2_alarmlist">Alarm List</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x2_alarmlist">Alarm List (details)</string>     <!-- setting -->    <!-- TODO -->
+
     <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->    <!-- TODO -->
@@ -747,11 +752,14 @@
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
-    <string name="widgetThemes_dark">Dark</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark">Dark (legacy)</string>                                <!-- default widget theme name -->
     <string name="widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name -->
     <string name="widgetThemes_dark_translucent">Dark (translucent)</string>      <!-- default widget theme name -->
-    <string name="widgetThemes_light">Light</string>                              <!-- default widget theme name -->
+    <string name="widgetThemes_light">Light (legacy)</string>                              <!-- default widget theme name -->
     <string name="widgetThemes_light_transparent">Light (transparent)</string>    <!-- default widget theme name -->
+
+    <string name="widgetThemes_dark1">Dark</string>                                <!-- default widget theme name -->   <!-- TODO -->
+    <string name="widgetThemes_light1">Light</string>                              <!-- default widget theme name -->   <!-- TODO -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->

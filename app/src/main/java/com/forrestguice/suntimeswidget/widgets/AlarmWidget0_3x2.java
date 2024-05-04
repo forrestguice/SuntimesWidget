@@ -23,30 +23,29 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
 
 /**
- *  Alarm widget 2x2
+ *  Alarm widget 3x2
  */
-public class AlarmWidget0_2x2 extends AlarmWidget0
+public class AlarmWidget0_3x2 extends AlarmWidget0
 {
     @Override
     protected Class getConfigClass() {
-        return AlarmWidget0ConfigActivity_2x2.class;
+        return AlarmWidget0ConfigActivity_3x2.class;
     }
 
     @Override
     protected void initMinSize(Context context)
     {
-        minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+        minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
     }
 
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        AlarmLayout defLayout = AlarmWidgetSettings.loadAlarm2x2ModePref_asLayout(context, appWidgetId);
-        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, AlarmWidget0_2x2.class, getMinSize(context), defLayout);
+        AlarmLayout defLayout = AlarmWidgetSettings.loadAlarm3x2ModePref_asLayout(context, appWidgetId);
+        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, AlarmWidget0_3x2.class, getMinSize(context), defLayout);
     }
 
 }

@@ -184,14 +184,7 @@ public class AlarmTileService extends ClockTileService
             String timeUntilString = utils.timeDeltaLongDisplayString(timeUntilMs);
             String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.hence : R.string.ago), timeUntilString);
 
-            // formatted event label
-            String eventString = item.getEvent();
-            AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
-            String eventDisplay = (eventString != null) ? eventItem.getTitle() : null;
-            if (item.offset != 0) {
-                eventDisplay = (eventString != null) ? AlarmNotifications.formatOffsetMessage(context, item.offset, item.timestamp, eventItem)
-                                                     : AlarmNotifications.formatOffsetMessage(context, item.offset, item.timestamp);
-            }
+            String eventDisplay = formatEventDisplay(context, item);    // formatted event label
 
             String dialogMessage = (eventDisplay != null ? context.getString(R.string.alarmtile_dialogmsg_format1, timeString, eventDisplay, timeUntilPhrase)
                                                          : context.getString(R.string.alarmtile_dialogmsg_format0, timeString, timeUntilPhrase));
@@ -222,6 +215,18 @@ public class AlarmTileService extends ClockTileService
             msg.append(context.getString(R.string.alarmtile_dialogmsg_none));
         }
         return msg;
+    }
+
+    public static String formatEventDisplay(Context context, AlarmClockItem item)
+    {
+        String eventString = item.getEvent();
+        AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
+        String eventDisplay = (eventString != null) ? eventItem.getTitle() : null;
+        if (item.offset != 0) {
+            eventDisplay = (eventString != null) ? AlarmNotifications.formatOffsetMessage(context, item.offset, item.timestamp, eventItem)
+                                                 : AlarmNotifications.formatOffsetMessage(context, item.offset, item.timestamp);
+        }
+        return eventDisplay;
     }
 
 }

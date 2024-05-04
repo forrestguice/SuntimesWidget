@@ -27,19 +27,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesConfigActivity0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.MODE_2x2;
+import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.MODE_3x2;
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_ENABLEDONLY;
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_SHOWICONS;
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_SORTORDER;
@@ -176,10 +181,14 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         super.initWidgetModeLayout(context);
         showOption2x2LayoutMode(true);
+        showOption3x2LayoutMode(true);
         showOption2x1LayoutMode(false);
         showOption3x1LayoutMode(false);
-        showOption3x2LayoutMode(false);
     }
+
+    /**
+     * Mode 1x1
+     */
 
     @Override
     protected void initWidgetMode1x1(Context context)
@@ -191,16 +200,24 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void saveWidgetMode1x1(Context context)
     {
-        final AlarmWidgetSettings.WidgetModeAlarm1x1[] modes = AlarmWidgetSettings.WidgetModeAlarm1x1.values();
-        AlarmWidgetSettings.WidgetModeAlarm1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
-        AlarmWidgetSettings.saveAlarm1x1ModePref(context, appWidgetId, mode);
-        //Log.d("DEBUG", "Saved mode: " + mode.name());
+        if (spinner_1x1mode != null)
+        {
+            final AlarmWidgetSettings.WidgetModeAlarm1x1[] modes = AlarmWidgetSettings.WidgetModeAlarm1x1.values();
+            AlarmWidgetSettings.WidgetModeAlarm1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
+            AlarmWidgetSettings.saveAlarmModePref(context, appWidgetId, mode.name(), AlarmWidgetSettings.MODE_1x1);
+        }
     }
     @Override
     protected void loadWidgetMode1x1(Context context)
     {
         AlarmWidgetSettings.WidgetModeAlarm1x1 mode1x1 = AlarmWidgetSettings.loadAlarm1x1ModePref(context, appWidgetId);
-        spinner_1x1mode.setSelection(mode1x1.ordinal());
+        if (spinner_1x1mode != null)
+        {
+            int p = searchForIndex(spinner_1x1mode, mode1x1);
+            if (p >= 0) {
+                spinner_1x1mode.setSelection(mode1x1.ordinal());
+            }
+        }
     }
     protected WidgetModeAdapter createAdapter_widgetMode1x1()
     {
@@ -209,6 +226,10 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
         adapter.setThemeValues(themeValues);
         return adapter;
     }
+
+    /**
+     *  Mode 2x2
+     */
 
     @Override
     protected void initWidgetMode2x2(Context context)
@@ -220,16 +241,24 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void saveWidgetMode2x2(Context context)
     {
-        final AlarmWidgetSettings.WidgetModeAlarm2x2[] modes = AlarmWidgetSettings.WidgetModeAlarm2x2.values();
-        AlarmWidgetSettings.WidgetModeAlarm2x2 mode = modes[spinner_2x2mode.getSelectedItemPosition()];
-        AlarmWidgetSettings.saveAlarm2x2ModePref(context, appWidgetId, mode);
-        //Log.d("DEBUG", "Saved mode: " + mode.name());
+        if (spinner_2x2mode != null)
+        {
+            final AlarmWidgetSettings.WidgetModeAlarm2x2[] modes = AlarmWidgetSettings.WidgetModeAlarm2x2.values();
+            AlarmWidgetSettings.WidgetModeAlarm2x2 mode = modes[spinner_2x2mode.getSelectedItemPosition()];
+            AlarmWidgetSettings.saveAlarmModePref(context, appWidgetId, mode.name(), MODE_2x2);
+        }
     }
     @Override
     protected void loadWidgetMode2x2(Context context)
     {
         AlarmWidgetSettings.WidgetModeAlarm2x2 mode2x2 = AlarmWidgetSettings.loadAlarm2x2ModePref(context, appWidgetId);
-        spinner_2x2mode.setSelection(mode2x2.ordinal());
+        if (spinner_2x2mode != null)
+        {
+            int p = searchForIndex(spinner_2x2mode, mode2x2);
+            if (p >= 0) {
+                spinner_2x2mode.setSelection(p);
+            }
+        }
     }
     protected WidgetModeAdapter createAdapter_widgetMode2x2()
     {
@@ -239,6 +268,61 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
         return adapter;
     }
 
+    /**
+     * Mode 3x2
+     */
+
+    @Override
+    protected void initWidgetMode3x2(Context context)
+    {
+        if (spinner_3x2mode != null) {
+            spinner_3x2mode.setAdapter(createAdapter_widgetMode3x2());
+        }
+    }
+    protected WidgetModeAdapter createAdapter_widgetMode3x2()
+    {
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, AlarmWidgetSettings.WidgetModeAlarm3x2.values());
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
+        return adapter;
+    }
+    @Override
+    protected void saveWidgetMode3x2(Context context)
+    {
+        if (spinner_3x2mode != null)
+        {
+            final AlarmWidgetSettings.WidgetModeAlarm3x2[] modes = AlarmWidgetSettings.WidgetModeAlarm3x2.values();
+            AlarmWidgetSettings.WidgetModeAlarm3x2 mode = modes[spinner_3x2mode.getSelectedItemPosition()];
+            AlarmWidgetSettings.saveAlarmModePref(context, appWidgetId, mode.name(), MODE_3x2);
+            //Log.d("DEBUG", "Saved mode: " + mode.name());
+        }
+    }
+    @Override
+    protected void loadWidgetMode3x2(Context context)
+    {
+        AlarmWidgetSettings.WidgetModeAlarm3x2 mode3x2 = AlarmWidgetSettings.loadAlarm3x2ModePref(context, appWidgetId);
+        if (spinner_3x2mode != null)
+        {
+            int p = searchForIndex(spinner_3x2mode, mode3x2);
+            if (p >= 0) {
+                spinner_3x2mode.setSelection(mode3x2.ordinal());
+            }
+        }
+    }
+
+    protected static int searchForIndex(Spinner spinner, Object enumValue)
+    {
+        for (int i=0; i<spinner.getAdapter().getCount(); i++) {
+            if (spinner.getAdapter().getItem(i).equals(enumValue)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * updateWidgets
+     */
     @Override
     protected void updateWidgets(Context context, int[] appWidgetIds)
     {
@@ -284,7 +368,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected View[] getSecondaryWidgetModeViews() {
-        return new View[] { label_2x2mode, spinner_2x2mode };
+        return new View[] { label_2x2mode, spinner_2x2mode, label_3x2mode, spinner_3x2mode };
     }
 
 }

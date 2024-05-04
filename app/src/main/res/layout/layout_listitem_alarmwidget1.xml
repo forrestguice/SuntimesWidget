@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This layout is used by RemoteViews, so it must not contain any custom views, styles, or attributes
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/itemLayout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:padding="4dp">
+
+    <LinearLayout android:id="@+id/icon_layout"
+        android:orientation="vertical" android:gravity="center" android:paddingTop="2dp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/layout_text"
+        android:layout_alignBottom="@+id/layout_text"
+        android:layout_marginEnd="8dp" android:layout_marginRight="8dp">
+
+        <ImageView android:id="@android:id/icon1"
+            android:layout_width="24dp" android:layout_height="24dp"
+            android:src="@drawable/ic_action_alarms"
+            tools:ignore="contentDescription" />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/layout_text"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/icon_layout" android:layout_toEndOf="@+id/icon_layout"
+        android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+        android:paddingTop="2dp"
+        android:layout_centerVertical="true" android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            android:orientation="vertical">
+
+            <TextView android:id="@android:id/text1"
+                android:layout_width="wrap_content" android:layout_weight="1" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall" android:duplicateParentState="true"
+                android:maxLines="2" android:ellipsize="end" android:textStyle="bold"
+                tools:text="Alarm Label" />
+
+            <TextView android:id="@+id/text_event"
+                android:layout_width="wrap_content" android:layout_weight="1" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall" android:duplicateParentState="true"
+                android:maxLines="3" android:ellipsize="end"
+                tools:text="Alarm Label" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical" android:gravity="center_horizontal"
+            android:layout_marginEnd="2dp" android:layout_marginRight="2dp">
+
+            <TextView android:id="@android:id/text2"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:singleLine="true" android:duplicateParentState="true"
+                android:layout_gravity="center_vertical"
+                tools:text="6:00 AM" />
+
+            <TextView android:id="@+id/text_note"
+                android:layout_width="wrap_content" android:layout_weight="1" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall" android:duplicateParentState="true"
+                android:maxLines="2" android:ellipsize="end"
+                tools:text="8h" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

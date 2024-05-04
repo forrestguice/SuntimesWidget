@@ -27,7 +27,6 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -36,15 +35,15 @@ import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 
 import java.util.Set;
 
-public class AlarmLayout_1x1_0 extends AlarmLayout
+public class AlarmLayout_2x2_1 extends AlarmLayout
 {
-    public AlarmLayout_1x1_0() {
+    public AlarmLayout_2x2_1() {
         super();
     }
 
     @Override
     public void initLayoutID() {
-        this.layoutID = R.layout.layout_widget_alarm_1x1_0;
+        this.layoutID = R.layout.layout_widget_alarm_2x2_1;
     }
 
     @Override
@@ -52,16 +51,16 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
     {
         switch (position)
         {
-            case 0: return R.layout.layout_widget_alarm_1x1_0_align_fill;
-            case 1: return R.layout.layout_widget_alarm_1x1_0_align_float_1;
-            case 2: return R.layout.layout_widget_alarm_1x1_0_align_float_2;
-            case 3: return R.layout.layout_widget_alarm_1x1_0_align_float_3;
-            case 4: return R.layout.layout_widget_alarm_1x1_0_align_float_4;
-            case 6: return R.layout.layout_widget_alarm_1x1_0_align_float_6;
-            case 7: return R.layout.layout_widget_alarm_1x1_0_align_float_7;
-            case 8: return R.layout.layout_widget_alarm_1x1_0_align_float_8;
-            case 9: return R.layout.layout_widget_alarm_1x1_0_align_float_9;
-            case 5: default: return R.layout.layout_widget_alarm_1x1_0;
+            case 0: return R.layout.layout_widget_alarm_2x2_1_align_fill;
+            case 1: return R.layout.layout_widget_alarm_2x2_1_align_float_1;
+            case 2: return R.layout.layout_widget_alarm_2x2_1_align_float_2;
+            case 3: return R.layout.layout_widget_alarm_2x2_1_align_float_3;
+            case 4: return R.layout.layout_widget_alarm_2x2_1_align_float_4;
+            case 6: return R.layout.layout_widget_alarm_2x2_1_align_float_6;
+            case 7: return R.layout.layout_widget_alarm_2x2_1_align_float_7;
+            case 8: return R.layout.layout_widget_alarm_2x2_1_align_float_8;
+            case 9: return R.layout.layout_widget_alarm_2x2_1_align_float_9;
+            case 5: default: return R.layout.layout_widget_alarm_2x2_1;
         }
     }
 
@@ -95,7 +94,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
         {
             if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
             {
-                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
+                /*int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
                 int[] maxDp = new int[] { maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) };
 
                 String s = (displayString.length() <= 3 ? "0:00" : displayString);
@@ -103,7 +102,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
                 if (adjustedSizeSp != timeSizeSp) {
                     views.setTextViewTextSize(android.R.id.text2, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp);
-                }
+                }*/
             }
         }
 
@@ -111,6 +110,5 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
         views.setViewVisibility(R.id.text_label, (showLabels ? View.VISIBLE : View.GONE));
         views.setTextViewText(android.R.id.text2, (boldTime ? SuntimesUtils.createBoldSpan(null, displayString, displayString) : displayString));
     }
-
 
 }
