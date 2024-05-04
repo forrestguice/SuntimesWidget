@@ -26,7 +26,7 @@
     <string name="configAction_share">Udostępnij</string>
     <string name="configAction_export">Eksportuj</string>
     <string name="configAction_import">Importuj</string>
-    <string name="configAction_info">More Info</string>   <!-- TODO -->
+    <string name="configAction_info">Więcej informacji</string>
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
     <string name="configAction_worldMap">Mapa świata</string>
@@ -345,7 +345,7 @@
     <string name="timeMode_nautical">Żeglarski świt/zmierzch</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomiczny</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomiczny świt/zmierzch</string> <!-- setting -->
-    <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_night">Noc astronomiczna</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Dzień</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_golden_short">Złota</string>                <!-- setting -->
     <string name="timeMode_golden">Złota godzina</string>                 <!-- setting -->
@@ -571,7 +571,7 @@
     <string name="compareMode_tomorrow">Jutro</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Porównaj z:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Pokaż porównanie</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">Porównaj ilość światła słonecznego dzisiaj z wczoraj lub jutrem.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">poprzednie</string>                   <!-- setting -->
@@ -720,8 +720,8 @@
     <string name="configLabel_themeColorMoonFull">Kolor pełni</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Kolor nowiu</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
-    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
+    <string name="configLabel_themeColorMoonFullText">Pełnia (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">Nów (tekst)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1169,23 +1169,23 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
-    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
-    <string name="place_label_AF">Africa</string>    <!-- TODO -->
-    <string name="place_label_AS">Asia</string>    <!-- TODO -->
-    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
-    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
-    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
-    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
-    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
-    <string name="place_label_EU">Europe</string>    <!-- TODO -->
-    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
-    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
-    <string name="place_label_NA">North America</string>    <!-- TODO -->
-    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
-    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
-    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
-    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
-    <string name="place_label_other">Other</string>    <!-- TODO -->
+    <string name="place_label_AN">Antarktyda</string>
+    <string name="place_label_AF">Afryka</string>
+    <string name="place_label_AS">Azja</string>
+    <string name="place_label_AS_CN">Azja (Chiny)</string>
+    <string name="place_label_AS_IN">Azja (Indie)</string>
+    <string name="place_label_AS_JP">Azja (Japonia)</string>
+    <string name="place_label_AS_SA">Azja (Arabia Saudyjska)</string>
+    <string name="place_label_AS_VN">Azja (Wietnam)</string>
+    <string name="place_label_EU">Europa</string>
+    <string name="place_label_EU_ES">Europa (Hiszpania)</string>
+    <string name="place_label_EU_UK">Europa (Wielka Brytania)</string>
+    <string name="place_label_NA">Ameryka Północna</string>
+    <string name="place_label_NA_CA">Ameryka Północna (Kanada)</string>
+    <string name="place_label_NA_US">Ameryka Północna (USA)</string> 
+    <string name="place_label_OC">Oceania</string>
+    <string name="place_label_SA">Ameryka Centralna i Południowa</string>
+    <string name="place_label_other">Inne</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
@@ -1381,7 +1381,7 @@
         <item>Holenderski</item>
         <item>Czeski</item>
         <item>Chiński uproszczony</item>
-        <item>Arabic</item>    <!-- TODO -->
+        <item>Arabski</item>
     </string-array>
 
     <!-- position formats -->

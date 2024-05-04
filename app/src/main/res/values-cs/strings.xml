@@ -626,7 +626,7 @@
     <string name="compareMode_tomorrow">Zítřku</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Porovnat oproti:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Zobrazit porovnání</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Nedávná událost</string>                   <!-- setting -->
