@@ -994,8 +994,9 @@ public class SuntimesActivity extends AppCompatActivity
         actionBar = getSupportActionBar();
         if (actionBar != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            boolean sideNavigation = AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(context));
+            actionBar.setHomeButtonEnabled(sideNavigation);
+            actionBar.setDisplayHomeAsUpEnabled(sideNavigation);
         }
         
         navigation = new SuntimesNavigation(this, menuBar, R.id.action_suntimes);
@@ -1161,6 +1162,8 @@ public class SuntimesActivity extends AppCompatActivity
                     refreshItem.setVisible(true);
                 }
             }
+
+            SuntimesNavigation.updateNavMenuItems(context, actionBarMenu);
         }
     }
 

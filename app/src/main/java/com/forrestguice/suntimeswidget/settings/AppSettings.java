@@ -93,6 +93,11 @@ public class AppSettings
     public static final String PREF_KEY_LAUNCHER_MODE = "app_launcher_mode";
     public static final String PREF_DEF_LAUNCHER_MODE = "default";
 
+    public static final String NAVIGATION_SIMPLE = "SIMPLE";
+    public static final String NAVIGATION_SIDEBAR = "SIDEBAR";
+    public static final String PREF_KEY_NAVIGATION_MODE = "app_navigation_mode";
+    public static final String PREF_DEF_NAVIGATION_MODE = NAVIGATION_SIDEBAR;
+
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final String PREF_DEF_UI_DATETAPACTION = WidgetActions.SuntimesAction.SWAP_CARD.name();
 
@@ -195,9 +200,11 @@ public class AppSettings
             PREF_KEY_GETFIX_MINELAPSED, PREF_KEY_GETFIX_MAXELAPSED, PREF_KEY_GETFIX_MAXAGE, PREF_KEY_GETFIX_PASSIVE,
             PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG, PREF_KEY_DIALOG_DONOTSHOWAGAIN,
             //PREF_KEY_GETFIX_TIME,
+            PREF_KEY_NAVIGATION_MODE
     };
     public static final String[] INT_KEYS = new String[] {
-            PREF_KEY_UI_SHOWFIELDS
+            PREF_KEY_UI_SHOWFIELDS,
+            PREF_KEY_NAVIGATION_MODE
     };
     public static final String[] LONG_KEYS = new String[] {
             //PREF_KEY_GETFIX_TIME    // commented; TODO: does it actually make sense to preserve this value across installations? #783
@@ -484,6 +491,13 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_LAUNCHER_MODE, PREF_DEF_LAUNCHER_MODE);
+    }
+
+    @NonNull
+    public static String loadNavModePref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_NAVIGATION_MODE, PREF_DEF_NAVIGATION_MODE);
     }
 
     /**

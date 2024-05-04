@@ -20,14 +20,17 @@ package com.forrestguice.suntimeswidget.navigation;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -35,6 +38,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.lang.ref.WeakReference;
 
@@ -65,9 +69,13 @@ public class SuntimesNavigation
         drawer = (DrawerLayout) activity.findViewById(R.id.app_drawer);
         if (drawer != null && menuBar != null)
         {
-            drawerToggle = new ActionBarDrawerToggle(activity, drawer, menuBar, R.string.configAction_openNavDrawer, R.string.configAction_closeNavDrawer);
-            drawer.addDrawerListener(drawerToggle);
-            drawerToggle.syncState();
+            if (AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(activity)))
+            {
+                drawerToggle = new ActionBarDrawerToggle(activity, drawer, menuBar, R.string.configAction_openNavDrawer, R.string.configAction_closeNavDrawer);
+                drawerToggle.setDrawerIndicatorEnabled(AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(activity)));
+                drawer.addDrawerListener(drawerToggle);
+                drawerToggle.syncState();
+            }
         }
 
         navigation = (NavigationView) activity.findViewById(R.id.app_navigation);
@@ -232,5 +240,25 @@ public class SuntimesNavigation
         activity.startActivity(about, getActivityOptions(activity).toBundle());
         overridePendingTransition(activity);
     }
+
+
+    public static void updateNavMenuItems(Context context, Menu menu)
+    {
+        if (menu != null && context != null)
+        {
+            boolean simpleNavigation = AppSettings.NAVIGATION_SIMPLE.equals(AppSettings.loadNavModePref(context));
+            for (int itemID : NAV_MENU_ITEMS)
+            {
+                MenuItem item = menu.findItem(itemID);
+                if (item != null) {
+                    item.setVisible(simpleNavigation);
+                }
+            }
+        }
+    }
+    public static final int[] NAV_MENU_ITEMS = new int[] {
+            R.id.action_settings,
+            R.id.action_about
+    };
 
 }

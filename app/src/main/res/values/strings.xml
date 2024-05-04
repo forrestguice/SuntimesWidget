@@ -389,6 +389,23 @@
     <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
+
+    <!-- Setting: navigation -->
+    <string name="configLabel_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
+    <string name="configLabel_navigation_mode">Navigation</string>      <!-- spinner label -->    <!-- TODO -->
+
+    <string name="configLabel_navMode_simple">Simple (legacy)</string>   <!-- TODO -->
+    <string name="configLabel_navMode_sidebar">Sidebar</string>   <!-- TODO -->
+
+    <string-array name="navMode_display"> <!-- display values (one-to-one with navigationMode_values) -->
+        <item>@string/configLabel_navMode_simple</item>
+        <item>@string/configLabel_navMode_sidebar</item>
+    </string-array>
+    <string-array name="navMode_values" translatable="false">  <!-- config values (one-to-one with navMode_display) -->
+        <item>SIMPLE</item>
+        <item>SIDEBAR</item>
+    </string-array>
+
     <!-- Widget Setting: riseSetOrder -->
     <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->
     <string name="risesetorder_today">Today</string>                    <!-- setting -->
@@ -633,7 +650,7 @@
     <string name="compareMode_tomorrow">Tomorrow</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Compare Against</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against today or tomorrow.</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->
 
     <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
         <item>@string/compareMode_yesterday</item>
@@ -2594,6 +2611,7 @@
     <string name="def_app_ui_clocktapaction" translatable="false">RESET_NOTE</string>
     <string name="def_app_appearance_theme" translatable="false">system</string>
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
+    <string name="def_app_navigation_mode" translatable="false">SIDEBAR</string>
 
     <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
     <string name="def_app_alarms_timeout" translatable="false">1200000</string>    <!-- timeout after 20m -->

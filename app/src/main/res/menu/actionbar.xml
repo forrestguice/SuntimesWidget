@@ -55,6 +55,7 @@
     <item android:id="@+id/action_settings"
           android:icon="?attr/icActionSettings"
           android:title="@string/configAction_settings"
+          android:visible="false"
           app:showAsAction="never" />
 
     <item android:id="@+id/action_help"
@@ -62,9 +63,10 @@
           android:title="@string/configAction_help"
           app:showAsAction="never" />
 
-    <!--<item android:id="@+id/action_about"
+    <item android:id="@+id/action_about"
           android:icon="?attr/icActionAbout"
           android:title="@string/configAction_aboutWidget"
-          app:showAsAction="never" />-->
+          android:visible="false"
+          app:showAsAction="never" />
 
 </menu>
