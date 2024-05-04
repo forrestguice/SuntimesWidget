@@ -40,6 +40,9 @@
     <string name="configAction_onlineHelp">Online Help</string>
     <string name="configAction_appDetails">App info</string>
     <string name="configAction_overflow">More</string>
+    <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
+    <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
+    <string name="configAction_clock">Clock</string>    <!-- TODO -->
     <string name="configAction_options">Options</string>
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
@@ -386,6 +389,23 @@
     <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+
+    <!-- Setting: navigation -->
+    <string name="configLabel_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
+    <string name="configLabel_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
+
+    <string name="configLabel_navMode_simple">Simple (legacy)</string>   <!-- TODO -->
+    <string name="configLabel_navMode_sidebar">Sidebar</string>   <!-- TODO -->
+
+    <string-array name="navMode_display"> <!-- display values (one-to-one with navigationMode_values) -->
+        <item>@string/configLabel_navMode_simple</item>
+        <item>@string/configLabel_navMode_sidebar</item>
+    </string-array>
+    <string-array name="navMode_values" translatable="false">  <!-- config values (one-to-one with navMode_display) -->
+        <item>SIMPLE</item>
+        <item>SIDEBAR</item>
+    </string-array>
 
     <!-- Widget Setting: riseSetOrder -->
     <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->
@@ -1291,6 +1311,17 @@
     <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
     <string name="place_label_SA">South and Central America</string>
     <string name="place_label_other">Other</string>
+
+    <!-- App Setting: Launch Activity -->
+    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string-array name="launcherMode_display">                      <!-- one-to-one with launcherMode_values -->
+        <item>@string/app_name</item>
+        <item>@string/app_name_alarmclock</item>
+    </string-array>
+    <string-array name="launcherMode_values" translatable="false">  <!-- one-to-one with launcherMode_display -->
+        <item>SuntimesActivity</item>
+        <item>AlarmClockActivity</item>
+    </string-array>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
@@ -2551,6 +2582,7 @@
     <string name="def_appwidget_0_general_observerheight" translatable="false">1.8288</string>
     <string name="def_appwidget_0_general_localize_hemisphere" translatable="false">true</string>
 
+    <string name="def_app_launcher_mode" translatable="false">SuntimesActivity</string>
     <string name="def_app_plugins_enabled" translatable="false">false</string>
 
     <string name="def_app_appearance_textsize" translatable="false">NORMAL</string>
@@ -2580,6 +2612,7 @@
     <string name="def_app_ui_clocktapaction" translatable="false">RESET_NOTE</string>
     <string name="def_app_appearance_theme" translatable="false">system</string>
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
+    <string name="def_app_navigation_mode" translatable="false">SIDEBAR</string>
 
     <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
     <string name="def_app_alarms_timeout" translatable="false">1200000</string>    <!-- timeout after 20m -->

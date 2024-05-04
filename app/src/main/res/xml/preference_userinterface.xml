@@ -36,6 +36,27 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/configLabel_navigation">
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_navigation_mode"
+            android:title="@string/configLabel_navigation_mode"
+            android:dialogTitle="@string/configLabel_navigation_mode"
+            android:summary="%s"
+            android:entries="@array/navMode_display" android:entryValues="@array/navMode_values"
+            android:defaultValue="@string/def_app_navigation_mode"/>
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_launcher_mode"
+            android:title="@string/configLabel_launcherMode"
+            android:dialogTitle="@string/configLabel_launcherMode"
+            android:summary="%s"
+            android:entries="@array/launcherMode_display" android:entryValues="@array/launcherMode_values"
+            android:defaultValue="@string/def_app_launcher_mode" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="custom_events"
         android:title="@string/configLabel_ui_fields1">
 

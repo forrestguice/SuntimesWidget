@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -55,6 +55,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -147,6 +148,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private FloatingActionButton addButton;
     private FloatingActionButton deselectButton;
     private BottomSheetBehavior sheetBehavior;
+    private SuntimesNavigation navigation;
 
     private SuntimesWarning notificationWarning;
     private SuntimesWarning batteryOptimizationWarning = null;   // remains null for api < 23
@@ -662,6 +664,8 @@ public class AlarmClockActivity extends AppCompatActivity
             }
         }
 
+        navigation = new SuntimesNavigation(this, menuBar, R.id.action_alarms);
+
         addButton = (FloatingActionButton) findViewById(R.id.btn_add);
 
         deselectButton = (FloatingActionButton) findViewById(R.id.btn_deselect);
@@ -1041,6 +1045,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.alarmclock, menu);
+        SuntimesNavigation.updateMenuNavigationItems(this, menu);
         return true;
     }
 
