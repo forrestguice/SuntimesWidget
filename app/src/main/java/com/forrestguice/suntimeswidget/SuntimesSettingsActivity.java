@@ -37,6 +37,9 @@ import android.support.annotation.StringRes;
 import android.util.Log;
 import android.util.TypedValue;
 
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsPreferenceHelper;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
@@ -45,6 +48,7 @@ import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 import com.forrestguice.suntimeswidget.settings.fragments.LocalePrefsFragment;
 import com.forrestguice.suntimeswidget.settings.fragments.PlacesPrefsFragment;
 import com.forrestguice.suntimeswidget.settings.fragments.UIPrefsFragment;
+
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;

@@ -19,6 +19,8 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -41,6 +43,7 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -617,6 +620,34 @@ public class AlarmSettings
                 return true;
             } else return false;
         }
+    }
+
+    @TargetApi(26)
+    public static void openChannelSettings(@NonNull Context context, @NonNull AlarmClockItem.AlarmType type)
+    {
+        Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+        intent.putExtra(Settings.EXTRA_CHANNEL_ID, AlarmNotifications.createNotificationChannel(context, type));
+        context.startActivity(intent);
+    }
+
+    /**
+     * isChannelMuted
+     * @return true if NotificationChannel is blocked
+     */
+    public static boolean isChannelMuted(Context context, @NonNull AlarmClockItem.AlarmType type)
+    {
+        if (Build.VERSION.SDK_INT >= 26)
+        {
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null)
+            {
+                String channelID = AlarmNotifications.createNotificationChannel(context, type);
+                NotificationChannel channel = notificationManager.getNotificationChannel(channelID);
+                return (channel.getImportance() == NotificationManager.IMPORTANCE_NONE);
+            }
+        }
+        return false;
     }
 
     /**

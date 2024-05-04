@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android
 {
-    compileSdkVersion 25
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.0'
 
     sourceSets
     {
@@ -20,9 +20,9 @@ android
     {
         applicationId "com.forrestguice.suntimeswidget"
         //noinspection MinSdkTooLow
-        minSdkVersion 10
+        minSdkVersion 14
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 111
         versionName "0.15.14"
 
@@ -49,10 +49,10 @@ android
 
 dependencies
 {
-    implementation 'com.android.support:design:25.4.0'
-    implementation 'com.android.support:appcompat-v7:25.4.0'
-    implementation 'com.android.support:recyclerview-v7:25.4.0'
-    implementation 'com.android.support:cardview-v7:25.4.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     implementation 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
@@ -63,7 +63,7 @@ dependencies
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.jraska:falcon:1.0.4'
-    androidTestImplementation 'com.android.support:support-annotations:25.4.0'
+    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test:rules:0.5'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
