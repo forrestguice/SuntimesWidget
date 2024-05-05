@@ -440,6 +440,7 @@ public class BedtimeActivity extends AppCompatActivity
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bedtime, menu);
+        SuntimesNavigation.updateMenuNavigationItems(this, menu);
         return true;
     }
 
