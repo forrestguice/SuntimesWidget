@@ -72,6 +72,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.getfix.LocationHelper;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
@@ -192,6 +193,7 @@ public class SuntimesActivity extends AppCompatActivity
     private int appThemeResID;
     private SuntimesTheme appThemeOverride = null;
     private AppSettings.LocaleInfo localeInfo;
+    private SuntimesNavigation navigation;
 
     private LocationHelper getFixHelper;
 
@@ -990,6 +992,14 @@ public class SuntimesActivity extends AppCompatActivity
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            boolean sideNavigation = AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(context));
+            actionBar.setHomeButtonEnabled(sideNavigation);
+            actionBar.setDisplayHomeAsUpEnabled(sideNavigation);
+        }
+        
+        navigation = new SuntimesNavigation(this, menuBar, R.id.action_suntimes);
     }
 
     private void initMisc(final Context context)
@@ -1152,6 +1162,8 @@ public class SuntimesActivity extends AppCompatActivity
                     refreshItem.setVisible(true);
                 }
             }
+
+            SuntimesNavigation.updateMenuNavigationItems(context, actionBarMenu);
         }
     }
 

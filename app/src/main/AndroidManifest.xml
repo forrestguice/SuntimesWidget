@@ -46,7 +46,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name=".SuntimesActivity"
+            android:name=".SuntimesLaunchActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher">
 
@@ -58,6 +58,22 @@
 
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
+
+        </activity>
+
+        <activity
+            android:name=".SuntimesActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher">
+
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />-->
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

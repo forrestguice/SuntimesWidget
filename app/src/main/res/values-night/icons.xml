@@ -99,4 +99,5 @@
     <drawable name="ic_action_next_item_ref">@drawable/ic_action_next_item</drawable>
     <drawable name="ic_action_previous_item_ref">@drawable/ic_action_previous_item</drawable>
 
+    <drawable name="popupmenu_frame_ref">@drawable/popupmenu_frame_dark</drawable>
 </resources>
