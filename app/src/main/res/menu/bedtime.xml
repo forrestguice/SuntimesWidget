@@ -6,6 +6,7 @@
         <item android:id="@+id/action_permission"
             android:icon="?attr/icActionSettings"
             android:title="Check Permissions"
+            android:visible="false"
             app:showAsAction="never" />  <!-- TODO -->
 
         <item android:id="@+id/action_settings"

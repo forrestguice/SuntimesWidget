@@ -4,10 +4,10 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/action_bedtime"
-            android:icon="?attr/icActionAlarm"
+            android:icon="?attr/icActionBedtime"
             android:title="@string/configLabel_bedtime"
-            app:showAsAction="never"
-            android:orderInCategory="996" />  <!-- TODO -->
+            app:showAsAction="ifRoom"
+            android:orderInCategory="10" />
 
         <item android:id="@+id/action_settings"
             android:icon="?attr/icActionSettings"
