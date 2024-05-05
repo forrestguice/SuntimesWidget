@@ -261,22 +261,23 @@ public class BedtimeAlarmHelper
             });
 
         } else {
-            clearBedtimeReminder(context);
+            clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
         }
     }
 
-    public static void clearBedtimeReminder(Context context)
+    public static void clearBedtimeItem(Context context, String slotName)
     {
-        long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
-        clearBedtimeReminder(context, rowID);
+        long rowID = BedtimeSettings.loadAlarmID(context, slotName);
+        clearBedtimeItem(context, slotName, rowID);
     }
-    public static void clearBedtimeReminder(Context context, long rowID)
+
+    public static void clearBedtimeItem(Context context, String slotName, long rowID)
     {
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            Log.d("DEBUG", "deleting existing reminder " + rowID);
+            Log.d("DEBUG", "deleting existing bedtime item " + rowID);
             Uri uri = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, rowID);
-            BedtimeSettings.clearAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
+            BedtimeSettings.clearAlarmID(context, slotName);
             context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, uri));
         }
     }
