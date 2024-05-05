@@ -38,7 +38,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -358,15 +357,15 @@ public class BedtimeDialog extends DialogFragment
                         break;
 
                     case WAKEUP_ALARM:
-                        showAlarmEditActivity(BedtimeSettings.loadAlarmID(getActivity(), BedtimeSettings.SLOT_WAKEUP_ALARM), null, REQUEST_EDIT_WAKEUP, false);
+                        showEditBedtimeMenu(getActivity(), holder.getConfigureActionView(), item,  BedtimeSettings.SLOT_WAKEUP_ALARM, REQUEST_EDIT_WAKEUP);
                         break;
 
                     case BEDTIME:
-                        showAlarmEditActivity(BedtimeSettings.loadAlarmID(getActivity(), BedtimeSettings.SLOT_BEDTIME_NOTIFY), null, REQUEST_EDIT_BEDTIME, false);
+                        showEditBedtimeMenu(getActivity(), holder.getConfigureActionView(), item,  BedtimeSettings.SLOT_BEDTIME_NOTIFY, REQUEST_EDIT_BEDTIME);
                         break;
 
                     case BEDTIME_REMINDER:
-                        showAlarmEditActivity(BedtimeSettings.loadAlarmID(getActivity(), BedtimeSettings.SLOT_BEDTIME_REMINDER), null, REQUEST_EDIT_REMINDER, false);
+                        showEditBedtimeMenu(getActivity(), holder.getConfigureActionView(), item,  BedtimeSettings.SLOT_BEDTIME_REMINDER, REQUEST_EDIT_REMINDER);
                         break;
 
                     default:
@@ -894,6 +893,33 @@ public class BedtimeDialog extends DialogFragment
                 }
             }
         };
+    }
+
+    protected void showEditBedtimeMenu(final Context context, final View v, final BedtimeItem item, final String slotName, final int requestID)
+    {
+        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.action_bedtime_edit:
+                        showAlarmEditActivity(BedtimeSettings.loadAlarmID(getActivity(), slotName), null, requestID, false);
+                        return true;
+
+                    case R.id.action_bedtime_delete:
+                        BedtimeAlarmHelper.clearBedtimeItem(getActivity(), slotName);
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        };
+        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.bedtime_edit, onMenuItemClickListener, null);
+        Menu menu = popup.getMenu();
+        popup.show();
     }
 
 }
