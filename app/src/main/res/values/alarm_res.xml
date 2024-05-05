@@ -37,4 +37,7 @@
     <dimen name="alarmcard_corners_snoozing">8dp</dimen>
     <dimen name="alarmcard_corners_timeout">8dp</dimen>
 
+    <dimen name="clockcard_corners">4dp</dimen>
+    <dimen name="clockcard_corners_controls">8dp</dimen>
+
 </resources>
