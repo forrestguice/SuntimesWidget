@@ -88,6 +88,14 @@ public class BedtimeItem
         }
     }
 
+    public BedtimeItem linked = null;
+    public void linkItem( BedtimeItem item ) {
+        linked = item;
+    }
+    public BedtimeItem getLinkedItem() {
+        return linked;
+    }
+
     public String slot = null;
     public String getSlot() {
         return slot;
