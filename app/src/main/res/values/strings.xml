@@ -1209,15 +1209,29 @@
     -->
     <string name="configLabel_bedtime">Bedtime</string>              <!-- group title -->   <!-- TODO -->
 
-    <string name="configAction_set">Turn on now</string>                   <!-- TODO -->
-
     <string name="configAction_startBedtime">Turn on now</string>                   <!-- TODO -->
     <string name="configAction_dismissBedtime">Turn off</string>                     <!-- TODO -->
+
+    <string name="configAction_set">Set</string>                   <!-- TODO -->
     <string name="configAction_setBedtime">Set bedtime</string>                     <!-- TODO -->
     <string name="configAction_setBedtime_fromAlarm">Set bedtime from alarm</string>                     <!-- TODO -->
     <string name="configAction_setBedtime_toNow">Set bedtime to now</string>                     <!-- TODO -->
     <string name="configAction_pauseBedtime">Pause</string>                         <!-- TODO -->
     <string name="configAction_resumeBedtime">Resume</string>                       <!-- TODO -->
+
+    <string name="configAction_setSleep">Set sleep time</string>                     <!-- TODO -->
+
+    <string name="configLabel_sleepOffset">Drift Asleep Duration</string>                     <!-- TODO -->
+    <string name="configLabel_sleepCycle">Sleep Cycle Length</string>                     <!-- TODO -->
+    <string name="configLabel_sleepCycles">Sleep Cycles</string>                     <!-- TODO -->
+    <string name="configLabel_numSleepCycles">Sleep for %s of %s, or %s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->        <!-- TODO -->
+    <plurals name="cyclePlural">
+        <item quantity="one">%d cycle</item>    <!-- TODO -->
+        <item quantity="other">%d cycles</item>    <!-- TODO -->
+        <item quantity="few">%d cycles</item>    <!-- TODO -->
+        <item quantity="many">%d cycles</item>    <!-- TODO -->
+    </plurals>
+    <string name="cycleNone">None</string>  <!-- TODO -->
 
     <string name="configAction_setWakeUp">Set wake up time</string>                     <!-- TODO -->
     <string name="configAction_setWakeUp_fromBedtime">Set wake up from bedtime</string>                     <!-- TODO -->
@@ -2685,5 +2699,7 @@
     <string name="def_app_alarms_allringtones" translatable="false">false</string>   <!-- show all ringtones during selection (ignore ringtone type) -->
     <string name="def_app_alarms_showlauncher" translatable="false">true</string>
     <string name="def_app_alarms_dismiss_challenge" translatable="false">NONE</string>
+
+    <string name="def_app_bedtime_sleepCycleMillis" translatable="false">5400000</string>   <!-- 90m -->
 
 </resources>

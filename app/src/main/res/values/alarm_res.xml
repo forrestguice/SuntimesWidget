@@ -6,6 +6,10 @@
     <integer name="maxAlarmSnoozeMinutes">120</integer>
     <integer name="minAlarmAutoDismissSeconds">5</integer>
     <integer name="maxAlarmAutoDismissSeconds">300</integer>
+    <integer name="minSleepCycleMinutes">60</integer>
+    <integer name="maxSleepCycleMinutes">120</integer>
+    <integer name="minFallAsleepMinutes">0</integer>
+    <integer name="maxFallAsleepMinutes">90</integer>
 
     <integer name="anim_alarmscreen_sounding_pulse_duration">4000</integer>
     <integer name="anim_alarmscreen_snoozing_pulse_duration">6000</integer>

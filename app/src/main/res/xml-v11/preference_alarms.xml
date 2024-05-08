@@ -79,6 +79,21 @@
 
     </PreferenceCategory>
 
+    <!--<PreferenceCategory
+        android:title="@string/configLabel_bedtime"
+        android:key="app_alarms_category3">
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_bedtime_sleepCycleMillis"
+            android:title="@string/configLabel_sleepCycle"
+            android:summary="%s"
+            android:defaultValue="@string/def_app_bedtime_sleepCycleMillis"
+            app:mode="minutes" app:minValue="@integer/minSleepCycleMinutes"
+            app:maxValue="@integer/maxSleepCycleMinutes"
+            />
+
+    </PreferenceCategory>-->
+
     <PreferenceCategory
         android:title="@string/configLabel_alarmQuick_notification"
         android:key="app_alarms_category2">
