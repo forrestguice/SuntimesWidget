@@ -224,7 +224,7 @@ public class BedtimeSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getInt(PREF_KEY_SLEEP_OFFSET, PREF_DEF_SLEEP_OFFSET);
+            return prefs.getLong(PREF_KEY_SLEEP_OFFSET, PREF_DEF_SLEEP_OFFSET);
         } else return AlarmSettings.loadStringPrefAsLong(prefs, PREF_KEY_SLEEP_OFFSET, PREF_DEF_SLEEP_OFFSET);
     }
     public static void savePrefSleepOffsetMs(Context context, long value)
