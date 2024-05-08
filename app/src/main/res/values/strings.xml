@@ -1221,6 +1221,11 @@
 
     <string name="configAction_setSleep">Set sleep time</string>                     <!-- TODO -->
 
+    <string name="msg_bedtime_sleep_length">Sleep for %s.</string>                             <!-- e.g. "Sleep for 8h" -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length_other_plus">This is %s, plus %s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length_cycles">This is %s of %s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length_cycles_plus">This is %s of %s, plus %s.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->                     <!-- TODO -->
+
     <string name="configLabel_sleepOffset">Drift Asleep Duration</string>                     <!-- TODO -->
     <string name="configLabel_sleepCycle">Sleep Cycle Length</string>                     <!-- TODO -->
     <string name="configLabel_sleepCycles">Sleep Cycles</string>                     <!-- TODO -->

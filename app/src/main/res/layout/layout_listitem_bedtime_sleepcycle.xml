@@ -6,7 +6,7 @@
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
-        android:background="?attr/alarmCardEnabled"
+        android:background="?attr/alarmCardBackdrop"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -23,7 +23,7 @@
 
             <TextView android:id="@+id/text_sleepcycle"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:gravity="center_vertical" android:layout_marginStart="4dp"
                 android:textSize="?attr/text_size_small"
                 tools:text="Each sleep cycle\n is 1h 30m" />
 

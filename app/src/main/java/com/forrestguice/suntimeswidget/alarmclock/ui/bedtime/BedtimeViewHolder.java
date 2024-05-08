@@ -775,6 +775,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
      */
     public static final class AlarmBedtimeViewHolder_SleepCycle extends BedtimeViewHolder
     {
+        protected View card;
         protected ImageButton button_configure;
         protected TextView text_totalsleep;
         protected TextView text_sleepcycle;
@@ -782,6 +783,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         public AlarmBedtimeViewHolder_SleepCycle(View view)
         {
             super(view);
+            card = view.findViewById(R.id.card);
             text_totalsleep = (TextView) view.findViewById(R.id.text_totalsleep);
             text_sleepcycle = (TextView) view.findViewById(R.id.text_sleepcycle);
             button_configure = (ImageButton) view.findViewById(R.id.button_configure);
@@ -803,13 +805,25 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         @Override
         protected void updateViews(Context context, BedtimeItem item)
         {
+            int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor,
+                    R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            @SuppressLint("ResourceType") int colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled));
+            @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_primary_dark));
+            @SuppressLint("ResourceType") int cardBgOn = a.getResourceId(2, R.drawable.card_alarmitem_enabled_dark);
+            @SuppressLint("ResourceType") int cardBgOff = a.getResourceId(3, R.drawable.card_alarmitem_disabled_dark);
+            a.recycle();
+
+            boolean enabled = false;
+            setCardBackground(context, enabled ? cardBgOn : cardBgOff);
+
             if (item != null)
             {
                 if (text_totalsleep != null)
                 {
                     long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
                     String sleepTotalString = utils.timeDeltaLongDisplayString(sleepTotalMs);
-                    String displayString = "Sleep for " + sleepTotalString  + ".";
+                    String displayString = context.getString(R.string.msg_bedtime_sleep_length, sleepTotalString);
                     SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepTotalString);
                     text_totalsleep.setText(sleepTimeDisplay);
                 }
@@ -823,17 +837,15 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     if (useSleepCycle)
                     {
                         long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
-                        float sleepCycleCount = BedtimeSettings.loadPrefSleepCycleCount(context);
-                        String sleepCycleCountString = String.format(SuntimesUtils.getLocale(), "%.0f", sleepCycleCount);
+                        int sleepCycleCount = (int) BedtimeSettings.loadPrefSleepCycleCount(context);
+
+                        String sleepCycleCountString = context.getResources().getQuantityString(R.plurals.cyclePlural, sleepCycleCount, sleepCycleCount);  //String.format(SuntimesUtils.getLocale(), "%.0f", sleepCycleCount);
                         String sleepCycleString = utils.timeDeltaLongDisplayString(sleepCycleMs);
                         String sleepCycleHoursString = utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount));
 
-                        String displayString = //"Sleep for " + sleepCycleHoursString + " + " + offsetString +
-                                "This is " + sleepCycleCountString + " cycles of " + sleepCycleString;
-
-                        if (sleepOffsetMs > 0) {
-                            displayString += ", plus " + offsetString + ".";  // TODO
-                        } else displayString += ".";
+                        String displayString = (sleepOffsetMs > 0)
+                                ? context.getString(R.string.msg_bedtime_sleep_length_cycles_plus, sleepCycleCountString, sleepCycleString, offsetString)
+                                : context.getString(R.string.msg_bedtime_sleep_length_cycles, sleepCycleCountString, sleepCycleString);
 
                         SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepCycleString);
                         sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, sleepCycleCountString);
@@ -844,11 +856,9 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     } else {
                         long sleepMs = BedtimeSettings.loadPrefSleepMs(context);
                         String sleepTimeString = utils.timeDeltaLongDisplayString(sleepMs);
-
-                        String displayString = "This is " + sleepTimeString;
-                        if (sleepOffsetMs > 0) {
-                            displayString += ", plus " + offsetString + ".";  // TODO
-                        } else displayString += ".";
+                        String displayString = (sleepOffsetMs > 0)
+                                ? context.getString(R.string.msg_bedtime_sleep_length_other_plus, sleepTimeString, offsetString)
+                                : "";
 
                         SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepTimeString);
                         sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, offsetString);
@@ -879,6 +889,19 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             super.detachClickListeners();
             if (button_configure != null) {
                 button_configure.setOnClickListener(null);
+            }
+        }
+
+        protected void setCardBackground(Context context, int resId)
+        {
+            if (card != null)
+            {
+                Drawable background = ContextCompat.getDrawable(context, resId).mutate();
+                if (Build.VERSION.SDK_INT >= 16) {
+                    card.setBackground(background);
+                } else {
+                    card.setBackgroundDrawable(background);
+                }
             }
         }
     }
