@@ -207,6 +207,14 @@ public class BedtimeAlarmHelper
         AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, hour, minute, offset);
         setBedtimeReminder_withEventItem(context, eventItem, enabled);
     }
+
+    public static void setBedtimeReminder_withEventInfo(final Context context, String event, final long offset, final boolean enabled)
+    {
+        AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, -1, -1, offset);
+        eventItem.setEvent(event);
+        setBedtimeReminder_withEventItem(context, eventItem, enabled);
+    }
+
     public static void setBedtimeReminder_withEventItem(final Context context, @Nullable final AlarmClockItem eventItem, final boolean enabled)
     {
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
@@ -238,11 +246,21 @@ public class BedtimeAlarmHelper
                 reminderItem = BedtimeAlarmHelper.createBedtimeReminderItem(context, null, eventItem.hour, eventItem.minute, eventItem.offset + reminderOffset);
             } else Log.d("DEBUG", "existing reminder item");
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(eventItem.timestamp + eventItem.offset);
-            reminderItem.hour = calendar.get(Calendar.HOUR_OF_DAY);
-            reminderItem.minute = calendar.get(Calendar.MINUTE);
-            reminderItem.offset = (existingOffset != 0) ? existingOffset : reminderOffset;
+            if (eventItem.getEvent() != null)
+            {
+                reminderItem.setEvent(eventItem.getEvent());
+                reminderItem.hour = -1;
+                reminderItem.minute = -1;
+                reminderItem.offset = (eventItem.offset + reminderOffset);
+
+            } else {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(eventItem.timestamp + eventItem.offset);
+                reminderItem.hour = calendar.get(Calendar.HOUR_OF_DAY);
+                reminderItem.minute = calendar.get(Calendar.MINUTE);
+                reminderItem.offset = (existingOffset != 0) ? existingOffset : reminderOffset;
+            }
+
             reminderItem.alarmtime = 0;
             reminderItem.enabled = enabled;
             reminderItem.modified = true;
