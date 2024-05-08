@@ -38,6 +38,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -689,7 +690,21 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             {
                 if (context != null)
                 {
-                    String offsetString = utils.timeDeltaLongDisplayString(alarmItem != null ? alarmItem.offset : BedtimeSettings.loadPrefBedtimeReminderOffset(context));
+                    //String offsetString = utils.timeDeltaLongDisplayString(alarmItem != null ? alarmItem.offset : BedtimeSettings.loadPrefBedtimeReminderOffset(context));
+                    long offset = BedtimeSettings.loadPrefBedtimeReminderOffset(context);
+                    if (alarmItem != null)
+                    {
+                        BedtimeItem linkedItem = item.getLinkedItem();
+                        if (linkedItem != null)
+                        {
+                            AlarmClockItem linkedAlarmItem = linkedItem.getAlarmItem();
+                            if (linkedAlarmItem != null) {
+                                offset = (alarmItem.getEvent() == null ? alarmItem.offset : alarmItem.offset - linkedAlarmItem.offset);
+                            }
+                        }
+                    }
+
+                    String offsetString = utils.timeDeltaLongDisplayString(offset);
                     String labelString = context.getString(R.string.msg_bedtime_reminder, offsetString);
                     CharSequence labelDisplay = SuntimesUtils.createBoldSpan(null, labelString, offsetString);
                     text_label.setText(labelDisplay);
@@ -761,11 +776,13 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     public static final class AlarmBedtimeViewHolder_SleepCycle extends BedtimeViewHolder
     {
         protected ImageButton button_configure;
+        protected TextView text_totalsleep;
         protected TextView text_sleepcycle;
 
         public AlarmBedtimeViewHolder_SleepCycle(View view)
         {
             super(view);
+            text_totalsleep = (TextView) view.findViewById(R.id.text_totalsleep);
             text_sleepcycle = (TextView) view.findViewById(R.id.text_sleepcycle);
             button_configure = (ImageButton) view.findViewById(R.id.button_configure);
         }
@@ -788,22 +805,55 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             if (item != null)
             {
+                if (text_totalsleep != null)
+                {
+                    long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
+                    String sleepTotalString = utils.timeDeltaLongDisplayString(sleepTotalMs);
+                    String displayString = "Sleep for " + sleepTotalString  + ".";
+                    SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepTotalString);
+                    text_totalsleep.setText(sleepTimeDisplay);
+                }
+
                 if (text_sleepcycle != null)
                 {
-                    long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
-                    float sleepCycleCount = BedtimeSettings.loadPrefSleepCycleCount(context);
+                    long sleepOffsetMs = BedtimeSettings.loadPrefSleepOffsetMs(context);
+                    String offsetString = utils.timeDeltaLongDisplayString(sleepOffsetMs);
 
-                    String sleepCycleCountString = String.format(SuntimesUtils.getLocale(), "%.0f", sleepCycleCount);
-                    String sleepCycleString = utils.timeDeltaLongDisplayString(sleepCycleMs);
-                    String hoursString = utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount));
+                    boolean useSleepCycle = BedtimeSettings.loadPrefUseSleepCycle(context);
+                    if (useSleepCycle)
+                    {
+                        long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
+                        float sleepCycleCount = BedtimeSettings.loadPrefSleepCycleCount(context);
+                        String sleepCycleCountString = String.format(SuntimesUtils.getLocale(), "%.0f", sleepCycleCount);
+                        String sleepCycleString = utils.timeDeltaLongDisplayString(sleepCycleMs);
+                        String sleepCycleHoursString = utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount));
 
-                    String displayString = "Sleep for " + hoursString
-                            + "\n" + sleepCycleCountString + " sleep cycles of " + sleepCycleString;  // TODO
+                        String displayString = //"Sleep for " + sleepCycleHoursString + " + " + offsetString +
+                                "This is " + sleepCycleCountString + " cycles of " + sleepCycleString;
 
-                    SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepCycleString);
-                    sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, sleepCycleCountString);
-                    sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, hoursString);
-                    text_sleepcycle.setText(sleepTimeDisplay);
+                        if (sleepOffsetMs > 0) {
+                            displayString += ", plus " + offsetString + ".";  // TODO
+                        } else displayString += ".";
+
+                        SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepCycleString);
+                        sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, sleepCycleCountString);
+                        sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, sleepCycleHoursString);
+                        sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, offsetString);
+                        text_sleepcycle.setText(sleepTimeDisplay);
+
+                    } else {
+                        long sleepMs = BedtimeSettings.loadPrefSleepMs(context);
+                        String sleepTimeString = utils.timeDeltaLongDisplayString(sleepMs);
+
+                        String displayString = "This is " + sleepTimeString;
+                        if (sleepOffsetMs > 0) {
+                            displayString += ", plus " + offsetString + ".";  // TODO
+                        } else displayString += ".";
+
+                        SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepTimeString);
+                        sleepTimeDisplay = SuntimesUtils.createBoldSpan(sleepTimeDisplay, displayString, offsetString);
+                        text_sleepcycle.setText(sleepTimeDisplay);
+                    }
                 }
 
             } else {

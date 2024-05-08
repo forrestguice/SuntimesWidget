@@ -9,17 +9,22 @@
         android:background="?attr/alarmCardEnabled"
         android:orientation="horizontal">
 
-
         <LinearLayout
             android:layout_width="0dp" android:layout_weight="1"
             android:layout_height="match_parent" android:layout_margin="8dp"
             android:orientation="vertical" android:animateLayoutChanges="true">
 
-            <TextView android:id="@+id/text_sleepcycle"
+            <TextView android:id="@+id/text_totalsleep"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textSize="?attr/text_size_small"
                 android:drawablePadding="8dp" android:drawableStart="?attr/icActionTime"
+                tools:text="Bedtime for 8h" />
+
+            <TextView android:id="@+id/text_sleepcycle"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="?attr/text_size_small"
                 tools:text="Each sleep cycle\n is 1h 30m" />
 
         </LinearLayout>
