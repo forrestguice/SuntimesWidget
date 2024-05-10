@@ -410,8 +410,13 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
                     toggleAlarm(context, item.getAlarmItem(), isChecked);
+                    BedtimeItem linkedItem = item.getLinkedItem();
+                    if (linkedItem != null) {
+                        toggleAlarm(context, linkedItem.getAlarmItem(), isChecked);
+                    }
                 }
             };
         }
@@ -814,7 +819,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             @SuppressLint("ResourceType") int cardBgOff = a.getResourceId(3, R.drawable.card_alarmitem_disabled_dark);
             a.recycle();
 
-            boolean enabled = false;
+            AlarmClockItem bedtimeOff = item.getAlarmItem();
+            boolean enabled = (bedtimeOff != null && bedtimeOff.enabled);
             setCardBackground(context, enabled ? cardBgOn : cardBgOff);
 
             if (item != null)

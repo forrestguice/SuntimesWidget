@@ -1251,7 +1251,8 @@
     <string name="msg_bedtime_note">Bedtime in %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->   <!-- TODO -->
 
     <string name="configLabel_bedtime_alarm_notify">Bedtime</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
-    <string name="configLabel_bedtime_alarm_reminder">Bedtime Reminder</string>    <!-- AlarmItem label for reminder notification --> <!-- TODO -->
+    <string name="configLabel_bedtime_alarm_notify_off">Bedtime (off)</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
+    <string name="configLabel_bedtime_alarm_reminder">Bedtime (reminder)</string>    <!-- AlarmItem label for reminder notification --> <!-- TODO -->
     <string name="configLabel_bedtime_alarm_wakeup">Wake up</string>             <!-- AlarmItem label for wake up alarm --> <!-- TODO -->
 
     <string name="configLabel_bedtime_tile_normal">Bedtime</string>             <!-- Quick Settings Tile labels --> <!-- TODO -->
