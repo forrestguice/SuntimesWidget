@@ -120,17 +120,18 @@ public class BedtimeAlarmHelper
         return alarmItem;
     }
 
-    public static AlarmClockItem createBedtimeEventItem(final Context context, @Nullable final BedtimeItem item, int hour, int minute, long offset)
+    public static AlarmClockItem createBedtimeEventItem(final Context context, String slot, @Nullable final BedtimeItem item, int hour, int minute, long offset)
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
         AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.NOTIFICATION1,
-                context.getString(R.string.configLabel_bedtime_alarm_notify),
+                context.getString(slot == null || slot.equals(BedtimeSettings.SLOT_BEDTIME_NOTIFY) ? R.string.configLabel_bedtime_alarm_notify : R.string.configLabel_bedtime_alarm_notify_off),
                 null, location, -1, hour, minute, null,
                 false, null, null, AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
         alarmItem.offset = offset;
         alarmItem.repeating = true;
-        alarmItem.actionID0 = WidgetActions.SuntimesAction.TRIGGER_BEDTIME.name();
-        //alarmItem.actionID1 = WidgetActions.SuntimesAction.DISMISS_BEDTIME.name();
+        alarmItem.actionID0 = (slot == null || slot.equals(BedtimeSettings.SLOT_BEDTIME_NOTIFY))
+                ? WidgetActions.SuntimesAction.TRIGGER_BEDTIME.name()
+                : WidgetActions.SuntimesAction.DISMISS_BEDTIME.name();
         alarmItem.enabled = true;
         AlarmNotifications.updateAlarmTime(context, alarmItem);
         return alarmItem;
@@ -204,13 +205,13 @@ public class BedtimeAlarmHelper
     public static void setBedtimeReminder_withEventInfo(final Context context, final int hour, final int minute, final long offset, final boolean enabled)
     {
         //AlarmClockItem eventItem = (enabled ? BedtimeAlarmHelper.createBedtimeEventItem(context, null, hour, minute, offset) : null);   // to also clear reminder when disabled
-        AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, hour, minute, offset);
+        AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, null, hour, minute, offset);
         setBedtimeReminder_withEventItem(context, eventItem, enabled);
     }
 
     public static void setBedtimeReminder_withEventInfo(final Context context, String event, final long offset, final boolean enabled)
     {
-        AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, -1, -1, offset);
+        AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, null, -1, -1, offset);
         eventItem.setEvent(event);
         setBedtimeReminder_withEventItem(context, eventItem, enabled);
     }

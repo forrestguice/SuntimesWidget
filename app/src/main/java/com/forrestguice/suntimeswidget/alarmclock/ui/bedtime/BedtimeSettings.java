@@ -47,8 +47,9 @@ public class BedtimeSettings
     public static final String PREF_KEY_BEDTIME_ALARM_ID = "app_bedtime_alarmid";
     public static final String SLOT_WAKEUP_ALARM = "wakeup";
     public static final String SLOT_BEDTIME_NOTIFY = "notify";
+    public static final String SLOT_BEDTIME_NOTIFYOFF = "notifyoff";
     public static final String SLOT_BEDTIME_REMINDER = "reminder";
-    public static final String[] ALL_SLOTS = new String[] { SLOT_WAKEUP_ALARM, SLOT_BEDTIME_NOTIFY, SLOT_BEDTIME_REMINDER };
+    public static final String[] ALL_SLOTS = new String[] { SLOT_WAKEUP_ALARM, SLOT_BEDTIME_NOTIFY, SLOT_BEDTIME_NOTIFYOFF, SLOT_BEDTIME_REMINDER };
     public static final long ID_NONE = -1;
 
     public static final String PREF_KEY_SLEEPCYCLE_LENGTH = "app_bedtime_sleepCycleMillis";
