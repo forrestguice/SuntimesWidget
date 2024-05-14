@@ -3,11 +3,11 @@
     <string name="help_url">@string/help_cb_url</string>       <!-- must end with / -->
 
     <!-- Help Paths (these should be prefixed by `help_url`) -->
-    <string name="help_action_path" translatable="false">actions</string>
-    <string name="help_battery_optimization_path" translatable="false">alarms/batteryopt</string>
-    <string name="help_datasources_path" translatable="false">datasources</string>
-    <string name="help_substitutions_path" translatable="false">datasubstitutions</string>
-    <string name="help_worldmap_background_path" translatable="false">worldmap</string>
+    <string name="help_action_path" translatable="false">more/actions/addaction</string>
+    <string name="help_battery_optimization_path" translatable="false">alarms/recommendations/#battery-optimization</string>
+    <string name="help_datasources_path" translatable="false">more/data/datasources</string>
+    <string name="help_substitutions_path" translatable="false">more/data/datasubstitutions</string>
+    <string name="help_worldmap_background_path" translatable="false">dialogs/worldmap/#set-background</string>
 
     <!-- App Links -->
     <string name="help_app_url">@string/help_app_cb_url</string>
