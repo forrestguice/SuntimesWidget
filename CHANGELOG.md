@@ -1,6 +1,7 @@
 ### ~
 
-### v0.15.15 (2024-05-10)
+### v0.15.15 (2024-05-14)
+* adds online user manual; https://forrestguice.github.io/Suntimes/help/ or https://forrestguice.codeberg.page/Suntimes/help/
 * fixes app crash when using custom themes (#792).
 * updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#791 by James Liu).
 * updates translation to Polish and Esperanto (eo, pl) (#793 by Verdulo).
