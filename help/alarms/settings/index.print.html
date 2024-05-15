@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.8">
+    <meta name="generator" content="Relearn 5.25.0+tip">
+    <meta name="description" content="">
+    <meta name="author" content="Forrest Guice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Alarm Settings :: Suntimes">
+    <meta name="twitter:description" content="Suntimes -&gt; Settings -&gt; Alarms to reach alarm settings.
+Alarms Dismiss Challenge None (default) Easy Math. Solve single digit math problems to dismiss alarms. Reminder within Show a reminder notification within 12 hours of each alarm.
+Snooze for Snooze alarms for up to 120 minutes.
+Snooze limit Change the snooze limit to limit the number of times snooze can be used.
+Timeout after Alarms will timeout after sounding for too long without user intervention.">
+    <meta property="og:title" content="Alarm Settings :: Suntimes">
+    <meta property="og:description" content="Suntimes -&gt; Settings -&gt; Alarms to reach alarm settings.
+Alarms Dismiss Challenge None (default) Easy Math. Solve single digit math problems to dismiss alarms. Reminder within Show a reminder notification within 12 hours of each alarm.
+Snooze for Snooze alarms for up to 120 minutes.
+Snooze limit Change the snooze limit to limit the number of times snooze can be used.
+Timeout after Alarms will timeout after sounding for too long without user intervention.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://forrestguice.codeberg.page/Suntimes/help/alarms/settings/index.html">
+    <meta property="article:section" content="Alarms :: Suntimes">
+    <meta property="og:site_name" content="Suntimes">
+    <title>Alarm Settings :: Suntimes</title>
+    <link href="https://forrestguice.codeberg.page/Suntimes/help/alarms/settings/index.html" rel="canonical" type="text/html" title="Alarm Settings :: Suntimes">
+    <link href="/Suntimes/help/alarms/settings/index.xml" rel="alternate" type="application/rss+xml" title="Alarm Settings :: Suntimes">
+    <link href="/Suntimes/images/logo.png?1715731408" rel="icon" type="image/png">
+    <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
+    <link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/nucleus.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/perfect-scrollbar.min.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/theme.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/theme-dark-theme.css?1715731410" rel="stylesheet" id="R-variant-style">
+    <link href="/Suntimes/css/chroma-relearn-dark.css?1715731410" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="/Suntimes/css/variant.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/print.css?1715731410" rel="stylesheet" media="print">
+    <link href="/Suntimes/css/format-print.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/ie.css?1715731410" rel="stylesheet">
+    <script src="/Suntimes/js/url.js?1715731410"></script>
+    <script src="/Suntimes/js/variant.js?1715731410"></script>
+    <script>
+      // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      window.index_js_url="/Suntimes/index.search.js";
+      var root_url="/";
+      var baseUri=root_url.replace(/\/$/, '');
+      window.relearn = window.relearn || {};
+      window.relearn.baseUriFull='https:\/\/forrestguice.codeberg.page\/Suntimes/';
+      // variant stuff
+      window.relearn.themeVariantModifier='';
+      window.variants && variants.init( [ 'dark-theme', 'light-theme' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+
+  </head>
+  <body class="mobile-support print disableInlineCopyToClipboard" data-url="/Suntimes/help/alarms/settings/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/index.html"><span itemprop="name">Suntimes</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/index.html"><span itemprop="name">Help</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/alarms/index.html"><span itemprop="name">Alarms</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Alarm Settings</span><meta itemprop="position" content="4"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable default" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="alarm-settings">Alarm Settings</h1>
+
+<p><code>Suntimes -&gt; Settings</code> <code>-&gt; Alarms</code> to reach  <span title="Alarm"><i class="ic-alarm"></i></span>
+
+ <strong>alarm</strong> settings.</p>
+<hr>
+<h3 id="alarms">Alarms</h3>
+<h6 id="dismiss-challenge">Dismiss Challenge</h6>
+<ul>
+<li><strong>None</strong> (default)</li>
+<li><strong>Easy Math</strong>. Solve single digit math problems to dismiss alarms.</li>
+</ul>
+<h6 id="reminder-within">Reminder within</h6>
+<p>Show a <span title="reminder"><i class="ic-notification"></i></span>
+
+ <strong>reminder</strong> notification within 12 hours of each alarm.</p>
+<h6 id="snooze-for">Snooze for</h6>
+<p><span title="Snooze"><i class="ic-snooze"></i></span>
+
+ <strong>Snooze</strong> alarms for up to 120 minutes.</p>
+<h6 id="snooze-limit">Snooze limit</h6>
+<p>Change the <span title="snooze limit"><i class="ic-snooze"></i></span>
+
+ <strong>snooze limit</strong> to limit the number of times snooze can be used.</p>
+<h6 id="timeout-after">Timeout after</h6>
+<p>Alarms will <span title="timeout"><i class="ic-alarm_timeout"></i></span>
+
+ <strong>timeout</strong> after sounding for too long without user intervention.</p>
+<hr>
+<h3 id="quick-notification">Quick Notification</h3>
+<p><span title="quick notification"><i class="ic-notification_circle"></i></span>
+
+ <strong>Quick Notifications</strong> are displayed for less than a minute and then automatically dismissed (defaults to 30s).</p>
+<hr>
+<h3 id="sounds">Sounds</h3>
+<h6 id="volumes">Volumes</h6>
+<p>Tap to opens system volume settings.</p>
+<h6 id="gradually-increase-volume">Gradually increase volume</h6>
+<p>Gradually increase the alarm volume over time (defaults to 10s).</p>
+<h6 id="show-all-ringtones">Show all ringtones</h6>
+<ul>
+<li><input disabled="" type="checkbox"> Show all system sounds during selection (ignore ringtone type).</li>
+</ul>
+<hr>
+<h3 id="miscellaneous">Miscellaneous</h3>
+<h6 id="launcher-icon">Launcher Icon</h6>
+<ul>
+<li><input disabled="" type="checkbox"> Show alarm clock icon in the app tray.</li>
+</ul>
+<h6 id="import-warning">Import Warning</h6>
+<p>Imported alarms might revert some settings to defaults.</p>
+<ul>
+<li><input disabled="" type="checkbox"> Do not show this warning again.</li>
+</ul>
+<h6 id="boot-completed">Boot Completed</h6>
+<p>Alarms are automatically rescheduled a few minutes after reboot. This setting displays the last time alarms were rescheduled and the total amount of time that was consumed.</p>
+<p>Tap this setting to trigger the boot completed routine manually.</p>
+<hr>
+<h3 id="experimental">Experimental</h3>
+<h6 id="power-off-alarm">Power Off Alarm</h6>
+<p>Wake the device from the power off state.</p>
+<p>This feature is hardware dependent. Supported devices will display the name of the package responsible for implementing this feature. Unsupported devices will display <em>null</em>.</p>
+<p>For supported devices, tapping this setting will request power off alarm permissions.</p>
+
+<div class="box notices cstyle grey">
+  <div class="box-label">Note</div>
+  <div class="box-content">
+
+<p>This feature is incomplete and has been reported as non-functional. If you have supporting hardware, please considering testing and creating a detailed <a href="/Suntimes/help/index.html#user-support">report</a>.</p>
+</div>
+</div>
+
+            <footer class="footline">
+            </footer>
+          </article>
+
+        </div>
+      </main>
+    </div>
+    <script src="/Suntimes/js/clipboard.min.js?1715731410" defer></script>
+    <script src="/Suntimes/js/perfect-scrollbar.min.js?1715731410" defer></script>
+    <script src="/Suntimes/js/theme.js?1715731410" defer></script>
+  </body>
+</html>

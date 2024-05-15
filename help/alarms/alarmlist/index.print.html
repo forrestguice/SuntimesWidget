@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.8">
+    <meta name="generator" content="Relearn 5.25.0+tip">
+    <meta name="description" content="">
+    <meta name="author" content="Forrest Guice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Alarm List :: Suntimes">
+    <meta name="twitter:description" content="Alarm List Select, Deselect Add Alarm Edit Alarm Delete, Clear Snooze, Dismiss Sort Alarms Export, Import Alarm List The alarm list can be shown from Suntimes -&gt; Set Alarm, or by tapping Suntimes Alarms from the app launcher.
+Tip Suntimes -&gt; Settings -&gt; Alarms -&gt; Launcher Icon to enable the Suntimes Alarms icon in the app launcher.
+Select, Deselect Tap an item in the list to select it. Selected items display the alarm note and additional controls.">
+    <meta property="og:title" content="Alarm List :: Suntimes">
+    <meta property="og:description" content="Alarm List Select, Deselect Add Alarm Edit Alarm Delete, Clear Snooze, Dismiss Sort Alarms Export, Import Alarm List The alarm list can be shown from Suntimes -&gt; Set Alarm, or by tapping Suntimes Alarms from the app launcher.
+Tip Suntimes -&gt; Settings -&gt; Alarms -&gt; Launcher Icon to enable the Suntimes Alarms icon in the app launcher.
+Select, Deselect Tap an item in the list to select it. Selected items display the alarm note and additional controls.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://forrestguice.codeberg.page/Suntimes/help/alarms/alarmlist/index.html">
+    <meta property="article:section" content="Alarms :: Suntimes">
+    <meta property="og:site_name" content="Suntimes">
+    <title>Alarm List :: Suntimes</title>
+    <link href="https://forrestguice.codeberg.page/Suntimes/help/alarms/alarmlist/index.html" rel="canonical" type="text/html" title="Alarm List :: Suntimes">
+    <link href="/Suntimes/help/alarms/alarmlist/index.xml" rel="alternate" type="application/rss+xml" title="Alarm List :: Suntimes">
+    <link href="/Suntimes/images/logo.png?1715731408" rel="icon" type="image/png">
+    <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
+    <link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/nucleus.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/perfect-scrollbar.min.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/theme.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/theme-dark-theme.css?1715731410" rel="stylesheet" id="R-variant-style">
+    <link href="/Suntimes/css/chroma-relearn-dark.css?1715731410" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="/Suntimes/css/variant.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/print.css?1715731410" rel="stylesheet" media="print">
+    <link href="/Suntimes/css/format-print.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/ie.css?1715731410" rel="stylesheet">
+    <script src="/Suntimes/js/url.js?1715731410"></script>
+    <script src="/Suntimes/js/variant.js?1715731410"></script>
+    <script>
+      // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      window.index_js_url="/Suntimes/index.search.js";
+      var root_url="/";
+      var baseUri=root_url.replace(/\/$/, '');
+      window.relearn = window.relearn || {};
+      window.relearn.baseUriFull='https:\/\/forrestguice.codeberg.page\/Suntimes/';
+      // variant stuff
+      window.relearn.themeVariantModifier='';
+      window.variants && variants.init( [ 'dark-theme', 'light-theme' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+
+  </head>
+  <body class="mobile-support print disableInlineCopyToClipboard" data-url="/Suntimes/help/alarms/alarmlist/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/index.html"><span itemprop="name">Suntimes</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/index.html"><span itemprop="name">Help</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/alarms/index.html"><span itemprop="name">Alarms</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Alarm List</span><meta itemprop="position" content="4"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable default" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="alarm-list">Alarm List</h1>
+
+<p><a href="#R-image-147db5cfb5e94d5fd5176f7d141d7d48" class="lightbox-link"><img alt="Manage Alarms" class="noborder lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/suntimes-alarmlist.png?width=350px" style=" height: auto; width: 350px;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-147db5cfb5e94d5fd5176f7d141d7d48"><img alt="Manage Alarms" class="noborder lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/suntimes-alarmlist.png?width=350px"></a></p>
+<ul>
+<li><a href="/Suntimes/help/alarms/alarmlist/index.html#alarm-list">Alarm List</a></li>
+<li><a href="/Suntimes/help/alarms/alarmlist/index.html#select-deselect">Select, Deselect</a></li>
+<li><a href="/Suntimes/help/alarms/alarmlist/index.html#add">Add Alarm</a></li>
+<li><a href="/Suntimes/help/alarms/alarmlist/index.html#edit">Edit Alarm</a></li>
+<li><a href="/Suntimes/help/alarms/alarmlist/index.html#delete-clear">Delete, Clear</a></li>
+<li><a href="/Suntimes/help/alarms/alarmlist/index.html#snooze-dismiss">Snooze, Dismiss</a></li>
+<li><a href="/Suntimes/help/alarms/alarmlist/index.html#sort-alarms">Sort Alarms</a></li>
+<li><a href="/Suntimes/help/alarms/alarmlist/index.html#export-import">Export, Import</a></li>
+</ul>
+<hr>
+<h3 id="alarm-list">Alarm List</h3>
+<p>The <strong>alarm list</strong> can be shown from <span title="Set Alarm"><i class="ic-alarm"></i></span>
+
+ <code>Suntimes -&gt; Set Alarm</code>, or by tapping <code>Suntimes Alarms</code> from the app launcher.</p>
+
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
+<p><code>Suntimes -&gt; Settings -&gt; Alarms</code> <code>-&gt; Launcher Icon</code> to enable the <strong>Suntimes Alarms</strong> icon in the app launcher.</p>
+</div>
+</div>
+<hr>
+<h3 id="select-deselect">Select, Deselect</h3>
+<p>Tap an item in the list to select it. Selected items display the <a href="/Suntimes/help/alarms/alarmlist/../editalarm/#note">alarm note</a> and additional controls.</p>
+<p>Tap <span title="deselect"><i class="ic-deselect"></i></span>
+
+ on the lower left of the screen, or press back to clear the selection.</p>
+<p><a href="#R-image-33b222adbc24f6af5ea179b709fb545a" class="lightbox-link"><img alt="Deselect Button" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/suntimes-alarmlist-buttons.png?width=250px&classes=inline" style=" height: auto; width: 250px;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-33b222adbc24f6af5ea179b709fb545a"><img alt="Deselect Button" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/suntimes-alarmlist-buttons.png?width=250px&classes=inline"></a></p>
+<hr>
+<h3 id="add-alarm">Add Alarm</h3>
+<p>Tap <span title="Add"><i class="ic-add"></i></span>
+
+ to <a href="/Suntimes/help/alarms/setalarm/index.html">set an alarm</a>. The alarm event dialog will be shown.</p>
+<p><a href="#R-image-9dd81ea6e905f9d5e9c80b7456542732" class="lightbox-link"><img alt="Add Alarm Button" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/suntimes-alarmlist-buttons0.png?width=250px&classes=inline" style=" height: auto; width: 250px;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-9dd81ea6e905f9d5e9c80b7456542732"><img alt="Add Alarm Button" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/suntimes-alarmlist-buttons0.png?width=250px&classes=inline"></a></p>
+<hr>
+<h3 id="edit-alarm">Edit Alarm</h3>
+<p>Tap an item in the list to select it. Tap the item again to <a href="/Suntimes/help/alarms/editalarm/index.html">edit the alarm</a>.</p>
+<p><a href="#R-image-7347910489f9c6b161fd6b1596726856" class="lightbox-link"><img alt="Edit Alarm" class="noborder lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/alarmlist_edit.png?width=250px" style=" height: auto; width: 250px;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-7347910489f9c6b161fd6b1596726856"><img alt="Edit Alarm" class="noborder lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/alarmlist_edit.png?width=250px"></a></p>
+<hr>
+<h3 id="delete-clear">Delete, Clear</h3>
+<p>Tap an item in the list to select it, then tap the <span title="Delete"><i class="ic-delete"></i></span>
+
+ button to remove the alarm.</p>
+<p>Use <span title="Clear"><i class="ic-delete"></i></span>
+
+ <code>: -&gt; Clear</code> to remove all alarms.</p>
+<p><a href="#R-image-5ff28828043b958180aa9d8aaa6d76a0" class="lightbox-link"><img alt="Delete Alarm" class="noborder lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/alarmlist_delete.png?width=350px" style=" height: auto; width: 350px;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-5ff28828043b958180aa9d8aaa6d76a0"><img alt="Delete Alarm" class="noborder lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/alarmlist_delete.png?width=350px"></a></p>
+<hr>
+<h3 id="snooze-dismiss">Snooze, Dismiss</h3>
+<p>Tap an item in the list to select it. Sounding alarms will display additional buttons.</p>
+<p>Tap <span title="snooze"><i class="ic-snooze"></i></span>
+
+ <code>snooze</code>
+or <span title="dismiss"><i class="ic-highlight_remove"></i></span>
+
+ <code>dismiss</code>,
+or tap the item again to display the fullscreen notification.</p>
+<p><a href="#R-image-4548f6185bbf639a2a91a4b923c745e4" class="lightbox-link"><img alt="Dismiss Alarm" class="noborder lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/alarmlist_dismiss.png?width=350px" style=" height: auto; width: 350px;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-4548f6185bbf639a2a91a4b923c745e4"><img alt="Dismiss Alarm" class="noborder lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/alarmlist/../images/alarmlist_dismiss.png?width=350px"></a></p>
+<hr>
+<h3 id="sort-alarms">Sort Alarms</h3>
+<p>Use <span title="Sort"><i class="ic-sort"></i></span>
+
+ <code>: -&gt; Sort</code> to sort the <strong>alarm list</strong> by</p>
+<ul>
+<li><strong>Alarm Time</strong></li>
+<li><strong>Creation Date</strong></li>
+</ul>
+<p>Use <span title="Enabled first"><i class="ic-sort"></i></span>
+
+ <strong>Enabled first</strong> to move enabled items to the top of the list.</p>
+<p>Use <span title="Show offsets"><i class="ic-visibility"></i></span>
+
+ <strong>Show Offsets</strong> to show before/after offsets separately from the alarm time.</p>
+<hr>
+<h3 id="export-import">Export, Import</h3>
+<p>Use <span title="Export"><i class="ic-save"></i></span>
+
+ <code>: -&gt; Export</code> to export the alarm list to file.</p>
+<p>Use <span title="Import"><i class="ic-copy"></i></span>
+
+ <code>: -&gt; Import</code> to import alarms from a previous export.</p>
+
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
+<p>It is also possible to export or import alarms by creating or restoring a <a href="/Suntimes/help/widgets/manage/index.html#create-backup">backup</a>.</p>
+</div>
+</div>
+
+            <footer class="footline">
+            </footer>
+          </article>
+
+        </div>
+      </main>
+    </div>
+    <script src="/Suntimes/js/clipboard.min.js?1715731410" defer></script>
+    <script src="/Suntimes/js/perfect-scrollbar.min.js?1715731410" defer></script>
+    <script src="/Suntimes/js/theme.js?1715731410" defer></script>
+  </body>
+</html>

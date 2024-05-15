@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.8">
+    <meta name="generator" content="Relearn 5.25.0+tip">
+    <meta name="description" content="">
+    <meta name="author" content="Forrest Guice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Widget Themes :: Suntimes">
+    <meta name="twitter:description" content="Suntimes can customize the appearance of widgets using widget themes.
+Defaults Manage Themes To access the theme list Suntimes -&gt; Settings -&gt; Widgets -&gt; Themes
+Add, Edit, Copy, Remove To add, edit, copy, or remove themes, navigate to the theme list.
+To add a theme, tap add.
+To copy a theme, select it, then tap copy to create a new theme with the same values.
+To edit a theme, select it, then tap edit.">
+    <meta property="og:title" content="Widget Themes :: Suntimes">
+    <meta property="og:description" content="Suntimes can customize the appearance of widgets using widget themes.
+Defaults Manage Themes To access the theme list Suntimes -&gt; Settings -&gt; Widgets -&gt; Themes
+Add, Edit, Copy, Remove To add, edit, copy, or remove themes, navigate to the theme list.
+To add a theme, tap add.
+To copy a theme, select it, then tap copy to create a new theme with the same values.
+To edit a theme, select it, then tap edit.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://forrestguice.codeberg.page/Suntimes/help/widgets/themes/index.html">
+    <meta property="article:section" content="Widgets :: Suntimes">
+    <meta property="og:site_name" content="Suntimes">
+    <title>Widget Themes :: Suntimes</title>
+    <link href="/Suntimes/help/widgets/themes/index.xml" rel="alternate" type="application/rss+xml" title="Widget Themes :: Suntimes">
+    <link href="/Suntimes/help/widgets/themes/index.print.html" rel="alternate" type="text/html" title="Widget Themes :: Suntimes">
+    <link href="/Suntimes/images/logo.png?1715731408" rel="icon" type="image/png">
+    <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
+    <link href="/Suntimes/css/fontawesome-all.min.css?1715731408" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fontawesome-all.min.css?1715731408" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/nucleus.css?1715731408" rel="stylesheet">
+    <link href="/Suntimes/css/auto-complete.css?1715731408" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/auto-complete.css?1715731408" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/perfect-scrollbar.min.css?1715731408" rel="stylesheet">
+    <link href="/Suntimes/css/fonts.css?1715731408" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fonts.css?1715731408" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/custom.css?1715731408" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/custom.css?1715731408" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/theme.css?1715731408" rel="stylesheet">
+    <link href="/Suntimes/css/theme-dark-theme.css?1715731409" rel="stylesheet" id="R-variant-style">
+    <link href="/Suntimes/css/chroma-relearn-dark.css?1715731409" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="/Suntimes/css/variant.css?1715731409" rel="stylesheet">
+    <link href="/Suntimes/css/print.css?1715731409" rel="stylesheet" media="print">
+    <link href="/Suntimes/css/ie.css?1715731409" rel="stylesheet">
+    <script src="/Suntimes/js/url.js?1715731409"></script>
+    <script src="/Suntimes/js/variant.js?1715731409"></script>
+    <script>
+      // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      window.index_js_url="/Suntimes/index.search.js";
+      var root_url="/";
+      var baseUri=root_url.replace(/\/$/, '');
+      window.relearn = window.relearn || {};
+      window.relearn.baseUriFull='https:\/\/forrestguice.codeberg.page\/Suntimes/';
+      // variant stuff
+      window.relearn.themeVariantModifier='';
+      window.variants && variants.init( [ 'dark-theme', 'light-theme' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+
+  </head>
+  <body class="mobile-support html disableInlineCopyToClipboard" data-url="/Suntimes/help/widgets/themes/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper"><nav class="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#defaults">Defaults</a></li>
+        <li><a href="#manage-themes">Manage Themes</a></li>
+        <li><a href="#add-edit-copy-remove">Add, Edit, Copy, Remove</a></li>
+        <li><a href="#share-export-import">Share, Export, Import</a></li>
+        <li><a href="#edit-themes">Edit Themes</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/index.html"><span itemprop="name">Suntimes</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/index.html"><span itemprop="name">Help</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/widgets/index.html"><span itemprop="name">Widgets</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Widget Themes</span><meta itemprop="position" content="4"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-print" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/Suntimes/help/widgets/themes/index.print.html" title="Print whole chapter (CTRL&#43;ALT&#43;p)"><i class="fa-fw fas fa-print"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/Suntimes/help/widgets/configure/index.html" title="Configure Widgets (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/Suntimes/help/tiles/index.html" title="Tiles (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable default" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="widget-themes">Widget Themes</h1>
+
+<p>Suntimes can customize the appearance of widgets using widget themes.</p>
+<h3 id="defaults">Defaults</h3>
+<p><a href="#R-image-83a6140f32f54398dbc1a2162ef00708" class="lightbox-link"><img alt="Dark theme" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="images/widgets_theme_dark.png?width=100px&classes=inline" style=" height: auto; width: 100px;" title="Dark theme"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-83a6140f32f54398dbc1a2162ef00708"><img alt="Dark theme" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="images/widgets_theme_dark.png?width=100px&classes=inline" title="Dark theme"></a>
+<a href="#R-image-df24cc564b626a57922ffc59ba1acbef" class="lightbox-link"><img alt="Light theme" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="images/widgets_theme_light.png?width=100px&classes=inline" style=" height: auto; width: 100px;" title="Light theme"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-df24cc564b626a57922ffc59ba1acbef"><img alt="Light theme" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="images/widgets_theme_light.png?width=100px&classes=inline" title="Light theme"></a>
+<a href="#R-image-be2d4f4b4119c95960d9fec934decacd" class="lightbox-link"><img alt="Translucent theme" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="images/widgets_theme_translucent.png?width=100px&classes=inline" style=" height: auto; width: 100px;" title="Translucent theme"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-be2d4f4b4119c95960d9fec934decacd"><img alt="Translucent theme" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="images/widgets_theme_translucent.png?width=100px&classes=inline" title="Translucent theme"></a>
+<a href="#R-image-fc7d5d832df477b649a06a74035a51b9" class="lightbox-link"><img alt="Transparent theme" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="images/widgets_theme_transparent.png?width=100px&classes=inline" style=" height: auto; width: 100px;" title="Translucent theme"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-fc7d5d832df477b649a06a74035a51b9"><img alt="Transparent theme" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="images/widgets_theme_transparent.png?width=100px&classes=inline" title="Translucent theme"></a></p>
+<h3 id="manage-themes">Manage Themes</h3>
+<p>To access the <span title="Themes"><i class="ic-palette"></i></span>
+
+ <strong>theme list</strong> <code>Suntimes -&gt; Settings -&gt; Widgets</code> <code>-&gt; Themes</code></p>
+<h3 id="add-edit-copy-remove">Add, Edit, Copy, Remove</h3>
+<p>To add, edit, copy, or remove themes, navigate to the <a href="/Suntimes/help/widgets/themes/index.html#manage-themes">theme list</a>.</p>
+<p>To <strong>add</strong> a theme, tap <span title="Add"><i class="ic-add"></i></span>
+
+ <strong>add</strong>.</p>
+<p>To <strong>copy</strong> a theme, select it, then tap <span title="Copy"><i class="ic-copy"></i></span>
+
+ <strong>copy</strong> to create a new theme with the same values.</p>
+<p>To <strong>edit</strong> a theme, select it, then tap <span title="Edit"><i class="ic-edit"></i></span>
+
+ <strong>edit</strong>.</p>
+<p>To <strong>remove</strong> a theme, select it, then tap <span title="Remove"><i class="ic-delete"></i></span>
+
+ <strong>delete</strong>.</p>
+
+<div class="box notices cstyle default">
+  <div class="box-label">Note</div>
+  <div class="box-content">
+
+<p>The <strong>default</strong> themes cannot be modified; the <strong>edit</strong> and <strong>remove</strong> actions will not be shown.  <span title="default"><i class="ic-settings"></i></span></p>
+</div>
+</div>
+<h3 id="share-export-import">Share, Export, Import</h3>
+<p>From the <a href="/Suntimes/help/widgets/themes/index.html#manage-themes">theme list</a>, select a theme, then tap <span title="Share"><i class="ic-share"></i></span>
+
+ to <strong>share</strong> the theme as a file.</p>
+<p>Use <span title="export"><i class="ic-save"></i></span>
+
+ <code>: -&gt; Export</code> to <strong>export</strong> all themes to file.</p>
+<p>Use <span title="import"><i class="ic-copy"></i></span>
+
+ <code>: -&gt; Import</code> to <strong>import</strong> previously shared or exported themes.</p>
+<h3 id="edit-themes">Edit Themes</h3>
+<p>TODO</p>
+
+            <footer class="footline">
+            </footer>
+          </article>
+        </div>
+      </main>
+    </div>
+    <aside id="R-sidebar" class="default-animation">
+      <div id="R-header-topbar" class="default-animation"></div>
+
+
+      <div id="R-header-wrapper" class="default-animation">
+        <div id="R-header" class="default-animation">
+<a id="R-logo" href="https://forrestguice.codeberg.page/Suntimes/"><img src="https://forrestguice.codeberg.page/Suntimes//images/logo.png" width="128px" height="128px" /></a>
+
+        </div>
+        
+      </div>
+
+
+      <div id="R-homelinks" class="default-animation homelinks">
+        <ul>
+          <li><a class="padding" href="/Suntimes/index.html"><span style='font-size:1.5rem'><b>Suntimes</b></span></a></li>
+        </ul>
+        <hr class="padding">
+      </div>
+      <div id="R-content-wrapper" class="highlightable">
+        <div id="R-topics">
+          <ul class="enlarge morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/download/index.html" class=""><a class="padding" href="/Suntimes/download/index.html">Download</a></li>
+          <li data-nav-id="/Suntimes/help/index.html" class="parent "><a class="padding" href="/Suntimes/help/index.html">Help</a><ul id="R-subsections-7ddc2c3e2cb52a293678470c01b99070" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/configuration/index.html" class=""><a class="padding" href="/Suntimes/help/configuration/index.html">Configuration</a><ul id="R-subsections-d91bf07080a289790be3e1165540ad6d" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/configuration/welcome/index.html" class=""><a class="padding" href="/Suntimes/help/configuration/welcome/index.html">Welcome</a></li>
+          <li data-nav-id="/Suntimes/help/configuration/selectplace/index.html" class=""><a class="padding" href="/Suntimes/help/configuration/selectplace/index.html">Select a Place</a></li>
+          <li data-nav-id="/Suntimes/help/configuration/timezone/index.html" class=""><a class="padding" href="/Suntimes/help/configuration/timezone/index.html">Select a Time Zone</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/dialogs/index.html" class=""><a class="padding" href="/Suntimes/help/dialogs/index.html">App Dialogs</a><ul id="R-subsections-160ef38d0b480a7e537dd1ab953740e2" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/dialogs/main/index.html" class=""><a class="padding" href="/Suntimes/help/dialogs/main/index.html">Main</a></li>
+          <li data-nav-id="/Suntimes/help/dialogs/sun/index.html" class=""><a class="padding" href="/Suntimes/help/dialogs/sun/index.html">Sun</a></li>
+          <li data-nav-id="/Suntimes/help/dialogs/moon/index.html" class=""><a class="padding" href="/Suntimes/help/dialogs/moon/index.html">Moon</a></li>
+          <li data-nav-id="/Suntimes/help/dialogs/solstice/index.html" class=""><a class="padding" href="/Suntimes/help/dialogs/solstice/index.html">Solstice, Equinox</a></li>
+          <li data-nav-id="/Suntimes/help/dialogs/worldmap/index.html" class=""><a class="padding" href="/Suntimes/help/dialogs/worldmap/index.html">World Map</a><ul id="R-subsections-94eb2f09d28c6d93089be51daf7eeb7c" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/dialogs/worldmap/downloadbackgrounds/index.html" class=""><a class="padding" href="/Suntimes/help/dialogs/worldmap/downloadbackgrounds/index.html">Download Backgrounds</a></li>
+          <li data-nav-id="/Suntimes/help/dialogs/worldmap/createbackgrounds/index.html" class=""><a class="padding" href="/Suntimes/help/dialogs/worldmap/createbackgrounds/index.html">Creating Backgrounds</a></li></ul></li></ul></li>
+          <li data-nav-id="/Suntimes/help/alarms/index.html" class=""><a class="padding" href="/Suntimes/help/alarms/index.html">Alarms</a><ul id="R-subsections-fc4d72ba6b0564f887d612ee4358b328" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/alarms/setalarm/index.html" class=""><a class="padding" href="/Suntimes/help/alarms/setalarm/index.html">Set Alarm</a></li>
+          <li data-nav-id="/Suntimes/help/alarms/editalarm/index.html" class=""><a class="padding" href="/Suntimes/help/alarms/editalarm/index.html">Edit Alarm</a></li>
+          <li data-nav-id="/Suntimes/help/alarms/alarmlist/index.html" class=""><a class="padding" href="/Suntimes/help/alarms/alarmlist/index.html">Alarm List</a></li>
+          <li data-nav-id="/Suntimes/help/alarms/settings/index.html" class=""><a class="padding" href="/Suntimes/help/alarms/settings/index.html">Alarm Settings</a></li>
+          <li data-nav-id="/Suntimes/help/alarms/recommendations/index.html" class=""><a class="padding" href="/Suntimes/help/alarms/recommendations/index.html">Recommendations</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/widgets/index.html" class="parent "><a class="padding" href="/Suntimes/help/widgets/index.html">Widgets</a><ul id="R-subsections-3637b9be551346642827c5f38fcbe231" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/widgets/manage/index.html" class=""><a class="padding" href="/Suntimes/help/widgets/manage/index.html">Manage Widgets</a></li>
+          <li data-nav-id="/Suntimes/help/widgets/configure/index.html" class=""><a class="padding" href="/Suntimes/help/widgets/configure/index.html">Configuration</a></li>
+          <li data-nav-id="/Suntimes/help/widgets/themes/index.html" class="active"><a class="padding" href="/Suntimes/help/widgets/themes/index.html">Themes</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/tiles/index.html" class=""><a class="padding" href="/Suntimes/help/tiles/index.html">Tiles</a><ul id="R-subsections-98fadd107ad8fb18e023f8027b1bfe3d" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/tiles/manage/index.html" class=""><a class="padding" href="/Suntimes/help/tiles/manage/index.html">Manage Tiles</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/addons/index.html" class=""><a class="padding" href="/Suntimes/help/addons/index.html">Add-ons</a><ul id="R-subsections-09397255ed2c119f38d66e33083ffecb" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/addons/interfaces/index.html" class=""><a class="padding" href="/Suntimes/help/addons/interfaces/index.html">Interfaces</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/more/index.html" class=""><a class="padding" href="/Suntimes/help/more/index.html">More</a><ul id="R-subsections-ff21d1dc202d89d0f55439392fed68f6" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/more/settings/index.html" class=""><a class="padding" href="/Suntimes/help/more/settings/index.html">Settings</a><ul id="R-subsections-98a9930f7d007a71cd59a1ed87dd2d76" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/more/settings/general/index.html" class=""><a class="padding" href="/Suntimes/help/more/settings/general/index.html">General</a></li>
+          <li data-nav-id="/Suntimes/help/more/settings/language/index.html" class=""><a class="padding" href="/Suntimes/help/more/settings/language/index.html">Language</a></li>
+          <li data-nav-id="/Suntimes/help/more/settings/userinterface/index.html" class=""><a class="padding" href="/Suntimes/help/more/settings/userinterface/index.html">User Interface</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/more/events/index.html" class=""><a class="padding" href="/Suntimes/help/more/events/index.html">Events</a></li>
+          <li data-nav-id="/Suntimes/help/more/places/index.html" class=""><a class="padding" href="/Suntimes/help/more/places/index.html">Places</a><ul id="R-subsections-d9e3f32ff69972d520f9466c75a0c351" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/more/places/manageplaces/index.html" class=""><a class="padding" href="/Suntimes/help/more/places/manageplaces/index.html">Manage Places</a></li>
+          <li data-nav-id="/Suntimes/help/more/places/placesettings/index.html" class=""><a class="padding" href="/Suntimes/help/more/places/placesettings/index.html">Place Settings</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/more/actions/index.html" class=""><a class="padding" href="/Suntimes/help/more/actions/index.html">Actions</a><ul id="R-subsections-2e8d895c2a409a290002df476003fa60" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/more/actions/addaction/index.html" class=""><a class="padding" href="/Suntimes/help/more/actions/addaction/index.html">Add Actions</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/more/data/index.html" class=""><a class="padding" href="/Suntimes/help/more/data/index.html">Data</a><ul id="R-subsections-a0e1ace6d52f7e67236ad4d4e12566c4" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/more/data/datasubstitutions/index.html" class=""><a class="padding" href="/Suntimes/help/more/data/datasubstitutions/index.html">Data Substitutions</a><ul id="R-subsections-1ff32728f0241a06efadd008add707e8" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/more/data/datasubstitutions/allsubstitions/index.html" class=""><a class="padding" href="/Suntimes/help/more/data/datasubstitutions/allsubstitions/index.html">Available Substitutions</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/more/data/datasources/index.html" class=""><a class="padding" href="/Suntimes/help/more/data/datasources/index.html">Data Sources</a><ul id="R-subsections-528bac9b8fb1f7ad511a16a824147066" class="morespace collapsible-menu">
+          <li data-nav-id="/Suntimes/help/more/data/datasources/availablesources/index.html" class=""><a class="padding" href="/Suntimes/help/more/data/datasources/availablesources/index.html">Available Data Sources</a></li>
+          <li data-nav-id="/Suntimes/help/more/data/datasources/addingsources/index.html" class=""><a class="padding" href="/Suntimes/help/more/data/datasources/addingsources/index.html">Adding Data Sources</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/more/data/dataprovider/index.html" class=""><a class="padding" href="/Suntimes/help/more/data/dataprovider/index.html">Data Provider</a></li></ul></li>
+          <li data-nav-id="/Suntimes/help/more/documentation/index.html" class=""><a class="padding" href="/Suntimes/help/more/documentation/index.html">Documentation</a></li></ul></li></ul></li>
+          </ul>
+        </div>
+
+
+        <hr>
+        <div id="R-shortcuts">
+          <div class="nav-title padding"></div>
+          <ul class="space">
+            <li><a class="padding" href="https://github.com/forrestguice/SuntimesWidget"><i class='fab fa-fw fa-github'></i> GitHub</a></li>
+            <li><a class="padding" href="/Suntimes/license/index.html"><i class='fas fa-fw fa-file-contract'></i> License</a></li>
+            <li><a class="padding" href="/Suntimes/privacy/index.html"><i class='fas fa-fw fa-lock'></i> Privacy</a></li>
+          </ul>
+        </div>
+
+
+
+        <hr>
+	<div id="R-header-wrapper">
+        <form action="/Suntimes/search.html" method="get"><div class="searchbox default-animation">
+          <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+          <label class="a11y-only" for="R-search-by">Search</label>
+          <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
+          <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
+        </div></form>
+        <script>
+          var contentLangs=['en'];
+        </script>
+        <script src="/Suntimes/js/auto-complete.js?1715731410" defer></script>
+        <script src="/Suntimes/js/lunr/lunr.min.js?1715731410" defer></script>
+        <script src="/Suntimes/js/lunr/lunr.stemmer.support.min.js?1715731410" defer></script>
+        <script src="/Suntimes/js/lunr/lunr.multi.min.js?1715731410" defer></script>
+        <script src="/Suntimes/js/lunr/lunr.en.min.js?1715731410" defer></script>
+        <script src="/Suntimes/js/search.js?1715731410" defer></script>
+	</div>
+        <div class="padding footermargin footerLangSwitch footerVariantSwitch footerVisitedLinks footerFooter showVariantSwitch showFooter"></div>
+        <div id="R-menu-footer">
+          <hr class="padding default-animation footerLangSwitch footerVariantSwitch footerVisitedLinks footerFooter showVariantSwitch showFooter">
+          <div id="R-prefooter" class="footerLangSwitch footerVariantSwitch footerVisitedLinks showVariantSwitch">
+            <ul>
+              <li id="R-select-language-container" class="footerLangSwitch">
+                <div class="padding menu-control">
+                  <i class="fas fa-language fa-fw"></i>
+                  <span>&nbsp;</span>
+                  <div class="control-style">
+                    <label class="a11y-only" for="R-select-language">Language</label>
+                    <select id="R-select-language" onchange="location = baseUri + this.value;">
+                      <option id="R-en" value="/Suntimes/help/widgets/themes/index.html" lang="en" selected></option>
+                    </select>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </li>
+              <li id="R-select-variant-container" class="footerVariantSwitch showVariantSwitch">
+                <div class="padding menu-control">
+                  <i class="fas fa-palette fa-fw"></i>
+                  <span>&nbsp;</span>
+                  <div class="control-style">
+                    <label class="a11y-only" for="R-select-variant">Theme</label>
+                    <select id="R-select-variant" onchange="window.variants && variants.changeVariant( this.value );">
+                      <option id="R-dark-theme" value="dark-theme" selected>Dark Theme</option>
+                      <option id="R-light-theme" value="light-theme">Light Theme</option>
+                    </select>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <script>window.variants && variants.markSelectedVariant();</script>
+              </li>
+              <li class="footerVisitedLinks">
+                <div class="padding menu-control">
+                  <i class="fas fa-history fa-fw"></i>
+                  <span>&nbsp;</span>
+                  <div class="control-style">
+                    <button onclick="clearHistory();">Clear History</button>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div id="R-footer" class="footerFooter showFooter">
+	    <p>This website built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> using <a href="https://gohugo.io/">Hugo</a></p>
+
+	    <p>Copyright &#169; 2014-2024 Forrest Guice
+<p>
+
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <script src="/Suntimes/js/clipboard.min.js?1715731410" defer></script>
+    <script src="/Suntimes/js/perfect-scrollbar.min.js?1715731410" defer></script>
+    <script src="/Suntimes/js/theme.js?1715731410" defer></script>
+  </body>
+</html>

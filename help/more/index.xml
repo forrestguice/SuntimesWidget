@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>More on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/more/index.html</link>
+    <description>Recent content in More on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Mar 2024 16:10:53 -0700</lastBuildDate>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/more/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Settings</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/settings/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/settings/index.html</guid>
+      <description>Suntimes -&amp;gt; Settings to change application settings.
+General Suntimes -&amp;gt; Settings -&amp;gt; General to change general settings.
+Alarms Suntimes -&amp;gt; Settings -&amp;gt; Alarms to change alarm settings.
+Language Suntimes -&amp;gt; Settings -&amp;gt; Language to change language settings.
+Places Suntimes -&amp;gt; Settings -&amp;gt; Places to change place settings.
+User Interface Suntimes -&amp;gt; Settings -&amp;gt; User Interface to change user interface settings.
+Widgets Suntimes -&amp;gt; Settings -&amp;gt; Widgets to reconfigure widgets, or configure widget themes, or widget actions.</description>
+    </item>
+    <item>
+      <title>Events</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/events/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/events/index.html</guid>
+      <description>Suntimes displays astronomical event times in dialogs and widgets. It can also use events to schedule repeating alarms.
+Default Events Custom Events Add, Edit Delete, Clear Export, Import Add-on Events Default Events sunrise, sunset, &amp;amp; solar noon civil, nautical, &amp;amp; astronomical twilight times blue hour, &amp;amp; golden hour moonrise, moonset, lunar noon, &amp;amp; lunar midnight major moon phases solstices, equinoxes, &amp;amp; cross-quarter days Custom Events Suntimes allows defining events with a user-defined angle.</description>
+    </item>
+    <item>
+      <title>Places</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/places/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/places/index.html</guid>
+      <description>Suntimes is configured using location data and maintains a private collection of places.
+Manage Places Place Settings </description>
+    </item>
+    <item>
+      <title>Actions</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/actions/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:00:20 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/actions/index.html</guid>
+      <description>Suntimes can perform user-defined actions when a widget is clicked, or when an alarm or notification is shown or dismissed.
+Add Actions </description>
+    </item>
+    <item>
+      <title>Data</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:10:53 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/index.html</guid>
+      <description>Suntimes performs all calculations locally on the device.
+This data is displayed by dialogs in the app, by home screen widgets, and can used to schedule alarms and notifications. Data is also available to plugins and add-ons apps through a provider.
+Data Substitutions Data Sources Data Provider </description>
+    </item>
+    <item>
+      <title>Documentation</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/documentation/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/documentation/index.html</guid>
+      <description>This user manual (and other documentation) is maintained at https://github.com/forrestguice/Suntimes/issues.
+You can help improve it by reporting typos, dead links, and other errors.
+Mirrors This user manual is published to:
+https://forrestguice.codeberg.page/Suntimes/ https://forrestguice.github.io/Suntimes/ Versions v0.1.0 (latest), 2024-05-01, written for Suntimes v0.15.14. </description>
+    </item>
+  </channel>
+</rss>

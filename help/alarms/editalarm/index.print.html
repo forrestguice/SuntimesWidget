@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.8">
+    <meta name="generator" content="Relearn 5.25.0+tip">
+    <meta name="description" content="">
+    <meta name="author" content="Forrest Guice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Edit Alarm :: Suntimes">
+    <meta name="twitter:description" content="Type Label Note Event (or time) Repeat Offset (before/after) Location Reminder Sound Vibration On Alert Action On Dismiss Action On Dismiss Challenge Tap to cancel without making changes.
+Tap to save, or to save and enable.
+Tap to save and disable.
+Tap to cancel and delete.
+Type Tap to change the alarm type:
+Alarm Notification Quick Notification Tip Quick Notifications are automatically dismissed after 30s. Suntimes -&gt; Settings -&gt; Alarms -&gt; Auto-dismiss after to change this setting.">
+    <meta property="og:title" content="Edit Alarm :: Suntimes">
+    <meta property="og:description" content="Type Label Note Event (or time) Repeat Offset (before/after) Location Reminder Sound Vibration On Alert Action On Dismiss Action On Dismiss Challenge Tap to cancel without making changes.
+Tap to save, or to save and enable.
+Tap to save and disable.
+Tap to cancel and delete.
+Type Tap to change the alarm type:
+Alarm Notification Quick Notification Tip Quick Notifications are automatically dismissed after 30s. Suntimes -&gt; Settings -&gt; Alarms -&gt; Auto-dismiss after to change this setting.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://forrestguice.codeberg.page/Suntimes/help/alarms/editalarm/index.html">
+    <meta property="article:section" content="Alarms :: Suntimes">
+    <meta property="og:site_name" content="Suntimes">
+    <title>Edit Alarm :: Suntimes</title>
+    <link href="https://forrestguice.codeberg.page/Suntimes/help/alarms/editalarm/index.html" rel="canonical" type="text/html" title="Edit Alarm :: Suntimes">
+    <link href="/Suntimes/help/alarms/editalarm/index.xml" rel="alternate" type="application/rss+xml" title="Edit Alarm :: Suntimes">
+    <link href="/Suntimes/images/logo.png?1715731408" rel="icon" type="image/png">
+    <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
+    <link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/nucleus.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/perfect-scrollbar.min.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/theme.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/theme-dark-theme.css?1715731410" rel="stylesheet" id="R-variant-style">
+    <link href="/Suntimes/css/chroma-relearn-dark.css?1715731410" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="/Suntimes/css/variant.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/print.css?1715731410" rel="stylesheet" media="print">
+    <link href="/Suntimes/css/format-print.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/ie.css?1715731410" rel="stylesheet">
+    <script src="/Suntimes/js/url.js?1715731410"></script>
+    <script src="/Suntimes/js/variant.js?1715731410"></script>
+    <script>
+      // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      window.index_js_url="/Suntimes/index.search.js";
+      var root_url="/";
+      var baseUri=root_url.replace(/\/$/, '');
+      window.relearn = window.relearn || {};
+      window.relearn.baseUriFull='https:\/\/forrestguice.codeberg.page\/Suntimes/';
+      // variant stuff
+      window.relearn.themeVariantModifier='';
+      window.variants && variants.init( [ 'dark-theme', 'light-theme' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+
+  </head>
+  <body class="mobile-support print disableInlineCopyToClipboard" data-url="/Suntimes/help/alarms/editalarm/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/index.html"><span itemprop="name">Suntimes</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/index.html"><span itemprop="name">Help</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/alarms/index.html"><span itemprop="name">Alarms</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Edit Alarm</span><meta itemprop="position" content="4"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable default" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="edit-alarm">Edit Alarm</h1>
+
+<ul>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#type">Type</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#label">Label</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#note">Note</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#event-or-time">Event (or time)</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#repeat">Repeat</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#offset-before-after">Offset (before/after)</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#offset-beforeafter">Location</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#reminder">Reminder</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#sound">Sound</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#vibration">Vibration</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#on-alert-action">On Alert Action</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#on-dismiss-action">On Dismiss Action</a></li>
+<li><a href="/Suntimes/help/alarms/editalarm/index.html#on-dismiss-challenge">On Dismiss Challenge</a></li>
+</ul>
+<hr>
+<p><a href="#R-image-d2caf94e08636bdbefbd482dddb898be" class="lightbox-link"><img alt="Edit Alarm" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-actionbar.png?width=350px&classes=inline" style=" height: auto; width: 350px;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-d2caf94e08636bdbefbd482dddb898be"><img alt="Edit Alarm" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-actionbar.png?width=350px&classes=inline"></a></p>
+<p>Tap <span title="cancel"><i class="ic-back"></i></span>
+
+ to <strong>cancel</strong> without making changes.</p>
+<p>Tap <span title="save"><i class="ic-save"></i></span>
+
+ to <strong>save</strong>, or <span title="save and enable"><i class="ic-done_all"></i></span>
+
+ to save and enable.</p>
+<p>Tap <span title="save and close"><i class="ic-highlight_remove"></i></span>
+
+ to <strong>save and disable</strong>.</p>
+<p>Tap <span title="Delete"><i class="ic-delete"></i></span>
+
+ to <strong>cancel and delete</strong>.</p>
+<hr>
+<h3 id="type">Type</h3>
+<p><a href="#R-image-8a06e530ada48fb52e185eabb4c9d734" class="lightbox-link"><img alt="Alarm Label" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-type.png?width=350px&classes=inline" style=" height: auto; width: 350px;" title="Alarm Type"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-8a06e530ada48fb52e185eabb4c9d734"><img alt="Alarm Label" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-type.png?width=350px&classes=inline" title="Alarm Type"></a></p>
+<p>Tap <span title="Type"><i class="ic-alarm"></i></span>
+
+ to change the alarm <strong>type</strong>:</p>
+<ul>
+<li><strong>Alarm</strong></li>
+<li><strong>Notification</strong></li>
+<li><strong>Quick Notification</strong></li>
+</ul>
+
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
+<p><strong>Quick Notifications</strong> are automatically dismissed after 30s. <code>Suntimes -&gt; Settings -&gt; Alarms</code> <code>-&gt; Auto-dismiss after</code> to change this <a href="/Suntimes/help/alarms/settings/index.html#quick-notification">setting</a>.</p>
+</div>
+</div>
+<hr>
+<h3 id="label">Label</h3>
+<p><a href="#R-image-1c9ca6d91c887923e3c2a9bb108faeb9" class="lightbox-link"><img alt="Alarm Label" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-label.png?width=350px&classes=inline" style=" height: auto; width: 350px;" title="Alarm Label"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-1c9ca6d91c887923e3c2a9bb108faeb9"><img alt="Alarm Label" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-label.png?width=350px&classes=inline" title="Alarm Label"></a></p>
+<p>Tap <code>Label</code> to change the alarm <strong>label</strong>.</p>
+<hr>
+<h3 id="note">Note</h3>
+<p><a href="#R-image-6a67319b329a03d18162511b53d75267" class="lightbox-link"><img alt="Alarm Note" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-note.png?width=350px&classes=inline" style=" height: auto; width: 350px;" title="Alarm Note"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-6a67319b329a03d18162511b53d75267"><img alt="Alarm Note" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-note.png?width=350px&classes=inline" title="Alarm Note"></a></p>
+<p>Tap <span title="Note"><i class="ic-label"></i></span>
+
+ to change the alarm <strong>note</strong>.</p>
+
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
+<p>The note is displayed with the label, and supports limited %<a href="/Suntimes/help/more/data/datasubstitutions/index.html">substitutions</a>.</p>
+</div>
+</div>
+<hr>
+<h3 id="event-or-time">Event (or time)</h3>
+<p>Tap <span title="Event"><i class="ic-time"></i></span>
+
+ to change the alarm&rsquo;s event or time.</p>
+<p><a href="#R-image-ead44b6227ea3387e70a38ca4a9b1c81" class="lightbox-link"><img alt="Event" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-schedule-event.png?width=250px&classes=inline" style=" height: auto; width: 250px;" title="Event"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-ead44b6227ea3387e70a38ca4a9b1c81"><img alt="Event" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-schedule-event.png?width=250px&classes=inline" title="Event"></a></p>
+<hr>
+<h3 id="repeat">Repeat</h3>
+<p>Suntimes supports daily <strong>repeating alarms</strong>, and will automatically reschedule alarms as event times change throughout the year.</p>
+<p>Tap <span title="repeat"><i class="ic-today"></i></span>
+
+ to change repeat options.</p>
+<p><a href="#R-image-1492d80e4a7cec3493dc64c64521b9e3" class="lightbox-link"><img alt="Repeat" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-schedule-repeat.png?width=250px&classes=inline" style=" height: auto; width: 250px;" title="Repeat"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-1492d80e4a7cec3493dc64c64521b9e3"><img alt="Repeat" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-schedule-repeat.png?width=250px&classes=inline" title="Repeat"></a>
+<a href="#R-image-3913b5e5a484219afd95bf0a8f59529f" class="lightbox-link"><img alt="Repeat" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-repeat.png?width=200px&classes=inline" style=" height: auto; width: 200px;" title="Repeat"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-3913b5e5a484219afd95bf0a8f59529f"><img alt="Repeat" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-repeat.png?width=200px&classes=inline" title="Repeat"></a></p>
+<hr>
+<h3 id="offset-beforeafter">Offset (before/after)</h3>
+<p>Suntimes can schedule alarms <strong>before</strong> or <strong>after</strong> an event or specified time.</p>
+<p>Tap <span title="offset"><i class="ic-offset"></i></span>
+
+ <code>at</code> to change the <strong>offset</strong> options.</p>
+<p><a href="#R-image-2b6d6102c3de3210f2fe21a94a39ccdb" class="lightbox-link"><img alt="Offset" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-schedule-at.png?width=250px&classes=inline" style=" height: auto; width: 250px;" title="Alarm Offset"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-2b6d6102c3de3210f2fe21a94a39ccdb"><img alt="Offset" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-schedule-at.png?width=250px&classes=inline" title="Alarm Offset"></a></p>
+
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
+<p>Tap the alarm time preview to see the combined <code>event + offset</code> alarm time.</p>
+</div>
+</div>
+<hr>
+<h3 id="location">Location</h3>
+<p>Suntimes can schedule alarms for events occurring in different locations.</p>
+<p>Tap <span title="location"><i class="ic-place"></i></span>
+
+ to change the <strong>location</strong>.</p>
+<p><a href="#R-image-d8c2025ec38af9546aff6b094197395b" class="lightbox-link"><img alt="Offset" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-schedule-location.png?width=250px&classes=inline" style=" height: auto; width: 250px;" title="Alarm Offset"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-d8c2025ec38af9546aff6b094197395b"><img alt="Offset" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-schedule-location.png?width=250px&classes=inline" title="Alarm Offset"></a></p>
+<hr>
+<h3 id="reminder">Reminder</h3>
+<p>Suntimes can show a <strong>reminder</strong> several hours before an alarm triggers, and perform an additional <a href="/Suntimes/help/more/actions/index.html">action</a> at that time.</p>
+<p>Tap <span title="reminder"><i class="ic-notification"></i></span>
+
+ to toggle the <strong>reminder</strong>.</p>
+<p><a href="#R-image-8ea1a54631cc1270f67d1c992a94df90" class="lightbox-link"><img alt="Reminder" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-before.png?width=250px&classes=inline" style=" height: auto; width: 250px;" title="Reminder"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-8ea1a54631cc1270f67d1c992a94df90"><img alt="Reminder" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-before.png?width=250px&classes=inline" title="Reminder"></a></p>
+
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
+<p>The reminder notification allows alarms to be dismissed early. Dismissing a <em>repeating alarm</em> will automatically reschedule it for the next day.</p>
+</div>
+</div>
+<hr>
+<h3 id="sound">Sound</h3>
+<p>Suntimes can play a <em>ringtone</em> or <em>audio file</em> when an alarm sounds.</p>
+<p>Tap <span title="sound"><i class="ic-sound"></i></span>
+
+ to change the alert sound, or select <code>No Sound</code> <span title="No Sound"><i class="ic-nosound"></i></span>
+
+ for a silent alarm.</p>
+<p><a href="#R-image-aa2afa87c4ee0f371deb58cc6cd5bdb7" class="lightbox-link"><img alt="On Alert" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-onalert.png?width=250px&classes=inline" style=" height: auto; width: 250px;" title="On Alert"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-aa2afa87c4ee0f371deb58cc6cd5bdb7"><img alt="On Alert" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-onalert.png?width=250px&classes=inline" title="On Alert"></a></p>
+
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
+<p>Enable <code>Suntimes -&gt; Settings -&gt; Alarms</code> <code>-&gt; Show all ringtones</code> to allow selection of all system sounds regardless of their intended use.</p>
+</div>
+</div>
+<hr>
+<h3 id="vibration">Vibration</h3>
+<p>Suntimes can cause the device to <strong>vibrate</strong> when an alarm triggers.</p>
+<p>Tap <span title="vibration"><i class="ic-vibration"></i></span>
+
+ to enable vibration.</p>
+<hr>
+<h3 id="on-alert-action">On Alert Action</h3>
+<p>Suntimes can perform an <a href="/Suntimes/help/more/actions/index.html">action</a> when an alarm triggers.</p>
+<p>Tap <code>On Alert</code> <span title="action"><i class="ic-extension"></i></span>
+
+ to change the <strong>alert action</strong>.</p>
+<p><a href="#R-image-0d49940eb49ecec8237a41fcc1edad76" class="lightbox-link"><img alt="On Alert" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-onalert1.png?width=250px&classes=inline" style=" height: auto; width: 250px;" title="On Alert"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-0d49940eb49ecec8237a41fcc1edad76"><img alt="On Alert" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-onalert1.png?width=250px&classes=inline" title="On Alert"></a></p>
+<hr>
+<h3 id="on-dismiss-action">On Dismiss Action</h3>
+<p>Suntimes can perform an <a href="/Suntimes/help/more/actions/index.html">action</a> when dismissing an alarm.</p>
+<p>Tap <code>On Dismiss</code> <span title="action"><i class="ic-extension"></i></span>
+
+ to change the <strong>dismiss action</strong>.</p>
+<p><a href="#R-image-567c445385cf589f5caa1bef13b133d6" class="lightbox-link"><img alt="On Dismiss" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-ondismiss.png?width=250px&classes=inline" style=" height: auto; width: 250px;" title="On Dismiss"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-567c445385cf589f5caa1bef13b133d6"><img alt="On Dismiss" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/alarms/editalarm/../images/suntimes-editalarm-ondismiss.png?width=250px&classes=inline" title="On Dismiss"></a></p>
+<hr>
+<h3 id="on-dismiss-challenge">On Dismiss Challenge</h3>
+<p>Suntimes can require passing a <strong>challenge</strong> before dismissing a sounding alarm.</p>
+<p>Tap <code>On Dismiss</code> <span title="challenge"><i class="ic-challenge"></i></span>
+
+ to change the <strong>dismiss challenge</strong>.</p>
+<ul>
+<li><strong>None</strong></li>
+<li><strong>Easy Math</strong> (single digit math problems)</li>
+</ul>
+
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
+<p><a href="/Suntimes/help/addons/index.html">Add-ons</a> can provide additional <strong>challenges</strong>; e.g. <a href="/addons/suntimesnfc">Suntimes NFC</a> can be used to dismiss alarms using NFC tags.</p>
+</div>
+</div>
+
+            <footer class="footline">
+            </footer>
+          </article>
+
+        </div>
+      </main>
+    </div>
+    <script src="/Suntimes/js/clipboard.min.js?1715731410" defer></script>
+    <script src="/Suntimes/js/perfect-scrollbar.min.js?1715731410" defer></script>
+    <script src="/Suntimes/js/theme.js?1715731410" defer></script>
+  </body>
+</html>

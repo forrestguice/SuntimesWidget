@@ -9,22 +9,54 @@
     <lastBuildDate>Sat, 16 Mar 2024 15:50:03 -0700</lastBuildDate>
     <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/alarms/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Battery Optimization</title>
-      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/batteryopt/index.html</link>
-      <pubDate>Sat, 16 Mar 2024 15:49:54 -0700</pubDate>
-      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/batteryopt/index.html</guid>
-      <description>Suntimes must be not optimized for alarms to work reliably.
-Settings -&amp;gt; Apps -&amp;gt; Suntimes -&amp;gt; Battery -&amp;gt; Unrestricted
-On most devices the optimized setting may delay alarms up to 15 minutes. Other devices may restrict alarms without special configuration.
-The following devices are affected: Asus, Blackview, Huawei, LENOVO, Meizu, OnePlus, OPPO, realme, Samsung, Sony, Unihertz, Vivo, WIKO, and Xiaomi. Check https://dontkillmyapp.com/ for solutions.</description>
+      <title>Set Alarm</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/setalarm/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/setalarm/index.html</guid>
+      <description>Alarm Types Schedule by Time Schedule by Event Show Alarm Time Alarm Types Suntimes supports multiple alarm types. Tap to choose the type.
+Alarms will sound until they are dismissed or snoozed. Notifications remain in the tray until they are dismissed. Quick Notifications are shown for a brief moment. Tip Quick Notifications are automatically dismissed after 30s (changed from Suntimes -&amp;gt; Settings -&amp;gt; Alarms -&amp;gt; Auto-dismiss after). Regular notifications will remain the tray until they are dismissed.</description>
     </item>
     <item>
-      <title>Notification Settings</title>
-      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/notificationsettings/index.html</link>
+      <title>Edit Alarm</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/editalarm/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/editalarm/index.html</guid>
+      <description>Type Label Note Event (or time) Repeat Offset (before/after) Location Reminder Sound Vibration On Alert Action On Dismiss Action On Dismiss Challenge Tap to cancel without making changes.
+Tap to save, or to save and enable.
+Tap to save and disable.
+Tap to cancel and delete.
+Type Tap to change the alarm type:
+Alarm Notification Quick Notification Tip Quick Notifications are automatically dismissed after 30s. Suntimes -&amp;gt; Settings -&amp;gt; Alarms -&amp;gt; Auto-dismiss after to change this setting.</description>
+    </item>
+    <item>
+      <title>Alarm List</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/alarmlist/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/alarmlist/index.html</guid>
+      <description>Alarm List Select, Deselect Add Alarm Edit Alarm Delete, Clear Snooze, Dismiss Sort Alarms Export, Import Alarm List The alarm list can be shown from Suntimes -&amp;gt; Set Alarm, or by tapping Suntimes Alarms from the app launcher.
+Tip Suntimes -&amp;gt; Settings -&amp;gt; Alarms -&amp;gt; Launcher Icon to enable the Suntimes Alarms icon in the app launcher.
+Select, Deselect Tap an item in the list to select it. Selected items display the alarm note and additional controls.</description>
+    </item>
+    <item>
+      <title>Alarm Settings</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/settings/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/settings/index.html</guid>
+      <description>Suntimes -&amp;gt; Settings -&amp;gt; Alarms to reach alarm settings.
+Alarms Dismiss Challenge None (default) Easy Math. Solve single digit math problems to dismiss alarms. Reminder within Show a reminder notification within 12 hours of each alarm.
+Snooze for Snooze alarms for up to 120 minutes.
+Snooze limit Change the snooze limit to limit the number of times snooze can be used.
+Timeout after Alarms will timeout after sounding for too long without user intervention.</description>
+    </item>
+    <item>
+      <title>Alarm Recommendations</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/alarms/recommendations/index.html</link>
       <pubDate>Sat, 16 Mar 2024 15:50:03 -0700</pubDate>
-      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/notificationsettings/index.html</guid>
-      <description>Notifications must be enabled for alarms to display correctly.
-Settings -&amp;gt; Apps -&amp;gt; Suntimes -&amp;gt; Notifications -&amp;gt; Show Notifications</description>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/recommendations/index.html</guid>
+      <description>Battery Optimization Notification Settings Autostart Permission Battery Optimization Suntimes must be not optimized for alarms to work reliably.
+Settings -&amp;gt; Apps -&amp;gt; Suntimes -&amp;gt; Battery -&amp;gt; Unrestricted
+Note On most devices the optimized setting may delay alarms up to 15 minutes. Other devices may restrict alarms without special configuration.
+The following devices are affected: Asus, Blackview, Huawei, LENOVO, Meizu, OnePlus, OPPO, realme, Samsung, Sony, Unihertz, Vivo, WIKO, and Xiaomi. Check https://dontkillmyapp.</description>
     </item>
   </channel>
 </rss>

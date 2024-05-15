@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Add-ons on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/addons/index.html</link>
+    <description>Recent content in Add-ons on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/addons/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Interfaces</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/interfaces/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/interfaces/index.html</guid>
+      <description>Add-ons are separate applications that integrate with or extend Suntimes through the use of public interfaces. Add-ons may start intents, use content-providers, or implement content-provider contracts.
+Add-ons must declare the READ_CALCULATOR permission. This permission is granted during installation.
+See https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces for a list of interfaces available to add-ons (and other applications).</description>
+    </item>
+  </channel>
+</rss>

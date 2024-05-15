@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Widgets on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/widgets/index.html</link>
+    <description>Recent content in Widgets on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/widgets/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Manage Widgets</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/widgets/manage/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/widgets/manage/index.html</guid>
+      <description>Add Remove Resize Reconfigure Create Backup Restore Backup Add To add a widget, navigate to the home screen, long-press to show the widget menu, then hold and drag the widget to a position on the screen.
+The configuration screen will be shown. Tap to add the widget.
+Remove To remove a widget, long press on it, then hold and drag it to the zone at the top of the screen.</description>
+    </item>
+    <item>
+      <title>Configure Widgets</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/widgets/configure/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/widgets/configure/index.html</guid>
+      <description>Layout Appearance General Time Zone Location Action Layout Suntimes groups widgets by type of data (sun, moon, etc). Each widget type offers a selection of different layouts. Change the layout settings to choose the widget that will be displayed at a given size.
+Swap layouts to fill available space Suntimes can swap between widget layouts when resized to take advantage of available space.
+Enabled :: The widget will switch between layouts depending on available space.</description>
+    </item>
+    <item>
+      <title>Widget Themes</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/widgets/themes/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/widgets/themes/index.html</guid>
+      <description>Suntimes can customize the appearance of widgets using widget themes.
+Defaults Manage Themes To access the theme list Suntimes -&amp;gt; Settings -&amp;gt; Widgets -&amp;gt; Themes
+Add, Edit, Copy, Remove To add, edit, copy, or remove themes, navigate to the theme list.
+To add a theme, tap add.
+To copy a theme, select it, then tap copy to create a new theme with the same values.
+To edit a theme, select it, then tap edit.</description>
+    </item>
+  </channel>
+</rss>

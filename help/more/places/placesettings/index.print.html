@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.8">
+    <meta name="generator" content="Relearn 5.25.0+tip">
+    <meta name="description" content="">
+    <meta name="author" content="Forrest Guice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Place Settings :: Suntimes">
+    <meta name="twitter:description" content="Suntimes can query the device&rsquo;s current location using the GPS or Network providers.
+To configure this behavior, use Suntimes -&gt; Settings -&gt; Places to access the place settings.
+Permissions Getting the current location requires location permissions. When prompted, grant permissions and enable device location.
+Location time limit When requesting the current location, Suntimes will actively wait for a location update until the time limit expires.
+The default location time limit is 1 minute.">
+    <meta property="og:title" content="Place Settings :: Suntimes">
+    <meta property="og:description" content="Suntimes can query the device&rsquo;s current location using the GPS or Network providers.
+To configure this behavior, use Suntimes -&gt; Settings -&gt; Places to access the place settings.
+Permissions Getting the current location requires location permissions. When prompted, grant permissions and enable device location.
+Location time limit When requesting the current location, Suntimes will actively wait for a location update until the time limit expires.
+The default location time limit is 1 minute.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://forrestguice.codeberg.page/Suntimes/help/more/places/placesettings/index.html">
+    <meta property="article:section" content="Places :: Suntimes">
+    <meta property="og:site_name" content="Suntimes">
+    <title>Place Settings :: Suntimes</title>
+    <link href="https://forrestguice.codeberg.page/Suntimes/help/more/places/placesettings/index.html" rel="canonical" type="text/html" title="Place Settings :: Suntimes">
+    <link href="/Suntimes/help/more/places/placesettings/index.xml" rel="alternate" type="application/rss+xml" title="Place Settings :: Suntimes">
+    <link href="/Suntimes/images/logo.png?1715731408" rel="icon" type="image/png">
+    <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
+    <link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/nucleus.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/perfect-scrollbar.min.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/theme.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/theme-dark-theme.css?1715731410" rel="stylesheet" id="R-variant-style">
+    <link href="/Suntimes/css/chroma-relearn-dark.css?1715731410" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="/Suntimes/css/variant.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/print.css?1715731410" rel="stylesheet" media="print">
+    <link href="/Suntimes/css/format-print.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/ie.css?1715731410" rel="stylesheet">
+    <script src="/Suntimes/js/url.js?1715731410"></script>
+    <script src="/Suntimes/js/variant.js?1715731410"></script>
+    <script>
+      // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      window.index_js_url="/Suntimes/index.search.js";
+      var root_url="/";
+      var baseUri=root_url.replace(/\/$/, '');
+      window.relearn = window.relearn || {};
+      window.relearn.baseUriFull='https:\/\/forrestguice.codeberg.page\/Suntimes/';
+      // variant stuff
+      window.relearn.themeVariantModifier='';
+      window.variants && variants.init( [ 'dark-theme', 'light-theme' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+
+  </head>
+  <body class="mobile-support print disableInlineCopyToClipboard" data-url="/Suntimes/help/more/places/placesettings/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/index.html"><span itemprop="name">Suntimes</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/index.html"><span itemprop="name">Help</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/more/index.html"><span itemprop="name">More</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/more/places/index.html"><span itemprop="name">Places</span></a><meta itemprop="position" content="4">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Place Settings</span><meta itemprop="position" content="5"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable default" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="place-settings">Place Settings</h1>
+
+<p>Suntimes can query the device&rsquo;s <strong>current location</strong> using the <strong>GPS</strong> or <strong>Network</strong> providers.</p>
+<p>To configure this behavior, use <code>Suntimes -&gt; Settings -&gt; Places</code> to access the <span title="place settings"><i class="ic-place"></i></span>
+
+ <strong>place settings</strong>.</p>
+<p><a href="#R-image-e1d1403606d6a3738d1a284dc919ed36" class="lightbox-link"><img alt="Location Settings" class="noborder lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/more/places/placesettings/../images/placessettings.png?width=350px" style=" height: auto; width: 350px;" title="Location Settings"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-e1d1403606d6a3738d1a284dc919ed36"><img alt="Location Settings" class="noborder lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/more/places/placesettings/../images/placessettings.png?width=350px" title="Location Settings"></a></p>
+
+<div class="box notices cstyle grey">
+  <div class="box-label">Permissions</div>
+  <div class="box-content">
+
+<p>Getting the current location requires <a href="/Suntimes/privacy/index.html#permissions">location permissions</a>. When prompted, grant permissions and enable device location.</p>
+</div>
+</div>
+
+<ul class="children children-li children-sort-weight">
+	
+</ul>
+<hr>
+<h3 id="location-time-limit">Location time limit</h3>
+<p>When requesting the <strong>current location</strong>, Suntimes will actively wait for a location update until the <strong>time limit</strong> expires.</p>
+<p>The default <strong>location time limit</strong> is <em>1 minute</em>.</p>
+
+<div class="box notices cstyle grey">
+  <div class="box-label">Note</div>
+  <div class="box-content">
+
+<p>Location requests may time out if GPS or Network location providers are unavailable (and the current location is older than the max age).</p>
+</div>
+</div>
+<hr>
+<h3 id="location-recent-max-age">Location recent max age</h3>
+<p>When requesting the <strong>current location</strong>, Suntimes will trigger a location update if the current location is older than the <strong>max age</strong>.</p>
+<p>The default <strong>location max age</strong> is <em>5 minutes</em>.</p>
+<hr>
+<h3 id="passive-location">Passive Location</h3>
+<p>Suntimes can use the <strong>passive location provider</strong> to determine the device&rsquo;s location. A separate app is required to make active update requests.</p>
+
+            <footer class="footline">
+            </footer>
+          </article>
+
+        </div>
+      </main>
+    </div>
+    <script src="/Suntimes/js/clipboard.min.js?1715731411" defer></script>
+    <script src="/Suntimes/js/perfect-scrollbar.min.js?1715731411" defer></script>
+    <script src="/Suntimes/js/theme.js?1715731411" defer></script>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>App Dialogs on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/index.html</link>
+    <description>Recent content in App Dialogs on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Mar 2024 16:16:14 -0700</lastBuildDate>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/dialogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Main</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/main/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/dialogs/main/index.html</guid>
+      <description>Location Current Time Next Event Sunrise, Sunset, Twilight Moon Solstice, Equinox Location Suntimes displays the location name and coordinates in the action bar.
+Tap to change the location.
+Tap to update the current location.
+Tap to show the location on a map. Visibility of the map button can be changed from Suntimes -&amp;gt; Settings User Interface -&amp;gt; Show Map Button.
+Current Time Suntimes displays the current time and time zone in the upper left.</description>
+    </item>
+    <item>
+      <title>Sun</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/sun/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/dialogs/sun/index.html</guid>
+      <description>Current Position Light map Altitude Graph Seek Altitude Play (animation) View date Object Shadow Current Position Suntimes displays the sun&amp;rsquo;s current azimuth and altitude, azimuth at sunrise and sunset, and altitude at solar noon.
+Light map Suntimes can display a graph of daylight and twilight periods.
+Tip Use Suntimes -&amp;gt; Settings User Interface -&amp;gt; Show Light Map to show the light map view on the main screen.
+Altitude Graph Use : -&amp;gt; Altitude Graph to toggle the altitude graph, and : -&amp;gt; Options to change the graph&amp;rsquo;s options.</description>
+    </item>
+    <item>
+      <title>Moon</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/moon/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/dialogs/moon/index.html</guid>
+      <description>Phase, Illumination, and Position Playback Moonrise, moonset Synodic Month Anomalistic Month More Options Phase, Illumination, and Position Suntimes displays the moon&amp;rsquo;s current phase, illumination, azimuth, and altitude.
+Tip Use Suntimes -&amp;gt; Settings User Interface -&amp;gt; Show Moon to show this info in the main table.
+Playback Use : -&amp;gt; Playback to show the controls.
+Tap and to step through positions at 5 minute intervals. Tap to reset to the current time (on the selected day).</description>
+    </item>
+    <item>
+      <title>Solstice, Equinox</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/solstice/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/dialogs/solstice/index.html</guid>
+      <description>Solstices, Equinoxes (tracking) Cross-Quarter Days Tropical Year More Options Solstices, Equinoxes (tracking) Suntimes displays the solstices and equinoxes, and can track the number of days until or since those events.
+Use : -&amp;gt; Track to change tracking to the recent, nearest, or upcoming event.
+This option can also be changed from the User Interface settings. Suntimes -&amp;gt; Settings User Interface -&amp;gt; Solstice Tracking.
+Tip Tracking can be enabled in the main view using Suntimes -&amp;gt; Settings User Interface -&amp;gt; Show Solstice / Equinox.</description>
+    </item>
+    <item>
+      <title>World Map</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:16:14 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/index.html</guid>
+      <description>Maps Map Options Play Share (Record) View Date Set Background Maps Basic Blue Marble Polar (North) Polar (South) Azimuthal Equidistant (Phoenix) Map Options Use : -&amp;gt; Options to change the map&amp;rsquo;s options.
+Sunlight (shadow) Moonlight Location (dot) Graticule (minor grid lines) Major Lines (equator, tropics, arctic circle) Note The map options are also applied to home screen widgets.
+Play (animation) Suntimes can animate the world map at different rates.</description>
+    </item>
+  </channel>
+</rss>

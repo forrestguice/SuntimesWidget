@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Available Data Sources on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/availablesources/index.html</link>
+    <description>Recent content in Available Data Sources on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Mar 2024 16:03:18 -0700</lastBuildDate>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/availablesources/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

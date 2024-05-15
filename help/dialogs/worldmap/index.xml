@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>World Map on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/index.html</link>
+    <description>Recent content in World Map on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Mar 2024 16:16:14 -0700</lastBuildDate>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Download Backgrounds</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/downloadbackgrounds/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:16:14 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/downloadbackgrounds/index.html</guid>
+      <description>To use backgrounds&amp;hellip; Store full-sized images somewhere on your device, then open with Set background. Suntimes uses URI permissions to access images stored on the SD card.
+Projection Map Backgrounds (click for full-size image) Equidistant Rectangular Equidistant Azimuthal Made with Natural Earth. https://www.naturalearthdata.com/about/terms-of-use/
+NASA Earth Observatory. Blue Marble: Next Generation. https://visibleearth.nasa.gov/view_cat.php?categoryID=1484</description>
+    </item>
+    <item>
+      <title>Creating Backgrounds</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/createbackgrounds/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:15:52 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/createbackgrounds/index.html</guid>
+      <description>The background image should be a png or jpeg, with recommended dimensions 1024 x 512 or 1024 x 1024 or greater (will be scaled to fit the screen). The default maps use vector data from Natural Earth, and raster data from Blue Marble: Next Generation. The default maps use a white foreground (landmasses), and transparent background (ocean). The final coloring is determined by the app&amp;rsquo;s theme. The graticule and other markings are drawn behind the background image (requires transparency).</description>
+    </item>
+  </channel>
+</rss>

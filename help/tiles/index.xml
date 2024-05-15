@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tiles on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/tiles/index.html</link>
+    <description>Recent content in Tiles on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/tiles/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Manage Tiles</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/tiles/manage/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/tiles/manage/index.html</guid>
+      <description>Add, Remove Tiles Configure Tiles Add, Remove Tiles Pull down from the top of the screen to open the system tray, then tap to edit.
+To add a tile, hold and drag the tile to the top of the tray.
+To remove a tile, hold and drag the tile to the bottom of the tray (unused area).
+Configure Tiles From the system tray, tap a tile to open the tile dialog, then tap Settings (bottom left).</description>
+    </item>
+  </channel>
+</rss>

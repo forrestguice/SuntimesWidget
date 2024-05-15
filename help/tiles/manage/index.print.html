@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.8">
+    <meta name="generator" content="Relearn 5.25.0+tip">
+    <meta name="description" content="">
+    <meta name="author" content="Forrest Guice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Manage Tiles :: Suntimes">
+    <meta name="twitter:description" content="Add, Remove Tiles Configure Tiles Add, Remove Tiles Pull down from the top of the screen to open the system tray, then tap to edit.
+To add a tile, hold and drag the tile to the top of the tray.
+To remove a tile, hold and drag the tile to the bottom of the tray (unused area).
+Configure Tiles From the system tray, tap a tile to open the tile dialog, then tap Settings (bottom left).">
+    <meta property="og:title" content="Manage Tiles :: Suntimes">
+    <meta property="og:description" content="Add, Remove Tiles Configure Tiles Add, Remove Tiles Pull down from the top of the screen to open the system tray, then tap to edit.
+To add a tile, hold and drag the tile to the top of the tray.
+To remove a tile, hold and drag the tile to the bottom of the tray (unused area).
+Configure Tiles From the system tray, tap a tile to open the tile dialog, then tap Settings (bottom left).">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://forrestguice.codeberg.page/Suntimes/help/tiles/manage/index.html">
+    <meta property="article:section" content="Tiles :: Suntimes">
+    <meta property="og:site_name" content="Suntimes">
+    <title>Manage Tiles :: Suntimes</title>
+    <link href="https://forrestguice.codeberg.page/Suntimes/help/tiles/manage/index.html" rel="canonical" type="text/html" title="Manage Tiles :: Suntimes">
+    <link href="/Suntimes/help/tiles/manage/index.xml" rel="alternate" type="application/rss+xml" title="Manage Tiles :: Suntimes">
+    <link href="/Suntimes/images/logo.png?1715731408" rel="icon" type="image/png">
+    <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
+    <link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fontawesome-all.min.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/nucleus.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/auto-complete.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/perfect-scrollbar.min.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/fonts.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/Suntimes/css/custom.css?1715731410" rel="stylesheet"></noscript>
+    <link href="/Suntimes/css/theme.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/theme-dark-theme.css?1715731410" rel="stylesheet" id="R-variant-style">
+    <link href="/Suntimes/css/chroma-relearn-dark.css?1715731410" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="/Suntimes/css/variant.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/print.css?1715731410" rel="stylesheet" media="print">
+    <link href="/Suntimes/css/format-print.css?1715731410" rel="stylesheet">
+    <link href="/Suntimes/css/ie.css?1715731410" rel="stylesheet">
+    <script src="/Suntimes/js/url.js?1715731410"></script>
+    <script src="/Suntimes/js/variant.js?1715731410"></script>
+    <script>
+      // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      window.index_js_url="/Suntimes/index.search.js";
+      var root_url="/";
+      var baseUri=root_url.replace(/\/$/, '');
+      window.relearn = window.relearn || {};
+      window.relearn.baseUriFull='https:\/\/forrestguice.codeberg.page\/Suntimes/';
+      // variant stuff
+      window.relearn.themeVariantModifier='';
+      window.variants && variants.init( [ 'dark-theme', 'light-theme' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+
+  </head>
+  <body class="mobile-support print disableInlineCopyToClipboard" data-url="/Suntimes/help/tiles/manage/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/index.html"><span itemprop="name">Suntimes</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/index.html"><span itemprop="name">Help</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/Suntimes/help/tiles/index.html"><span itemprop="name">Tiles</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Manage Tiles</span><meta itemprop="position" content="4"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable default" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="default">
+            <header class="headline">
+            </header>
+<h1 id="manage-tiles">Manage Tiles</h1>
+
+<ul>
+<li><a href="/Suntimes/help/tiles/manage/index.html#add-remove-tiles">Add, Remove Tiles</a></li>
+<li><a href="/Suntimes/help/tiles/manage/index.html#configure-tiles">Configure Tiles</a></li>
+</ul>
+<hr>
+<h3 id="add-remove-tiles">Add, Remove Tiles</h3>
+<p>Pull down from the top of the screen to open the system tray, then tap <span title="Edit"><i class="ic-edit"></i></span>
+
+ to <strong>edit</strong>.</p>
+<p><a href="#R-image-33033c88dbe2489f0df954161b6d783d" class="lightbox-link"><img alt="System Tray" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tiles-tray-edit.png?width=350px&classes=inline" style=" height: auto; width: 350px;" title="System Tray"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-33033c88dbe2489f0df954161b6d783d"><img alt="System Tray" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tiles-tray-edit.png?width=350px&classes=inline" title="System Tray"></a></p>
+<p>To <strong>add</strong> a tile, <strong>hold and drag</strong> the tile to the top of the tray.</p>
+<p><a href="#R-image-0980a563d2a7fda67c6ebd4413fec828" class="lightbox-link"><img alt="Add Tile" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tiles-add.png?width=350px&classes=inline" style=" height: auto; width: 350px;" title="Add Tile"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-0980a563d2a7fda67c6ebd4413fec828"><img alt="Add Tile" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tiles-add.png?width=350px&classes=inline" title="Add Tile"></a></p>
+<p>To <strong>remove</strong> a tile, <strong>hold and drag</strong> the tile to the bottom of the tray (unused area).</p>
+<p><a href="#R-image-1550b6086a47171c4d86f3e15c27c261" class="lightbox-link"><img alt="Remove Tile" class="noborder inline lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tiles-remove.png?width=350px&classes=inline" style=" height: auto; width: 350px;" title="Remove Tile"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-1550b6086a47171c4d86f3e15c27c261"><img alt="Remove Tile" class="noborder inline lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tiles-remove.png?width=350px&classes=inline" title="Remove Tile"></a></p>
+<hr>
+<h3 id="configure-tiles">Configure Tiles</h3>
+<p>From the system tray, tap a tile to open the <strong>tile dialog</strong>, then tap <code>Settings</code> (bottom left). The configuration screen will be shown.</p>
+<p><a href="#R-image-9015cfdc37960caa47acb6977190ab95" class="lightbox-link"><img alt="System Tray" class="noborder lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tiles.png?width=250px" style=" height: auto; width: 250px;" title="System Tray"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-9015cfdc37960caa47acb6977190ab95"><img alt="System Tray" class="noborder lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tiles.png?width=250px" title="System Tray"></a></p>
+<p><a href="#R-image-935f8a1a9d33874bc754d22d286b9919" class="lightbox-link"><img alt="Tile Dialog (next event)" class="noborder lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tile-dialog-event.png?width=250px" style=" height: auto; width: 250px;" title="Tile Dialog (next event)"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-935f8a1a9d33874bc754d22d286b9919"><img alt="Tile Dialog (next event)" class="noborder lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tile-dialog-event.png?width=250px" title="Tile Dialog (next event)"></a></p>
+<p><a href="#R-image-96746a16f467106f65bd54294e9d2ea4" class="lightbox-link"><img alt="Tile Settings (next event)" class="noborder lightbox noshadow figure-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tile-settings-event.png?width=250px" style=" height: auto; width: 250px;" title="Tile Settings (next event)"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-96746a16f467106f65bd54294e9d2ea4"><img alt="Tile Settings (next event)" class="noborder lightbox noshadow lightbox-image" loading="lazy" src="/Suntimes/help/tiles/manage/../images/suntimes-tile-settings-event.png?width=250px" title="Tile Settings (next event)"></a></p>
+
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
+<p>Tile settings can be included in <a href="/Suntimes/help/widgets/manage/index.html#create-backup">backups</a> and restored with other widget settings.</p>
+</div>
+</div>
+
+            <footer class="footline">
+            </footer>
+          </article>
+
+        </div>
+      </main>
+    </div>
+    <script src="/Suntimes/js/clipboard.min.js?1715731411" defer></script>
+    <script src="/Suntimes/js/perfect-scrollbar.min.js?1715731411" defer></script>
+    <script src="/Suntimes/js/theme.js?1715731411" defer></script>
+  </body>
+</html>

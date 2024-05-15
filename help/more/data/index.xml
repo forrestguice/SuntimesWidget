@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/index.html</link>
+    <description>Recent content in Data on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Mar 2024 16:10:53 -0700</lastBuildDate>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/more/data/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data Substitutions</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasubstitutions/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:10:53 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasubstitutions/index.html</guid>
+      <description>Suntimes supports limited %substitutions, a set of tags that are replaced with values from the data set.
+Available Substitutions Substitutions may be used within widget titles, alarm notes, or within action data or extras.
+Examples %loc, %M, or %t can be used to include the location name, event name, or time zone as part of a widget&amp;rsquo;s title.
+%dm and %em@&amp;lt;event&amp;gt; can be used to pass time (milliseconds) as part of an action; e.</description>
+    </item>
+    <item>
+      <title>Data Sources</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:03:27 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/index.html</guid>
+      <description>Suntimes uses third-party libraries to perform astronomical calculations.
+The data source settings allow for choosing between different libraries (or choosing between different algorithms offered by those libraries).
+Suntimes -&amp;gt; Settings -&amp;gt; General -&amp;gt; Advanced
+These are advanced settings that affect the speed and accuracy of calculations, and may limit which features are available.
+Available Data Sources Adding Data Sources </description>
+    </item>
+    <item>
+      <title>Data Provider</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/dataprovider/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/dataprovider/index.html</guid>
+      <description>Suntimes can provide data to plugins or add-on apps through a content-provider.</description>
+    </item>
+  </channel>
+</rss>

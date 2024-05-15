@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Configuration on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/configuration/index.html</link>
+    <description>Recent content in Configuration on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/configuration/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Welcome</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/configuration/welcome/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/configuration/welcome/index.html</guid>
+      <description>Suntimes will display a welcome screen to assist with initial configuration.
+Appearance User Interface Location Time Zone Alarms Tip The welcome screen is automatically displayed the first time the app is launched. It can be revisited later from Suntimes -&amp;gt; Settings -&amp;gt; General -&amp;gt; Welcome.
+Appearance Suntimes supports light and dark themes, and can switch between them to match the system. It also includes high contrast versions of these themes.</description>
+    </item>
+    <item>
+      <title>Select a Place</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/configuration/selectplace/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/configuration/selectplace/index.html</guid>
+      <description>Suntimes requires location data to configure dialogs, alarms, and widgets.
+It is recommended to configure the app to some user-defined location (such as a local park, intersection, or city center). Suntimes can also periodically query and update using the current location.
+User-Defined Location Current (last known) User-Defined Location Suntimes is configured to a user-defined location by default. The use of location permissions is optional.
+Configure the location using:
+Previous place: choose a previously used place from the drop-down list.</description>
+    </item>
+    <item>
+      <title>Select a Time Zone</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/configuration/timezone/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/configuration/timezone/index.html</guid>
+      <description>Suntimes can be configured to use a given time zone (or other time standards).
+System Time Zone User-Defined Time Zone Time Standard System Time Zone Suntimes displays time using the system time zone by default.
+User-Defined Time Zone Suntimes can display time using a specific time zone.
+Choose user-defined, tap to sort the list, then select a time zone from the drop-down.
+Tap -&amp;gt; Recommend Time Zone to suggest a time zone closely matching local mean time.</description>
+    </item>
+  </channel>
+</rss>

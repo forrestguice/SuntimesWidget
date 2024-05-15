@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Settings on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/more/settings/index.html</link>
+    <description>Recent content in Settings on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/more/settings/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>General</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/settings/general/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/settings/general/index.html</guid>
+      <description>Suntimes -&amp;gt; Settings -&amp;gt; General to change general settings.
+Welcome Screen Starts the first launch configuration wizard. This guided configuration is also shown the first time the app is launched.
+Time Format System format (default) 12-hour 24-hour Units of Length Metric (kilometers, meters) Imperial (miles, feet) The default value will depend on your specific locale.
+Localize to Hemisphere Apply hemisphere based localization. This setting will swap labels and icons (seasons, moon phases, etc) when configured to locations in the southern hemisphere.</description>
+    </item>
+    <item>
+      <title>Language</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/settings/language/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/settings/language/index.html</guid>
+      <description>Suntimes -&amp;gt; Settings -&amp;gt; Language to change language settings.
+Mode System to use the system locale (default). User Defined to override the system locale. Note It is recommended to change System settings instead of overriding the locale. In some cases User Defined may fail to work as expected (partial translation).
+Language Suntimes has been translated into the following languages:
+Arabic Basque Catalan Czech Dutch Esperanto French German Hungarian Italian Norwegian Polish Portuguese Russian Simplified Chinese Spanish Traditional Chinese Note All translations are volunteer contributions!</description>
+    </item>
+    <item>
+      <title>User Interface</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/settings/userinterface/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/settings/userinterface/index.html</guid>
+      <description>Suntimes -&amp;gt; Settings -&amp;gt; User Interface to change user interface settings.
+Appearance Text Size Display (Default Events) Display (Custom Events) Display (Other) Miscellaneous Tap Actions Appearance Light always shows light theme. Dark always shows dark dark. System default follows the system theme, and will automatically switch between light and dark themes. Light Theme Default (Light) High Contrast (Light) Dark Theme Default (Dark) High Contrast (Dark) Text Size Small (12) Normal (14) Large (16) Extra Large (18) Tip The text size setting also respects the system settings.</description>
+    </item>
+  </channel>
+</rss>

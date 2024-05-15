@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Places on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/more/places/index.html</link>
+    <description>Recent content in Places on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/more/places/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Manage Places</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/places/manageplaces/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/places/manageplaces/index.html</guid>
+      <description>Places List Add World Places Search Add Place Copy, Edit, Remove Share Place Import, Export Clear Places Places List Suntimes -&amp;gt; Settings -&amp;gt; Places -&amp;gt; Manage Places to open the places list.
+The places list can also be reached by tapping when selecting a place.
+Add World Places Suntimes includes coordinates for over 200 cities located around the globe.
+Use : -&amp;gt; Add World Places to add world places to the list.</description>
+    </item>
+    <item>
+      <title>Place Settings</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/places/placesettings/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/places/placesettings/index.html</guid>
+      <description>Suntimes can query the device&amp;rsquo;s current location using the GPS or Network providers.
+To configure this behavior, use Suntimes -&amp;gt; Settings -&amp;gt; Places to access the place settings.
+Permissions Getting the current location requires location permissions. When prompted, grant permissions and enable device location.
+Location time limit When requesting the current location, Suntimes will actively wait for a location update until the time limit expires.
+The default location time limit is 1 minute.</description>
+    </item>
+  </channel>
+</rss>

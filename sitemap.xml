@@ -1,77 +1,176 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/worldmap/downloadbackgrounds/index.html</loc>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/downloadbackgrounds/index.html</loc>
     <lastmod>2024-03-16T16:16:14-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions/allsubstitions/index.html</loc>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasubstitutions/allsubstitions/index.html</loc>
     <lastmod>2024-03-16T16:10:53-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/datasources/availablesources/index.html</loc>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasubstitutions/index.html</loc>
+    <lastmod>2024-03-16T16:10:53-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/availablesources/index.html</loc>
     <lastmod>2024-03-16T16:03:18-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/actions/index.html</loc>
-    <lastmod>2024-03-16T16:00:20-07:00</lastmod>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/configuration/index.html</loc>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/batteryopt/index.html</loc>
-    <lastmod>2024-03-16T15:49:54-07:00</lastmod>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/settings/general/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/interfaces/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/main/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/widgets/manage/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/setalarm/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/settings/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/sun/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/configuration/welcome/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/download/index.html</loc>
     <lastmod>2024-03-16T18:53:18-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/worldmap/createbackgrounds/index.html</loc>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/index.html</loc>
+    <lastmod>2024-03-16T16:16:14-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/createbackgrounds/index.html</loc>
     <lastmod>2024-03-16T16:15:52-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions/examples/index.html</loc>
-    <lastmod>2024-03-16T16:10:59-07:00</lastmod>
-  </url>
-  <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/datasources/addingsources/index.html</loc>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/addingsources/index.html</loc>
     <lastmod>2024-03-16T16:03:27-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/index.html</loc>
-    <lastmod>2024-03-16T15:50:03-07:00</lastmod>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/index.html</loc>
+    <lastmod>2024-03-16T16:03:27-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/notificationsettings/index.html</loc>
-    <lastmod>2024-03-16T15:50:03-07:00</lastmod>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/widgets/configure/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/editalarm/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/settings/language/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/places/manageplaces/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/tiles/manage/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/moon/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/configuration/selectplace/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/index.html</loc>
     <lastmod>2024-03-16T16:16:14-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/datasources/index.html</loc>
-    <lastmod>2024-03-16T16:03:27-07:00</lastmod>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/index.html</loc>
+    <lastmod>2024-03-16T15:50:03-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/datasubstitutions/index.html</loc>
-    <lastmod>2024-03-16T16:10:59-07:00</lastmod>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/alarmlist/index.html</loc>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/worldmap/index.html</loc>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/places/placesettings/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/configuration/timezone/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/solstice/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/widgets/themes/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/settings/userinterface/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/index.html</loc>
     <lastmod>2024-03-16T16:16:14-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/settings/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/data/dataprovider/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/events/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/widgets/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/recommendations/index.html</loc>
+    <lastmod>2024-03-16T15:50:03-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/tiles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/places/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/index.html</loc>
+    <lastmod>2024-03-16T16:10:53-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/actions/index.html</loc>
+    <lastmod>2024-03-16T16:00:20-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/data/index.html</loc>
+    <lastmod>2024-03-16T16:10:53-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/documentation/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/index.html</loc>
     <lastmod>2024-03-16T18:53:18-07:00</lastmod>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/actions/addaction/index.html</loc>
+    <loc>https://forrestguice.codeberg.page/Suntimes/tags/advanced/index.html</loc>
+    <lastmod>2024-03-16T16:15:52-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/tags/index.html</loc>
+    <lastmod>2024-03-16T16:15:52-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/actions/addaction/index.html</loc>
     <lastmod>2024-03-16T16:00:20-07:00</lastmod>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/categories/index.html</loc>
-  </url>
-  <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/tags/index.html</loc>
   </url>
 </urlset>

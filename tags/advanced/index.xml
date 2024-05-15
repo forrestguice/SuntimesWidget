@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Advanced on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/tags/advanced/index.html</link>
+    <description>Recent content in Advanced on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Mar 2024 16:15:52 -0700</lastBuildDate>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/tags/advanced/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Available Data Sources</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/availablesources/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:03:18 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/availablesources/index.html</guid>
+      <description>Library Description sunrisesunsetlib Not Recommended Somewhat inaccurate and sometimes buggy. Does not support altitude, seconds-based calculation, solstice, equinox, or sun position. Based on &amp;ldquo;Almanac for Computers&amp;rdquo; by the USNO. github.com/mikereedell/sunrisesunsetlib-java ca.rmen.sunrisesunset Partially Recommended Similar to sunrisesunsetlib but with reasonable precision. Does not support altitude, solstice, equinox, or sun position. Based on the algorithms published by NOAA. github.com/caarmen/SunriseSunset time4a-simple Not Recommended Somewhat inaccurate. Does not support altitude. Based on &amp;ldquo;Almanac for Computers&amp;rdquo; by the USNO.</description>
+    </item>
+    <item>
+      <title>Interfaces</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/interfaces/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/interfaces/index.html</guid>
+      <description>Add-ons are separate applications that integrate with or extend Suntimes through the use of public interfaces. Add-ons may start intents, use content-providers, or implement content-provider contracts.
+Add-ons must declare the READ_CALCULATOR permission. This permission is granted during installation.
+See https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces for a list of interfaces available to add-ons (and other applications).</description>
+    </item>
+    <item>
+      <title>Creating Backgrounds</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/createbackgrounds/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:15:52 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/createbackgrounds/index.html</guid>
+      <description>The background image should be a png or jpeg, with recommended dimensions 1024 x 512 or 1024 x 1024 or greater (will be scaled to fit the screen). The default maps use vector data from Natural Earth, and raster data from Blue Marble: Next Generation. The default maps use a white foreground (landmasses), and transparent background (ocean). The final coloring is determined by the app&amp;rsquo;s theme. The graticule and other markings are drawn behind the background image (requires transparency).</description>
+    </item>
+    <item>
+      <title>Adding Data Sources</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/addingsources/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:03:27 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/addingsources/index.html</guid>
+      <description>The app can be extended to add additional data sources by implementing the Suntimes Calculator interface.</description>
+    </item>
+    <item>
+      <title>Data Sources</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:03:27 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/index.html</guid>
+      <description>Suntimes uses third-party libraries to perform astronomical calculations.
+The data source settings allow for choosing between different libraries (or choosing between different algorithms offered by those libraries).
+Suntimes -&amp;gt; Settings -&amp;gt; General -&amp;gt; Advanced
+These are advanced settings that affect the speed and accuracy of calculations, and may limit which features are available.
+Available Data Sources Adding Data Sources </description>
+    </item>
+    <item>
+      <title>Data Provider</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/dataprovider/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/dataprovider/index.html</guid>
+      <description>Suntimes can provide data to plugins or add-on apps through a content-provider.</description>
+    </item>
+    <item>
+      <title>Add Actions</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/actions/addaction/index.html</link>
+      <pubDate>Sat, 16 Mar 2024 16:00:20 -0700</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/actions/addaction/index.html</guid>
+      <description>Common Intents Intents and Intent Filters (docs) To add an action&amp;hellip; create an Intent by declaring:
+Intent (leave fields empty for an implicit intent) Action An action string. e.g. android.intent.action.ACTION_VIEW Class A fully qualified class name (case-sensitive). This must be a complete definition that includes both the package and class name. The class is required for explicit intents - leave it blank to allow the system to decide which class to launch.</description>
+    </item>
+  </channel>
+</rss>
