@@ -26,7 +26,7 @@
     <string name="configAction_share">Del</string>
     <string name="configAction_export">Eksporter</string>
     <string name="configAction_import">Importer</string>
-    <string name="configAction_info">More Info</string>   <!-- TODO -->
+    <string name="configAction_info">Mer info</string>
     <string name="configAction_sunDialog">Solens posisjon</string>
     <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
     <string name="configAction_worldMap">Verdenskart</string>
@@ -37,7 +37,7 @@
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
     <string name="configAction_onlineHelp">Hjelp på nett</string>
-    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
+    <string name="configAction_appDetails">App-info</string>
     <string name="configAction_overflow">Mer</string>
     <string name="configAction_options">Alternativer</string>
     <string name="configAction_settings">Innstillinger</string>
@@ -576,7 +576,7 @@
     <string name="compareMode_tomorrow">I morgen</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Sammenlign med:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Vis sammenligning</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">Sammenlign mengden dagslys i dag med i går eller i morgen.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Nylig hendelse</string>                   <!-- setting -->
@@ -726,8 +726,8 @@
     <string name="configLabel_themeColorMoonFull">Fullmånefarge</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Nymånefarge</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
-    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
+    <string name="configLabel_themeColorMoonFullText">Full (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">Ny (tekst)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">Soloppgangsfarge</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -1096,8 +1096,8 @@
     <string name="configLabel_widgetListHelp_summary">Vis modulhjelp</string>
     <string name="configLabel_widgetList_emptyMsg">Ingen moduler</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
-    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
+    <string name="configAction_createBackup">Opprett sikkerhetskopi</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="configAction_restoreBackup">Gjenopprett sikkerhetskopi</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
     <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
     <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
@@ -1162,23 +1162,23 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
-    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
-    <string name="place_label_AF">Africa</string>    <!-- TODO -->
-    <string name="place_label_AS">Asia</string>    <!-- TODO -->
-    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
-    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
-    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
-    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
-    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
-    <string name="place_label_EU">Europe</string>    <!-- TODO -->
-    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
-    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
-    <string name="place_label_NA">North America</string>    <!-- TODO -->
-    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
-    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
-    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
-    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
-    <string name="place_label_other">Other</string>    <!-- TODO -->
+    <string name="place_label_AN">Antarktis</string>
+    <string name="place_label_AF">Afrika</string>
+    <string name="place_label_AS">Asia</string>
+    <string name="place_label_AS_CN">Asia (Kina)</string>
+    <string name="place_label_AS_IN">Asia (India)</string>
+    <string name="place_label_AS_JP">Asia (Japan)</string>
+    <string name="place_label_AS_SA">Asia (Saudi-Arabia)</string>
+    <string name="place_label_AS_VN">Asia (Vietnam)</string>
+    <string name="place_label_EU">Europa</string>
+    <string name="place_label_EU_ES">Europa (Spania)</string>
+    <string name="place_label_EU_UK">Europa (Storbritannia)</string>
+    <string name="place_label_NA">Nord-Amerika</string>
+    <string name="place_label_NA_CA">Nord-Amerika (Canada)</string>
+    <string name="place_label_NA_US">Nord-Amerika (USA)</string>
+    <string name="place_label_OC">Oseania</string>
+    <string name="place_label_SA">Sør- og Mellom-Amerika</string>
+    <string name="place_label_other">Andre</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
@@ -1207,7 +1207,7 @@
     <string name="configLabel_ui_showmoon_noon_summary">Vis månens kulminasjon og månens nedre kulminasjon som del av månedialogen.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_phase_columns">Kolonner (faser)</string>
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
@@ -1379,7 +1379,7 @@
         <item>Nederlandsk</item>
         <item>Tsjekkisk</item>
         <item>Forenklet kinesisk</item>
-        <item>Arabic</item>    <!-- TODO -->
+        <item>Arabisk</item>
     </string-array>
 
     <!-- position formats -->
@@ -1695,7 +1695,7 @@
     <string name="msg_import_success">Importert <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Import fra <xliff:g id="filepath">%s</xliff:g> feilet!</string>
     <string name="msg_import_noresults">Import hoppet over; ingen nye temaer funnet.</string>
-    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
+    <string name="msg_import_label_file">fil</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">
         <item quantity="one">%d tema</item>
