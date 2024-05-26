@@ -34,6 +34,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -78,6 +79,8 @@ import java.util.List;
 public class EquinoxCardDialog extends BottomSheetDialogFragment
 {
     public static final String DIALOGTAG_HELP = "equinox_help";
+    public static final int HELP_PATH_ID = R.string.help_solstice_path;
+
     protected static SuntimesUtils utils = new SuntimesUtils();
 
     protected TextView empty, text_title;
@@ -176,6 +179,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     {
         super.onResume();
         expandSheet(getDialog());
+
+        FragmentManager fragments = getChildFragmentManager();
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        }
     }
 
     private void expandSheet(DialogInterface dialog)
@@ -390,6 +399,8 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent);
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 

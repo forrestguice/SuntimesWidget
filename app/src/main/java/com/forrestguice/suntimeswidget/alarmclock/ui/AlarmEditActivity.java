@@ -101,6 +101,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
     private static final String DIALOGTAG_HELP = "alarmhelp";
+    private static final int HELP_PATH_ID = R.string.help_alarms_edit_path;
 
     protected static final String HELPTAG_SUBSTITUTIONS = "help_substitutions";
 
@@ -366,6 +367,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             locationDialog.setDialogListener(onLocationChanged);
         }
 
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmEditActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
+        }
+
         if (Build.VERSION.SDK_INT >= 11)
         {
             AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
@@ -603,6 +609,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmEditActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 

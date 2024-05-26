@@ -37,6 +37,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
@@ -89,6 +90,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public class LightMapDialog extends BottomSheetDialogFragment
 {
     public static final String DIALOGTAG_HELP = "lightmap_help";
+    public static final int HELP_PATH_ID = R.string.help_sun_path;
 
     public static final String ARG_DATETIME = "datetime";
 
@@ -181,6 +183,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         super.onResume();
         expandSheet(getDialog());
+
+        FragmentManager fragments = getChildFragmentManager();
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        }
+
         updateViews();
     }
 
@@ -1591,6 +1600,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(shadowHelpSpan);
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 

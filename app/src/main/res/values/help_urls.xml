@@ -9,6 +9,14 @@
     <string name="help_substitutions_path" translatable="false">more/data/datasubstitutions</string>
     <string name="help_worldmap_background_path" translatable="false">dialogs/worldmap/#set-background</string>
 
+    <string name="help_main_path" translatable="false">dialogs/main</string>
+    <string name="help_sun_path" translatable="false">dialogs/sun</string>
+    <string name="help_moon_path" translatable="false">dialogs/moon</string>
+    <string name="help_solstice_path" translatable="false">dialogs/solstice</string>
+    <string name="help_worldmap_path" translatable="false">dialogs/worldmap</string>
+    <string name="help_alarms_edit_path" translatable="false">alarms/edit</string>
+    <string name="help_widgetlist_path" translatable="false">widgets/manage</string>
+
     <!-- App Links -->
     <string name="help_app_url">@string/help_app_cb_url</string>
     <string name="help_addons_url">@string/help_addons_cb_url</string>
