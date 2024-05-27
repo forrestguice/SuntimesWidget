@@ -35,6 +35,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.text.SpannableStringBuilder;
@@ -80,6 +81,7 @@ public class EventListHelper
     public static final String DIALOGTAG_ADD = "add";
     public static final String DIALOGTAG_EDIT = "edit";
     public static final String DIALOGTAG_HELP = "help";
+    private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
     private WeakReference<Context> contextRef;
     private android.support.v4.app.FragmentManager fragmentManager;
@@ -167,6 +169,11 @@ public class EventListHelper
         EditEventDialog editDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
         if (editDialog != null) {
             editDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), editDialog));
+        }
+
+        HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(contextRef.get(), HELP_PATH_ID), DIALOGTAG_HELP);
         }
     }
 
@@ -745,6 +752,8 @@ public class EventListHelper
 
             HelpDialog helpDialog = new HelpDialog();
             helpDialog.setContent(helpSpan);
+            helpDialog.setShowNeutralButton(context.getString(R.string.configAction_onlineHelp));
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
             helpDialog.show(fragmentManager, DIALOGTAG_HELP);
         }
     }

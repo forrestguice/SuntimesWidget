@@ -30,6 +30,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.widget.PopupMenu;
@@ -83,6 +84,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public static final String KEY_TIMEFORMAT_MODE = "timeformatMode";
 
     private static final String DIALOGTAG_HELP = "timezone_help";
+    public static final int HELP_PATH_ID = R.string.help_timezone_path;
 
     public static final String SLOT_CUSTOM0 = "custom0";
 
@@ -355,6 +357,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             public void onClick(View v) {
                 HelpDialog helpDialog = new HelpDialog();
                 helpDialog.setContent(getString(R.string.help_general_solartime));
+                helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+                helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
                 helpDialog.show(getFragmentManager(), DIALOGTAG_HELP);
             }
         }));
@@ -902,6 +906,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     {
         super.onResume();
         expandSheet(getDialog());
+
+        FragmentManager fragments = getChildFragmentManager();
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        }
     }
 
     private final WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()
