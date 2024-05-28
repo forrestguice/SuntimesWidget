@@ -21,5 +21,11 @@
             android:icon="?attr/icActionTime"
             android:orderInCategory="3" />
 
+        <item android:id="@+id/action_bedtime_sleep_autooff"
+            android:title="@string/configLabel_sleepBedtimeAutoOff"
+            app:showAsAction="never"
+            android:checkable="true"
+            android:orderInCategory="4" />
+
     </group>
 </menu>

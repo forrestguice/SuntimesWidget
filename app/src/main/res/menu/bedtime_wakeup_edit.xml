@@ -21,5 +21,14 @@
             android:icon="?attr/icActionDelete"
             android:orderInCategory="3" />
 
+        <item android:id="@+id/action_bedtime_alarmoff"
+            android:title="@string/configLabel_sleepBedtimeAlarmOff"
+            app:showAsAction="never"
+            android:checkable="true"
+            android:icon="?attr/icActionCancel"
+            android:visible="false"
+            android:enabled="false"
+            android:orderInCategory="4" />
+
     </group>
 </menu>
