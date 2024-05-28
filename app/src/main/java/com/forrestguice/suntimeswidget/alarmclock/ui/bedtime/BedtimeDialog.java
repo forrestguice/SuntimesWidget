@@ -1139,13 +1139,23 @@ public class BedtimeDialog extends DialogFragment
 
                     case R.id.action_wakeup_delete:
                     case R.id.action_reminder_delete:
-                        BedtimeAlarmHelper.clearBedtimeItem(getActivity(), slotName);
+                        AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                BedtimeAlarmHelper.clearBedtimeItem(getActivity(), slotName);
+                            }
+                        });
                         return true;
 
                     case R.id.action_bedtime_delete:
-                        BedtimeAlarmHelper.clearBedtimeItem(getActivity(), BedtimeSettings.SLOT_BEDTIME_NOTIFY);
-                        BedtimeAlarmHelper.clearBedtimeItem(getActivity(), BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF);
-                        BedtimeAlarmHelper.clearBedtimeItem(getActivity(), BedtimeSettings.SLOT_BEDTIME_REMINDER);
+                        AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                BedtimeAlarmHelper.clearBedtimeItem(getActivity(), BedtimeSettings.SLOT_BEDTIME_NOTIFY);
+                                BedtimeAlarmHelper.clearBedtimeItem(getActivity(), BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF);
+                                BedtimeAlarmHelper.clearBedtimeItem(getActivity(), BedtimeSettings.SLOT_BEDTIME_REMINDER);
+                            }
+                        });
                         return true;
 
                     case R.id.action_bedtime_set:
