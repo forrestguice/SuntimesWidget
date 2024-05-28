@@ -104,6 +104,14 @@ public class BedtimeItem
         this.slot = slot;
     }
 
+    public boolean shouldMirrorParent(Context context)
+    {
+        switch (type) {
+            case SLEEP_CYCLE: return BedtimeSettings.loadPrefBedtimeAutoOff(context);
+            default: return true;
+        }
+    }
+
     /**
      * ItemType
      */

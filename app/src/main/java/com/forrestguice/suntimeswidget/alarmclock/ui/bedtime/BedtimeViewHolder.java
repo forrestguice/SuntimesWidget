@@ -414,7 +414,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 {
                     toggleAlarm(context, item.getAlarmItem(), isChecked);
                     BedtimeItem linkedItem = item.getLinkedItem();
-                    if (linkedItem != null) {
+
+                    if (linkedItem != null && linkedItem.shouldMirrorParent(context)) {
                         toggleAlarm(context, linkedItem.getAlarmItem(), isChecked);
                     }
                 }
