@@ -100,7 +100,7 @@ public class BedtimeAlarmHelper
 
         alarmItem.offset = offset;
         alarmItem.repeating = true;
-        alarmItem.actionID1 = WidgetActions.SuntimesAction.DISMISS_BEDTIME.name();
+        alarmItem.actionID1 = (BedtimeSettings.loadPrefBedtimeAlarmOff(context) ? WidgetActions.SuntimesAction.DISMISS_BEDTIME.name() : null);
         alarmItem.enabled = true;
         AlarmNotifications.updateAlarmTime(context, alarmItem);
         return alarmItem;

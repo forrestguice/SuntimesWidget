@@ -53,8 +53,8 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmOffsetDialog;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
@@ -238,6 +238,8 @@ public class BedtimeDialog extends DialogFragment
                     {
                         if (result && items != null && items.length > 0)
                         {
+                            onBedtimeChanged_updateBedtimeOff(getActivity(), adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.SLEEP_CYCLE)));
+
                             if (items[0] != null) {
                                 BedtimeSettings.setAutomaticZenRule(getActivity(), items[0].enabled && BedtimeSettings.loadPrefBedtimeDoNotDisturb(getActivity()));
                             }
@@ -408,7 +410,7 @@ public class BedtimeDialog extends DialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void configureSleepTime(Context context, View v, @Nullable final BedtimeItem item)
+    protected void configureSleepTime(final Context context, View v, @Nullable final BedtimeItem item)
     {
         PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
         {
@@ -429,6 +431,10 @@ public class BedtimeDialog extends DialogFragment
                         showConfigureSleepOffsetDialog(item);
                         return true;
 
+                    case R.id.action_bedtime_sleep_autooff:
+                        toggleConfigureBedtimeAutoOff(context, item);
+                        return true;
+
                     default:
                         return false;
                 }
@@ -436,28 +442,68 @@ public class BedtimeDialog extends DialogFragment
         };
         PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.bedtime_sleep, onMenuItemClickListener, null);
         Menu menu = popup.getMenu();
+
+        MenuItem item_enabled = menu.findItem(R.id.action_bedtime_sleep_autooff);
+        item_enabled.setChecked(BedtimeSettings.loadPrefBedtimeAutoOff(context));
+
         popup.show();
     }
 
-    protected void updateBedtimeAlarmItems(Context context, BedtimeItem item)
+    protected void toggleConfigureBedtimeAlarmOff(Context context, BedtimeItem item)
     {
-        BedtimeItem linkedItem = item.getLinkedItem();
-        AlarmClockItem linkedAlarmItem = ((linkedItem != null) ? item.getAlarmItem() : null);
+        boolean toggled = !BedtimeSettings.loadPrefBedtimeAlarmOff(context);
+        BedtimeSettings.savePrefBedtimeAlarmOff(context, toggled);
+        Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show();    // TODO
+    }
 
-        AlarmClockItem alarmItem = item.getAlarmItem();
-        if (alarmItem != null)
+    protected void toggleConfigureBedtimeAutoOff(Context context, BedtimeItem item)
+    {
+        boolean toggled = !BedtimeSettings.loadPrefBedtimeAutoOff(context);
+        BedtimeSettings.savePrefBedtimeAutoOff(context, toggled);
+        onSleepTimeChanged_updateBedtimeOff(context, item);
+    }
+
+    protected void onBedtimeChanged_updateBedtimeOff(Context context, @Nullable BedtimeItem item)
+    {
+        BedtimeItem linkedItem = ((item != null) ? item.getLinkedItem() : null);
+        AlarmClockItem linkedAlarmItem = ((linkedItem != null) ? linkedItem.getAlarmItem() : null);
+
+        if (linkedAlarmItem != null)
         {
-            if (alarmItem.getEvent() != null) {
-                // when bedtime is based on an event, changes to sleep duration modify bedtime
-                configureBedtimeAt(getActivity(), item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, alarmItem.getEvent(), -1, -1, -BedtimeSettings.totalSleepTimeMs(getActivity()), true, alarmItem.enabled);
+            if (linkedAlarmItem.getEvent() != null) {
+                configureBedtimeAt(getActivity(), item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), -1, -1, 0, true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
 
-            } else if (linkedAlarmItem != null) {
-                // when bedtime is based on some time, changes to sleep duration modify "bedtime off"
+            } else {
+                AlarmNotifications.updateAlarmTime(context, linkedAlarmItem);
                 Calendar bedtime = Calendar.getInstance();
                 bedtime.set(Calendar.HOUR_OF_DAY, linkedAlarmItem.hour);
                 bedtime.set(Calendar.MINUTE, linkedAlarmItem.minute);
                 bedtime.setTimeInMillis(bedtime.getTimeInMillis() + BedtimeSettings.totalSleepTimeMs(getActivity()));
-                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtime.get(Calendar.HOUR_OF_DAY), bedtime.get(Calendar.MINUTE), 0, true, alarmItem.enabled);
+                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtime.get(Calendar.HOUR_OF_DAY), bedtime.get(Calendar.MINUTE), 0, true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
+            }
+        }
+    }
+
+    protected void onSleepTimeChanged_updateBedtimeOff(Context context, @Nullable BedtimeItem item)
+    {
+        BedtimeItem linkedItem = ((item != null) ? item.getLinkedItem() : null);
+        AlarmClockItem linkedAlarmItem = ((linkedItem != null) ? linkedItem.getAlarmItem() : null);
+        if (linkedAlarmItem != null)
+        {
+            if (linkedAlarmItem.getEvent() != null)
+            {
+                // when bedtime is based on an event, changes to sleep duration modify bedtime
+                configureBedtimeAt(getActivity(), item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, linkedAlarmItem.getEvent(), -1, -1, -BedtimeSettings.totalSleepTimeMs(getActivity()), true, linkedAlarmItem.enabled);
+                configureBedtimeAt(getActivity(), item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), -1, -1, 0, true, BedtimeSettings.loadPrefBedtimeAutoOff(context) && linkedAlarmItem.enabled);
+
+            } else {
+                // when bedtime is based on some time, changes to sleep duration modify "bedtime off"
+                AlarmNotifications.updateAlarmTime(context, linkedAlarmItem);
+                Calendar bedtime = Calendar.getInstance();
+                bedtime.set(Calendar.HOUR_OF_DAY, linkedAlarmItem.hour);
+                bedtime.set(Calendar.MINUTE, linkedAlarmItem.minute);
+                bedtime.setTimeInMillis(bedtime.getTimeInMillis() + BedtimeSettings.totalSleepTimeMs(getActivity()));
+                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtime.get(Calendar.HOUR_OF_DAY), bedtime.get(Calendar.MINUTE), 0, true, BedtimeSettings.loadPrefBedtimeAutoOff(context) && linkedAlarmItem.enabled);
             }
         }
     }
@@ -487,7 +533,7 @@ public class BedtimeDialog extends DialogFragment
             @Override
             public void onDialogAccepted(long value) {
                 BedtimeSettings.savePrefSleepCycleMs(getActivity(), value);
-                updateBedtimeAlarmItems(getActivity(), item);
+                onSleepTimeChanged_updateBedtimeOff(getActivity(), item);
                 adapter.notifyItemChanged(adapter.findItemPosition(item));
 
                 BedtimeItem linkedItem = item.getLinkedItem();
@@ -524,7 +570,7 @@ public class BedtimeDialog extends DialogFragment
                 if (dialog != null)
                 {
                     BedtimeSettings.savePrefSleepCycleCount(getActivity(), dialog.getNumCycles());
-                    updateBedtimeAlarmItems(getActivity(), item);
+                    onSleepTimeChanged_updateBedtimeOff(getActivity(), item);
                     adapter.notifyItemChanged(adapter.findItemPosition(item));
 
                     BedtimeItem linkedItem = item.getLinkedItem();
@@ -562,7 +608,7 @@ public class BedtimeDialog extends DialogFragment
             @Override
             public void onDialogAccepted(long value) {
                 BedtimeSettings.savePrefSleepOffsetMs(getActivity(), value);
-                updateBedtimeAlarmItems(getActivity(), item);
+                onSleepTimeChanged_updateBedtimeOff(getActivity(), item);
                 adapter.notifyItemChanged(adapter.findItemPosition(item));
 
                 BedtimeItem linkedItem = item.getLinkedItem();
@@ -603,14 +649,14 @@ public class BedtimeDialog extends DialogFragment
     protected void configBedtimeToDate(final Context context, BedtimeItem item, int hour, int minute, boolean modifyEnabled, boolean enabled)
     {
         Calendar bedtimeOff = bedtimeOffCalendar(context, hour, minute);
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtimeOff.get(Calendar.HOUR_OF_DAY), bedtimeOff.get(Calendar.MINUTE), 0, modifyEnabled, enabled);
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtimeOff.get(Calendar.HOUR_OF_DAY), bedtimeOff.get(Calendar.MINUTE), 0, modifyEnabled, BedtimeSettings.loadPrefBedtimeAutoOff(context));
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, hour, minute, 0, modifyEnabled, enabled);
         BedtimeSettings.setAutomaticZenRule(getActivity(), BedtimeSettings.loadPrefBedtimeDoNotDisturb(getActivity()));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, hour, minute, 0, BedtimeSettings.loadPrefBedtimeReminder(context));
     }
     protected void configBedtimeOffsetEvent(final Context context, BedtimeItem item, String event, long offset, boolean modifyEnabled, boolean enabled)
     {
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, -1, -1, 0, modifyEnabled, enabled);
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, -1, -1, 0, modifyEnabled, BedtimeSettings.loadPrefBedtimeAutoOff(context));
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, event, -1, -1, offset, modifyEnabled, enabled);
         BedtimeSettings.setAutomaticZenRule(getActivity(), BedtimeSettings.loadPrefBedtimeDoNotDisturb(getActivity()));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, event, offset, BedtimeSettings.loadPrefBedtimeReminder(context));
@@ -657,7 +703,7 @@ public class BedtimeDialog extends DialogFragment
         } else Log.d("DEBUG", "failed to configure bedtime to wakeup time; not set");
     }
 
-    protected void configWakeupFromBedtime(final Context context, @Nullable final BedtimeItem item)
+    protected void configWakeupFromBedtime(final Context context, @Nullable final BedtimeItem item, final boolean enabled)
     {
         final long rowId = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowId != BedtimeSettings.ID_NONE)
@@ -677,7 +723,7 @@ public class BedtimeDialog extends DialogFragment
                             wakeup.setTimeInMillis(bedtimeItem.timestamp + bedtimeItem.offset + sleepTotalMs);
                             final int hour = wakeup.get(Calendar.HOUR_OF_DAY);
                             final int minute = wakeup.get(Calendar.MINUTE);
-                            configureBedtimeAt(context, item, BedtimeSettings.SLOT_WAKEUP_ALARM, hour, minute, 0, false, false);
+                            configureBedtimeAt(context, item, BedtimeSettings.SLOT_WAKEUP_ALARM, hour, minute, 0, false, enabled);
 
                         } else Log.w("DEBUG", "failed to configure wakeup from bedtme; null");
                     } else Log.w("DEBUG", "failed to configure wakeup from bedtime; load failed");
@@ -929,7 +975,7 @@ public class BedtimeDialog extends DialogFragment
         {
             @Override
             public void onClick(View view) {
-                configWakeupFromBedtime(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM)));
+                configWakeupFromBedtime(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM)), false);
             }
         });
         SuntimesUtils.themeSnackbar(context, snackbar, null);
@@ -1044,7 +1090,7 @@ public class BedtimeDialog extends DialogFragment
                         return true;
 
                     case R.id.action_wakeup_from_bedtime:
-                        configWakeupFromBedtime(context, item);
+                        configWakeupFromBedtime(context, item, true);
                         return true;
 
                     default:
@@ -1060,6 +1106,13 @@ public class BedtimeDialog extends DialogFragment
         MenuItem setFromBedtime = menu.findItem(R.id.action_wakeup_from_bedtime);
         if (setFromBedtime != null) {
             setFromBedtime.setVisible(BedtimeSettings.hasAlarmID(getActivity(), BedtimeSettings.SLOT_BEDTIME_NOTIFY));
+        }
+    }
+    protected void updateEditAlarmMenu(final Context context, final View v, final Menu menu)
+    {
+        MenuItem bedtimeAlarmOffItem = menu.findItem(R.id.action_bedtime_alarmoff);
+        if (bedtimeAlarmOffItem != null) {
+            bedtimeAlarmOffItem.setChecked(BedtimeSettings.loadPrefBedtimeAlarmOff(context));
         }
     }
 
@@ -1171,7 +1224,11 @@ public class BedtimeDialog extends DialogFragment
                         return true;
 
                     case R.id.action_wakeup_from_bedtime:
-                        configWakeupFromBedtime(context, item);
+                        configWakeupFromBedtime(context, item, true);
+                        return true;
+
+                    case R.id.action_bedtime_alarmoff:
+                        toggleConfigureBedtimeAlarmOff(context, item);
                         return true;
 
                     default:
@@ -1183,6 +1240,7 @@ public class BedtimeDialog extends DialogFragment
         Menu menu = popup.getMenu();
         updateAddBedtimeMenu(context, v, menu);
         updateAddAlarmMenu(context, v, menu);
+        updateEditAlarmMenu(context, v, menu);
         popup.show();
     }
 
