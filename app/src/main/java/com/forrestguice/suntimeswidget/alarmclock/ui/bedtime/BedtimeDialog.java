@@ -649,14 +649,14 @@ public class BedtimeDialog extends DialogFragment
     protected void configBedtimeToDate(final Context context, BedtimeItem item, int hour, int minute, boolean modifyEnabled, boolean enabled)
     {
         Calendar bedtimeOff = bedtimeOffCalendar(context, hour, minute);
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtimeOff.get(Calendar.HOUR_OF_DAY), bedtimeOff.get(Calendar.MINUTE), 0, modifyEnabled, BedtimeSettings.loadPrefBedtimeAutoOff(context));
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtimeOff.get(Calendar.HOUR_OF_DAY), bedtimeOff.get(Calendar.MINUTE), 0, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, hour, minute, 0, modifyEnabled, enabled);
         BedtimeSettings.setAutomaticZenRule(getActivity(), BedtimeSettings.loadPrefBedtimeDoNotDisturb(getActivity()));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, hour, minute, 0, BedtimeSettings.loadPrefBedtimeReminder(context));
     }
     protected void configBedtimeOffsetEvent(final Context context, BedtimeItem item, String event, long offset, boolean modifyEnabled, boolean enabled)
     {
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, -1, -1, 0, modifyEnabled, BedtimeSettings.loadPrefBedtimeAutoOff(context));
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, -1, -1, 0, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, event, -1, -1, offset, modifyEnabled, enabled);
         BedtimeSettings.setAutomaticZenRule(getActivity(), BedtimeSettings.loadPrefBedtimeDoNotDisturb(getActivity()));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, event, offset, BedtimeSettings.loadPrefBedtimeReminder(context));
@@ -671,7 +671,7 @@ public class BedtimeDialog extends DialogFragment
         return calendar;
     }
 
-    protected void configBedtimeFromWakeup(final Context context, @Nullable final BedtimeItem item)
+    protected void configBedtimeFromWakeup(final Context context, @Nullable final BedtimeItem item, final boolean enabled)
     {
         final long wakeupId = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_WAKEUP_ALARM);
         if (wakeupId != BedtimeSettings.ID_NONE)
@@ -688,12 +688,12 @@ public class BedtimeDialog extends DialogFragment
                         if (wakeupItem != null)
                         {
                             if (wakeupItem.getEvent() != null) {
-                                configBedtimeOffsetEvent(context, item, wakeupItem.getEvent(), wakeupItem.offset - sleepTotalMs, false, false);
+                                configBedtimeOffsetEvent(context, item, wakeupItem.getEvent(), wakeupItem.offset - sleepTotalMs, false, enabled);
 
                             } else {
                                 Calendar bedtime = Calendar.getInstance();
                                 bedtime.setTimeInMillis(wakeupItem.timestamp + wakeupItem.offset - sleepTotalMs);
-                                configBedtimeToDate(context, item, bedtime, false, false);
+                                configBedtimeToDate(context, item, bedtime, false, enabled);
                             }
 
                         } else Log.w("DEBUG", "failed to configure bedtime to wakeup time; null");
@@ -952,7 +952,7 @@ public class BedtimeDialog extends DialogFragment
         {
             @Override
             public void onClick(View view) {
-                configBedtimeFromWakeup(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.BEDTIME)));
+                configBedtimeFromWakeup(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.BEDTIME)), false);
             }
         });
         SuntimesUtils.themeSnackbar(context, snackbar, null);
@@ -1001,7 +1001,7 @@ public class BedtimeDialog extends DialogFragment
                         return true;
 
                     case R.id.action_bedtime_from_wakeup:
-                        configBedtimeFromWakeup(context, item);
+                        configBedtimeFromWakeup(context, item, false);
                         return true;
 
                     case R.id.action_bedtime_now:
@@ -1216,7 +1216,7 @@ public class BedtimeDialog extends DialogFragment
                         return true;
 
                     case R.id.action_bedtime_from_wakeup:
-                        configBedtimeFromWakeup(context, item);
+                        configBedtimeFromWakeup(context, item, false);
                         return true;
 
                     case R.id.action_bedtime_now:

@@ -229,7 +229,7 @@ public class BedtimeAlarmHelper
                     BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, eventItem, enabled);
                 }
             });
-        } else {
+        } else if (BedtimeSettings.loadPrefBedtimeReminder(context)) {
             BedtimeAlarmHelper.setBedtimeReminder(context, null, eventItem, enabled);
         }
     }
