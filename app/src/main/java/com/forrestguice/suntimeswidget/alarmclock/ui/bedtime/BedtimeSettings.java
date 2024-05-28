@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -17,26 +17,18 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
-import android.annotation.TargetApi;
 import android.app.AutomaticZenRule;
 import android.app.NotificationManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.service.notification.Condition;
-import android.service.notification.ConditionProviderService;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 
 /**
@@ -69,6 +61,12 @@ public class BedtimeSettings
 
     public static final String PREF_KEY_BEDTIME_DND = "app_bedtime_dnd";
     public static final boolean PREF_DEF_BEDTIME_DND = false;
+
+    public static final String PREF_KEY_BEDTIME_AUTOOFF = "app_bedtime_autooff";
+    public static final boolean PREF_DEF_BEDTIME_AUTOOFF = true;
+
+    public static final String PREF_KEY_BEDTIME_ALARMOFF = "app_bedtime_autooff";
+    public static final boolean PREF_DEF_BEDTIME_ALARMOFF = true;
 
     public static final int DND_FILTER_PRIORITY = 2;
     public static final int DND_FILTER_ALARMS = 4;
@@ -109,6 +107,28 @@ public class BedtimeSettings
     {
         int state = getBedtimeState(context);
         return (state == STATE_BEDTIME_PAUSED);
+    }
+
+    public static boolean loadPrefBedtimeAutoOff(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_BEDTIME_AUTOOFF, PREF_DEF_BEDTIME_AUTOOFF);
+    }
+    public static void savePrefBedtimeAutoOff(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_BEDTIME_AUTOOFF, value);
+        prefs.apply();
+    }
+
+    public static boolean loadPrefBedtimeAlarmOff(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_BEDTIME_ALARMOFF, PREF_DEF_BEDTIME_ALARMOFF);
+    }
+    public static void savePrefBedtimeAlarmOff(Context context, boolean value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(PREF_KEY_BEDTIME_ALARMOFF, value);
+        prefs.apply();
     }
 
     public static boolean loadPrefBedtimeDoNotDisturb(Context context) {
@@ -173,7 +193,7 @@ public class BedtimeSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getInt(PREF_KEY_SLEEPCYCLE_LENGTH, PREF_DEF_SLEEPCYCLE_LENGTH);
+            return prefs.getLong(PREF_KEY_SLEEPCYCLE_LENGTH, PREF_DEF_SLEEPCYCLE_LENGTH);
         } else return AlarmSettings.loadStringPrefAsLong(prefs, PREF_KEY_SLEEPCYCLE_LENGTH, PREF_DEF_SLEEPCYCLE_LENGTH);
     }
     public static void savePrefSleepCycleMs(Context context, long value)
