@@ -579,7 +579,7 @@
     <string name="compareMode_tomorrow">明天</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">對比:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">顯示對比</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">將今天的日光量與今天或明日相比較。</string>  <!-- checkbox label -->  <!-- TODO: verify/fix (the original `en` value contained a typo) ; this should read "Compare the amount of daylight today against yesterday or tomorrow." -->
+    <string name="configLabel_general_showComparison_summary">將今天的日光量與昨天或明天相比較。</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">近期事件</string>                   <!-- setting -->
