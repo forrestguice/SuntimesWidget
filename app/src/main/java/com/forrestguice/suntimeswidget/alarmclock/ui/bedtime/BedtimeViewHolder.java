@@ -85,6 +85,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     protected void attachClickListeners(Context context, @Nullable BedtimeItem item) {}
     protected void detachClickListeners()
     {
+        View clickView = getClickView();
+        if (clickView != null) {
+            clickView.setOnClickListener(null);
+        }
+
         View actionView = getActionView();
         if (actionView != null) {
             actionView.setOnClickListener(null);
@@ -99,6 +104,14 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     protected void clearViews() {}
     protected void updateViews(Context context, BedtimeItem item) {}
 
+    @Nullable
+    public View getClickView() {
+        return null;
+    }
+    @Nullable
+    public View getSharedView() {
+        return null;
+    }
     @Nullable
     public View getActionView() {
         return null;
@@ -190,6 +203,15 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             status_vibrate = (ImageView) view.findViewById(R.id.status_vibrate);
             button_add = (FloatingActionButton) view.findViewById(R.id.button_add);
             button_edit = (FloatingActionButton) view.findViewById(R.id.button_edit);
+        }
+
+        @Nullable
+        public View getClickView() {
+            return null;  //text_time_layout;
+        }
+        @Nullable
+        public View getSharedView() {
+            return text_time;
         }
 
         @Nullable

@@ -335,6 +335,30 @@ public class BedtimeDialog extends DialogFragment
     protected BedtimeItemAdapter.AdapterListener adapterListener = new BedtimeItemAdapter.AdapterListener()
     {
         @Override
+        public void onItemClick(BedtimeViewHolder holder, BedtimeItem item)
+        {
+            if (item != null)
+            {
+                switch (item.getItemType())
+                {
+                    case WAKEUP_ALARM:
+                        //Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();    // TODO
+                        break;
+
+                    case BEDTIME:
+                        //Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();    // TODO
+                        break;
+
+                    default:
+                        if (listener != null) {
+                            listener.onItemClick(holder, item);
+                        }
+                        break;
+                }
+            }
+        }
+
+        @Override
         public void onItemAction(BedtimeViewHolder holder, BedtimeItem item)
         {
             if (item != null)
@@ -377,20 +401,20 @@ public class BedtimeDialog extends DialogFragment
                         break;
 
                     case WAKEUP_ALARM:
-                        showEditBedtimeMenu(getActivity(), holder.getConfigureActionView(), item,  BedtimeSettings.SLOT_WAKEUP_ALARM, REQUEST_EDIT_WAKEUP, R.menu.bedtime_wakeup_edit);
+                        showEditBedtimeMenu(getActivity(), holder.getConfigureActionView(), holder.getSharedView(), item, BedtimeSettings.SLOT_WAKEUP_ALARM, REQUEST_EDIT_WAKEUP, R.menu.bedtime_wakeup_edit);
                         break;
 
                     case BEDTIME:
-                        showEditBedtimeMenu(getActivity(), holder.getConfigureActionView(), item,  BedtimeSettings.SLOT_BEDTIME_NOTIFY, REQUEST_EDIT_BEDTIME, R.menu.bedtime_edit);
+                        showEditBedtimeMenu(getActivity(), holder.getConfigureActionView(), holder.getSharedView(), item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, REQUEST_EDIT_BEDTIME, R.menu.bedtime_edit);
                         break;
 
                     case BEDTIME_REMINDER:
-                        showEditBedtimeMenu(getActivity(), holder.getConfigureActionView(), item,  BedtimeSettings.SLOT_BEDTIME_REMINDER, REQUEST_EDIT_REMINDER, R.menu.bedtime_reminder_edit);
+                        showEditBedtimeMenu(getActivity(), holder.getConfigureActionView(), holder.getSharedView(), item, BedtimeSettings.SLOT_BEDTIME_REMINDER, REQUEST_EDIT_REMINDER, R.menu.bedtime_reminder_edit);
                         break;
 
                     default:
                         if (listener != null) {
-                            listener.onItemAction(holder, item);
+                            listener.onItemConfigure(holder, item);
                         }
                         break;
                 }
@@ -813,7 +837,7 @@ public class BedtimeDialog extends DialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected boolean showAlarmEditActivity(long rowID, @Nullable View sharedView, final int requestCode, boolean isNewAlarm)
+    protected boolean showAlarmEditActivity(long rowID, @Nullable final View sharedView, final int requestCode, final boolean isNewAlarm)
     {
         if (rowID == BedtimeSettings.ID_NONE) {
             return false;
@@ -825,7 +849,7 @@ public class BedtimeDialog extends DialogFragment
             {
                 super.onLoadFinished(result);
                 if (result != null && result.size() > 0) {
-                    showAlarmEditActivity(result.get(0), null, requestCode, false);
+                    showAlarmEditActivity(result.get(0), sharedView, requestCode, isNewAlarm);
                 }
             }
         });
@@ -840,6 +864,7 @@ public class BedtimeDialog extends DialogFragment
 
         if (Build.VERSION.SDK_INT >= 16 && sharedView != null)
         {
+            ViewCompat.setTransitionName(sharedView, "transition_" + item.rowID);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), sharedView, ViewCompat.getTransitionName(sharedView));
             startActivityForResult(intent, requestCode, options.toBundle());
 
@@ -1172,10 +1197,10 @@ public class BedtimeDialog extends DialogFragment
         offerModifyBedtimeFromWakeup(getActivity());
     }
 
-    protected void showEditBedtimeMenu(final Context context, final View v, final BedtimeItem item, final String slotName, final int requestID) {
-        showEditBedtimeMenu(context, v, item, slotName, requestID, R.menu.bedtime_edit);
+    protected void showEditBedtimeMenu(final Context context, final View v, final View sharedView, final BedtimeItem item, final String slotName, final int requestID) {
+        showEditBedtimeMenu(context, v, sharedView, item, slotName, requestID, R.menu.bedtime_edit);
     }
-    protected void showEditBedtimeMenu(final Context context, final View v, final BedtimeItem item, final String slotName, final int requestID, int menuResID)
+    protected void showEditBedtimeMenu(final Context context, final View v, final View sharedView, final BedtimeItem item, final String slotName, final int requestID, int menuResID)
     {
         PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
         {
@@ -1187,7 +1212,7 @@ public class BedtimeDialog extends DialogFragment
                     case R.id.action_wakeup_edit:
                     case R.id.action_reminder_edit:
                     case R.id.action_bedtime_edit:
-                        showAlarmEditActivity(BedtimeSettings.loadAlarmID(getActivity(), slotName), null, requestID, false);
+                        showAlarmEditActivity(BedtimeSettings.loadAlarmID(getActivity(), slotName), sharedView, requestID, false);
                         return true;
 
                     case R.id.action_wakeup_delete:
