@@ -82,6 +82,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final String TAG = "AlarmReceiverList";
 
     public static final String EXTRA_ITEM = "item";
+    public static final String EXTRA_ITEMID = "itemID";
     public static final String EXTRA_ISNEW = "isnew";
 
     public static final int REQUEST_RINGTONE = 10;
@@ -321,11 +322,18 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         returnItem(item);
     }
 
-    protected void returnItem(AlarmClockItem item)
+    /**
+     * returns an AlarmClockItem; calls finish.
+     * @param item the modified item this activity will return, or null if item was deleted
+     */
+    protected void returnItem(@Nullable AlarmClockItem item)
     {
         editor.saveSettings(AlarmEditActivity.this);
         Intent intent = getIntent();
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
+        if (item == null) {
+            intent.putExtra(AlarmNotifications.ACTION_DELETE, true);
+        }
         setResult(Activity.RESULT_OK, intent);
         supportFinishAfterTransition();
     }
@@ -627,8 +635,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
        return new DialogInterface.OnClickListener()
        {
            public void onClick(DialogInterface dialog, int whichButton) {
-               setResult(AlarmEditActivity.RESULT_CANCELED);
-               supportFinishAfterTransition();
+               returnItem(null);
                sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmEditActivity.this, AlarmNotifications.ACTION_DELETE, item.getUri()));
            }
        };
@@ -681,6 +688,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             }
         });
         task.execute(item);
+        returnItem(item);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

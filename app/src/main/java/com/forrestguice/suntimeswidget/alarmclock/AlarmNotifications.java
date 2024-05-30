@@ -60,6 +60,8 @@ import android.support.v4.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
+
+import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -103,6 +105,11 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
     public static final String ACTION_UPDATE_UI = "suntimeswidget.alarm.ui.update";
 
+    public static final String ACTION_BEDTIME = "suntimeswidget.alarm.start_bedtime";              // enable bedtime mode
+    public static final String ACTION_BEDTIME_PAUSE = "suntimeswidget.alarm.pause_bedtime";        // pause bedtime mode
+    public static final String ACTION_BEDTIME_RESUME = "suntimeswidget.alarm.resume_bedtime";      // resume bedtime mode
+    public static final String ACTION_BEDTIME_DISMISS = "suntimeswidget.alarm.dismiss_bedtime";    // disable bedtime mode
+
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
 
@@ -116,6 +123,8 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final int NOTIFICATION_BATTERYOPT_WARNING_ID = -20;
     public static final int NOTIFICATION_AUTOSTART_WARNING_ID = -30;
+
+    public static final int NOTIFICATION_BEDTIME_ACTIVE_ID = -1000;
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -1112,6 +1121,34 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+    public static Notification createBedtimeModeNotification(Context context)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setDefaults(Notification.DEFAULT_LIGHTS);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setCategory(NotificationCompat.CATEGORY_STATUS);
+        builder.setAutoCancel(false);
+        builder.setOngoing(true);
+        builder.setContentTitle(context.getString(R.string.configLabel_bedtime));
+        builder.setSmallIcon(R.drawable.ic_action_bedtime_light);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.setOnlyAlertOnce(false);
+
+        boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
+        builder.setContentText(context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active));
+
+        if (isPaused) {
+            PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, new Intent(AlarmNotifications.ACTION_BEDTIME_RESUME), PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(R.drawable.ic_action_bedtime, context.getString(R.string.configAction_resumeBedtime), pendingResume);
+        } else {
+            PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, new Intent(AlarmNotifications.ACTION_BEDTIME_PAUSE), PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(R.drawable.ic_action_pause, context.getString(R.string.configAction_pauseBedtime), pendingPause);
+        }
+
+        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS), 0);
+        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.configAction_dismissBedtime), pendingDismiss);
+        return builder.build();
+    }
 
     public static Notification createProgressNotification(Context context) {
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock), "");
@@ -1536,6 +1573,22 @@ public class AlarmNotifications extends BroadcastReceiver
                         notifications.stopSelf(startId);
                         // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
 
+                    } else if (ACTION_BEDTIME.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME");
+                        triggerBedtimeMode(getApplicationContext(), true);
+
+                    } else if (ACTION_BEDTIME_PAUSE.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME_PAUSE");
+                        pauseBedtimeMode(getApplicationContext());
+
+                    } else if (ACTION_BEDTIME_RESUME.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME_RESUME");
+                        resumeBedtimeMode(getApplicationContext());
+
+                    } else if (ACTION_BEDTIME_DISMISS.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME_DISMISS");
+                        triggerBedtimeMode(getApplicationContext(), false);
+
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
                         Log.d(TAG, "ACTION_DELETE: clear all");
                         AlarmNotifications.stopAlert();
@@ -1571,6 +1624,55 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             return START_STICKY;
+        }
+
+        public static void triggerBedtimeMode(Context context, boolean value)
+        {
+            BedtimeSettings.setBedtimeState(context, (value ? BedtimeSettings.STATE_BEDTIME_ACTIVE : BedtimeSettings.STATE_BEDTIME_INACTIVE));
+
+            if (value) {
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+            } else dismissNotification(context, NOTIFICATION_BEDTIME_ACTIVE_ID);
+
+            if (BedtimeSettings.loadPrefBedtimeDoNotDisturb(context))
+            {
+                if (Build.VERSION.SDK_INT >= 23)
+                {
+                    NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    if (notifications != null && BedtimeSettings.hasDoNotDisturbPermission(context))
+                    {
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            BedtimeSettings.setAutomaticZenRule(context, true);
+                        }
+                        BedtimeSettings.triggerDoNotDisturb(context, value);
+                    }
+                }
+            }
+            context.sendBroadcast(getFullscreenBroadcast(null));
+        }
+        public static void pauseBedtimeMode(Context context)
+        {
+            if (BedtimeSettings.isBedtimeModeActive(context))
+            {
+                BedtimeSettings.setBedtimeState(context, BedtimeSettings.STATE_BEDTIME_PAUSED);
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+                if (Build.VERSION.SDK_INT >= 24) {
+                    BedtimeSettings.triggerDoNotDisturb(context, false);
+                }
+                context.sendBroadcast(getFullscreenBroadcast(null));
+            }
+        }
+        public static void resumeBedtimeMode(Context context)
+        {
+            if (BedtimeSettings.isBedtimeModePaused(context))
+            {
+                BedtimeSettings.setBedtimeState(context, BedtimeSettings.STATE_BEDTIME_ACTIVE);
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+                if (Build.VERSION.SDK_INT >= 24) {
+                    BedtimeSettings.triggerDoNotDisturb(context, true);
+                }
+                context.sendBroadcast(getFullscreenBroadcast(null));
+            }
         }
 
         private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener_clocktime(final int startId)
@@ -1625,7 +1727,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener clearTaskListener = new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
+        private final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener clearTaskListener = new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
         {
             @Override
             public void onItemsLoaded(Long[] ids)
@@ -2050,7 +2152,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids) {
-                            context.startActivity(getAlarmListIntent(context, item.rowID));         // open the alarm list
+                            //context.startActivity(getAlarmListIntent(context, item.rowID));         // open the alarm list
                             context.sendBroadcast(getFullscreenBroadcast(item.getUri()));           // dismiss fullscreen activity
                             notifications.dismissNotification(context, (int)item.rowID);
                             notifications.stopSelf(startId);
@@ -2068,14 +2170,19 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final Long itemID)
                 {
                     Log.d(TAG, "Alarm Deleted (onDeleted)");
+                    BedtimeSettings.clearAlarmID(getApplicationContext(), itemID);
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, itemID)));     // dismiss fullscreen activity
-                            Intent alarmListIntent = getAlarmListIntent(context, itemID);
-                            alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
-                            context.startActivity(alarmListIntent);                                                                             // open the alarm list
+                            Intent updateIntent = getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, itemID));
+                            updateIntent.putExtra(ACTION_DELETE, true);    // signal item was deleted
+                            context.sendBroadcast(updateIntent);     // dismiss fullscreen activity, update list UIs
+
+                            //Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                            //alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                            //context.startActivity(alarmListIntent);                                                                             // open the alarm list
+
                             notifications.dismissNotification(context, itemID.intValue());
                             notifications.stopSelf(startId);
                         }
@@ -2092,14 +2199,19 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final Long itemID)
                 {
                     Log.d(TAG, "Alarms Cleared (on Cleared)");
+                    BedtimeSettings.clearAlarmIDs(getApplicationContext());
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // clear upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            context.sendBroadcast(getFullscreenBroadcast(null));     // dismiss fullscreen activity
-                            Intent alarmListIntent = getAlarmListIntent(context, itemID);
-                            alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
-                            context.startActivity(alarmListIntent);                                 // open the alarm list
+                            Intent updateIntent = getFullscreenBroadcast(null);
+                            updateIntent.putExtra(ACTION_DELETE, true);
+                            context.sendBroadcast(updateIntent);     // dismiss fullscreen activity, update list UIs
+
+                            //Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                            //alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                            //context.startActivity(alarmListIntent);                                 // open the alarm list
+
                             notifications.dismissNotifications(context);
                             notifications.stopSelf();
                         }

@@ -33,6 +33,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -819,6 +821,9 @@ public class WidgetActions
         DISMISS_ALARM("Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
         UPDATE_WIDGETS("Suntimes", "Update widgets", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
+        TRIGGER_BEDTIME("Bedtime", "Turn on bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        DISMISS_BEDTIME("Bedtime", "Turn off bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+
         CREATE_CALENDAR_EVENT_RISING("Calendar Event", "Create a calendar event (rising time)", new String[] {TAG_DEFAULT, TAG_CALENDAR}, true),
         CREATE_CALENDAR_EVENT_SETTING("Calendar Event", "Create a calendar event (setting time)", new String[] {TAG_DEFAULT, TAG_CALENDAR}, true),
 
@@ -892,6 +897,18 @@ public class WidgetActions
 
             switch (this)
             {
+                case TRIGGER_BEDTIME:
+                    launchType = LaunchType.BROADCAST;
+                    launchString = null;
+                    launchAction = AlarmNotifications.ACTION_BEDTIME;
+                    break;
+
+                case DISMISS_BEDTIME:
+                    launchType = LaunchType.BROADCAST;
+                    launchString = null;
+                    launchAction = AlarmNotifications.ACTION_BEDTIME_DISMISS;
+                    break;
+
                 case SNOOZE_ALARM:
                     launchString = null;
                     launchAction = AlarmClockActivity.ACTION_SNOOZE_ALARM;

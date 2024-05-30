@@ -105,7 +105,9 @@
     <attr name="icActionGraph" format="reference" />
     <attr name="icActionTime" format="reference" />
     <attr name="icActionDst" format="reference" />
+    <attr name="icActionDnd" format="reference" />
     <attr name="icActionAlarm" format="reference" />
+    <attr name="icActionBedtime" format="reference" />
     <attr name="icActionCalendar" format="reference" />
     <attr name="icActionNotification" format="reference" />
     <attr name="icActionNotification1" format="reference" />
@@ -166,6 +168,7 @@
     <attr name="checkFavorite" format="reference" />
     <attr name="checkAltitude" format="reference" />
     <attr name="checkVibrate" format="reference" />
+    <attr name="checkDnd" format="reference" />
     <attr name="checkVisibility" format="reference" />
     <attr name="checkReminder" format="reference" />
 

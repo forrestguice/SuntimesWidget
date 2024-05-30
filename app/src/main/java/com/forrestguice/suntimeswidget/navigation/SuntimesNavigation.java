@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.lang.ref.WeakReference;
@@ -213,6 +214,10 @@ public class SuntimesNavigation
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent, getActivityOptions(activity).toBundle());
         overridePendingTransition(activity);
+    }
+
+    public static Intent getBedtimeIntent(Context context) {
+        return new Intent(context, BedtimeActivity.class);
     }
 
     public static final int REQUEST_SETTINGS = 2200;

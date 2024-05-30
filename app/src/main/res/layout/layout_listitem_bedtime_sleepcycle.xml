@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <LinearLayout android:id="@+id/card"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+        android:background="?attr/alarmCardBackdrop"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="match_parent" android:layout_margin="8dp"
+            android:orientation="vertical" android:animateLayoutChanges="true">
+
+            <TextView android:id="@+id/text_totalsleep"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="?attr/text_size_small"
+                android:drawablePadding="8dp" android:drawableStart="?attr/icActionTime"
+                tools:text="Bedtime for 8h" />
+
+            <TextView android:id="@+id/text_sleepcycle"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical" android:layout_marginStart="4dp"
+                android:textSize="?attr/text_size_small"
+                tools:text="Each sleep cycle\n is 1h 30m" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp" android:layout_marginTop="8dp" android:layout_marginBottom="4dp">
+
+            <Switch android:id="@+id/switch_enabled"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|end" android:visibility="invisible"
+                android:layout_marginStart="0dp" />
+
+            <android.support.design.widget.FloatingActionButton android:id="@+id/button_configure"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:src="?attr/icActionSettings"
+                app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
+                android:scaleType="center"
+                app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="4dp"
+                android:contentDescription="@string/configAction_settings" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

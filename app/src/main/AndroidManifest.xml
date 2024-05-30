@@ -24,6 +24,8 @@
 
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />  <!-- needed for reliable delivery of alarms and notifications -->
 
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />  <!-- needed by Bedtime to trigger do-not-disturb -->
+
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
         android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
@@ -179,6 +181,7 @@
             android:icon="@mipmap/ic_launcher"
             android:permission="suntimes.permission.READ_CALCULATOR"
             android:exported="true">
+            android:launchMode="singleTask">
         </activity>
 
         <!-- Places Activity -->
@@ -339,6 +342,40 @@
             android:exported="true">
         </activity>
 
+        <activity android:name="com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity"
+            android:label="@string/configLabel_bedtime"
+            android:icon="@mipmap/ic_launcher_alarms"
+            android:taskAffinity=".alarmclock.ui.bedtime.BedtimeActivity"
+            android:launchMode="singleTask"
+            android:exported="true">
+            <!--<meta-data android:name="android.service.zen.automatic.ruleType" android:value="Bedtime (Suntimes)" />
+            <intent-filter>
+                <action android:name="android.app.action.AUTOMATIC_ZEN_RULE"/>
+            </intent-filter>-->
+        </activity>
+
+        <service
+            android:name=".tiles.BedtimeTileService"
+            android:label="@string/configLabel_bedtime"
+            android:icon="@drawable/ic_action_bedtime"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".alarmclock.ui.bedtime.BedtimeConditionService"
+            android:label="@string/configLabel_bedtime"
+            android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.ConditionProviderService" />
+            </intent-filter>
+            <meta-data android:name="android.service.zen.automatic.ruleType" android:value="Bedtime (Suntimes)" />
+            <meta-data android:name="android.service.zen.automatic.ruleInstanceLimit" android:value="1" />
+            <meta-data android:name="android.service.zen.automatic.configurationActivity"
+                android:value="com.forrestguice.suntimeswidget/com.forrestguice.suntimeswidget.alarmclock.ui.BedtimeActivity" />
+        </service>
+
         <service android:name=".alarmclock.AlarmNotifications$NotificationService" />
         <receiver android:name=".alarmclock.AlarmNotifications">
             <intent-filter>
@@ -346,6 +383,10 @@
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 <!--<action android:name="android.intent.action.TIME_SET" />-->
+                <action android:name="suntimeswidget.alarm.start_bedtime" />
+                <action android:name="suntimeswidget.alarm.pause_bedtime" />
+                <action android:name="suntimeswidget.alarm.resume_bedtime" />
+                <action android:name="suntimeswidget.alarm.dismiss_bedtime" />
             </intent-filter>
             <intent-filter>
                 <action android:name="suntimeswidget.alarm.show" />

@@ -1263,6 +1263,76 @@
     <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
+         BEDTIME
+    -->
+    <string name="configLabel_bedtime">Bedtime</string>              <!-- group title -->   <!-- TODO -->
+
+    <string name="configAction_startBedtime">Turn on now</string>                   <!-- TODO -->
+    <string name="configAction_dismissBedtime">Turn off</string>                     <!-- TODO -->
+
+    <string name="configAction_set">Set</string>                   <!-- TODO -->
+    <string name="configAction_setBedtime">Set bedtime</string>                     <!-- TODO -->
+    <string name="configAction_setBedtime_fromAlarm">Set bedtime from alarm</string>                     <!-- TODO -->
+    <string name="configAction_setBedtime_toNow">Set bedtime to now</string>                     <!-- TODO -->
+    <string name="configAction_pauseBedtime">Pause</string>                         <!-- TODO -->
+    <string name="configAction_resumeBedtime">Resume</string>                       <!-- TODO -->
+
+    <string name="configAction_setSleep">Set sleep time</string>                     <!-- TODO -->
+
+    <string name="msg_bedtime_sleep_length">Sleep for %s.</string>                             <!-- e.g. "Sleep for 8h" -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length_other_plus">This is %s, plus %s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length_cycles">This is %s of %s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length_cycles_plus">This is %s of %s, plus %s.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->                     <!-- TODO -->
+
+    <string name="configLabel_sleepBedtimeAutoOff">Turn off bedtime automatically</string>    <!-- TODO -->
+    <string name="configLabel_sleepBedtimeAlarmOff">Turn off bedtime with alarm</string>    <!-- TODO -->
+
+    <string name="configLabel_sleepOffset">Drift Asleep Duration</string>                     <!-- TODO -->
+    <string name="configLabel_sleepCycle">Sleep Cycle Length</string>                     <!-- TODO -->
+    <string name="configLabel_sleepCycles">Sleep Cycles</string>                     <!-- TODO -->
+    <string name="configLabel_numSleepCycles">Sleep for %s of %s, or %s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->        <!-- TODO -->
+    <plurals name="cyclePlural">
+        <item quantity="one">%d cycle</item>    <!-- TODO -->
+        <item quantity="other">%d cycles</item>    <!-- TODO -->
+        <item quantity="few">%d cycles</item>    <!-- TODO -->
+        <item quantity="many">%d cycles</item>    <!-- TODO -->
+    </plurals>
+    <string name="cycleNone">None</string>  <!-- TODO -->
+
+    <string name="configAction_setWakeUp">Set wake up time</string>                     <!-- TODO -->
+    <string name="configAction_setWakeUp_fromBedtime">Set wake up from bedtime</string>                     <!-- TODO -->
+
+    <string name="msg_bedtime_active">Bedtime mode is active.</string>              <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_paused">Bedtime mode is paused.</string>              <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_set">Bedtime at</string>                                        <!-- textview text (next line shows time) -->   <!-- TODO -->
+    <string name="msg_bedtime_notset">Bedtime is not set.</string>                            <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_reminder">Show a reminder %1$s before bedtime</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->   <!-- TODO -->
+    <string name="msg_bedtime_wakeup_set">Wake up at</string>                                 <!-- textview text (next line shows time) -->   <!-- TODO -->
+    <string name="msg_bedtime_wakeup_notset">Wake up time is not set.</string>                <!-- textview text -->   <!-- TODO -->
+    <string name="msg_bedtime_note">Bedtime in %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->   <!-- TODO -->
+
+    <string name="configLabel_bedtime_alarm_notify">Bedtime</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
+    <string name="configLabel_bedtime_alarm_notify_off">Bedtime (off)</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
+    <string name="configLabel_bedtime_alarm_reminder">Bedtime (reminder)</string>    <!-- AlarmItem label for reminder notification --> <!-- TODO -->
+    <string name="configLabel_bedtime_alarm_wakeup">Wake up</string>             <!-- AlarmItem label for wake up alarm --> <!-- TODO -->
+
+    <string name="configLabel_bedtime_tile_normal">Bedtime</string>             <!-- Quick Settings Tile labels --> <!-- TODO -->
+    <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>    <!-- TODO -->
+    <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>    <!-- TODO -->
+
+    <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->    <!-- TODO -->
+
+    <string name="configLabel_dnd_disabled">DND: Disabled</string>         <!-- do-not-disturb menu item -->    <!-- TODO -->
+    <string name="configLabel_dnd_priority">DND: Priority only</string>    <!-- do-not-disturb menu item -->    <!-- TODO -->
+    <string name="configLabel_dnd_alarms">DND: Alarms only</string>        <!-- do-not-disturb menu item -->    <!-- TODO -->
+
+    <string name="prompt_bedtime_setFrom_wakeup">Set the bedtime to %s before wake up time?</string>    <!-- snackbar message -->    <!-- TODO -->
+    <string name="prompt_bedtime_setFrom_bedtime">Set the wake up alarm to %s after bedtime?</string>    <!-- snackbar message -->    <!-- TODO -->
+
+    <string name="configActionDesc_triggerBedtime">Turn on bedtime mode</string>  <!-- TODO -->
+    <string name="configActionDesc_dismissBedtime">Turn off bedtime mode</string>  <!-- TODO -->
+
+    <!--
          APP SETTINGS
     -->
 
@@ -1688,6 +1758,8 @@
         <item>@string/configLabel_alarmClock</item>
         <item>@string/configLabel_alarmClock</item>
         <item>@string/app_name</item>
+        <item>@string/configLabel_bedtime</item>
+        <item>@string/configLabel_bedtime</item>
     </string-array>
     <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1724,6 +1796,8 @@
         <item>@string/configActionDesc_alarmSnooze</item>
         <item>@string/configActionDesc_alarmDismiss</item>
         <item>@string/configActionDesc_updateWidgets</item>
+        <item>@string/configActionDesc_triggerBedtime</item>
+        <item>@string/configActionDesc_dismissBedtime</item>
     </string-array>
 
     <!-- App Setting: time zone sort modes -->
@@ -2477,6 +2551,13 @@
           [Icon View] Marked events are displayed by the app.
     ]]></string>
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] to cancel without making changes.<br/>
           [Icon Save] to save, and [Icon Done] to save and enable.<br/>
@@ -2597,6 +2678,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignore</string>
     <string name="privacy_permissiondialog_title">Permissions</string>
@@ -2695,5 +2777,7 @@
     <string name="def_app_alarms_allringtones" translatable="false">false</string>   <!-- show all ringtones during selection (ignore ringtone type) -->
     <string name="def_app_alarms_showlauncher" translatable="false">true</string>
     <string name="def_app_alarms_dismiss_challenge" translatable="false">NONE</string>
+
+    <string name="def_app_bedtime_sleepCycleMillis" translatable="false">5400000</string>   <!-- 90m -->
 
 </resources>
