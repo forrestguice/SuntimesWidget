@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -177,20 +178,35 @@ public class AlarmLabelDialog extends DialogFragment
         return dialog;
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        FragmentManager fragments = getChildFragmentManager();
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(onlineHelpClickListener, helpTag());
+        }
+    }
+
     protected void showHelpDialog()
     {
         CharSequence helpContent = helpContent();
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent != null ? helpContent : "");
         helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
-        helpDialog.setNeutralButtonListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl())));
-            }
-        }, helpTag());
+        helpDialog.setNeutralButtonListener(onlineHelpClickListener, helpTag());
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
+
+    protected View.OnClickListener onlineHelpClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl())));
+        }
+    };
 
     private final View.OnClickListener onHelpButtonClicked = new View.OnClickListener() {
         @Override

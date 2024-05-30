@@ -18,7 +18,10 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -160,4 +163,23 @@ public class HelpDialog extends BottomSheetDialogFragment
     public String getListenerTag() {
         return listenerTag;
     }
+
+    /**
+     * getOnlineHelp
+     */
+    public static View.OnClickListener getOnlineHelpClickListener(final Context context, final int helpPathID)
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(getOnlineHelpIntent(context, context.getString(helpPathID)));
+            }
+        };
+    }
+
+    public static Intent getOnlineHelpIntent(Context context, String helpPath) {
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_url) + Uri.parse(helpPath)));
+    }
+
 }

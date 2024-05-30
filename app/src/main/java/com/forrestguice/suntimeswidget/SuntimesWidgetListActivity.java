@@ -44,6 +44,7 @@ import android.os.Bundle;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -74,7 +75,6 @@ import com.forrestguice.suntimeswidget.settings.SuntimesBackupLoadTask;
 import com.forrestguice.suntimeswidget.settings.SuntimesBackupRestoreTask;
 import com.forrestguice.suntimeswidget.settings.SuntimesBackupTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
-import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0_2x2;
@@ -95,6 +95,7 @@ import static com.forrestguice.suntimeswidget.SuntimesConfigActivity0.EXTRA_RECO
 public class SuntimesWidgetListActivity extends AppCompatActivity
 {
     private static final String DIALOGTAG_HELP = "help";
+    private static final int HELP_PATH_ID = R.string.help_widgetlist_path;
 
     private static final String KEY_LISTVIEW_TOP = "widgetlisttop";
     private static final String KEY_LISTVIEW_INDEX = "widgetlistindex";
@@ -182,6 +183,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+
+        FragmentManager fragments = getSupportFragmentManager();
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesWidgetListActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
+        }
     }
 
     /**
@@ -316,6 +323,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(getString(R.string.help_widgetlist));
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesWidgetListActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 

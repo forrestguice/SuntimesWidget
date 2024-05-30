@@ -178,6 +178,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_TIMEZONE = "timezone";
     private static final String DIALOGTAG_ALARM = "alarm";
     private static final String DIALOGTAG_HELP = "help";
+    private static final int HELP_PATH_ID = R.string.help_main_path;
     private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_DATE_CONFIG = "dateconfig";
     private static final String DIALOGTAG_DATE_SEEK = "dateselect";
@@ -587,6 +588,11 @@ public class SuntimesActivity extends AppCompatActivity
             moonDialog.setDialogListener(moonDialogListener);
             moonDialog.updateViews();
             //Log.d("DEBUG", "MoonDialog updated on restore.");
+        }
+
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         }
     }
 
@@ -1692,6 +1698,8 @@ public class SuntimesActivity extends AppCompatActivity
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 

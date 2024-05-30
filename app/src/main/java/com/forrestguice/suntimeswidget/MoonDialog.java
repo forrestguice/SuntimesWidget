@@ -33,6 +33,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
@@ -84,6 +85,8 @@ public class MoonDialog extends BottomSheetDialogFragment
     public static final String ARG_PLAY_OFFSET = "offsetMinutes";
 
     public static final String DIALOGTAG_HELP = "moon_help";
+    public static final int HELP_PATH_ID = R.string.help_moon_path;
+
     public static final String MAPTAG_MOON = "_moon";
 
     private SuntimesUtils utils = new SuntimesUtils();
@@ -162,6 +165,12 @@ public class MoonDialog extends BottomSheetDialogFragment
     {
         super.onResume();
         expandSheet(getDialog());
+
+        FragmentManager fragments = getChildFragmentManager();
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        }
     }
 
     private void expandSheet(DialogInterface dialog)
@@ -1090,6 +1099,8 @@ public class MoonDialog extends BottomSheetDialogFragment
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 

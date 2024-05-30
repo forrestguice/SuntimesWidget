@@ -3,11 +3,23 @@
     <string name="help_url">@string/help_cb_url</string>       <!-- must end with / -->
 
     <!-- Help Paths (these should be prefixed by `help_url`) -->
-    <string name="help_action_path" translatable="false">actions</string>
-    <string name="help_battery_optimization_path" translatable="false">alarms/batteryopt</string>
-    <string name="help_datasources_path" translatable="false">datasources</string>
-    <string name="help_substitutions_path" translatable="false">datasubstitutions</string>
-    <string name="help_worldmap_background_path" translatable="false">worldmap</string>
+    <string name="help_action_path" translatable="false">more/actions/addaction</string>
+    <string name="help_battery_optimization_path" translatable="false">alarms/recommendations/#battery-optimization</string>
+    <string name="help_datasources_path" translatable="false">more/data/datasources</string>
+    <string name="help_substitutions_path" translatable="false">more/data/datasubstitutions</string>
+    <string name="help_worldmap_background_path" translatable="false">dialogs/worldmap/#set-background</string>
+
+    <string name="help_main_path" translatable="false">dialogs/main</string>
+    <string name="help_sun_path" translatable="false">dialogs/sun</string>
+    <string name="help_moon_path" translatable="false">dialogs/moon</string>
+    <string name="help_solstice_path" translatable="false">dialogs/solstice</string>
+    <string name="help_worldmap_path" translatable="false">dialogs/worldmap</string>
+    <string name="help_alarms_edit_path" translatable="false">alarms/edit</string>
+    <string name="help_widgetlist_path" translatable="false">widgets/manage</string>
+    <string name="help_themelist_path" translatable="false">widgets/themes</string>
+    <string name="help_eventlist_path" translatable="false">more/events/#custom-events</string>
+    <string name="help_timezone_path" translatable="false">configuration/timezone</string>
+    <string name="help_location_path" translatable="false">configuration/location</string>
 
     <!-- App Links -->
     <string name="help_app_url">@string/help_app_cb_url</string>

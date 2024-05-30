@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help_url">@string/help_gh_url</string>
+    <string name="help_app_url">@string/help_app_gh_url</string>
+    <string name="help_addons_url">@string/help_addons_gh_url</string>
+    <string name="help_license_url">@string/help_license_gh_url</string>
+    <string name="help_privacy_url">@string/help_privacy_gh_url</string>
+    <string name="help_donate_url">@string/help_donate_gh_url</string>
+</resources>
