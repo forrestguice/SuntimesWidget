@@ -241,7 +241,7 @@
     <string name="units_kilometers">千米</string>
     <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
-        <!--<item quantity="one">%s kilometer</item>-->
+        <!--<item quantity="one">%s 千米</item>-->
         <item quantity="other">%s 千米</item>
     </plurals>
 
@@ -1656,7 +1656,7 @@
     <string name="location_dialog_error_alt">无效海拔</string>
     <string name="location_dialog_error_name">输入有效地名</string>
 
-    <string name="location_dialog_toast_copied">已复制到剪切板<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+    <string name="location_dialog_toast_copied">已复制到剪贴板<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Delete Place -->
     <string name="locationdelete_dialog_title">移除地点？</string>   <!-- title; remove 1 place -->
