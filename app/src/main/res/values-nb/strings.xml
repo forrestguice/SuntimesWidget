@@ -499,7 +499,7 @@
     <string name="locationMode_current">Gjeldende (sist kjente)</string>  <!-- setting -->
     <string name="locationMode_custom">Brukerdefinert</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Posisjonstillatelser kreves for å oppdatere gjeldende posisjon.</string>           <!-- snackbar text -->
 
     <string name="configLabel_location">Sted</string>               <!-- group title -->
     <string name="configLabel_location_mode">Modus:</string>                      <!-- spinner label -->
@@ -1200,7 +1200,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Vis månen</string>
-    <string name="configLabel_ui_showmoon_summary">Vis oppgang- og nedgangstider, fase og illuminasjon.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
+    <string name="configLabel_ui_showmoon_summary">Vis måneoppgang- og månenedgangstider, fase og illuminasjon.</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Vis månens kulminasjon</string>
@@ -1613,8 +1613,8 @@
     <string name="gps_dialog_cancel">Nei</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Bestem posisjon</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">Siste posisjon</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
+    <string name="gps_lastfix_title_set">Innstilt posisjon</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_cached">Forrige posisjon</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
     <string name="gps_lastfix_title_found">Siste posisjon</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Henter posisjon</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">Mislyktes i å hente posisjon; faller tilbake til sist kjente posisjon.</string>  <!-- displayed briefly after gps has failed to get a location -->
