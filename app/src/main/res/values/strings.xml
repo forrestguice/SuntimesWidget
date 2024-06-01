@@ -1420,7 +1420,7 @@
 
     <string name="place_label_AN">Antarctica</string>
     <string name="place_label_AF">Africa</string>
-    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
+    <string name="place_label_AF_EG">Africa (Egypt)</string>
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN">Asia (China)</string>
     <string name="place_label_AS_IN">Asia (India)</string>
@@ -1434,12 +1434,12 @@
     <string name="place_label_NA_CA">North America (Canada)</string>
     <string name="place_label_NA_US">North America (US)</string>
     <string name="place_label_OC">Oceania</string>
-    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
+    <string name="place_label_OC_AU">Oceania (Australia)</string>
     <string name="place_label_SA">South and Central America</string>
     <string name="place_label_other">Other</string>
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string name="configLabel_launcherMode">Launcher Activity</string>
     <string-array name="launcherMode_display">                      <!-- one-to-one with launcherMode_values -->
         <item>@string/app_name</item>
         <item>@string/app_name_alarmclock</item>
@@ -2075,7 +2075,7 @@
     <string name="graph_option_grid">Grid</string>
     <string name="graph_option_labels">Labels</string>
     <string name="graph_option_axis">Axis</string>
-    <string name="graph_option_points">Points</string>    <!-- TODO -->
+    <string name="graph_option_points">Points</string>
     <string name="graph_option_filledpath">Filled Path</string>
     <string name="graph_option_moon">Show Moon</string>
 

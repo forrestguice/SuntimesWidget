@@ -1231,6 +1231,7 @@
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->
+    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
     <string name="place_label_AS">Asia</string>    <!-- TODO -->
     <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
     <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
@@ -1244,8 +1245,12 @@
     <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
     <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
     <string name="place_label_OC">Oceania</string>    <!-- TODO -->
+    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
     <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
     <string name="place_label_other">Other</string>    <!-- TODO -->
+
+    <!-- App Setting: Launch Activity -->
+    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interface do Usuário</string>                       <!-- group title -->
@@ -1562,6 +1567,7 @@
     <string name="graph_option_grid">Grade</string>
     <string name="graph_option_labels">Etiquetas</string>
     <string name="graph_option_axis">Eixo</string>
+    <string name="graph_option_points">Points</string>    <!-- TODO -->
     <string name="graph_option_filledpath">Caminho Preenchido</string>
     <string name="graph_option_moon">Mostrar Lua</string>
 

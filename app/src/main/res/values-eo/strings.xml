@@ -1177,6 +1177,7 @@
 
     <string name="place_label_AN">Antarkto</string>
     <string name="place_label_AF">Afriko</string>
+    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
     <string name="place_label_AS">Azio</string>
     <string name="place_label_AS_CN">Azio (Ĉinujo)</string>
     <string name="place_label_AS_IN">Azio (Hindujo)</string>
@@ -1190,8 +1191,12 @@
     <string name="place_label_NA_CA">Nordameriko (Kanado)</string>
     <string name="place_label_NA_US">Nordameriko (Usono)</string>
     <string name="place_label_OC">Oceanio</string>
+    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
     <string name="place_label_SA">Sudameriko kaj Centra Ameriko</string>
     <string name="place_label_other">Aliaj</string>
+
+    <!-- App Setting: Launch Activity -->
+    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
@@ -1404,6 +1409,7 @@
     <string name="graph_option_grid">Krado (detala)</string>
     <string name="graph_option_labels">Etikedoj</string> 
     <string name="graph_option_axis">Krado</string>
+    <string name="graph_option_points">Points</string>    <!-- TODO -->
     <string name="graph_option_filledpath">Plenigi areon</string>
     <string name="graph_option_moon">Montri Lunon</string>
 

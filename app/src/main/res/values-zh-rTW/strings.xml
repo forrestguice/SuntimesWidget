@@ -1188,6 +1188,7 @@
 
     <string name="place_label_AN">南極洲</string>
     <string name="place_label_AF">非洲</string>
+    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
     <string name="place_label_AS">亞洲</string>
     <string name="place_label_AS_CN">亞洲（中國）</string>
     <string name="place_label_AS_IN">亞洲（印度）</string>
@@ -1201,8 +1202,12 @@
     <string name="place_label_NA_CA">北美洲（加拿大）</string>
     <string name="place_label_NA_US">北美洲（美國）</string>
     <string name="place_label_OC">大洋洲</string>
+    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
     <string name="place_label_SA">南美洲和中美洲</string>
     <string name="place_label_other">其他</string>
+
+    <!-- App Setting: Launch Activity -->
+    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">使用者介面</string>                       <!-- group title -->
@@ -1519,6 +1524,7 @@
     <string name="graph_option_grid">網格</string>
     <string name="graph_option_labels">標籤</string>
     <string name="graph_option_axis">軸</string>
+    <string name="graph_option_points">Points</string>    <!-- TODO -->
     <string name="graph_option_filledpath">填充路徑</string>
     <string name="graph_option_moon">顯示月亮</string>
 

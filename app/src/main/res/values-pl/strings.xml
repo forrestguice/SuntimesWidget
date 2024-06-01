@@ -1201,6 +1201,7 @@
 
     <string name="place_label_AN">Antarktyda</string>
     <string name="place_label_AF">Afryka</string>
+    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
     <string name="place_label_AS">Azja</string>
     <string name="place_label_AS_CN">Azja (Chiny)</string>
     <string name="place_label_AS_IN">Azja (Indie)</string>
@@ -1214,8 +1215,12 @@
     <string name="place_label_NA_CA">Ameryka Północna (Kanada)</string>
     <string name="place_label_NA_US">Ameryka Północna (USA)</string> 
     <string name="place_label_OC">Oceania</string>
+    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
     <string name="place_label_SA">Ameryka Centralna i Południowa</string>
     <string name="place_label_other">Inne</string>
+
+    <!-- App Setting: Launch Activity -->
+    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
@@ -1511,6 +1516,7 @@
     <string name="graph_option_grid">Siatka</string>
     <string name="graph_option_labels">Etykiety</string>
     <string name="graph_option_axis">Osie</string>
+    <string name="graph_option_points">Points</string>    <!-- TODO -->
     <string name="graph_option_filledpath">Pole pod wykresem</string>
     <string name="graph_option_moon">Wyświetl Księżyc</string>
 
