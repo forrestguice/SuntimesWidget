@@ -241,7 +241,7 @@
     <string name="units_kilometers">千米</string>
     <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
-        <!--<item quantity="one">%s kilometer</item>-->
+        <!--<item quantity="one">%s 千米</item>-->
         <item quantity="other">%s 千米</item>
     </plurals>
 
@@ -579,7 +579,7 @@
     <string name="compareMode_tomorrow">明天</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">对比:</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">显示对比</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">将今天的日照量与今天或明天进行比较。</string>  <!-- checkbox label -->  <!-- TODO: verify/fix (the original `en` value contained a typo) ; this should read "Compare the amount of daylight today against yesterday or tomorrow." -->
+    <string name="configLabel_general_showComparison_summary">将今天的日照量与昨天或明天进行比较。</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">近期事件</string>                   <!-- setting -->
@@ -1656,7 +1656,7 @@
     <string name="location_dialog_error_alt">无效海拔</string>
     <string name="location_dialog_error_name">输入有效地名</string>
 
-    <string name="location_dialog_toast_copied">已复制到剪切板<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+    <string name="location_dialog_toast_copied">已复制到剪贴板<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Delete Place -->
     <string name="locationdelete_dialog_title">移除地点？</string>   <!-- title; remove 1 place -->
