@@ -31,6 +31,10 @@
     <string name="configAction_sunDialog">Солнечная позиция</string>
     <string name="configAction_equinoxDialog">Солнцест. / Равнод.</string>
     <string name="configAction_worldMap">Карта мира</string>
+    <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
+    <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
+    <string name="configAction_clock">Clock</string>    <!-- TODO -->
+    <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
     <string name="configAction_lineGraph">График высоты над уровнем моря</string>
     <string name="configAction_seekAltitude">Поиск высоты</string>        <!-- checkbox label -->
     <string name="configAction_search">Поиск</string>        <!-- button (contentDescription) -->
@@ -392,6 +396,12 @@
     <string name="configLabel_appearance_titleText">Заголовок:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
+    <!-- Setting: navigation -->
+    <string name="configLabel_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
+    <string name="configLabel_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
+    <string name="configLabel_navigation_mode_simple">Simple (legacy)</string>   <!-- TODO -->
+    <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
+
     <!-- Widget Setting: riseSetOrder -->
     <string name="configLabel_general_riseSetOrder">Порядок:</string>     <!-- label -->
     <string name="risesetorder_today">Сегодня</string>                    <!-- setting -->
@@ -523,8 +533,14 @@
     <string name="widgetMode1x1_moonillum">Только освещенность луны</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Следующая большая фаза луны</string>     <!-- setting -->
 
+    <string name="widgetMode1x1_nextalarm">Next Alarm</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode2x2_nextalarm">Next Alarm (details)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode2x2_alarmlist">Alarm List</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x2_alarmlist">Alarm List (details)</string>     <!-- setting -->    <!-- TODO -->
+
     <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
