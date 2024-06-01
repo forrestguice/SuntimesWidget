@@ -841,6 +841,9 @@
     <string name="configAction_deleteEvent">Slett</string>           <!-- button (contentDescription) -->
     <string name="configAction_clearEvents">Tøm</string>           <!-- button (contentDescription) -->
 
+    <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
     <string name="importevents_toast_success">Importert <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
@@ -867,6 +870,17 @@
     <string name="editevent_dialog_angle_hint">-6</string>
     <string name="editevent_dialog_angle_suffix">°</string>
     <string name="editevent_dialog_angle_error">Vinkel kreves!</string>
+
+    <string name="editevent_dialog_length">Shadow Length</string>    <!-- TODO -->
+    <string name="editevent_dialog_length_hint">6</string>    <!-- TODO -->
+    <string name="editevent_dialog_length_suffix">m</string>    <!-- TODO -->
+    <string name="editevent_dialog_length_error">Shadow length is required!</string>    <!-- TODO -->
+    <string name="editevent_dialog_label_suggested1">Shadow Length</string>    <!-- TODO -->
+
+    <string name="editevent_dialog_height">Object Height</string>    <!-- TODO -->
+    <string name="editevent_dialog_height_hint">1</string>    <!-- TODO -->
+    <string name="editevent_dialog_height_suffix">m</string>    <!-- TODO -->
+    <string name="editevent_dialog_height_error">Object height is required!</string>    <!-- TODO -->
 
     <string name="delevent_dialog_msg">Er du sikker på at du vil slette %1$s (%2$s)?\n\nAlarmer, varsler eller moduler som bruker denne hendelsen kan stoppe å virke og bør bli tildelt på nytt.</string>
     <string name="delevent_dialog_ok">Slett</string>

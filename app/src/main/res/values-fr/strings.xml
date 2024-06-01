@@ -821,6 +821,9 @@
     <string name="configAction_deleteEvent">Supprimer</string>           <!-- button (contentDescription) -->
     <string name="configAction_clearEvents">Effacer</string>           <!-- button (contentDescription) -->
 
+    <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
     <string name="importevents_toast_success">Importer <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
@@ -847,6 +850,17 @@
     <string name="editevent_dialog_angle_hint">-6</string>    <!-- TODO -->
     <string name="editevent_dialog_angle_suffix">°</string>    <!-- TODO -->
     <string name="editevent_dialog_angle_error">Angle is required!</string>    <!-- TODO -->
+
+    <string name="editevent_dialog_length">Shadow Length</string>    <!-- TODO -->
+    <string name="editevent_dialog_length_hint">6</string>    <!-- TODO -->
+    <string name="editevent_dialog_length_suffix">m</string>    <!-- TODO -->
+    <string name="editevent_dialog_length_error">Shadow length is required!</string>    <!-- TODO -->
+    <string name="editevent_dialog_label_suggested1">Shadow Length</string>    <!-- TODO -->
+
+    <string name="editevent_dialog_height">Object Height</string>    <!-- TODO -->
+    <string name="editevent_dialog_height_hint">1</string>    <!-- TODO -->
+    <string name="editevent_dialog_height_suffix">m</string>    <!-- TODO -->
+    <string name="editevent_dialog_height_error">Object height is required!</string>    <!-- TODO -->
 
     <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may no longer work and should be reassigned.</string>    <!-- TODO -->
     <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
