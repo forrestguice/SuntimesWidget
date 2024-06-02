@@ -91,7 +91,7 @@ public class LightTheme extends SuntimesTheme
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = context.getString(R.string.widgetThemes_light);
+        this.themeDisplayString = context.getString(R.string.widgetThemes_light1);
 
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
@@ -166,7 +166,7 @@ public class LightTheme extends SuntimesTheme
     public static ThemeDescriptor themeDescriptor(Context context)
     {
         if (THEMEDEF_DESCRIPTOR == null) {
-            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_light), THEMEDEF_VERSION, ThemeBackground.LIGHT.name(), Color.LTGRAY);
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_light1), THEMEDEF_VERSION, ThemeBackground.LIGHT.name(), Color.LTGRAY);
         }
         return THEMEDEF_DESCRIPTOR;
     }

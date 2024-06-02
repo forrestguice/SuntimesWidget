@@ -47,7 +47,7 @@ public class DarkTheme1 extends  DarkTheme
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = context.getString(R.string.widgetThemes_dark1);
+        this.themeDisplayString = context.getString(R.string.widgetThemes_dark);
 
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
@@ -62,7 +62,7 @@ public class DarkTheme1 extends  DarkTheme
     public static ThemeDescriptor themeDescriptor(Context context)
     {
         if (THEMEDEF_DESCRIPTOR == null) {
-            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_dark1), THEMEDEF_VERSION, THEMEDEF_BACKGROUND.name(), Color.DKGRAY);
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_dark), THEMEDEF_VERSION, THEMEDEF_BACKGROUND.name(), Color.DKGRAY);
         }
         return THEMEDEF_DESCRIPTOR;
     }
