@@ -1322,7 +1322,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Луна</string>
-    <string name="configLabel_ui_showmoon_summary">Показывать время восхода и захода луны, ее фазы и освещенность.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
+    <string name="configLabel_ui_showmoon_summary">Показывать время восхода и захода луны, ее фазы и освещенность.</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Показать лунный полдень</string>

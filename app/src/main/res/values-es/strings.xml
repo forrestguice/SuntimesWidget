@@ -1227,7 +1227,7 @@
 
     
     <string name="configLabel_ui_showmoon">Mostrar la Luna</string>
-    <string name="configLabel_ui_showmoon_summary">Muestra los momentos de salida y puesta, fase e iluminación.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
+    <string name="configLabel_ui_showmoon_summary">Muestra los momentos de salida y puesta de la luna, fase e iluminación.</string>    <!-- TODO: update/review -->
 
 
     <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->

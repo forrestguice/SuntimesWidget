@@ -1287,7 +1287,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Exibir Lua</string>
-    <string name="configLabel_ui_showmoon_summary">Mostra nascer, pôr, fases e iluminação da Lua.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
+    <string name="configLabel_ui_showmoon_summary">Mostra nascer, pôr, fases e iluminação da Lua.</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Exibir Meio-Dia Lunar</string>

@@ -1223,7 +1223,7 @@
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Hold megjelenítése</string>
-    <string name="configLabel_ui_showmoon_summary">A holdkelte és holdnyugta idők valamint a fázis és a megvilágítás mutatása.</string>    <!-- TODO: update/review; should include "moon" at beginning of summary to provide context (may be displayed alone with checkbox) -->
+    <string name="configLabel_ui_showmoon_summary">A holdkelte és holdnyugta idők valamint a fázis és a megvilágítás mutatása.</string>
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Holdi dél megjelenítése</string>
