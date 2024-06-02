@@ -1878,6 +1878,13 @@
           [Icon View] Zaznaczone zdarzenia są wyświetlane w aplikacji.
     ]]></string>
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] : anuluj bez wprowadzania zmian.<br/>
           [Icon Save] : zapisz, [Icon Done] : zapisz i aktywuj.<br/>
@@ -1986,6 +1993,7 @@
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Uprawnienie <b>dostępu do pamięci zewnętrznej</b> jest wymagane do wyeksportowania danych do pliku (np. miejsc, skórek).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Uprawnienie <b>odczytu zawartości karty SD</b> jest wymagane do odczytu plików dźwiękowych znajdujących się na karcie SD.<br/><br/>To uprawnienie jest opcjonalne; w przypadku odmowy udzielenia, będzie odtworzony domyślny dźwięk. To uprawnienie nie jest potrzebne dla dźwięków systemowych (przechowywanie multimediów).]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Czy udzielić uprawnień teraz?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignoruj</string>
     <string name="privacy_permissiondialog_title">Uprawnienia</string>
@@ -1997,6 +2005,8 @@
     <string name="feature_not_supported_by_source">Ta funkcja nie jest wspierana przez obecne źródło danych.</string>
     <string name="reboot_required_message">Aby zastosować zmiany, może być konieczne ponowne uruchomienie urządzenia.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">Aby zastosować zmiany, może być konieczne ponowne uruchomienie aplikacji.</string>   <!-- toast; app restart may be required -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">Potwierdź</string>
     <string name="dialog_cancel">Anuluj</string>

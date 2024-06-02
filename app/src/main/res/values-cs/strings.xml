@@ -2012,6 +2012,13 @@
           [Icon View] Marked events are displayed by the app.
     ]]></string>    <!-- TODO -->
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] to cancel without making changes.<br/>
           [Icon Save] to save, and [Icon Done] to save and enable.<br/>
@@ -2128,6 +2135,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes používá oprávnění k <b>poloze</b> k určení vaší aktuální zeměpisné délky a šířky.<br/><br/>Toto oprávnění je volitelné; umístění je ve výchozím nastavení nakonfigurováno ručně.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes používá oprávnění <b>externího úložiště</b> k zálohování/exportu dat do souboru (např. míst, motivů).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms využívá oprávnění <b>externího úložiště</b> k přehrávání zvuků umístěných na SD kartě.<br/><br/>Toto oprávnění je volitelné; je-li přístup odepřen, přehraje se výchozí zvuk. Toto oprávnění není potřeba pro systémové zvuky (úložiště médií).]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Vyžádat oprávnění nyní?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorovat</string>
     <string name="privacy_permissiondialog_title">Oprávnění</string>
@@ -2139,6 +2147,8 @@
     <string name="feature_not_supported_by_source">Tato funkce není podporována aktuálním zdrojem dat.</string>
     <string name="reboot_required_message">Aby se změny projevily, může být nutné restartovat zařízení.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">Aby se změny plně projevily, může být nutné restartovat aplikaci.</string>   <!-- toast; app restart may be required -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Zrušit</string>

@@ -1024,7 +1024,7 @@
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
     <string name="alarmAction_silencedMsg">Alarm silenced</string>          <!-- toast message -->
     <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
-    <string name="alarmAction_timeoutMsg">Missed alarm</string>     <!-- notification msg -->   <!-- TODO: update: "alarm timed out" to "Missed alarm" -->
+    <string name="alarmAction_timeoutMsg">Missed alarm</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">Failed to play sound!</string>         <!-- error toast -->
 
@@ -1152,15 +1152,15 @@
     <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->
 
-    <string name="notificationChannelWarning">@string/notificationsWarning</string>  <!-- snackbar message -->    <!-- TODO -->
-    <string name="notificationChannel_alarms_title">@string/alarmMode_alarm</string>  <!-- notification channel title -->   <!-- TODO -->
-    <string name="notificationChannel_alarms_desc">@string/alarmMode_alarm</string>  <!-- notification channel title -->   <!-- TODO -->
-    <string name="notificationChannel_notifications0_title">@string/alarmMode_notification</string>  <!-- notification channel title -->   <!-- TODO -->
-    <string name="notificationChannel_notifications0_desc">@string/alarmMode_notification</string>  <!-- notification channel title -->   <!-- TODO -->
-    <string name="notificationChannel_notifications1_title">@string/alarmMode_notification1</string>  <!-- notification channel title -->   <!-- TODO -->
-    <string name="notificationChannel_notifications1_desc">@string/alarmMode_notification1</string>  <!-- notification channel title -->   <!-- TODO -->
-    <string name="notificationChannel_misc_title">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->   <!-- TODO -->
-    <string name="notificationChannel_misc_desc">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->   <!-- TODO -->
+    <string name="notificationChannelWarning">@string/notificationsWarning</string>  <!-- snackbar message -->
+    <string name="notificationChannel_alarms_title">@string/alarmMode_alarm</string>  <!-- notification channel title -->
+    <string name="notificationChannel_alarms_desc">@string/alarmMode_alarm</string>  <!-- notification channel title -->
+    <string name="notificationChannel_notifications0_title">@string/alarmMode_notification</string>  <!-- notification channel title -->
+    <string name="notificationChannel_notifications0_desc">@string/alarmMode_notification</string>  <!-- notification channel title -->
+    <string name="notificationChannel_notifications1_title">@string/alarmMode_notification1</string>  <!-- notification channel title -->
+    <string name="notificationChannel_notifications1_desc">@string/alarmMode_notification1</string>  <!-- notification channel title -->
+    <string name="notificationChannel_misc_title">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->
+    <string name="notificationChannel_misc_desc">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->
 
     <string name="configLabel_alarms_bootcompleted">Boot Completed</string>
     <string name="configLabel_alarms_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
@@ -1206,8 +1206,8 @@
     <string name="configLabel_alarms_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
 
     <string name="alarmtile_dialogmsg_none">No alarm set.</string>    <!-- TODO -->
-    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>
-    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>
+    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>     <!-- TODO -->
+    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>     <!-- TODO -->
 
     <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
@@ -2290,7 +2290,7 @@
 
     <!-- Dialog: KeepTrying Location? -->
     <string name="gps_keeptrying_title">No Location</string>
-    <string name="gps_keeptrying_msg">Unable to get location.</string>   <!-- TODO: "get a fix" to "get location" -->
+    <string name="gps_keeptrying_msg">Unable to get location.</string>
     <string name="gps_keeptrying_ok">Keep Trying</string>
     <string name="gps_keeptrying_cancel">Give Up</string>
     <string name="gps_keeptrying_fallback">Use Last Position</string>
@@ -2554,7 +2554,7 @@
            <br/>
            [Icon Reminder] Show a reminder notification before bedtime.<br/>
            [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
-    ]]></string>  <!-- TODO -->
+    ]]></string>
 
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] to cancel without making changes.<br/>
@@ -2676,7 +2676,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>
-    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignore</string>
     <string name="privacy_permissiondialog_title">Permissions</string>
@@ -2689,7 +2689,7 @@
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="drag_hint">Drag here</string>
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>

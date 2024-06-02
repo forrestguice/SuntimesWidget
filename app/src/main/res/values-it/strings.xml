@@ -1910,6 +1910,13 @@
           [Icon View] Marked events are displayed by the app.
     ]]></string>    <!-- TODO -->
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] to cancel without making changes.<br/>
           [Icon Save] to save, and [Icon Done] to save and enable.<br/>
@@ -1984,6 +1991,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>posizione</b> per determinare la tua latitudine e longitudine correnti.<br/><br/> Questo permesso è opzionale; la posizione viene configurata manualmente di default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>memoria esterna</b> per effettuare backup e esportare dati su file (e.g. località, temi).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>memoria esterna</b> per riprodurre suoni che si trovano sulla scheda SD.<br/><br/>Questo permesso è opzionale; i suoni di default saranno riprodotti se l\'accesso è negato. Questo permesso non è necessario per i suoni di sistema (Media Storage).]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Richiedi permesso ora?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignora</string>
     <string name="privacy_permissiondialog_title">Permessi</string>
@@ -1995,6 +2003,8 @@
     <string name="feature_not_supported_by_source">Questa funzionalità non è supportata dalla sorgente di dati corrente.</string>
     <string name="reboot_required_message">Un riavvio potrebbe essere necessario perché i cambiamenti abbiano effetto.</string>
     <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancella</string>

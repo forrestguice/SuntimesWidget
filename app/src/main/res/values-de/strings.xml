@@ -1875,6 +1875,13 @@
           [Icon View] Marked events are displayed by the app.
     ]]></string>    <!-- TODO -->
 
+  <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
   <string name="help_alarms_edit"><![CDATA[
           [Icon Back] to cancel without making changes.<br/>
           [Icon Save] to save, and [Icon Done] to save and enable.<br/>
@@ -1955,6 +1962,7 @@
       name="privacy_permission_storage"><![CDATA[Suntimes verwendet die <b>externe Speicherberechtigung</b> um Daten zu sichern bzw. in Dateien zu exportieren (z.B. Orte, Themen).]]></string>
   <string
       name="privacy_permission_storage1"><![CDATA[Suntimes Alarme verwenden die <b>externe Speicherberechtigung</b> um Töne auf der SD-Karte abzuspielen.<br/><br/>Diese Berechtigung ist optional; der Vorgabeton wird abgespielt, wenn die Berechtigung verweigert wird. Die Berechtigung wird für Systemtöne nicht benötigt.]]></string>
+  <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
   <string name="privacy_permissiondialog_prompt"><![CDATA[Berechtigungen jetzt anfragen?]]></string>
   <string name="privacy_permissiondialog_ignore">Ignorieren</string>
   <string name="privacy_permissiondialog_title">Berechtigungen</string>
@@ -1967,6 +1975,8 @@
   <string name="feature_not_supported_by_source">Diese Funktion wird nicht von der aktuellen Datenquelle unterstützt.</string>
   <string name="reboot_required_message">Ein Neustart ist möglicherweise nötig, damit die Änderungen wirksam werden.</string>
   <string name="restart_required_message">Möglicherweise ist ein Neustart erforderlich, damit die Änderungen vollständig wirksam werden.</string>   <!-- toast; app restart may be required -->
+
+  <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
   <string name="dialog_ok">OK</string>
   <string name="dialog_cancel">Abbrechen</string>

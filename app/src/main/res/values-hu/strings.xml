@@ -1856,6 +1856,13 @@
           Az [Icon View] ikonnal jelölt eseményeket az alkalmazás megjeleníti.
     ]]></string>
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] a módosítások nélküli törléshez.<br/>
           [Icon Save] a mentéshez és [Icon Done] a mentéshez és engedélyezéshez.<br/>
@@ -1930,6 +1937,7 @@
     <string name="privacy_permission_location"><![CDATA[A Suntimes a <b>helyadatok</b> engedélyt használja az jelenlegi földrajzi hosszúság és szélesség meghatározására.<br/><br/>Ez az engedély nem kötelező; a hely alapértelmezés szerint manuálisan van beállítva.]]></string>
     <string name="privacy_permission_storage"><![CDATA[A Suntimes <b>külső tároló</b> engedélyeket használ az adatok fájlba történő mentéséhez/exportálásához (pl. helyek, témák).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[A Suntimes Alarms a <b>külső tároló</b> engedélyt használja az SD-kártyán található hangok lejátszásához.<br/><br/>Ez a jogosultság nem kötelező; a hozzáférés megtagadása esetén az alapértelmezett hang fog megszólalni. Ez a jogosultság nem szükséges a rendszerhangokhoz (Médiatároló).]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Jogosultságok kérése most?]]></string>
     <string name="privacy_permissiondialog_ignore">Mellőzés</string>
     <string name="privacy_permissiondialog_title">Engedélyek</string>
@@ -1941,6 +1949,8 @@
     <string name="feature_not_supported_by_source">Ezt a funkciót a jelenlegi adatforrás nem támogatja.</string>
     <string name="reboot_required_message">A módosítások érvénybe lépéséhez újraindításra lehet szükség.</string>
     <string name="restart_required_message">Előfordulhat, hogy újra kell indítani a rendszert ahhoz, hogy a módosítások teljes mértékben érvényesüljenek.</string>   <!-- toast; app restart may be required -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Mégse</string>

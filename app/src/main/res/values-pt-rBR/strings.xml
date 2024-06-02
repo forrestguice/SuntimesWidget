@@ -1945,6 +1945,13 @@
           [Icon View] Eventos marcados são exibidos pelo aplicativo..
     ]]></string>
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] para cancelar sem fazer alterações.<br/>
           [Icon Save] para salver, e [Icon Done] para salvar e habilitar.<br/>
@@ -2061,6 +2068,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes usa a permissão de <b>localização</b> para determinar sua atual localização.<br/><br/>Permissão opcional, você pode definir seu local manualmente.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes usa a permissão de <b>armazenamento</b> para backup/exportar dados para arquivos (lugares e temas).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms usa a permissão de <b>armazenamento</b> para tocar áudios presentes na memória do aparelho.<br/><br/>Permissão opcional, você pode usar os áudios internos do sistema.]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Solicitar permissões agora?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorar</string>
     <string name="privacy_permissiondialog_title">Permissões</string>
@@ -2072,6 +2080,8 @@
     <string name="feature_not_supported_by_source">Essa função não é suportada pela fonte de dados atual.</string>
     <string name="reboot_required_message">Pode ser necessário o reinício do app para que as mudanças sejam aplicadas..</string>
     <string name="restart_required_message">Pode ser necessário reiniciar para que as modificações tenham efeito.</string>   <!-- toast; app restart may be required -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancelar</string>

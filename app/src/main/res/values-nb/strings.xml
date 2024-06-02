@@ -1893,6 +1893,13 @@
           [Icon View] Merkede hendelser er vist av appen.
     ]]></string>
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] å avbryte uten å gjøre endringer.<br/>
           [Icon Save] å lagre, og [Icon Done] å lagre og aktivere.<br/>
@@ -2009,6 +2016,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes bruker <b>posisjonstillatelse</b> til å bestemme gjeldende lengde- og breddegrad.<br/><br/>Denne tillatelsen er valgfri; posisjonen er manuelt innstilt som standard.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes bruker tillatelser for <b>ekstern lagring</b> til å sikkerhetskopiere/eksportere data til fil (f.eks. steder, temaer).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms bruker tillatelsen <b>ekstern lagring</b> til å avspille lyder plassert på SD-kortet.<br/><br/>Denne tillatelsen er valgfri; standardlyden avspilles hvis tilgang nektes. Denne tillatelsen behøves ikke for systemlyder (Medialagring).]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Forespørre tillatelser nå?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorer</string>
     <string name="privacy_permissiondialog_title">Tillatelser</string>
@@ -2020,6 +2028,8 @@
     <string name="feature_not_supported_by_source">Denne funksjonen er ikke støttet av gjeldende datakilde.</string>
     <string name="reboot_required_message">En omstart kan behøves for at endringer skal tre i kraft.</string>
     <string name="restart_required_message">En app-omstart kan behøves for at endringer skal tre i kraft.</string>   <!-- toast; app restart may be required -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Avbryt</string>

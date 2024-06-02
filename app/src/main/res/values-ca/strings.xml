@@ -1878,6 +1878,13 @@
           [Icon View] Marked events are displayed by the app.
     ]]></string>    <!-- TODO -->
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] to cancel without making changes.<br/>
           [Icon Save] to save, and [Icon Done] to save and enable.<br/>
@@ -1951,7 +1958,8 @@
     <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades d\'ubicació. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís d\'<b>ubicació</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; l\'ubicació es configura manualment per defecte.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per fer una còpia de seguretat o exportar dades a un arxiu (p. ex. llocs, temes).]]></string>
-    <string name="privacy_permission_storage1"><![CDATA[Alarmes Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per reproduïr sons localitzats en la targeta SD.<br/><br/> Aquest permís és opcional; es reproduirà el so predeterminat si l\'accès és denegat. Aquest permís no és un requisit per als sons del sistema (emmagatzematge multimèdia).]]></string>    
+    <string name="privacy_permission_storage1"><![CDATA[Alarmes Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per reproduïr sons localitzats en la targeta SD.<br/><br/> Aquest permís és opcional; es reproduirà el so predeterminat si l\'accès és denegat. Aquest permís no és un requisit per als sons del sistema (emmagatzematge multimèdia).]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Demanar permisos ara?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorar</string>
     <string name="privacy_permissiondialog_title">Permisos</string>
@@ -1963,6 +1971,8 @@
     <string name="feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
     <string name="reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
     <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">D\'acord</string>  
     <string name="dialog_cancel">Canceŀlar</string>

@@ -2089,6 +2089,13 @@
           [Icon View] Отмеченные события отображаются в приложении.
     ]]></string>
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] для отмены без внесения изменений.<br/>
           [Icon Save] для сохранения, и [Icon Done] для сохранения и активации.<br/>
@@ -2206,6 +2213,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes запрашивает разрешение на <b>определение местоположения</b>, чтобы узнать вашу текущую долготу и широту. Данное разрешение является <b>необязательным</b>: по умолчанию местоположение настраивается вручную.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes запрашивает разрешение на <b>использование внешнего хранилища</b> для резервного копирования или экспорта данных в файл (например, мест и тем оформления).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms запрашивает разрешение на <b>использование внешнего хранилища</b> для воспроизведения звуков, находящихся на SD-карте. <br/><br/>Это разрешение является необязательным: если доступ запрещен, будет воспроизводиться звук по умолчанию. Это разрешение не требуется для использования встроенных (системных) звуков, размещенных в Media Storage.]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Запросить разрешения?]]></string>
     <string name="privacy_permissiondialog_ignore">Отклонить</string>
     <string name="privacy_permissiondialog_title">Разрешения</string>
@@ -2220,6 +2228,8 @@
     <string name="feature_not_supported_by_source">Эта функция не поддерживается текущим источником данных.</string>
     <string name="reboot_required_message">Для вступления изменений в силу может потребоваться перезагрузка.</string>
     <string name="restart_required_message">Для полного вступления изменений в силу может потребоваться перезапуск.</string>   <!-- toast; app restart may be required -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Отменить</string>

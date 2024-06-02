@@ -1903,6 +1903,13 @@
           [Icon View] 標記的事件被應用顯示。
     ]]></string>
 
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] 取消不進行變更。<br/>
           [Icon Save] 儲存，[Icon Done] 儲存並啟用。<br/>
@@ -1995,6 +2002,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes 使用<b>位置</b>許可權以確認您當前的經緯度。<br/><br/>此許可權是可選的；位置預設可被手動配置。]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes 使用<b>外部儲存</b>許可權以備份/匯出資料到文件中（例如: 地點、主題）。]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms 使用<b>外部儲存</b>許可權以播放位於SD卡中的聲音。<br/><br/>此許可權是可選的；如果訪問被拒絕將播放預設聲音。系統聲音不需要此許可權（媒體儲存）。]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[現在請求許可權？]]></string>
     <string name="privacy_permissiondialog_ignore">忽略</string>
     <string name="privacy_permissiondialog_title">許可權</string>
@@ -2006,6 +2014,8 @@
     <string name="feature_not_supported_by_source">當前資料來源不支援此功能。</string>
     <string name="reboot_required_message">可能需要重啟裝置以使變更生效。</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">可能需要重啟應用以使變更生效。</string>   <!-- toast; app restart may be required -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">確認</string>
     <string name="dialog_cancel">取消</string>

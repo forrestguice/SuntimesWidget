@@ -26,7 +26,7 @@
     <string name="configAction_share">مشاركة</string>
     <string name="configAction_export">تصدير</string>
     <string name="configAction_import">استيراد</string>
-    <string name="configAction_info">مزيد معلومات</string>    <!-- TODO -->
+    <string name="configAction_info">مزيد معلومات</string>
     <string name="configAction_sunDialog">موقع الشمس</string>
     <string name="configAction_equinoxDialog">الانقلاب / الاعتدال الشمسي</string>
     <string name="configAction_worldMap">خريطة العالم</string>
@@ -535,7 +535,7 @@
     <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
     <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">خريطة بسيطة</string>  <!-- setting -->  <!-- TODO: "Basic" to "Basic Map" -->
+    <string name="widgetMode_sunPosMap_simplerectangular">خريطة بسيطة</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">القطب [الشمالي]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">القطب [الجنوبي]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">الرخام الأزرق</string>    <!-- setting -->
@@ -567,7 +567,7 @@
     <string name="actionMode_update">حدث الودجة</string>           <!-- setting -->
     <string name="actionMode_update_all">حدث كل ودجة</string>           <!-- setting -->
     <string name="actionMode_config">إعادة ضبط الودجة</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">طبق إجراءً</string>      <!-- setting -->  <!-- TODO: update -->
+    <string name="actionMode_launchActivity">طبق إجراءً</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">قلب المعاينة</string>      <!-- setting -->
 
     <string name="launchType_activity">النشاط</string>           <!-- setting -->
@@ -781,8 +781,8 @@
     <string name="edittheme_error_themeName_empty">يجب أن يكون المعرف فريدًا (مطلوب).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">يجب أن يكون المعرف فريدًا (مأخوذ بالفعل).</string>  <!-- error hint (themeName taken) -->
     <string name="edittheme_error_displaytext">يجب ألا يكون نص العرض فارغًا.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">يجب أن يكون الحجم ≥ <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->  <!-- TODO: drop "an integer"  -->
-    <string name="edittheme_error_textsize_max">يجب أن يكون الحجم ≤ <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->    <!-- TODO: drop "an integer" -->
+    <string name="edittheme_error_textsize_min">يجب أن يكون الحجم ≥ <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">يجب أن يكون الحجم ≤ <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
     <string name="edittheme_flag_default">افتراضي</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">حذف السمة</string>        <!-- dialog title -->
@@ -828,8 +828,8 @@
     <string name="configLabel_themeColorMoonFull">بدر</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">محاق</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">بدر (النص)</string> <!-- color label -->   <!-- TODO -->
-    <string name="configLabel_themeColorMoonNewText">محاق (النص)</string> <!-- color label -->     <!-- TODO -->
+    <string name="configLabel_themeColorMoonFullText">بدر (النص)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">محاق (النص)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSunrise">شروق الشمس</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
@@ -912,9 +912,9 @@
     <string name="sunevent_title">الشمس</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
     <string name="sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
     <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> في <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
-    <string name="sunevent_title_format1">%1$s %2$s %3$s</string>      <!-- (custom) sun event title; e.g. "5m before Sun 6°" -->   <!-- TODO -->
-    <string name="sunevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> at <xliff:g id="angle">%3$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->  <!-- TODO -->
-    <string name="sunevent_phrase_gender">أخرى</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="sunevent_title_format1">%1$s %2$s %3$s</string>      <!-- (custom) sun event title; e.g. "5m before Sun 6°" -->
+    <string name="sunevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> at <xliff:g id="angle">%3$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->
+    <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
     <string name="configLabel_manageEvents">إدارة الأحداث</string>  <!-- settings activity / pref -->
     <string name="configLabel_manageEvents_summary">إضافة أو إزالة الأحداث المخصصة.</string>
@@ -1038,7 +1038,7 @@
     <string name="alarmMode_alarm">منبه</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">تنبيه</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification1">تنبيه سريع</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification2">تنبيه (ثابت)</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_notification2">تنبيه (ثابت)</string>                <!-- alarm type (setting) -->
 
     <string name="configLabel_alarmEdit_beforeAlertTray">قبل التنبيه:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_scheduleTray">الجدولة:</string>               <!-- group title -->
@@ -1077,7 +1077,7 @@
 
     <string name="importalarms_title_warning">تحذير الاستيراد</string> <!-- dialog title -->
     <string name="importalarms_msg_warning">قد يؤدي استيراد التنبيهات إلى إعادة بعض الإعدادات إلى القيم الافتراضية.\n\nقد تحتاج إلى (إعادة) تحديد الأصوات والإجراءات.</string> <!-- toast msg -->
-    <string name="importalarms_toast_success">تم استيراد <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->   <!-- uses alarmPlural -->  <!-- TODO: fix inconsistent translation -->
+    <string name="importalarms_toast_success">تم استيراد <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->   <!-- uses alarmPlural -->
     <plurals name="alarmPlural">
         <item quantity="zero">%d منبهٍ</item>
         <item quantity="one">منبه واحد</item>
@@ -1146,8 +1146,6 @@
     <string name="configLabel_alarms_bootcompleted_info_never">أبدًا</string>
     <string name="configLabel_alarms_bootcompleted_action_confirm">إعادة جدولة جميع التنبيهات والإشعارات؟</string>
     <string name="configLabel_alarms_bootcompleted_action_message">جارٍ إعادة جدولة التنبيهات والإشعارات..</string>
-
-    <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
 
     <string name="configLabel_alarms_silenceAfter">كتم الصوت بعد</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
@@ -1558,79 +1556,6 @@
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
     <string name="configActionDesc_settings">@string/configAction_settings</string>
 
-    <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name_alarmclock</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/configAction_showCalendar</item>
-        <item>@string/configAction_mapLocation</item>
-        <item>@string/configLabel_alarmClock</item>
-        <item>@string/configLabel_alarmClock</item>
-        <item>@string/app_name</item>
-    </string-array>
-    <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_setAlarm</item>
-
-        <item>@string/configActionDesc_nextCard</item>
-        <item>@string/configActionDesc_prevCard</item>
-        <item>@string/configActionDesc_swapCards</item>
-        <item>@string/configActionDesc_showCard</item>
-
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
-        <item>@string/configActionDesc_nextSunrise</item>
-        <item>@string/configActionDesc_nextSunset</item>
-
-        <item>@string/configActionDesc_setDate</item>
-        <item>@string/configActionDesc_setLocation</item>
-        <item>@string/configActionDesc_setTimeZone</item>
-
-        <item>@string/configActionDesc_worldMap</item>
-        <item>@string/configActionDesc_equinoxDialog</item>
-        <item>@string/configActionDesc_moon</item>
-        <item>@string/configActionDesc_sunDialog</item>
-
-        <item>@string/configActionDesc_alarmList</item>
-        <item>@string/configActionDesc_themeList</item>
-        <item>@string/configActionDesc_actionList</item>
-        <item>@string/configActionDesc_widgetList</item>
-        <item>@string/configActionDesc_settings</item>
-
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_mapLocation</item>
-        <item>@string/configActionDesc_alarmSnooze</item>
-        <item>@string/configActionDesc_alarmDismiss</item>
-        <item>@string/configActionDesc_updateWidgets</item>
-    </string-array>
-
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">بالتعويض</string>
     <string name="timezone_sort_byId">بالمعرف</string>
@@ -2022,7 +1947,7 @@
     <string name="gps_dialog_cancel">لا</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">الموقع المُعد</string>   <!-- may appear as place name when location set by intent -->   <!-- TODO: changed from "Set Position" to "Configured Position" -->
+    <string name="gps_lastfix_title_set">الموقع المُعد</string>   <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_cached">الموقع السابق</string>  <!-- may appear as place name after location mode is changed away from 'current location'  -->
     <string name="gps_lastfix_title_found">الموقع الأخير</string>    <!-- may appear as place name when location set by lookup -->
     <string name="gps_lastfix_title_searching">الحصول على الموقع</string>
@@ -2031,7 +1956,7 @@
 
     <!-- Dialog: KeepTrying Location? -->
     <string name="gps_keeptrying_title">لا موقع</string>
-    <string name="gps_keeptrying_msg">تعذر الحصول على الموقع.</string> <!-- TODO: "get a fix" to "get location" -->
+    <string name="gps_keeptrying_msg">تعذر الحصول على الموقع.</string>
     <string name="gps_keeptrying_ok">محاولة مستمرة</string>
     <string name="gps_keeptrying_cancel">الاستسلام</string>
     <string name="gps_keeptrying_fallback">استخدام الموقع السابق</string>
@@ -2097,7 +2022,7 @@
     <string name="themesexport_dialog_message">جارٍ تصدير السمات إلى الملف.</string>
 
     <!-- Dialog: Import / Export -->
-    <string name="msg_export_success">تم الحفظ إلى <xliff:g id="filepath">%s</xliff:g></string> <!-- TODO: update -->
+    <string name="msg_export_success">تم الحفظ إلى <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">فشل التصدير إلى <xliff:g id="filepath">%s</xliff:g>!</string>
     <string name="msg_export_to">التصدير بواسطة</string> <!-- title displayed over "share action" chooser -->
 
@@ -2239,7 +2164,7 @@
                 * <b>%m</b> للوضع (قصير) (مثال: الانقلاب الشتوي) <br/>
                 * <b>%M</b> للوضع (طويل) (مثال: الانقلاب الشتوي) <br/>
                 * <b>%o</b> للترتيب (مثال: الحدث الأقرب، الحدث القادم) <br/>
-    ]]></string> <!-- TODO: added section "Date Widgets:", add "%em, %et, %eT, %eA" (#599) to online-help -->
+    ]]></string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -2282,7 +2207,7 @@
           <b>بيلتان (الربع الفاصل):</b> نقطة منتصف الطريق بين ميزان الربيع والانقلاب الصيفي؛ <em>مايو</em> [northern hemisphere]، أو <em>نوفمبر</em> [southern hemisphere].<br/><br/>
           <b>لوناسا (الربع الفاصل):</b> نقطة منتصف الطريق بين الانقلاب الصيفي والميزان الخريفي؛ <em>أغسطس</em> [northern hemisphere]، أو <em>فبراير</em> [southern hemisphere].<br/><br/>
           <b>سمهوين (الربع الفاصل):</b> نقطة منتصف الطريق بين الميزان الخريفي والانقلاب الشتوي؛ <em>نوفمبر</em> [northern hemisphere]، أو <em>مايو</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO -->
+    ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[
           [Icon OK] اختر حدثاً مخصصاً .\n
@@ -2290,6 +2215,13 @@
           \nالأحداث الخاصة بالإمكان عرضها في التطبيق، أو في الويدجت، أو تُستعمل لجدولة تنبيهات وإشعارات.\n
           [Icon View] الأحداث المعلمة سيعرضها التطبيق.
     ]]></string>
+
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
 
     <string name="help_alarms_edit"><![CDATA[
       [Icon Back] للإلغاء دون إجراء تغييرات.<br/>
@@ -2349,7 +2281,7 @@
       <i>يستخدم هذا التطبيق خوارزمية لحساب معادلة الوقت (واستنتاج الوقت الشمسي الظاهري).
       يُستخدم موقعك لتحديد الوقت الساعي المحلي.</i>
       <br/><br/>
-]]></string> <!-- TODO -->
+]]></string>
 
     <string name="help_general_daylength"><![CDATA[
     <b>طول النهار:</b> كمية الوقت بين شروق الشمس وغروبها.<br/><br/>
@@ -2357,7 +2289,7 @@
 ]]></string>
 <string name="help_general_moonillum"><![CDATA[
     <b>إضاءة القمر:</b> يعرض الصفحة الرئيسية إضاءة القمر عند ظهيرة القمر، بينما يعرض حوار القمر الإضاءة الحالية للقمر.<br/>
-]]></string>   <!-- TODO: deprecated -->
+]]></string>
 <string name="help_general_goldhour"><![CDATA[
     <b>الساعة الذهبية:</b> تكون الشمس بين 6 درجات فوق أو تحت الأفق. في الصباح، تبدأ الساعة الذهبية مع الفجر المدني وتنتهي بعد وقت قصير من شروق الشمس. في المساء، تبدأ الساعة الذهبية قبل وقت قصير من غروب الشمس وتنتهي مع الغسق المدني.<br/>
 ]]></string>
@@ -2410,6 +2342,7 @@
 <string name="privacy_permission_location"><![CDATA[Suntimes تستخدم أذونة <b>الموقع</b> لتحديد خط الطول والعرض الحاليين الخاصين بك.<br/><br/>هذه الأذونة اختيارية؛ يتم تكوين الموقع يدويًا افتراضيًا.]]></string>
 <string name="privacy_permission_storage"><![CDATA[Suntimes تستخدم أذونات <b>التخزين الخارجي</b> لنسخ البيانات أو تصديرها إلى ملف (على سبيل المثال، الأماكن، السمات).]]></string>
 <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms تستخدم أذونة <b>التخزين الخارجي</b> لتشغيل الأصوات الموجودة على بطاقة SD.<br/><br/>هذه الأذونة اختيارية؛ سيتم تشغيل الصوت الافتراضي إذا تم رفض الوصول. لا يلزم هذا الإذن لأصوات النظام (تخزين الوسائط).]]></string>
+<string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
 <string name="privacy_permissiondialog_prompt"><![CDATA[هل ترغب في طلب الأذونات الآن؟]]></string>
 <string name="privacy_permissiondialog_ignore">تجاهل</string>
 <string name="privacy_permissiondialog_title">الأذونات</string>
@@ -2421,6 +2354,8 @@
     <string name="feature_not_supported_by_source">هذه الميزة غير مدعومة بواسطة مصدر البيانات الحالي.</string>
     <string name="reboot_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتفعيل التغييرات.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتحقيق التأثير الكامل للتغييرات.</string>   <!-- toast; app restart may be required -->
+
+    <string name="drag_hint">Drag here</string>    <!-- TODO -->
 
     <string name="dialog_ok">موافق</string>
     <string name="dialog_cancel">إلغاء</string>
