@@ -1277,9 +1277,9 @@
     <string name="configAction_setSleep">Set sleep time</string>                     <!-- TODO -->
 
     <string name="msg_bedtime_sleep_length">Sleep for %s.</string>                             <!-- e.g. "Sleep for 8h" -->                     <!-- TODO -->
-    <string name="msg_bedtime_sleep_length_other_plus">This is %s, plus %s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->                     <!-- TODO -->
-    <string name="msg_bedtime_sleep_length_cycles">This is %s of %s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->                     <!-- TODO -->
-    <string name="msg_bedtime_sleep_length_cycles_plus">This is %s of %s, plus %s.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length_other_plus">This is %1$s, plus %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length_cycles">This is %1$s of %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length_cycles_plus">This is %1$s of %2$s, plus %3$s.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->                     <!-- TODO -->
 
     <string name="configLabel_sleepBedtimeAutoOff">Turn off bedtime automatically</string>    <!-- TODO -->
     <string name="configLabel_sleepBedtimeAlarmOff">Turn off bedtime with alarm</string>    <!-- TODO -->
@@ -1287,7 +1287,7 @@
     <string name="configLabel_sleepOffset">Drift Asleep Duration</string>                     <!-- TODO -->
     <string name="configLabel_sleepCycle">Sleep Cycle Length</string>                     <!-- TODO -->
     <string name="configLabel_sleepCycles">Sleep Cycles</string>                     <!-- TODO -->
-    <string name="configLabel_numSleepCycles">Sleep for %s of %s, or %s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->        <!-- TODO -->
+    <string name="configLabel_numSleepCycles">Sleep for %1$s of %2$s, or %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->        <!-- TODO -->
     <plurals name="cyclePlural">
         <item quantity="one">%d cycle</item>    <!-- TODO -->
         <item quantity="other">%d cycles</item>    <!-- TODO -->
