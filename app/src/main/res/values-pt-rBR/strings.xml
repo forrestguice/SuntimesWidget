@@ -723,6 +723,8 @@
     <string name="widgetThemes_dark_translucent">Escuro (translúcido)</string>      <!-- default widget theme name --> <!-- TODO: review -->
     <string name="widgetThemes_light">Claro</string>                              <!-- default widget theme name --> <!-- TODO: review -->
     <string name="widgetThemes_light_transparent">Claro (transparente)</string>    <!-- default widget theme name --> <!-- TODO: review -->
+    <string name="widgetThemes_dark1">Escuro (legacy)</string>                                <!-- default widget theme name -->   <!-- TODO -->
+    <string name="widgetThemes_light1">Claro (legacy)</string>                              <!-- default widget theme name -->   <!-- TODO -->
 
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
