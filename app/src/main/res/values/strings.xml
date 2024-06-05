@@ -2385,8 +2385,13 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <string name="color_dialog_hint_hex">#FFFFFF</string>
 
+    <string name="configAction_colors">Colors</string>    <!-- TODO -->
+    <string name="configAction_addColors">Add</string>    <!-- TODO -->
+    <string name="configAction_editColors">Edit</string>    <!-- TODO -->
     <string name="configAction_saveColors">Save</string>    <!-- TODO -->
     <string name="configAction_deleteColors">Delete</string>    <!-- TODO -->
+    <string name="configAction_importColors">@string/configAction_import</string>    <!-- TODO -->
+    <string name="configAction_exportColors">@string/configAction_export</string>    <!-- TODO -->
 
     <string name="suggest_colorid">Custom</string>       <!-- edittext hint -->
     <string name="hint_colorid">ID</string>              <!-- edittext hint -->
