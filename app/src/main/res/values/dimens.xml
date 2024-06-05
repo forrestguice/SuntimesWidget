@@ -143,4 +143,6 @@
     <dimen name="equinoxItem_margin">12dp</dimen>
     <dimen name="equinoxList_topMargin">6dp</dimen>
 
+    <dimen name="colortext_margin">3dp</dimen>
+
 </resources>

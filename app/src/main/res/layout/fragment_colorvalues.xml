@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout android:id="@+id/layout_header" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="end">
+
+        <ImageButton android:id="@+id/cancelButton"
+            style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionBack"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:tooltipText="@android:string/cancel"
+            android:contentDescription="@android:string/cancel" />
+
+        <EditText android:id="@+id/editTextID"
+            android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp" android:layout_marginRight="0dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
+            android:inputType="text"
+            android:hint="@string/hint_colorid" android:textSize="?attr/text_size_small"
+            android:importantForAutofill="no" />
+
+        <ImageButton android:id="@+id/saveButton"
+            style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionSave"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:tooltipText="@string/configAction_saveColors"
+            android:contentDescription="@string/configAction_saveColors" />
+
+        <ImageButton android:id="@+id/overflow"
+            style="@style/Widget.AppCompat.ActionButton.Overflow"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:contentDescription="@string/configAction_overflow" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <GridLayout android:id="@+id/colorPanel" android:columnCount="2"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:gravity="top|start"
+            android:useDefaultMargins="false"
+            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp" android:layout_marginBottom="8dp">
+
+        </GridLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
