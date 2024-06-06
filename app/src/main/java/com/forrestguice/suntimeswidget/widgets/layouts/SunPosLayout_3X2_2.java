@@ -30,6 +30,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.LightGraphView;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -46,6 +47,14 @@ import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_FILL
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWAXIS;
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWMOON;
+import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_ASTRONOMICAL;
+import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_BACKGROUND;
+import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_CIVIL;
+import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_DAY;
+import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_NAUTICAL;
+import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_NIGHT;
+import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_POINT_FILL;
+import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_POINT_STROKE;
 import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
 
 /**
@@ -125,22 +134,17 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        options = new LightGraphView.LightGraphOptions();
-        if (theme.getBackground() == SuntimesTheme.ThemeBackground.LIGHT)
-            options.initDefaultLight(context);
-        else options.initDefaultDark(context);
+        options = new LightGraphView.LightGraphOptions(context);
 
-        options.colorDay = theme.getDayColor();
-        options.colorCivil = theme.getCivilColor();
-        options.colorNautical = theme.getNauticalColor();
-        options.colorAstro = theme.getAstroColor();
-        options.colorNight = theme.getNightColor();
-        options.colorPointFill = theme.getGraphPointFillColor();
-        options.colorPointStroke = theme.getGraphPointStrokeColor();
-
-        options.colorBackground = options.colorDay;
-        options.sunPath_color_day = options.sunPath_color_day_closed = options.colorDay;
-        options.sunPath_color_night = options.sunPath_color_night_closed = options.colorNautical;
+        options.colors = LightGraphColorValues.getColorDefaults(context, (theme.getBackground() == SuntimesTheme.ThemeBackground.DARK));
+        options.colors.setColor(COLOR_BACKGROUND, theme.getDayColor());
+        options.colors.setColor(COLOR_DAY, theme.getDayColor());
+        options.colors.setColor(COLOR_CIVIL, theme.getCivilColor());
+        options.colors.setColor(COLOR_NAUTICAL, theme.getNauticalColor());
+        options.colors.setColor(COLOR_ASTRONOMICAL, theme.getAstroColor());
+        options.colors.setColor(COLOR_NIGHT, theme.getNightColor());
+        options.colors.setColor(COLOR_POINT_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
 
         options.graph_width = 365;    // days
         options.graph_height = 24;    // hours

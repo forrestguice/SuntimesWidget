@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
  */
 public class LightGraphColorValues extends ColorValues implements Parcelable
 {
+    public static final String COLOR_BACKGROUND = "color_background";
     public static final String COLOR_DAY = "color_day";
     public static final String COLOR_NIGHT = "color_night";
     public static final String COLOR_CIVIL = "color_civil";
@@ -44,9 +45,12 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
 
     public static final String COLOR_POINT_FILL = "color_pointFill";
     public static final String COLOR_POINT_STROKE = "color_pointStroke";
+
     public static final String COLOR_AXIS = "color_axis";
-    public static final String COLOR_GRID = "color_grid";
+    public static final String COLOR_GRID_MAJOR = "color_grid_major";
+    public static final String COLOR_GRID_MINOR = "color_grid_minor";
     public static final String COLOR_LABELS = "color_labels";
+    public static final String COLOR_LABELS_BG = "color_labels_bg";
 
     public static final String COLOR_SPRING = "color_spring";
     public static final String COLOR_SUMMER = "color_summer";
@@ -54,50 +58,63 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
     public static final String COLOR_WINTER = "color_winter";
 
     public static final String[] COLORS = new String[]
-            {
-            COLOR_DAY, COLOR_CIVIL, COLOR_NAUTICAL, COLOR_ASTRONOMICAL, COLOR_NIGHT,       // 0-4
-            COLOR_POINT_FILL, COLOR_POINT_STROKE, COLOR_AXIS, COLOR_GRID, COLOR_LABELS,    // 5-9
-            COLOR_SPRING, COLOR_SUMMER, COLOR_AUTUMN, COLOR_WINTER                         // 10-13
+    {
+            COLOR_BACKGROUND, COLOR_DAY,
+            COLOR_CIVIL, COLOR_NAUTICAL, COLOR_ASTRONOMICAL, COLOR_NIGHT,
+            COLOR_POINT_FILL, COLOR_POINT_STROKE, COLOR_AXIS, COLOR_GRID_MAJOR, COLOR_GRID_MINOR,
+            COLOR_LABELS, COLOR_LABELS_BG,
+            COLOR_SPRING, COLOR_SUMMER, COLOR_AUTUMN, COLOR_WINTER
     };
     protected static final int[] COLORS_ATTR = new int[]
     {
-            R.attr.graphColor_day,                  // 0
-            R.attr.graphColor_civil,                // 1
-            R.attr.graphColor_nautical,             // 2
-            R.attr.graphColor_astronomical,         // 3
-            R.attr.graphColor_night,                // 4
-            R.attr.graphColor_pointFill,            // 5
-            R.attr.graphColor_pointStroke,          // 6
-            R.attr.graphColor_axis,                 // 7
-            R.attr.graphColor_grid,                 // 8
-            R.attr.graphColor_labels,               // 9
-            R.attr.springColor,                     // 10
-            R.attr.summerColor,                     // 11
-            R.attr.fallColor,                       // 12
-            R.attr.winterColor,                     // 13
+            R.attr.graphColor_day,
+            R.attr.graphColor_day,
+            R.attr.graphColor_civil,
+            R.attr.graphColor_nautical,
+            R.attr.graphColor_astronomical,
+            R.attr.graphColor_night,
+            R.attr.graphColor_pointFill,
+            R.attr.graphColor_pointStroke,
+            R.attr.graphColor_axis,
+            R.attr.graphColor_grid,     // grid_major
+            R.attr.graphColor_grid,     // grid_minor
+            R.attr.graphColor_labels,
+            R.attr.graphColor_labels_bg,
+            R.attr.springColor,
+            R.attr.summerColor,
+            R.attr.fallColor,
+            R.attr.winterColor,
     };
     protected static final int[] COLORS_RES_DARK = new int[]
     {
-            R.color.graphColor_day_dark, R.color.graphColor_civil_dark, R.color.graphColor_nautical_dark, R.color.graphColor_astronomical_dark, R.color.graphColor_night_dark,
-            R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark, R.color.graphColor_axis_dark, R.color.graphColor_grid_dark, R.color.graphColor_labels_dark,
+            R.color.graphColor_day_dark, R.color.graphColor_day_dark,
+            R.color.graphColor_civil_dark, R.color.graphColor_nautical_dark, R.color.graphColor_astronomical_dark, R.color.graphColor_night_dark,
+            R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark, R.color.graphColor_axis_dark, R.color.graphColor_grid_dark,  R.color.graphColor_grid_dark,
+            R.color.graphColor_labels_dark, R.color.graphColor_labels_bg_dark,
             R.color.springColor_dark, R.color.summerColor_dark, R.color.fallColor_dark, R.color.winterColor_dark
     };
     protected static final int[] COLORS_RES_LIGHT = new int[]
     {
-            R.color.graphColor_day_light, R.color.graphColor_civil_light, R.color.graphColor_nautical_light, R.color.graphColor_astronomical_light, R.color.graphColor_night_light,
-            R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light, R.color.graphColor_axis_dark, R.color.graphColor_grid_light, R.color.graphColor_labels_light,
+            R.color.graphColor_day_light, R.color.graphColor_day_light,
+            R.color.graphColor_civil_light, R.color.graphColor_nautical_light, R.color.graphColor_astronomical_light, R.color.graphColor_night_light,
+            R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light, R.color.graphColor_axis_dark, R.color.graphColor_grid_light, R.color.graphColor_grid_light,
+            R.color.graphColor_labels_light, R.color.graphColor_labels_bg_light,
             R.color.springColor_light, R.color.summerColor_light, R.color.fallColor_light, R.color.winterColor_light
     };
     public static final int[] LABELS_RESID = new int[]
     {
-            R.string.timeMode_day, R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical, R.string.timeMode_night,
-            R.string.graph_option_points, R.string.graph_option_points, R.string.graph_option_axis, R.string.graph_option_grid, R.string.graph_option_labels,
+            R.string.configLabel_themeColorMapBackground, R.string.timeMode_day,
+            R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical, R.string.timeMode_night,
+            R.string.graph_option_points, R.string.graph_option_points, R.string.graph_option_axis, R.string.graph_option_grid, R.string.graph_option_grid,
+            R.string.graph_option_labels, R.string.graph_option_labels,
             R.string.configLabel_themeColorSpring, R.string.configLabel_themeColorSummer, R.string.configLabel_themeColorFall, R.string.configLabel_themeColorWinter
     };
     protected static final int[] COLORS_FALLBACK = new int[]
     {
-            Color.YELLOW, Color.CYAN, Color.BLUE, Color.DKGRAY, Color.BLACK,
+            Color.YELLOW, Color.YELLOW,
+            Color.CYAN, Color.BLUE, Color.DKGRAY, Color.BLACK,
             Color.DKGRAY, Color.DKGRAY, Color.DKGRAY, Color.DKGRAY, Color.DKGRAY,
+            Color.DKGRAY, Color.BLACK,
             Color.GREEN, Color.YELLOW, Color.RED, Color.BLUE
     };
 

@@ -68,6 +68,7 @@
     <color name="graphColor_axis">@color/graphColor_axis_light</color>
     <color name="graphColor_grid">@color/graphColor_grid_light</color>
     <color name="graphColor_labels">@color/graphColor_labels_light</color>
+    <color name="graphColor_labels_bg">@color/graphColor_labels_bg_light</color>
 
     <color name="warningTag">@color/warningTag_light</color>
     <color name="errorTag">@color/errorTag_light</color>
@@ -353,6 +354,7 @@
     <color name="graphColor_axis_dark">@color/grey_900</color>  <!-- TODO -->
     <color name="graphColor_grid_dark">@color/grey_500</color>  <!-- TODO -->
     <color name="graphColor_labels_dark">@color/grey_300</color>  <!-- TODO -->
+    <color name="graphColor_labels_bg_dark">#80000000</color>
 
     <color name="graphColor_bg_light">@color/material_grey_50</color>
     <color name="graphColor_day_light">#ffffcc00</color>
@@ -365,6 +367,7 @@
     <color name="graphColor_axis_light">@color/grey_300</color>  <!-- TODO -->
     <color name="graphColor_grid_light">@color/grey_300</color>
     <color name="graphColor_labels_light">@color/grey_800</color>
+    <color name="graphColor_labels_bg_light">#80000000</color>
 
     <!-- Dingy Yellows
     <color name="graphColor_bg_light">@color/material_grey_50</color>
@@ -425,6 +428,7 @@
 
     <!-- misc -->
     <color name="transparent">#00000000</color>
+    <color name="white">#ffffffff</color>
     <color name="grey_50">#fffafafa</color>
     <color name="grey_100">#fff5f5f5</color>
     <color name="grey_200">#ffEEEEEE</color>
@@ -438,6 +442,7 @@
     <color name="grey_850">#ff303030</color>
     <color name="grey_900">#ff212121</color>
     <color name="grey_999">#ff111111</color>
+    <color name="black">#ff000000</color>
     <color name="deep_teal_200">#ff80cbc4</color>
     <color name="deep_teal_500">#ff009688</color>
 

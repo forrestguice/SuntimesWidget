@@ -48,6 +48,7 @@
     <attr name="graphColor_axis" format="reference" />
     <attr name="graphColor_grid" format="reference" />
     <attr name="graphColor_labels" format="reference" />
+    <attr name="graphColor_labels_bg" format="reference" />
 
     <attr name="table_risingColor" format="reference" />
     <attr name="table_settingColor" format="reference" />
