@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -79,6 +80,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
 {
     public static final String MAPTAG_LIGHTGRAPH = "_lightgraph";
 
+    public static final String DIALOGTAG_COLORS = "lightgraph_colors";
     public static final String DIALOGTAG_HELP = "lightgraph_help";
     protected static SuntimesUtils utils = new SuntimesUtils();
 
@@ -586,6 +588,10 @@ public class LightGraphDialog extends BottomSheetDialogFragment
 
             switch (item.getItemId())
             {
+                case R.id.graphOption_colors:
+                    showColorDialog(getActivity());
+                    return true;
+
                 case R.id.graphOption_showPoints:
                     toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWPOINTS);
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, toggledValue);
@@ -718,6 +724,20 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             }
             Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();
         }*/
+    }
+
+    /**
+     * showColorDialog
+     */
+    protected void showColorDialog(Context context)
+    {
+        LightGraphColorValuesCollection<LightGraphColorValues> colors = new LightGraphColorValuesCollection<>(context);
+        colors.setColors(context, LightGraphColorValues.getColorDefaults(context, true));
+        colors.setColors(context, LightGraphColorValues.getColorDefaults(context, false));
+
+        ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
+        dialog.setColorCollection(new LightGraphColorValuesCollection<LightGraphColorValues>(context));
+        dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

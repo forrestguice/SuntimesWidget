@@ -27,7 +27,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 /**
  * ColorValuesCollection
  */
-public class LightGraphColorValuesCollection<LightGraphColorValues> extends ColorValuesCollection
+public class LightGraphColorValuesCollection<LightGraphColorValues> extends ColorValuesCollection<ColorValues>
 {
     public static final String PREFS_LIGHTGRAPH_COLORS = "prefs_lightgraph_colors";
 
