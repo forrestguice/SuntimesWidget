@@ -251,14 +251,20 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
-    private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
+    private final DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener()
+    {
         @Override
         public void onShow(final DialogInterface dialog)
         {
             Context context = getContext();
-            if (context != null) {
+            if (context != null)
+            {
                 updateViews();
                 text_dialogTitle.post(initPeekHeight);
+
+                if (AppSettings.isTelevision(getActivity())) {
+                    menuButton.requestFocus();
+                }
             }
             startUpdateTask();
         }

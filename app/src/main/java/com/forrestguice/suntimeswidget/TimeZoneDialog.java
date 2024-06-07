@@ -936,11 +936,14 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             btn_accept.setEnabled(validateInput());
             progress_timezone.setVisibility(View.GONE);
             startUpdateTask();
+
+            if (AppSettings.isTelevision(getActivity())) {
+                btn_accept.requestFocus();
+            }
         }
     };
 
-    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
-    {
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
         @Override
         public void onShow(DialogInterface dialog) {
             ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);

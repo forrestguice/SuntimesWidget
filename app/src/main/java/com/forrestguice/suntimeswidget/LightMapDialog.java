@@ -232,7 +232,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()
+    private final DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog)
@@ -244,6 +244,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     initPeekHeight(getDialog());
                 }
             });
+
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.requestFocus();
+            }
         }
     };
 

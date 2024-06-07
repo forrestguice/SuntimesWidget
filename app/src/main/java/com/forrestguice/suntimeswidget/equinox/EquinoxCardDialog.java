@@ -224,11 +224,14 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         return null;
     }
 
-    private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
+    private final DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener()
+    {
         @Override
-        public void onShow(DialogInterface dialogInterface) {
+        public void onShow(DialogInterface dialogInterface)
+        {
             Context context = getContext();
-            if (context != null) {
+            if (context != null)
+            {
                 updateViews(getContext());
                 text_title.post(new Runnable() {
                     @Override
@@ -236,10 +239,14 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                         ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                     }
                 });
+
+                if (AppSettings.isTelevision(getActivity())) {
+                    btn_menu.requestFocus();
+                }
+
             } else Log.w("EquinoxDialog.onShow", "null context! skipping update");
         }
     };
-
 
     private View.OnClickListener onTitleClicked = new View.OnClickListener() {
         @Override
@@ -859,4 +866,6 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified(boolean closeDialog) {}
     }
+
+
 }
