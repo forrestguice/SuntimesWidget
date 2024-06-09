@@ -2332,7 +2332,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    protected static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         t_updateAlarmTime_runningLoop = true;
         SuntimesCalculator.MoonPhase phase = event.toMoonPhase();
@@ -2341,6 +2341,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Calendar alarmTime = Calendar.getInstance();
 
         Calendar day = Calendar.getInstance();
+        day.setTimeInMillis(now.getTimeInMillis());
         moonData.setTodayIs(day);
         moonData.calculate();
 
@@ -2564,7 +2565,7 @@ public class AlarmNotifications extends BroadcastReceiver
         sunData.setTodayIs(Calendar.getInstance());
         return sunData;
     }
-    private static SuntimesMoonData getData_moonEvent(Context context, @NonNull Location location)
+    protected static SuntimesMoonData getData_moonEvent(Context context, @NonNull Location location)
     {
         SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
         moonData.setLocation(location);

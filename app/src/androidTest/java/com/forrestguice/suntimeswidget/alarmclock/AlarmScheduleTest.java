@@ -28,7 +28,9 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.UnlistedTest;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -86,6 +88,76 @@ public class AlarmScheduleTest
             Log.i("TEST", utils.calendarDateTimeDisplayString(context, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
             now = event;
             now.add(Calendar.SECOND, 1);
+            c++;
+        }
+    }
+
+    public static final Location location0 = new Location("Helsinki", "60", "25", "0");
+
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvents()
+    {
+        SuntimesMoonData data = AlarmNotifications.getData_moonEvent(context, location0);
+        data.setTodayIs(getCalendar(2024, Calendar.JUNE, 1, 18, 8));
+        data.calculate();
+
+        Calendar newMoon = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW);
+        Calendar firstQuarter = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER);
+        Calendar fullMoon = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL);
+        Calendar thirdQuarter = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER);
+
+        SuntimesCalculator.MoonPhase[] phases = new SuntimesCalculator.MoonPhase[] { SuntimesCalculator.MoonPhase.NEW, SuntimesCalculator.MoonPhase.FIRST_QUARTER, SuntimesCalculator.MoonPhase.FULL, SuntimesCalculator.MoonPhase.THIRD_QUARTER };
+        Calendar[] calendars = new Calendar[] { newMoon, firstQuarter, fullMoon, thirdQuarter };
+
+        for (int i=0; i<phases.length; i++)
+        {
+            Calendar calendar = calendars[i];
+            calendar.add(Calendar.SECOND, 1);
+            int month = calendar.get(Calendar.MONTH);
+            int nextMonth = (month + 1);
+            test_updateAlarmTime_moonPhaseEvent(nextMonth, SolarEvents.valueOf(phases[i]), calendar, phases[i].name());
+        }
+    }
+
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvents_fullMoon()
+    {
+        Calendar now = getCalendar(2024, Calendar.JUNE, 21, 18, 8);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JULY, SolarEvents.FULLMOON, now, "Full Moon");
+    }
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvents_firstQuarter()
+    {
+        Calendar now = getCalendar(2024, Calendar.JUNE, 13, 22, 19);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JULY, SolarEvents.FIRSTQUARTER, now, "First Quarter");
+
+        now = getCalendar(2024, Calendar.JULY, 13, 15, 49);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.AUGUST, SolarEvents.FIRSTQUARTER, now, "First Quarter");
+    }
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvents_thirdQuarter()
+    {
+        Calendar now = getCalendar(2024, Calendar.MAY, 30, 14, 54);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JUNE, SolarEvents.THIRDQUARTER, now, "Third Quarter");
+
+        now = getCalendar(2024, Calendar.JUNE, 28, 14, 54);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JULY, SolarEvents.THIRDQUARTER, now, "Third Quarter");
+    }
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvent_newMoon()
+    {
+        Calendar now = getCalendar(2024, Calendar.JUNE, 6, 11, 16);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JULY, SolarEvents.NEWMOON, now, "New Moon");
+    }
+    public void test_updateAlarmTime_moonPhaseEvent(int expectedMonth, SolarEvents eventID, Calendar now, String tag)
+    {
+        int c = 0, n = 24;
+        while (c < n)
+        {
+            Calendar event = AlarmNotifications.updateAlarmTime_moonPhaseEvent(context, eventID, location0, 0, true, null, now);
+            Log.i("TEST", tag + " " + c + " :: " + utils.calendarDateTimeDisplayString(context, now, true, false) + " :: " + utils.calendarDateTimeDisplayString(context, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
+            assertEquals(expectedMonth, event.get(Calendar.MONTH));
+            now.add(Calendar.HOUR, 1);
             c++;
         }
     }
