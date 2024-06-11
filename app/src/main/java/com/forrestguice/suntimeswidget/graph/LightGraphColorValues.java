@@ -21,45 +21,21 @@ package com.forrestguice.suntimeswidget.graph;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.content.ContextCompat;
 
-import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 
 /**
  * ColorValues
  */
-public class LightGraphColorValues extends ColorValues implements Parcelable
+public class LightGraphColorValues extends GraphColorValues implements Parcelable
 {
-    public static final String COLOR_BACKGROUND = "color_background";
-    public static final String COLOR_DAY = "color_day";
-    public static final String COLOR_NIGHT = "color_night";
-    public static final String COLOR_CIVIL = "color_civil";
-    public static final String COLOR_NAUTICAL = "color_nautical";
-    public static final String COLOR_ASTRONOMICAL = "color_astronomical";
-
-    public static final String COLOR_POINT_FILL = "color_pointFill";
-    public static final String COLOR_POINT_STROKE = "color_pointStroke";
-
-    public static final String COLOR_AXIS = "color_axis";
-    public static final String COLOR_GRID_MAJOR = "color_grid_major";
-    public static final String COLOR_GRID_MINOR = "color_grid_minor";
-    public static final String COLOR_LABELS = "color_labels";
-    public static final String COLOR_LABELS_BG = "color_labels_bg";
-
-    public static final String COLOR_SPRING = "color_spring";
-    public static final String COLOR_SUMMER = "color_summer";
-    public static final String COLOR_AUTUMN = "color_autumn";
-    public static final String COLOR_WINTER = "color_winter";
-
     public static final String[] COLORS = new String[]
     {
-            COLOR_BACKGROUND, COLOR_DAY,
+            COLOR_DAY,
             COLOR_CIVIL, COLOR_NAUTICAL, COLOR_ASTRONOMICAL, COLOR_NIGHT,
             COLOR_POINT_FILL, COLOR_POINT_STROKE, COLOR_AXIS, COLOR_GRID_MAJOR, COLOR_GRID_MINOR,
             COLOR_LABELS, COLOR_LABELS_BG,
@@ -67,7 +43,6 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
     };
     protected static final int[] COLORS_ATTR = new int[]
     {
-            R.attr.graphColor_day,
             R.attr.graphColor_day,
             R.attr.graphColor_civil,
             R.attr.graphColor_nautical,
@@ -87,7 +62,7 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
     };
     protected static final int[] COLORS_RES_DARK = new int[]
     {
-            R.color.graphColor_day_dark, R.color.graphColor_day_dark,
+            R.color.graphColor_day_dark,
             R.color.graphColor_civil_dark, R.color.graphColor_nautical_dark, R.color.graphColor_astronomical_dark, R.color.graphColor_night_dark,
             R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark, R.color.graphColor_axis_dark, R.color.graphColor_grid_dark,  R.color.graphColor_grid_dark,
             R.color.graphColor_labels_dark, R.color.graphColor_labels_bg_dark,
@@ -95,7 +70,7 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
     };
     protected static final int[] COLORS_RES_LIGHT = new int[]
     {
-            R.color.graphColor_day_light, R.color.graphColor_day_light,
+            R.color.graphColor_day_light,
             R.color.graphColor_civil_light, R.color.graphColor_nautical_light, R.color.graphColor_astronomical_light, R.color.graphColor_night_light,
             R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light, R.color.graphColor_axis_dark, R.color.graphColor_grid_light, R.color.graphColor_grid_light,
             R.color.graphColor_labels_light, R.color.graphColor_labels_bg_light,
@@ -103,7 +78,7 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
     };
     public static final int[] LABELS_RESID = new int[]
     {
-            R.string.configLabel_themeColorMapBackground, R.string.timeMode_day,
+            R.string.timeMode_day,
             R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical, R.string.timeMode_night,
             R.string.graph_option_points, R.string.graph_option_points, R.string.graph_option_axis, R.string.graph_option_grid, R.string.graph_option_grid,
             R.string.graph_option_labels, R.string.graph_option_labels,
@@ -111,7 +86,7 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
     };
     protected static final int[] COLORS_FALLBACK = new int[]
     {
-            Color.YELLOW, Color.YELLOW,
+            Color.YELLOW,
             Color.CYAN, Color.BLUE, Color.DKGRAY, Color.BLACK,
             Color.DKGRAY, Color.DKGRAY, Color.DKGRAY, Color.DKGRAY, Color.DKGRAY,
             Color.DKGRAY, Color.BLACK,
@@ -123,6 +98,27 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
         return COLORS;
     }
 
+    @Override
+    public int[] getColorAttrs() {
+        return COLORS_ATTR;
+    }
+    @Override
+    public int[] getColorLabelsRes() {
+        return LABELS_RESID;
+    }
+    @Override
+    public int[] getColorsResDark() {
+        return COLORS_RES_DARK;
+    }
+    @Override
+    public int[] getColorsResLight() {
+        return COLORS_RES_LIGHT;
+    }
+    @Override
+    public int[] getColorsFallback() {
+        return COLORS_FALLBACK;
+    }
+
     public LightGraphColorValues(ColorValues other) {
         super(other);
     }
@@ -132,33 +128,14 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
     private LightGraphColorValues(Parcel in) {
         super(in);
     }
-    public LightGraphColorValues()
-    {
+    public LightGraphColorValues() {
         super();
-        if (BuildConfig.DEBUG && (COLORS.length != COLORS_FALLBACK.length)) {
-            throw new AssertionError("COLORS and COLORS_FALLBACK have different lengths! These arrays should be one-to-one.");
-        }
-        for (int i=0; i<COLORS.length; i++) {
-            setColor(COLORS[i], COLORS_FALLBACK[i]);
-            setLabel(COLORS[i], COLORS[i]);
-        }
     }
     public LightGraphColorValues(Context context) {
         this(context, true);
     }
-    public LightGraphColorValues(Context context, boolean darkTheme)
-    {
-        super();
-        if (BuildConfig.DEBUG && (COLORS.length != COLORS_ATTR.length)) {
-            throw new AssertionError("COLORS and COLORS_ATTR have different lengths! These arrays should be one-to-one.");
-        }
-        int[] defaultResID = darkTheme ? COLORS_RES_DARK : COLORS_RES_LIGHT;
-        TypedArray a = context.obtainStyledAttributes(COLORS_ATTR);
-        for (int i=0; i<COLORS.length; i++) {
-            setColor(COLORS[i], ContextCompat.getColor(context, a.getResourceId(i, defaultResID[i])));
-            setLabel(COLORS[i], context.getString(LABELS_RESID[i]));
-        }
-        a.recycle();
+    public LightGraphColorValues(Context context, boolean darkTheme) {
+        super(context, darkTheme);
     }
     public LightGraphColorValues(String jsonString) {
         super(jsonString);
@@ -174,15 +151,7 @@ public class LightGraphColorValues extends ColorValues implements Parcelable
         }
     };
 
-    public static LightGraphColorValues getColorDefaults(Context context, boolean darkTheme)
-    {
-        LightGraphColorValues values = new LightGraphColorValues();
-        int[] defaultResID = darkTheme ? COLORS_RES_DARK : COLORS_RES_LIGHT;
-        for (int i=0; i<COLORS.length; i++) {
-            values.setColor(COLORS[i], ContextCompat.getColor(context, defaultResID[i]));
-            values.setLabel(COLORS[i], context.getString(LABELS_RESID[i]));
-        }
-        values.setID(darkTheme ? context.getString(R.string.widgetThemes_dark) : context.getString(R.string.widgetThemes_light));
-        return values;
+    public static LightGraphColorValues getColorDefaults(Context context, boolean darkTheme) {
+        return new LightGraphColorValues(new LightGraphColorValues().getDefaultValues(context, darkTheme));
     }
 }

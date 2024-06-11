@@ -131,7 +131,7 @@ public abstract class ColorValues implements Parcelable
     }
 
     public static final String SUFFIX_LABEL = "_LABEL";
-    protected void setLabel(String key, String label) {
+    public void setLabel(String key, String label) {
         values.put(key + SUFFIX_LABEL, label);
     }
     public String getLabel(String key) {
