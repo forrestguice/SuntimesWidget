@@ -207,9 +207,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             public void run()
             {
                 Context context = getContext();
+                Location location = ((data0 != null) ? data0.location() : null);
+                double longitude = ((location != null) ? location.getLongitudeAsDouble() : 0);
                 String tzId = WidgetTimezones.LocalMeanTime.TIMEZONEID; //WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
                 TimeZone timezone = //WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() :
-                        WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
+                        WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
 
                 data = LightGraphTask.createYearData(getContext(), data0, timezone);
                 handler.post(new Runnable() {
@@ -869,7 +871,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 }
             }
             options.sunPath_points = p.toArray(new float[0][0]);
-            Log.d("DEBUG", "sunPath_points: " + options.sunPath_points.length);
+            //Log.d("DEBUG", "sunPath_points: " + options.sunPath_points.length);
         }
 
         protected HashMap<Path, Double> createSunPath(Calendar now, SuntimesRiseSetDataset[] data, WidgetSettings.TimeMode mode, boolean rising, Canvas c, LightGraphOptions options, boolean closed, ArrayList<Path> paths, HashMap<Path,Double> hours)
