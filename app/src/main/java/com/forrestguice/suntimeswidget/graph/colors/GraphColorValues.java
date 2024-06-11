@@ -17,7 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.graph;
+package com.forrestguice.suntimeswidget.graph.colors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -34,7 +34,6 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
  */
 public abstract class GraphColorValues extends ColorValues
 {
-    public static final String COLOR_BACKGROUND = "color_background";
     public static final String COLOR_DAY = "color_day";
     public static final String COLOR_NIGHT = "color_night";
     public static final String COLOR_CIVIL = "color_civil";
@@ -54,6 +53,16 @@ public abstract class GraphColorValues extends ColorValues
     public static final String COLOR_SUMMER = "color_summer";
     public static final String COLOR_AUTUMN = "color_autumn";
     public static final String COLOR_WINTER = "color_winter";
+
+    public static final String COLOR_SUNPATH_DAY = "color_sunpath_day";
+    public static final String COLOR_SUNPATH_DAY_CLOSED = "color_sunpath_day_closed";
+    public static final String COLOR_SUNPATH_NIGHT = "color_sunpath_night";
+    public static final String COLOR_SUNPATH_NIGHT_CLOSED = "color_sunpath_night_closed";
+
+    public static final String COLOR_MOONPATH_DAY = "color_moonpath_day";
+    public static final String COLOR_MOONPATH_DAY_CLOSED = "color_moonpath_day_closed";
+    public static final String COLOR_MOONPATH_NIGHT = "color_moonpath_night";
+    public static final String COLOR_MOONPATH_NIGHT_CLOSED = "color_moonpath_night_closed";
 
     public abstract int[] getColorAttrs();
     public abstract int[] getColorLabelsRes();
@@ -96,7 +105,7 @@ public abstract class GraphColorValues extends ColorValues
         TypedArray a = context.obtainStyledAttributes(getColorAttrs());
         for (int i=0; i<colorKeys.length; i++) {
             setColor(colorKeys[i], ContextCompat.getColor(context, a.getResourceId(i, defaultResID[i])));
-            setLabel(colorKeys[i], context.getString(labelsResID[i]));
+            setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
         }
         a.recycle();
     }
@@ -118,9 +127,10 @@ public abstract class GraphColorValues extends ColorValues
         String[] colorKeys = getColorKeys();
         int[] labelsResID = getColorLabelsRes();
         int[] defaultResID = darkTheme ? getColorsResDark() : getColorsResLight();
-        for (int i=0; i<colorKeys.length; i++) {
+        for (int i=0; i<colorKeys.length; i++)
+        {
             values.setColor(colorKeys[i], ContextCompat.getColor(context, defaultResID[i]));
-            values.setLabel(colorKeys[i], context.getString(labelsResID[i]));
+            values.setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
         }
         values.setID(darkTheme ? context.getString(R.string.widgetThemes_dark) : context.getString(R.string.widgetThemes_light));
         return values;

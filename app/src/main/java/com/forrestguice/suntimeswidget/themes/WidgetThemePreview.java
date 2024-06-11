@@ -41,7 +41,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.graph.LightMapColorValues;
+import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_6;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_7;

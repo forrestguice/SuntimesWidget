@@ -17,7 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.graph;
+package com.forrestguice.suntimeswidget.graph.colors;
 
 import android.content.Context;
 import android.os.Parcel;
@@ -49,16 +49,16 @@ public class LightGraphColorValuesCollection<LightGraphColorValues> extends Colo
 
     @Override
     public ColorValues getDefaultColors(Context context) {
-        return new com.forrestguice.suntimeswidget.graph.LightGraphColorValues(context);
+        return new com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues(context);
     }
 
-    public static final Creator<com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection> CREATOR = new Creator<com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection>()
+    public static final Creator<LightGraphColorValuesCollection> CREATOR = new Creator<LightGraphColorValuesCollection>()
     {
-        public com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection createFromParcel(Parcel in) {
-            return new com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection<ColorValues>(in);
+        public LightGraphColorValuesCollection createFromParcel(Parcel in) {
+            return new LightGraphColorValuesCollection<ColorValues>(in);
         }
-        public com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection<ColorValues>[] newArray(int size) {
-            return new com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection[size];
+        public LightGraphColorValuesCollection<ColorValues>[] newArray(int size) {
+            return new LightGraphColorValuesCollection[size];
         }
     };
 

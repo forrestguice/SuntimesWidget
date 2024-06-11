@@ -18,7 +18,6 @@
 package com.forrestguice.suntimeswidget.graph;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -35,19 +34,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -62,19 +59,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_ASTRONOMICAL;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_AXIS;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_BACKGROUND;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_CIVIL;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_DAY;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_GRID_MAJOR;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_GRID_MINOR;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_LABELS;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_LABELS_BG;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_NAUTICAL;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_NIGHT;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_POINT_FILL;
-import static com.forrestguice.suntimeswidget.graph.LightGraphColorValues.COLOR_POINT_STROKE;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_ASTRONOMICAL;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_AXIS;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_CIVIL;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_DAY;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_GRID_MAJOR;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_GRID_MINOR;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_LABELS;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_LABELS_BG;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_NAUTICAL;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_NIGHT;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_POINT_FILL;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_POINT_STROKE;
 
 /**
  * LightGraphView
