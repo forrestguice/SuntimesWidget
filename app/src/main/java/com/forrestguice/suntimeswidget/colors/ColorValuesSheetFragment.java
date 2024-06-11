@@ -61,6 +61,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorsheet, container, false);
 
         listDialog = new ColorValuesSelectFragment(); //(ColorValuesSelectFragment) fragments.findFragmentById(R.id.colorsCollectionFragment);
+        listDialog.setAppWidgetID(getAppWidgetID());
         listDialog.setTheme(getThemeResID());
 
         editDialog = new ColorValuesEditFragment();  // (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
@@ -84,6 +85,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         if (listDialog != null) {
             listDialog.setColorCollection(colorCollection);
             listDialog.setFragmentListener(listDialogListener);
+            listDialog.setAppWidgetID(getAppWidgetID());
         }
 
         //editDialog = (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
@@ -270,8 +272,12 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
     }
 
-    public void setAppWidgetID(int id) {
+    public void setAppWidgetID(int id)
+    {
         getArguments().putInt("appWidgetID", id);
+        if (listDialog != null) {
+            listDialog.setAppWidgetID(id);
+        }
     }
     public int getAppWidgetID() {
         return getArguments().getInt("appWidgetID", 0);
