@@ -280,8 +280,12 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     public void pickColor(String key)
     {
         int requestCode = colorValues.colorKeyIndex(key);
-        if (requestCode >= 0) {
-            startActivityForResult(pickColorIntent(key, requestCode), requestCode);
+        if (requestCode >= 0)
+        {
+            Intent intent = pickColorIntent(key, requestCode);
+            if (intent != null) {
+                startActivityForResult(pickColorIntent(key, requestCode), requestCode);
+            }
         }
     }
 
