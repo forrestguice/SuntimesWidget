@@ -148,8 +148,8 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     {
     }
 
-    protected ColorValuesSheetFragment.FragmentListener dialogListener = null;
-    public void setDialogListener(ColorValuesSheetFragment.FragmentListener l) {
+    protected DialogListener dialogListener = null;
+    public void setDialogListener(DialogListener l) {
         dialogListener = l;
     }
 

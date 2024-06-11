@@ -28,6 +28,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.util.Pair;
@@ -48,7 +49,10 @@ import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetFragment;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -142,6 +146,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         ContextThemeWrapper context = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_lightgraph, parent, false);
+        initColors(context);
 
         progress = (ProgressBar) v.findViewById(R.id.progress);
 
@@ -207,9 +212,22 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     public void onResume()
     {
         super.onResume();
+
         if (graph != null) {
             graph.onResume();
         }
+
+        FragmentManager fragments = getChildFragmentManager();
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        if (colorDialog != null) {
+            colorDialog.setDialogListener(colorDialogListener);
+        }
+
+        //HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        //if (helpDialog != null) {
+        //    helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        //}
+
         expandSheet(getDialog());
     }
 
@@ -424,6 +442,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         if (context != null)
         {
+            options.colors = (LightGraphColorValues) colors.getSelectedColors(context);
             options.axisX_labels_show = options.axisY_labels_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
             options.axisX_show = options.axisY_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
             options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
@@ -726,18 +745,44 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         }*/
     }
 
+    private ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
+    {
+        @Override
+        public void onColorValuesSelected(ColorValues values) {
+            updateGraphViews(getActivity());
+        }
+
+        public void requestPeekHeight(int height) {}
+        public void requestHideSheet() {}
+        public void requestExpandSheet() {}
+        public void onModeChanged(int mode) {}
+    };
+
+
     /**
      * showColorDialog
      */
     protected void showColorDialog(Context context)
     {
-        LightGraphColorValuesCollection<LightGraphColorValues> colors = new LightGraphColorValuesCollection<>(context);
+        ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
+        dialog.setColorCollection(colors);
+        dialog.setDialogListener(colorDialogListener);
+        dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
+    }
+
+    private ColorValuesCollection<ColorValues> colors;
+    public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
+        colors = collection;
+    }
+    public ColorValuesCollection<ColorValues> getColorCollection() {
+        return colors;
+    }
+
+    protected void initColors(Context context)
+    {
+        colors = new LightGraphColorValuesCollection<>(context);
         colors.setColors(context, LightGraphColorValues.getColorDefaults(context, true));
         colors.setColors(context, LightGraphColorValues.getColorDefaults(context, false));
-
-        ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
-        dialog.setColorCollection(new LightGraphColorValuesCollection<LightGraphColorValues>(context));
-        dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
