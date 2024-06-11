@@ -81,8 +81,8 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState)
     {
-        android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
-        View content = inflater.cloneInContext(contextWrapper).inflate(R.layout.fragment_colorselector, container, false);
+        //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
+        View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorselector, container, false);
         if (savedState != null) {
             onRestoreInstanceState(savedState);
         }
