@@ -128,7 +128,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     {
         options = new LightGraphOptions(context);
         if (isInEditMode()) {
-            setBackgroundColor(options.colors.getColor(COLOR_BACKGROUND));
+            setBackgroundColor(options.colors.getColor(COLOR_DAY));
         }
     }
 
@@ -710,7 +710,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void drawBackground(Canvas c, Paint p, LightGraphOptions options)
         {
-            p.setColor(options.colors.getColor(COLOR_BACKGROUND));
+            p.setColor(options.colors.getColor(COLOR_DAY));
             drawRect(c, p);
         }
 

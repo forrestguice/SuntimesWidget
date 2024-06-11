@@ -137,7 +137,6 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         options = new LightGraphView.LightGraphOptions(context);
 
         options.colors = LightGraphColorValues.getColorDefaults(context, (theme.getBackground() == SuntimesTheme.ThemeBackground.DARK));
-        options.colors.setColor(COLOR_BACKGROUND, theme.getDayColor());
         options.colors.setColor(COLOR_DAY, theme.getDayColor());
         options.colors.setColor(COLOR_CIVIL, theme.getCivilColor());
         options.colors.setColor(COLOR_NAUTICAL, theme.getNauticalColor());
