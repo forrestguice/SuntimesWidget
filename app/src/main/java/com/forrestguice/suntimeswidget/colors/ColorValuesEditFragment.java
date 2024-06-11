@@ -23,10 +23,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,6 +45,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 
 public class ColorValuesEditFragment extends ColorValuesFragment
 {
@@ -289,8 +293,12 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    protected Intent pickColorIntent(String key, int requestCode) {
-        return null;
+    protected Intent pickColorIntent(String key, int requestCode)
+    {
+        Intent intent = new Intent(getActivity(), ColorActivity.class);
+        intent.putExtra("showAlpha", true);
+        intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
+        return intent;
     }
 
     protected void onPickColorResult(int requestCode, int resultCode, Intent data)
@@ -301,7 +309,18 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    protected void onPickColorResult(String key, Intent data) { /* EMPTY */ }
+    protected void onPickColorResult(String key, Intent data)
+    {
+        Uri uri = data.getData();
+        if (uri != null)
+        {
+            try {
+                setColor(key, Color.parseColor("#" + uri.getFragment()));
+            } catch (IllegalArgumentException e) {
+                Log.e("onActivityResult", "bad color uri; " + e);
+            }
+        }
+    }
 
     protected void shareColors(Context context)
     {
