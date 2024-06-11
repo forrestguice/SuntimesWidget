@@ -37,6 +37,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     public static final int MODE_EDIT = 1;
 
     public ColorValuesSheetFragment() {
+        setArguments(new Bundle());
         setHasOptionsMenu(false);
     }
 
@@ -203,7 +204,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             //Log.d("DEBUG", "onItemSelected " + item.colorsID);
             Context context = getActivity();
             if (context != null) {
-                colorCollection.setSelectedColorsID(context, item.colorsID);
+                colorCollection.setSelectedColorsID(context, item.colorsID, getAppWidgetID());
                 ColorValues selectedColors = colorCollection.getColors(context, item.colorsID);
                 onSelectColors(selectedColors);
             }
@@ -225,7 +226,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             {
                 colorCollection.clearCache();
                 colorCollection.setColors(context, colorsID, values);
-                colorCollection.setSelectedColorsID(context, colorsID);
+                colorCollection.setSelectedColorsID(context, colorsID, getAppWidgetID());
                 onSelectColors(colorCollection.getColors(context, colorsID));
 
                 setMode(MODE_SELECT);
@@ -265,8 +266,15 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             colorCollection.clearCache();    // cached instance may have been modified
             setMode(MODE_SELECT);
             toggleFragmentVisibility(getMode());
-            onSelectColors(colorCollection.getSelectedColors(context));
+            onSelectColors(colorCollection.getSelectedColors(context, getAppWidgetID()));
         }
+    }
+
+    public void setAppWidgetID(int id) {
+        getArguments().putInt("appWidgetID", id);
+    }
+    public int getAppWidgetID() {
+        return getArguments().getInt("appWidgetID", 0);
     }
 
     protected ColorValuesCollection colorCollection = null;

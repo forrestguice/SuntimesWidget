@@ -37,6 +37,20 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class ColorValuesSheetDialog extends BottomSheetDialogFragment
 {
+    public ColorValuesSheetDialog() {
+        setArguments(new Bundle());
+    }
+
+    public void setAppWidgetID(int id) {
+        getArguments().putInt("appWidgetID", id);
+        if (colorSheet != null) {
+            colorSheet.setAppWidgetID(id);
+        }
+    }
+    public int getAppWidgetID() {
+        return getArguments().getInt("appWidgetID", 0);
+    }
+
     protected ColorValuesCollection<ColorValues> colorCollection = null;
     public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
         colorCollection = collection;
@@ -85,6 +99,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         FragmentTransaction transaction = fragments.beginTransaction();
 
         colorSheet = new ColorValuesSheetFragment();
+        colorSheet.setAppWidgetID(getAppWidgetID());
         colorSheet.setColorCollection(colorCollection);
         colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
         colorSheet.setFragmentListener(fragmentListener);

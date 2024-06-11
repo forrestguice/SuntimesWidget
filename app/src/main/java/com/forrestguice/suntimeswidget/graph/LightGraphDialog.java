@@ -220,6 +220,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         FragmentManager fragments = getChildFragmentManager();
         ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null) {
+            colorDialog.setAppWidgetID(getResources().getBoolean(R.bool.is_nightmode) ? 1 : 0);
             colorDialog.setDialogListener(colorDialogListener);
         }
 
@@ -765,6 +766,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     protected void showColorDialog(Context context)
     {
         ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
+        dialog.setAppWidgetID(getResources().getBoolean(R.bool.is_nightmode) ? 1 : 0);
         dialog.setColorCollection(colors);
         dialog.setDialogListener(colorDialogListener);
         dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
