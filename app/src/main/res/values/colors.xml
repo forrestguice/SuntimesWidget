@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <bool name="is_nightmode">false</bool>
+
     <color name="primary">#ff9900</color>
     <color name="primary_dark">#ff9900</color>
 

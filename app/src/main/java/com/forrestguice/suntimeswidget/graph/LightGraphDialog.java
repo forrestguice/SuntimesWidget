@@ -443,7 +443,9 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         if (context != null)
         {
-            options.colors = (LightGraphColorValues) colors.getSelectedColors(context);
+            boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
+            options.colors = (LightGraphColorValues) colors.getSelectedColors(context, isNightMode ? 1 : 0);
+
             options.axisX_labels_show = options.axisY_labels_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
             options.axisX_show = options.axisY_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
             options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
