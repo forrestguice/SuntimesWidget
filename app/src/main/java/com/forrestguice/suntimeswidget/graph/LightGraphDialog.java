@@ -358,7 +358,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         //WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID)
 
-        if (context == null) {
+        if (context == null || data == null) {
             return;
         }
 
@@ -453,9 +453,12 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             options.showNautical = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWNAUTICAL);
             options.showAstro = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWASTRO);
 
-            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
-            options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
-                    : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());data.timezone();
+            if (data != null)
+            {
+                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+                options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
+                        : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());data.timezone();
+            }
             options.is24 = (WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
         }
         if (graph != null) {

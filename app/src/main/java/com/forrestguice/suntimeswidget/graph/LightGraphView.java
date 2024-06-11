@@ -195,6 +195,10 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             graphListener.onProgress(true);
         }
 
+        if (this.data0 == null) {
+            return;
+        }
+
         ExecutorService executor = Executors.newSingleThreadExecutor();
         final Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(new Runnable()
