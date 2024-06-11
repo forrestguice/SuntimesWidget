@@ -463,9 +463,16 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                         : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());data.timezone();
             }
             options.is24 = (WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
+
+            if (lightmap != null) {
+                lightmap.getColors().values = new LightMapColorValues(options.colors);
+            }
         }
         if (graph != null) {
             graph.updateViews(true);
+        }
+        if (lightmap != null) {
+            lightmap.updateViews(true);
         }
 
         if (text_sunrise_early != null)
