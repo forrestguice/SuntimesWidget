@@ -26,6 +26,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,9 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
         colorCollection = collection;
     }
+    public ColorValuesCollection<ColorValues> getColorCollection() {
+        return colorCollection;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
@@ -62,9 +66,11 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         //ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(getActivity()).inflate(R.layout.layout_dialog_colorsheet, parent, false);
 
+        if (savedState != null) {
+            onRestoreInstanceState(savedState);
+        }
+
         initViews(dialogContent);
-        /*if (savedState != null) {
-        }*/
         return dialogContent;
     }
 
@@ -73,6 +79,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     {
         super.onResume();
         updateViews();
+
         expandSheet(getDialog());
     }
 
@@ -100,7 +107,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
 
         colorSheet = new ColorValuesSheetFragment();
         colorSheet.setAppWidgetID(getAppWidgetID());
-        colorSheet.setColorCollection(colorCollection);
+        colorSheet.setColorCollection(getColorCollection());
         colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
         colorSheet.setFragmentListener(fragmentListener);
 
@@ -115,8 +122,12 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
+        outState.putParcelable("colorCollection", colorCollection);
         colorSheet.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+    }
+    protected void onRestoreInstanceState( Bundle savedState ) {
+        colorCollection = savedState.getParcelable("colorCollection");
     }
 
     private final ColorValuesSheetFragment.FragmentListener fragmentListener = new ColorValuesSheetFragment.FragmentListener()
