@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.LightMapColorValues;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
@@ -823,13 +824,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
             colors.initDefaultDark(this);
 
-            colors.colorDay = chooseColorDay.getColor();
-            colors.colorCivil = chooseColorCivil.getColor();
-            colors.colorNautical = chooseColorNautical.getColor();
-            colors.colorAstro = chooseColorAstro.getColor();
-            colors.colorNight = chooseColorNight.getColor();
-            colors.colorPointFill = chooseColorPointFill.getColor();
-            colors.colorPointStroke = chooseColorPointStroke.getColor();
+            colors.values.setColor(LightMapColorValues.COLOR_DAY, chooseColorDay.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_CIVIL, chooseColorCivil.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_NAUTICAL, chooseColorNautical.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, chooseColorAstro.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_NIGHT, chooseColorNight.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, chooseColorPointFill.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, chooseColorPointStroke.getColor());
 
             colors.option_drawNow = LightMapView.LightMapColors.DRAW_SUN1;
             colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);

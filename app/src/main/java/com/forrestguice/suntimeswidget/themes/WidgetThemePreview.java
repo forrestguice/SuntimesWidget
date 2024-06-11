@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.graph.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_6;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_7;
@@ -237,13 +238,13 @@ public class WidgetThemePreview
             LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
             colors.initDefaultDark(previewLayout.getContext());
 
-            colors.colorDay = values.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR);
-            colors.colorCivil = values.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR);
-            colors.colorNautical = values.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
-            colors.colorAstro = values.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);;
-            colors.colorNight = values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR);;
-            colors.colorPointFill = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR);
-            colors.colorPointStroke = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR);
+            colors.values.setColor(LightMapColorValues.COLOR_DAY, values.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_CIVIL, values.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_NAUTICAL, values.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, values.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_NIGHT, values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
 
             if (values.getAsInteger("option_drawNow") != null) {
                 colors.option_drawNow = values.getAsInteger("option_drawNow");

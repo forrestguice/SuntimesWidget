@@ -37,6 +37,8 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.LightGraphColorValues;
+import com.forrestguice.suntimeswidget.graph.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -90,7 +92,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         colors = new LightMapColors(context);
         if (isInEditMode())
         {
-            setBackgroundColor(colors.colorNight);
+            setBackgroundColor(colors.values.getColor(LightMapColorValues.COLOR_NIGHT));
         }
     }
 
@@ -141,13 +143,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         if (colors == null) {
             colors = new LightMapColors();
         }
-        colors.colorNight = theme.getNightColor();
-        colors.colorDay = theme.getDayColor();
-        colors.colorAstro = theme.getAstroColor();
-        colors.colorNautical = theme.getNauticalColor();
-        colors.colorCivil = theme.getCivilColor();
-        colors.colorPointFill = theme.getGraphPointFillColor();
-        colors.colorPointStroke = theme.getGraphPointStrokeColor();
+        colors.values.setColor(LightMapColorValues.COLOR_NIGHT, theme.getNightColor());
+        colors.values.setColor(LightMapColorValues.COLOR_DAY, theme.getDayColor());
+        colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, theme.getAstroColor());
+        colors.values.setColor(LightMapColorValues.COLOR_NAUTICAL, theme.getNauticalColor());
+        colors.values.setColor(LightMapColorValues.COLOR_CIVIL, theme.getCivilColor());
+        colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
+        colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
     }
 
     public void setData(@Nullable SuntimesRiseSetDataset data) {
@@ -511,13 +513,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             boolean layer_astro, layer_nautical, layer_civil;
 
             // draw background (night)
-            p.setColor(colors.colorNight);
+            p.setColor(colors.values.getColor(LightMapColorValues.COLOR_NIGHT));
             drawRect(c, p);
 
             if (data != null)
             {
                 // draw astro twilight
-                p.setColor(colors.colorAstro);
+                p.setColor(colors.values.getColor(LightMapColorValues.COLOR_ASTRONOMICAL));
                 if (!(layer_astro = drawRect(colors, data.dataAstro, c, p)))
                 {
                     if (data.dataNautical.hasSunriseTimeToday() || data.dataNautical.hasSunsetTimeToday())
@@ -527,7 +529,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 // draw nautical twilight
-                p.setColor(colors.colorNautical);
+                p.setColor(colors.values.getColor(LightMapColorValues.COLOR_NAUTICAL));
                 if (!(layer_nautical = drawRect(colors, data.dataNautical, c, p)))
                 {
                     if (data.dataCivil.hasSunriseTimeToday() || data.dataCivil.hasSunsetTimeToday())
@@ -537,7 +539,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 // draw civil twilight
-                p.setColor(colors.colorCivil);
+                p.setColor(colors.values.getColor(LightMapColorValues.COLOR_CIVIL));
                 if (!(layer_civil = drawRect(colors, data.dataCivil, c, p)))
                 {
                     if (data.dataActual.hasSunriseTimeToday() || data.dataActual.hasSunsetTimeToday())
@@ -547,7 +549,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 // draw foreground (day)
-                p.setColor(colors.colorDay);
+                p.setColor(colors.values.getColor(LightMapColorValues.COLOR_DAY));
                 if (!drawRect(colors, data.dataActual, c, p))
                 {
                     boolean noLayers = !layer_astro && !layer_nautical && !layer_civil;
@@ -561,24 +563,24 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                         {
                             if (calculator != null && calculator.isDay(calendar))
                             {
-                                p.setColor(colors.colorDay);
+                                p.setColor(colors.values.getColor(LightMapColorValues.COLOR_DAY));
                                 drawRect(c, p);
                             }
 
                         } else if (position.elevation > 0) {
-                            p.setColor(colors.colorDay);
+                            p.setColor(colors.values.getColor(LightMapColorValues.COLOR_DAY));
                             drawRect(c, p);
 
                         } else if (position.elevation > -6) {
-                            p.setColor(colors.colorCivil);
+                            p.setColor(colors.values.getColor(LightMapColorValues.COLOR_CIVIL));
                             drawRect(c, p);
 
                         } else if (position.elevation > -12) {
-                            p.setColor(colors.colorNautical);
+                            p.setColor(colors.values.getColor(LightMapColorValues.COLOR_NAUTICAL));
                             drawRect(c, p);
 
                         } else if (position.elevation > -18) {
-                            p.setColor(colors.colorAstro);
+                            p.setColor(colors.values.getColor(LightMapColorValues.COLOR_ASTRONOMICAL));
                             drawRect(c, p);
                         }
                     }
@@ -604,12 +606,12 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     switch (colors.option_drawNow) {
                         case LightMapColors.DRAW_SUN2:
                             DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
-                            drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.colorPointStroke, dashed);
+                            drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.values.getColor(LightMapColorValues.COLOR_POINT_STROKE), dashed);
                             break;
 
                         case LightMapColors.DRAW_SUN1:
                         default:
-                            drawPoint(now, pointRadius, pointStroke, c, p, colors.colorPointFill, colors.colorPointStroke, null);
+                            drawPoint(now, pointRadius, pointStroke, c, p, colors.values.getColor(LightMapColorValues.COLOR_POINT_FILL), colors.values.getColor(LightMapColorValues.COLOR_POINT_STROKE), null);
                             break;
                     }
                 }
@@ -838,8 +840,6 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public static final int DRAW_SUN1 = 1;    // solid stroke
         public static final int DRAW_SUN2 = 2;    // dashed stroke
 
-        public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
-        public int colorPointFill, colorPointStroke;
         public int option_drawNow = DRAW_SUN1;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
         public boolean option_lmt = false;
@@ -850,52 +850,23 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
         public Lock anim_lock = null;
 
-        public LightMapColors() {}
+        public LightMapColorValues values;
+
+        public LightMapColors() {
+            values = new LightMapColorValues();
+        }
 
         @SuppressWarnings("ResourceType")
-        public LightMapColors(Context context)
-        {
-            int[] colorAttrs = { R.attr.graphColor_day,     // 0
-                    R.attr.graphColor_civil,                // 1
-                    R.attr.graphColor_nautical,             // 2
-                    R.attr.graphColor_astronomical,         // 3
-                    R.attr.graphColor_night,                // 4
-                    R.attr.graphColor_pointFill,            // 5
-                    R.attr.graphColor_pointStroke };        // 6
-            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-            int def = R.color.transparent;
-
-            colorDay = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-            colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-            colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-            colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-            colorNight = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
-            colorPointFill = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
-            colorPointStroke = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
-
-            typedArray.recycle();
+        public LightMapColors(Context context) {
+            values = new LightMapColorValues(context);
         }
 
-        public void initDefaultDark(Context context)
-        {
-            colorDay = ContextCompat.getColor(context, R.color.graphColor_day_dark);
-            colorCivil = ContextCompat.getColor(context, R.color.graphColor_civil_dark);
-            colorNautical = ContextCompat.getColor(context, R.color.graphColor_nautical_dark);
-            colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
-            colorNight = ContextCompat.getColor(context, R.color.graphColor_night_dark);
-            colorPointFill = ContextCompat.getColor(context, R.color.graphColor_pointFill_dark);
-            colorPointStroke = ContextCompat.getColor(context, R.color.graphColor_pointStroke_dark);
+        public void initDefaultDark(Context context) {
+            values = new LightMapColorValues(values.getDefaultValues(context, true));
         }
 
-        public void initDefaultLight(Context context)
-        {
-            colorDay = ContextCompat.getColor(context, R.color.graphColor_day_light);
-            colorCivil = ContextCompat.getColor(context, R.color.graphColor_civil_light);
-            colorNautical = ContextCompat.getColor(context, R.color.graphColor_nautical_light);
-            colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
-            colorNight = ContextCompat.getColor(context, R.color.graphColor_night_light);
-            colorPointFill = ContextCompat.getColor(context, R.color.graphColor_pointFill_light);
-            colorPointStroke = ContextCompat.getColor(context, R.color.graphColor_pointStroke_light);
+        public void initDefaultLight(Context context) {
+            values = new LightMapColorValues(values.getDefaultValues(context, false));
         }
 
         public void acquireDrawLock()
