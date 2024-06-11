@@ -21,13 +21,17 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class ColorValuesCollection<T extends ColorValues>
+public abstract class ColorValuesCollection<T extends ColorValues> implements Parcelable
 {
     public static final String KEY_COLLECTION = "colorValuesCollection";
     public static final String KEY_SELECTED = "selectedValues";
@@ -35,6 +39,25 @@ public abstract class ColorValuesCollection<T extends ColorValues>
     public ColorValuesCollection() {}
     public ColorValuesCollection(Context context) {
         loadCollection(getSharedPreferences(context));
+    }
+    protected ColorValuesCollection(Parcel in)
+    {
+        collection = new TreeSet<>();
+        List<String> items = new ArrayList<>();
+        in.readStringList(items);
+        collection.addAll(items);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        List<String> items = new ArrayList<>(collection);
+        dest.writeStringList(items);
+    }
+
+    @Override
+    public int describeContents(){
+        return 0;
     }
 
     protected Set<String> collection = new TreeSet<String>();
@@ -167,4 +190,5 @@ public abstract class ColorValuesCollection<T extends ColorValues>
         } else result.append("]\n");
         return result.toString();
     }
+
 }

@@ -20,6 +20,7 @@
 package com.forrestguice.suntimeswidget.graph;
 
 import android.content.Context;
+import android.os.Parcel;
 
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
@@ -37,6 +38,9 @@ public class LightGraphColorValuesCollection<LightGraphColorValues> extends Colo
     public LightGraphColorValuesCollection(Context context) {
         super(context);
     }
+    protected LightGraphColorValuesCollection(Parcel in) {
+        super(in);
+    }
 
     @Override
     public String getSharedPrefsName() {
@@ -47,4 +51,15 @@ public class LightGraphColorValuesCollection<LightGraphColorValues> extends Colo
     public ColorValues getDefaultColors(Context context) {
         return new com.forrestguice.suntimeswidget.graph.LightGraphColorValues(context);
     }
+
+    public static final Creator<com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection> CREATOR = new Creator<com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection>()
+    {
+        public com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection createFromParcel(Parcel in) {
+            return new com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection<ColorValues>(in);
+        }
+        public com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection<ColorValues>[] newArray(int size) {
+            return new com.forrestguice.suntimeswidget.graph.LightGraphColorValuesCollection[size];
+        }
+    };
+
 }
