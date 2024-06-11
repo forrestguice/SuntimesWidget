@@ -551,6 +551,16 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "AlarmCreateDialog listeners restored.");
         }
 
+        LightGraphDialog lightGraphDialog = (LightGraphDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
+        if (lightGraphDialog != null)
+        {
+            lightGraphDialog.themeViews(this, appThemeOverride);
+            lightGraphDialog.setData(context, dataset);
+            lightGraphDialog.setDialogListener(lightGraphDialogListener);
+            lightGraphDialog.updateViews(context);
+            //Log.d("DEBUG", "LightGraphDialog updated on restore.");
+        }
+
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
         if (lightMapDialog != null)
         {
@@ -2353,7 +2363,8 @@ public class SuntimesActivity extends AppCompatActivity
     protected LightGraphDialog showLightGraphDialog()
     {
         final LightGraphDialog dialog = new LightGraphDialog();
-        dialog.setDialogListener(new LightGraphDialog.DialogListener());    // TODO: listener
+        dialog.themeViews(this, appThemeOverride);
+        dialog.setDialogListener(lightGraphDialogListener);
 
         if (dataset != null) {
             dialog.setData(SuntimesActivity.this, dataset);
@@ -2366,6 +2377,8 @@ public class SuntimesActivity extends AppCompatActivity
         dialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTGRAPH);
         return dialog;
     }
+
+    private final LightGraphDialog.DialogListener lightGraphDialogListener = new LightGraphDialog.DialogListener();
 
     /**
      * Show the sun position dialog.
