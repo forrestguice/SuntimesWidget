@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -136,38 +137,60 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
         colorValues.clear();
     }
 
+    @Nullable
     public ColorValues getSelectedColors(Context context) {
-        return getSelectedColors(context, 0);
+        return getSelectedColors(context, 0, null);
     }
-    public ColorValues getSelectedColors(Context context, int appWidgetID)
+    @Nullable
+    public ColorValues getSelectedColors(Context context, int appWidgetID) {
+        return getSelectedColors(context, appWidgetID, null);
+    }
+    @Nullable
+    public ColorValues getSelectedColors(Context context, int appWidgetID, @Nullable String tag)
     {
-        String selected = getSelectedColorsID(context, appWidgetID);
+        String selected = getSelectedColorsID(context, appWidgetID, tag);
         if (selected != null) {
             return getColors(context, selected);
-        } else return getDefaultColors(context);
+        } else return null; //return getDefaultColors(context);
     }
 
+    @Nullable
     public String getSelectedColorsID(Context context) {
-        return getSelectedColorsID(context, 0);
+        return getSelectedColorsID(context, 0, null);
     }
+    @Nullable
     public String getSelectedColorsID(Context context, int appWidgetID) {
+        return getSelectedColorsID(context, appWidgetID, null);
+    }
+    @Nullable
+    public String getSelectedColorsID(Context context, int appWidgetID, @Nullable String tag) {
         SharedPreferences prefs = getSharedPreferences(context);
-        return prefs.getString(KEY_SELECTED + "_" + appWidgetID, null);
+        return prefs.getString(KEY_SELECTED + "_" + ((tag != null) ? (tag + "_") : "") + appWidgetID, null);
     }
 
-    public void setSelectedColorsID(Context context, String colorsID) {
-        setSelectedColorsID(context, colorsID, 0);
+    public void setSelectedColorsID(Context context, @Nullable String colorsID) {
+        setSelectedColorsID(context, colorsID, 0, null);
     }
-    public void setSelectedColorsID(Context context, String colorsID, int appWidgetID)
+    public void setSelectedColorsID(Context context, @Nullable String colorsID, int appWidgetID) {
+        setSelectedColorsID(context, colorsID, appWidgetID, null);
+    }
+    public void setSelectedColorsID(Context context, @Nullable String colorsID, int appWidgetID, @Nullable String tag)
     {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString(KEY_SELECTED + "_" + appWidgetID, colorsID);
+        editor.putString(KEY_SELECTED + "_" + ((tag != null) ? (tag + "_") : "") + appWidgetID, colorsID);
         editor.apply();
     }
 
+    public void clearSelectedColorsID(Context context) {
+        clearSelectedColorsID(context, 0, null);
+    }
     public void clearSelectedColorsID(Context context, int appWidgetID) {
+        clearSelectedColorsID(context, appWidgetID, null);
+    }
+    public void clearSelectedColorsID(Context context, int appWidgetID, @Nullable String tag) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.remove(KEY_SELECTED + "_" + appWidgetID);
+
+        editor.remove(KEY_SELECTED + "_" + ((tag != null) ? (tag + "_") : "") + appWidgetID);
         editor.apply();
     }
 
