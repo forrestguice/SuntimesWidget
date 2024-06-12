@@ -22,6 +22,7 @@ package com.forrestguice.suntimeswidget.graph.colors;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Parcel;
 import android.support.v4.content.ContextCompat;
 
@@ -32,7 +33,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
 /**
  * ColorValues
  */
-public abstract class GraphColorValues extends ColorValues
+public class GraphColorValues extends ColorValues
 {
     public static final String COLOR_DAY = "color_day";
     public static final String COLOR_NIGHT = "color_night";
@@ -54,21 +55,86 @@ public abstract class GraphColorValues extends ColorValues
     public static final String COLOR_AUTUMN = "color_autumn";
     public static final String COLOR_WINTER = "color_winter";
 
-    public static final String COLOR_SUNPATH_DAY = "color_sunpath_day";
-    public static final String COLOR_SUNPATH_DAY_CLOSED = "color_sunpath_day_closed";
-    public static final String COLOR_SUNPATH_NIGHT = "color_sunpath_night";
-    public static final String COLOR_SUNPATH_NIGHT_CLOSED = "color_sunpath_night_closed";
+    public static final String COLOR_SUNPATH_DAY_STROKE = "color_sunpath_day_stroke";
+    public static final String COLOR_SUNPATH_DAY_FILL = "color_sunpath_day_fill";
+    public static final String COLOR_SUNPATH_NIGHT_STROKE = "color_sunpath_night_stroke";
+    public static final String COLOR_SUNPATH_NIGHT_FILL = "color_sunpath_night_fill";
 
-    public static final String COLOR_MOONPATH_DAY = "color_moonpath_day";
-    public static final String COLOR_MOONPATH_DAY_CLOSED = "color_moonpath_day_closed";
-    public static final String COLOR_MOONPATH_NIGHT = "color_moonpath_night";
-    public static final String COLOR_MOONPATH_NIGHT_CLOSED = "color_moonpath_night_closed";
+    public static final String COLOR_MOONPATH_DAY_STROKE = "color_moonpath_day_stroke";
+    public static final String COLOR_MOONPATH_DAY_FILL = "color_moonpath_day_fill";
+    public static final String COLOR_MOONPATH_NIGHT_STROKE = "color_moonpath_night_stroke";
+    public static final String COLOR_MOONPATH_NIGHT_FILL = "color_moonpath_night_fill";
 
-    public abstract int[] getColorAttrs();
-    public abstract int[] getColorLabelsRes();
-    public abstract int[] getColorsResDark();
-    public abstract int[] getColorsResLight();
-    public abstract int[] getColorsFallback();
+    public String[] getColorKeys() {
+        return new String[] {
+                COLOR_DAY, COLOR_CIVIL, COLOR_NAUTICAL, COLOR_ASTRONOMICAL, COLOR_NIGHT,
+                COLOR_POINT_FILL, COLOR_POINT_STROKE, COLOR_AXIS, COLOR_GRID_MAJOR, COLOR_GRID_MINOR,
+                COLOR_LABELS, COLOR_LABELS_BG,
+                COLOR_SPRING, COLOR_SUMMER, COLOR_AUTUMN, COLOR_WINTER,
+                COLOR_SUNPATH_DAY_STROKE, COLOR_SUNPATH_DAY_FILL,
+                COLOR_SUNPATH_NIGHT_STROKE, COLOR_SUNPATH_NIGHT_FILL,
+                COLOR_MOONPATH_DAY_STROKE, COLOR_MOONPATH_DAY_FILL,
+                COLOR_MOONPATH_NIGHT_STROKE, COLOR_MOONPATH_NIGHT_FILL
+        };
+    }
+    public int[] getColorAttrs() {
+        return new int[] {
+                R.attr.graphColor_day, R.attr.graphColor_civil, R.attr.graphColor_nautical, R.attr.graphColor_astronomical, R.attr.graphColor_night,
+                R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke, R.attr.graphColor_axis,
+                R.attr.graphColor_grid,     // grid_major
+                R.attr.graphColor_grid,     // grid_minor
+                R.attr.graphColor_labels, R.attr.graphColor_labels_bg,
+                R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor,
+                R.attr.graphColor_day, R.attr.graphColor_day,        // sunpath_day
+                R.attr.graphColor_nautical, R.attr.graphColor_nautical,    // sunpath_night
+                R.attr.moonriseColor, R.attr.moonriseColor,          // moonpath_day
+                R.attr.moonsetColor, R.attr.moonsetColor             // moonpath_night
+        };
+    }
+    public int[] getColorLabelsRes() {
+        return new int[] {
+                R.string.timeMode_day, R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical, R.string.timeMode_night,
+                R.string.graph_option_points, R.string.graph_option_points, R.string.graph_option_axis, R.string.graph_option_grid, R.string.graph_option_grid,
+                R.string.graph_option_labels, R.string.graph_option_labels,
+                R.string.configLabel_themeColorSpring, R.string.configLabel_themeColorSummer, R.string.configLabel_themeColorFall, R.string.configLabel_themeColorWinter,
+                0, 0, 0, 0,    // TODO: labels
+                0, 0, 0, 0,    // TODO: labels
+        };
+    }
+    public int[] getColorsResDark() {
+        return new int[] {
+                R.color.graphColor_day_dark, R.color.graphColor_civil_dark, R.color.graphColor_nautical_dark, R.color.graphColor_astronomical_dark, R.color.graphColor_night_dark,
+                R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark, R.color.graphColor_axis_dark, R.color.graphColor_grid_dark,  R.color.graphColor_grid_dark,
+                R.color.graphColor_labels_dark, R.color.graphColor_labels_bg_dark,
+                R.color.springColor_dark, R.color.summerColor_dark, R.color.fallColor_dark, R.color.winterColor_dark,
+                R.color.graphColor_day_dark, R.color.graphColor_day_dark,
+                R.color.graphColor_nautical_dark, R.color.graphColor_nautical_dark,
+                R.color.moonIcon_color_rising_dark, R.color.moonIcon_color_rising_dark,
+                R.color.moonIcon_color_setting_dark, R.color.moonIcon_color_setting_dark
+        };
+    }
+    public int[] getColorsResLight() {
+        return new int[] {
+                R.color.graphColor_day_light, R.color.graphColor_civil_light, R.color.graphColor_nautical_light, R.color.graphColor_astronomical_light, R.color.graphColor_night_light,
+                R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light, R.color.graphColor_axis_dark, R.color.graphColor_grid_light, R.color.graphColor_grid_light,
+                R.color.graphColor_labels_light, R.color.graphColor_labels_bg_light,
+                R.color.springColor_light, R.color.summerColor_light, R.color.fallColor_light, R.color.winterColor_light,
+                R.color.graphColor_day_light, R.color.graphColor_day_light,
+                R.color.graphColor_nautical_light, R.color.graphColor_nautical_light,
+                R.color.moonIcon_color_rising_light, R.color.moonIcon_color_rising_light,
+                R.color.moonIcon_color_setting_light, R.color.moonIcon_color_setting_light
+        };
+    }
+    public int[] getColorsFallback() {
+        return new int[] {
+                Color.YELLOW, Color.CYAN, Color.BLUE, Color.DKGRAY, Color.BLACK,
+                Color.DKGRAY, Color.DKGRAY, Color.DKGRAY, Color.DKGRAY, Color.DKGRAY,
+                Color.DKGRAY, Color.BLACK,
+                Color.GREEN, Color.YELLOW, Color.RED, Color.BLUE,
+                Color.YELLOW, Color.YELLOW, Color.BLUE, Color.BLUE,
+                Color.LTGRAY, Color.LTGRAY, Color.CYAN, Color.CYAN
+        };
+    }
 
     public GraphColorValues(ColorValues other) {
         super(other);
@@ -113,6 +179,16 @@ public abstract class GraphColorValues extends ColorValues
     public GraphColorValues(String jsonString) {
         super(jsonString);
     }
+
+    public static final Creator<GraphColorValues> CREATOR = new Creator<GraphColorValues>()
+    {
+        public GraphColorValues createFromParcel(Parcel in) {
+            return new GraphColorValues(in);
+        }
+        public GraphColorValues[] newArray(int size) {
+            return new GraphColorValues[size];
+        }
+    };
 
     public ColorValues getDefaultValues(Context context, boolean darkTheme)
     {

@@ -33,72 +33,47 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
  */
 public class LightMapColorValues extends GraphColorValues implements Parcelable
 {
-    public static final String[] COLORS = new String[]
-    {
-            COLOR_DAY,
-            COLOR_CIVIL, COLOR_NAUTICAL, COLOR_ASTRONOMICAL,
-            COLOR_NIGHT,
-            COLOR_POINT_FILL, COLOR_POINT_STROKE
-    };
-    protected static final int[] COLORS_ATTR = new int[]
-    {
-            R.attr.graphColor_day,
-            R.attr.graphColor_civil, R.attr.graphColor_nautical, R.attr.graphColor_astronomical,
-            R.attr.graphColor_night,
-            R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke,
-    };
-    protected static final int[] COLORS_RES_DARK = new int[]
-    {
-            R.color.graphColor_day_dark,
-            R.color.graphColor_civil_dark, R.color.graphColor_nautical_dark, R.color.graphColor_astronomical_dark,
-            R.color.graphColor_night_dark,
-            R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark,
-    };
-    protected static final int[] COLORS_RES_LIGHT = new int[]
-    {
-            R.color.graphColor_day_light,
-            R.color.graphColor_civil_light, R.color.graphColor_nautical_light, R.color.graphColor_astronomical_light,
-            R.color.graphColor_night_light,
-            R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light,
-    };
-    public static final int[] LABELS_RESID = new int[]
-    {
-            R.string.timeMode_day,
-            R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical,
-            R.string.timeMode_night,
-            R.string.graph_option_points, R.string.graph_option_points,
-    };
-    protected static final int[] COLORS_FALLBACK = new int[]
-    {
-            Color.YELLOW,
-            Color.CYAN, Color.BLUE, Color.DKGRAY,
-            Color.BLACK,
-            Color.DKGRAY, Color.DKGRAY,
-    };
-
     @Override
     public String[] getColorKeys() {
-        return COLORS;
+        return new String[] {
+                COLOR_DAY, COLOR_CIVIL, COLOR_NAUTICAL, COLOR_ASTRONOMICAL, COLOR_NIGHT,
+                COLOR_POINT_FILL, COLOR_POINT_STROKE
+        };
     }
     @Override
     public int[] getColorAttrs() {
-        return COLORS_ATTR;
+        return new int[] {
+                R.attr.graphColor_day, R.attr.graphColor_civil, R.attr.graphColor_nautical, R.attr.graphColor_astronomical, R.attr.graphColor_night,
+                R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke,
+        };
     }
     @Override
     public int[] getColorLabelsRes() {
-        return LABELS_RESID;
+        return new int[] {
+                R.string.timeMode_day, R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical, R.string.timeMode_night,
+                R.string.graph_option_points, R.string.graph_option_points,
+        };
     };
     @Override
     public int[] getColorsResDark() {
-        return COLORS_RES_DARK;
+        return new int[] {
+                R.color.graphColor_day_dark, R.color.graphColor_civil_dark, R.color.graphColor_nautical_dark, R.color.graphColor_astronomical_dark, R.color.graphColor_night_dark,
+                R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark,
+        };
     }
     @Override
     public int[] getColorsResLight() {
-        return COLORS_RES_LIGHT;
+        return new int[] {
+                R.color.graphColor_day_light, R.color.graphColor_civil_light, R.color.graphColor_nautical_light, R.color.graphColor_astronomical_light, R.color.graphColor_night_light,
+                R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light,
+        };
     }
     @Override
     public int[] getColorsFallback() {
-        return COLORS_FALLBACK;
+        return new int[] {
+                Color.YELLOW, Color.CYAN, Color.BLUE, Color.DKGRAY, Color.BLACK,
+                Color.DKGRAY, Color.DKGRAY,
+        };
     }
 
     public LightMapColorValues(ColorValues other) {

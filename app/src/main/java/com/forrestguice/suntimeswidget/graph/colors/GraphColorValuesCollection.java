@@ -28,23 +28,23 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 /**
  * ColorValuesCollection
  */
-public class LightGraphColorValuesCollection<LightGraphColorValues> extends ColorValuesCollection<ColorValues>
+public class GraphColorValuesCollection<GraphColorValues> extends ColorValuesCollection<ColorValues>
 {
-    public static final String PREFS_LIGHTGRAPH_COLORS = "prefs_lightgraph_colors";
+    public static final String PREFS_GRAPH_COLORS = "prefs_graph_colors";
 
-    public LightGraphColorValuesCollection() {
+    public GraphColorValuesCollection() {
         super();
     }
-    public LightGraphColorValuesCollection(Context context) {
+    public GraphColorValuesCollection(Context context) {
         super(context);
     }
-    protected LightGraphColorValuesCollection(Parcel in) {
+    protected GraphColorValuesCollection(Parcel in) {
         super(in);
     }
 
     @Override
     public String getSharedPrefsName() {
-        return PREFS_LIGHTGRAPH_COLORS;
+        return PREFS_GRAPH_COLORS;
     }
 
     @Override
@@ -52,13 +52,13 @@ public class LightGraphColorValuesCollection<LightGraphColorValues> extends Colo
         return new com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues(context);
     }
 
-    public static final Creator<LightGraphColorValuesCollection> CREATOR = new Creator<LightGraphColorValuesCollection>()
+    public static final Creator<GraphColorValuesCollection> CREATOR = new Creator<GraphColorValuesCollection>()
     {
-        public LightGraphColorValuesCollection createFromParcel(Parcel in) {
-            return new LightGraphColorValuesCollection<ColorValues>(in);
+        public GraphColorValuesCollection createFromParcel(Parcel in) {
+            return new GraphColorValuesCollection<ColorValues>(in);
         }
-        public LightGraphColorValuesCollection<ColorValues>[] newArray(int size) {
-            return new LightGraphColorValuesCollection[size];
+        public GraphColorValuesCollection<ColorValues>[] newArray(int size) {
+            return new GraphColorValuesCollection[size];
         }
     };
 

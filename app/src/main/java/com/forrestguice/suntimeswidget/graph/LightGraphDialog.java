@@ -53,7 +53,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
-import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValuesCollection;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -797,7 +797,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
 
     protected void initColors(Context context)
     {
-        colors = new LightGraphColorValuesCollection<>(context);
+        colors = new GraphColorValuesCollection<>(context);
         colors.setColors(context, LightGraphColorValues.getColorDefaults(context, true));
         colors.setColors(context, LightGraphColorValues.getColorDefaults(context, false));
     }

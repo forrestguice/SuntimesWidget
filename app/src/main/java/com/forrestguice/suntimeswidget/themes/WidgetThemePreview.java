@@ -415,7 +415,7 @@ public class WidgetThemePreview
         if (view != null)
         {
             Context context = view.getContext();
-            LineGraphView.LineGraphOptions options = new LineGraphView.LineGraphOptions();
+            LineGraphView.LineGraphOptions options = new LineGraphView.LineGraphOptions(context);
             options.initDefaultDark(previewLayout.getContext());
             options.graph_width = LineGraphView.MINUTES_IN_DAY;
             options.graph_height = 180;
