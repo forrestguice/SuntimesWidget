@@ -33,6 +33,8 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
  */
 public class LightGraphColorValues extends GraphColorValues implements Parcelable
 {
+    public static final String TAG_LIGHTGRAPH = "lightgraph";
+
     public static final String[] COLORS = new String[]
     {
             COLOR_DAY, COLOR_CIVIL, COLOR_NAUTICAL, COLOR_ASTRONOMICAL, COLOR_NIGHT,

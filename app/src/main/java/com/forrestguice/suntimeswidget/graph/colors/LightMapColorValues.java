@@ -33,6 +33,8 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
  */
 public class LightMapColorValues extends GraphColorValues implements Parcelable
 {
+    public static final String TAG_LIGHTMAP = "lightmap";
+
     @Override
     public String[] getColorKeys() {
         return new String[] {

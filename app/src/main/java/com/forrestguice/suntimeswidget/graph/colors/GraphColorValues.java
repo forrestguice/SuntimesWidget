@@ -35,6 +35,8 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
  */
 public class GraphColorValues extends ColorValues
 {
+    public static final String TAG_GRAPH = "graph";
+
     public static final String COLOR_DAY = "color_day";
     public static final String COLOR_NIGHT = "color_night";
     public static final String COLOR_CIVIL = "color_civil";
@@ -210,6 +212,10 @@ public class GraphColorValues extends ColorValues
         }
         values.setID(darkTheme ? context.getString(R.string.widgetThemes_dark) : context.getString(R.string.widgetThemes_light));
         return values;
+    }
+
+    public static GraphColorValues getColorDefaults(Context context, boolean darkTheme) {
+        return new GraphColorValues(new GraphColorValues().getDefaultValues(context, darkTheme));
     }
 
 }

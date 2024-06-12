@@ -49,7 +49,7 @@ public class GraphColorValuesCollection<GraphColorValues> extends ColorValuesCol
 
     @Override
     public ColorValues getDefaultColors(Context context) {
-        return new com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues(context);
+        return new com.forrestguice.suntimeswidget.graph.colors.GraphColorValues(context,  true);
     }
 
     public static final Creator<GraphColorValuesCollection> CREATOR = new Creator<GraphColorValuesCollection>()

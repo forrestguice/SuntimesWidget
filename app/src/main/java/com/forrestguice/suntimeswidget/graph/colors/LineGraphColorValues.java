@@ -31,6 +31,8 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
  */
 public class LineGraphColorValues extends GraphColorValues implements Parcelable
 {
+    public static final String TAG_LINEGRAPH = "linegraph";
+
     @Override
     public String[] getColorKeys() {
         return super.getColorKeys();
