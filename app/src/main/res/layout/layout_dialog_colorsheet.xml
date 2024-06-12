@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:id="@+id/fragmentContainer2"
+    android:orientation="vertical" android:paddingTop="@dimen/dialog_margin"
     android:background="?attr/dialogBackground">
 
-</FrameLayout>
+    <TextView android:id="@+id/dialog_title"
+        style="@style/DialogTitleStyle"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin" android:layout_marginTop="0dp" android:layout_marginBottom="@dimen/dialog_margin"
+        android:text="@string/configAction_colors" />
+
+    <FrameLayout android:minHeight="25dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:id="@+id/fragmentContainer2"
+        android:background="?attr/dialogBackgroundAlt">
+
+    </FrameLayout>
+
+</LinearLayout>

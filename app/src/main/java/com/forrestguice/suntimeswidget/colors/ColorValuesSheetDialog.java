@@ -26,15 +26,13 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class ColorValuesSheetDialog extends BottomSheetDialogFragment
 {
@@ -58,8 +56,21 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             colorSheet.setColorTag(tag);
         }
     }
+    @Nullable
     public String getColorTag() {
         return getArguments().getString("colorTag", null);
+    }
+
+    public void setDialogTitle(String title)
+    {
+        getArguments().putString("dialogTitle", title);
+        if (isAdded()) {
+            updateViews();
+        }
+    }
+    @Nullable
+    public String getDialogTitle() {
+        return getArguments().getString("dialogTitle", null);
     }
 
     protected ColorValuesCollection<ColorValues> colorCollection = null;
@@ -108,10 +119,13 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         }
     }
 
+    private TextView titleText;
     private ColorValuesSheetFragment colorSheet;
 
     public void initViews(View dialogView)
     {
+        titleText = (TextView) dialogView.findViewById(R.id.dialog_title);
+
         FragmentManager fragments = getChildFragmentManager();
         FragmentTransaction transaction = fragments.beginTransaction();
 
@@ -126,7 +140,13 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         transaction.commit();
     }
 
-    public void updateViews() {
+    public void updateViews()
+    {
+        String title = getDialogTitle();
+        if (titleText != null && title != null) {
+            titleText.setText(title);
+        }
+
         colorSheet.updateViews();
     }
 
