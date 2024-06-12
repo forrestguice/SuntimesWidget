@@ -57,6 +57,9 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     public static final String ARG_SHOW_MENU = "showMenu";
     public static final boolean DEF_SHOW_MENU = true;
 
+    public static final String ARG_COLOR_TAG = "colorTag";
+    public static final String DEF_COLOR_TAG = null;
+
     protected TextView label;
     protected Spinner selector;
     protected ImageButton addButton, editButton, backButton, menuButton;
@@ -71,6 +74,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         args.putBoolean(ARG_SHOW_BACK, DEF_SHOW_BACK);
         args.putBoolean(ARG_SHOW_MENU, DEF_SHOW_MENU);
         args.putInt(ARG_APPWIDGETID, DEF_APPWIDGETID);
+        args.putString(ARG_COLOR_TAG, DEF_COLOR_TAG);
         setArguments(args);
     }
 
@@ -131,6 +135,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         if (listener != null) {
             listener.onItemSelected((ColorValuesItem) selector.getItemAtPosition(position));
         }
+        updateControls();
     }
     public String getSelectedID() {
         if (selector != null) {
@@ -283,13 +288,36 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
     protected void updateViews()
     {
+        boolean allowEdit = allowEdit();
+
+        if (selector != null)
+        {
+            selector.setAdapter(initAdapter(getActivity()));
+
+            if (colorCollection != null)
+            {
+                int selectedIndex = 0;
+                String selectedColorsID = colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag());
+
+                for (int i=0; i<selector.getCount(); i++)
+                {
+                    ColorValuesItem item = (ColorValuesItem) selector.getItemAtPosition(i);
+                    if (item.colorsID != null && item.colorsID.equals(selectedColorsID))
+                    {
+                        selectedIndex = i;
+                        break;
+                    }
+                }
+                selector.setSelection(selectedIndex, false);
+            }
+        }
+
         if (label != null) {
             label.setVisibility(getShowLabel() ? View.VISIBLE : View.GONE);
         }
         if (backButton != null) {
             backButton.setVisibility(getShowBack() ? View.VISIBLE : View.GONE);
         }
-        boolean allowEdit = allowEdit();
         if (addButton != null) {
             addButton.setVisibility(allowEdit ? View.VISIBLE : View.GONE);
         }
@@ -300,33 +328,23 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         {
             boolean showMenu = getShowMenu();
             menuButton.setVisibility(showMenu ? View.VISIBLE : View.GONE);
-            if (addButton != null) {    // shown as part of menu
-                addButton.setVisibility(showMenu || !allowEdit() ? View.GONE : View.VISIBLE);
-            }
+            //if (addButton != null) {    // shown as part of menu
+            //    addButton.setVisibility(showMenu || !allowEdit() ? View.GONE : View.VISIBLE);
+            //}
         }
+        updateControls();
+    }
 
-        if (selector != null)
-        {
-            selector.setAdapter(initAdapter(getActivity()));
+    protected void updateControls()
+    {
+        String selectedColorsID = (colorCollection != null) ? colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag()) : null;
+        boolean isDefault = (selectedColorsID == null);
 
-            if (colorCollection != null)
-            {
-                int selectedIndex = 0;
-                String selectedColorsID = colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID());
-                if (selectedColorsID == null) {
-                    selectedColorsID = colorCollection.getSelectedColorsID(getActivity(), 0);
-                }
-
-                for (int i=0; i<selector.getCount(); i++)
-                {
-                    ColorValuesItem item = (ColorValuesItem) selector.getItemAtPosition(i);
-                    if (item.colorsID.equals(selectedColorsID)) {
-                        selectedIndex = i;
-                        break;
-                    }
-                }
-                selector.setSelection(selectedIndex, false);
-            }
+        if (editButton != null) {
+            editButton.setVisibility(isDefault ? View.GONE : View.VISIBLE);
+        }
+        if (addButton != null) {
+            addButton.setVisibility(isDefault ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -389,6 +407,20 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         return args != null ? args.getInt(ARG_APPWIDGETID, DEF_APPWIDGETID) : DEF_APPWIDGETID;
     }
 
+    public void setColorTag(@Nullable String tag)
+    {
+        Bundle args = getArguments();
+        if (args != null) {
+            args.putString(ARG_COLOR_TAG, tag);
+            updateViews();
+        }
+    }
+    @Nullable
+    public String getColorTag() {
+        Bundle args = getArguments();
+        return args != null ? args.getString(ARG_COLOR_TAG, DEF_COLOR_TAG) : DEF_COLOR_TAG;
+    }
+
     /**
      * ColorValuesItem
      */
@@ -408,9 +440,11 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
         public static ColorValuesItem[] createItems(Context context, String[] colorIDs)
         {
-            ColorValuesItem[] items = new ColorValuesItem[colorIDs.length];
+            ColorValuesItem[] items = new ColorValuesItem[colorIDs.length+1];
+            items[0] = new ColorValuesItem(context.getString(R.string.configLabel_tagDefault), null);
+
             for (int i=0; i<colorIDs.length; i++) {
-                items[i] = new ColorValuesItem(colorIDs[i], colorIDs[i]);
+                items[i+1] = new ColorValuesItem(colorIDs[i], colorIDs[i]);
             }
             return items;
         }

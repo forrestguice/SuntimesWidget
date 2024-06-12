@@ -52,6 +52,16 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         return getArguments().getInt("appWidgetID", 0);
     }
 
+    public void setColorTag(String tag) {
+        getArguments().putString("colorTag", tag);
+        if (colorSheet != null) {
+            colorSheet.setColorTag(tag);
+        }
+    }
+    public String getColorTag() {
+        return getArguments().getString("colorTag", null);
+    }
+
     protected ColorValuesCollection<ColorValues> colorCollection = null;
     public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
         colorCollection = collection;
@@ -107,6 +117,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
 
         colorSheet = new ColorValuesSheetFragment();
         colorSheet.setAppWidgetID(getAppWidgetID());
+        colorSheet.setColorTag(getColorTag());
         colorSheet.setColorCollection(getColorCollection());
         colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
         colorSheet.setFragmentListener(fragmentListener);

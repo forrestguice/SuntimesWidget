@@ -62,6 +62,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
         listDialog = new ColorValuesSelectFragment(); //(ColorValuesSelectFragment) fragments.findFragmentById(R.id.colorsCollectionFragment);
         listDialog.setAppWidgetID(getAppWidgetID());
+        listDialog.setColorTag(getColorTag());
         listDialog.setTheme(getThemeResID());
 
         editDialog = new ColorValuesEditFragment();  // (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
@@ -86,6 +87,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listDialog.setColorCollection(colorCollection);
             listDialog.setFragmentListener(listDialogListener);
             listDialog.setAppWidgetID(getAppWidgetID());
+            listDialog.setColorTag(getColorTag());
         }
 
         //editDialog = (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
@@ -176,8 +178,12 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         {
             //Log.d("DEBUG", "onAddClicked " + colorsID);
             Context context = getActivity();
-            if (context != null && colorsID != null) {
-                editDialog.setColorValues(colorCollection.getColors(context, colorsID));
+            if (context != null)
+            {
+                ColorValues values = (colorsID == null)
+                        ? colorCollection.getDefaultColors(context)
+                        : colorCollection.getColors(context, colorsID);
+                editDialog.setColorValues(values);
                 editDialog.setID(suggestColorValuesID(context));
                 editDialog.setAllowDelete(false);
                 setMode(MODE_EDIT);
@@ -206,7 +212,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             //Log.d("DEBUG", "onItemSelected " + item.colorsID);
             Context context = getActivity();
             if (context != null) {
-                colorCollection.setSelectedColorsID(context, item.colorsID, getAppWidgetID());
+                colorCollection.setSelectedColorsID(context, item.colorsID, getAppWidgetID(), getColorTag());
                 ColorValues selectedColors = colorCollection.getColors(context, item.colorsID);
                 onSelectColors(selectedColors);
             }
@@ -228,7 +234,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             {
                 colorCollection.clearCache();
                 colorCollection.setColors(context, colorsID, values);
-                colorCollection.setSelectedColorsID(context, colorsID, getAppWidgetID());
+                colorCollection.setSelectedColorsID(context, colorsID, getAppWidgetID(), getColorTag());
                 onSelectColors(colorCollection.getColors(context, colorsID));
 
                 setMode(MODE_SELECT);
@@ -268,7 +274,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             colorCollection.clearCache();    // cached instance may have been modified
             setMode(MODE_SELECT);
             toggleFragmentVisibility(getMode());
-            onSelectColors(colorCollection.getSelectedColors(context, getAppWidgetID()));
+            onSelectColors(colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag()));
         }
     }
 
@@ -281,6 +287,18 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     }
     public int getAppWidgetID() {
         return getArguments().getInt("appWidgetID", 0);
+    }
+
+    public void setColorTag(@Nullable String tag)
+    {
+        getArguments().putString("colorTag", tag);
+        if (listDialog != null) {
+            listDialog.setColorTag(tag);
+        }
+    }
+    @Nullable
+    public String getColorTag() {
+        return getArguments().getString("colorTag", null);
     }
 
     protected ColorValuesCollection colorCollection = null;
