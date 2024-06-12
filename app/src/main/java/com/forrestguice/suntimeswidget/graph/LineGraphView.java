@@ -1336,14 +1336,13 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
 
         @SuppressWarnings("ResourceType")
-        public LineGraphOptions(Context context)
-        {
-            colors = new LineGraphColorValues(context);
+        public LineGraphOptions(Context context) {
             init(context);
         }
 
-        protected void init(Context context)
+        public void init(Context context)
         {
+            colors = new LineGraphColorValues(context);
             //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
             //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
             //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
@@ -1355,14 +1354,14 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         public void initDefaultDark(Context context)
         {
-            colors = new LineGraphColorValues(colors.getDefaultValues(context, true));
             init(context);
+            colors = new LineGraphColorValues(colors.getDefaultValues(context, true));
         }
 
         public void initDefaultLight(Context context)
         {
-            colors = new LineGraphColorValues(colors.getDefaultValues(context, false));
             init(context);
+            colors = new LineGraphColorValues(colors.getDefaultValues(context, false));
         }
 
         public void acquireDrawLock()

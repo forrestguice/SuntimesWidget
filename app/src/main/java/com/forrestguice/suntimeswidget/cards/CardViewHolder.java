@@ -57,6 +57,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValuesCollection;
+import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -359,6 +362,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
 
         // lightmap
+        updateColors(context);
         lightmapLayout.setVisibility(options.showLightmap ? View.VISIBLE : View.GONE);
         LightMapView.LightMapColors lightmapOptions = lightmap.getColors();
         lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
@@ -367,6 +371,18 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         //Log.d("DEBUG", "bindDataToPosition: " + sun.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
 
         toggleNextPrevButtons(position);
+    }
+
+    public static GraphColorValuesCollection<GraphColorValues> colors = new GraphColorValuesCollection<>();
+    protected void updateColors(Context context)
+    {
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        GraphColorValues values = (GraphColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), LightMapColorValues.TAG_GRAPH);
+        if (values != null) {
+            lightmap.getColors().values = values;
+        } else if (lightmap.getColors().values == null) {
+            lightmap.getColors().init(context);
+        }
     }
 
     protected CharSequence comparisonDisplayString(Context context, SuntimesRiseSetData data, CardAdapter.CardAdapterOptions options)

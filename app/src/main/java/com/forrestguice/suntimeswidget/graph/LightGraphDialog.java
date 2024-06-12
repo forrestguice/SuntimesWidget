@@ -220,10 +220,12 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             graph.onResume();
         }
 
+        Context context = getActivity();
         FragmentManager fragments = getChildFragmentManager();
         ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
-        if (colorDialog != null) {
-            boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
+        if (colorDialog != null)
+        {
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
             colorDialog.setColorTag(GraphColorValues.TAG_GRAPH);
             colorDialog.setColorCollection(colors);
@@ -449,7 +451,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         if (context != null)
         {
-            boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
             GraphColorValues values = (GraphColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), GraphColorValues.TAG_GRAPH);
 
             if (values != null)
@@ -794,7 +796,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
      */
     protected void showColorDialog(Context context)
     {
-        boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
         ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
         dialog.setAppWidgetID((isNightMode ? 1 : 0));
         dialog.setColorTag(GraphColorValues.TAG_GRAPH);
@@ -810,12 +812,8 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     public ColorValuesCollection<ColorValues> getColorCollection() {
         return colors;
     }
-
-    protected void initColors(Context context)
-    {
+    protected void initColors(Context context) {
         colors = new GraphColorValuesCollection<>(context);
-        //colors.setColors(context, GraphColorValues.getColorDefaults(context, true));
-        //colors.setColors(context, GraphColorValues.getColorDefaults(context, false));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

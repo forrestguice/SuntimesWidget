@@ -61,6 +61,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValuesCollection;
+import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -166,6 +172,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_lightmap, parent, false);
+        initColors(contextWrapper);
 
         SuntimesUtils.initDisplayStrings(getActivity());
         WidgetSettings.SolarTimeMode.initDisplayStrings(getActivity());
@@ -1271,6 +1278,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
             SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), themeOverride.getSunsetIconColor(), themeOverride.getSunsetIconStrokeColor(), themeOverride.getSunsetIconStrokePixels(context));
         }
 
+        GraphColorValues colors = initGraphColorValues(context);
+        if (colors != null)
+        {
+            colorNight = colors.getColor(GraphColorValues.COLOR_NIGHT);
+            colorAstro = colors.getColor(GraphColorValues.COLOR_ASTRONOMICAL);
+            colorNautical = colors.getColor(GraphColorValues.COLOR_NAUTICAL);
+            colorCivil = colors.getColor(GraphColorValues.COLOR_CIVIL);
+            colorDay = colors.getColor(GraphColorValues.COLOR_DAY);
+        }
+
         ImageViewCompat.setImageTintList(playButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(color_warning, color_disabled, color_pressed));
         ImageViewCompat.setImageTintList(pauseButton, SuntimesUtils.colorStateList(color_accent, color_disabled, color_pressed));
@@ -1323,6 +1340,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
     protected void updateLightmapViews(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
+        if (context == null) {
+            return;
+        }
+        GraphColorValues values = initGraphColorValues(context);
+
         if (lightmap != null)
         {
             field_civil.updateInfo(context, createInfoArray(data.civilTwilightLength()));
@@ -1341,12 +1363,30 @@ public class LightMapDialog extends BottomSheetDialogFragment
             field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorRising));
             field_day.highlight(false);
 
+            if (values != null) {
+                lightmap.getColors().values = values;
+            } else if (lightmap.getColors().values == null) {
+                lightmap.getColors().init(context);
+            }
             lightmap.updateViews(data);
             //Log.d("DEBUG", "LightMapDialog updated");
         }
-        if (graphView != null) {
+        if (graphView != null)
+        {
+            if (values != null) {
+                graphView.getOptions().colors = values;
+            } else if (graphView.getOptions().colors == null) {
+                graphView.getOptions().init(context);
+            }
             graphView.updateViews(graphView.getVisibility() == View.VISIBLE ? data : null);
         }
+    }
+
+    @Nullable
+    protected GraphColorValues initGraphColorValues(Context context)
+    {
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        return (GraphColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), LightMapColorValues.TAG_GRAPH);
     }
 
     private void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
@@ -1774,6 +1814,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
         public void onShowDate( long suggestDate ) {}
         public void onShowMap( long suggestDate ) {}
         public void onShowMoonInfo( long suggestDate ) {}
+    }
+
+    /**
+     * ColorCollection
+     */
+    private ColorValuesCollection<ColorValues> colors;
+    public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
+        colors = collection;
+    }
+    public ColorValuesCollection<ColorValues> getColorCollection() {
+        return colors;
+    }
+    protected void initColors(Context context) {
+        colors = new GraphColorValuesCollection<>(context);
     }
 
 }
