@@ -44,6 +44,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -1368,7 +1369,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public Lock anim_lock = null;
 
         public TimeZone timezone = null;
-        public LightGraphColorValues colors;
+        public GraphColorValues colors;
 
         public final Map<String, Pair<Double,Double>> t_sunrise_earliest = new HashMap<>();
         public final Map<String, Pair<Double,Double>> t_sunset_earliest = new HashMap<>();
@@ -1378,14 +1379,13 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public LightGraphOptions() {}
 
         @SuppressWarnings("ResourceType")
-        public LightGraphOptions(Context context)
-        {
-            colors = new LightGraphColorValues(context);
+        public LightGraphOptions(Context context) {
             init(context);
         }
 
         protected void init(Context context)
         {
+            colors = new LightGraphColorValues(context);
             //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
             //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
             //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
@@ -1395,13 +1395,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             //axisY_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisY_labels_textsize, context.getResources().getDisplayMetrics());
         }
 
-        public void initDefaultDark(Context context)
-        {
+        public void initDefaultDark(Context context) {
             init(context);
         }
 
-        public void initDefaultLight(Context context)
-        {
+        public void initDefaultLight(Context context) {
             init(context);
         }
 

@@ -35,6 +35,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -847,7 +848,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
         public Lock anim_lock = null;
 
-        public LightMapColorValues values;
+        public GraphColorValues values;
 
         public LightMapColors() {
             values = new LightMapColorValues();
@@ -855,7 +856,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         @SuppressWarnings("ResourceType")
         public LightMapColors(Context context) {
-            values = new LightMapColorValues(context);
+            init(context);
         }
 
         public void initDefaultDark(Context context) {
@@ -864,6 +865,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         public void initDefaultLight(Context context) {
             values = new LightMapColorValues(values.getDefaultValues(context, false));
+        }
+
+        public void init(Context context) {
+            values = new LightMapColorValues(context);
         }
 
         public void acquireDrawLock()

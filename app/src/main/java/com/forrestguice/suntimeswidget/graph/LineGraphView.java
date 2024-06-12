@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -1312,7 +1313,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         public int densityDpi = DisplayMetrics.DENSITY_DEFAULT;
 
-        public LineGraphColorValues colors;
+        public GraphColorValues colors;
         public int getColor(String key) {
             return colors.getColor(key);
         }
