@@ -41,6 +41,11 @@
 
         <menu>
 
+            <item android:id="@+id/mapOption_colors"
+                android:title="@string/configAction_colors"
+                android:icon="?attr/icActionAppearance"
+                app:showAsAction="never" />
+
             <group android:id="@+id/mapOption_group_light">
 
                 <item android:id="@+id/mapOption_sunlight"

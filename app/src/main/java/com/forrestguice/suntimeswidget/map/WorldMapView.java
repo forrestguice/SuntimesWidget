@@ -108,8 +108,8 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             setBackgroundColor(Color.WHITE);
             setImageBitmap(Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888));
         }
-        setMapMode(context, mode);
         themeViews(context);
+        setMapMode(context, mode);
     }
 
     public WorldMapWidgetSettings.WorldMapWidgetMode getMapMode()
@@ -254,7 +254,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     @SuppressLint("ResourceType")
-    private void themeViews(Context context)
+    public void themeViews(Context context)
     {
         foregroundColor = options.colors.getColor(WorldMapColorValues.COLOR_FOREGROUND);
         options.latitudeColors[0] = options.colors.getColor(WorldMapColorValues.COLOR_AXIS);
@@ -265,6 +265,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     private int foregroundColor;
     public void themeViews(Context context, SuntimesTheme theme)
     {
+        options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, theme.getMapForegroundColor());
         foregroundColor = theme.getMapForegroundColor();
         options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, theme.getMapBackgroundColor());
         options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, theme.getMapShadowColor());

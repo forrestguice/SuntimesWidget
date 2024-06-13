@@ -40,6 +40,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 
@@ -60,6 +61,13 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
+import com.forrestguice.suntimeswidget.graph.colors.GraphColorValuesCollection;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -87,6 +95,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 {
     public static final String LOGTAG = "WorldMapDialog";
     public static final String ARG_DATETIME = "datetime";
+
+    public static final String DIALOGTAG_COLORS = "worldmap_colors";
 
     public static final int REQUEST_BACKGROUND = 400;
 
@@ -139,6 +149,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_worldmap, parent, false);
+        initColors(contextWrapper);
 
         initLocale(getContext());
         initViews(getContext(), dialogContent);
@@ -462,6 +473,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             utcTime.setTypeface(utcTime.getTypeface(), (themeOverride.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL));
 
             worldmap.themeViews(context, themeOverride);
+        } else {
+            worldmap.themeViews(context);
         }
 
         if (seekbar != null) {
@@ -528,6 +541,15 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 options.offsetMinutes = 1;
                 Log.d("DEBUG", "updateOptions: now: " + now);
             }
+
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            WorldMapColorValues values = (WorldMapColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), WorldMapColorValues.TAG_WORLDMAP);
+            if (values != null) {
+                options.colors = values;
+            } else if (options.colors == null) {
+                options.init(context);
+            }
+            worldmap.themeViews(context);
 
             options.modified = true;
         }
@@ -1251,6 +1273,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     updateViews();
                     return true;
 
+                case R.id.mapOption_colors:
+                    showColorDialog(context);
+                    return true;
+
                 default:
                     return false;
             }
@@ -1472,6 +1498,68 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         public void onShowDate( long suggestedDate ) {}
         public void onShowPosition( long suggestDate ) {}
         public void onShowMoonInfo( long suggestDate ) {}
+    }
+
+    /**
+     * onResume
+     */
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        Context context = getActivity();
+        FragmentManager fragments = getChildFragmentManager();
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        if (colorDialog != null)
+        {
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
+            colorDialog.setColorTag(WorldMapColorValues.TAG_WORLDMAP);
+            colorDialog.setColorCollection(colors);
+            colorDialog.setDialogListener(colorDialogListener);
+        }
+    }
+
+    /**
+     * showColorDialog
+     */
+    protected void showColorDialog(Context context)
+    {
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
+        dialog.setAppWidgetID((isNightMode ? 1 : 0));
+        dialog.setColorTag(WorldMapColorValues.TAG_WORLDMAP);
+        dialog.setColorCollection(colors);
+        dialog.setDialogListener(colorDialogListener);
+        dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
+    }
+    private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
+    {
+        @Override
+        public void onColorValuesSelected(ColorValues values)
+        {
+            worldmap.getOptions().colors = null;    // clear existing colors
+            updateOptions(getActivity());           // (re)inits colors to selection or default
+            worldmap.setMapMode(getActivity(), mapMode);
+            updateViews();
+        }
+
+        public void requestPeekHeight(int height) {}
+        public void requestHideSheet() {}
+        public void requestExpandSheet() {}
+        public void onModeChanged(int mode) {}
+    };
+
+    private ColorValuesCollection<ColorValues> colors;
+    public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
+        colors = collection;
+    }
+    public ColorValuesCollection<ColorValues> getColorCollection() {
+        return colors;
+    }
+    protected void initColors(Context context) {
+        colors = new WorldMapColorValuesCollection<WorldMapColorValues>(context);
     }
 
 }
