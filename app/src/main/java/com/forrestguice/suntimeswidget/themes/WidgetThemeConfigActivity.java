@@ -68,6 +68,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
@@ -858,17 +859,17 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
             options.map = ContextCompat.getDrawable(this, R.drawable.worldmap);
-            options.backgroundColor = chooseColorMapBackground.getColor();
-            options.foregroundColor = chooseColorMapForeground.getColor();
-            options.sunShadowColor = chooseColorMapShadow.getColor();
-            options.moonLightColor = chooseColorMapHighlight.getColor();
+            options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, chooseColorMapBackground.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, chooseColorMapForeground.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, chooseColorMapShadow.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_LIGHT, chooseColorMapHighlight.getColor());
 
-            options.sunFillColor = chooseColorPointFill.getColor();
-            options.sunStrokeColor = chooseColorPointStroke.getColor();
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_FILL, chooseColorPointFill.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_STROKE, chooseColorPointStroke.getColor());
             options.sunScale = 24;      // extra large so preview of colors is visible
 
-            options.moonFillColor = chooseColorMoonFull.getColor();
-            options.moonStrokeColor = chooseColorMoonWaning.getColor();
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_FILL, chooseColorMoonFull.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_STROKE, chooseColorMoonWaning.getColor());
             options.moonScale = 32;
 
             int dpWidth = 128;

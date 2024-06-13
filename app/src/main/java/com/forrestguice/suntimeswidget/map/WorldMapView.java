@@ -41,6 +41,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -60,7 +62,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public static final int DEFAULT_MAX_UPDATE_RATE = 1000;  // ms value; once a second
 
     private WorldMapTask drawTask;
-    private WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
+    private WorldMapTask.WorldMapOptions options;
     private WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
 
     private SuntimesRiseSetDataset data = null;
@@ -100,6 +102,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     @SuppressLint("ResourceType")
     private void init(Context context)
     {
+        options = new WorldMapTask.WorldMapOptions(context);
         if (isInEditMode())
         {
             setBackgroundColor(Color.WHITE);
@@ -253,51 +256,32 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     @SuppressLint("ResourceType")
     private void themeViews(Context context)
     {
-        foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
-        options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
-        options.sunShadowColor = ContextCompat.getColor(context, R.color.map_sunshadow);
-        options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);
-        options.gridXColor = options.moonLightColor;
-        options.gridYColor = options.moonLightColor;
-        options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
-        options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
-        options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
-        options.locationFillColor = ContextCompat.getColor(context, R.color.map_location);
-
-        int[] attrs = {
-                R.attr.graphColor_pointFill,            // 0
-                R.attr.graphColor_pointStroke,          // 1
-                R.attr.moonriseColor,                   // 2
-                R.attr.moonsetColor,                    // 3
-                R.attr.icActionPlace                    // 4
-        };
-        TypedArray typedArray = context.obtainStyledAttributes(attrs);
-        int def = R.color.transparent;
-        options.sunFillColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-        options.sunStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-        options.moonFillColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-        options.moonStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-        typedArray.recycle();
+        foregroundColor = options.colors.getColor(WorldMapColorValues.COLOR_FOREGROUND);
+        options.latitudeColors[0] = options.colors.getColor(WorldMapColorValues.COLOR_AXIS);
+        options.latitudeColors[1] = options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR);
+        options.latitudeColors[2] = options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR);
     }
 
     private int foregroundColor;
     public void themeViews(Context context, SuntimesTheme theme)
     {
-        options.backgroundColor = theme.getMapBackgroundColor();
-        options.sunShadowColor = theme.getMapShadowColor();
-        options.moonLightColor = theme.getMapHighlightColor();
-        options.gridXColor = options.moonLightColor;
-        options.gridYColor = options.moonLightColor;
-        options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
-        options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
-        options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
-        options.locationFillColor = theme.getActionColor();
-        options.sunFillColor = theme.getNoonIconColor();
-        options.sunStrokeColor = theme.getNoonIconStrokeColor();
-        options.moonFillColor = theme.getMoonFullColor();
-        options.moonStrokeColor = theme.getMoonWaningColor();
-
         foregroundColor = theme.getMapForegroundColor();
+        options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, theme.getMapBackgroundColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, theme.getMapShadowColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_MOON_LIGHT, theme.getMapHighlightColor());
+        int sunShadowColor = options.colors.getColor(WorldMapColorValues.COLOR_SUN_SHADOW);
+        int moonLightColor = options.colors.getColor(WorldMapColorValues.COLOR_MOON_LIGHT);
+        options.colors.setColor(WorldMapColorValues.COLOR_AXIS, sunShadowColor);
+        options.colors.setColor(WorldMapColorValues.COLOR_GRID_MAJOR, moonLightColor);
+        options.colors.setColor(WorldMapColorValues.COLOR_GRID_MINOR, moonLightColor);
+        options.latitudeColors[0] = options.colors.getColor(WorldMapColorValues.COLOR_AXIS);
+        options.latitudeColors[1] = options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR);
+        options.latitudeColors[2] = options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR);
+        options.colors.setColor(WorldMapColorValues.COLOR_POINT_FILL, theme.getActionColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_SUN_FILL, theme.getNoonIconColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_SUN_STROKE, theme.getNoonIconStrokeColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_MOON_FILL, theme.getMoonFullColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_MOON_STROKE, theme.getMoonWaningColor());
         setMapMode(context, mode);    // options.foregroundColor is assigned with the mapMode
     }
 

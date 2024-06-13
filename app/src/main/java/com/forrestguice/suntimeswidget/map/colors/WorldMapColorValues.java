@@ -1,0 +1,196 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+/*
+    Copyright (C) 2024 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+package com.forrestguice.suntimeswidget.map.colors;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.os.Parcel;
+import android.support.v4.content.ContextCompat;
+
+import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+
+/**
+ * ColorValues
+ */
+public class WorldMapColorValues extends ColorValues
+{
+    public static final String TAG_WORLDMAP = "worldmap";
+
+    public static final String COLOR_BACKGROUND = "color_background";
+    public static final String COLOR_FOREGROUND = "color_foreground";
+
+    public static final String COLOR_SUN_SHADOW = "color_sun_shadow";
+    public static final String COLOR_MOON_LIGHT = "color_moon_light";
+
+    public static final String COLOR_SUN_FILL = "color_sunFill";
+    public static final String COLOR_SUN_STROKE = "color_sunStroke";
+
+    public static final String COLOR_MOON_FILL = "color_moonFill";
+    public static final String COLOR_MOON_STROKE = "color_moonStroke";
+
+    public static final String COLOR_POINT_FILL = "color_pointFill";
+    public static final String COLOR_POINT_STROKE = "color_pointStroke";
+
+    public static final String COLOR_AXIS = "color_axis";
+    public static final String COLOR_GRID_MAJOR = "color_grid_major";
+    public static final String COLOR_GRID_MINOR = "color_grid_minor";
+
+    public String[] getColorKeys() {
+        return new String[] {
+                COLOR_BACKGROUND, COLOR_FOREGROUND,
+                COLOR_SUN_SHADOW, COLOR_SUN_FILL, COLOR_SUN_STROKE,
+                COLOR_MOON_LIGHT, COLOR_MOON_FILL, COLOR_MOON_STROKE,
+                COLOR_POINT_FILL, COLOR_POINT_STROKE,
+                COLOR_AXIS, COLOR_GRID_MAJOR, COLOR_GRID_MINOR,
+        };
+    }
+    public int[] getColorAttrs() {
+        return new int[] {
+                0, 0,
+                0, R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke,
+                0, R.attr.moonriseColor, R.attr.moonsetColor,
+                R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke,
+                R.attr.graphColor_axis, R.attr.graphColor_grid, R.attr.graphColor_grid,
+        };
+    }
+    public int[] getColorLabelsRes() {
+        return new int[] {
+                R.string.configLabel_themeColorMapBackground, R.string.configLabel_themeColorMapForeground,
+                R.string.configLabel_themeColorMapSunShadow, 0, 0,
+                R.string.worldmap_dialog_option_moonlight, 0, 0,
+                R.string.graph_option_points, R.string.graph_option_points,
+                R.string.graph_option_axis, R.string.graph_option_grid, R.string.graph_option_grid,
+        };
+    }
+    public int[] getColorsResDark() {
+        return new int[] {
+                R.color.map_background_dark, R.color.map_foreground_dark,
+                R.color.map_sunshadow_dark, R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark,
+                R.color.map_moonlight_dark, R.color.moonIcon_color_rising_dark, R.color.moonIcon_color_setting_dark,
+                R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark,
+                R.color.graphColor_axis_dark, R.color.graphColor_grid_dark,  R.color.graphColor_grid_dark,
+        };
+    }
+    public int[] getColorsResLight() {
+        return new int[] {
+                R.color.map_background_light, R.color.map_foreground_light,
+                R.color.map_sunshadow_light, R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light,
+                R.color.map_moonlight_light,  R.color.moonIcon_color_rising_light, R.color.moonIcon_color_setting_light,
+                R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light,
+                R.color.graphColor_axis_dark, R.color.graphColor_grid_light, R.color.graphColor_grid_light,
+        };
+    }
+    public int[] getColorsFallback() {
+        return new int[] {
+                Color.BLUE, Color.TRANSPARENT,            // background, foreground
+                Color.BLACK, Color.YELLOW, Color.BLACK,   // sunshadow, sunfill, sunstroke
+                Color.LTGRAY, Color.WHITE, Color.BLACK,   // moonlight, moonfill, moonstroke
+                Color.MAGENTA, Color.BLACK,               // pointfill, pointstroke
+                Color.BLACK, Color.LTGRAY, Color.LTGRAY,  // axis, grid-major, grid-minor
+        };
+    }
+
+    public WorldMapColorValues(ColorValues other) {
+        super(other);
+    }
+    public WorldMapColorValues(SharedPreferences prefs, String prefix) {
+        super(prefs, prefix);
+    }
+    protected WorldMapColorValues(Parcel in) {
+        super(in);
+    }
+    public WorldMapColorValues()
+    {
+        super();
+        if (BuildConfig.DEBUG && (getColorKeys().length != getColorsFallback().length)) {
+            throw new AssertionError("COLORS and COLORS_FALLBACK have different lengths! These arrays should be one-to-one.");
+        }
+        String[] colorKeys = getColorKeys();
+        int[] fallbackColors = getColorsFallback();
+        for (int i=0; i<colorKeys.length; i++) {
+            setColor(colorKeys[i], fallbackColors[i]);
+            setLabel(colorKeys[i], colorKeys[i]);
+        }
+    }
+
+    public WorldMapColorValues(Context context, boolean darkTheme)
+    {
+        super();
+        if (BuildConfig.DEBUG && (getColorKeys().length != getColorAttrs().length)) {
+            throw new AssertionError("COLORS and COLORS_ATTR have different lengths! These arrays should be one-to-one.");
+        }
+        String[] colorKeys = getColorKeys();
+        int[] labelsResID = getColorLabelsRes();
+        int[] defaultResID = darkTheme ? getColorsResDark() : getColorsResLight();
+        int[] attrs = getColorAttrs();
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        for (int i=0; i<colorKeys.length; i++)
+        {
+            setColor(colorKeys[i], (attrs[i] != 0) ? ContextCompat.getColor(context, a.getResourceId(i, defaultResID[i])) : ContextCompat.getColor(context, defaultResID[i]));
+            setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
+        }
+        a.recycle();
+    }
+
+    public WorldMapColorValues(String jsonString) {
+        super(jsonString);
+    }
+
+    public static final Creator<WorldMapColorValues> CREATOR = new Creator<WorldMapColorValues>()
+    {
+        public WorldMapColorValues createFromParcel(Parcel in) {
+            return new WorldMapColorValues(in);
+        }
+        public WorldMapColorValues[] newArray(int size) {
+            return new WorldMapColorValues[size];
+        }
+    };
+
+    public ColorValues getDefaultValues(Context context, boolean darkTheme)
+    {
+        ColorValues values = new ColorValues()
+        {
+            @Override
+            public String[] getColorKeys() {
+                return WorldMapColorValues.this.getColorKeys();
+            }
+        };
+
+        String[] colorKeys = getColorKeys();
+        int[] labelsResID = getColorLabelsRes();
+        int[] defaultResID = darkTheme ? getColorsResDark() : getColorsResLight();
+        for (int i=0; i<colorKeys.length; i++)
+        {
+            values.setColor(colorKeys[i], ContextCompat.getColor(context, defaultResID[i]));
+            values.setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
+        }
+        values.setID(darkTheme ? context.getString(R.string.widgetThemes_dark) : context.getString(R.string.widgetThemes_light));
+        return values;
+    }
+
+    public static WorldMapColorValues getColorDefaults(Context context, boolean darkTheme) {
+        return new WorldMapColorValues(new WorldMapColorValues().getDefaultValues(context, darkTheme));
+    }
+
+}

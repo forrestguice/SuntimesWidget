@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_6;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_8;
@@ -281,17 +282,17 @@ public class WidgetThemePreview
 
             WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
             options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
-            options.backgroundColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR);
-            options.foregroundColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR);
-            options.sunShadowColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_SHADOWCOLOR);
-            options.moonLightColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR);
+            options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR));
+            options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR));
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, values.getAsInteger(SuntimesThemeContract.THEME_MAP_SHADOWCOLOR));
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_LIGHT, values.getAsInteger(SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR));
 
-            options.sunFillColor = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR);
-            options.sunStrokeColor = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR);
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
             options.sunScale = 24;      // extra large so preview of colors is visible
 
-            options.moonFillColor = values.getAsInteger(SuntimesThemeContract.THEME_MOONFULLCOLOR);
-            options.moonStrokeColor = values.getAsInteger(SuntimesThemeContract.THEME_MOONWANINGCOLOR);
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_FILL, values.getAsInteger(SuntimesThemeContract.THEME_MOONFULLCOLOR));
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_MOONWANINGCOLOR));
             options.moonScale = 32;
 
             int[] sizeDp = suggestedPreviewSizeDp(mode);
