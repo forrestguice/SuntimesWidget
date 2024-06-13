@@ -135,6 +135,8 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
         options.colors.setColor(LineGraphColorValues.COLOR_NIGHT, theme.getNightColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
 
         options.colors.setColor(LineGraphColorValues.COLOR_SUNPATH_DAY_STROKE, theme.getDayColor());
         options.colors.setColor(LineGraphColorValues.COLOR_SUNPATH_DAY_FILL, theme.getDayColor());

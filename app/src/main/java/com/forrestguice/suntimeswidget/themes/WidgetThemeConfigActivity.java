@@ -832,6 +832,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             colors.values.setColor(LightMapColorValues.COLOR_NIGHT, chooseColorNight.getColor());
             colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, chooseColorPointFill.getColor());
             colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, chooseColorPointStroke.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, chooseColorPointFill.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, chooseColorPointStroke.getColor());
 
             colors.option_drawNow = LightMapView.LightMapColors.DRAW_SUN1;
             colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);

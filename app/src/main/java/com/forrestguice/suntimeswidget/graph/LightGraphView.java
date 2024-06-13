@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -60,6 +61,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 
+import static com.forrestguice.suntimeswidget.graph.colors.GraphColorValues.COLOR_SUN_FILL;
+import static com.forrestguice.suntimeswidget.graph.colors.GraphColorValues.COLOR_SUN_STROKE;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_ASTRONOMICAL;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_AXIS;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_CIVIL;
@@ -181,6 +184,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         options.colors.setColor(COLOR_CIVIL, theme.getCivilColor());
         options.colors.setColor(COLOR_POINT_FILL, theme.getGraphPointFillColor());
         options.colors.setColor(COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
+        options.colors.setColor(COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
     }
 
     public void setData(@Nullable SuntimesRiseSetDataset value)
@@ -722,12 +727,12 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 {
                     case LightGraphOptions.DRAW_NOW2:
                         DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
-                        drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, options.colors.getColor(COLOR_POINT_STROKE), dashed);
+                        drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, options.colors.getColor(COLOR_SUN_STROKE), dashed);
                         break;
 
                     case LightGraphOptions.DRAW_NOW1:
                     default:
-                        drawPoint(now, pointRadius, pointStroke, c, p, options.colors.getColor(COLOR_POINT_FILL), options.colors.getColor(COLOR_POINT_STROKE), null);
+                        drawPoint(now, pointRadius, pointStroke, c, p, options.colors.getColor(COLOR_SUN_FILL), options.colors.getColor(COLOR_SUN_STROKE), null);
                         //drawVerticalLine(now, calculator, c, p, pointStroke, options.colorPointFill, null);
                         break;
                 }
@@ -740,7 +745,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             {
                 double pointSize = Math.sqrt(c.getWidth() * c.getHeight()) / options.sunPath_points_width;
                 for (float[] point : options.sunPath_points) {
-                    drawPoint(point[0], point[1], (int)pointSize, 0, c, p, options.sunPath_points_color, options.sunPath_points_color, null);
+                    drawPoint(point[0], point[1], (int)pointSize, 0, c, p, options.colors.getColor(COLOR_POINT_FILL), options.colors.getColor(COLOR_POINT_STROKE), null);
                 }
             }
         }
@@ -1346,7 +1351,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         //public int sunPath_interval = 1;   // 1 day
 
         public float[][] sunPath_points = new float[0][0];
-        public int sunPath_points_color = Color.MAGENTA;
+        //public int sunPath_points_color = Color.MAGENTA;
         public float sunPath_points_width = 150;
 
         public boolean showCivil = true, showNautical = true, showAstro = true;

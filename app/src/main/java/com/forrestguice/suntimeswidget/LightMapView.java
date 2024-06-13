@@ -148,6 +148,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         colors.values.setColor(LightMapColorValues.COLOR_CIVIL, theme.getCivilColor());
         colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
         colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
+        colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
     }
 
     public void setData(@Nullable SuntimesRiseSetDataset data) {
@@ -604,12 +606,12 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     switch (colors.option_drawNow) {
                         case LightMapColors.DRAW_SUN2:
                             DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
-                            drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.values.getColor(LightMapColorValues.COLOR_POINT_STROKE), dashed);
+                            drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
                             break;
 
                         case LightMapColors.DRAW_SUN1:
                         default:
-                            drawPoint(now, pointRadius, pointStroke, c, p, colors.values.getColor(LightMapColorValues.COLOR_POINT_FILL), colors.values.getColor(LightMapColorValues.COLOR_POINT_STROKE), null);
+                            drawPoint(now, pointRadius, pointStroke, c, p, colors.values.getColor(LightMapColorValues.COLOR_SUN_FILL), colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
                             break;
                     }
                 }

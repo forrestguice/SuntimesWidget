@@ -150,6 +150,8 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         options.colors.setColor(LineGraphColorValues.COLOR_CIVIL, theme.getCivilColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
     }
 
     public void setData(@Nullable SuntimesRiseSetDataset data) {
@@ -656,12 +658,12 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 switch (options.option_drawNow) {
                     case LineGraphOptions.DRAW_SUN2:
                         DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
-                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, Color.TRANSPARENT, options.getColor(LineGraphColorValues.COLOR_POINT_STROKE), dashed);
+                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, Color.TRANSPARENT, options.getColor(LineGraphColorValues.COLOR_SUN_STROKE), dashed);
                         break;
 
                     case LineGraphOptions.DRAW_SUN1:
                     default:
-                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, options.getColor(LineGraphColorValues.COLOR_POINT_FILL), options.getColor(LineGraphColorValues.COLOR_POINT_STROKE), null);
+                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, options.getColor(LineGraphColorValues.COLOR_SUN_FILL), options.getColor(LineGraphColorValues.COLOR_SUN_STROKE), null);
                         break;
                 }
             }
@@ -677,7 +679,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                     Integer[] minutes = findMinutes(now, degrees, calculator);
                     if (minutes != null) {
                         for (Integer m : minutes) {
-                            drawPoint(m, degrees, (int)pointSize, 0, c, p, options.sunPath_points_color, options.sunPath_points_color, null);
+                            drawPoint(m, degrees, (int)pointSize, 0, c, p, options.colors.getColor(GraphColorValues.COLOR_POINT_FILL), options.colors.getColor(GraphColorValues.COLOR_POINT_STROKE), null);
                         }
                     }
                 }
@@ -1296,7 +1298,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public int sunPath_interval = 5;   // minutes
 
         public double[] sunPath_points_elevations = new double[] { 30, -50 };  // TODO
-        public int sunPath_points_color = Color.MAGENTA;    // TODO
+        //public int sunPath_points_color = Color.MAGENTA;    // TODO
         public float sunPath_points_width = 150;
 
         public boolean moonPath_show_line = true;

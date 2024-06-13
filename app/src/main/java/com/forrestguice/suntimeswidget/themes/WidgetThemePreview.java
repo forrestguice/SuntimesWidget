@@ -246,6 +246,8 @@ public class WidgetThemePreview
             colors.values.setColor(LightMapColorValues.COLOR_NIGHT, values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR));
             colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
             colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
 
             if (values.getAsInteger("option_drawNow") != null) {
                 colors.option_drawNow = values.getAsInteger("option_drawNow");

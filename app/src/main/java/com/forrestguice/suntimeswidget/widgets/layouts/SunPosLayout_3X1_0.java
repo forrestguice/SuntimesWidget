@@ -155,6 +155,8 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         colors.values.setColor(LightMapColorValues.COLOR_NIGHT, theme.getNightColor());
         colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
         colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
+        colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
     }
 
 }

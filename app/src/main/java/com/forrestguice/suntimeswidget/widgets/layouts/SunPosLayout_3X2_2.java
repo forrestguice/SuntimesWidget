@@ -38,6 +38,8 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
 import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWAXIS;
+import static com.forrestguice.suntimeswidget.graph.colors.GraphColorValues.COLOR_SUN_FILL;
+import static com.forrestguice.suntimeswidget.graph.colors.GraphColorValues.COLOR_SUN_STROKE;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_ASTRONOMICAL;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_CIVIL;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_DAY;
@@ -134,6 +136,8 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         options.colors.setColor(COLOR_NIGHT, theme.getNightColor());
         options.colors.setColor(COLOR_POINT_FILL, theme.getGraphPointFillColor());
         options.colors.setColor(COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
+        options.colors.setColor(COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
 
         options.graph_width = 365;    // days
         options.graph_height = 24;    // hours
