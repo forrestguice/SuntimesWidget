@@ -41,6 +41,11 @@
             app:showAsAction="never">
             <menu>
 
+                <item android:id="@+id/graphOption_colors"
+                    android:title="@string/configAction_colors"
+                    android:icon="?attr/icActionAppearance"
+                    app:showAsAction="never" />
+
                 <item android:id="@+id/graphOption_showGrid"
                     android:title="@string/graph_option_grid"
                     android:checkable="true"

@@ -64,6 +64,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.GraphColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
@@ -95,6 +96,8 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class LightMapDialog extends BottomSheetDialogFragment
 {
+    public static final String DIALOGTAG_COLORS = "lightmap_colors";
+
     public static final String DIALOGTAG_HELP = "lightmap_help";
     public static final int HELP_PATH_ID = R.string.help_sun_path;
 
@@ -191,7 +194,18 @@ public class LightMapDialog extends BottomSheetDialogFragment
         super.onResume();
         expandSheet(getDialog());
 
+        Context context = getActivity();
         FragmentManager fragments = getChildFragmentManager();
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        if (colorDialog != null && context != null)
+        {
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
+            colorDialog.setColorTag(GraphColorValues.TAG_GRAPH);
+            colorDialog.setColorCollection(colors);
+            colorDialog.setDialogListener(colorDialogListener);
+        }
+
         HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
@@ -573,6 +587,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
             boolean toggledValue;
             switch (item.getItemId())
             {
+                case R.id.graphOption_colors:
+                    showColorDialog(getActivity());
+                    return true;
+
                 case R.id.action_showgraph:
                     toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, toggledValue);
@@ -1829,5 +1847,43 @@ public class LightMapDialog extends BottomSheetDialogFragment
     protected void initColors(Context context) {
         colors = new GraphColorValuesCollection<>(context);
     }
+
+    protected void showColorDialog(Context context)
+    {
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
+        dialog.setAppWidgetID((isNightMode ? 1 : 0));
+        dialog.setColorTag(GraphColorValues.TAG_GRAPH);
+        dialog.setColorCollection(colors);
+        dialog.setDialogListener(colorDialogListener);
+        dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
+    }
+    private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
+    {
+        @Override
+        public void onColorValuesSelected(ColorValues values)
+        {
+            if (lightmap != null) {
+                if (values != null) {
+                    lightmap.getColors().values = new GraphColorValues(values);
+                } else {
+                    lightmap.getColors().init(getActivity());
+                }
+            }
+            if (graphView != null) {
+                if (values != null) {
+                    graphView.getOptions().colors = new GraphColorValues(values);
+                } else {
+                    graphView.getOptions().init(getActivity());
+                }
+            }
+            updateViews();
+        }
+
+        public void requestPeekHeight(int height) {}
+        public void requestHideSheet() {}
+        public void requestExpandSheet() {}
+        public void onModeChanged(int mode) {}
+    };
 
 }
