@@ -373,9 +373,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         toggleNextPrevButtons(position);
     }
 
-    public static GraphColorValuesCollection<GraphColorValues> colors = new GraphColorValuesCollection<>();
     protected void updateColors(Context context)
     {
+        GraphColorValuesCollection<GraphColorValues> colors = new GraphColorValuesCollection<>();
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
         GraphColorValues values = (GraphColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), LightMapColorValues.TAG_GRAPH);
         if (values != null) {
