@@ -94,8 +94,12 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
 
     public abstract T getDefaultColors(Context context);
     protected HashMap<String, ColorValues> colorValues = new HashMap<>();
-    public ColorValues getColors( Context context, @NonNull String colorsID )
+    @Nullable
+    public ColorValues getColors( Context context, @Nullable String colorsID )
     {
+        if (colorsID == null) {
+            return null;
+        }
         if (!colorValues.containsKey(colorsID))
         {
             ColorValues values = loadColors(context, getSharedPreferences(context), colorsID);

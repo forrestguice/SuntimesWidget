@@ -1537,10 +1537,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
     {
         @Override
-        public void onColorValuesSelected(ColorValues values)
+        public void onColorValuesSelected(ColorValues values) {
+            updateColors(values);
+        }
+
+        protected void updateColors(ColorValues values)
         {
-            worldmap.getOptions().colors = null;    // clear existing colors
-            updateOptions(getActivity());           // (re)inits colors to selection or default
+            if (values != null) {
+                worldmap.getOptions().colors = new WorldMapColorValues(values);
+            } else {
+                worldmap.getOptions().init(getActivity());
+            }
+            worldmap.themeViews(getActivity());
             worldmap.setMapMode(getActivity(), mapMode);
             updateViews();
         }
