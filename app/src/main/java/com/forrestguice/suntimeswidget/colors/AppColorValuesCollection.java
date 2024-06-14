@@ -17,28 +17,25 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.graph.colors;
+package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.os.Parcel;
 
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
-
 /**
  * ColorValuesCollection
  */
-public class GraphColorValuesCollection<GraphColorValues> extends ColorValuesCollection<ColorValues>
+public class AppColorValuesCollection<GraphColorValues> extends ColorValuesCollection<ColorValues>
 {
     public static final String PREFS_GRAPH_COLORS = "prefs_graph_colors";
 
-    public GraphColorValuesCollection() {
+    public AppColorValuesCollection() {
         super();
     }
-    public GraphColorValuesCollection(Context context) {
+    public AppColorValuesCollection(Context context) {
         super(context);
     }
-    protected GraphColorValuesCollection(Parcel in) {
+    protected AppColorValuesCollection(Parcel in) {
         super(in);
     }
 
@@ -49,16 +46,16 @@ public class GraphColorValuesCollection<GraphColorValues> extends ColorValuesCol
 
     @Override
     public ColorValues getDefaultColors(Context context) {
-        return new com.forrestguice.suntimeswidget.graph.colors.GraphColorValues(context,  true);
+        return new AppColorValues(context,  true);
     }
 
-    public static final Creator<GraphColorValuesCollection> CREATOR = new Creator<GraphColorValuesCollection>()
+    public static final Creator<AppColorValuesCollection> CREATOR = new Creator<AppColorValuesCollection>()
     {
-        public GraphColorValuesCollection createFromParcel(Parcel in) {
-            return new GraphColorValuesCollection<ColorValues>(in);
+        public AppColorValuesCollection createFromParcel(Parcel in) {
+            return new AppColorValuesCollection<ColorValues>(in);
         }
-        public GraphColorValuesCollection<ColorValues>[] newArray(int size) {
-            return new GraphColorValuesCollection[size];
+        public AppColorValuesCollection<ColorValues>[] newArray(int size) {
+            return new AppColorValuesCollection[size];
         }
     };
 

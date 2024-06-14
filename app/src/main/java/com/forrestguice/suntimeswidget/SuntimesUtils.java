@@ -25,6 +25,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -49,9 +50,11 @@ import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
@@ -1796,7 +1799,7 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(percentPattern, "%");
         return displayString;
     }
-
+    
     public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan)
     {
         return createSpan(context, text, spanTag, imageSpan, ImageSpan.ALIGN_BASELINE);
@@ -1859,6 +1862,20 @@ public class SuntimesUtils
         return span;
     }
 
+    public static SpannableString createBackgroundColorSpan(SpannableString span, String text, String toColorize, int color)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toColorize);
+        if (start >= 0)
+        {
+            int end = start + toColorize.length();
+            span.setSpan(new BackgroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
+    }
+
     public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color)
     {
         if (span == null) {
@@ -1890,6 +1907,23 @@ public class SuntimesUtils
         {
             int end = start + toUnderline.length();
             span.setSpan(new UnderlineSpan(), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
+    }
+    public static SpannableString createUnderlineSpan(SpannableString span, String text, String toUnderline, int color)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toUnderline);
+        if (start >= 0)
+        {
+            UnderlineSpan underline = new UnderlineSpan();
+            TextPaint paint = new TextPaint();
+            paint.setColor(color);
+            underline.updateDrawState(paint);
+            int end = start + toUnderline.length();
+            span.setSpan(underline, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return span;
     }
