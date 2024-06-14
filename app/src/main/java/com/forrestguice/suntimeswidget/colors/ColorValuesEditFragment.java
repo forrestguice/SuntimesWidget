@@ -46,6 +46,10 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
+import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColorValuesEditFragment extends ColorValuesFragment
 {
@@ -298,6 +302,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         Intent intent = new Intent(getActivity(), ColorActivity.class);
         intent.putExtra("showAlpha", true);
         intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
+        intent.putExtra(ColorDialog.KEY_RECENT, colorValues.getColors());
         return intent;
     }
 
