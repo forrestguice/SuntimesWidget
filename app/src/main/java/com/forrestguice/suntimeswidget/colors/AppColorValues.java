@@ -30,6 +30,9 @@ import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.ToIntFunction;
 
 /**
@@ -67,34 +70,56 @@ public class AppColorValues extends ResourceColorValues
         ArrayList<Integer> labelRes = new ArrayList<>();
         ArrayList<Integer> fallback = new ArrayList<>();
 
+        Set<String> keySet = new TreeSet<>();
         ResourceColorValues[] r = RESOURCE_VALUES;
+        OuterLoop:
         for (int i = 0; i<r.length; i++)
         {
-            keys.addAll(Arrays.asList(r[i].getColorKeys()));
+            //keys.addAll(Arrays.asList(r[i].getColorKeys()));
+            String[] s = r[i].getColorKeys();
 
             int[] a = r[i].getColorAttrs();
             for (int j=0; j<a.length; j++) {
-                attrs.add(a[j]);
+                if (!keySet.contains(s[j])) {
+                    attrs.add(a[j]);
+                }
             }
 
             int[] rD = r[i].getColorsResDark();
             for (int j=0; j<rD.length; j++) {
-                darkRes.add(rD[j]);
+                if (!keySet.contains(s[j])) {
+                    darkRes.add(rD[j]);
+                }
             }
 
             int[] rL = r[i].getColorsResLight();
             for (int j=0; j<rL.length; j++) {
-                lightRes.add(rL[j]);
+                if (!keySet.contains(s[j])) {
+                    lightRes.add(rL[j]);
+                }
             }
 
             int[] rLabels = r[i].getColorLabelsRes();
             for (int j=0; j<rLabels.length; j++) {
-                labelRes.add(rLabels[j]);
+                if (!keySet.contains(s[j])) {
+                    labelRes.add(rLabels[j]);
+                }
             }
 
             int[] f = r[i].getColorsFallback();
             for (int j=0; j<f.length; j++) {
-                fallback.add(f[j]);
+                if (!keySet.contains(s[j])) {
+                    fallback.add(f[j]);
+                }
+            }
+
+            for (int j=0; j<s.length; j++)
+            {
+                if (!keySet.contains(s[j]))
+                {
+                    keySet.add(s[j]);
+                    keys.add(s[j]);
+                }
             }
         }
 
