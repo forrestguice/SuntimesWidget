@@ -57,8 +57,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.events.EventSettings;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -375,11 +375,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     protected void updateColors(Context context)
     {
-        GraphColorValuesCollection<GraphColorValues> colors = new GraphColorValuesCollection<>();
+        AppColorValuesCollection<AppColorValues> colors = new AppColorValuesCollection<>();
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-        GraphColorValues values = (GraphColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), LightMapColorValues.TAG_GRAPH);
+        AppColorValues values = (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_GRAPH);
         if (values != null) {
-            lightmap.getColors().values = values;
+            lightmap.getColors().values = new LightMapColorValues(values);
         } else if (lightmap.getColors().values == null) {
             lightmap.getColors().init(context);
         }
