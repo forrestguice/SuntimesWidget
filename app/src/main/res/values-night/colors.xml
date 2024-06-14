@@ -31,6 +31,7 @@
     <color name="table_rising">@color/table_rising_dark</color>
     <color name="table_setting">@color/table_setting_dark</color>
     <color name="table_civil">@color/table_civil_dark</color>
+    <color name="table_nautical">@color/table_nautical_dark</color>
     <color name="table_astro">@color/table_astro_dark</color>
     <color name="table_night">@color/table_night_dark</color>
     <color name="table_noon">@color/table_setting_dark</color>
@@ -83,6 +84,7 @@
     <color name="table_rising_contrast">@color/table_rising_contrast_dark</color>
     <color name="table_setting_contrast">@color/table_setting_contrast_dark</color>
     <color name="table_civil_contrast">@color/table_civil_contrast_dark</color>
+    <color name="table_nautical_contrast">@color/table_nautical_contrast_dark</color>
     <color name="table_astro_contrast">@color/table_astro_contrast_dark</color>
     <color name="table_night_contrast">@color/table_night_contrast_dark</color>
     <color name="table_noon_contrast">@color/table_noon_contrast_dark</color>

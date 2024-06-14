@@ -49,6 +49,7 @@
     <color name="table_rising">@color/table_rising_light</color>
     <color name="table_setting">@color/table_setting_light</color>
     <color name="table_civil">@color/table_civil_light</color>
+    <color name="table_nautical">@color/table_nautical_light</color>
     <color name="table_astro">@color/table_astro_light</color>
     <color name="table_night">@color/table_night_light</color>
     <color name="table_noon">@color/table_setting_light</color>
@@ -101,6 +102,7 @@
     <color name="table_rising_contrast">@color/table_rising_contrast_light</color>
     <color name="table_setting_contrast">@color/table_setting_contrast_light</color>
     <color name="table_civil_contrast">@color/table_civil_contrast_light</color>
+    <color name="table_nautical_contrast">@color/table_nautical_contrast_light</color>
     <color name="table_astro_contrast">@color/table_astro_contrast_light</color>
     <color name="table_night_contrast">@color/table_night_contrast_light</color>
     <color name="table_noon_contrast">@color/table_noon_contrast_light</color>
@@ -149,7 +151,8 @@
     <color name="table_rising_dark">@color/sunIcon_color_rising_dark</color>
     <color name="table_setting_dark">@color/sunIcon_color_setting_dark</color>
     <color name="table_civil_dark">@color/graphColor_civil_dark</color>
-    <color name="table_astro_dark">@color/grey_500</color>
+    <color name="table_nautical_dark">@color/graphColor_nautical_dark</color>   <!-- TODO -->
+    <color name="table_astro_dark">@color/grey_500</color>   <!-- TODO -->
     <color name="table_night_dark">@color/grey_500</color>
     <color name="table_noon_dark">@color/sunIcon_color_setting_dark</color>
     <color name="table_moon_rising_dark">@color/moonIcon_color_rising_dark</color>
@@ -183,6 +186,7 @@
     <color name="table_rising_light">@color/sunIcon_color_rising_light</color>
     <color name="table_setting_light">@color/sunIcon_color_setting_light</color>
     <color name="table_civil_light">@color/graphColor_civil_light</color>
+    <color name="table_nautical_light">@color/graphColor_nautical_light</color>
     <color name="table_astro_light">@color/graphColor_astronomical_light</color>
     <color name="table_night_light">@color/graphColor_night_light</color>
     <color name="table_noon_light">@color/sunIcon_color_setting_light</color>
@@ -205,6 +209,7 @@
     <color name="table_rising_contrast_dark">@android:color/white</color>
     <color name="table_setting_contrast_dark">@color/grey_300</color>
     <color name="table_civil_contrast_dark">#FFb1c9ff</color>
+    <color name="table_nautical_contrast_dark">#FF7BA3FF</color>    <!-- TODO -->
     <color name="table_astro_contrast_dark">#FF7BA3FF</color>
     <color name="table_night_contrast_dark">@color/grey_500</color>
     <color name="table_noon_contrast_dark">@color/grey_300</color>
@@ -231,6 +236,7 @@
     <color name="table_rising_contrast_light">@color/grey_900</color>
     <color name="table_setting_contrast_light">@color/grey_800</color>
     <color name="table_civil_contrast_light">#5287ff</color>
+    <color name="table_nautical_contrast_light">#0000FF</color>   <!-- TODO -->
     <color name="table_astro_contrast_light">#0000FF</color>
     <color name="table_night_contrast_light">@color/grey_600</color>
     <color name="table_noon_contrast_light">@color/grey_800</color>

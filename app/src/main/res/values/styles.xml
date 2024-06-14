@@ -58,6 +58,7 @@
         <item name="table_risingColor">@color/table_rising</item>
         <item name="table_settingColor">@color/table_setting</item>
         <item name="table_civilColor">@color/table_civil</item>
+        <item name="table_nauticalColor">@color/table_nautical</item>
         <item name="table_astroColor">@color/table_astro</item>
         <item name="table_nightColor">@color/table_night</item>
         <item name="table_noonColor">@color/table_noon</item>
@@ -275,6 +276,7 @@
         <item name="table_risingColor">@color/table_rising_light</item>
         <item name="table_settingColor">@color/table_setting_light</item>
         <item name="table_civilColor">@color/table_civil_light</item>
+        <item name="table_nauticalColor">@color/table_nautical_light</item>
         <item name="table_astroColor">@color/table_astro_light</item>
         <item name="table_nightColor">@color/table_night_light</item>
         <item name="table_noonColor">@color/table_noon_light</item>
@@ -495,6 +497,7 @@
         <item name="table_risingColor">@color/table_rising_dark</item>
         <item name="table_settingColor">@color/table_setting_dark</item>
         <item name="table_civilColor">@color/table_civil_dark</item>
+        <item name="table_nauticalColor">@color/table_nautical_dark</item>
         <item name="table_astroColor">@color/table_astro_dark</item>
         <item name="table_nightColor">@color/table_night_dark</item>
         <item name="table_noonColor">@color/table_noon_dark</item>
@@ -678,6 +681,7 @@
         <item name="table_risingColor">@color/table_rising_contrast</item>
         <item name="table_settingColor">@color/table_setting_contrast</item>
         <item name="table_civilColor">@color/table_civil_contrast</item>
+        <item name="table_nauticalColor">@color/table_nautical_contrast</item>
         <item name="table_astroColor">@color/table_astro_contrast</item>
         <item name="table_nightColor">@color/table_night_contrast</item>
         <item name="table_noonColor">@color/table_noon_contrast</item>
@@ -746,6 +750,7 @@
         <item name="table_risingColor">@color/table_rising_contrast_light</item>
         <item name="table_settingColor">@color/table_setting_contrast_light</item>
         <item name="table_civilColor">@color/table_civil_contrast_light</item>
+        <item name="table_nauticalColor">@color/table_nautical_contrast_light</item>
         <item name="table_astroColor">@color/table_astro_contrast_light</item>
         <item name="table_nightColor">@color/table_night_contrast_light</item>
         <item name="table_noonColor">@color/table_noon_contrast_light</item>
@@ -814,6 +819,7 @@
         <item name="table_risingColor">@color/table_rising_contrast_dark</item>
         <item name="table_settingColor">@color/table_setting_contrast_dark</item>
         <item name="table_civilColor">@color/table_civil_contrast_dark</item>
+        <item name="table_nauticalColor">@color/table_nautical_contrast_dark</item>
         <item name="table_astroColor">@color/table_astro_contrast_dark</item>
         <item name="table_nightColor">@color/table_night_contrast_dark</item>
         <item name="table_noonColor">@color/table_noon_contrast_dark</item>
