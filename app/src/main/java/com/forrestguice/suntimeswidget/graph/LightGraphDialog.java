@@ -52,9 +52,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -227,7 +227,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         {
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
-            colorDialog.setColorTag(GraphColorValues.TAG_GRAPH);
+            colorDialog.setColorTag(AppColorValues.TAG_GRAPH);
             colorDialog.setColorCollection(colors);
             colorDialog.setDialogListener(colorDialogListener);
         }
@@ -334,6 +334,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             }
             */  // TODO
         }
+        updateGraphColors(context);
     }
 
     private SuntimesTheme themeOverride = null;
@@ -447,27 +448,30 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         } else return null;
     }
 
+    public void updateGraphColors(Context context)
+    {
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        AppColorValues values = (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_GRAPH);
+
+        if (values != null)
+        {
+            options.colors = new LightGraphColorValues(values);
+            if (lightmap != null) {
+                lightmap.getColors().values = new LightMapColorValues(values);
+            }
+
+        } else if (options.colors == null) {
+            options.init(context);
+            if (lightmap != null) {
+                lightmap.getColors().init(context);
+            }
+        }
+    }
+
     public void updateGraphViews(Context context)
     {
         if (context != null)
         {
-            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-            GraphColorValues values = (GraphColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), GraphColorValues.TAG_GRAPH);
-
-            if (values != null)
-            {
-                options.colors = values;
-                if (lightmap != null) {
-                    lightmap.getColors().values = values;
-                }
-
-            } else if (options.colors == null) {
-                options.init(context);
-                if (lightmap != null) {
-                    lightmap.getColors().init(context);
-                }
-            }
-
             options.axisX_labels_show = options.axisY_labels_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
             options.axisX_show = options.axisY_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
             options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
@@ -784,7 +788,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
         ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
         dialog.setAppWidgetID((isNightMode ? 1 : 0));
-        dialog.setColorTag(GraphColorValues.TAG_GRAPH);
+        dialog.setColorTag(AppColorValues.TAG_GRAPH);
         dialog.setColorCollection(colors);
         dialog.setDialogListener(colorDialogListener);
         dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
@@ -794,6 +798,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         @Override
         public void onColorValuesSelected(ColorValues values) {
             options.colors = null;
+            updateGraphColors(getActivity());
             updateGraphViews(getActivity());
         }
 
@@ -811,7 +816,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         return colors;
     }
     protected void initColors(Context context) {
-        colors = new GraphColorValuesCollection<>(context);
+        colors = new AppColorValuesCollection<>(context);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

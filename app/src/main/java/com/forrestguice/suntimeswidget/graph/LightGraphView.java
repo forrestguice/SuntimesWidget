@@ -44,9 +44,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
-import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -61,8 +59,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 
-import static com.forrestguice.suntimeswidget.graph.colors.GraphColorValues.COLOR_SUN_FILL;
-import static com.forrestguice.suntimeswidget.graph.colors.GraphColorValues.COLOR_SUN_STROKE;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_SUN_FILL;
+import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_SUN_STROKE;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_ASTRONOMICAL;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_AXIS;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_CIVIL;
@@ -1374,7 +1372,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public Lock anim_lock = null;
 
         public TimeZone timezone = null;
-        public GraphColorValues colors;
+        public LightGraphColorValues colors;
 
         public final Map<String, Pair<Double,Double>> t_sunrise_earliest = new HashMap<>();
         public final Map<String, Pair<Double,Double>> t_sunset_earliest = new HashMap<>();

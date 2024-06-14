@@ -26,14 +26,38 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
 /**
  * ColorValues
  */
-public class LightGraphColorValues extends GraphColorValues implements Parcelable
+public class LightGraphColorValues extends ResourceColorValues implements Parcelable
 {
-    public static final String TAG_LIGHTGRAPH = "lightgraph";
+
+    public static final String COLOR_DAY = AppColorKeys.COLOR_DAY;
+    public static final String COLOR_NIGHT = AppColorKeys.COLOR_NIGHT;
+    public static final String COLOR_CIVIL = AppColorKeys.COLOR_CIVIL;
+    public static final String COLOR_NAUTICAL = AppColorKeys.COLOR_NAUTICAL;
+    public static final String COLOR_ASTRONOMICAL = AppColorKeys.COLOR_ASTRONOMICAL;
+
+    public static final String COLOR_SUN_FILL = AppColorKeys.COLOR_SUN_FILL;
+    public static final String COLOR_SUN_STROKE = AppColorKeys.COLOR_SUN_STROKE;
+
+    public static final String COLOR_POINT_FILL = AppColorKeys.COLOR_POINT_FILL;
+    public static final String COLOR_POINT_STROKE = AppColorKeys.COLOR_POINT_STROKE;
+
+    public static final String COLOR_AXIS = AppColorKeys.COLOR_AXIS;
+    public static final String COLOR_GRID_MAJOR = AppColorKeys.COLOR_GRID_MAJOR;
+    public static final String COLOR_GRID_MINOR = AppColorKeys.COLOR_GRID_MINOR;
+    public static final String COLOR_LABELS = AppColorKeys.COLOR_LABELS;
+    public static final String COLOR_LABELS_BG = AppColorKeys.COLOR_LABELS_BG;
+
+    public static final String COLOR_SPRING = AppColorKeys.COLOR_SPRING;
+    public static final String COLOR_SUMMER = AppColorKeys.COLOR_SUMMER;
+    public static final String COLOR_AUTUMN = AppColorKeys.COLOR_AUTUMN;
+    public static final String COLOR_WINTER = AppColorKeys.COLOR_WINTER;
 
     public static final String[] COLORS = new String[]
     {
