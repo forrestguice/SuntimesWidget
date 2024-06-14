@@ -49,7 +49,6 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +63,6 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValuesCollection;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
@@ -539,7 +536,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 getArguments().putLong(ARG_DATETIME, -1L);
                 options.now = now;
                 options.offsetMinutes = 1;
-                Log.d("DEBUG", "updateOptions: now: " + now);
+                //Log.d("DEBUG", "updateOptions: now: " + now);
             }
 
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);

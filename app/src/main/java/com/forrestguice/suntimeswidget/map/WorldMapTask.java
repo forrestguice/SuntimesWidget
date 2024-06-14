@@ -379,7 +379,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
                 {
                     int[] point = toBitmapCoords(w, h, mid, options.locations[i][0], options.locations[i][1]);
                     drawLocation(c, point[0], point[1], p1, p2, options);
-                    Log.d("DEBUG", "drawLocations: " + options.locations[i][0] + ", " + options.locations[i][1]);
+                    //Log.d("DEBUG", "drawLocations: " + options.locations[i][0] + ", " + options.locations[i][1]);
                 }
             }
         }

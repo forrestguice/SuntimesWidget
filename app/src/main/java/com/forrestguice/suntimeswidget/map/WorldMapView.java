@@ -35,7 +35,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
@@ -231,7 +230,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
      */
     public void onResume()
     {
-        Log.d("DEBUG", "WorldMapView onResume");
+        //Log.d("DEBUG", "WorldMapView onResume");
     }
 
     /**
@@ -346,7 +345,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
             case EQUIAZIMUTHAL_SIMPLE2:
-                Log.d("DEBUG", "matchHeight: " + matchHeight);
+                //Log.d("DEBUG", "matchHeight: " + matchHeight);
                 projection = getMapProjection(mode);
                 if (w > 0)
                 {
