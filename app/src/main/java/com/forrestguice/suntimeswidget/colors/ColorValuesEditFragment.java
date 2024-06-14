@@ -49,7 +49,10 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ColorValuesEditFragment extends ColorValuesFragment
 {
@@ -185,10 +188,16 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     {
         super.onSaveInstanceState(out);
         out.putParcelable("colorValues", colorValues);
+        out.putStringArray("filterValues", filterValues.toArray(new String[0]));
         out.putString("editID", editID.getText().toString());
     }
-    protected void onRestoreInstanceState(@NonNull Bundle savedState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedState)
+    {
         colorValues = savedState.getParcelable("colorValues");
+        String[] filter = savedState.getStringArray("filterValues");
+        if (filter != null) {
+            filterValues  = new TreeSet<>(Arrays.asList(filter));
+        }
         setID(savedState.getString("editID"));
     }
 
@@ -205,13 +214,12 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    protected TextView[] colorEdits;
+    //protected TextView[] colorEdits;
     protected void updateViews()
     {
         if (panel != null && colorValues != null)
         {
             String[] keys = colorValues.getColorKeys();
-            colorEdits = new TextView[keys.length];
 
             int itemMargin = 0;
             TypedValue itemBackground = null;
@@ -224,21 +232,26 @@ public class ColorValuesEditFragment extends ColorValuesFragment
                 itemMargin = (int)context.getResources().getDimension(R.dimen.colortext_margin);
             }
 
+            int c = 0;
             panel.removeAllViews();
             for (int i=0; i<keys.length; i++)
             {
-                colorEdits[i] = new TextView(getActivity());
-                colorEdits[i].setText(colorValues.getLabel(keys[i]));
-                colorEdits[i].setTextColor(colorValues.getColor(keys[i]));
-                colorEdits[i].setOnClickListener(onColorEditClick(keys[i]));
-                colorEdits[i].setGravity(Gravity.CENTER);
+                if (!passesFilter(keys[i])) {
+                    continue;
+                }
+                TextView colorEdit = new TextView(getActivity());
+                colorEdit.setText(colorValues.getLabel(keys[i]));
+                colorEdit.setTextColor(colorValues.getColor(keys[i]));
+                colorEdit.setOnClickListener(onColorEditClick(keys[i]));
+                colorEdit.setGravity(Gravity.CENTER);
 
                 if (itemBackground != null) {
-                    colorEdits[i].setBackgroundResource(itemBackground.resourceId);
+                    colorEdit.setBackgroundResource(itemBackground.resourceId);
                 }
+                colorEdit.setPadding(itemMargin, itemMargin, itemMargin, itemMargin);
 
-                colorEdits[i].setPadding(itemMargin, itemMargin, itemMargin, itemMargin);
-                panel.addView(colorEdits[i], getItemLayoutParams(i));
+                panel.addView(colorEdit, getItemLayoutParams(c));
+                c++;
             }
 
         } else if (panel != null) {
@@ -278,6 +291,26 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
     public ColorValues getColorValues() {
          return colorValues;
+    }
+
+    protected Set<String> filterValues = new TreeSet<>();
+    public void setFilter(@Nullable String[] keys)
+    {
+        filterValues.clear();
+        if (keys != null) {
+            filterValues.addAll(Arrays.asList(keys));
+        }
+        updateViews();
+    }
+    public String[] getFilter() {
+        return filterValues.toArray(new String[0]);
+    }
+    public void clearFilter() {
+        filterValues.clear();
+        updateViews();
+    }
+    protected boolean passesFilter(String key) {
+        return filterValues.isEmpty() || filterValues.contains(key);
     }
 
     protected void setColor(String key, int color) {

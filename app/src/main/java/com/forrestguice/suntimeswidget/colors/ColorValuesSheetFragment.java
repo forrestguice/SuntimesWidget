@@ -67,6 +67,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
         editDialog = new ColorValuesEditFragment();  // (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
         editDialog.setTheme(getThemeResID());
+        editDialog.setFilter(getFilter());
 
         getChildFragmentManager().beginTransaction().add(R.id.layout_color_sheet, listDialog).add(R.id.layout_color_sheet, editDialog).commit();
 
@@ -299,6 +300,23 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     @Nullable
     public String getColorTag() {
         return getArguments().getString("colorTag", null);
+    }
+
+    public void setFilter(String[] keys) {
+        getArguments().putStringArray("filterValues", keys);
+        if (editDialog != null) {
+            editDialog.setFilter(keys);
+        }
+    }
+    @Nullable
+    public String[] getFilter() {
+        return getArguments().getStringArray("filterValues");
+    }
+    public void clearFilter() {
+        getArguments().remove("filterValues");
+        if (editDialog != null) {
+            editDialog.clearFilter();
+        }
     }
 
     protected ColorValuesCollection colorCollection = null;

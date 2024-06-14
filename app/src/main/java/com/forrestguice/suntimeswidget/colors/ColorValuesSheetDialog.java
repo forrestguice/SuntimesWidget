@@ -38,6 +38,9 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 
+import java.util.Arrays;
+import java.util.TreeSet;
+
 public class ColorValuesSheetDialog extends BottomSheetDialogFragment
 {
     public ColorValuesSheetDialog() {
@@ -63,6 +66,22 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     @Nullable
     public String getColorTag() {
         return getArguments().getString("colorTag", null);
+    }
+
+    public void setFilter(String[] keys) {
+        getArguments().putStringArray("filterValues", keys);
+        if (colorSheet != null) {
+            colorSheet.setFilter(keys);
+        }
+    }
+    public String[] getFilter() {
+        return getArguments().getStringArray("filterValues");
+    }
+    public void clearFilter() {
+        getArguments().remove("filterValues");
+        if (colorSheet != null) {
+            colorSheet.clearFilter();
+        }
     }
 
     public void setDialogTitle(String title)
@@ -141,6 +160,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         colorSheet = new ColorValuesSheetFragment();
         colorSheet.setAppWidgetID(getAppWidgetID());
         colorSheet.setColorTag(getColorTag());
+        colorSheet.setFilter(getFilter());
         colorSheet.setColorCollection(getColorCollection());
         colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
         colorSheet.setFragmentListener(fragmentListener);
