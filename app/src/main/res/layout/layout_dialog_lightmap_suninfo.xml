@@ -42,6 +42,13 @@
             app:layout_constraintTop_toTopOf="@+id/info_sun_elevation_current_label"
             tools:text="00.00°∠" />
 
+        <ImageView android:id="@+id/info_sun_elevation_current_highlight"
+            android:layout_width="64dp" android:layout_height="2dp"
+            android:layout_marginTop="2dp" android:layout_marginStart="2dp"
+            android:scaleType="fitXY" android:background="@drawable/ic_colortab"
+            app:layout_constraintStart_toStartOf="@+id/info_sun_elevation_current_label"
+            app:layout_constraintTop_toBottomOf="@+id/info_sun_elevation_current" />
+
         <View android:id="@+id/clickArea_altitude"
             android:background="?attr/selectableItemBackground"
             android:clickable="true" android:focusable="true"
