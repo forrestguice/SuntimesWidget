@@ -39,7 +39,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -679,7 +678,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                     Integer[] minutes = findMinutes(now, degrees, calculator);
                     if (minutes != null) {
                         for (Integer m : minutes) {
-                            drawPoint(m, degrees, (int)pointSize, 0, c, p, options.colors.getColor(GraphColorValues.COLOR_POINT_FILL), options.colors.getColor(GraphColorValues.COLOR_POINT_STROKE), null);
+                            drawPoint(m, degrees, (int)pointSize, 0, c, p, options.colors.getColor(LineGraphColorValues.COLOR_POINT_FILL), options.colors.getColor(LineGraphColorValues.COLOR_POINT_STROKE), null);
                         }
                     }
                 }
@@ -1315,7 +1314,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         public int densityDpi = DisplayMetrics.DENSITY_DEFAULT;
 
-        public GraphColorValues colors;
+        public LineGraphColorValues colors;
         public int getColor(String key) {
             return colors.getColor(key);
         }
