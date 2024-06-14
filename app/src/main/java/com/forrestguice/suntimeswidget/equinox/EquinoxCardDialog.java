@@ -57,6 +57,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -131,8 +133,13 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         ContextThemeWrapper context = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_equinox1, parent, false);
         initLocale(context);
+
         options.init(context);
         options.showSeconds = true;
+
+        AppColorValuesCollection<AppColorValues> colors = new AppColorValuesCollection<>();
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        options.colors = new EquinoxColorValues(colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_GRAPH));
 
         empty = (TextView)v.findViewById(R.id.txt_empty);
         text_title = (TextView)v.findViewById(R.id.text_title1);

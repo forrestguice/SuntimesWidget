@@ -40,6 +40,11 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.forrestguice.suntimeswidget.equinox.EquinoxColorValues.COLOR_SPRING_TEXT;
+import static com.forrestguice.suntimeswidget.equinox.EquinoxColorValues.COLOR_SUMMER_TEXT;
+import static com.forrestguice.suntimeswidget.equinox.EquinoxColorValues.COLOR_AUTUMN_TEXT;
+import static com.forrestguice.suntimeswidget.equinox.EquinoxColorValues.COLOR_WINTER_TEXT;
+
 /**
  * @see EquinoxDatasetAdapter
  */
@@ -87,10 +92,10 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
         btn_flipperNext = (ImageButton)view.findViewById(R.id.info_time_nextbtn);
         btn_flipperPrev = (ImageButton)view.findViewById(R.id.info_time_prevbtn);
 
-        note_equinox_vernal = addNote(view, R.id.text_date_equinox_vernal_label, R.id.text_date_equinox_vernal, R.id.text_date_equinox_vernal_note, R.id.menu_equinox_vernal, R.id.focus_equinox_vernal, R.id.text_date_equinox_vernal_layout, 0, options.seasonColors[0], options);
-        note_solstice_summer = addNote(view, R.id.text_date_solstice_summer_label, R.id.text_date_solstice_summer, R.id.text_date_solstice_summer_note, R.id.menu_solstice_summer, R.id.focus_solstice_summer, R.id.text_date_solstice_summer_layout, 0, options.seasonColors[1], options);
-        note_equinox_autumnal = addNote(view, R.id.text_date_equinox_autumnal_label, R.id.text_date_equinox_autumnal, R.id.text_date_equinox_autumnal_note, R.id.menu_equinox_autumnal, R.id.focus_equinox_autumnal, R.id.text_date_equinox_autumnal_layout, 0, options.seasonColors[2], options);
-        note_solstice_winter = addNote(view, R.id.text_date_solstice_winter_label, R.id.text_date_solstice_winter, R.id.text_date_solstice_winter_note, R.id.menu_solstice_winter, R.id.focus_solstice_winter, R.id.text_date_solstice_winter_layout, 0, options.seasonColors[3], options);
+        note_equinox_vernal = addNote(view, R.id.text_date_equinox_vernal_label, R.id.text_date_equinox_vernal, R.id.text_date_equinox_vernal_note, R.id.menu_equinox_vernal, R.id.focus_equinox_vernal, R.id.text_date_equinox_vernal_layout, 0, options.colors.getColor(COLOR_SPRING_TEXT), options);
+        note_solstice_summer = addNote(view, R.id.text_date_solstice_summer_label, R.id.text_date_solstice_summer, R.id.text_date_solstice_summer_note, R.id.menu_solstice_summer, R.id.focus_solstice_summer, R.id.text_date_solstice_summer_layout, 0, options.colors.getColor(COLOR_SUMMER_TEXT), options);
+        note_equinox_autumnal = addNote(view, R.id.text_date_equinox_autumnal_label, R.id.text_date_equinox_autumnal, R.id.text_date_equinox_autumnal_note, R.id.menu_equinox_autumnal, R.id.focus_equinox_autumnal, R.id.text_date_equinox_autumnal_layout, 0, options.colors.getColor(COLOR_AUTUMN_TEXT), options);
+        note_solstice_winter = addNote(view, R.id.text_date_solstice_winter_label, R.id.text_date_solstice_winter, R.id.text_date_solstice_winter_note, R.id.menu_solstice_winter, R.id.focus_solstice_winter, R.id.text_date_solstice_winter_layout, 0, options.colors.getColor(COLOR_WINTER_TEXT), options);
 
         if (options.columnWidthPx >= 0) {
             adjustColumnWidth(options.columnWidthPx);
@@ -255,10 +260,10 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
             options.titleColor = theme.getTitleColor();
             options.textColor = theme.getTextColor();
             options.pressedColor = theme.getActionColor();
-            options.seasonColors[0] = theme.getSpringColor();
-            options.seasonColors[1] = theme.getSummerColor();
-            options.seasonColors[2] = theme.getFallColor();
-            options.seasonColors[3] = theme.getWinterColor();
+            options.colors.setColor(COLOR_SPRING_TEXT, theme.getSpringColor());
+            options.colors.setColor(COLOR_SUMMER_TEXT, theme.getSummerColor());
+            options.colors.setColor(COLOR_AUTUMN_TEXT, theme.getFallColor());
+            options.colors.setColor(COLOR_WINTER_TEXT, theme.getWinterColor());
         }
     }
     public void themeViews(EquinoxViewOptions options, int position )
@@ -273,10 +278,10 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
         ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
         ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
 
-        note_equinox_vernal.themeViews(options.labelColor, options.seasonColors[0], options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
-        note_solstice_summer.themeViews(options.labelColor, options.seasonColors[1], options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
-        note_equinox_autumnal.themeViews(options.labelColor, options.seasonColors[2], options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
-        note_solstice_winter.themeViews(options.labelColor, options.seasonColors[3], options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
+        note_equinox_vernal.themeViews(options.labelColor, options.colors.getColor(COLOR_SPRING_TEXT), options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
+        note_solstice_summer.themeViews(options.labelColor, options.colors.getColor(COLOR_SUMMER_TEXT), options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
+        note_equinox_autumnal.themeViews(options.labelColor, options.colors.getColor(COLOR_AUTUMN_TEXT), options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
+        note_solstice_winter.themeViews(options.labelColor, options.colors.getColor(COLOR_WINTER_TEXT), options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
     }
 
     ///////////////////////////////////////////////////////
