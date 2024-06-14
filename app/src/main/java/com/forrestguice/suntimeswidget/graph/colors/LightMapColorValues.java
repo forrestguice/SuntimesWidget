@@ -26,14 +26,26 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
 /**
  * ColorValues
  */
-public class LightMapColorValues extends GraphColorValues implements Parcelable
+public class LightMapColorValues extends ResourceColorValues implements Parcelable
 {
-    public static final String TAG_LIGHTMAP = "lightmap";
+    public static final String COLOR_DAY = AppColorKeys.COLOR_DAY;
+    public static final String COLOR_NIGHT = AppColorKeys.COLOR_NIGHT;
+    public static final String COLOR_CIVIL = AppColorKeys.COLOR_CIVIL;
+    public static final String COLOR_NAUTICAL = AppColorKeys.COLOR_NAUTICAL;
+    public static final String COLOR_ASTRONOMICAL = AppColorKeys.COLOR_ASTRONOMICAL;
+
+    public static final String COLOR_SUN_FILL = AppColorKeys.COLOR_SUN_FILL;
+    public static final String COLOR_SUN_STROKE = AppColorKeys.COLOR_SUN_STROKE;
+
+    public static final String COLOR_POINT_FILL = AppColorKeys.COLOR_POINT_FILL;
+    public static final String COLOR_POINT_STROKE = AppColorKeys.COLOR_POINT_STROKE;
 
     @Override
     public String[] getColorKeys() {

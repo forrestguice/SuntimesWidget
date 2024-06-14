@@ -62,12 +62,14 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -111,6 +113,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private TextView sunTime, offsetTime;
     private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon, sunAzimuthLabel;
     private TextView sunElevation, sunElevationAtNoon, sunElevationLabel;
+    private ImageView sunElevationHighlight;
     private ImageView riseIcon, setIcon;
     private TextView sunShadowObj, sunShadowLength, sunShadowLengthAtNoon;
 
@@ -127,7 +130,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private int colorNight, colorAstro, colorNautical, colorCivil, colorDay;
     private int colorRising, colorSetting;
     private int colorLabel;
-    private int colorRisingLabel, colorSettingLabel, colorCivilLabel, colorAstroLabel;
+    private int colorRisingLabel, colorSettingLabel, colorCivilLabel, colorNauticalLabel, colorAstroLabel;
     private boolean showSeconds = true;
     private int decimalPlaces = 1;
     private View dialogContent = null;
@@ -201,7 +204,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
-            colorDialog.setColorTag(GraphColorValues.TAG_GRAPH);
+            colorDialog.setColorTag(AppColorValues.TAG_GRAPH);
             colorDialog.setColorCollection(colors);
             colorDialog.setDialogListener(colorDialogListener);
         }
@@ -322,6 +325,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         sunLayout = dialogView.findViewById(R.id.info_sun_layout);
         sunElevation = (TextView)dialogView.findViewById(R.id.info_sun_elevation_current);
+        sunElevationHighlight = (ImageView) dialogView.findViewById(R.id.info_sun_elevation_current_highlight);
         sunElevationAtNoon = (TextView)dialogView.findViewById(R.id.info_sun_elevation_atnoon);
         sunElevationLabel = (TextView)dialogView.findViewById(R.id.info_sun_elevation_current_label);
 
@@ -1179,15 +1183,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private static final int SEEK_CENTIMETERS_INC = 1;
 
     @SuppressWarnings("ResourceType")
-    public void themeViews(Context context)
+    public void themeViews(@Nullable Context context)
     {
+        if (context == null) {
+            return;
+        }
+        updateLightmapColors(context);
+
         int[] colorAttrs = { R.attr.graphColor_night,   // 0
                 R.attr.graphColor_astronomical,         // 1
                 R.attr.graphColor_nautical,             // 2
                 R.attr.graphColor_civil,                // 3
                 R.attr.graphColor_day,                  // 4
-                R.attr.table_risingColor,                    // 5
-                R.attr.table_settingColor,                     // 6
+                R.attr.sunriseColor,                    // 5
+                R.attr.sunsetColor,                     // 6
                 R.attr.text_disabledColor,              // 7
                 R.attr.buttonPressColor,                // 8
                 android.R.attr.textColorPrimary,        // 9
@@ -1196,8 +1205,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 R.attr.table_risingColor,               // 12
                 R.attr.table_settingColor,              // 13
                 R.attr.table_civilColor,                // 14
-                R.attr.table_astroColor,                // 15
-                R.attr.table_nightColor,                // 16
+                R.attr.table_nauticalColor,             // 15
+                R.attr.table_astroColor,                // 16
+                R.attr.table_nightColor,                // 17
         };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
@@ -1216,8 +1226,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
         colorRisingLabel = ContextCompat.getColor(context, typedArray.getResourceId(12, def));
         colorSettingLabel = ContextCompat.getColor(context, typedArray.getResourceId(13, def));
         colorCivilLabel = ContextCompat.getColor(context, typedArray.getResourceId(14, def));
-        colorAstroLabel = ContextCompat.getColor(context, typedArray.getResourceId(15, def));
-        colorLabel = ContextCompat.getColor(context, typedArray.getResourceId(16, def));
+        colorNauticalLabel = ContextCompat.getColor(context, typedArray.getResourceId(15, def));
+        colorAstroLabel = ContextCompat.getColor(context, typedArray.getResourceId(16, def));
+        colorLabel = ContextCompat.getColor(context, typedArray.getResourceId(17, def));
         typedArray.recycle();
 
         if (themeOverride != null)
@@ -1263,6 +1274,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             colorRisingLabel = colorRising;
             colorSettingLabel = colorSetting;
             colorCivilLabel = colorCivil;
+            colorNauticalLabel = colorNautical;
             colorAstroLabel = colorAstro;
 
             field_astro.themeViews(themeOverride);
@@ -1291,19 +1303,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
             sunShadowLengthAtNoon.setTextColor(themeOverride.getSunsetTextColor());
             sunShadowLengthAtNoon.setTextSize(timeSizeSp);
-
-            SuntimesUtils.tintDrawable((InsetDrawable)riseIcon.getBackground(), themeOverride.getSunriseIconColor(), themeOverride.getSunriseIconStrokeColor(), themeOverride.getSunriseIconStrokePixels(context));
-            SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), themeOverride.getSunsetIconColor(), themeOverride.getSunsetIconStrokeColor(), themeOverride.getSunsetIconStrokePixels(context));
         }
 
-        GraphColorValues colors = initGraphColorValues(context);
+        AppColorValues colors = initGraphColorValues(context);
         if (colors != null)
         {
-            colorNight = colors.getColor(GraphColorValues.COLOR_NIGHT);
-            colorAstro = colors.getColor(GraphColorValues.COLOR_ASTRONOMICAL);
-            colorNautical = colors.getColor(GraphColorValues.COLOR_NAUTICAL);
-            colorCivil = colors.getColor(GraphColorValues.COLOR_CIVIL);
-            colorDay = colors.getColor(GraphColorValues.COLOR_DAY);
+            colorNight = colors.getColor(AppColorKeys.COLOR_NIGHT);
+            colorAstro = colors.getColor(AppColorKeys.COLOR_ASTRONOMICAL);
+            colorNautical = colors.getColor(AppColorKeys.COLOR_NAUTICAL);
+            colorCivil = colors.getColor(AppColorKeys.COLOR_CIVIL);
+            colorDay = colors.getColor(AppColorKeys.COLOR_DAY);
+            colorRising = colors.getColor(AppColorKeys.COLOR_RISING);
+            colorRisingLabel = colors.getColor(AppColorKeys.COLOR_RISING_TEXT);
+            colorSetting = colors.getColor(AppColorKeys.COLOR_SETTING);
+            colorSettingLabel = colors.getColor(AppColorKeys.COLOR_SETTING_TEXT);
         }
 
         ImageViewCompat.setImageTintList(playButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
@@ -1322,6 +1335,14 @@ public class LightMapDialog extends BottomSheetDialogFragment
         SuntimesUtils.colorizeImageView(field_nautical.icon, colorNautical);
         SuntimesUtils.colorizeImageView(field_civil.icon, colorCivil);
         SuntimesUtils.colorizeImageView(field_day.icon, colorDay);
+
+        if (themeOverride != null) {
+            SuntimesUtils.tintDrawable((InsetDrawable)riseIcon.getBackground(), themeOverride.getSunriseIconColor(), themeOverride.getSunriseIconStrokeColor(), themeOverride.getSunriseIconStrokePixels(context));
+            SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), themeOverride.getSunsetIconColor(), themeOverride.getSunsetIconStrokeColor(), themeOverride.getSunsetIconStrokePixels(context));
+        } else {
+            SuntimesUtils.tintDrawable((InsetDrawable)riseIcon.getBackground(), colorRising, colorRising, getResources().getDimensionPixelSize(R.dimen.sunIcon_width_risingBorder));
+            SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), colorSetting, colorSetting, getResources().getDimensionPixelSize(R.dimen.sunIcon_width_settingBorder));
+        }
 
         //colorLabel = field_night.label.getTextColors().getColorForState(new int[] { -android.R.attr.state_enabled }, Color.BLUE); // field_night.label.getCurrentTextColor()
     }
@@ -1355,13 +1376,36 @@ public class LightMapDialog extends BottomSheetDialogFragment
         startUpdateTask();
     }
 
+    protected void updateLightmapColors(Context context)
+    {
+        AppColorValues values = initGraphColorValues(context);
+
+        if (lightmap != null)
+        {
+            if (values != null) {
+                lightmap.getColors().values = new LightMapColorValues(values);
+            } else if (lightmap.getColors().values == null) {
+                lightmap.getColors().init(context);
+            }
+        }
+
+        if (graphView != null)
+        {
+            if (values != null) {
+                graphView.getOptions().colors = new LineGraphColorValues(values);
+            } else if (graphView.getOptions().colors == null) {
+                graphView.getOptions().init(context);
+            }
+            graphView.updateViews(graphView.getVisibility() == View.VISIBLE ? data : null);
+        }
+    }
+
     protected void updateLightmapViews(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
         if (context == null) {
             return;
         }
-        GraphColorValues values = initGraphColorValues(context);
 
         if (lightmap != null)
         {
@@ -1378,33 +1422,22 @@ public class LightMapDialog extends BottomSheetDialogFragment
             field_night.highlight(false);
 
             long dayDelta = data.dayLengthOther() - data.dayLength();
-            field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorRising));
+            field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorRisingLabel));
             field_day.highlight(false);
 
-            if (values != null) {
-                lightmap.getColors().values = values;
-            } else if (lightmap.getColors().values == null) {
-                lightmap.getColors().init(context);
-            }
             lightmap.updateViews(data);
             //Log.d("DEBUG", "LightMapDialog updated");
         }
-        if (graphView != null)
-        {
-            if (values != null) {
-                graphView.getOptions().colors = values;
-            } else if (graphView.getOptions().colors == null) {
-                graphView.getOptions().init(context);
-            }
+        if (graphView != null) {
             graphView.updateViews(graphView.getVisibility() == View.VISIBLE ? data : null);
         }
     }
 
     @Nullable
-    protected GraphColorValues initGraphColorValues(Context context)
+    protected AppColorValues initGraphColorValues(Context context)
     {
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-        return (GraphColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), LightMapColorValues.TAG_GRAPH);
+        return (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_GRAPH);
     }
 
     private void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
@@ -1424,14 +1457,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
         view.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
     }
 
-    private CharSequence styleElevationText(double elevation, Integer color, int places)
+    private CharSequence styleElevationText(double elevation, @Nullable Integer color, int places)
     {
         SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(elevation, places);
         String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
         SpannableString span = null;
         //noinspection ConstantConditions
         span = SuntimesUtils.createRelativeSpan(span, elevationString, elevationText.getSuffix(), 0.7f);
-        span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, color);
+        if (color != null) {
+            span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, color);
+        }
         return (span != null ? span : elevationString);
     }
 
@@ -1448,13 +1483,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private int getColorForPosition(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
     {
         if (position.elevation >= 0)
-            return (SuntimesRiseSetDataset.isRising(position, noonPosition) ? colorRisingLabel : colorSettingLabel);
+            return (SuntimesRiseSetDataset.isRising(position, noonPosition) ? colorRising : colorSetting);
 
         if (position.elevation >= -6)
-            return colorCivilLabel;
+            return colorCivil;
 
-        if (position.elevation >= -12)  //if (elevation >= -18)   // share color
-            return colorAstroLabel;
+        if (position.elevation >= -12)
+            return colorNautical;
+
+        if (position.elevation >= -18)
+            return colorAstro;
 
         return colorLabel;
     }
@@ -1553,20 +1591,35 @@ public class LightMapDialog extends BottomSheetDialogFragment
             if (currentPosition != null)
             {
                 styleAzimuthText(sunAzimuth, currentPosition.azimuth, null, 2);
-                sunElevation.setText(styleElevationText(currentPosition.elevation, getColorForPosition(currentPosition, noonPosition),2));
+                int textColor = getColorForPosition(currentPosition, noonPosition);
+
+                //sunElevation.setText(styleElevationText(currentPosition.elevation, null,2));
+                //sunElevation.setShadowLayer(8f, 0, 0, textColor);
+
+                //sunElevation.setText(styleElevationText(currentPosition.elevation, null,2));
+                //sunElevation.setBackgroundColor(textColor);
+
+                //sunElevation.setText(styleElevationText(currentPosition.elevation, textColor,2));
+                //sunElevation.setShadowLayer(32f, 0, 0, SuntimesUtils.getContrastGlow(textColor));
+
+                sunElevation.setText(styleElevationText(currentPosition.elevation, null, 2));
+                SuntimesUtils.colorizeImageView(sunElevationHighlight, textColor);
+                sunElevationHighlight.setVisibility(View.VISIBLE);
+
                 highlightLightmapKey(currentPosition.elevation);
 
             } else {
                 sunAzimuth.setText("");
                 sunAzimuth.setContentDescription("");
                 sunElevation.setText("");
+                sunElevationHighlight.setVisibility(View.GONE);
             }
 
             SuntimesRiseSetData riseSetData = data.dataActual;
             Calendar riseTime = (riseSetData != null ? riseSetData.sunriseCalendarToday() : null);
             SuntimesCalculator.SunPosition positionRising = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
             if (positionRising != null) {
-                styleAzimuthText(sunAzimuthRising, positionRising.azimuth, colorRising, decimalPlaces);
+                styleAzimuthText(sunAzimuthRising, positionRising.azimuth, colorRisingLabel, decimalPlaces);
 
             } else {
                 sunAzimuthRising.setText("");
@@ -1576,7 +1629,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             Calendar setTime = (riseSetData != null ? riseSetData.sunsetCalendarToday() : null);
             SuntimesCalculator.SunPosition positionSetting = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
             if (positionSetting != null) {
-                styleAzimuthText(sunAzimuthSetting, positionSetting.azimuth, colorSetting, decimalPlaces);
+                styleAzimuthText(sunAzimuthSetting, positionSetting.azimuth, colorSettingLabel, decimalPlaces);
 
             } else {
                 sunAzimuthSetting.setText("");
@@ -1585,7 +1638,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
             if (noonPosition != null)
             {
-                sunElevationAtNoon.setText(styleElevationText(noonPosition.elevation, colorSetting, decimalPlaces));
+                sunElevationAtNoon.setText(styleElevationText(noonPosition.elevation, colorSettingLabel, decimalPlaces));
                 styleAzimuthText(sunAzimuthAtNoon, noonPosition.azimuth, null, decimalPlaces);
 
             } else {
@@ -1757,7 +1810,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             } else if (info.length >= 2) {
                 String s = context.getString(R.string.length_twilight2, info[0].durationString(showSeconds), info[1].durationString(showSeconds));
                 String delimiter = context.getString(R.string.length_delimiter);
-                text.setText(SuntimesUtils.createBoldColorSpan(null, s, delimiter, colorRising));
+                text.setText(SuntimesUtils.createBoldColorSpan(null, s, delimiter, colorDay));
                 setVisible(true);
 
             } else {
@@ -1845,7 +1898,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return colors;
     }
     protected void initColors(Context context) {
-        colors = new GraphColorValuesCollection<>(context);
+        colors = new AppColorValuesCollection<>(context);
     }
 
     protected void showColorDialog(Context context)
@@ -1853,7 +1906,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
         ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
         dialog.setAppWidgetID((isNightMode ? 1 : 0));
-        dialog.setColorTag(GraphColorValues.TAG_GRAPH);
+        dialog.setColorTag(AppColorValues.TAG_GRAPH);
         dialog.setColorCollection(colors);
         dialog.setDialogListener(colorDialogListener);
         dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
@@ -1865,18 +1918,19 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             if (lightmap != null) {
                 if (values != null) {
-                    lightmap.getColors().values = new GraphColorValues(values);
+                    lightmap.getColors().values = new LightMapColorValues(values);
                 } else {
                     lightmap.getColors().init(getActivity());
                 }
             }
             if (graphView != null) {
                 if (values != null) {
-                    graphView.getOptions().colors = new GraphColorValues(values);
+                    graphView.getOptions().colors = new LineGraphColorValues(values);
                 } else {
                     graphView.getOptions().init(getActivity());
                 }
             }
+            themeViews(getActivity());
             updateViews();
         }
 

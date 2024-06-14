@@ -35,7 +35,6 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.graph.colors.GraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -850,7 +849,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
         public Lock anim_lock = null;
 
-        public GraphColorValues values;
+        public LightMapColorValues values;
 
         public LightMapColors() {
             values = new LightMapColorValues();
