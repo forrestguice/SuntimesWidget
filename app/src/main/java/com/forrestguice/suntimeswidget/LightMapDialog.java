@@ -62,6 +62,7 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
@@ -1907,6 +1908,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
         ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
         dialog.setAppWidgetID((isNightMode ? 1 : 0));
         dialog.setColorTag(AppColorValues.TAG_GRAPH);
+        dialog.setFilter(new CardColorValues().getColorKeys(),
+                         new LineGraphColorValues().getColorKeys(),
+                         new LightMapColorValues().getColorKeys());
         dialog.setColorCollection(colors);
         dialog.setDialogListener(colorDialogListener);
         dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);

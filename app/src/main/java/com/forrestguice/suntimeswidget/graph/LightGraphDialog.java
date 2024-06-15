@@ -791,6 +791,8 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         dialog.setColorTag(AppColorValues.TAG_GRAPH);
         dialog.setColorCollection(colors);
         dialog.setDialogListener(colorDialogListener);
+        dialog.setFilter(new LightMapColorValues().getColorKeys(),
+                         new LightGraphColorValues().getColorKeys());
         dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
     }
     private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
