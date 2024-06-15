@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Parcel;
 
+import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.equinox.EquinoxColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
@@ -30,7 +31,6 @@ import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.ToIntFunction;
@@ -42,8 +42,10 @@ public class AppColorValues extends ResourceColorValues
 {
     public static final String TAG_GRAPH = "graph";
 
-    private static final ResourceColorValues[] RESOURCE_VALUES = new ResourceColorValues[]{
-            new LightMapColorValues(), new LightGraphColorValues(), new LineGraphColorValues(), new EquinoxColorValues()
+    private static final ResourceColorValues[] RESOURCE_VALUES = new ResourceColorValues[] {
+            new CardColorValues(),
+            new LightMapColorValues(), new LightGraphColorValues(), new LineGraphColorValues(),
+            new EquinoxColorValues()
     };
 
     private static final ToIntFunction<Integer> toInt = new ToIntFunction<Integer>()
