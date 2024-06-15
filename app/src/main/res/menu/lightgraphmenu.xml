@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/optionsSubMenu"
-        android:icon="?attr/icActionGraph"
+        android:icon="?attr/icActionSettings"
         android:title="@string/configAction_options"
         app:showAsAction="never">
         <menu>
