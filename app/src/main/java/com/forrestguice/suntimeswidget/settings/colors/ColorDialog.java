@@ -69,9 +69,13 @@ public class ColorDialog extends BottomSheetDialogFragment
     public static final String KEY_SHOWALPHA = "showAlpha";
     public static final String KEY_COLOR = "color";
     public static final String KEY_RECENT = "recentColors";
+    public static final String KEY_SUGGESTED = "suggestedColor";
 
-    public ColorDialog() {}
+    public ColorDialog() {
+        setArguments(colorPagerArgs);
+    }
 
+    private Button btn_suggest;
     private ViewPager colorPager;
     private TabLayout colorPagerTabs;
     private ColorPickerPagerAdapter colorPagerAdapter;
@@ -89,6 +93,24 @@ public class ColorDialog extends BottomSheetDialogFragment
         {
             colorPagerAdapter.setColor(color);
             colorPagerAdapter.updateViews(getContext());
+        }
+    }
+
+    @Nullable
+    public Integer suggestedColor()
+    {
+        int suggested = colorPagerArgs.getInt(KEY_SUGGESTED, -1);
+        return (suggested == -1) ? null : suggested;
+    }
+    public void setSuggestedColor(@Nullable Integer color)
+    {
+        if (color == null || color == -1) {
+            colorPagerArgs.remove(KEY_SUGGESTED);
+        } else {
+            colorPagerArgs.putInt(KEY_SUGGESTED, color);
+        }
+        if (isAdded()) {
+            updateViews(getActivity());
         }
     }
 
@@ -212,14 +234,43 @@ public class ColorDialog extends BottomSheetDialogFragment
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recentColors);
 
+        btn_suggest = (Button) dialogContent.findViewById(R.id.dialog_button_suggest);
+        if (btn_suggest != null) {
+            btn_suggest.setOnClickListener(onDialogSuggestClick);
+        }
+
         Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
-        btn_cancel.setOnClickListener(onDialogCancelClick);
+        if (btn_cancel != null) {
+            btn_cancel.setOnClickListener(onDialogCancelClick);
+        }
 
         Button btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
-        btn_accept.setOnClickListener(onDialogAcceptClick);
+        if (btn_accept != null) {
+            btn_accept.setOnClickListener(onDialogAcceptClick);
+        }
+
+        updateViews(context);
     }
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    public void updateViews(Context context)
+    {
+        if (btn_suggest != null) {
+            btn_suggest.setVisibility(suggestedColor() != null ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    private final View.OnClickListener onDialogSuggestClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v)
+        {
+            Integer color = suggestedColor();
+            if (color != null) {
+                setColor(color);
+            }
+        }
+    };
+
+    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getDialog().cancel();
@@ -229,7 +280,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
