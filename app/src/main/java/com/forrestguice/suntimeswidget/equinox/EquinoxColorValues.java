@@ -30,70 +30,61 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
 /**
- * ColorValues
+ * EquinoxColorValues
  */
 public class EquinoxColorValues extends ResourceColorValues
 {
-    public static final String TAG_EQUINOX = "equinox";
-
-    public static final String COLOR_SPRING = AppColorKeys.COLOR_SPRING;
     public static final String COLOR_SPRING_TEXT =  AppColorKeys.COLOR_SPRING_TEXT;
-
-    public static final String COLOR_SUMMER =  AppColorKeys.COLOR_SUMMER;
     public static final String COLOR_SUMMER_TEXT =  AppColorKeys.COLOR_SUMMER_TEXT;
-
-    public static final String COLOR_AUTUMN =  AppColorKeys.COLOR_AUTUMN;
     public static final String COLOR_AUTUMN_TEXT =  AppColorKeys.COLOR_AUTUMN_TEXT;
-
-    public static final String COLOR_WINTER =  AppColorKeys.COLOR_WINTER;
     public static final String COLOR_WINTER_TEXT =  AppColorKeys.COLOR_WINTER_TEXT;
 
     public String[] getColorKeys() {
         return new String[] {
-                COLOR_SPRING, COLOR_SPRING_TEXT,
-                COLOR_SUMMER, COLOR_SUMMER_TEXT,
-                COLOR_AUTUMN, COLOR_AUTUMN_TEXT,
-                COLOR_WINTER, COLOR_WINTER_TEXT,
+                COLOR_SPRING_TEXT,
+                COLOR_SUMMER_TEXT,
+                COLOR_AUTUMN_TEXT,
+                COLOR_WINTER_TEXT,
         };
     }
     public int[] getColorAttrs() {
         return new int[] {
-                R.attr.springColor, R.attr.table_springColor,
-                R.attr.summerColor, R.attr.table_summerColor,
-                R.attr.fallColor, R.attr.table_fallColor,
-                R.attr.winterColor, R.attr.table_winterColor,
+                R.attr.table_springColor,
+                R.attr.table_summerColor,
+                R.attr.table_fallColor,
+                R.attr.table_winterColor,
         };
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorSpring, 0,
-                R.string.configLabel_themeColorSummer, 0,
-                R.string.configLabel_themeColorFall, 0,
-                R.string.configLabel_themeColorWinter, 0,
+                0,
+                0,
+                0,
+                0,
         };
     }
     public int[] getColorsResDark() {
         return new int[] {
-                R.color.springColor_dark, R.color.springColor_dark,
-                R.color.summerColor_dark, R.color.summerColor_dark,
-                R.color.fallColor_dark, R.color.fallColor_dark,
-                R.color.winterColor_dark, R.color.winterColor_dark,
+                R.color.springColor_dark,
+                R.color.summerColor_dark,
+                R.color.fallColor_dark,
+                R.color.winterColor_dark,
         };
     }
     public int[] getColorsResLight() {
         return new int[] {
-                R.color.springColor_light, R.color.springColor_light,
-                R.color.summerColor_light, R.color.summerColor_light,
-                R.color.fallColor_light, R.color.fallColor_light,
-                R.color.winterColor_light, R.color.winterColor_light,
+                R.color.springColor_light,
+                R.color.summerColor_light,
+                R.color.fallColor_light,
+                R.color.winterColor_light,
         };
     }
     public int[] getColorsFallback() {
         return new int[] {
-                Color.parseColor("#AAEB5B"), Color.parseColor("#AAEB5B"),
-                Color.parseColor("#FFD500"), Color.parseColor("#FFD500"),
-                Color.parseColor("#FF9900"), Color.parseColor("#FF9900"),
-                Color.parseColor("#37BBF0"), Color.parseColor("#37BBF0"),
+                Color.parseColor("#AAEB5B"),
+                Color.parseColor("#FFD500"),
+                Color.parseColor("#FF9900"),
+                Color.parseColor("#37BBF0"),
         };
     }
 
