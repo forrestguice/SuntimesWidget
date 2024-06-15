@@ -377,7 +377,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     {
         AppColorValuesCollection<AppColorValues> colors = new AppColorValuesCollection<>();
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-        AppColorValues values = (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_GRAPH);
+        AppColorValues values = (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
         if (values != null) {
             lightmap.getColors().values = new LightMapColorValues(values);
         } else if (lightmap.getColors().values == null) {

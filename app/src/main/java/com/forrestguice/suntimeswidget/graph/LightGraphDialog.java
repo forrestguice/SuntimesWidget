@@ -227,7 +227,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         {
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
-            colorDialog.setColorTag(AppColorValues.TAG_GRAPH);
+            colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
             colorDialog.setColorCollection(colors);
             colorDialog.setDialogListener(colorDialogListener);
         }
@@ -451,7 +451,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     public void updateGraphColors(Context context)
     {
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-        AppColorValues values = (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_GRAPH);
+        AppColorValues values = (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
 
         if (values != null)
         {
@@ -788,7 +788,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
         ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
         dialog.setAppWidgetID((isNightMode ? 1 : 0));
-        dialog.setColorTag(AppColorValues.TAG_GRAPH);
+        dialog.setColorTag(AppColorValues.TAG_APPCOLORS);
         dialog.setColorCollection(colors);
         dialog.setDialogListener(colorDialogListener);
         dialog.setFilter(new LightMapColorValues().getColorKeys(),

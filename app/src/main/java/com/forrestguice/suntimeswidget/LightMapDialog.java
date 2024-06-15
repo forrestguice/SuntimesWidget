@@ -205,7 +205,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
-            colorDialog.setColorTag(AppColorValues.TAG_GRAPH);
+            colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
             colorDialog.setColorCollection(colors);
             colorDialog.setDialogListener(colorDialogListener);
         }
@@ -1438,7 +1438,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     protected AppColorValues initGraphColorValues(Context context)
     {
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-        return (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_GRAPH);
+        return (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
     }
 
     private void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
@@ -1907,7 +1907,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
         ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
         dialog.setAppWidgetID((isNightMode ? 1 : 0));
-        dialog.setColorTag(AppColorValues.TAG_GRAPH);
+        dialog.setColorTag(AppColorValues.TAG_APPCOLORS);
         dialog.setFilter(new CardColorValues().getColorKeys(),
                          new LineGraphColorValues().getColorKeys(),
                          new LightMapColorValues().getColorKeys());

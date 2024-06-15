@@ -27,7 +27,7 @@ import android.os.Parcel;
  */
 public class AppColorValuesCollection<GraphColorValues> extends ColorValuesCollection<ColorValues>
 {
-    public static final String PREFS_GRAPH_COLORS = "prefs_graph_colors";
+    public static final String PREFS_APP_COLORS = "prefs_graph_colors";   // TODO: change
 
     public AppColorValuesCollection() {
         super();
@@ -41,7 +41,7 @@ public class AppColorValuesCollection<GraphColorValues> extends ColorValuesColle
 
     @Override
     public String getSharedPrefsName() {
-        return PREFS_GRAPH_COLORS;
+        return PREFS_APP_COLORS;
     }
 
     @Override

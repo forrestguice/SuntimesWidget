@@ -40,7 +40,7 @@ import java.util.function.ToIntFunction;
  */
 public class AppColorValues extends ResourceColorValues
 {
-    public static final String TAG_GRAPH = "graph";
+    public static final String TAG_APPCOLORS = "appcolors";
 
     private static final ResourceColorValues[] RESOURCE_VALUES = new ResourceColorValues[] {
             new CardColorValues(),
