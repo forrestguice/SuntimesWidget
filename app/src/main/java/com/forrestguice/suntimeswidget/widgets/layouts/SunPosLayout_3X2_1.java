@@ -128,11 +128,7 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
             options.initDefaultLight(context);
         else options.initDefaultDark(context);
 
-        options.colors.setColor(LineGraphColorValues.COLOR_DAY, theme.getDayColor());
-        options.colors.setColor(LineGraphColorValues.COLOR_CIVIL, theme.getCivilColor());
-        options.colors.setColor(LineGraphColorValues.COLOR_NAUTICAL, theme.getNauticalColor());
-        options.colors.setColor(LineGraphColorValues.COLOR_ASTRONOMICAL, theme.getAstroColor());
-        options.colors.setColor(LineGraphColorValues.COLOR_NIGHT, theme.getNightColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_GRAPH_BG, theme.getNightColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
         options.colors.setColor(LineGraphColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());

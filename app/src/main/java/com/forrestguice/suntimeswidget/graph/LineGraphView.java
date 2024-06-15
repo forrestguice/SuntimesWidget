@@ -91,7 +91,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         options = new LineGraphOptions(context);
         if (isInEditMode())
         {
-            setBackgroundColor(options.getColor(LineGraphColorValues.COLOR_NIGHT));
+            setBackgroundColor(options.getColor(LineGraphColorValues.COLOR_GRAPH_BG));
         }
     }
 
@@ -142,11 +142,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         if (options == null) {
             options = new LineGraphOptions(context);
         }
-        options.colors.setColor(LineGraphColorValues.COLOR_NIGHT, theme.getNightColor());
-        options.colors.setColor(LineGraphColorValues.COLOR_DAY, theme.getDayColor());
-        options.colors.setColor(LineGraphColorValues.COLOR_ASTRONOMICAL, theme.getAstroColor());
-        options.colors.setColor(LineGraphColorValues.COLOR_NAUTICAL, theme.getNauticalColor());
-        options.colors.setColor(LineGraphColorValues.COLOR_CIVIL, theme.getCivilColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_GRAPH_BG, theme.getNightColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
         options.colors.setColor(LineGraphColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
@@ -643,7 +639,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void drawBackground(Canvas c, Paint p, LineGraphOptions options)
         {
-            p.setColor(options.getColor(LineGraphColorValues.COLOR_NIGHT));
+            p.setColor(options.getColor(LineGraphColorValues.COLOR_GRAPH_BG));
             drawRect(c, p);
         }
 

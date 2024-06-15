@@ -41,6 +41,7 @@ public class AppColorKeys
     public static final String COLOR_POINT_FILL = "color_pointFill";
     public static final String COLOR_POINT_STROKE = "color_pointStroke";
 
+    public static final String COLOR_GRAPH_BG = "color_graphBackground";
     public static final String COLOR_AXIS = "color_axis";
     public static final String COLOR_GRID_MAJOR = "color_grid_major";
     public static final String COLOR_GRID_MINOR = "color_grid_minor";
