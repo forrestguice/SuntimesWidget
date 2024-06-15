@@ -21,6 +21,9 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
+
+import com.forrestguice.suntimeswidget.R;
 
 /**
  * ColorValuesCollection
@@ -58,5 +61,18 @@ public class AppColorValuesCollection<GraphColorValues> extends ColorValuesColle
             return new AppColorValuesCollection[size];
         }
     };
+
+    @Nullable
+    public static AppColorValues initSelectedColors(@Nullable Context context)
+    {
+        if (context != null) {
+            AppColorValuesCollection<AppColorValues> colors = new AppColorValuesCollection<>();
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            return (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
+
+        } else {
+            return null;
+        }
+    }
 
 }
