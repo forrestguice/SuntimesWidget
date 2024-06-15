@@ -40,6 +40,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -236,6 +237,13 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     }
     protected void onRestoreInstanceState( Bundle savedState ) {
         colorCollection = savedState.getParcelable("colorCollection");
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        ViewUtils.disableTouchOutsideBehavior(getDialog());
     }
 
     private final ColorValuesSheetFragment.FragmentListener fragmentListener = new ColorValuesSheetFragment.FragmentListener()
