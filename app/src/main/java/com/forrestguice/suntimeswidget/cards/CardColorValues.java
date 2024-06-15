@@ -43,32 +43,38 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
 
     public String[] getColorKeys() {
         return new String[] {
-                COLOR_RISING, COLOR_RISING_TEXT, COLOR_SETTING, COLOR_SETTING_TEXT,
+                COLOR_RISING, COLOR_RISING_TEXT,
+                COLOR_SETTING, COLOR_SETTING_TEXT,
         };
     }
     public int[] getColorAttrs() {
         return new int[] {
-                R.attr.sunriseColor, R.attr.table_risingColor, R.attr.sunsetColor, R.attr.table_settingColor,
+                R.attr.sunriseColor, R.attr.table_risingColor,
+                R.attr.sunsetColor, R.attr.table_settingColor,
         };
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorSunrise, 0, R.string.configLabel_themeColorSunset, 0,
+                R.string.configLabel_themeColorSunrise, 0,
+                R.string.configLabel_themeColorSunset, 0,
         };
     }
     public int[] getColorsResDark() {
         return new int[] {
-                R.color.sunIcon_color_rising_dark, R.color.table_rising_dark, R.color.sunIcon_color_setting_dark, R.color.table_rising_dark,
+                R.color.sunIcon_color_rising_dark, R.color.table_rising_dark,
+                R.color.sunIcon_color_setting_dark, R.color.table_setting_dark,
         };
     }
     public int[] getColorsResLight() {
         return new int[] {
-                R.color.sunIcon_color_rising_light,  R.color.table_rising_light, R.color.sunIcon_color_setting_light, R.color.table_rising_light,
+                R.color.sunIcon_color_rising_light,  R.color.table_rising_light,
+                R.color.sunIcon_color_setting_light, R.color.table_setting_light,
         };
     }
     public int[] getColorsFallback() {
         return new int[] {
-                Color.YELLOW, Color.GRAY, Color.YELLOW, Color.GRAY,
+                Color.parseColor("#FFD500"), Color.parseColor("#FFD500"),
+                Color.parseColor("#FF9900"), Color.parseColor("#FF9900"),
         };
     }
 
