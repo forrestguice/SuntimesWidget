@@ -2,12 +2,19 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="vertical" android:paddingTop="@dimen/dialog_margin"
+    android:orientation="vertical"
     android:background="?attr/dialogBackground">
+
+    <LinearLayout android:visibility="visible"
+        android:background="?attr/text_accentColor"
+        android:layout_width="match_parent" android:layout_height="2dp"
+        android:orientation="horizontal" android:gravity="center_vertical|start">
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingTop="@dimen/dialog_margin"
         android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin" android:layout_marginTop="0dp" android:layout_marginBottom="@dimen/dialog_margin">
 
         <TextView android:id="@+id/dialog_title"
