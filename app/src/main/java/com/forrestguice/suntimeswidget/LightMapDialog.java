@@ -1942,6 +1942,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
         public void requestHideSheet() {}
         public void requestExpandSheet() {}
         public void onModeChanged(int mode) {}
+
+        @Nullable
+        @Override
+        public ColorValues getDefaultValues() {
+            return new AppColorValues(getActivity(), true);
+        }
     };
 
 }

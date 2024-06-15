@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -232,6 +233,12 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             if (dialogListener != null) {
                 dialogListener.onModeChanged(mode);
             }
+        }
+
+        @Nullable
+        @Override
+        public ColorValues getDefaultValues() {
+            return ((dialogListener != null) ? dialogListener.getDefaultValues() : null);
         }
     };
 

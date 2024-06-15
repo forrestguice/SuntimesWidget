@@ -188,12 +188,14 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     {
         super.onSaveInstanceState(out);
         out.putParcelable("colorValues", colorValues);
+        out.putParcelable("defaultValues", defaultValues);
         out.putStringArray("filterValues", filterValues.toArray(new String[0]));
         out.putString("editID", editID.getText().toString());
     }
     protected void onRestoreInstanceState(@NonNull Bundle savedState)
     {
         colorValues = savedState.getParcelable("colorValues");
+        defaultValues = savedState.getParcelable("defaultValues");
         String[] filter = savedState.getStringArray("filterValues");
         if (filter != null) {
             filterValues  = new TreeSet<>(Arrays.asList(filter));
@@ -293,6 +295,14 @@ public class ColorValuesEditFragment extends ColorValuesFragment
          return colorValues;
     }
 
+    protected ColorValues defaultValues = null;
+    public void setDefaultValues(ColorValues v) {
+        defaultValues = v;
+    }
+    public ColorValues getDefaultValues() {
+        return defaultValues;
+    }
+
     protected Set<String> filterValues = new TreeSet<>();
     public void setFilter(@Nullable String[] keys)
     {
@@ -336,6 +346,10 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         intent.putExtra("showAlpha", true);
         intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
         intent.putExtra(ColorDialog.KEY_RECENT, colorValues.getColors());
+
+        if (defaultValues != null) {
+            intent.putExtra(ColorDialog.KEY_SUGGESTED, defaultValues.getColor(key));
+        }
         return intent;
     }
 

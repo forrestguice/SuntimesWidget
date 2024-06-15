@@ -1554,6 +1554,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         public void requestHideSheet() {}
         public void requestExpandSheet() {}
         public void onModeChanged(int mode) {}
+
+        @Nullable
+        @Override
+        public ColorValues getDefaultValues() {
+            return new WorldMapColorValues(getActivity(), true);
+        }
     };
 
     private ColorValuesCollection<ColorValues> colors;

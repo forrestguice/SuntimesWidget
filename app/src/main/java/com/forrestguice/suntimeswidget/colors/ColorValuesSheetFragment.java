@@ -139,8 +139,12 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     public void updateViews(ColorValues values)
     {
-        if (editDialog != null) {
+        if (editDialog != null)
+        {
             editDialog.setColorValues(values);
+            if (listener != null) {
+                editDialog.setDefaultValues(listener.getDefaultValues());
+            }
         }
         updateViews();
     }
@@ -187,6 +191,9 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                 editDialog.setColorValues(values);
                 editDialog.setID(suggestColorValuesID(context));
                 editDialog.setAllowDelete(false);
+                if (listener != null) {
+                    editDialog.setDefaultValues(listener.getDefaultValues());
+                }
                 setMode(MODE_EDIT);
                 toggleFragmentVisibility(getMode());
                 requestExpandSheet();
@@ -201,6 +208,9 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             if (context != null && colorsID != null) {
                 editDialog.setColorValues(colorCollection.getColors(context, colorsID));
                 editDialog.setAllowDelete(true);
+                if (listener != null) {
+                    editDialog.setDefaultValues(listener.getDefaultValues());
+                }
                 setMode(MODE_EDIT);
                 toggleFragmentVisibility(getMode());
                 requestExpandSheet();
@@ -360,6 +370,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         void requestExpandSheet();
         void onColorValuesSelected(ColorValues values);
         void onModeChanged(int mode);
+        @Nullable ColorValues getDefaultValues();
     }
 
     protected FragmentListener listener = null;
