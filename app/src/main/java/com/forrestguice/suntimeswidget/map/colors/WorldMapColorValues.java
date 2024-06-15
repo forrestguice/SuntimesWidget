@@ -21,19 +21,17 @@ package com.forrestguice.suntimeswidget.map.colors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Parcel;
-import android.support.v4.content.ContextCompat;
 
-import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
 /**
  * ColorValues
  */
-public class WorldMapColorValues extends ColorValues
+public class WorldMapColorValues extends ResourceColorValues
 {
     public static final String TAG_WORLDMAP = "worldmap";
 
@@ -120,37 +118,12 @@ public class WorldMapColorValues extends ColorValues
     protected WorldMapColorValues(Parcel in) {
         super(in);
     }
-    public WorldMapColorValues()
-    {
+    public WorldMapColorValues() {
         super();
-        if (BuildConfig.DEBUG && (getColorKeys().length != getColorsFallback().length)) {
-            throw new AssertionError("COLORS and COLORS_FALLBACK have different lengths! These arrays should be one-to-one.");
-        }
-        String[] colorKeys = getColorKeys();
-        int[] fallbackColors = getColorsFallback();
-        for (int i=0; i<colorKeys.length; i++) {
-            setColor(colorKeys[i], fallbackColors[i]);
-            setLabel(colorKeys[i], colorKeys[i]);
-        }
     }
 
-    public WorldMapColorValues(Context context, boolean darkTheme)
-    {
-        super();
-        if (BuildConfig.DEBUG && (getColorKeys().length != getColorAttrs().length)) {
-            throw new AssertionError("COLORS and COLORS_ATTR have different lengths! These arrays should be one-to-one.");
-        }
-        String[] colorKeys = getColorKeys();
-        int[] labelsResID = getColorLabelsRes();
-        int[] defaultResID = darkTheme ? getColorsResDark() : getColorsResLight();
-        int[] attrs = getColorAttrs();
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        for (int i=0; i<colorKeys.length; i++)
-        {
-            setColor(colorKeys[i], (attrs[i] != 0) ? ContextCompat.getColor(context, a.getResourceId(i, defaultResID[i])) : ContextCompat.getColor(context, defaultResID[i]));
-            setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
-        }
-        a.recycle();
+    public WorldMapColorValues(Context context, boolean darkTheme) {
+        super(context, darkTheme);
     }
 
     public WorldMapColorValues(String jsonString) {
@@ -166,28 +139,6 @@ public class WorldMapColorValues extends ColorValues
             return new WorldMapColorValues[size];
         }
     };
-
-    public ColorValues getDefaultValues(Context context, boolean darkTheme)
-    {
-        ColorValues values = new ColorValues()
-        {
-            @Override
-            public String[] getColorKeys() {
-                return WorldMapColorValues.this.getColorKeys();
-            }
-        };
-
-        String[] colorKeys = getColorKeys();
-        int[] labelsResID = getColorLabelsRes();
-        int[] defaultResID = darkTheme ? getColorsResDark() : getColorsResLight();
-        for (int i=0; i<colorKeys.length; i++)
-        {
-            values.setColor(colorKeys[i], ContextCompat.getColor(context, defaultResID[i]));
-            values.setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
-        }
-        values.setID(darkTheme ? context.getString(R.string.widgetThemes_dark) : context.getString(R.string.widgetThemes_light));
-        return values;
-    }
 
     public static WorldMapColorValues getColorDefaults(Context context, boolean darkTheme) {
         return new WorldMapColorValues(new WorldMapColorValues().getDefaultValues(context, darkTheme));
