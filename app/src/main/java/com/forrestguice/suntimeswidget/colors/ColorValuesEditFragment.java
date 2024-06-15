@@ -238,9 +238,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             panel.removeAllViews();
             for (int i=0; i<keys.length; i++)
             {
-                if (!passesFilter(keys[i])) {
+                if (applyFilter()
+                        && !passesFilter(keys[i])) {
                     continue;
                 }
+
                 TextView colorEdit = new TextView(getActivity());
                 colorEdit.setText(colorValues.getLabel(keys[i]));
                 colorEdit.setTextColor(colorValues.getColor(keys[i]));
@@ -303,6 +305,19 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         return defaultValues;
     }
 
+    public void setApplyFilter(boolean value) {
+        getArguments().putBoolean("applyFilter", value);
+        if (isAdded()) {
+            updateViews();
+        }
+    }
+    public boolean applyFilter() {
+        return getArguments().getBoolean("applyFilter", hasFilter());
+    }
+    public boolean hasFilter() {
+        return (!filterValues.isEmpty());
+    }
+
     protected Set<String> filterValues = new TreeSet<>();
     public void setFilter(@Nullable String[] keys)
     {
@@ -343,7 +358,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     protected Intent pickColorIntent(String key, int requestCode)
     {
         Intent intent = new Intent(getActivity(), ColorActivity.class);
-        intent.putExtra("showAlpha", true);
+        intent.putExtra(ColorDialog.KEY_SHOWALPHA, true);
         intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
         intent.putExtra(ColorDialog.KEY_RECENT, colorValues.getColors());
 

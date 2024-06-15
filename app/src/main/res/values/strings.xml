@@ -2387,6 +2387,7 @@
     <string name="color_dialog_hint_hex">#FFFFFF</string>
 
     <string name="configAction_colors">Colors</string>    <!-- TODO -->
+    <string name="configAction_filterColors">Filter</string>    <!-- checkbox label -->    <!-- TODO -->
     <string name="configAction_addColors">Add</string>    <!-- TODO -->
     <string name="configAction_editColors">Edit</string>    <!-- TODO -->
     <string name="configAction_saveColors">Save</string>    <!-- TODO -->

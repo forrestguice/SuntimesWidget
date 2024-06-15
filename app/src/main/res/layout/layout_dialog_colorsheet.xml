@@ -5,11 +5,25 @@
     android:orientation="vertical" android:paddingTop="@dimen/dialog_margin"
     android:background="?attr/dialogBackground">
 
-    <TextView android:id="@+id/dialog_title"
-        style="@style/DialogTitleStyle"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin" android:layout_marginTop="0dp" android:layout_marginBottom="@dimen/dialog_margin"
-        android:text="@string/configAction_colors" />
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin" android:layout_marginTop="0dp" android:layout_marginBottom="@dimen/dialog_margin">
+
+        <TextView android:id="@+id/dialog_title"
+            style="@style/DialogTitleStyle"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/configAction_colors" />
+
+        <View android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null" />
+
+        <CheckBox android:id="@+id/check_filter"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/configAction_filterColors" />
+
+    </LinearLayout>
 
     <FrameLayout android:minHeight="25dp"
         android:layout_width="match_parent" android:layout_height="wrap_content"
