@@ -59,6 +59,8 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -80,6 +82,8 @@ import java.util.List;
 
 public class EquinoxCardDialog extends BottomSheetDialogFragment
 {
+    public static final String DIALOGTAG_COLORS= "equinox_colors";
+
     public static final String DIALOGTAG_HELP = "equinox_help";
     public static final int HELP_PATH_ID = R.string.help_solstice_path;
 
@@ -139,7 +143,10 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
         AppColorValuesCollection<AppColorValues> colors = new AppColorValuesCollection<>();
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-        options.colors = new EquinoxColorValues(colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_GRAPH));
+        ColorValues values = colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
+        if (values != null) {
+            options.colors = new EquinoxColorValues(values);
+        }
 
         empty = (TextView)v.findViewById(R.id.txt_empty);
         text_title = (TextView)v.findViewById(R.id.text_title1);
@@ -188,6 +195,16 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
 
         FragmentManager fragments = getChildFragmentManager();
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        if (colorDialog != null)
+        {
+            boolean isNightMode = getActivity().getResources().getBoolean(R.bool.is_nightmode);
+            colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
+            colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
+            colorDialog.setColorCollection(new AppColorValuesCollection<>(getActivity()));
+            colorDialog.setDialogListener(colorDialogListener);
+        }
+
         HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
@@ -503,6 +520,10 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         {
             switch (item.getItemId())
             {
+                case R.id.action_colors:
+                    showColorDialog(getActivity());
+                    return true;
+
                 case R.id.trackRecent: case R.id.trackClosest: case R.id.trackUpcoming:
                     onTrackingModeChanged(getContext(), item.getItemId());
                     return true;
@@ -520,6 +541,46 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             }
         }
     });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void showColorDialog(Context context)
+    {
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
+        dialog.setAppWidgetID((isNightMode ? 1 : 0));
+        dialog.setColorTag(AppColorValues.TAG_APPCOLORS);
+        dialog.setColorCollection(new AppColorValuesCollection<>(context));
+        dialog.setDialogListener(colorDialogListener);
+        dialog.setFilter(new EquinoxColorValues().getColorKeys());
+        dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
+    }
+
+    private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
+    {
+        @Override
+        public void onColorValuesSelected(ColorValues values)
+        {
+            if (values != null) {
+                options.colors = new EquinoxColorValues(values);
+            } else {
+                options.init(getActivity());
+            }
+            card_adapter.notifyDataSetChanged();
+        }
+
+        public void requestPeekHeight(int height) {}
+        public void requestHideSheet() {}
+        public void requestExpandSheet() {}
+        public void onModeChanged(int mode) {}
+
+        @Nullable
+        @Override
+        public ColorValues getDefaultValues() {
+            return new AppColorValues(getActivity(), true);
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
