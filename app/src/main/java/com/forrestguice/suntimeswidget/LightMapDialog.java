@@ -1314,10 +1314,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
             colorNautical = colors.getColor(AppColorKeys.COLOR_NAUTICAL);
             colorCivil = colors.getColor(AppColorKeys.COLOR_CIVIL);
             colorDay = colors.getColor(AppColorKeys.COLOR_DAY);
-            colorRising = colors.getColor(AppColorKeys.COLOR_RISING);
-            colorRisingLabel = colors.getColor(AppColorKeys.COLOR_RISING_TEXT);
-            colorSetting = colors.getColor(AppColorKeys.COLOR_SETTING);
-            colorSettingLabel = colors.getColor(AppColorKeys.COLOR_SETTING_TEXT);
+            colorRising = colors.getColor(AppColorKeys.COLOR_RISING_SUN);
+            colorRisingLabel = colors.getColor(AppColorKeys.COLOR_RISING_SUN_TEXT);
+            colorSetting = colors.getColor(AppColorKeys.COLOR_SETTING_SUN);
+            colorSettingLabel = colors.getColor(AppColorKeys.COLOR_SETTING_SUN_TEXT);
         }
 
         ImageViewCompat.setImageTintList(playButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));

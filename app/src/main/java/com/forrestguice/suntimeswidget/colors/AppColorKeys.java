@@ -27,10 +27,15 @@ public class AppColorKeys
     public static final String COLOR_NAUTICAL = "color_nautical";
     public static final String COLOR_ASTRONOMICAL = "color_astronomical";
 
-    public static final String COLOR_RISING = "color_rising";
-    public static final String COLOR_RISING_TEXT = "color_risingText";
-    public static final String COLOR_SETTING = "color_setting";
-    public static final String COLOR_SETTING_TEXT = "color_settingText";
+    public static final String COLOR_RISING_SUN = "color_risingSun";
+    public static final String COLOR_RISING_SUN_TEXT = "color_risingSunText";
+    public static final String COLOR_RISING_MOON = "color_risingMoon";
+    public static final String COLOR_RISING_MOON_TEXT = "color_risingMoonText";
+
+    public static final String COLOR_SETTING_SUN = "color_settingSun";
+    public static final String COLOR_SETTING_SUN_TEXT = "color_settingSunText";
+    public static final String COLOR_SETTING_MOON = "color_settingMoon";
+    public static final String COLOR_SETTING_MOON_TEXT = "color_settingMoonText";
 
     public static final String COLOR_SUN_FILL = "color_sunFill";
     public static final String COLOR_SUN_STROKE = "color_sunStroke";

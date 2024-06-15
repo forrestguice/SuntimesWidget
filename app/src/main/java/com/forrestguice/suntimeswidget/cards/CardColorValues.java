@@ -35,46 +35,64 @@ import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
  */
 public class CardColorValues extends ResourceColorValues implements Parcelable
 {
-    public static final String COLOR_RISING = AppColorKeys.COLOR_RISING;
-    public static final String COLOR_RISING_TEXT = AppColorKeys.COLOR_RISING_TEXT;
+    public static final String COLOR_RISING_SUN = AppColorKeys.COLOR_RISING_SUN;
+    public static final String COLOR_RISING_SUN_TEXT = AppColorKeys.COLOR_RISING_SUN_TEXT;
 
-    public static final String COLOR_SETTING = AppColorKeys.COLOR_SETTING;
-    public static final String COLOR_SETTING_TEXT = AppColorKeys.COLOR_SETTING_TEXT;
+    public static final String COLOR_RISING_MOON = AppColorKeys.COLOR_RISING_MOON;
+    public static final String COLOR_RISING_MOON_TEXT = AppColorKeys.COLOR_RISING_MOON_TEXT;
+
+    public static final String COLOR_SETTING_SUN = AppColorKeys.COLOR_SETTING_SUN;
+    public static final String COLOR_SETTING_SUN_TEXT = AppColorKeys.COLOR_SETTING_SUN_TEXT;
+
+    public static final String COLOR_SETTING_MOON = AppColorKeys.COLOR_SETTING_MOON;
+    public static final String COLOR_SETTING_MOON_TEXT = AppColorKeys.COLOR_SETTING_MOON_TEXT;
 
     public String[] getColorKeys() {
         return new String[] {
-                COLOR_RISING, COLOR_RISING_TEXT,
-                COLOR_SETTING, COLOR_SETTING_TEXT,
+                COLOR_RISING_SUN, COLOR_RISING_SUN_TEXT,
+                COLOR_SETTING_SUN, COLOR_SETTING_SUN_TEXT,
+                COLOR_RISING_MOON, COLOR_RISING_MOON_TEXT,
+                COLOR_SETTING_MOON, COLOR_SETTING_MOON_TEXT,
         };
     }
     public int[] getColorAttrs() {
         return new int[] {
                 R.attr.sunriseColor, R.attr.table_risingColor,
                 R.attr.sunsetColor, R.attr.table_settingColor,
+                R.attr.moonriseColor, R.attr.table_moonRisingColor,
+                R.attr.moonsetColor, R.attr.table_moonSettingColor,
         };
     }
     public int[] getColorLabelsRes() {
         return new int[] {
                 R.string.configLabel_themeColorSunrise, 0,
                 R.string.configLabel_themeColorSunset, 0,
+                R.string.configLabel_themeColorMoonrise, 0,
+                R.string.configLabel_themeColorMoonset, 0,
         };
     }
     public int[] getColorsResDark() {
         return new int[] {
                 R.color.sunIcon_color_rising_dark, R.color.table_rising_dark,
                 R.color.sunIcon_color_setting_dark, R.color.table_setting_dark,
+                R.color.moonIcon_color_rising_dark, R.color.table_moon_rising_dark,
+                R.color.moonIcon_color_setting_dark, R.color.table_moon_setting_dark,
         };
     }
     public int[] getColorsResLight() {
         return new int[] {
                 R.color.sunIcon_color_rising_light,  R.color.table_rising_light,
                 R.color.sunIcon_color_setting_light, R.color.table_setting_light,
+                R.color.moonIcon_color_rising_light, R.color.table_moon_rising_light,
+                R.color.moonIcon_color_setting_light, R.color.table_moon_setting_light,
         };
     }
     public int[] getColorsFallback() {
         return new int[] {
                 Color.parseColor("#FFD500"), Color.parseColor("#FFD500"),
                 Color.parseColor("#FF9900"), Color.parseColor("#FF9900"),
+                Color.LTGRAY, Color.LTGRAY,
+                Color.DKGRAY, Color.DKGRAY,
         };
     }
 
