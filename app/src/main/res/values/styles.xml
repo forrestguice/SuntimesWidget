@@ -89,6 +89,11 @@
         <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
         <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
 
+        <item name="moonNewColor">@color/moonIcon_color_new</item>
+        <item name="moonWaxingColor">@color/moonIcon_color_waxing</item>
+        <item name="moonFullColor">@color/moonIcon_color_full</item>
+        <item name="moonWaningColor">@color/moonIcon_color_waning</item>
+
         <item name="springColor">@color/springColor</item>
         <item name="summerColor">@color/summerColor</item>
         <item name="fallColor">@color/fallColor</item>
@@ -306,6 +311,11 @@
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
         <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
         <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
+
+        <item name="moonNewColor">@color/moonIcon_color_new_light</item>
+        <item name="moonWaxingColor">@color/moonIcon_color_waxing_light</item>
+        <item name="moonFullColor">@color/moonIcon_color_full_light</item>
+        <item name="moonWaningColor">@color/moonIcon_color_waning_light</item>
 
         <item name="springColor">@color/springColor_light</item>
         <item name="summerColor">@color/summerColor_light</item>
@@ -527,6 +537,11 @@
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
         <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
         <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
+
+        <item name="moonNewColor">@color/moonIcon_color_new_dark</item>
+        <item name="moonWaxingColor">@color/moonIcon_color_waxing_dark</item>
+        <item name="moonFullColor">@color/moonIcon_color_full_dark</item>
+        <item name="moonWaningColor">@color/moonIcon_color_waning_dark</item>
 
         <item name="springColor">@color/springColor_dark</item>
         <item name="summerColor">@color/summerColor_dark</item>

@@ -299,11 +299,16 @@
     <color name="moonIcon_color_setting_light">#6B5256</color>
 
     <!-- moon icons (waxing phase, waning phase) -->
-    <color name="moonIcon_color_waxing">@color/grey_300</color>
-    <color name="moonIcon_color_waning">@color/grey_500l</color>
+    <color name="moonIcon_color_waxing">@color/moonIcon_color_waxing_light</color>
+    <color name="moonIcon_color_waxing_dark">@color/grey_300</color>
+    <color name="moonIcon_color_waxing_light">@color/grey_300</color>
+
+    <color name="moonIcon_color_waning">@color/moonIcon_color_waning_light</color>
+    <color name="moonIcon_color_waning_dark">@color/grey_500l</color>
+    <color name="moonIcon_color_waning_light">@color/grey_500l</color>
 
     <!-- moon icon (new) -->
-    <color name="moonIcon_color_new">@color/moonIcon_color_new_dark</color>
+    <color name="moonIcon_color_new">@color/moonIcon_color_new_light</color>
     <color name="moonIcon_color_new_border">@color/moonIcon_color_new_border_dark</color>
 
     <color name="moonIcon_color_new_dark">@color/grey_850</color>
@@ -314,7 +319,7 @@
     <color name="moonIcon_color_new_text_light">@color/grey_850</color>
 
     <!-- moon icon (full) -->
-    <color name="moonIcon_color_full">@color/moonIcon_color_full_dark</color>
+    <color name="moonIcon_color_full">@color/moonIcon_color_full_light</color>
     <color name="moonIcon_color_full_border">@color/moonIcon_color_full_border_dark</color>
 
     <color name="moonIcon_color_full_dark">@color/grey_100</color>

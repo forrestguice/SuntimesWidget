@@ -84,6 +84,11 @@
     <attr name="moonPhaseIcon2" format="reference" />
     <attr name="moonPhaseIcon3" format="reference" />
 
+    <attr name="moonNewColor" format="reference" />
+    <attr name="moonWaxingColor" format="reference" />
+    <attr name="moonFullColor" format="reference" />
+    <attr name="moonWaningColor" format="reference" />
+
     <attr name="springColor" format="reference" />
     <attr name="summerColor" format="reference" />
     <attr name="fallColor" format="reference" />

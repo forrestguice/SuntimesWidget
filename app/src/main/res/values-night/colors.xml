@@ -65,6 +65,11 @@
     <color name="moonIcon_color_rising">@color/moonIcon_color_rising_dark</color>
     <color name="moonIcon_color_setting">@color/moonIcon_color_setting_dark</color>
 
+    <color name="moonIcon_color_new">@color/moonIcon_color_new_dark</color>
+    <color name="moonIcon_color_waxing">@color/moonIcon_color_waxing_dark</color>
+    <color name="moonIcon_color_full">@color/moonIcon_color_full_dark</color>
+    <color name="moonIcon_color_waning">@color/moonIcon_color_waning_dark</color>
+
     <color name="springColor">@color/springColor_dark</color>
     <color name="summerColor">@color/summerColor_dark</color>
     <color name="fallColor">@color/fallColor_dark</color>
