@@ -2572,9 +2572,11 @@ public class SuntimesActivity extends AppCompatActivity
         if (notes != null) {
             initNotes();
         }
-        if (card_adapter != null)
-        {
+        if (card_adapter != null) {
             card_adapter.notifyDataSetChanged();
+        }
+        if (card_equinoxSolstice != null) {
+            card_equinoxSolstice.setColorValues(SuntimesActivity.this, values);
         }
     }
 

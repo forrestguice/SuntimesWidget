@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +43,9 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -91,6 +95,11 @@ public class EquinoxCardView extends LinearLayout
         initLocale(context);
         options.init(context);
         LayoutInflater.from(context).inflate(getLayoutResID(), this, true);
+
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(context);
+        if (colors != null) {
+            options.colors = new EquinoxColorValues(colors);
+        }
 
         if (attrs != null)
         {
@@ -334,6 +343,18 @@ public class EquinoxCardView extends LinearLayout
     }
     public WidgetSettings.TrackingMode getTrackingMode() {
         return options.trackingMode;
+    }
+
+    public void setColorValues(Context context, @Nullable ColorValues values)
+    {
+        if (values != null) {
+            options.colors = new EquinoxColorValues(values);
+        } else {
+            options.init(context);
+        }
+        if (card_adapter != null) {
+            card_adapter.notifyDataSetChanged();
+        }
     }
 
     /**
