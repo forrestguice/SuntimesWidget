@@ -47,6 +47,9 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -336,7 +339,8 @@ public class MoonPhasesView1 extends LinearLayout
         private HashMap<Integer, SuntimesMoonData1> data = new HashMap<>();
         private SuntimesCalculator.MoonPhase nextPhase = SuntimesCalculator.MoonPhase.FULL;
 
-        private int colorNote, colorTitle, colorTime, colorText, colorWaxing, colorWaning, colorFull, colorNew, colorDisabled;
+        private MoonPhasesColorValues colors;
+        private int colorNote, colorTitle, colorTime, colorText, colorDisabled;
         private float strokePixelsNew, strokePixelsFull;
         private Float spTime = null, spText = null, spTitle = null, spSuffix = null;
         private boolean boldTime, boldTitle;
@@ -467,6 +471,7 @@ public class MoonPhasesView1 extends LinearLayout
         @SuppressLint("ResourceType")
         protected void initTheme(Context context)
         {
+            colors = new MoonPhasesColorValues(context);
             int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
@@ -476,10 +481,6 @@ public class MoonPhasesView1 extends LinearLayout
             typedArray.recycle();
 
             strokePixelsFull = strokePixelsNew = context.getResources().getDimension(R.dimen.moonIcon_stroke_full);
-            colorWaxing = ContextCompat.getColor(context, R.color.moonIcon_color_waxing);
-            colorWaning = ContextCompat.getColor(context, R.color.moonIcon_color_waning);
-            colorFull = ContextCompat.getColor(context, R.color.moonIcon_color_full);
-            colorNew = ContextCompat.getColor(context, R.color.moonIcon_color_new);
         }
 
         protected void applyTheme(Context context, SuntimesTheme theme)
@@ -488,10 +489,10 @@ public class MoonPhasesView1 extends LinearLayout
             colorTitle = theme.getTitleColor();
             colorTime = theme.getTimeColor();
             colorText = theme.getTextColor();
-            colorWaxing = theme.getMoonWaxingColor();
-            colorWaning = theme.getMoonWaningColor();
-            colorFull = theme.getMoonFullColor();
-            colorNew = theme.getMoonNewColor();
+            colors.setColor(MoonPhasesColorValues.COLOR_MOON_WAXING, theme.getMoonWaxingColor());
+            colors.setColor(MoonPhasesColorValues.COLOR_MOON_WANING, theme.getMoonWaningColor());
+            colors.setColor(MoonPhasesColorValues.COLOR_MOON_FULL, theme.getMoonFullColor());
+            colors.setColor(MoonPhasesColorValues.COLOR_MOON_NEW, theme.getMoonNewColor());
             strokePixelsNew = theme.getMoonNewStrokePixels(context);
             strokePixelsFull = theme.getMoonFullStrokePixels(context);
             spTime = theme.getTimeSizeSp();
@@ -504,6 +505,11 @@ public class MoonPhasesView1 extends LinearLayout
 
         protected void themeViews(Context context, @NonNull PhaseField holder, boolean isAgo)
         {
+            int colorWaxing = colors.getColor(MoonPhasesColorValues.COLOR_MOON_WAXING);
+            int colorWaning = colors.getColor(MoonPhasesColorValues.COLOR_MOON_WANING);
+            int colorFull = colors.getColor(MoonPhasesColorValues.COLOR_MOON_FULL);
+            int colorNew = colors.getColor(MoonPhasesColorValues.COLOR_MOON_NEW);
+
             Bitmap bitmap;
             switch (holder.phase)
             {
@@ -548,6 +554,19 @@ public class MoonPhasesView1 extends LinearLayout
             adapterListener = listener;
         }
         private PhaseAdapterListener adapterListener = new PhaseAdapterListener();
+    }
+
+    public void setColors(Context context, @Nullable ColorValues colors)
+    {
+        if (card_adapter != null)
+        {
+            if (colors != null) {
+                card_adapter.colors = new MoonPhasesColorValues(colors);
+            } else {
+                card_adapter.initTheme(context);
+            }
+            card_adapter.notifyDataSetChanged();
+        }
     }
 
     /**

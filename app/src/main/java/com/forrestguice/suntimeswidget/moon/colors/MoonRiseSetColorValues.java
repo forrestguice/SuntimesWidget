@@ -17,7 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.moon;
+package com.forrestguice.suntimeswidget.moon.colors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,7 +33,7 @@ import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 /**
  * ColorValues
  */
-public class MoonColorValues extends ResourceColorValues implements Parcelable
+public class MoonRiseSetColorValues extends ResourceColorValues implements Parcelable
 {
     public static final String COLOR_RISING_MOON = AppColorKeys.COLOR_RISING_MOON;
     public static final String COLOR_RISING_MOON_TEXT = AppColorKeys.COLOR_RISING_MOON_TEXT;
@@ -44,19 +44,19 @@ public class MoonColorValues extends ResourceColorValues implements Parcelable
     public String[] getColorKeys() {
         return new String[] {
                 COLOR_RISING_MOON, COLOR_RISING_MOON_TEXT,
-                COLOR_SETTING_MOON, COLOR_SETTING_MOON_TEXT,
+                COLOR_SETTING_MOON, COLOR_SETTING_MOON_TEXT
         };
     }
     public int[] getColorAttrs() {
         return new int[] {
                 R.attr.moonriseColor, R.attr.table_moonRisingColor,
-                R.attr.moonsetColor, R.attr.table_moonSettingColor,
+                R.attr.moonsetColor, R.attr.table_moonSettingColor
         };
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorMoonrise, 0,
-                R.string.configLabel_themeColorMoonset, 0,
+                0, 0,
+                0, 0,
         };
     }
     public int[] getColorsResDark() {
@@ -67,8 +67,8 @@ public class MoonColorValues extends ResourceColorValues implements Parcelable
     }
     public int[] getColorsResLight() {
         return new int[] {
-                R.color.moonIcon_color_rising_light, R.color.table_moon_rising_light,
-                R.color.moonIcon_color_setting_light, R.color.table_moon_setting_light,
+                R.color.moonIcon_color_rising_light,  R.color.table_moon_rising_light,
+                R.color.moonIcon_color_setting_light, R.color.table_moon_setting_light
         };
     }
     public int[] getColorsFallback() {
@@ -78,39 +78,39 @@ public class MoonColorValues extends ResourceColorValues implements Parcelable
         };
     }
 
-    public MoonColorValues(ColorValues other) {
+    public MoonRiseSetColorValues(ColorValues other) {
         super(other);
     }
-    public MoonColorValues(SharedPreferences prefs, String prefix) {
+    public MoonRiseSetColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    private MoonColorValues(Parcel in) {
+    private MoonRiseSetColorValues(Parcel in) {
         super(in);
     }
-    public MoonColorValues() {
+    public MoonRiseSetColorValues() {
         super();
     }
-    public MoonColorValues(Context context) {
+    public MoonRiseSetColorValues(Context context) {
         this(context, true);
     }
-    public MoonColorValues(Context context, boolean darkTheme) {
+    public MoonRiseSetColorValues(Context context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public MoonColorValues(String jsonString) {
+    public MoonRiseSetColorValues(String jsonString) {
         super(jsonString);
     }
 
-    public static final Creator<MoonColorValues> CREATOR = new Creator<MoonColorValues>()
+    public static final Creator<MoonRiseSetColorValues> CREATOR = new Creator<MoonRiseSetColorValues>()
     {
-        public MoonColorValues createFromParcel(Parcel in) {
-            return new MoonColorValues(in);
+        public MoonRiseSetColorValues createFromParcel(Parcel in) {
+            return new MoonRiseSetColorValues(in);
         }
-        public MoonColorValues[] newArray(int size) {
-            return new MoonColorValues[size];
+        public MoonRiseSetColorValues[] newArray(int size) {
+            return new MoonRiseSetColorValues[size];
         }
     };
 
-    public static MoonColorValues getColorDefaults(Context context, boolean darkTheme) {
-        return new MoonColorValues(new MoonColorValues().getDefaultValues(context, darkTheme));
+    public static MoonRiseSetColorValues getColorDefaults(Context context, boolean darkTheme) {
+        return new MoonRiseSetColorValues(new MoonRiseSetColorValues().getDefaultValues(context, darkTheme));
     }
 }

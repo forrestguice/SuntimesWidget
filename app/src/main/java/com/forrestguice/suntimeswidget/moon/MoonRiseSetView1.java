@@ -54,6 +54,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -123,7 +124,7 @@ public class MoonRiseSetView1 extends LinearLayout
         if (card_adapter != null)
         {
             if (colors != null) {
-                card_adapter.colors = new MoonColorValues(colors);
+                card_adapter.colors = new MoonRiseSetColorValues(colors);
             } else {
                 card_adapter.initTheme(context);
             }
@@ -448,12 +449,12 @@ public class MoonRiseSetView1 extends LinearLayout
         private boolean boldTime = false;
         private Float spTime = null, spText = null;
         private int colorDisabled, colorTime, colorText;
-        protected MoonColorValues colors;
+        protected MoonRiseSetColorValues colors;
 
         @SuppressLint("ResourceType")
         private void initTheme(Context context)
         {
-            colors = new MoonColorValues(context);
+            colors = new MoonRiseSetColorValues(context);
 
             int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
@@ -471,10 +472,8 @@ public class MoonRiseSetView1 extends LinearLayout
             spTime = theme.getTimeSizeSp();
             spText = theme.getTextSizeSp();
             boldTime = theme.getTimeBold();
-            colors.setColor(MoonColorValues.COLOR_RISING_MOON, theme.getMoonriseTextColor());
-            colors.setColor(MoonColorValues.COLOR_SETTING_MOON, theme.getMoonsetTextColor());
-            colors.setColor(MoonColorValues.COLOR_RISING_MOON_TEXT, theme.getMoonriseTextColor());
-            colors.setColor(MoonColorValues.COLOR_SETTING_MOON_TEXT, theme.getMoonsetTextColor());
+            colors.setColor(MoonRiseSetColorValues.COLOR_RISING_MOON, theme.getMoonriseTextColor());
+            colors.setColor(MoonRiseSetColorValues.COLOR_SETTING_MOON, theme.getMoonsetTextColor());
         }
 
         protected void themeViews(Context context, @NonNull MoonRiseSetField holder, boolean isAgo)
@@ -694,24 +693,14 @@ public class MoonRiseSetView1 extends LinearLayout
             }
         }
 
-        protected int getIconColorForEvent(@Nullable MoonRiseSetEvent event, MoonColorValues colors)
+        protected int getIconColorForEvent(@Nullable MoonRiseSetEvent event, MoonRiseSetColorValues colors)
         {
             if (event == null) {
                 return Color.TRANSPARENT;
             }
             switch (event) {
-                case MOONNIGHT: case MOONSET: return colors.getColor(MoonColorValues.COLOR_SETTING_MOON);
-                case MOONNOON: case MOONRISE: default: return colors.getColor(MoonColorValues.COLOR_RISING_MOON);
-            }
-        }
-        protected int getTextColorForEvent(@Nullable MoonRiseSetEvent event, MoonColorValues colors)
-        {
-            if (event == null) {
-                return Color.TRANSPARENT;
-            }
-            switch (event) {
-                case MOONNIGHT: case MOONSET: return colors.getColor(MoonColorValues.COLOR_SETTING_MOON_TEXT);
-                case MOONNOON: case MOONRISE: default: return colors.getColor(MoonColorValues.COLOR_RISING_MOON_TEXT);
+                case MOONNIGHT: case MOONSET: return colors.getColor(MoonRiseSetColorValues.COLOR_SETTING_MOON);
+                case MOONNOON: case MOONRISE: default: return colors.getColor(MoonRiseSetColorValues.COLOR_RISING_MOON);
             }
         }
 
@@ -741,7 +730,7 @@ public class MoonRiseSetView1 extends LinearLayout
             this.eventID = null;
         }
 
-        public void themeViews(int timeColor, @Nullable Float timeSizeSp, boolean timeBold, int textColor, @Nullable Float textSizeSp, MoonColorValues colors)
+        public void themeViews(int timeColor, @Nullable Float timeSizeSp, boolean timeBold, int textColor, @Nullable Float textSizeSp, MoonRiseSetColorValues colors)
         {
             timeView.setTextColor(timeColor);
             positionView.setTextColor(textColor);

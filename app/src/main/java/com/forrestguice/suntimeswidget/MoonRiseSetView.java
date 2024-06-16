@@ -19,10 +19,12 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -34,6 +36,8 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -54,6 +58,8 @@ public class MoonRiseSetView extends LinearLayout
     private MoonRiseSetField risingTextField1, settingTextField1;
     private ArrayList<MoonRiseSetField> f = new ArrayList<>();
     private View divider;
+
+    protected MoonRiseSetColorValues colors;
 
     public MoonRiseSetView(Context context)
     {
@@ -95,7 +101,7 @@ public class MoonRiseSetView extends LinearLayout
     private void init(Context context, AttributeSet attrs)
     {
         initLocale(context);
-        //initColors(context);
+        initColors(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_moonriseset, this, true);
 
         //if (attrs != null)
@@ -118,6 +124,7 @@ public class MoonRiseSetView extends LinearLayout
         {
             updateViews(context, null);
         }
+        themeViews(context, colors);
     }
 
     private boolean tomorrowMode = false;
@@ -140,15 +147,24 @@ public class MoonRiseSetView extends LinearLayout
         return showExtraField;
     }*/
 
-    /**private int noteColor;
-    private void initColors(Context context)
+    public void initColors(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
+        colors = new MoonRiseSetColorValues(context);
+        /*int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-        typedArray.recycle();
-    }*/
+        typedArray.recycle();*/
+    }
+    public void setColors(Context context, @Nullable ColorValues values)
+    {
+        if (values != null) {
+            colors = new MoonRiseSetColorValues(values);
+        } else {
+            initColors(context);
+        }
+        themeViews(context, values);
+    }
 
     public void initLocale(Context context)
     {
@@ -156,10 +172,20 @@ public class MoonRiseSetView extends LinearLayout
         //isRtl = AppSettings.isLocaleRtl(context);
     }
 
+    public void themeViews(Context context, @Nullable ColorValues colors)
+    {
+        if (colors != null) {
+            for (MoonRiseSetField field : f) {
+                field.themeView(context, colors);
+            }
+        }
+    }
     public void themeViews(Context context, SuntimesTheme theme)
     {
-        for (MoonRiseSetField field : f) {
-            field.themeView(theme);
+        if (theme != null) {
+            for (MoonRiseSetField field : f) {
+                field.themeView(theme);
+            }
         }
     }
 
@@ -428,7 +454,19 @@ public class MoonRiseSetView extends LinearLayout
             rising = risingState;
         }
 
-        public void themeView(SuntimesTheme theme)
+        public void themeView(Context context, @NonNull ColorValues colors)
+        {
+            int textColor = (rising ? colors.getColor(MoonRiseSetColorValues.COLOR_RISING_MOON_TEXT)
+                                    : colors.getColor(MoonRiseSetColorValues.COLOR_SETTING_MOON_TEXT));
+            timeView.setTextColor(textColor);
+            positionView.setTextColor(textColor);
+
+            int iconColor = (rising ? colors.getColor(MoonRiseSetColorValues.COLOR_RISING_MOON)
+                                    : colors.getColor(MoonRiseSetColorValues.COLOR_SETTING_MOON));
+            SuntimesUtils.tintDrawable((LayerDrawable)iconView.getBackground(), iconColor, iconColor, 0);
+        }
+
+        public void themeView(@NonNull SuntimesTheme theme)
         {
             int color = (rising ? theme.getMoonriseTextColor() : theme.getMoonsetTextColor());
             timeView.setTextColor(color);
