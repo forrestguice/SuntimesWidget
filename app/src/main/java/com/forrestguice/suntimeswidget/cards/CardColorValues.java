@@ -47,12 +47,16 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
     public static final String COLOR_SETTING_MOON = AppColorKeys.COLOR_SETTING_MOON;
     public static final String COLOR_SETTING_MOON_TEXT = AppColorKeys.COLOR_SETTING_MOON_TEXT;
 
+    public static final String COLOR_SUN_FILL = AppColorKeys.COLOR_SUN_FILL;
+    public static final String COLOR_SUN_STROKE = AppColorKeys.COLOR_SUN_STROKE;
+
     public String[] getColorKeys() {
         return new String[] {
                 COLOR_RISING_SUN, COLOR_RISING_SUN_TEXT,
                 COLOR_SETTING_SUN, COLOR_SETTING_SUN_TEXT,
                 COLOR_RISING_MOON, COLOR_RISING_MOON_TEXT,
                 COLOR_SETTING_MOON, COLOR_SETTING_MOON_TEXT,
+                COLOR_SUN_FILL, COLOR_SUN_STROKE
         };
     }
     public int[] getColorAttrs() {
@@ -61,6 +65,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.attr.sunsetColor, R.attr.table_settingColor,
                 R.attr.moonriseColor, R.attr.table_moonRisingColor,
                 R.attr.moonsetColor, R.attr.table_moonSettingColor,
+                R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke,
         };
     }
     public int[] getColorLabelsRes() {
@@ -69,6 +74,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.string.configLabel_themeColorSunset, 0,
                 R.string.configLabel_themeColorMoonrise, 0,
                 R.string.configLabel_themeColorMoonset, 0,
+                0, 0
         };
     }
     public int[] getColorsResDark() {
@@ -77,6 +83,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.color.sunIcon_color_setting_dark, R.color.table_setting_dark,
                 R.color.moonIcon_color_rising_dark, R.color.table_moon_rising_dark,
                 R.color.moonIcon_color_setting_dark, R.color.table_moon_setting_dark,
+                R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark,
         };
     }
     public int[] getColorsResLight() {
@@ -85,6 +92,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.color.sunIcon_color_setting_light, R.color.table_setting_light,
                 R.color.moonIcon_color_rising_light, R.color.table_moon_rising_light,
                 R.color.moonIcon_color_setting_light, R.color.table_moon_setting_light,
+                R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light,
         };
     }
     public int[] getColorsFallback() {
@@ -93,6 +101,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 Color.parseColor("#FF9900"), Color.parseColor("#FF9900"),
                 Color.LTGRAY, Color.LTGRAY,
                 Color.DKGRAY, Color.DKGRAY,
+                Color.YELLOW, Color.BLACK,
         };
     }
 

@@ -28,7 +28,9 @@ import com.forrestguice.suntimeswidget.equinox.EquinoxColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
-import com.forrestguice.suntimeswidget.moon.MoonColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,8 +47,13 @@ public class AppColorValues extends ResourceColorValues
 
     private static final ResourceColorValues[] RESOURCE_VALUES = new ResourceColorValues[] {
             new CardColorValues(),
-            new LightMapColorValues(), new LightGraphColorValues(), new LineGraphColorValues(),
-            new EquinoxColorValues(), new MoonColorValues(),
+            new LightMapColorValues(),
+            new LightGraphColorValues(),
+            new LineGraphColorValues(),
+            new EquinoxColorValues(),
+            new MoonRiseSetColorValues(),
+            new MoonPhasesColorValues(),
+            new MoonApsisColorValues()
     };
 
     private static final ToIntFunction<Integer> toInt = new ToIntFunction<Integer>()

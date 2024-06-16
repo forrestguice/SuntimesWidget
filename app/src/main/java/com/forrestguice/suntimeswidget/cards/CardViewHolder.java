@@ -56,6 +56,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
@@ -210,6 +211,10 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         SuntimesMoonData moon = ((data == null) ? null : data.second);
 
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        AppColorValuesCollection<AppColorValues> appColors = new AppColorValuesCollection<AppColorValues>();
+        AppColorValues colors = (AppColorValues) appColors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
+
         updateHeaderViews(context, data, options);
         row_actual.setVisible(options.showActual);
         row_civil.setVisible(options.showCivil);
@@ -357,12 +362,15 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
             int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
             moonrise.adjustColumnWidth(context, sunsetHeaderWidth);
-            moonphase.updateViews(context, moon);
+            moonrise.setColors(context, colors);
             moonrise.updateViews(context, moon);
+
+            moonphase.setColors(context, colors);
+            moonphase.updateViews(context, moon);
         }
 
         // lightmap
-        updateColors(context);
+        updateLightmapColors(context, colors);
         lightmapLayout.setVisibility(options.showLightmap ? View.VISIBLE : View.GONE);
         LightMapView.LightMapColors lightmapOptions = lightmap.getColors();
         lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
@@ -370,14 +378,13 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         lightmap.setData(options.showLightmap ? sun : null);
         //Log.d("DEBUG", "bindDataToPosition: " + sun.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
 
+        themeCardViews(context, colors);
+
         toggleNextPrevButtons(position);
     }
 
-    protected void updateColors(Context context)
+    protected void updateLightmapColors(Context context, ColorValues values)
     {
-        AppColorValuesCollection<AppColorValues> colors = new AppColorValuesCollection<>();
-        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-        AppColorValues values = (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
         if (values != null) {
             lightmap.getColors().values = new LightMapColorValues(values);
         } else if (lightmap.getColors().values == null) {
@@ -412,6 +419,50 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
         ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
         ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
+    }
+
+    protected void themeCardViews(Context context, @Nullable ColorValues colors)
+    {
+        if (colors == null) {
+            return;
+        }
+
+        int color_sunrise = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
+        int color_sunset =  colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
+
+        for (CardViewHolder.TimeFieldRow row : rows)
+        {
+            if (row != null)
+            {
+                Log.d("DEBUG", "themeRow: " + row);
+                TextView v0 = row.getField(0);
+                if (v0 != null) {
+                    v0.setTextColor(color_sunrise);
+                }
+                TextView v1 = row.getField(1);
+                if (v1 != null) {
+                    v1.setTextColor(color_sunset);
+                }
+            }
+        }
+
+        row_blue4.getField(0).setTextColor(color_sunset);
+        row_blue4.getField(1).setTextColor(color_sunrise);
+        row_gold.getField(0).setTextColor(color_sunset);
+        row_gold.getField(1).setTextColor(color_sunrise);
+        row_solarnoon.getField(0).setTextColor(color_sunset);
+
+        int sunriseIconColor = colors.getColor(CardColorValues.COLOR_RISING_SUN);
+        int sunriseIconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
+        int sunriseIconStrokeWidth = 0;
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunrise.getBackground(), sunriseIconColor, sunriseIconColor2, sunriseIconStrokeWidth);
+        header_sunrise.setTextColor(color_sunrise);
+
+        int sunsetIconColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
+        int sunsetIconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
+        int sunsetIconStrokeWidth = 0;
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunset.getBackground(), sunsetIconColor, sunsetIconColor2, sunsetIconStrokeWidth);
+        header_sunset.setTextColor(color_sunset);
     }
 
     protected void themeCardViews(Context context, @NonNull SuntimesTheme theme, CardAdapter.CardAdapterOptions options)

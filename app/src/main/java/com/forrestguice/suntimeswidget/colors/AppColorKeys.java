@@ -72,4 +72,12 @@ public class AppColorKeys
     public static final String COLOR_MOONPATH_NIGHT_STROKE = "color_moonpath_night_stroke";
     public static final String COLOR_MOONPATH_NIGHT_FILL = "color_moonpath_night_fill";
 
+    public static final String COLOR_MOON_APOGEE_TEXT = "color_moonApogeeText";
+    public static final String COLOR_MOON_PERIGEE_TEXT= "color_moonPerigeeText";
+
+    public static final String COLOR_MOON_NEW = "color_newMoon";
+    public static final String COLOR_MOON_WAXING = "color_waxingMoon";
+    public static final String COLOR_MOON_FULL = "color_fullMoon";
+    public static final String COLOR_MOON_WANING = "color_waningMoon";
+
 }
