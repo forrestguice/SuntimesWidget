@@ -211,9 +211,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         SuntimesMoonData moon = ((data == null) ? null : data.second);
 
-        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-        AppColorValuesCollection<AppColorValues> appColors = new AppColorValuesCollection<AppColorValues>();
-        AppColorValues colors = (AppColorValues) appColors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(context);
 
         updateHeaderViews(context, data, options);
         row_actual.setVisible(options.showActual);
@@ -434,7 +432,6 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         {
             if (row != null)
             {
-                Log.d("DEBUG", "themeRow: " + row);
                 TextView v0 = row.getField(0);
                 if (v0 != null) {
                     v0.setTextColor(color_sunrise);

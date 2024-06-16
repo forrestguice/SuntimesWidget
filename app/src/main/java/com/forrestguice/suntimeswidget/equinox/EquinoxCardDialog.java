@@ -568,6 +568,10 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                 options.init(getActivity());
             }
             card_adapter.notifyDataSetChanged();
+
+            if (dialogListener != null) {
+                dialogListener.onColorsModified(values);
+            }
         }
 
         public void requestPeekHeight(int height) {}
@@ -926,5 +930,6 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         public void onShowPosition( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified(boolean closeDialog) {}
+        public void onColorsModified(ColorValues values) {}
     }
 }

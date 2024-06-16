@@ -1886,6 +1886,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         public void onShowDate( long suggestDate ) {}
         public void onShowMap( long suggestDate ) {}
         public void onShowMoonInfo( long suggestDate ) {}
+        public void onColorsModified(ColorValues values) {}
     }
 
     /**
@@ -1937,6 +1938,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
             themeViews(getActivity());
             updateViews();
+
+            if (dialogListener != null) {
+                dialogListener.onColorsModified(values);
+            }
         }
 
         public void requestPeekHeight(int height) {}

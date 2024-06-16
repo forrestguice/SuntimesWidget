@@ -1310,6 +1310,10 @@ public class MoonDialog extends BottomSheetDialogFragment
             moonriseset.setColors(getActivity(), values);
             moonapsis.setColors(getActivity(), values);
             moonphases.setColors(getActivity(), values);
+
+            if (dialogListener != null) {
+                dialogListener.onColorsModified(values);
+            }
         }
 
         public void requestPeekHeight(int height) {}
@@ -1341,5 +1345,6 @@ public class MoonDialog extends BottomSheetDialogFragment
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}
+        public void onColorsModified(ColorValues values) {}
     }
 }

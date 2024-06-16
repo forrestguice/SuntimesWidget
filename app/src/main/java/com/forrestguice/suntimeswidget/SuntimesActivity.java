@@ -74,6 +74,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.getfix.LocationHelper;
@@ -2386,7 +2387,13 @@ public class SuntimesActivity extends AppCompatActivity
         return dialog;
     }
 
-    private final LightGraphDialog.DialogListener lightGraphDialogListener = new LightGraphDialog.DialogListener();
+    private final LightGraphDialog.DialogListener lightGraphDialogListener = new LightGraphDialog.DialogListener()
+    {
+        @Override
+        public void onColorsModified(ColorValues values) {
+            SuntimesActivity.this.onColorsModified(values);
+        }
+    };
 
     /**
      * Show the sun position dialog.
@@ -2406,7 +2413,13 @@ public class SuntimesActivity extends AppCompatActivity
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
         return lightMapDialog;
     }
-    private LightMapDialog.LightMapDialogListener lightMapListener = new LightMapDialog.LightMapDialogListener() {
+    private final LightMapDialog.LightMapDialogListener lightMapListener = new LightMapDialog.LightMapDialogListener()
+    {
+        @Override
+        public void onColorsModified(ColorValues values) {
+            SuntimesActivity.this.onColorsModified(values);
+        }
+
         @Override
         public void onShowMap( long suggested) {
             showMapPositionAt(suggested);
@@ -2507,7 +2520,7 @@ public class SuntimesActivity extends AppCompatActivity
             equinoxDialog.dismiss();
         }
     }
-    private EquinoxCardDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxCardDialog.EquinoxDialogListener()
+    private final EquinoxCardDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxCardDialog.EquinoxDialogListener()
     {
         @Override
         public void onOptionsModified(boolean closeDialog)
@@ -2523,6 +2536,12 @@ public class SuntimesActivity extends AppCompatActivity
                 card_equinoxSolstice.updateViews(SuntimesActivity.this);
             }
         }
+
+        @Override
+        public void onColorsModified(ColorValues values) {
+            SuntimesActivity.this.onColorsModified(values);
+        }
+
         @Override
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {
             scheduleAlarm(SolarEvents.valueOf(suggestedEvent).name());
@@ -2547,6 +2566,18 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
+    protected void onColorsModified(ColorValues values)
+    {
+        Log.d("DEBUG", "onColorsModified");
+        if (notes != null) {
+            initNotes();
+        }
+        if (card_adapter != null)
+        {
+            card_adapter.notifyDataSetChanged();
+        }
+    }
+
     /**
      * Show the moon dialog.
      */
@@ -2560,8 +2591,13 @@ public class SuntimesActivity extends AppCompatActivity
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
         return moonDialog;
     }
-    private MoonDialog.MoonDialogListener moonDialogListener = new MoonDialog.MoonDialogListener()
+    private final MoonDialog.MoonDialogListener moonDialogListener = new MoonDialog.MoonDialogListener()
     {
+        @Override
+        public void onColorsModified(ColorValues values) {
+            SuntimesActivity.this.onColorsModified(values);
+        }
+
         @Override
         public void onSetAlarm( SolarEvents suggestedEvent ) {
             scheduleAlarm(suggestedEvent.name());

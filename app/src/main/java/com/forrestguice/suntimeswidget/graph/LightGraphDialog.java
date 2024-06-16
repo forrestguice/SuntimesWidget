@@ -798,10 +798,15 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
     {
         @Override
-        public void onColorValuesSelected(ColorValues values) {
+        public void onColorValuesSelected(ColorValues values)
+        {
             options.colors = null;
             updateGraphColors(getActivity());
             updateGraphViews(getActivity());
+
+            if (dialogListener != null) {
+                dialogListener.onColorsModified(values);
+            }
         }
 
         public void requestPeekHeight(int height) {}
@@ -845,5 +850,6 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         //public void onShowPosition( long suggestedDate ) {}
         //public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified(boolean closeDialog) {}
+        public void onColorsModified(ColorValues values) {}
     }
 }
