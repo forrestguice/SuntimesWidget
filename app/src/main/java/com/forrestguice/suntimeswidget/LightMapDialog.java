@@ -1904,12 +1904,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     protected void showColorDialog(Context context)
     {
+        boolean showGraph = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
         ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
         dialog.setAppWidgetID((isNightMode ? 1 : 0));
         dialog.setColorTag(AppColorValues.TAG_APPCOLORS);
         dialog.setFilter(new CardColorValues().getColorKeys(),
-                         new LineGraphColorValues().getColorKeys(),
+                        (showGraph ? new LineGraphColorValues().getColorKeys() : null),
                          new LightMapColorValues().getColorKeys());
         dialog.setColorCollection(colors);
         dialog.setDialogListener(colorDialogListener);

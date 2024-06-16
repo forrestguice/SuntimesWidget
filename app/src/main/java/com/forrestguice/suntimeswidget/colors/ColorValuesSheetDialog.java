@@ -90,7 +90,9 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     {
         Set<String> filterSet = new TreeSet<>();
         for (String[] array : keys) {
-            filterSet.addAll(Arrays.asList(array));
+            if (array != null) {
+                filterSet.addAll(Arrays.asList(array));
+            }
         }
 
         String[] filter = filterSet.toArray(new String[0]);
