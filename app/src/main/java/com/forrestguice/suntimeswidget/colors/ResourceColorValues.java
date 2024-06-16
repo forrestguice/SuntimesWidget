@@ -67,7 +67,7 @@ public abstract class ResourceColorValues extends ColorValues
     {
         super();
         if (BuildConfig.DEBUG && (getColorKeys().length != getColorAttrs().length)) {
-            throw new AssertionError("COLORS and COLORS_ATTR have different lengths! These arrays should be one-to-one.");
+            throw new AssertionError("COLORS and COLORS_ATTR have different lengths! These arrays should be one-to-one." + getColorKeys().length + " != " + getColorAttrs().length);
         }
         String[] colorKeys = getColorKeys();
         int[] labelsResID = getColorLabelsRes();
