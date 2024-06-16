@@ -58,7 +58,14 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
+import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 import com.forrestguice.suntimeswidget.moon.MoonPhaseView1;
 import com.forrestguice.suntimeswidget.moon.MoonPhasesView1;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView1;
@@ -83,6 +90,8 @@ public class MoonDialog extends BottomSheetDialogFragment
     public static final String ARG_DATETIME = "datetime";
     public static final String ARG_PLAYING = "playing";
     public static final String ARG_PLAY_OFFSET = "offsetMinutes";
+
+    public static final String DIALOGTAG_COLORS = "moon_colors";
 
     public static final String DIALOGTAG_HELP = "moon_help";
     public static final int HELP_PATH_ID = R.string.help_moon_path;
@@ -133,7 +142,8 @@ public class MoonDialog extends BottomSheetDialogFragment
     private ImageButton playButton, pauseButton, nextButton, prevButton, resetButton, menuButton;
     private View mediaAnchor = null;
 
-    private int riseColor, setColor, timeColor, warningColor, accentColor, normalColor, pressedColor, disabledColor;
+    private int timeColor, warningColor, accentColor, normalColor, pressedColor, disabledColor;
+    //private int riseColor, setColor;
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -167,6 +177,16 @@ public class MoonDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
 
         FragmentManager fragments = getChildFragmentManager();
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        if (colorDialog != null)
+        {
+            boolean isNightMode = getActivity().getResources().getBoolean(R.bool.is_nightmode);
+            colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
+            colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
+            colorDialog.setColorCollection(new AppColorValuesCollection<>(getActivity()));
+            colorDialog.setDialogListener(colorDialogListener);
+        }
+
         HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
@@ -347,13 +367,21 @@ public class MoonDialog extends BottomSheetDialogFragment
     @SuppressLint("ResourceType")
     public void themeViews(Context context)
     {
+        AppColorValues values = AppColorValuesCollection.initSelectedColors(getActivity());
+        if (values != null) {
+            currentphase.setColors(getActivity(), values);
+            moonriseset.setColors(getActivity(), values);
+            moonapsis.setColors(getActivity(), values);
+            moonphases.setColors(getActivity(), values);
+        }
+
         if (themeOverride != null)
         {
             int titleColor = themeOverride.getTitleColor();
             timeColor = normalColor = themeOverride.getTimeColor();
             int textColor = themeOverride.getTextColor();
-            riseColor = themeOverride.getMoonriseTextColor();
-            setColor = themeOverride.getMoonsetTextColor();
+            //riseColor = themeOverride.getMoonriseTextColor();
+            //setColor = themeOverride.getMoonsetTextColor();
             pressedColor = accentColor = themeOverride.getAccentColor();
             warningColor = themeOverride.getActionColor();
             float timeSizeSp = themeOverride.getTimeSizeSp();
@@ -384,15 +412,13 @@ public class MoonDialog extends BottomSheetDialogFragment
             moondistance_note.setTextSize(textSizeSp);
 
         } else {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor, R.attr.tagColor_warning, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.text_accentColor };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.tagColor_warning, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.text_accentColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             timeColor = normalColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.grey_50));
-            riseColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.sunIcon_color_rising));
-            setColor = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.sunIcon_color_setting));
-            warningColor = ContextCompat.getColor(context, typedArray.getResourceId(3, R.color.warningTag));
-            pressedColor = ContextCompat.getColor(context, typedArray.getResourceId(4, R.color.btn_tint_pressed));
-            disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(5, timeColor));
-            accentColor = ContextCompat.getColor(context, typedArray.getResourceId(6, R.color.text_accent));
+            warningColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag));
+            pressedColor = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.btn_tint_pressed));
+            disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(3, timeColor));
+            accentColor = ContextCompat.getColor(context, typedArray.getResourceId(4, R.color.text_accent));
             typedArray.recycle();
         }
 
@@ -530,8 +556,11 @@ public class MoonDialog extends BottomSheetDialogFragment
             SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(dateTime);
             if (position != null)
             {
+                ColorValues colors = moonapsis.getColors();
+                int risingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_APOGEE_TEXT);
+                int settingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_PERIGEE_TEXT);
                 SuntimesUtils.TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
-                moondistance.setText(SuntimesUtils.createColorSpan(null, SuntimesUtils.formatAsDistance(context, distance), distance.getValue(), (moonapsis.isRising() ? riseColor : setColor)));
+                moondistance.setText(SuntimesUtils.createColorSpan(null, SuntimesUtils.formatAsDistance(context, distance), distance.getValue(), (moonapsis.isRising() ? risingColor : settingColor)));
 
                 if (SuntimesMoonData.isSuperMoon(position))
                     moondistance_note.setText(context.getString(R.string.timeMode_moon_super));
@@ -714,6 +743,10 @@ public class MoonDialog extends BottomSheetDialogFragment
         {
             switch (item.getItemId())
             {
+                case R.id.action_colors:
+                    showColorDialog(getActivity());
+                    return true;
+
                 case R.id.action_phase_columns_2:
                     saveMoonPhaseColumns(2);
                     return true;
@@ -1250,6 +1283,46 @@ public class MoonDialog extends BottomSheetDialogFragment
         stopUpdateTask();
         super.onStop();
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void showColorDialog(Context context)
+    {
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
+        dialog.setAppWidgetID((isNightMode ? 1 : 0));
+        dialog.setColorTag(AppColorValues.TAG_APPCOLORS);
+        dialog.setColorCollection(new AppColorValuesCollection<>(context));
+        dialog.setDialogListener(colorDialogListener);
+        dialog.setFilter(new MoonRiseSetColorValues().getColorKeys(),
+                         new MoonPhasesColorValues().getColorKeys(),
+                         new MoonApsisColorValues().getColorKeys());
+        dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
+    }
+
+    private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
+    {
+        @Override
+        public void onColorValuesSelected(ColorValues values)
+        {
+            currentphase.setColors(getActivity(), values);
+            moonriseset.setColors(getActivity(), values);
+            moonapsis.setColors(getActivity(), values);
+            moonphases.setColors(getActivity(), values);
+        }
+
+        public void requestPeekHeight(int height) {}
+        public void requestHideSheet() {}
+        public void requestExpandSheet() {}
+        public void onModeChanged(int mode) {}
+
+        @Nullable
+        @Override
+        public ColorValues getDefaultValues() {
+            return new AppColorValues(getActivity(), true);
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
