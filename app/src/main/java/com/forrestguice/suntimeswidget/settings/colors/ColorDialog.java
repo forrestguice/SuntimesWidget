@@ -99,12 +99,12 @@ public class ColorDialog extends BottomSheetDialogFragment
     @Nullable
     public Integer suggestedColor()
     {
-        int suggested = colorPagerArgs.getInt(KEY_SUGGESTED, -1);
-        return (suggested == -1) ? null : suggested;
+        int suggested = colorPagerArgs.getInt(KEY_SUGGESTED, Integer.MIN_VALUE);
+        return (suggested == Integer.MIN_VALUE) ? null : suggested;
     }
     public void setSuggestedColor(@Nullable Integer color)
     {
-        if (color == null || color == -1) {
+        if (color == null || color == Integer.MIN_VALUE) {
             colorPagerArgs.remove(KEY_SUGGESTED);
         } else {
             colorPagerArgs.putInt(KEY_SUGGESTED, color);
