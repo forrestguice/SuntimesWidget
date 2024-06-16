@@ -72,6 +72,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.getfix.LocationHelper;
@@ -1334,7 +1336,13 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initNotes()
     {
-        notes = new SuntimesNotes();
+        notes = new SuntimesNotes(this);
+
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(this);
+        if (colors != null) {
+            notes.setColors(this, colors);
+        }
+
         notes.themeViews(this, appThemeOverride);
         notes.init(this, dataset, dataset_moon);
         notes.setOnChangedListener(new NoteChangedListener()
@@ -2650,16 +2658,16 @@ public class SuntimesActivity extends AppCompatActivity
         {
             // currently using view1, ready view2
             ic_time2_note.setBackgroundResource(note.noteIconResource);
-            if (appThemeOverride != null) {
-                SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.noteColor, note.noteColor2, note.noteIconStroke);
-            }
+            //if (appThemeOverride != null) {
+                SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
+            //}
             adjustNoteIconSize(note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
             txt_time2_note1.setText(note.timeText.toString());
             txt_time2_note2.setText(note.prefixText);
             txt_time2_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time2_note3.setText(note.noteText);
-            txt_time2_note3.setTextColor(note.noteColor);
+            txt_time2_note3.setTextColor(note.textColor);
 
             txt_time1_note1.setText(note.timeText.toString());
             txt_time1_note3.setText(note.noteText);
@@ -2667,16 +2675,16 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             // currently using view2, ready view1
             ic_time1_note.setBackgroundResource(note.noteIconResource);
-            if (appThemeOverride != null) {
-                SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.noteColor, note.noteColor2, note.noteIconStroke);
-            }
+            //if (appThemeOverride != null) {
+                SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
+            //}
             adjustNoteIconSize(note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(note.timeText.toString());
             txt_time1_note2.setText(note.prefixText);
             txt_time1_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time1_note3.setText(note.noteText);
-            txt_time1_note3.setTextColor(note.noteColor);
+            txt_time1_note3.setTextColor(note.textColor);
 
             txt_time2_note1.setText(note.timeText.toString());
             txt_time2_note3.setText(note.noteText);

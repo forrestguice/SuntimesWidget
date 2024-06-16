@@ -96,6 +96,8 @@
     <dimen name="sunIcon_width_risingBorder">@dimen/sunIcon_width_border</dimen>
     <dimen name="sunIcon_width_settingBorder">@dimen/sunIcon_width_border</dimen>
 
+    <dimen name="noonIcon_width_border">2dp</dimen>
+
     <dimen name="moonIcon_inset">-9dip</dimen>
     <dimen name="moonIcon_height">9dip</dimen>
     <dimen name="moonIcon_width">18dip</dimen>

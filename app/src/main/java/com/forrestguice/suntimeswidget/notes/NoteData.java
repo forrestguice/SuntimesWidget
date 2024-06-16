@@ -30,19 +30,20 @@ public class NoteData
     public String noteText;
     public int noteIconResource;
     public int noteIconStroke;
-    public int noteColor, noteColor2;
+    public int textColor, iconColor, iconColor2;
     public Date time;
     public boolean tomorrow = false;
 
-    public NoteData(String noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor, int noteColor2, int noteIconStroke)
+    public NoteData(String noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int textColor, int iconColor, int iconColor2, int noteIconStroke)
     {
         this.noteMode = noteMode;
         this.timeText = timeText;
         this.prefixText = prefixText;
         this.noteText = noteText;
         this.noteIconResource = noteIconResource;
-        this.noteColor = noteColor;
-        this.noteColor2 = noteColor2;
+        this.textColor = textColor;
+        this.iconColor = iconColor;
+        this.iconColor2 = iconColor2;
         this.noteIconStroke = noteIconStroke;
     }
 
@@ -53,8 +54,9 @@ public class NoteData
         this.prefixText = other.prefixText;
         this.noteText = other.noteText;
         this.noteIconResource = other.noteIconResource;
-        this.noteColor = other.noteColor;
-        this.noteColor2 = other.noteColor2;
+        this.textColor = other.textColor;
+        this.iconColor = other.iconColor;
+        this.iconColor2 = other.iconColor2;
         this.noteIconStroke = other.noteIconStroke;
     }
 
