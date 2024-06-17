@@ -93,27 +93,27 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
         label = (TextView) content.findViewById(R.id.color_values_selector_label);
 
-        selector = content.findViewById(R.id.colorvalues_selector);
+        selector = (Spinner) content.findViewById(R.id.colorvalues_selector);
         if (selector != null) {
             selector.setOnItemSelectedListener(onItemSelected);
         }
 
-        editButton = content.findViewById(R.id.editButton);
+        editButton = (ImageButton) content.findViewById(R.id.editButton);
         if (editButton != null) {
             editButton.setOnClickListener(onEditButtonClicked);
         }
 
-        addButton = content.findViewById(R.id.addButton);
+        addButton = (ImageButton) content.findViewById(R.id.addButton);
         if (addButton != null) {
             addButton.setOnClickListener(onAddButtonClicked);
         }
 
-        backButton = content.findViewById(R.id.backButton);
+        backButton = (ImageButton) content.findViewById(R.id.backButton);
         if (backButton != null) {
             backButton.setOnClickListener(onBackButtonClicked);
         }
 
-        menuButton = content.findViewById(R.id.menuButton);
+        menuButton = (ImageButton) content.findViewById(R.id.menuButton);
         if (menuButton != null) {
             menuButton.setOnClickListener(onMenuButtonClicked);
         }
@@ -237,6 +237,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
                 exportString.append(colors.toJSON());
             }
             exportString.append("...");
+            // TODO
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
