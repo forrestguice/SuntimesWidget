@@ -1,5 +1,12 @@
 ### ~
 
+### v0.15.16 (2024-06-17)
+* adds "online help" links to existing help dialogs (#797).
+* fixes bug where "moon phase alarm time is incorrect" (#803).
+* fixes bugs when using d-pad navigation within dialogs (Android TV).
+* updates translation to Norwegian (nb) (#796, #801 by FTno).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#799, #800 by James Liu).
+
 ### v0.15.15 (2024-05-14)
 * adds online user manual; https://forrestguice.github.io/Suntimes/help/ or https://forrestguice.codeberg.page/Suntimes/help/
 * fixes app crash when using custom themes (#792).
