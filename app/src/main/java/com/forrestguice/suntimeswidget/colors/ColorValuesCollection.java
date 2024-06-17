@@ -113,7 +113,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
         String colorsID = values.getID();
         setColors(context, colorsID != null ? colorsID : "", values);
     }
-    public void setColors(Context context, String colorsID, ColorValues values)
+    public void setColors(Context context, @NonNull String colorsID, ColorValues values)
     {
         ColorValues v = getDefaultColors(context);
         v.loadColorValues(values);    // copy colors into a new instance
@@ -199,7 +199,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     }
 
     public abstract String getSharedPrefsName();
-    protected SharedPreferences getSharedPreferences(Context context) {
+    public SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(getSharedPrefsName(), 0);
     }
 
