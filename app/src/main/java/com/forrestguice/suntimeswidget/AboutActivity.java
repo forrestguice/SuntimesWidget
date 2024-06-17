@@ -293,7 +293,7 @@ public class AboutActivity extends AppCompatActivity
                 legalView4.setText(SuntimesUtils.fromHtml(privacy));
             }
 
-            int[] linkViews = new int[] { R.id.txt_about_url, R.id.txt_about_url1, R.id.txt_about_legal5 };
+            int[] linkViews = new int[] { R.id.txt_help_url, R.id.txt_about_url, R.id.txt_about_url1, R.id.txt_about_legal5 };
             for (int resID : linkViews)
             {
                 TextView text = (TextView) dialogContent.findViewById(resID);

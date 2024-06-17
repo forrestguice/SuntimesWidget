@@ -80,6 +80,17 @@
             android:text="@string/app_support_url" />
 
         <TextView
+            android:id="@+id/txt_help_url"
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="0dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
+            android:text="@string/help_url"
+            android:autoLink="web" />
+
+
+        <TextView
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
             android:layout_marginBottom="0dp"
             android:layout_marginTop="2dp"
