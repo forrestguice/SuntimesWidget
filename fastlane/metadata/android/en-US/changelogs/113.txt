@@ -1,0 +1,4 @@
+- fixes bug where "moon phase alarm time is incorrect" (#803).
+- fixes bugs when using d-pad navigation within dialogs (Android TV).
+- updates translation to Norwegian.
+- updates translations to Simplified Chinese, and Traditional Chinese.
