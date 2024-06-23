@@ -307,12 +307,15 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
     protected static int importWidgetThemes(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
     {
         int c = 0;
-        for (ContentValues values : contentValues)
+        if (contentValues != null)
         {
-            SuntimesTheme theme = new SuntimesTheme(values);
-            SuntimesTheme.ThemeDescriptor descriptor = theme.saveTheme(context, WidgetThemes.PREFS_THEMES);
-            WidgetThemes.addValue(context, descriptor);
-            c++;
+            for (ContentValues values : contentValues)
+            {
+                SuntimesTheme theme = new SuntimesTheme(values);
+                SuntimesTheme.ThemeDescriptor descriptor = theme.saveTheme(context, WidgetThemes.PREFS_THEMES);
+                WidgetThemes.addValue(context, descriptor);
+                c++;
+            }
         }
         report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_WIDGETTHEMES), c+""));
         report.append("\n");
@@ -330,17 +333,21 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         if (method == IMPORT_ALARMS_METHOD_CLEAR) {
             db.clearAlarms();
         }
-        for (ContentValues values : contentValues)
+        if (contentValues != null)
         {
-            if (values != null)
+            for (ContentValues values : contentValues)
             {
-                if (values.containsKey(AlarmDatabaseAdapter.KEY_ROWID)) {
-                    values.remove(AlarmDatabaseAdapter.KEY_ROWID);    // clear rowID (insert as new items)
+                if (values != null)
+                {
+                    if (values.containsKey(AlarmDatabaseAdapter.KEY_ROWID)) {
+                        values.remove(AlarmDatabaseAdapter.KEY_ROWID);    // clear rowID (insert as new items)
+                    }
+                    db.addAlarm(values);
+                    c++;
                 }
-                db.addAlarm(values);
-                c++;
             }
         }
+
         db.close();
         report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_ALARMITEMS), c+""));
         report.append("\n");
@@ -353,11 +360,14 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
     protected static int importEventItems(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
     {
         int c = 0;
-        for (ContentValues values : contentValues)
+        if (contentValues != null)
         {
-            if (values != null) {
-                EventSettings.saveEvent(context, new EventSettings.EventAlias(values));
-                c++;
+            for (ContentValues values : contentValues)
+            {
+                if (values != null) {
+                    EventSettings.saveEvent(context, new EventSettings.EventAlias(values));
+                    c++;
+                }
             }
         }
         report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_EVENTITEMS), c+""));
@@ -376,18 +386,22 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         if (method == IMPORT_PLACES_METHOD_CLEAR) {
             db.clearPlaces();
         }
-        for (ContentValues values : contentValues)
+        if (contentValues != null)
         {
-            if (values != null)
+            for (ContentValues values : contentValues)
             {
-                if (values.containsKey(GetFixDatabaseAdapter.KEY_ROWID)) {
-                    values.remove(GetFixDatabaseAdapter.KEY_ROWID);    // clear rowID (insert as new items)
-                }
-                if (db.addPlace(values) >= 0) {
-                    c++;
+                if (values != null)
+                {
+                    if (values.containsKey(GetFixDatabaseAdapter.KEY_ROWID)) {
+                        values.remove(GetFixDatabaseAdapter.KEY_ROWID);    // clear rowID (insert as new items)
+                    }
+                    if (db.addPlace(values) >= 0) {
+                        c++;
+                    }
                 }
             }
         }
+
         db.close();
         report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, SuntimesBackupTask.KEY_PLACEITEMS), c+""));
         report.append("\n");
