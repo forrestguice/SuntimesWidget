@@ -79,17 +79,22 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
 
     protected ColorValues loadColors(Context context, SharedPreferences prefs, String colorsID)
     {
+        String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
         ColorValues values = getDefaultColors(context);
-        values.loadColorValues(prefs, colorsID);
+        values.loadColorValues(prefs, prefix);
         return values;
     }
-    protected void saveColors(SharedPreferences prefs, String colorsID, ColorValues values) {
-        values.putColors(prefs, colorsID);
+    protected void saveColors(SharedPreferences prefs, String colorsID, ColorValues values)
+    {
+        String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
+        values.putColors(prefs, prefix);
     }
-    protected void removeColors(Context context, SharedPreferences prefs, String colorsID) {
-        ColorValues values = getColors(context, colorsID);
+    protected void removeColors(Context context, SharedPreferences prefs, String colorsID)
+    {
+        String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
+        ColorValues values = getColors(context, prefix);
         if (values != null) {
-            values.removeColors(prefs, colorsID);
+            values.removeColors(prefs, prefix);
         }
     }
 
@@ -210,7 +215,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     }
     @NonNull
     protected String getSharedPrefsPrefix() {
-        return "colors_";
+        return "color_";
     }
 
     @Nullable
@@ -221,6 +226,10 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
         return (prefsName != null)
                 ? context.getSharedPreferences(prefsName, 0)
                 : PreferenceManager.getDefaultSharedPreferences(context);
+    }
+    @NonNull
+    protected String getCollectionSharedPrefsPrefix() {
+        return "colors_";
     }
 
     @Override

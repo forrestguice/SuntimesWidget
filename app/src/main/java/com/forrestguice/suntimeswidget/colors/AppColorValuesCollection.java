@@ -49,12 +49,16 @@ public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValu
         return "app_";
     }
 
+    @NonNull
+    protected String getCollectionSharedPrefsPrefix() {
+        return "appcolors_";
+    }
+
     @Nullable
     @Override
     public String getSharedPrefsName() {
         return null;    // use default
     }
-
     @Nullable
     @Override
     public String getCollectionSharedPrefsName() {
