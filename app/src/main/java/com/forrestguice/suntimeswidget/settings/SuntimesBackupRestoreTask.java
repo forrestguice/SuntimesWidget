@@ -35,9 +35,13 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
@@ -224,6 +228,11 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             c += (importAppSettings(context, report, allValues.get(SuntimesBackupTask.KEY_APPSETTINGS)) ? 1 : 0);
         }
 
+        if (keys.contains(SuntimesBackupTask.KEY_COLORS)) {
+            c += importAppColors(context, SuntimesBackupTask.KEY_COLORS_APPCOLORS, 0, report, allValues.get(SuntimesBackupTask.KEY_COLORS_APPCOLORS));
+            c += importMapColors(context, SuntimesBackupTask.KEY_COLORS_MAPCOLORS, 0, report, allValues.get(SuntimesBackupTask.KEY_COLORS_MAPCOLORS));
+        }
+
         if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS))
         {
             int method = (methods.containsKey(SuntimesBackupTask.KEY_ALARMITEMS))
@@ -269,6 +278,71 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             }
         }
         return false;
+    }
+
+    /**
+     * importColors
+     */
+    protected static int importAppColors(Context context, String key, int method, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        return importColors(context, key, method, new ColorValuesImporter()
+        {
+            @Override
+            public ColorValues createColorValues(Context context) {
+                return new AppColorValues(context, true);
+            }
+            @Override
+            public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
+                return new AppColorValuesCollection<ColorValues>();
+            }
+        }, report, contentValues);
+    }
+    protected static int importMapColors(Context context, String key, int method, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        return importColors(context, key, method, new ColorValuesImporter()
+        {
+            @Override
+            public ColorValues createColorValues(Context context) {
+                return new WorldMapColorValues(context, true);
+            }
+            @Override
+            public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
+                return new WorldMapColorValuesCollection<ColorValues>();
+            }
+        }, report, contentValues);
+    }
+
+    protected static int importColors(Context context, String key, int method, ColorValuesImporter importer, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        int c = 0;
+        if (contentValues != null)
+        {
+            ColorValuesCollection<ColorValues> collection = importer.createColorValuesCollection(context);
+            for (ContentValues values : contentValues)
+            {
+                if (values != null)
+                {
+                    String colorsID = values.getAsString(ColorValues.KEY_ID);
+                    if (colorsID != null)
+                    {
+                        ColorValues v = importer.createColorValues(context);
+                        v.putColors(values);
+                        v.setID(colorsID);
+                        collection.setColors(context, colorsID, v);
+                        c++;
+                    }
+                }
+            }
+        }
+
+        report.append(context.getString(R.string.restorebackup_dialog_report_format1, SuntimesBackupTask.displayStringForBackupKey(context, key), c+""));
+        report.append("\n");
+        return c;
+    }
+    public abstract static class ColorValuesImporter
+    {
+        public abstract ColorValues createColorValues(Context context);
+        public abstract ColorValuesCollection<ColorValues> createColorValuesCollection(Context context);
     }
 
     /**

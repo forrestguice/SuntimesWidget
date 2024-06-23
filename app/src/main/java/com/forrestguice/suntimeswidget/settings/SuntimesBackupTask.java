@@ -83,8 +83,12 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     public static final String KEY_PLACEITEMS = "PlaceItems";
     public static final String KEY_ACTIONS = "Actions";
 
+    public static final String KEY_COLORS = "Colors";
+    public static final String KEY_COLORS_APPCOLORS = KEY_COLORS + "_" + "AppColors";
+    public static final String KEY_COLORS_MAPCOLORS = KEY_COLORS + "_" + "MapColors";
+
     public static final String[] ALL_KEYS = new String[] {
-            KEY_APPSETTINGS, KEY_WIDGETSETTINGS, KEY_ALARMITEMS, KEY_EVENTITEMS, KEY_PLACEITEMS, KEY_ACTIONS, KEY_WIDGETTHEMES
+            KEY_APPSETTINGS, KEY_COLORS, KEY_WIDGETSETTINGS, KEY_ALARMITEMS, KEY_EVENTITEMS, KEY_PLACEITEMS, KEY_ACTIONS, KEY_WIDGETTHEMES
     };
 
     public static final String DEF_EXPORT_TARGET = "SuntimesBackup";
@@ -395,6 +399,12 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     {
         if (SuntimesBackupTask.KEY_APPSETTINGS.equals(key)) {
             return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_appsettings));
+        }
+        if (SuntimesBackupTask.KEY_COLORS.equals(key) || SuntimesBackupTask.KEY_COLORS_APPCOLORS.equals(key)) {
+            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_appcolors));
+        }
+        if (SuntimesBackupTask.KEY_COLORS_MAPCOLORS.equals(key)) {
+            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_mapcolors));
         }
         if (SuntimesBackupTask.KEY_WIDGETSETTINGS.equals(key)) {
             return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_widgetsettings));
