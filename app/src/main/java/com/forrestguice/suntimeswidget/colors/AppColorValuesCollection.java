@@ -25,6 +25,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * ColorValuesCollection
@@ -32,6 +36,9 @@ import com.forrestguice.suntimeswidget.R;
 public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValues>
 {
     public static final String PREFS_APP_COLORS = "prefs_app_colors";
+
+    private static final String PREFS_PREFIX = "app_";
+    private static final String PREFS_COLLECTION_PREFIX = "appcolors_";
 
     public AppColorValuesCollection() {
         super();
@@ -46,12 +53,12 @@ public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValu
     @Override
     @NonNull
     protected String getSharedPrefsPrefix() {
-        return "app_";
+        return PREFS_PREFIX;
     }
 
     @NonNull
     protected String getCollectionSharedPrefsPrefix() {
-        return "appcolors_";
+        return PREFS_COLLECTION_PREFIX;
     }
 
     @Nullable
@@ -91,6 +98,51 @@ public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValu
         } else {
             return null;
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[] {
+            PREFS_PREFIX + "0" + "_" + KEY_SELECTED, PREFS_PREFIX + "1" + "_" + KEY_SELECTED,
+            PREFS_PREFIX + "0" + "_" + KEY_SELECTED + "_" + AppColorValues.TAG_APPCOLORS,
+            PREFS_PREFIX + "1" + "_" + KEY_SELECTED + "_" + AppColorValues.TAG_APPCOLORS,
+    };
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : ALL_KEYS) {
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo()
+        {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return new String[0];
+            }
+            public String[] longKeys() {
+                return new String[0];
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return new String[0];
+            }
+        };
     }
 
 }

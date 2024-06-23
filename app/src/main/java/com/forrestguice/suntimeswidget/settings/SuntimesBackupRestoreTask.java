@@ -35,8 +35,10 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
@@ -250,6 +252,8 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
     {
         Map<String,Class> prefTypes = AppSettings.getPrefTypes();
         prefTypes.putAll(AlarmSettings.getPrefTypes());
+        prefTypes.putAll(AppColorValuesCollection.getPrefTypes());
+        prefTypes.putAll(WorldMapColorValuesCollection.getPrefTypes());
 
         if (contentValues != null)
         {

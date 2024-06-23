@@ -20,7 +20,10 @@ package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 
 import org.junit.Test;
 
@@ -53,6 +56,8 @@ public class AppSettingsTest0
     @Test
     public void test_getPrefTypes()
     {
+        test_prefTypeInfo("AppColors", AppColorValuesCollection.getPrefTypeInfo(), AppColorValuesCollection.getPrefTypes());
+        test_prefTypeInfo("MapColors", WorldMapColorValuesCollection.getPrefTypeInfo(), WorldMapColorValuesCollection.getPrefTypes());
         test_prefTypeInfo("AppSettings", AppSettings.getPrefTypeInfo(), AppSettings.getPrefTypes());
         test_prefTypeInfo("AlarmSettings", AlarmSettings.getPrefTypeInfo(), AlarmSettings.getPrefTypes());
         test_prefTypeInfo("CalendarSettings", CalendarSettings.getPrefTypeInfo(), CalendarSettings.getPrefTypes());

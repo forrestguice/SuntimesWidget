@@ -26,6 +26,10 @@ import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * ColorValuesCollection
@@ -33,6 +37,9 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<ColorValues>
 {
     public static final String PREFS_WORLDMAP_COLORS = "prefs_worldmap_colors";
+
+    private static final String PREFS_PREFIX = "map_";
+    private static final String PREFS_COLLECTION_PREFIX = "mapcolors_";
 
     public WorldMapColorValuesCollection() {
         super();
@@ -47,12 +54,12 @@ public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<Colo
     @Override
     @NonNull
     protected String getSharedPrefsPrefix() {
-        return "map_";
+        return PREFS_PREFIX;
     }
 
     @NonNull
     protected String getCollectionSharedPrefsPrefix() {
-        return "mapcolors_";
+        return PREFS_COLLECTION_PREFIX;
     }
 
     @Nullable
@@ -81,5 +88,50 @@ public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<Colo
             return new WorldMapColorValuesCollection[size];
         }
     };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[] {
+            PREFS_PREFIX + "0" + "_" + KEY_SELECTED, PREFS_PREFIX + "1" + "_" + KEY_SELECTED,
+            PREFS_PREFIX + "0" + "_" + KEY_SELECTED + "_" + WorldMapColorValues.TAG_WORLDMAP,
+            PREFS_PREFIX + "1" + "_" + KEY_SELECTED + "_" + WorldMapColorValues.TAG_WORLDMAP,
+    };
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : ALL_KEYS) {
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo()
+        {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return new String[0];
+            }
+            public String[] longKeys() {
+                return new String[0];
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return new String[0];
+            }
+        };
+    }
 
 }
