@@ -46,9 +46,13 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.events.EventExportTask;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
@@ -226,7 +230,50 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
+        if (includedKeys.containsKey(KEY_COLORS) && includedKeys.get(KEY_COLORS))
+        {
+            if (c > 0) {
+                out.write(",\n".getBytes());
+            }
+            out.write(("\"" + KEY_COLORS_APPCOLORS + "\": ").getBytes());    // include App Colors
+            writeColorsJSONArray(context, new AppColorValuesCollection<ColorValues>(context), out);
+            c++;
+
+            if (c > 0) {
+                out.write(",\n".getBytes());
+            }
+            out.write(("\"" + KEY_COLORS_MAPCOLORS + "\": ").getBytes());    // include Map Colors
+            writeColorsJSONArray(context, new WorldMapColorValuesCollection<ColorValues>(), out);
+            c++;
+        }
+
         out.write("}".getBytes());
+        out.flush();
+    }
+
+    /**
+     * writes
+     *   [{ ColorValues }, ...]
+     */
+    public static void writeColorsJSONArray(Context context, ColorValuesCollection<ColorValues> collection, BufferedOutputStream out) throws IOException
+    {
+        out.write("[".getBytes());
+
+        int c = 0;
+        for (String colorsID : collection.getCollection())
+        {
+            if (c > 0) {
+                out.write(",\n".getBytes());
+            }
+
+            ColorValues colors = collection.getColors(context, colorsID);
+            if (colors != null) {
+                out.write(colors.toJSON().getBytes());
+                c++;
+            }
+        }
+
+        out.write("]".getBytes());
         out.flush();
     }
 
