@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.map.colors;
 
 import android.content.Context;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
@@ -28,7 +29,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 /**
  * ColorValuesCollection
  */
-public class WorldMapColorValuesCollection<WorldMapColorValues> extends ColorValuesCollection<ColorValues>
+public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<ColorValues>
 {
     public static final String PREFS_WORLDMAP_COLORS = "prefs_worldmap_colors";
 
@@ -40,6 +41,12 @@ public class WorldMapColorValuesCollection<WorldMapColorValues> extends ColorVal
     }
     protected WorldMapColorValuesCollection(Parcel in) {
         super(in);
+    }
+
+    @Override
+    @NonNull
+    protected String getSharedPrefsPrefix() {
+        return "mapcolors_";
     }
 
     @Nullable
@@ -56,7 +63,7 @@ public class WorldMapColorValuesCollection<WorldMapColorValues> extends ColorVal
 
     @Override
     public ColorValues getDefaultColors(Context context) {
-        return new com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues(context,  true);
+        return new WorldMapColorValues(context,  true);
     }
 
     public static final Creator<WorldMapColorValuesCollection> CREATOR = new Creator<WorldMapColorValuesCollection>()

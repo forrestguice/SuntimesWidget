@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.R;
@@ -28,9 +29,9 @@ import com.forrestguice.suntimeswidget.R;
 /**
  * ColorValuesCollection
  */
-public class AppColorValuesCollection<GraphColorValues> extends ColorValuesCollection<ColorValues>
+public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValues>
 {
-    public static final String PREFS_APP_COLORS = "prefs_graph_colors";   // TODO: change
+    public static final String PREFS_APP_COLORS = "prefs_app_colors";
 
     public AppColorValuesCollection() {
         super();
@@ -42,10 +43,16 @@ public class AppColorValuesCollection<GraphColorValues> extends ColorValuesColle
         super(in);
     }
 
+    @Override
+    @NonNull
+    protected String getSharedPrefsPrefix() {
+        return "app_";
+    }
+
     @Nullable
     @Override
     public String getSharedPrefsName() {
-        return null;
+        return null;    // use default
     }
 
     @Nullable
