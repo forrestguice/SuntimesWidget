@@ -42,8 +42,15 @@ public class AppColorValuesCollection<GraphColorValues> extends ColorValuesColle
         super(in);
     }
 
+    @Nullable
     @Override
     public String getSharedPrefsName() {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public String getCollectionSharedPrefsName() {
         return PREFS_APP_COLORS;
     }
 

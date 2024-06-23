@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -39,7 +40,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
 
     public ColorValuesCollection() {}
     public ColorValuesCollection(Context context) {
-        loadCollection(getSharedPreferences(context));
+        loadCollection(getCollectionSharedPreferences(context));
     }
     protected ColorValuesCollection(Parcel in)
     {
@@ -102,7 +103,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
         }
         if (!colorValues.containsKey(colorsID))
         {
-            ColorValues values = loadColors(context, getSharedPreferences(context), colorsID);
+            ColorValues values = loadColors(context, getCollectionSharedPreferences(context), colorsID);
             if (values != null) {
                 colorValues.put(colorsID, values);
             }
@@ -119,17 +120,17 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
         v.loadColorValues(values);    // copy colors into a new instance
         colorValues.put(colorsID, v);
 
-        saveColors(getSharedPreferences(context), colorsID, v);
+        saveColors(getCollectionSharedPreferences(context), colorsID, v);
         if (collection.add(colorsID)) {
-            saveCollection(getSharedPreferences(context));
+            saveCollection(getCollectionSharedPreferences(context));
         }
     }
 
     public void removeColors(Context context, String colorsID) {
         colorValues.remove(colorsID);
-        removeColors(context, getSharedPreferences(context), colorsID);
+        removeColors(context, getCollectionSharedPreferences(context), colorsID);
         if (collection.remove(colorsID)) {
-            saveCollection(getSharedPreferences(context));
+            saveCollection(getCollectionSharedPreferences(context));
         }
     }
 
@@ -198,9 +199,24 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
         editor.apply();
     }
 
+    @Nullable
     public abstract String getSharedPrefsName();
-    public SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(getSharedPrefsName(), 0);
+    public SharedPreferences getSharedPreferences(Context context)
+    {
+        String prefsName = getSharedPrefsName();
+        return (prefsName != null)
+                ? context.getSharedPreferences(prefsName, 0)
+                : PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    @Nullable
+    public abstract String getCollectionSharedPrefsName();
+    public SharedPreferences getCollectionSharedPreferences(Context context)
+    {
+        String prefsName = getCollectionSharedPrefsName();
+        return (prefsName != null)
+                ? context.getSharedPreferences(prefsName, 0)
+                : PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override

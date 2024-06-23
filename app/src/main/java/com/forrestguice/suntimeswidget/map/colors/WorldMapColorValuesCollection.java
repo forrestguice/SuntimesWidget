@@ -42,8 +42,15 @@ public class WorldMapColorValuesCollection<WorldMapColorValues> extends ColorVal
         super(in);
     }
 
+    @Nullable
     @Override
     public String getSharedPrefsName() {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public String getCollectionSharedPrefsName() {
         return PREFS_WORLDMAP_COLORS;
     }
 
