@@ -447,7 +447,10 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         if (SuntimesBackupTask.KEY_APPSETTINGS.equals(key)) {
             return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_appsettings));
         }
-        if (SuntimesBackupTask.KEY_COLORS.equals(key) || SuntimesBackupTask.KEY_COLORS_APPCOLORS.equals(key)) {
+        if (SuntimesBackupTask.KEY_COLORS.equals(key)) {
+            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors));
+        }
+        if (SuntimesBackupTask.KEY_COLORS_APPCOLORS.equals(key)) {
             return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_appcolors));
         }
         if (SuntimesBackupTask.KEY_COLORS_MAPCOLORS.equals(key)) {

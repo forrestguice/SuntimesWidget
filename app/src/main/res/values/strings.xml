@@ -1349,6 +1349,7 @@
     <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">Alarms</string>
     <string name="restorebackup_dialog_item_appsettings">App Settings</string>
+    <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
     <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>   <!-- TODO -->
     <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>   <!-- TODO -->
     <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string>
