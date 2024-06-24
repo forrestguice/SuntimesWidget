@@ -172,6 +172,14 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
     }
 
+    protected void onDeleteItem()
+    {
+        if (listener != null) {
+            ColorValuesItem item = (ColorValuesItem) selector.getSelectedItem();
+            listener.onDeleteClicked(item != null ? item.colorsID : null);
+        }
+    }
+
     private View.OnClickListener onBackButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -210,6 +218,10 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             {
                 case R.id.action_colors_add:
                     onAddItem();
+                    return true;
+
+                case R.id.action_colors_delete:
+                    onDeleteItem();
                     return true;
 
                 case R.id.action_colors_export:
@@ -459,6 +471,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         void onBackClicked();
         void onAddClicked(@Nullable String colorsID);
         void onEditClicked(@Nullable String colorsID);
+        void onDeleteClicked(@Nullable String colorsID);
         void onItemSelected(ColorValuesItem item);
     }
 

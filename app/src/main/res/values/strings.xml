@@ -2406,6 +2406,11 @@
     <string name="msg_colors_deleted">Removed %s</string>    <!-- toast -->
     <string name="msg_colors_imported">Imported colors %s</string>    <!-- toast -->
 
+    <string name="colorsdelete_dialog_title">Remove Colors?</string>    <!-- toast -->
+    <string name="colorsdelete_dialog_message">Are you sure you want to remove %s?</string>    <!-- toast -->
+    <string name="colorsdelete_dialog_ok">Remove</string>    <!-- toast -->
+    <string name="colorsdelete_dialog_cancel">@string/dialog_cancel</string>    <!-- toast -->
+
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>
     <string name="app_name">Suntimes</string>

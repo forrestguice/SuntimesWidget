@@ -19,7 +19,9 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -172,7 +174,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         } else return null;
     }
 
-    private ColorValuesSelectFragment.FragmentListener listDialogListener = new ColorValuesSelectFragment.FragmentListener()
+    private final ColorValuesSelectFragment.FragmentListener listDialogListener = new ColorValuesSelectFragment.FragmentListener()
     {
         @Override
         public void onBackClicked() {
@@ -219,6 +221,39 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
 
         @Override
+        public void onDeleteClicked(@Nullable String colorsID)
+        {
+            Context context = getActivity();
+            if (context != null && colorsID != null)
+            {
+                String title = context.getString(R.string.colorsdelete_dialog_title);
+                String message = context.getString(R.string.colorsdelete_dialog_message, colorsID);
+                AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                        .setTitle(title).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(context.getString(R.string.colorsdelete_dialog_ok), onConfirmDelete(context, colorsID))
+                        .setNegativeButton(context.getString(R.string.colorsdelete_dialog_cancel), null);
+                confirm.show();
+            }
+        }
+        protected DialogInterface.OnClickListener onConfirmDelete(final Context context, @NonNull final String colorsID)
+        {
+            return new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    String selectedID = colorCollection.getSelectedColorsID(context, getAppWidgetID(), getColorTag());
+                    colorCollection.removeColors(context, colorsID);
+                    if (colorsID.equals(selectedID)) {
+                        colorCollection.setSelectedColorsID(context, null, getAppWidgetID(), getColorTag());
+                    }
+                    Toast.makeText(context, getString(R.string.msg_colors_deleted, colorsID), Toast.LENGTH_SHORT).show();
+                    updateViews();
+                }
+            };
+        }
+
+        @Override
         public void onItemSelected(ColorValuesSelectFragment.ColorValuesItem item)
         {
             //Log.d("DEBUG", "onItemSelected " + item.colorsID);
@@ -231,7 +266,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
     };
 
-    private ColorValuesEditFragment.FragmentListener editDialogListener = new ColorValuesEditFragment.FragmentListener()
+    private final ColorValuesEditFragment.FragmentListener editDialogListener = new ColorValuesEditFragment.FragmentListener()
     {
         @Override
         public void onCancelClicked() {
@@ -257,9 +292,11 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
 
         @Override
-        public void onDeleteClicked(String colorsID) {
+        public void onDeleteClicked(String colorsID)
+        {
             Context context = getActivity();
-            if (context != null) {
+            if (context != null)
+            {
                 colorCollection.removeColors(context, colorsID);
                 setMode(MODE_SELECT);
                 toggleFragmentVisibility(getMode());
