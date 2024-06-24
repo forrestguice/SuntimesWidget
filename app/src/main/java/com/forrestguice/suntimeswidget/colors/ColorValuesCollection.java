@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 /*
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -87,14 +87,14 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     protected void saveColors(SharedPreferences prefs, String colorsID, ColorValues values)
     {
         String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
-        values.putColors(prefs, prefix);
+        values.putColorsInto(prefs, prefix);
     }
     protected void removeColors(Context context, SharedPreferences prefs, String colorsID)
     {
         String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
         ColorValues values = getColors(context, prefix);
         if (values != null) {
-            values.removeColors(prefs, prefix);
+            values.removeColorsFrom(prefs, prefix);
         }
     }
 
@@ -122,7 +122,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     public void setColors(Context context, @NonNull String colorsID, ColorValues values)
     {
         ColorValues v = getDefaultColors(context);
-        v.loadColorValues(values);    // copy colors into a new instance
+        v.loadColorValues(values);    // copy defined colors into a new instance
         colorValues.put(colorsID, v);
 
         saveColors(getCollectionSharedPreferences(context), colorsID, v);

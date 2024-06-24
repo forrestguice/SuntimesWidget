@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 /*
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -41,6 +41,9 @@ public abstract class ColorValues implements Parcelable
     public ColorValues(ColorValues other) {
         loadColorValues(other);
     }
+    public ColorValues(ContentValues values) {
+        loadColorValues(values);
+    }
     protected ColorValues(Parcel in) {
         loadColorValues(in);
     }
@@ -51,25 +54,47 @@ public abstract class ColorValues implements Parcelable
         loadColorValues(jsonString);
     }
 
-    public void loadColorValues(@NonNull Parcel in) {
+    public void loadColorValues(@NonNull Parcel in)
+    {
         setID(in.readString());
-        for (String key : getColorKeys()) {
+        for (String key : getColorKeys())
+        {
             setColor(key, in.readInt());
+            setLabel(key, in.readString());
         }
     }
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags)
+    {
         dest.writeString(getID());
-        for (String key : getColorKeys()) {
+        for (String key : getColorKeys())
+        {
             dest.writeInt(values.getAsInteger(key));
+            dest.writeString(values.getAsString(key + SUFFIX_LABEL));
         }
     }
 
     public void loadColorValues(@NonNull ColorValues other)
     {
         setID(other.getID());
-        for (String key : other.getColorKeys()) {
+        for (String key : other.getColorKeys())
+        {
             setColor(key, other.getColor(key));
+            if (other.hasLabel(key)) {
+                setLabel(key, other.getLabel(key));
+            }
+        }
+    }
+
+    public void loadColorValues(@NonNull ContentValues values)
+    {
+        setID(values.getAsString(KEY_ID));
+        for (String key : getColorKeys())
+        {
+            setColor(key, values.getAsInteger(key));
+            if (values.containsKey(key + SUFFIX_LABEL)) {
+                setLabel(key, values.getAsString(key + SUFFIX_LABEL));
+            }
         }
     }
 
@@ -86,15 +111,19 @@ public abstract class ColorValues implements Parcelable
         try {
             JSONObject json = new JSONObject(jsonString);
             setID(json.getString(KEY_ID));
-            for (String key : getColorKeys()) {
+            for (String key : getColorKeys())
+            {
                 setColor(key, json.has(key) ? Color.parseColor(json.getString(key).trim()) : getFallbackColor());
+                if (json.has(key + SUFFIX_LABEL)) {
+                    setLabel(key, json.getString(key + SUFFIX_LABEL).trim());
+                }
             }
         } catch (JSONException e) {
             Log.e("ColorValues", "fromJSON: " + e);
         }
     }
 
-    public void putColors(SharedPreferences prefs, String prefix)
+    public void putColorsInto(SharedPreferences prefs, String prefix)
     {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(prefix + KEY_ID, getID());
@@ -103,11 +132,11 @@ public abstract class ColorValues implements Parcelable
         }
         editor.apply();
     }
-    public void putColors(ContentValues other) {
+    public void putColorsInto(ContentValues other) {
         other.putAll(values);
     }
 
-    public void removeColors(SharedPreferences prefs, String prefix)
+    public void removeColorsFrom(SharedPreferences prefs, String prefix)
     {
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(prefix + KEY_ID);
@@ -137,6 +166,9 @@ public abstract class ColorValues implements Parcelable
     public String getLabel(String key) {
         String label = values.getAsString(key + SUFFIX_LABEL);
         return (label != null ? label : key);
+    }
+    public boolean hasLabel(String key) {
+        return values.containsKey(key + SUFFIX_LABEL);
     }
 
     public void setColor(String key, int color) {
@@ -185,13 +217,21 @@ public abstract class ColorValues implements Parcelable
         return toJSON();
     }
 
-    public String toJSON()
+    public String toJSON() {
+        return toJSON(false);
+    }
+
+    public String toJSON(boolean withLabels)
     {
         JSONObject result = new JSONObject();
         try {
             result.put(KEY_ID, getID());
-            for (String key : getColorKeys()) {
+            for (String key : getColorKeys())
+            {
                 result.put(key, "#" + Integer.toHexString(getColor(key)));
+                if (withLabels && hasLabel(key)) {
+                    result.put(key + SUFFIX_LABEL, getLabel(key));
+                }
             }
         } catch (JSONException e) {
             Log.e("ColorValues", "toJSON: " + e);

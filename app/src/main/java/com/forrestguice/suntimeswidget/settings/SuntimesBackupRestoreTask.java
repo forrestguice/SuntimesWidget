@@ -326,8 +326,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
                     if (colorsID != null)
                     {
                         ColorValues v = importer.createColorValues(context);
-                        v.putColors(values);
-                        v.setID(colorsID);
+                        v.loadColorValues(values);
                         collection.setColors(context, colorsID, v);
                         c++;
                     }
