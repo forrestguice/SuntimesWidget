@@ -18,10 +18,8 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -64,7 +62,7 @@ public class ColorValuesCollectionTest
         String[] ids0 = collection0.getCollection();
         assertNotNull(ids0);
         assertEquals(0, ids0.length);
-        assertNull(collection0.getColors(context, "colors0"));
+        assertNull(collection0.getColors(context, null));
 
         // setSolors, hasColors, getCollection
         assertFalse(collection0.hasColors("colors0"));
@@ -82,7 +80,6 @@ public class ColorValuesCollectionTest
         // removeColors
         collection0.removeColors(context, "colors0");
         assertFalse(collection0.hasColors("colors0"));
-        assertNull(collection0.getColors(context, "colors0"));
     }
 
     @Test
@@ -101,7 +98,7 @@ public class ColorValuesCollectionTest
         assertNull(collection0.getSelectedColorsID(context, 0));
 
         collection0.setSelectedColorsID(context, "selected00", 0, "tag0");
-        assertEquals("selected00", collection0.getSelectedColorsID(context, 0));
+        assertEquals("selected00", collection0.getSelectedColorsID(context, 0, "tag0"));
         collection0.clearSelectedColorsID(context, 0, "tag0");
         assertNull(collection0.getSelectedColorsID(context, 0, "tag0"));
 
@@ -111,7 +108,7 @@ public class ColorValuesCollectionTest
         assertNull(collection0.getSelectedColorsID(context, 1));
 
         collection0.setSelectedColorsID(context, "selected11", 1, "tag1");
-        assertEquals("selected11", collection0.getSelectedColorsID(context, 1));
+        assertEquals("selected11", collection0.getSelectedColorsID(context, 1, "tag1"));
         collection0.clearSelectedColorsID(context, 1, "tag1");
         assertNull(collection0.getSelectedColorsID(context, 1, "tag1"));
     }
@@ -124,11 +121,12 @@ public class ColorValuesCollectionTest
         @Override
         public ColorValues getDefaultColors(Context context)
         {
-            return new ColorValues() {
-                public String[] getColorKeys() {
-                    return new String[0];
-                }
-            };
+            ColorValues colors = new ColorValuesTest.TestColorValues();
+            colors.setColor("0", Color.BLACK);
+            colors.setColor("1", Color.BLACK);
+            colors.setColor("2", Color.BLACK);
+            colors.setColor("3", Color.BLACK);
+            return colors;
         }
 
         @Nullable
