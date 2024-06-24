@@ -47,6 +47,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,17 +86,17 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
         ImageButton overflow = (ImageButton) content.findViewById(R.id.overflow);
         if (overflow != null) {
-            overflow.setOnClickListener(onOverflowButtonClicked);
+            overflow.setOnClickListener(new ViewUtils.ThrottledClickListener(onOverflowButtonClicked));
         }
 
         ImageButton saveButton = (ImageButton) content.findViewById(R.id.saveButton);
         if (saveButton != null) {
-            saveButton.setOnClickListener(onSaveButtonClicked);
+            saveButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onSaveButtonClicked));
         }
 
         ImageButton cancelButton = (ImageButton) content.findViewById(R.id.cancelButton);
         if (cancelButton != null) {
-            cancelButton.setOnClickListener(onCancelButtonClicked);
+            cancelButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onCancelButtonClicked));
         }
 
         panel = (GridLayout) content.findViewById(R.id.colorPanel);

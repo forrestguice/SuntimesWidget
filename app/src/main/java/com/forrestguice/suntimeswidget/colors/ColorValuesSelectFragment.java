@@ -39,6 +39,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 public class ColorValuesSelectFragment extends ColorValuesFragment
 {
@@ -100,22 +101,22 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
         editButton = (ImageButton) content.findViewById(R.id.editButton);
         if (editButton != null) {
-            editButton.setOnClickListener(onEditButtonClicked);
+            editButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onEditButtonClicked));
         }
 
         addButton = (ImageButton) content.findViewById(R.id.addButton);
         if (addButton != null) {
-            addButton.setOnClickListener(onAddButtonClicked);
+            addButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onAddButtonClicked));
         }
 
         backButton = (ImageButton) content.findViewById(R.id.backButton);
         if (backButton != null) {
-            backButton.setOnClickListener(onBackButtonClicked);
+            backButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onBackButtonClicked));
         }
 
         menuButton = (ImageButton) content.findViewById(R.id.menuButton);
         if (menuButton != null) {
-            menuButton.setOnClickListener(onMenuButtonClicked);
+            menuButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onMenuButtonClicked));
         }
 
         updateViews();
@@ -144,12 +145,12 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         } else return null;
     }
 
-    private View.OnClickListener onEditButtonClicked = new View.OnClickListener() {
+    private View.OnClickListener onEditButtonClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onEditSelectedItem();
         }
-    };
+    });
     protected void onEditSelectedItem()
     {
         if (listener != null) {
