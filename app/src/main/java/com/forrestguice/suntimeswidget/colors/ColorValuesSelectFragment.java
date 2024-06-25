@@ -19,11 +19,15 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,12 +36,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.SuntimesBackupTask;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -225,8 +233,8 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
                     onDeleteItem();
                     return true;
 
-                case R.id.action_colors_export:
-                    onExportColors();
+                case R.id.action_colors_share:
+                    onShareColors();
                     return true;
 
                 case R.id.action_colors_import:
@@ -237,59 +245,27 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
     };
 
-    protected void onExportColors()
+    protected void onShareColors()
     {
         Context context = getActivity();
         if (colorCollection != null && context != null)
         {
-            StringBuilder exportString = new StringBuilder(colorCollection.toString());
-            for (String colorsID : colorCollection.getCollection())
+            ColorValues colors = colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag());
+            if (colors != null)
             {
-                ColorValues colors = colorCollection.getColors(context, colorsID);
-                exportString.append("\n");
-                exportString.append(colors.toJSON());
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, colors.toJSON(false));
+                startActivity(Intent.createChooser(intent, null));
             }
-            exportString.append("...");
-            // TODO
-
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, exportString.toString());
-            startActivity(Intent.createChooser(intent, null));
         }
     }
 
     protected void onImportColors()
     {
-        Context context = getActivity();
-        if (colorCollection != null && context != null)
-        {
-            String importString = "";  // TODO: user input
-            importColors(context, importString);
+        if (listener != null) {
+            listener.onImportClicked();
         }
-    }
-    protected void importColors(@NonNull Context context, String jsonString)
-    {
-        ColorValues values = createColorValues(jsonString);
-        if (values != null)
-        {
-            String id = values.getID();
-            if (!colorCollection.hasColors(id))
-            {
-                colorCollection.setColors(context, values);
-                Toast.makeText(getActivity(), context.getString(R.string.msg_colors_imported, id), Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    /**
-     * createColorsValues
-     * @param jsonString json colorvalues string
-     * @return defaults null; this method should be overridden by concrete implementations to create and return a valid ColorValues obj
-     */
-    @Nullable
-    protected ColorValues createColorValues(String jsonString) {
-        return null;
     }
 
     protected ArrayAdapter<ColorValuesItem> initAdapter(Context context)
@@ -470,6 +446,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     public interface FragmentListener
     {
         void onBackClicked();
+        void onImportClicked();
         void onAddClicked(@Nullable String colorsID);
         void onEditClicked(@Nullable String colorsID);
         void onDeleteClicked(@Nullable String colorsID);

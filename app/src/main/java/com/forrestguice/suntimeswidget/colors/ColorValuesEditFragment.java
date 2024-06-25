@@ -20,6 +20,7 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -45,6 +46,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -390,6 +392,34 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
+    protected void importColors(final Context context)
+    {
+        if (context != null)
+        {
+            AlertDialog.Builder dialog = createImportColorsDialog(context, new ImportColorsDialogInterface()
+            {
+                public void onImportClicked(String input) {
+                    importColors(context, input);
+                }
+            });
+            dialog.show();
+        }
+    }
+    protected void importColors(final Context context, String jsonInput)
+    {
+        ColorValues values = new ColorValues(jsonInput) {
+            @Override
+            public String[] getColorKeys() {
+                return new String[0];
+            }
+        };
+        if (values != null)
+        {
+
+        }
+        // TODO
+    }
+
     protected void shareColors(Context context)
     {
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -448,6 +478,10 @@ public class ColorValuesEditFragment extends ColorValuesFragment
                 //case R.id.action_colors_copytheme:
                 //    importFromTheme(getActivity());
                 //    return true;
+
+                case R.id.action_colors_import:
+                    importColors(getActivity());
+                    return true;
 
                 case R.id.action_colors_delete:
                     deleteColors(getActivity());

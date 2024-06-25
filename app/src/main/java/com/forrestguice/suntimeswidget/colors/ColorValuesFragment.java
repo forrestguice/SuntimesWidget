@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 /*
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2024 Forrest Guice
     This file is part of Natural Hour.
 
     Natural Hour is free software: you can redistribute it and/or modify
@@ -19,8 +19,14 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.forrestguice.suntimeswidget.R;
 
@@ -37,5 +43,42 @@ public class ColorValuesFragment extends Fragment
     }
     public int getThemeResID() {
         return (getArguments() != null) ? getArguments().getInt(KEY_DIALOGTHEME, DEF_DIALOGTHEME) : DEF_DIALOGTHEME;
+    }
+
+    /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
+
+    public interface ImportColorsDialogInterface {
+        void onImportClicked(String input);
+    }
+    public static AlertDialog.Builder createImportColorsDialog(final Context context, final ImportColorsDialogInterface dialogInterface)
+    {
+        final EditText editText = new EditText(context);
+        editText.setSingleLine(false);
+        editText.setLines(3);
+        editText.setMaxLines(10);
+        editText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        editText.setHint(context.getString(R.string.colorsimport_dialog_hint));
+
+        int margin = context.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        LinearLayout layout = new LinearLayout(context);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.setMargins(margin, margin, margin, 0);
+        layout.addView(editText, layoutParams);
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle(context.getString(R.string.colorsimport_dialog_title));
+        dialog.setNegativeButton(context.getString(R.string.colorsimport_dialog_cancel), null);
+        dialog.setPositiveButton(context.getString(R.string.colorsimport_dialog_ok), new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialogInterface.onImportClicked(editText.getText().toString());
+            }
+        });
+        dialog.setView(layout);
+        return dialog;
     }
 }

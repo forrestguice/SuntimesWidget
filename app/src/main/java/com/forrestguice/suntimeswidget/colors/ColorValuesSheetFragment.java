@@ -20,6 +20,7 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -31,7 +32,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.views.Toast;
+
+import java.util.ArrayList;
 
 public class ColorValuesSheetFragment extends ColorValuesFragment
 {
@@ -182,6 +186,23 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
 
         @Override
+        public void onImportClicked()
+        {
+            final Context context = getActivity();
+            if (context != null)
+            {
+                AlertDialog.Builder dialog = createImportColorsDialog(context, new ImportColorsDialogInterface()
+                {
+                    @Override
+                    public void onImportClicked(String input) {
+                        importColors(context, input);
+                    }
+                });
+                dialog.show();
+            }
+        }
+
+        @Override
         public void onAddClicked(@Nullable String colorsID)
         {
             //Log.d("DEBUG", "onAddClicked " + colorsID);
@@ -265,6 +286,37 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             }
         }
     };
+
+    protected void importColors(@NonNull Context context, String jsonString)
+    {
+        ColorValues values = listener.getDefaultValues();
+        if (values != null)
+        {
+            if (values.loadColorValues(jsonString))
+            {
+                String id = values.getID();
+                if (id != null)
+                {
+                    int c = 0;
+                    String base = id;
+                    while (colorCollection.hasColors(id)) {
+                        id = base + "_" + c;
+                        c++;
+                    }
+                    if (!base.equals(id)) {
+                        values.setID(id);
+                    }
+
+                    colorCollection.setColors(context, id, values);
+                    //colorCollection.setSelectedColorsID(context, id, getAppWidgetID(), getColorTag());
+                    Toast.makeText(getActivity(), context.getString(R.string.msg_colors_imported, id), Toast.LENGTH_SHORT).show();
+                    updateViews();
+                    return;
+                }
+            }
+        }
+        Toast.makeText(getActivity(), context.getString(R.string.msg_colors_import_failed), Toast.LENGTH_SHORT).show();
+    }
 
     private final ColorValuesEditFragment.FragmentListener editDialogListener = new ColorValuesEditFragment.FragmentListener()
     {
