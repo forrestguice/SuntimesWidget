@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -106,7 +107,7 @@ public abstract class ColorValues implements Parcelable
         }
     }
 
-    public void loadColorValues(String jsonString)
+    public boolean loadColorValues(String jsonString)
     {
         try {
             JSONObject json = new JSONObject(jsonString);
@@ -118,8 +119,11 @@ public abstract class ColorValues implements Parcelable
                     setLabel(key, json.getString(key + SUFFIX_LABEL).trim());
                 }
             }
+            return json.has(KEY_ID);
+
         } catch (JSONException e) {
             Log.e("ColorValues", "fromJSON: " + e);
+            return false;
         }
     }
 

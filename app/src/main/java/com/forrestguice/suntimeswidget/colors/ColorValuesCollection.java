@@ -247,4 +247,27 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
         return result.toString();
     }
 
+    /*public String toJSON(Context context)
+    {
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+
+        int c = 0;
+        for (String colorsID : collection)
+        {
+            if (c > 0) {
+                result.append(",\n");
+            }
+
+            ColorValues colors = getColors(context, colorsID);
+            if (colors != null) {
+                result.append(colors.toJSON());
+                c++;
+            }
+        }
+
+        result.append("]");
+        return result.toString();
+    }*/
+
 }
