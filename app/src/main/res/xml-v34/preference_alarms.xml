@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmClock"
+        android:key="app_alarms_category">
+
+        <Preference
+            android:key="app_alarms_autostart" android:persistent="false"
+            android:title="@string/configLabel_alarms_autostart"
+            android:summary="@string/configLabel_alarms_autostart_on" />
+
+        <Preference
+            android:key="app_alarms_batterytopt" android:persistent="false"
+            android:title="@string/configLabel_alarms_optWhiteList"
+            android:summary="@string/configLabel_alarms_optWhiteList_unlisted" />
+
+        <Preference
+            android:key="app_alarms_notifications" android:persistent="false"
+            android:title="@string/configLabel_alarms_notifications"
+            android:summary="@string/configLabel_alarms_notifications_on" />
+
+        <Preference
+            android:key="app_alarms_notifications_fullscreen" android:persistent="false"
+            android:title="@string/configLabel_alarms_notifications_fullscreen"
+            android:summary="@string/configLabel_alarms_notifications_fullscreen_summary1" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmClock"
+        android:key="app_alarms_category1">
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_alarms_dismiss_challenge"
+            android:title="@string/configLabel_alarms_dismissChallenge"
+            android:dialogTitle="@string/configLabel_alarms_dismissChallenge"
+            android:summary="%s"
+            android:entries="@array/dismissChallenge_display" android:entryValues="@array/dismissChallenge_values"
+            android:defaultValue="@string/def_app_alarms_dismiss_challenge" />
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_upcomingMillis"
+            android:title="@string/configLabel_alarms_upcoming"
+            android:summary="@string/configLabel_alarms_upcoming_summary"
+            app:mode="hours" app:minValue="@integer/minAlarmReminderHours" app:zeroValueText="@string/no_reminder"
+            android:defaultValue="@string/def_app_alarms_upcoming" />
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_snoozeMillis"
+            android:title="@string/configLabel_alarms_snooze"
+            android:summary="@string/configLabel_alarms_snooze_summary"
+            app:mode="minutes" app:minValue="@integer/minAlarmSnoozeMinutes" app:maxValue="@integer/maxAlarmSnoozeMinutes"
+            android:defaultValue="@string/def_app_alarms_snooze" />
+
+        <com.forrestguice.suntimeswidget.settings.IntegerPickerPreference
+            android:key="app_alarms_snoozeLimit"
+            android:title="@string/configLabel_alarms_snoozeLimit"
+            android:summary="@string/configLabel_alarms_snoozeLimit_summary"
+            app:zeroValueText="@string/configLabel_alarms_snoozeLimit_none"
+            app:minValue="0" app:maxValue="@integer/maxAlarmSnoozeLimit"
+            android:defaultValue="@string/def_app_alarms_snoozeLimit" />
+
+        <!--<com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_silenceafter"
+            android:title="@string/configLabel_alarms_silenceAfter"
+            android:summary="@string/configLabel_alarms_silenceAfter_summary"
+            android:defaultValue="@string/def_app_alarms_silence" />-->
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_timeoutMillis"
+            android:title="@string/configLabel_alarms_timeoutAfter"
+            android:summary="@string/configLabel_alarms_timeoutAfter_summary"
+            android:defaultValue="@string/def_app_alarms_timeout" />
+
+        <!--<ListPreference android:key="app_alarms_hardwarebutton_action"
+            android:enabled="false"
+            android:title="@string/configLabel_alarms_hardwarebuttons"
+            android:summary="@string/configLabel_alarms_hardwarebuttons_summary"
+            android:defaultValue="@string/def_app_alarms_hardwarebuttons_action"
+            android:entryValues="@array/alarm_hardwarebutton_actions_values"
+            android:entries="@array/alarm_hardwarebutton_actions_display" />-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmQuick_notification"
+        android:key="app_alarms_category2">
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_notifyDismissMillis"
+            android:title="@string/configLabel_alarms_autoDismissAfter"
+            android:summary="@string/configLabel_alarms_autoDismissAfter_summary"
+            android:defaultValue="@string/def_app_alarms_autodismiss"
+            app:mode="seconds" app:minValue="@integer/minAlarmAutoDismissSeconds"
+            app:maxValue="@integer/maxAlarmAutoDismissSeconds" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmSounds" >
+
+        <Preference
+            android:key="app_alarms_volumes"
+            android:title="@string/configLabel_alarms_volumes"
+            android:summary="" />
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_fadeinMillis"
+            android:title="@string/configLabel_alarms_fadein"
+            android:summary="@string/configLabel_alarms_fadein_summary"
+            android:defaultValue="@string/def_app_alarms_fadein"
+            app:mode="seconds" app:minValue="0"
+            app:zeroValueText="@string/configLabel_alarms_fadein_disabled" />
+
+        <CheckBoxPreference
+            android:key="app_alarms_allringtones"
+            android:title="@string/configLabel_alarms_allRingtones"
+            android:summary="@string/configLabel_alarms_allRingtones_summary"
+            android:defaultValue="@string/def_app_alarms_allringtones" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmMisc" >
+
+        <CheckBoxPreference
+            android:key="app_alarms_showlauncher"
+            android:title="@string/configLabel_alarms_showlauncher"
+            android:summary="@string/configLabel_alarms_showlauncher_summary"
+            android:defaultValue="@string/def_app_alarms_showlauncher" />
+
+        <CheckBoxPreference
+            android:key="dialog_importwarning_donotshowagain"
+            android:title="@string/importalarms_title_warning"
+            android:summary="@string/dialog_msg_donotshowagain"
+            android:defaultValue="false" />
+
+        <Preference
+            android:key="app_alarms_bootcompleted"
+            android:title="@string/configLabel_alarms_bootcompleted"
+            android:summary="@string/configLabel_alarms_bootcompleted_summary"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_experimental" >
+
+        <CheckBoxPreference
+            android:key="app_alarms_poweroffalarms"
+            android:title="@string/configLabel_alarms_poweroffalarms"
+            android:summary="@string/configLabel_alarms_poweroffalarms_summary"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
