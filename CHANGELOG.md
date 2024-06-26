@@ -10,9 +10,11 @@
 * adds "next alarm" quick settings tile, and 2x2 and 3x2 "next alarm" widgets (#766).
 * adds updated light and dark widget themes; adds to default widget actions.
 * adds support for notification channels (api26+); a warning is shown when channels are muted.
+* fixes bug "alarms fail to display over lock screen" (#802); adds `android.permission.USE_FULL_SCREEN_INTENT` [PERMISSION].
 * updates Time4A dependency from 4.4.2-2019c to 4.8-2021a.
-* updates targetSdkVersion (25 -> 28) (#725); adds `android.permission.FOREGROUND_SERVICE` [PERMISSION]; https://developer.android.com/about/versions/pie/android-9.0-changes-28#fg-svc
+* updates targetSdkVersion (25 -> 28) (#725); adds `android.permission.FOREGROUND_SERVICE` [PERMISSION].
 * increments minSdkVersion (10 -> 14) (#122); building for api10 remain possible by modifying `build.gradle`.
+
 
 
 ### v0.15.16 (2024-06-17)
