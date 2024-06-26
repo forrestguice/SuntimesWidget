@@ -70,11 +70,11 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorSunrise, 0,
-                R.string.configLabel_themeColorSunset, 0,
-                R.string.configLabel_themeColorMoonrise, 0,
-                R.string.configLabel_themeColorMoonset, 0,
-                0, 0
+                R.string.configLabel_themeColorSunrise, R.string.configLabel_themeColorSunrise_text,
+                R.string.configLabel_themeColorSunset, R.string.configLabel_themeColorSunset_text,
+                R.string.configLabel_themeColorMoonrise, R.string.configLabel_themeColorMoonrise_text,
+                R.string.configLabel_themeColorMoonset, R.string.configLabel_themeColorMoonset_text,
+                R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke
         };
     }
     public int[] getColorsResDark() {

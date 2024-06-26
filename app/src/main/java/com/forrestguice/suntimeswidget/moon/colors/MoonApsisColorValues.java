@@ -50,7 +50,7 @@ public class MoonApsisColorValues extends ResourceColorValues implements Parcela
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                0, 0    // TODO
+                R.string.configLabel_themeColorMoonApogeeText, R.string.configLabel_themeColorMoonPerigeeText
         };
     }
     public int[] getColorsResDark() {

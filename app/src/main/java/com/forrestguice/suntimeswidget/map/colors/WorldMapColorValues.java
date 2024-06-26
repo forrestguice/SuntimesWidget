@@ -75,10 +75,10 @@ public class WorldMapColorValues extends ResourceColorValues
     public int[] getColorLabelsRes() {
         return new int[] {
                 R.string.configLabel_themeColorMapBackground, R.string.configLabel_themeColorMapForeground,
-                R.string.configLabel_themeColorMapSunShadow, 0, 0,
-                R.string.worldmap_dialog_option_moonlight, 0, 0,
-                R.string.graph_option_points, R.string.graph_option_points,
-                R.string.graph_option_axis, R.string.graph_option_grid, R.string.graph_option_grid,
+                R.string.configLabel_themeColorMapSunShadow, R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
+                R.string.worldmap_dialog_option_moonlight, R.string.configLabel_themeColorGraphMoonFill, R.string.configLabel_themeColorGraphMoonStroke,
+                R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
+                R.string.configLabel_themeColorGraphAxis, R.string.configLabel_themeColorGraphGridMajor, R.string.configLabel_themeColorGraphGridMinor,
         };
     }
     public int[] getColorsResDark() {

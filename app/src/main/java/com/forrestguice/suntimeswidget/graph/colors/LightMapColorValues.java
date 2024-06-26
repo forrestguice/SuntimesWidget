@@ -67,8 +67,8 @@ public class LightMapColorValues extends ResourceColorValues implements Parcelab
     public int[] getColorLabelsRes() {
         return new int[] {
                 R.string.timeMode_day, R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical, R.string.timeMode_night,
-                0, 0,
-                R.string.graph_option_points, R.string.graph_option_points,
+                R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
+                R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
         };
     };
     @Override

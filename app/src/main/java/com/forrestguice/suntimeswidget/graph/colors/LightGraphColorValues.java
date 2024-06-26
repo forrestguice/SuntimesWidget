@@ -100,10 +100,10 @@ public class LightGraphColorValues extends ResourceColorValues implements Parcel
     public static final int[] LABELS_RESID = new int[]
     {
             R.string.timeMode_day, R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical, R.string.timeMode_night,
-            0, 0,
-            R.string.graph_option_points, R.string.graph_option_points,
-            R.string.graph_option_axis, R.string.graph_option_grid, R.string.graph_option_grid,
-            R.string.graph_option_labels, R.string.graph_option_labels,
+            R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
+            R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
+            R.string.configLabel_themeColorGraphAxis, R.string.configLabel_themeColorGraphGridMajor, R.string.configLabel_themeColorGraphGridMinor,
+            R.string.configLabel_themeColorGraphLabels, R.string.configLabel_themeColorGraphLabelsBG,
             R.string.configLabel_themeColorSpring, R.string.configLabel_themeColorSummer, R.string.configLabel_themeColorFall, R.string.configLabel_themeColorWinter
     };
     protected static final int[] COLORS_FALLBACK = new int[]

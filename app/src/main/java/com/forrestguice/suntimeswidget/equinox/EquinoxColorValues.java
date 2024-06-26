@@ -34,10 +34,10 @@ import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
  */
 public class EquinoxColorValues extends ResourceColorValues
 {
-    public static final String COLOR_SPRING_TEXT =  AppColorKeys.COLOR_SPRING_TEXT;
-    public static final String COLOR_SUMMER_TEXT =  AppColorKeys.COLOR_SUMMER_TEXT;
-    public static final String COLOR_AUTUMN_TEXT =  AppColorKeys.COLOR_AUTUMN_TEXT;
-    public static final String COLOR_WINTER_TEXT =  AppColorKeys.COLOR_WINTER_TEXT;
+    public static final String COLOR_SPRING_TEXT = AppColorKeys.COLOR_SPRING_TEXT;
+    public static final String COLOR_SUMMER_TEXT = AppColorKeys.COLOR_SUMMER_TEXT;
+    public static final String COLOR_AUTUMN_TEXT = AppColorKeys.COLOR_AUTUMN_TEXT;
+    public static final String COLOR_WINTER_TEXT = AppColorKeys.COLOR_WINTER_TEXT;
 
     public String[] getColorKeys() {
         return new String[] {
@@ -57,10 +57,10 @@ public class EquinoxColorValues extends ResourceColorValues
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                0,
-                0,
-                0,
-                0,
+                R.string.configLabel_themeColorSpring_text,
+                R.string.configLabel_themeColorSummer_text,
+                R.string.configLabel_themeColorFall_text,
+                R.string.configLabel_themeColorWinter_text,
         };
     }
     public int[] getColorsResDark() {

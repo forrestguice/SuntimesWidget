@@ -55,8 +55,8 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Parce
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                0, 0,
-                0, 0,
+                R.string.configLabel_themeColorMoonrise, R.string.configLabel_themeColorMoonrise_text,
+                R.string.configLabel_themeColorMoonset, R.string.configLabel_themeColorMoonset_text,
         };
     }
     public int[] getColorsResDark() {

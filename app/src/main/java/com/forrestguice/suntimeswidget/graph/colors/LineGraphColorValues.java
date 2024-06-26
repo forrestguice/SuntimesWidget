@@ -65,7 +65,8 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
     public String[] getColorKeys() {
         return new String[] {
                 COLOR_GRAPH_BG,
-                COLOR_SUN_FILL, COLOR_SUN_STROKE, COLOR_MOON_FILL, COLOR_MOON_STROKE,
+                COLOR_SUN_FILL, COLOR_SUN_STROKE,
+                COLOR_MOON_FILL, COLOR_MOON_STROKE,
                 COLOR_POINT_FILL, COLOR_POINT_STROKE,
                 COLOR_AXIS, COLOR_GRID_MAJOR, COLOR_GRID_MINOR,
                 COLOR_LABELS, COLOR_LABELS_BG,
@@ -78,7 +79,8 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
     public int[] getColorAttrs() {
         return new int[] {
                 R.attr.graphColor_night,
-                R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke, R.attr.moonriseColor, R.attr.moonsetColor,
+                R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke,
+                R.attr.moonriseColor, R.attr.moonsetColor,
                 R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke,
                 R.attr.graphColor_axis, R.attr.graphColor_grid,     // grid_major
                 R.attr.graphColor_grid,     // grid_minor
@@ -91,13 +93,16 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                0,
-                0, 0, 0, 0,
-                R.string.graph_option_points, R.string.graph_option_points,
-                R.string.graph_option_axis, R.string.graph_option_grid, R.string.graph_option_grid,
-                R.string.graph_option_labels, R.string.graph_option_labels,
-                0, 0, 0, 0,    // TODO: labels
-                0, 0, 0, 0,    // TODO: labels
+                R.string.configLabel_themeColorGraphBackground,
+                R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
+                R.string.configLabel_themeColorGraphMoonFill, R.string.configLabel_themeColorGraphMoonStroke,
+                R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
+                R.string.configLabel_themeColorGraphAxis, R.string.configLabel_themeColorGraphGridMajor, R.string.configLabel_themeColorGraphGridMinor,
+                R.string.configLabel_themeColorGraphLabels, R.string.configLabel_themeColorGraphLabelsBG,
+                R.string.configLabel_themeColorGraphSunPathDayFill, R.string.configLabel_themeColorGraphSunPathDayStroke,
+                R.string.configLabel_themeColorGraphSunPathNightFill, R.string.configLabel_themeColorGraphSunPathNightStroke,
+                R.string.configLabel_themeColorGraphMoonPathDayFill, R.string.configLabel_themeColorGraphMoonPathDayStroke,
+                R.string.configLabel_themeColorGraphMoonPathNightFill, R.string.configLabel_themeColorGraphMoonPathNightStroke,
         };
     }
     public int[] getColorsResDark() {
