@@ -404,8 +404,13 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
     private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
         @Override
-        public void onShow(DialogInterface dialog) {
+        public void onShow(DialogInterface dialog)
+        {
             ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+
+            if (AppSettings.isTelevision(getActivity())) {
+                btn_accept.requestFocus();
+            }
         }
     };
 

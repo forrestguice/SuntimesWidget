@@ -80,6 +80,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         picker.init(year, month, day, null);
     }
 
+    protected ImageButton btn_accept;
+
     /**
      * @param context a context used to access resources
      * @param dialogContent an inflated layout containing the dialog's other views
@@ -105,7 +107,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
             btn_cancel.setFocusableInTouchMode(true);
         }
 
-        ImageButton btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
+        btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
         TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
         btn_accept.setOnClickListener(onDialogAcceptClick);
 
@@ -269,6 +271,10 @@ public class TimeDateDialog extends BottomSheetDialogFragment
             ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
             if (onShowListener != null) {
                 onShowListener.onShow(dialog);
+            }
+
+            if (AppSettings.isTelevision(getActivity())) {
+                btn_accept.requestFocus();
             }
         }
     };

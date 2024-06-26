@@ -175,7 +175,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         worldmap.saveSettings(state);
     }
 
-    private DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()
+    private final DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog)
@@ -183,6 +183,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             Log.d(WorldMapView.LOGTAG, "onShowDialog: triggering update...");
             updateViews();
             startUpdateTask();
+
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.requestFocus();
+            }
         }
     };
 

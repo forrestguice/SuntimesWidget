@@ -214,7 +214,7 @@ public class AboutDialog extends BottomSheetDialogFragment
         String privacy = context.getString(R.string.privacy_policy, permissionsExplained);
         legalView4.setText(SuntimesUtils.fromHtml(privacy));
 
-        int[] linkViews = new int[] { R.id.txt_about_url, R.id.txt_about_legal5 };
+        int[] linkViews = new int[] { R.id.txt_help_url, R.id.txt_about_url, R.id.txt_about_legal5 };
         for (int resID : linkViews)
         {
             TextView text = (TextView) dialogContent.findViewById(resID);
