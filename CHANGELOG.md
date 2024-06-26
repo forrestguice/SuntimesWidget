@@ -3,6 +3,7 @@
 ### develop
 * adds sidebar navigation, and an option to change the "launcher activity" (#505).
 * adds support for custom events based on "shadow length" (#331).
+* adds support for customizing the app color scheme; override map, graph, and highlight colors.
 * adds "light graph" dialog (of sunlight over the year) (#735), "earliest/latest sunrise/sunset" info (#753), and a 3x2 graph widget (to sun position widgets).
 * adds "bedtime mode" to alarms; helps schedule do-not-disturb during sleep hours. (#425)
 * adds "high brightness" option (#741) and swipeable buttons (#738) to the alarm screen.
@@ -12,6 +13,8 @@
 * updates Time4A dependency from 4.4.2-2019c to 4.8-2021a.
 * updates targetSdkVersion (25 -> 28) (#725); adds `android.permission.FOREGROUND_SERVICE` [PERMISSION]; https://developer.android.com/about/versions/pie/android-9.0-changes-28#fg-svc
 * increments minSdkVersion (10 -> 14) (#122); building for api10 remain possible by modifying `build.gradle`.
+
+
 
 ### v0.15.15 (2024-05-14)
 * adds online user manual; https://forrestguice.github.io/Suntimes/help/ or https://forrestguice.codeberg.page/Suntimes/help/
