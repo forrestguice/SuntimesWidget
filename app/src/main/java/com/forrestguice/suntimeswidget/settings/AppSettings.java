@@ -96,7 +96,6 @@ public class AppSettings
     public static final String NAVIGATION_SIMPLE = "SIMPLE";
     public static final String NAVIGATION_SIDEBAR = "SIDEBAR";
     public static final String PREF_KEY_NAVIGATION_MODE = "app_navigation_mode";
-    public static final String PREF_DEF_NAVIGATION_MODE = NAVIGATION_SIDEBAR;
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final String PREF_DEF_UI_DATETAPACTION = WidgetActions.SuntimesAction.SWAP_CARD.name();
@@ -497,7 +496,7 @@ public class AppSettings
     public static String loadNavModePref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_NAVIGATION_MODE, PREF_DEF_NAVIGATION_MODE);
+        return pref.getString(PREF_KEY_NAVIGATION_MODE, context.getString(R.string.def_app_navigation_mode));
     }
 
     /**
