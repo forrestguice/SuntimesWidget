@@ -2115,6 +2115,7 @@
     <string name="graph_option_labels">Labels</string>
     <string name="graph_option_axis">Axis</string>
     <string name="graph_option_points">Points</string>
+    <string name="graph_option_twilights">Twilights</string>   <!-- TODO -->
     <string name="graph_option_filledpath">Filled Path</string>
     <string name="graph_option_moon">Show Moon</string>
 

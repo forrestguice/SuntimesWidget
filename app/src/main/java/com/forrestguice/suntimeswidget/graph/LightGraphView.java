@@ -82,6 +82,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     public static final String PREF_KEY_GRAPH_SHOWPOINTS = "showPoints";
     public static final boolean DEF_KEY_GRAPH_SHOWPOINTS = true;
 
+    public static final String PREF_KEY_GRAPH_SHOWTWILIGHT = "showTwilight";
+    public static final boolean DEF_KEY_GRAPH_SHOWTWILIGHT = true;
+
     public static final String PREF_KEY_GRAPH_SHOWCIVIL = "showCivil";
     public static final boolean DEF_KEY_GRAPH_SHOWCIVIL = true;
 

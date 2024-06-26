@@ -33,19 +33,24 @@
                 android:checkable="true"
                 app:showAsAction="never" />
 
+            <item android:id="@+id/graphOption_showTwilights"
+                android:title="@string/graph_option_twilights"
+                android:checkable="true"
+                app:showAsAction="never" />
+
             <item android:id="@+id/graphOption_showCivil"
                 android:title="@string/timeMode_civil"
-                android:checkable="true"
+                android:checkable="true" android:visible="false"
                 app:showAsAction="never" />
 
             <item android:id="@+id/graphOption_showNautical"
                 android:title="@string/timeMode_nautical"
-                android:checkable="true"
+                android:checkable="true" android:visible="false"
                 app:showAsAction="never" />
 
             <item android:id="@+id/graphOption_showAstro"
                 android:title="@string/timeMode_astronomical"
-                android:checkable="true"
+                android:checkable="true" android:visible="false"
                 app:showAsAction="never" />
 
         </menu>

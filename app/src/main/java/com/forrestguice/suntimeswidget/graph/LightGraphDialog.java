@@ -77,10 +77,12 @@ import static com.forrestguice.suntimeswidget.graph.LightGraphView.DEF_KEY_GRAPH
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.DEF_KEY_GRAPH_SHOWCIVIL;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.DEF_KEY_GRAPH_SHOWNAUTICAL;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.DEF_KEY_GRAPH_SHOWPOINTS;
+import static com.forrestguice.suntimeswidget.graph.LightGraphView.DEF_KEY_GRAPH_SHOWTWILIGHT;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWASTRO;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWCIVIL;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWNAUTICAL;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWPOINTS;
+import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWTWILIGHT;
 import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID;
 
 public class LightGraphDialog extends BottomSheetDialogFragment
@@ -615,16 +617,18 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             graphOption_showPoints.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWPOINTS));
         }
 
+        MenuItem graphOption_showTwilights = menu.findItem(R.id.graphOption_showTwilights);
+        if (graphOption_showTwilights != null) {
+            graphOption_showTwilights.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWTWILIGHT));
+        }
         MenuItem graphOption_showCivil = menu.findItem(R.id.graphOption_showCivil);
         if (graphOption_showCivil != null) {
             graphOption_showCivil.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCIVIL));
         }
-
         MenuItem graphOption_showNautical = menu.findItem(R.id.graphOption_showNautical);
         if (graphOption_showNautical != null) {
             graphOption_showNautical.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWNAUTICAL));
         }
-
         MenuItem graphOption_showAstro = menu.findItem(R.id.graphOption_showAstro);
         if (graphOption_showAstro != null) {
             graphOption_showAstro.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWASTRO));
@@ -638,8 +642,11 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         public boolean onMenuItemClick(MenuItem item)
         {
             Context context = getActivity();
-            boolean toggledValue;
+            if (context == null) {
+                return false;
+            }
 
+            boolean toggledValue;
             switch (item.getItemId())
             {
                 case R.id.graphOption_colors:
@@ -670,6 +677,16 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                 case R.id.graphOption_showLabels:
                     toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews(context);
+                    return true;
+
+                case R.id.graphOption_showTwilights:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWTWILIGHT, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWTWILIGHT, MAPTAG_LIGHTGRAPH, toggledValue);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, toggledValue);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, toggledValue);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, toggledValue);
                     item.setChecked(toggledValue);
                     updateViews(context);
                     return true;
