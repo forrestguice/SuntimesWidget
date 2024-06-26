@@ -454,14 +454,19 @@
     <string name="timeMode_solstice_winter">انقلاب الشتاء</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">الانقلاب</string>     <!-- setting -->
 
-    <string name="timeMode_cross_midwinter">إمبولك (نصف الربيع)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   <!-- TODO -->
-    <string name="timeMode_cross_midwinter_short">نصف الربيع</string>       <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midsummer">لوغناساد (نصف الصيف)</string>  <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midsummer_short">نصف الصيف</string>     <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midspring">بيلتان (نصف الربيع)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->   <!-- TODO -->
-    <string name="timeMode_cross_midspring_short">نصف الربيع</string>     <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midautumnal">سامهين (نصف الخريف)</string>    <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midautumnal_short">نصف الخريف</string>     <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midwinter">إمبولك (نصف الربيع)</string>      <!-- setting -->  <!-- TODO: neutral labels -->
+    <string name="timeMode_cross_midwinter_short">نصف الربيع</string>       <!-- setting -->
+    <string name="timeMode_cross_midsummer">لوغناساد (نصف الصيف)</string>  <!-- setting -->    <!-- TODO: neutral labels -->
+    <string name="timeMode_cross_midsummer_short">نصف الصيف</string>     <!-- setting -->
+    <string name="timeMode_cross_midspring">بيلتان (نصف الربيع)</string>    <!-- setting -->  <!-- TODO: neutral labels -->
+    <string name="timeMode_cross_midspring_short">نصف الربيع</string>     <!-- setting -->
+    <string name="timeMode_cross_midautumnal">سامهين (نصف الخريف)</string>    <!-- setting -->    <!-- TODO: neutral labels -->
+    <string name="timeMode_cross_midautumnal_short">نصف الخريف</string>     <!-- setting -->
+
+    <string name="timeMode_cross_midwinter0">إمبولك (نصف الربيع)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->
+    <string name="timeMode_cross_midsummer0">لوغناساد (نصف الصيف)</string>  <!-- setting -->
+    <string name="timeMode_cross_midspring0">بيلتان (نصف الربيع)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->
+    <string name="timeMode_cross_midautumnal0">سامهين (نصف الخريف)</string>    <!-- setting -->
 
     <string name="timeMode_moon">القمر</string>                               <!-- label -->
     <string name="timeMode_moon_new">محاق</string>                               <!-- setting -->

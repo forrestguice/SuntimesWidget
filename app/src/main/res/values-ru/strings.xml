@@ -437,14 +437,19 @@
     <string name="timeMode_solstice_winter">Зимнее солнцестояние</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Солнцестояние</string>     <!-- setting -->
 
-    <string name="timeMode_cross_midwinter">Имболк (Межквартальный)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->
+    <string name="timeMode_cross_midwinter">Имболк (Межквартальный)</string>      <!-- setting -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midwinter_short">Межквартальный</string>       <!-- setting -->
-    <string name="timeMode_cross_midsummer">Лугнасадх (Межквартальный)</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer">Лугнасадх (Межквартальный)</string>  <!-- setting -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midsummer_short">Межквартальный</string>     <!-- setting -->
-    <string name="timeMode_cross_midspring">Бельтайн (Межквартальный)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->
+    <string name="timeMode_cross_midspring">Бельтайн (Межквартальный)</string>    <!-- setting -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midspring_short">Межквартальный</string>     <!-- setting -->
-    <string name="timeMode_cross_midautumnal">Самхейн (Межквартальный)</string>    <!-- setting -->
-    <string name="timeMode_cross_midautumnal_short">Cross-Quarter</string>     <!-- setting -->
+    <string name="timeMode_cross_midautumnal">Самхейн (Межквартальный)</string>    <!-- setting -->  <!-- TODO: neutral labels -->
+    <string name="timeMode_cross_midautumnal_short">Межквартальный</string>     <!-- setting -->
+
+    <string name="timeMode_cross_midwinter0">Имболк (Межквартальный)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->
+    <string name="timeMode_cross_midsummer0">Лугнасадх (Межквартальный)</string>  <!-- setting -->
+    <string name="timeMode_cross_midspring0">Бельтайн (Межквартальный)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->
+    <string name="timeMode_cross_midautumnal0">Самхейн (Межквартальный)</string>    <!-- setting -->
 
     <string name="timeMode_moon">Луна</string>                               <!-- label -->
     <string name="timeMode_moon_new">Новолуние</string>                               <!-- setting -->

@@ -382,14 +382,19 @@
     <string name="timeMode_solstice_winter">冬至</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">冬至</string>     <!-- setting -->
 
-    <string name="timeMode_cross_midwinter">圣布里吉德节 (Imbolc)</string>      <!-- setting -->
+    <string name="timeMode_cross_midwinter">圣布里吉德节 (Imbolc)</string>      <!-- setting -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midwinter_short">跨季节</string>       <!-- setting -->
-    <string name="timeMode_cross_midsummer">拉马斯节 (Lughnasadh)</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer">拉马斯节 (Lughnasadh)</string>  <!-- setting -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midsummer_short">跨季节</string>     <!-- setting -->
-    <string name="timeMode_cross_midspring">贝尔丹节 (Beltane)</string>    <!-- setting -->
+    <string name="timeMode_cross_midspring">贝尔丹节 (Beltane)</string>    <!-- setting -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midspring_short">跨季节</string>     <!-- setting -->
-    <string name="timeMode_cross_midautumnal">夏末节 (Samhain)</string>    <!-- setting -->
+    <string name="timeMode_cross_midautumnal">夏末节 (Samhain)</string>    <!-- setting -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midautumnal_short">跨季节</string>     <!-- setting -->
+
+    <string name="timeMode_cross_midwinter0">圣布里吉德节 (Imbolc)</string>      <!-- setting -->
+    <string name="timeMode_cross_midsummer0">拉马斯节 (Lughnasadh)</string>  <!-- setting -->
+    <string name="timeMode_cross_midspring0">贝尔丹节 (Beltane)</string>    <!-- setting -->
+    <string name="timeMode_cross_midautumnal0">夏末节 (Samhain)</string>    <!-- setting -->
 
     <string name="timeMode_moon">月光</string>                               <!-- label -->
     <string name="timeMode_moon_new">新月</string>                               <!-- setting -->

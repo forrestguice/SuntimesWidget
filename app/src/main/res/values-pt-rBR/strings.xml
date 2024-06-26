@@ -419,14 +419,19 @@
     <string name="timeMode_solstice_winter">Solstício de Inverno</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstício</string>     <!-- setting -->
 
-    <string name="timeMode_cross_midwinter">Imbolc (Meio do Inverno)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->
+    <string name="timeMode_cross_midwinter">Meio do Inverno</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter" -->
     <string name="timeMode_cross_midwinter_short">Meio do Inverno</string>       <!-- setting -->
-    <string name="timeMode_cross_midsummer">Lughnasadh (Meio do Verão)</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer">Meio do Verão</string>  <!-- setting -->
     <string name="timeMode_cross_midsummer_short">Meio do Verão</string>     <!-- setting -->
-    <string name="timeMode_cross_midspring">Beltane (Meio da Primavera)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->
+    <string name="timeMode_cross_midspring">Meio da Primavera</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring" -->
     <string name="timeMode_cross_midspring_short">Meio da Primavera</string>     <!-- setting -->
-    <string name="timeMode_cross_midautumnal">Samhain (Meio do Outono)</string>    <!-- setting -->
+    <string name="timeMode_cross_midautumnal">Meio do Outono</string>    <!-- setting -->
     <string name="timeMode_cross_midautumnal_short">Meio do Outono</string>     <!-- setting -->
+
+    <string name="timeMode_cross_midwinter0">Imbolc (Meio do Inverno)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->
+    <string name="timeMode_cross_midsummer0">Lughnasadh (Meio do Verão)</string>  <!-- setting -->
+    <string name="timeMode_cross_midspring0">Beltane (Meio da Primavera)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->
+    <string name="timeMode_cross_midautumnal0">Samhain (Meio do Outono)</string>    <!-- setting -->
 
     <string name="timeMode_moon">Lua</string>                               <!-- label -->
     <string name="timeMode_moon_new">Lua Nova</string>                               <!-- setting -->

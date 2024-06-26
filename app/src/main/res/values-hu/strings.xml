@@ -360,14 +360,19 @@
     <string name="timeMode_solstice_winter">Téli napforduló</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Napforduló</string>     <!-- setting --> 
 
-    <string name="timeMode_cross_midwinter">Imbolc (keresztnegyed)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->   
+    <string name="timeMode_cross_midwinter">Imbolc (keresztnegyed)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter" -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midwinter_short">Keresztnegyed</string>       <!-- setting -->  
     <string name="timeMode_cross_midsummer">Lughnasadh (keresztnegyed)</string>  <!-- setting -->   
     <string name="timeMode_cross_midsummer_short">Keresztnegyed</string>     <!-- setting -->   
-    <string name="timeMode_cross_midspring">Beltane (keresztnegyed)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer --> 
+    <string name="timeMode_cross_midspring">Beltane (keresztnegyed)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring" -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midspring_short">Keresztnegyed</string>     <!-- setting -->   
     <string name="timeMode_cross_midautumnal">Samhain (keresztnegyed)</string>    <!-- setting -->   
-    <string name="timeMode_cross_midautumnal_short">Keresztnegyed</string>     <!-- setting -->   
+    <string name="timeMode_cross_midautumnal_short">Keresztnegyed</string>     <!-- setting -->
+
+    <string name="timeMode_cross_midwinter0">Imbolc (keresztnegyed)</string>      <!-- setting --> <!-- cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->
+    <string name="timeMode_cross_midsummer0">Lughnasadh (keresztnegyed)</string>  <!-- setting -->
+    <string name="timeMode_cross_midspring0">Beltane (keresztnegyed)</string>    <!-- setting --> <!-- cross-quarter in "astronomical spring"; Beltane, the onset of summer -->
+    <string name="timeMode_cross_midautumnal0">Samhain (keresztnegyed)</string>    <!-- setting -->
 
     <string name="timeMode_moon">Hold</string>                               <!-- label --> 
     <string name="timeMode_moon_new">Újhold</string>                               <!-- setting --> 
