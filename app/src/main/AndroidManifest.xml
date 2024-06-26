@@ -977,6 +977,8 @@
             </intent-filter>
         </activity>
 
+        <!-- https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/test-setup#deprecated-classes -->
+        <uses-library android:name="android.test.runner" android:required="false" />
 
     </application>
 
