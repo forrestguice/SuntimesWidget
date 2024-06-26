@@ -491,10 +491,14 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             }
             options.is24 = (WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
         }
+
+        long nowMillis = Calendar.getInstance().getTimeInMillis();
         if (graph != null) {
+            graph.getOptions().now = nowMillis;
             graph.updateViews(true);
         }
         if (lightmap != null) {
+            lightmap.getColors().now = nowMillis;
             lightmap.updateViews(true);
         }
 
@@ -730,15 +734,13 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         }
     });
 
-
-
-    private final View.OnClickListener onTimeClicked = new View.OnClickListener()
+    private final View.OnClickListener onTimeClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showTimeZoneMenu(getActivity(), text_time);
         }
-    };
+    });
     protected boolean showTimeZoneMenu(Context context, View view)
     {
         PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.lightgraphmenu_tz, onTimeZoneMenuClick);
