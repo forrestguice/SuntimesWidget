@@ -69,6 +69,7 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_AUTOSTART = "app_alarms_autostart";
     public static final String PREF_KEY_ALARM_BATTERYOPT = "app_alarms_batterytopt";
     public static final String PREF_KEY_ALARM_NOTIFICATIONS = "app_alarms_notifications";
+    public static final String PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN = "app_alarms_notifications_fullscreen";
     public static final String PREF_KEY_ALARM_VOLUMES = "app_alarms_volumes";
 
     public static final String PREF_KEY_ALARM_HARDAREBUTTON_ACTION = "app_alarms_hardwarebutton_action";
@@ -807,6 +808,26 @@ public class AlarmSettings
                 context.startActivity(AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context));
             } catch (ActivityNotFoundException e) {
                 Log.e("AlarmSettings", "Failed to launch battery optimization request Intent: " + e);
+            }
+        }
+    }
+
+    /**
+     * shows the screen to manage permissions for full screen intents.
+     */
+    @TargetApi(34)
+    public static Intent getFullScreenIntentSettingsIntent(Context context) {
+        return new Intent(ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+    }
+    public static final String ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT = "android.settings.MANAGE_APP_USE_FULL_SCREEN_INTENT";    // TODO: remove and use constant from api29+
+
+    public static void openFullScreenIntentSettings(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 34) {
+            try {
+                context.startActivity(AlarmSettings.getFullScreenIntentSettingsIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e("AlarmSettings", "Failed to launch 'fullscreen intent settings': " + e);
             }
         }
     }
