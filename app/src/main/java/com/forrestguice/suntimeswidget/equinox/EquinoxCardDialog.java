@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -701,6 +702,10 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                     collapseSheet(getDialog());
                     return true;
 
+                case R.id.action_calendar:
+                    openCalendar(getActivity(), itemTime);
+                    return true;
+
                 case R.id.action_share:
                     shareItem(getContext(), itemData);
                     return true;
@@ -710,6 +715,13 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             }
         }
     });
+
+    protected void openCalendar(Context context, long itemMillis)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("content://com.android.calendar/time/" + itemMillis));
+        context.startActivity(intent);
+    }
 
     protected void shareItem(Context context, Intent itemData)
     {

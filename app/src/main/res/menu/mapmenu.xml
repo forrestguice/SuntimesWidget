@@ -106,6 +106,12 @@
                     android:title="@string/configAction_moon"
                     android:icon="@drawable/ic_moon"
                     app:showAsAction="never" />
+
+                <item android:id="@+id/action_calendar"
+                    android:title="@string/configAction_showCalendar"
+                    android:icon="?attr/icActionCalendar"
+                    app:showAsAction="never" />
+
             </menu>
     </item>
 

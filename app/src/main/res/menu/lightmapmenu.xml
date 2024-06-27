@@ -26,6 +26,11 @@
                     android:title="@string/configAction_worldMap"
                     app:showAsAction="never" />
 
+                <item android:id="@+id/action_calendar"
+                    android:title="@string/configAction_showCalendar"
+                    android:icon="?attr/icActionCalendar"
+                    app:showAsAction="never" />
+
             </menu>
         </item>
 

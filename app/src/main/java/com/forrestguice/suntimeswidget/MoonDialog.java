@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -1089,6 +1090,10 @@ public class MoonDialog extends BottomSheetDialogFragment
                     collapseSheet(getDialog());
                     return true;
 
+                case R.id.action_calendar:
+                    openCalendar(context, itemTime);
+                    return true;
+
                 case R.id.action_share:
                     shareItem(context, itemData);
                     return true;
@@ -1098,6 +1103,13 @@ public class MoonDialog extends BottomSheetDialogFragment
             }
         }
     });
+
+    protected void openCalendar(Context context, long itemMillis)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("content://com.android.calendar/time/" + itemMillis));
+        context.startActivity(intent);
+    }
 
     protected void shareItem(Context context, Intent itemData)
     {

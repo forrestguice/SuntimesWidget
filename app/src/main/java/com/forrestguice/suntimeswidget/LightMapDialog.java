@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2022 Forrest Guice
+    Copyright (C) 2017-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -30,6 +31,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.InsetDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -654,6 +656,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     if (dialogListener != null) {
                         dialogListener.onShowDate(getMapTime(System.currentTimeMillis()));
                     }
+                    return true;
+
+                case R.id.action_calendar:
+                    openCalendar(context, getMapTime(System.currentTimeMillis()));
                     return true;
 
                 case R.id.action_worldmap:
@@ -1691,6 +1697,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 }
             }
         }
+    }
+
+    protected void openCalendar(Context context, long itemMillis)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("content://com.android.calendar/time/" + itemMillis));
+        context.startActivity(intent);
     }
 
     protected void showHelp(Context context)

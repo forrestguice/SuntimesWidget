@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -1190,6 +1190,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_calendar:
+                    openCalendar(context, getMapTime(Calendar.getInstance().getTimeInMillis()));
+                    return true;
+
                 case R.id.action_timezone:
                     showTimeZoneMenu(context, utcTime);
                     return true;
@@ -1283,6 +1287,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             }
         }
     });
+
+    protected void openCalendar(Context context, long itemMillis)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("content://com.android.calendar/time/" + itemMillis));
+        context.startActivity(intent);
+    }
 
     public static final int SEEK_STEPSIZE_5m = 5;
 
