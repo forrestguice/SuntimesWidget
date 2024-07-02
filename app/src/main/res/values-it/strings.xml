@@ -384,9 +384,9 @@
 
     <string name="timeMode_cross_midwinter">Winter/Spring Cross-Quarter</string>      <!-- setting --> <!-- neutral labels; cross-quarter in "astronomical winter" -->   <!-- TODO -->
     <string name="timeMode_cross_midwinter_short">Cross-Quarter</string>       <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midsummer">Spring/Summer Cross-Quarter</string>  <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer">Summer/Autumn Cross-Quarter</string>  <!-- setting -->    <!-- TODO -->
     <string name="timeMode_cross_midsummer_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midspring">Summer/Autumn Cross-Quarter</string>    <!-- setting --> <!-- neutral labels; cross-quarter in "astronomical spring" -->   <!-- TODO -->
+    <string name="timeMode_cross_midspring">Spring/Summer Cross-Quarter</string>    <!-- setting --> <!-- neutral labels; cross-quarter in "astronomical spring" -->   <!-- TODO -->
     <string name="timeMode_cross_midspring_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
     <string name="timeMode_cross_midautumnal">Autumn/Winter Cross-Quarter</string>    <!-- setting -->    <!-- TODO -->
     <string name="timeMode_cross_midautumnal_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->

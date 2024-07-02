@@ -9,6 +9,8 @@
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer">Summer/Fall Cross-Quarter</string>  <!-- setting -->
+    <string name="timeMode_cross_midautumnal">Fall/Winter Cross-Quarter</string>    <!-- setting -->
     <string name="solarevents_event_equinox_autumnal">fall equinox</string>
 
     <string name="configLabel_themeColorFall">Fall Colour:</string> <!-- color label -->
