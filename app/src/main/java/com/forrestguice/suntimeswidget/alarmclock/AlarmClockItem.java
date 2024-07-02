@@ -78,6 +78,7 @@ public class AlarmClockItem implements Parcelable
     public static final String FLAG_SNOOZE = "snoozeMillis";                         // milliseconds
     public static final String FLAG_SNOOZE_LIMIT = "snoozeLimit";                    // 0; unlimited
     public static final String FLAG_SNOOZE_COUNT = "snoozeCount";                    // [0, limit)
+    public static final String FLAG_LOCATION_FROM_APP = "locationFromApp";     // use app location
 
     public boolean modified = false;
     public AlarmState state = null;
