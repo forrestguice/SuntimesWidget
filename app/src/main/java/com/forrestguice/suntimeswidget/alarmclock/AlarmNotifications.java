@@ -474,7 +474,13 @@ public class AlarmNotifications extends BroadcastReceiver
         intent.setData(data);
         return intent;
     }
-    
+
+    public static Intent getBedtimeBroadcast(String action) {
+        Intent intent = new Intent(action);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
+        return intent;
+    }
+
     public static Intent getSuntimesIntent(Context context) {
         Intent intent = new Intent(context, SuntimesActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1140,14 +1146,14 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setContentText(context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active));
 
         if (isPaused) {
-            PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, new Intent(AlarmNotifications.ACTION_BEDTIME_RESUME), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_RESUME), PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.ic_action_bedtime, context.getString(R.string.configAction_resumeBedtime), pendingResume);
         } else {
-            PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, new Intent(AlarmNotifications.ACTION_BEDTIME_PAUSE), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_PAUSE), PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.ic_action_pause, context.getString(R.string.configAction_pauseBedtime), pendingPause);
         }
 
-        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS), 0);
+        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_DISMISS), 0);
         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.configAction_dismissBedtime), pendingDismiss);
         return builder.build();
     }
