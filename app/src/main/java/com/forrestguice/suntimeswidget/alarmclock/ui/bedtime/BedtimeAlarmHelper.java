@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
@@ -44,10 +45,15 @@ import java.util.List;
 public class BedtimeAlarmHelper
 {
     public static void pauseBedtimeEvent(final Context context) {
-        context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_PAUSE) );
+        context.sendBroadcast( createBedtimeBroadcastIntent(context, AlarmNotifications.ACTION_BEDTIME_PAUSE) );
     }
     public static void resumeBedtimeEvent(final Context context) {
-        context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_RESUME) );
+        context.sendBroadcast( createBedtimeBroadcastIntent(context, AlarmNotifications.ACTION_BEDTIME_RESUME) );
+    }
+    private static Intent createBedtimeBroadcastIntent(Context context, String action) {
+        Intent intent = new Intent(action);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
+        return intent;
     }
 
     public static void dismissBedtimeEvent(final Context context)
@@ -72,21 +78,21 @@ public class BedtimeAlarmHelper
                             {
                                 context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, item.getUri()));
                                 if (!hasBedtimeAction) {
-                                    context.sendBroadcast(new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS));
+                                    context.sendBroadcast( createBedtimeBroadcastIntent(context, AlarmNotifications.ACTION_BEDTIME_DISMISS)) ;
                                 }
                             } else {
-                                context.sendBroadcast(new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS));
+                                context.sendBroadcast( createBedtimeBroadcastIntent(context, AlarmNotifications.ACTION_BEDTIME_DISMISS)) ;
                             }
                         } else {
-                            context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS) );
+                            context.sendBroadcast( createBedtimeBroadcastIntent(context, AlarmNotifications.ACTION_BEDTIME_DISMISS) );
                         }
                     } else {
-                        context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS) );
+                        context.sendBroadcast( createBedtimeBroadcastIntent(context, AlarmNotifications.ACTION_BEDTIME_DISMISS) );
                     }
                 }
             });
         } else {
-            context.sendBroadcast( new Intent(AlarmNotifications.ACTION_BEDTIME_DISMISS) );
+            context.sendBroadcast( createBedtimeBroadcastIntent(context, AlarmNotifications.ACTION_BEDTIME_DISMISS) );
         }
     }
 

@@ -61,6 +61,7 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -469,6 +470,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static Intent getFullscreenBroadcast(Uri data)
     {
         Intent intent = new Intent(ACTION_UPDATE_UI);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
         intent.setData(data);
         return intent;
     }

@@ -899,13 +899,13 @@ public class WidgetActions
             {
                 case TRIGGER_BEDTIME:
                     launchType = LaunchType.BROADCAST;
-                    launchString = null;
+                    launchString = AlarmNotifications.class.getName();
                     launchAction = AlarmNotifications.ACTION_BEDTIME;
                     break;
 
                 case DISMISS_BEDTIME:
                     launchType = LaunchType.BROADCAST;
-                    launchString = null;
+                    launchString = AlarmNotifications.class.getName();
                     launchAction = AlarmNotifications.ACTION_BEDTIME_DISMISS;
                     break;
 
