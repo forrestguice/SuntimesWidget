@@ -596,17 +596,28 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      * updateWidgetAlarms
      * @param context context
      */
-    protected void updateWidgetAlarms(Context context)
+    protected void updateWidgetAlarms(Context context) {
+        if (widgetListAdapter != null) {
+            updateWidgetAlarms(context, widgetListAdapter);
+        }
+    }
+
+    public static void updateAllWidgetAlarms(Context context) {
+        updateWidgetAlarms(context, WidgetListAdapter.createWidgetListAdapter(context));
+    }
+    public static void updateWidgetAlarms(Context context, WidgetListAdapter adapter)
     {
-        if (widgetListAdapter != null)
-        {
-            for (ComponentName widgetClass : widgetListAdapter.getAllWidgetClasses())
-            {
-                Intent updateIntent = new Intent(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-                updateIntent.setComponent(widgetClass);
-                context.sendBroadcast(updateIntent);
+        if (adapter != null) {
+            for (ComponentName widgetClass : adapter.getAllWidgetClasses()) {
+                updateWidgetAlarms(context, widgetClass);
             }
         }
+    }
+    public static void updateWidgetAlarms(Context context, ComponentName widgetClass)
+    {
+        Intent updateIntent = new Intent(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+        updateIntent.setComponent(widgetClass);
+        context.sendBroadcast(updateIntent);
     }
 
     /**
