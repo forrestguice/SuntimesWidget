@@ -47,6 +47,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.forrestguice.suntimeswidget.SuntimesWidget0;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -978,6 +980,17 @@ public class AppSettings
         intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
+    }
+
+    public static void saveLocationPref(Context context, Location location)
+    {
+        WidgetSettings.saveLocationPref(context, 0, location);
+
+        Intent updateWidgets = new Intent();
+        updateWidgets.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+        context.sendBroadcast(updateWidgets);             // TODO: verify receiver background limits api26+; should this Intent be explicit?
+
+        // TODO: trigger alarm updates
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

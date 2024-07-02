@@ -832,7 +832,12 @@ public class LocationConfigView extends LinearLayout
             String altitude = text_locationAlt.getText().toString();
             String name = text_locationName.getText().toString();
             com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(name, latitude, longitude, altitude, WidgetSettings.loadLengthUnitsPref(context, appWidgetId) == WidgetSettings.LengthUnit.METRIC);
-            WidgetSettings.saveLocationPref(context, appWidgetId, location);
+
+            if (appWidgetId == 0) {
+                AppSettings.saveLocationPref(context, location);    // this is WidgetSettings.saveLocationPref pluss ide effects like triggering widget and alarm updates
+            } else {
+                WidgetSettings.saveLocationPref(context, appWidgetId, location);
+            }
             return true;
         }
         return false;
