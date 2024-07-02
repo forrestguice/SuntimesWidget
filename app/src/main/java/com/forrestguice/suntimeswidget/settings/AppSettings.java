@@ -47,7 +47,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 
-import com.forrestguice.suntimeswidget.SuntimesWidget0;
+import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.R;
@@ -57,6 +57,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Shared preferences used by the app; uses getDefaultSharedPreferences (stored in com.forrestguice.suntimeswidget_preferences.xml).
@@ -982,15 +984,29 @@ public class AppSettings
         activity.startActivity(intent);
     }
 
-    public static void saveLocationPref(Context context, Location location)
+    public static void saveLocationPref(final Context context, Location location) {
+        saveLocationPref(context, location, true);
+    }
+    public static void saveLocationPref(final Context context, Location location, boolean withSideEffects)
     {
         WidgetSettings.saveLocationPref(context, 0, location);
 
-        Intent updateWidgets = new Intent();
-        updateWidgets.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-        context.sendBroadcast(updateWidgets);             // TODO: verify receiver background limits api26+; should this Intent be explicit?
-
-        // TODO: trigger alarm updates
+        if (withSideEffects)
+        {
+            ExecutorService executor = Executors.newScheduledThreadPool(2);
+            executor.execute(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    long bench_start = System.nanoTime();
+                    SuntimesWidgetListActivity.updateAllWidgetAlarms(context);
+                    long bench_end = System.nanoTime();
+                    Log.d("DEBUG", "update all widgets :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+                }
+            });
+            executor.shutdown();
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
