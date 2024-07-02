@@ -1098,7 +1098,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.alarmlocation, popup.getMenu());
 
-        boolean useAppLocation = item.hasFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP) && item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+        boolean useAppLocation = item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
         MenuItem menuItem_fromApp = popup.getMenu().findItem(R.id.action_location_fromApp);
         if (menuItem_fromApp != null) {
             menuItem_fromApp.setChecked(useAppLocation);
@@ -1133,7 +1133,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     protected void toggleLocationFromApp(@NonNull AlarmClockItem item)
     {
-        boolean currentValue = item.hasFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP) && item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+        boolean currentValue = item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
         if (!currentValue) {
             item.setFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP, true);
         } else {

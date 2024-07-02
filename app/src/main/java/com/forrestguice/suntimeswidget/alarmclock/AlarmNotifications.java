@@ -2347,7 +2347,7 @@ public class AlarmNotifications extends BroadcastReceiver
         SolarEvents event = SolarEvents.valueOf(eventID, null);
         ArrayList<Integer> repeatingDays = (item.repeatingDays != null ? item.repeatingDays : AlarmClockItem.everyday());
         
-        if (item.hasFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP) && item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP)) {
+        if (item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP)) {
             item.location = WidgetSettings.loadLocationPref(context, 0);
         }
 
