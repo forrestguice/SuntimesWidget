@@ -1088,7 +1088,67 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     /**
      * pickLocation
      */
-    protected void pickLocation(@NonNull AlarmClockItem item)
+    protected void pickLocation(@NonNull AlarmClockItem item) {
+        showAlarmLocationPopup(editor.itemView.chip_location, item);
+    }
+
+    public void showAlarmLocationPopup(View v, @NonNull final AlarmClockItem item)
+    {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.alarmlocation, popup.getMenu());
+
+        boolean useAppLocation = item.hasFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP) && item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+        MenuItem menuItem_fromApp = popup.getMenu().findItem(R.id.action_location_fromApp);
+        if (menuItem_fromApp != null) {
+            menuItem_fromApp.setChecked(useAppLocation);
+        }
+
+        MenuItem menuItem_location = popup.getMenu().findItem(R.id.action_location_set);
+        if (menuItem_location != null) {
+            menuItem_location.setEnabled(!useAppLocation);
+        }
+
+        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.action_location_set:
+                        showLocationDialog(item);
+                        return true;
+
+                    case R.id.action_location_fromApp:
+                        toggleLocationFromApp(item);
+                        return true;
+                }
+                return false;
+            }
+        }));
+        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        popup.show();
+    }
+
+    protected void toggleLocationFromApp(@NonNull AlarmClockItem item)
+    {
+        boolean currentValue = item.hasFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP) && item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+        if (!currentValue) {
+            item.setFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP, true);
+        } else {
+            item.clearFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+        }
+        if (editor != null)
+        {
+            AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
+            editor.notifyItemChanged();
+            editor.triggerPreviewOffset();
+            invalidateOptionsMenu();
+        }
+    }
+
+    protected void showLocationDialog(@NonNull AlarmClockItem item)
     {
         final LocationConfigDialog dialog = new LocationConfigDialog();
         dialog.setHideTitle(true);
@@ -1097,7 +1157,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setDialogListener(onLocationChanged);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_LOCATION + 1);
     }
-    private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
+    private final LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
         public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
