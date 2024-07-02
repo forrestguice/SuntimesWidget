@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/dialogBackground">
+    android:background="?attr/dialogBackgroundAlt">
 
     <LinearLayout android:visibility="visible"
         android:background="?attr/text_accentColor"
@@ -35,7 +35,7 @@
     <FrameLayout android:minHeight="25dp"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:id="@+id/fragmentContainer2"
-        android:background="?attr/dialogBackgroundAlt">
+        android:background="?attr/dialogBackground">
 
     </FrameLayout>
 
