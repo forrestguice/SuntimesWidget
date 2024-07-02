@@ -1591,14 +1591,8 @@ public class SuntimesActivity extends AppCompatActivity
                 updateViews(SuntimesActivity.this);
 
                 WidgetSettings.LocationMode locationMode = dialog.getDialogContent().getLocationMode();
-                if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
-                {
+                if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
                     getFixHelper.getFix();
-
-                } else {
-                    Intent updateWidgets = new Intent();
-                    updateWidgets.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-                    sendBroadcast(updateWidgets);
                 }
             }
         };
