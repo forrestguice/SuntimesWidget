@@ -1125,7 +1125,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Notification createBedtimeModeNotification(Context context)
     {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, null);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setCategory(NotificationCompat.CATEGORY_STATUS);
