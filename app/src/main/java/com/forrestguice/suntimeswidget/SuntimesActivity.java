@@ -1133,7 +1133,7 @@ public class SuntimesActivity extends AppCompatActivity
                     {
                         com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
                         LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
-                        WidgetSettings.saveLocationPref(SuntimesActivity.this, 0, location);
+                        AppSettings.saveLocationPref(SuntimesActivity.this, location);
 
                     } else {
                         String msg = (wasCancelled ? getString(R.string.gps_lastfix_toast_cancelled) : getString(R.string.gps_lastfix_toast_notfound));
@@ -1142,10 +1142,6 @@ public class SuntimesActivity extends AppCompatActivity
                     SuntimesActivity.this.calculateData(SuntimesActivity.this);
                     SuntimesActivity.this.setUpdateAlarms(SuntimesActivity.this);
                     SuntimesActivity.this.updateViews(SuntimesActivity.this);
-
-                    Intent updateWidgets = new Intent();
-                    updateWidgets.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-                    sendBroadcast(updateWidgets);
                 }
             }
         });
@@ -1595,14 +1591,8 @@ public class SuntimesActivity extends AppCompatActivity
                 updateViews(SuntimesActivity.this);
 
                 WidgetSettings.LocationMode locationMode = dialog.getDialogContent().getLocationMode();
-                if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
-                {
+                if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
                     getFixHelper.getFix();
-
-                } else {
-                    Intent updateWidgets = new Intent();
-                    updateWidgets.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-                    sendBroadcast(updateWidgets);
                 }
             }
         };
