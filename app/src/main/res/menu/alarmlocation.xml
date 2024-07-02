@@ -4,6 +4,7 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/action_location_fromApp"
+            android:icon="?attr/icActionHome"
             android:title="@string/configLabel_location_fromapp"
             android:checkable="true"
             android:orderInCategory="0" />
