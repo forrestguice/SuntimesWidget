@@ -216,8 +216,11 @@ public class SuntimesNavigation
         overridePendingTransition(activity);
     }
 
-    public static Intent getBedtimeIntent(Context context) {
-        return new Intent(context, BedtimeActivity.class);
+    public static Intent getBedtimeIntent(Context context)
+    {
+        Intent intent = new Intent(context, BedtimeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
     }
 
     public static final int REQUEST_SETTINGS = 2200;
