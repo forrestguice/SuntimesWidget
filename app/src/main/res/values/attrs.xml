@@ -114,6 +114,7 @@
     <attr name="icActionDst" format="reference" />
     <attr name="icActionDnd" format="reference" />
     <attr name="icActionAlarm" format="reference" />
+    <attr name="icActionHome" format="reference" />
     <attr name="icActionBedtime" format="reference" />
     <attr name="icActionCalendar" format="reference" />
     <attr name="icActionNotification" format="reference" />
