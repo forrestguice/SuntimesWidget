@@ -182,7 +182,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
                 widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                 data = data0;
 
-            } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1") ||  widgetClass0.equals("DateWidget0") || widgetClass0.equals("AlarmWidget0")) {
+            } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1")
+                    || widgetClass0.equals("DateWidget0")
+                    || widgetClass0.equals("AlarmWidget0") || widgetClass0.equals("AlarmWidget0_2x2") || widgetClass0.equals("AlarmWidget0_3x2")) {
                 SuntimesClockData data0 = new SuntimesClockData(context, id);
                 widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                 widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern1;
@@ -276,7 +278,10 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         {
             case "DateWidget0":
                 return context.getString(R.string.configLabel_widgetList_itemTitlePattern2);
-            case "AlarmWidget0": case "AlarmWidget0_2x2":    // TODO: alarm widget title pattern
+
+            case "AlarmWidget0": case "AlarmWidget0_2x2": case "AlarmWidget0_3x2":
+                return context.getString(R.string.configLabel_widgetList_itemTitlePattern3);
+
             case "ClockWidget0": case "ClockWidget0_3x1":
             case "MoonWidget0": case "MoonWidget0_2x1": case "MoonWidget0_3x1": case "MoonWidget0_3x2":
             case "SuntimesWidget2": case "SuntimesWidget2_3x1": case "SuntimesWidget2_3x2": case "SuntimesWidget2_3x3":
@@ -292,8 +297,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         switch (simpleClassName(widgetClass))
         {
             case "SolsticeWidget0": return context.getString(R.string.app_name_solsticewidget0);
-            case "AlarmWidget0": return context.getString(R.string.app_name_alarmwidget0);
+            case "AlarmWidget0": return context.getString(R.string.app_name_alarmwidget0) + " (1x1)";
             case "AlarmWidget0_2x2": return context.getString(R.string.app_name_alarmwidget0) + " (2x2)";
+            case "AlarmWidget0_3x2": return context.getString(R.string.app_name_alarmwidget0) + " (3x2)";
             case "ClockWidget0": return context.getString(R.string.app_name_clockwidget0);
             case "ClockWidget0_3x1": return context.getString(R.string.app_name_clockwidget0) + " (3x1)";
             case "DateWidget0": return context.getString(R.string.app_name_datewidget0);
