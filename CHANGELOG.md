@@ -6,6 +6,7 @@
 * adds support for customizing the app color scheme; override map, graph, and highlight colors.
 * adds "light graph" dialog (of sunlight over the year) (#735), "earliest/latest sunrise/sunset" info (#753), and a 3x2 graph widget (to sun position widgets).
 * adds "bedtime mode" to alarms; helps schedule do-not-disturb during sleep hours. (#425)
+* adds "use app location" option to alarms; reschedules alarms automatically when the location is changed. (#768, #808).
 * adds "high brightness" option (#741) and swipeable buttons (#738) to the alarm screen.
 * adds "next alarm" quick settings tile, and 2x2 and 3x2 "next alarm" widgets (#766).
 * adds updated light and dark widget themes; adds to default widget actions.
