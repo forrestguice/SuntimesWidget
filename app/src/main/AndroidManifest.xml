@@ -374,7 +374,7 @@
             <meta-data android:name="android.service.zen.automatic.ruleType" android:value="Bedtime (Suntimes)" />
             <meta-data android:name="android.service.zen.automatic.ruleInstanceLimit" android:value="1" />
             <meta-data android:name="android.service.zen.automatic.configurationActivity"
-                android:value="com.forrestguice.suntimeswidget/com.forrestguice.suntimeswidget.alarmclock.ui.BedtimeActivity" />
+                android:value="com.forrestguice.suntimeswidget/com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity" />
         </service>
 
         <service android:name=".alarmclock.AlarmNotifications$NotificationService" />
