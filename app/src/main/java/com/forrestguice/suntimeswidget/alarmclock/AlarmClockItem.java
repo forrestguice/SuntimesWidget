@@ -434,7 +434,16 @@ public class AlarmClockItem implements Parcelable
                 alarmFlags = new HashMap<String, Long>();
             }
             alarmFlags.clear();
+            parseAlarmFlags(alarmFlags, flags);
 
+        } else {
+            alarmFlags = null;
+        }
+    }
+    public static void parseAlarmFlags(@NonNull HashMap<String,Long> out, String flags)
+    {
+        if (flags != null && !flags.trim().isEmpty())
+        {
             String[] elements = flags.split(",");
             for (String flag : elements)
             {
@@ -444,7 +453,7 @@ public class AlarmClockItem implements Parcelable
                     if (parts[0] != null && isValidFlagName(parts[0]))
                     {
                         try {
-                            alarmFlags.put(parts[0].trim(), (parts[1] != null ? Long.parseLong(parts[1]) : 0L));
+                            out.put(parts[0].trim(), (parts[1] != null ? Long.parseLong(parts[1]) : 0L));
 
                         } catch (NumberFormatException e) {
                             Log.w("AlarmFlags", "setAlarmFlags: invalid flag value: " + e);
@@ -452,8 +461,6 @@ public class AlarmClockItem implements Parcelable
                     } else Log.w("AlarmFlags", "setAlarmFlags: invalid flag name; ignoring: '" + flag + "'");
                 } else Log.w("AlarmFlags", "setAlarmFlags: wrong number of elements (" +  parts.length +"); ignoring: '" + flag + "'");
             }
-        } else {
-            alarmFlags = null;
         }
     }
 
@@ -501,6 +508,10 @@ public class AlarmClockItem implements Parcelable
     }
     public boolean flagIsTrue(@Nullable String flagname) {
         return (getFlag(flagname) != 0L);
+    }
+    public static boolean flagIsTrue(@NonNull HashMap<String,Long> map, @Nullable String flagname) {
+        Long value = map.get(flagname);
+        return (value != null && value != 0L);
     }
     public boolean setFlag(@NonNull String flag, boolean value) {
         return setFlag(flag, (value ? 1L : 0L));
