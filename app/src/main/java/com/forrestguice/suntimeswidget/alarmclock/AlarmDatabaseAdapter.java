@@ -187,7 +187,7 @@ public class AlarmDatabaseAdapter
                                                                             "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_NOTE };
     private static final String[] TABLE_ALARMS_DOWNGRADE = new String[] { "DROP TABLE " + TABLE_ALARMS, TABLE_ALARMS_CREATE };
 
-    private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME, KEY_ALARM_LABEL };
+    private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME, KEY_ALARM_LABEL, KEY_ALARM_FLAGS };
     private static final String[] QUERY_ALARMS_FULLENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_LABEL,
                                                                           KEY_ALARM_REPEATING, KEY_ALARM_REPEATING_DAYS,
                                                                           KEY_ALARM_DATETIME_ADJUSTED, KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_HOUR, KEY_ALARM_DATETIME_MINUTE, KEY_ALARM_DATETIME_OFFSET,
