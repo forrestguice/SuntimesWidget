@@ -113,6 +113,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public int res_icSoundOn, res_icSoundOff;
     public int res_colorEnabled;
     public int res_icOffset;
+    public int res_icHome, res_icPlace;
 
     public AlarmEditViewHolder(View parent)
     {
@@ -191,7 +192,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public void themeHolder(Context context)
     {
         int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled, R.attr.alarmColorEnabled, R.attr.icActionTimeReset,
-                R.attr.icActionNotification1, R.attr.icActionNotification2 };
+                R.attr.icActionNotification1, R.attr.icActionNotification2, R.attr.icActionHome, R.attr.icActionPlace };
         TypedArray a = context.obtainStyledAttributes(attrs);
         res_icAlarm = a.getResourceId(0, R.drawable.ic_action_extension);
         res_icNotification = a.getResourceId(1, R.drawable.ic_action_notification);
@@ -201,6 +202,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         res_icOffset = a.getResourceId(5, R.drawable.ic_action_timereset);;
         res_icNotification1 = a.getResourceId(6, R.drawable.ic_action_notification1);
         res_icNotification2 = a.getResourceId(7, R.drawable.ic_action_notification2);
+        res_icHome = a.getResourceId(8, R.drawable.ic_action_home);
+        res_icPlace = a.getResourceId(9, R.drawable.ic_action_place);
         a.recycle();
     }
 
@@ -243,9 +246,9 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             text_offset.setText(displayOffset(context, item));
 
+            int iconMargin = (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
             if (item.offset != 0)
             {
-                int iconMargin = (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
                 Drawable offsetIcon = ContextCompat.getDrawable(context, res_icOffset).mutate();
                 offsetIcon = new InsetDrawable(offsetIcon, iconMargin, iconMargin, iconMargin, iconMargin);
                 offsetIcon.setBounds(0, 0, (int)iconSize, (int)iconSize);
@@ -257,6 +260,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             }
 
             text_location.setText((item.location != null) ? item.location.getLabel() : "");
+
+            boolean useAppLocation = item.hasFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP) && item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+            Drawable locationIcon = ContextCompat.getDrawable(context, (useAppLocation ? res_icHome : res_icPlace)).mutate();
+            locationIcon = new InsetDrawable(locationIcon, iconMargin, iconMargin, iconMargin, iconMargin);
+            locationIcon.setBounds(0, 0, (int)iconSize, (int)iconSize);
+            text_location.setCompoundDrawablePadding(iconMargin);
+            text_location.setCompoundDrawables(locationIcon, null, null, null);
+
             text_repeat.setText( displayRepeating(context, item, selected));
             text_event.setText(displayEvent(context, item));
 

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -86,6 +86,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
@@ -105,6 +106,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
     public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
     public static final String ACTION_UPDATE_UI = "suntimeswidget.alarm.ui.update";
+    public static final String ACTION_LOCATION_CHANGED = "suntimeswidget.alarm.location_changed";  // signals home location is changed/reconfigured; reschedule these alarms
 
     public static final String ACTION_BEDTIME = "suntimeswidget.alarm.start_bedtime";              // enable bedtime mode
     public static final String ACTION_BEDTIME_PAUSE = "suntimeswidget.alarm.pause_bedtime";        // pause bedtime mode
@@ -367,6 +369,25 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
         findTask.setParam_withAlarmState(AlarmState.STATE_SOUNDING);
+        findTask.setAlarmItemTaskListener(onFinished);
+        findTask.execute();
+    }
+
+    public static void findAppLocationAlarms(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished)
+    {
+        AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context)
+        {
+            @Override
+            protected boolean passesFilter(Cursor cursor, long rowID)
+            {
+                int index = cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ALARM_FLAGS);
+                String rawFlags = (index >= 0) ? cursor.getString(index) : null;
+                flags.clear();
+                AlarmClockItem.parseAlarmFlags(flags, rawFlags);
+                return AlarmClockItem.flagIsTrue(flags, AlarmClockItem.FLAG_LOCATION_FROM_APP);
+            }
+            private final HashMap<String,Long> flags = new HashMap<>();
+        };
         findTask.setAlarmItemTaskListener(onFinished);
         findTask.execute();
     }
@@ -1552,6 +1573,11 @@ public class AlarmNotifications extends BroadcastReceiver
                         notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
                         alarmListTask.execute();
 
+                    } else if (AlarmNotifications.ACTION_LOCATION_CHANGED.equals(action)) {
+                        Log.d(TAG, "ACTION_LOCATION_CHANGED received");
+                        notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
+                        findAppLocationAlarms(getApplicationContext(), rescheduleTaskListener(startId, null));
+
                     } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
                         Log.d(TAG, "TIMEZONE_CHANGED received");
                         boolean rescheduling = false;
@@ -1685,6 +1711,21 @@ public class AlarmNotifications extends BroadcastReceiver
 
         private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener_clocktime(final int startId)
         {
+            return rescheduleTaskListener(startId, new AlarmClockItemFilter()
+            {
+                @Override
+                public boolean passesFilter(AlarmClockItem item) {
+                    int state = item.state.getState();
+                    return (item.getEvent() == null && state != AlarmState.STATE_SOUNDING && state != AlarmState.STATE_SNOOZING);
+                }
+            });
+        }
+        public interface AlarmClockItemFilter {
+            boolean passesFilter(AlarmClockItem item);
+        }
+
+        private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener(final int startId, @Nullable final AlarmClockItemFilter filter)
+        {
             return new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
             {
                 @Override
@@ -1696,7 +1737,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         public void onObservedAll()
                         {
                             long duration = System.currentTimeMillis() - startedAt;
-                            Log.d(TAG, "Re-schedule completed (time zone changed); took " + duration + "ms");
+                            Log.d(TAG, "Re-schedule completed; took " + duration + "ms");
                             new Handler(Looper.getMainLooper()).postDelayed(new Runnable()
                             {
                                 @Override
@@ -1723,8 +1764,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             @Override
                             public void onFinished(Boolean result, final AlarmClockItem item)
                             {
-                                int state = item.state.getState();
-                                if (item.getEvent() == null && state != AlarmState.STATE_SOUNDING && state != AlarmState.STATE_SNOOZING) {
+                                if (filter == null || filter.passesFilter(item)) {
                                     createAlarmOnReceiveListener(getApplicationContext(), startId, AlarmNotifications.ACTION_RESCHEDULE, notifyObserver).onFinished(result, item);
                                 } else notifyObserver.onFinished(false, item);
                             }
@@ -2346,6 +2386,10 @@ public class AlarmNotifications extends BroadcastReceiver
         String eventID = item.getEvent();
         SolarEvents event = SolarEvents.valueOf(eventID, null);
         ArrayList<Integer> repeatingDays = (item.repeatingDays != null ? item.repeatingDays : AlarmClockItem.everyday());
+        
+        if (item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP)) {
+            item.location = WidgetSettings.loadLocationPref(context, 0);
+        }
 
         if (item.location != null && event != null)
         {

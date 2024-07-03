@@ -33,6 +33,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -1573,6 +1574,8 @@ public class AlarmListDialog extends DialogFragment
         public int res_iconSoundOff = R.drawable.ic_action_sounddisabled;
         public int res_iconVibrate = R.drawable.ic_action_vibration;
         public int res_iconAction = R.drawable.ic_action_extension;
+        public int res_icHome = R.drawable.ic_action_home;
+        public int res_icPlace = R.drawable.ic_action_place;
         public int res_backgroundOn = R.drawable.card_alarmitem_enabled_dark1;
         public int res_backgroundOff = R.drawable.card_alarmitem_disabled_dark1;
         public int res_backgroundSounding = R.drawable.card_alarmitem_sounding_dark1;
@@ -1667,7 +1670,8 @@ public class AlarmListDialog extends DialogFragment
                             R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
                             R.attr.alarmColorEnabled, android.R.attr.textColorSecondary, android.R.attr.textColorPrimary,
                             R.attr.buttonPressColor, R.attr.alarmCardSounding, R.attr.alarmCardSnoozing, R.attr.alarmCardTimeout,
-                            R.attr.icActionNotification1, R.attr.icActionNotification2 };
+                            R.attr.icActionNotification1, R.attr.icActionNotification2,
+                            R.attr.icActionHome, R.attr.icActionPlace };
             TypedArray a = context.obtainStyledAttributes(attrs);
             res_iconAlarm = a.getResourceId(0, R.drawable.ic_action_alarms);
             res_iconNotification = a.getResourceId(1, R.drawable.ic_action_notification);
@@ -1687,6 +1691,8 @@ public class AlarmListDialog extends DialogFragment
             res_backgroundTimeout = a.getResourceId(15, R.drawable.card_alarmitem_timeout_dark);
             res_iconNotification1 = a.getResourceId(16, R.drawable.ic_action_notification1);
             res_iconNotification2 = a.getResourceId(17, R.drawable.ic_action_notification2);
+            res_icHome = a.getResourceId(18, R.drawable.ic_action_home);
+            res_icPlace = a.getResourceId(19, R.drawable.ic_action_place);
             a.recycle();
         }
 
@@ -1864,6 +1870,11 @@ public class AlarmListDialog extends DialogFragment
                 view.text_location.setVisibility(eventItem.requiresLocation() ? View.VISIBLE : View.INVISIBLE);
                 view.text_location.setText(item.location != null ? item.location.getLabel() : "");
                 view.text_location.setTextColor(item.enabled ? color_on : color_off);
+
+                int iconMargin = (int)context.getResources().getDimension(R.dimen.eventIcon_margin);
+                boolean useAppLocation = item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+                text_location.setCompoundDrawablePadding(iconMargin);
+                text_location.setCompoundDrawablesWithIntrinsicBounds((useAppLocation ? res_icHome : res_icPlace), 0, 0, 0);
 
                 Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), (item.enabled ? color_on : color_off));
                 view.text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
