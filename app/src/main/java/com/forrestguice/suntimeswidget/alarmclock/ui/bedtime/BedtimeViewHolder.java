@@ -18,27 +18,22 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
 
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,7 +55,6 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.TimeZone;
 
 public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
@@ -384,7 +378,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         switch_enabled.setVisibility(View.VISIBLE);
                     }
                     if (button_edit != null) {
-                        button_edit.setVisibility(View.VISIBLE);
+                        button_edit.show();  //setVisibility(View.VISIBLE);
                     }
 
                     boolean hasSound = (alarmItem.ringtoneURI != null);
@@ -634,20 +628,20 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         text_label.setText(context.getString(R.string.msg_bedtime_set));
                     }
                     if (button_add != null) {
-                        button_add.setVisibility(View.GONE);
+                        button_add.hide();  //setVisibility(View.GONE);
                     }
                     if (button_edit != null) {
-                        button_edit.setVisibility(View.VISIBLE);
+                        button_edit.show();  //setVisibility(View.VISIBLE);
                     }
                 } else {
                     if (text_label != null) {
                         text_label.setText(context.getString(R.string.msg_bedtime_notset));
                     }
                     if (button_add != null) {
-                        button_add.setVisibility(View.VISIBLE);
+                        button_add.show();  //setVisibility(View.VISIBLE);
                     }
                     if (button_edit != null) {
-                        button_edit.setVisibility(View.INVISIBLE);
+                        button_edit.hide();  //setVisibility(View.INVISIBLE);
                     }
                 }
             } else {
@@ -655,10 +649,10 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     text_label.setText("");
                 }
                 if (button_add != null) {
-                    button_add.setVisibility(View.GONE);
+                    button_add.hide();  //setVisibility(View.GONE);
                 }
                 if (button_edit != null) {
-                    button_edit.setVisibility(View.INVISIBLE);
+                    button_edit.hide();  //setVisibility(View.INVISIBLE);
                 }
             }
         }
@@ -711,8 +705,12 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (switch_enabled != null) {
                 switch_enabled.setVisibility(View.VISIBLE);
             }
-            if (button_edit != null) {
-                button_edit.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
+            if (button_edit != null)
+            {
+                //button_edit.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
+                if (alarmItem != null)
+                    button_edit.show();
+                else button_edit.hide();
             }
             if (text_label != null)
             {
@@ -778,10 +776,10 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     text_label.setText(context != null ? context.getString(R.string.msg_bedtime_wakeup_set) : "");
                 }
                 if (button_add != null) {
-                    button_add.setVisibility(View.GONE);
+                    button_add.hide();  //setVisibility(View.GONE);
                 }
                 if (button_edit != null) {
-                    button_edit.setVisibility(View.VISIBLE);
+                    button_edit.show();  //setVisibility(View.VISIBLE);
                 }
 
             } else {
@@ -789,10 +787,10 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     text_label.setText(context != null ? context.getString(R.string.msg_bedtime_wakeup_notset) : "");
                 }
                 if (button_add != null) {
-                    button_add.setVisibility(View.VISIBLE);
+                    button_add.show();  //.setVisibility(View.VISIBLE);
                 }
                 if (button_edit != null) {
-                    button_edit.setVisibility(View.GONE);
+                    button_edit.hide();  //.setVisibility(View.GONE);
                 }
             }
         }
@@ -1053,7 +1051,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             return Color.WHITE;    // TODO
         }
 
-        protected static ValueAnimator animateColorChange(final ImageView view, int colorTo, int colorFrom, long duration)
+        /*protected static ValueAnimator animateColorChange(final ImageView view, int colorTo, int colorFrom, long duration)
         {
             ValueAnimator animation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -1088,7 +1086,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             });
             animation.setDuration(duration);
             return animation;
-        }
+        }*/
 
         @Override
         protected void updateViews(final Context context, final BedtimeItem item)
