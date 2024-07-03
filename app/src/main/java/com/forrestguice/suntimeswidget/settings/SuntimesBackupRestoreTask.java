@@ -32,7 +32,6 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
@@ -44,10 +43,10 @@ import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -540,7 +539,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         }
 
         ArrayList<Integer> widgetIds = new ArrayList<>();
-        for (Class widgetClass : SuntimesWidgetListActivity.WidgetListAdapter.ALL_WIDGETS) {
+        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             widgetIds.addAll(SuntimesBackupTask.getAllWidgetIds(context, widgetClass));
         }
         widgetIds.add(0);

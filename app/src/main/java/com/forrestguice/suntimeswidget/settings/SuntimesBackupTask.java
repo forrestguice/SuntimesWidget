@@ -41,7 +41,6 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
@@ -57,6 +56,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -415,7 +415,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     protected static ArrayList<Integer> getAllWidgetIds(Context context)
     {
         ArrayList<Integer> ids = new ArrayList<>();
-        for (Class widgetClass : SuntimesWidgetListActivity.WidgetListAdapter.ALL_WIDGETS) {
+        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             ids.addAll(getAllWidgetIds(context, widgetClass));
         }
         ids.add(0);                                                    // include app config and quick settings tiles

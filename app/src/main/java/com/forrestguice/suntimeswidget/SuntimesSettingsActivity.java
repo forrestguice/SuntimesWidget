@@ -38,8 +38,6 @@ import android.util.Log;
 import android.util.TypedValue;
 
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsPreferenceHelper;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
@@ -64,6 +62,7 @@ import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.util.List;
 
@@ -491,7 +490,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     {
         AppSettings.initLocale(this);
 
-        for (Class widgetClass : SuntimesWidgetListActivity.WidgetListAdapter.ALL_WIDGETS) {
+        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             SuntimesWidget0.triggerWidgetUpdate(this, widgetClass);
         }
     }

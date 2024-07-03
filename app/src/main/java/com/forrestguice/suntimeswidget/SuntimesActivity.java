@@ -114,6 +114,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.lang.reflect.Method;
 
@@ -404,7 +405,7 @@ public class SuntimesActivity extends AppCompatActivity
                 configLocation();
 
             } else if (action.equals(ACTION_WIDGETS_UPDATE_ALL)) {
-                SuntimesWidget0.updateAllWidgets(SuntimesActivity.this);
+                WidgetListAdapter.updateAllWidgetAlarms(SuntimesActivity.this);
 
             } else {
                 if (data != null && LocationConfigView.SCHEME_GEO.equals(data.getScheme())) {

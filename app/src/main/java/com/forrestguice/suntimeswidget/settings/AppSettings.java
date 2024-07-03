@@ -52,6 +52,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -1000,7 +1001,7 @@ public class AppSettings
                 public void run()
                 {
                     long bench_start = System.nanoTime();
-                    SuntimesWidgetListActivity.updateAllWidgetAlarms(context);
+                    WidgetListAdapter.updateAllWidgetAlarms(context);
                     long bench_end = System.nanoTime();
                     Log.d("DEBUG", "update all widgets :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
                 }
