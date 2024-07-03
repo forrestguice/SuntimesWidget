@@ -340,6 +340,22 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         context.sendBroadcast(updateIntent);
     }
 
+    public static void updateWidgetsMatchingTheme(Context context, WidgetListAdapter adapter, String themeName)
+    {
+        if (adapter != null) {
+            for (ComponentName widgetClass : adapter.getAllWidgetClasses()) {
+                updateWidgetThemes(context, widgetClass, themeName);
+            }
+        }
+    }
+    public static void updateWidgetThemes(Context context, ComponentName widgetClass, String themeName)
+    {
+        Intent updateIntent = new Intent(SuntimesWidget0.SUNTIMES_THEME_UPDATE);
+        updateIntent.putExtra(SuntimesWidget0.KEY_THEME, themeName);
+        updateIntent.setPackage(widgetClass.getPackageName());
+        context.sendBroadcast(updateIntent);
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 

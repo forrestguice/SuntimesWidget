@@ -70,6 +70,7 @@ import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.io.File;
 
@@ -788,12 +789,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
-    public static void updateWidgetsMatchingTheme(Context context, String themeName)
-    {
-        Intent updateIntent = new Intent();
-        updateIntent.setAction(SuntimesWidget0.SUNTIMES_THEME_UPDATE);
-        updateIntent.putExtra(SuntimesWidget0.KEY_THEME, themeName);
-        context.sendBroadcast(updateIntent);
+    public static void updateWidgetsMatchingTheme(Context context, String themeName) {
+        WidgetListAdapter.updateWidgetsMatchingTheme(context, WidgetListAdapter.createWidgetListAdapter(context), themeName);
     }
 
     @Override
