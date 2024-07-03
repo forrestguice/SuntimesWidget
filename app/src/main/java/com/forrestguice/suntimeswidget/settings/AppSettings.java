@@ -48,6 +48,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.R;
@@ -1003,6 +1004,13 @@ public class AppSettings
                     SuntimesWidgetListActivity.updateAllWidgetAlarms(context);
                     long bench_end = System.nanoTime();
                     Log.d("DEBUG", "update all widgets :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+                }
+            });
+            executor.execute(new Runnable()
+            {
+                @Override
+                public void run() {
+                    context.sendBroadcast(new Intent(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_LOCATION_CHANGED, null)));
                 }
             });
             executor.shutdown();
