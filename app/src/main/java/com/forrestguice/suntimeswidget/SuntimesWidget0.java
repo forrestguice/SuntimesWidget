@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
@@ -269,7 +270,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         // OnTap: Update All
         if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE_ALL.name()))
         {
-            updateAllWidgets(context);
+            WidgetListAdapter.updateAllWidgetAlarms(context);
             return true;
         }
 
@@ -387,13 +388,6 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
-    }
-
-    public static void updateAllWidgets(Context context)
-    {
-        Intent intent = new Intent();
-        intent.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-        context.sendBroadcast(intent);
     }
 
     public void initLocale(Context context)
