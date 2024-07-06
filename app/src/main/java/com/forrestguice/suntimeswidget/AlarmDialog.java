@@ -205,7 +205,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         if (choice != null)
         {
             this.choice = choice;
-            Log.d("DEBUG", "setChoice: " + choice);
+            //Log.d("DEBUG", "setChoice: " + choice);
 
             if (adapter != null)
             {
@@ -215,7 +215,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                     AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(choice, context.getContentResolver());
                     if (item.isResolved()) {
                         adapter.insert(item, 0);
-                        Log.d("DEBUG", "inserting event into adapter: " + choice);
+                        //Log.d("DEBUG", "inserting event into adapter: " + choice);
                     } else Log.w(getClass().getSimpleName(), "omitting unresolved event from adapter: " + choice);
                 }
 
@@ -230,7 +230,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                         {
                             found = true;
                             spinner_scheduleMode.setSelection(i);
-                            Log.d("DEBUG", "setting spinner to position: " + i);
+                            //Log.d("DEBUG", "setting spinner to position: " + i);
                             break;
                         }
                     }
@@ -353,11 +353,11 @@ public class AlarmDialog extends BottomSheetDialogFragment
                         choice = item.getEventID();
 
                         if (choice == null) {
-                            Log.d("DEBUG", "null selection");
+                            //Log.d("DEBUG", "null selection");
                             return;
                         }
 
-                        Log.d("DEBUG", "onItemSelected: " + choice);
+                        //Log.d("DEBUG", "onItemSelected: " + choice);
                         if (listener != null) {
                             listener.onChanged(AlarmDialog.this);
                         }
@@ -493,7 +493,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 return true;
 
             } else {
-                Log.d(getClass().getSimpleName(), "Invalid AlarmPicker index; ignoring selection..");
+                Log.w(getClass().getSimpleName(), "Invalid AlarmPicker index; ignoring selection..");
                 return false;
             }
         }

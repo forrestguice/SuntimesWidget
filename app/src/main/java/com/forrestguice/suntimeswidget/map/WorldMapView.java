@@ -517,7 +517,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         super.setImageBitmap(b);
         bitmap = b;
         //postInvalidate();
-        Log.d("WorldMapView", "setImageBitmap");
+        //Log.d("WorldMapView", "setImageBitmap");
     }
 
     private Bitmap bitmap;

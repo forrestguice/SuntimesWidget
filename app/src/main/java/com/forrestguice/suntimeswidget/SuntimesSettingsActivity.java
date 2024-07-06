@@ -104,7 +104,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        Log.d("DEBUG", "onCreate");
+        //Log.d("DEBUG", "onCreate");
         setResult(RESULT_OK, getResultData());
         context = SuntimesSettingsActivity.this;
         appTheme = AppSettings.loadThemePref(this);
@@ -157,14 +157,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
     public Intent getResultData() {
         boolean value = getIntent().getBooleanExtra(SettingsActivityInterface.RECREATE_ACTIVITY, false);
-        Log.d("DEBUG", "getResultData: needsRecreate? " + value);
+        //Log.d("DEBUG", "getResultData: needsRecreate? " + value);
         return new Intent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, value);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
+        //Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
         switch(requestCode)
         {
             case SettingsActivityInterface.REQUEST_HEADER:
@@ -209,7 +209,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
             String selection = data.getStringExtra(ActionListActivity.SELECTED_ACTIONID);
             boolean adapterModified = data.getBooleanExtra(ActionListActivity.ADAPTER_MODIFIED, false);
-            Log.d("onPickAction", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
+            //Log.d("onPickAction", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
 
             if (selection != null)
             {
@@ -231,7 +231,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         {
             String selection = data.getStringExtra(SuntimesThemeContract.THEME_NAME);
             boolean adapterModified = data.getBooleanExtra(WidgetThemeListActivity.ADAPTER_MODIFIED, false);
-            Log.d("onPickTheme", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
+            //Log.d("onPickTheme", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
 
             if (selection != null)
             {
@@ -322,7 +322,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     public void onResume()
     {
         super.onResume();
-        Log.d("DEBUG", "onResume");
+        //Log.d("DEBUG", "onResume");
         initLocale(null);
         PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(helper);
 
@@ -378,7 +378,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
             if (themeChanged) {
-                Log.d("DEBUG", "theme changed: " + themeChanged);
+                //Log.d("DEBUG", "theme changed: " + themeChanged);
                 invalidateHeaders();
             }
         }
@@ -389,7 +389,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     {
         super.onSaveInstanceState(outState);
         outState.putString(AppSettings.PREF_KEY_APPEARANCE_THEME, appTheme);
-        Log.d("DEBUG", "onSaveInstanceState: " + appTheme);
+        //Log.d("DEBUG", "onSaveInstanceState: " + appTheme);
     }
 
     /**
@@ -481,7 +481,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     };
 
     public void setNeedsRecreateFlag() {
-        Log.d("DEBUG", "setNeedsRecreateFlag");
+        //Log.d("DEBUG", "setNeedsRecreateFlag");
         getIntent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, true);
         setResult(RESULT_OK, getResultData());
     }

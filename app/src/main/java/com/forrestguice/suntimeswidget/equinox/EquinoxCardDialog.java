@@ -377,7 +377,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             layoutParams.width = options.columnWidthPx;
             text_year_length_label.setLayoutParams(layoutParams);
         }
-        Log.d("DEBUG", "EquinoxDialog updated");
+        //Log.d("DEBUG", "EquinoxDialog updated");
     }
 
     protected boolean isImplemented(SuntimesEquinoxSolsticeDataset data) {
@@ -811,7 +811,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         {
             int position = currentCardPosition();
             if (position >= 0) {
-                Log.d("DEBUG", "onScrolled: position: " + position);
+                //Log.d("DEBUG", "onScrolled: position: " + position);
                 updateViews(getContext(), card_adapter.initData(getContext(), position));
             }
         }
