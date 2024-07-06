@@ -389,6 +389,7 @@ public class AlarmNotifications extends BroadcastReceiver
             private final HashMap<String,Long> flags = new HashMap<>();
         };
         findTask.setAlarmItemTaskListener(onFinished);
+        findTask.setParam_enabledOnly(true);
         findTask.execute();
     }
 
