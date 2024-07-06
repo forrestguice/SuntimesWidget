@@ -53,6 +53,11 @@
                 android:checkable="true" android:visible="false"
                 app:showAsAction="never" />
 
+            <item android:id="@+id/graphOption_showSeasons"
+                android:title="@string/graph_option_seasons"
+                android:checkable="true"
+                app:showAsAction="never" />
+
         </menu>
     </item>
 

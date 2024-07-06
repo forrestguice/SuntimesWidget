@@ -94,6 +94,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     public static final String PREF_KEY_GRAPH_SHOWASTRO = "showAstro";
     public static final boolean DEF_KEY_GRAPH_SHOWASTRO = true;
 
+    public static final String PREF_KEY_GRAPH_SHOWSEASONS = "showSeasons";
+    public static final boolean DEF_KEY_GRAPH_SHOWSEASONS = true;
+
     public static final int MINUTES_IN_DAY = 24 * 60;
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
@@ -959,7 +962,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             if (options.axisX_labels_show) {
                 drawYLabels(c, p, options);
             }
-            drawSeasonsBar(c, p, options);
+            if (options.showSeasons) {
+                drawSeasonsBar(c, p, options);
+            }
         }
 
         protected void drawAxisUnder(Calendar now, SuntimesRiseSetDataset[] data, Canvas c, Paint p, LightGraphOptions options)
@@ -1357,6 +1362,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         //public int sunPath_points_color = Color.MAGENTA;
         public float sunPath_points_width = 150;
 
+        public boolean showSeasons = true;
         public boolean showCivil = true, showNautical = true, showAstro = true;
         public int option_drawNow = DRAW_NOW1;
         public int option_drawNow_pointSizePx = -1;    // when set, use a fixed point size
