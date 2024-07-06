@@ -26,6 +26,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetService;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 
@@ -67,6 +68,7 @@ public class AlarmLayout_2x2_0 extends AlarmLayout_1x1_0
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_label, (showLabels ? View.VISIBLE : View.GONE));
+        views.setEmptyView(R.id.list_alarms, R.id.text_empty);
         views.setRemoteAdapter(R.id.list_alarms, getRemoteAdapterIntent(context, appWidgetId));
     }
 
@@ -77,6 +79,13 @@ public class AlarmLayout_2x2_0 extends AlarmLayout_1x1_0
         intent.putExtra(AlarmWidgetService.AlarmWidgetItemViewFactory.EXTRA_LAYOUTMODE, AlarmWidgetSettings.MODE_2x2);
         intent.setAction(appWidgetId + "_" + AlarmWidgetSettings.MODE_2x2);  // set action so Intent has a unique hashcode (RemoteViews are cached by Intent)
         return intent;
+    }
+
+    @Override
+    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
+    {
+        super.themeViews(context, views, theme);
+        views.setTextColor(R.id.text_empty, timeColor);
     }
 
 }

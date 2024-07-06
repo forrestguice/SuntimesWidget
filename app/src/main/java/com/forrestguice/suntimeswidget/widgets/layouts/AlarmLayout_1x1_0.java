@@ -112,5 +112,4 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
         views.setTextViewText(android.R.id.text2, (boldTime ? SuntimesUtils.createBoldSpan(null, displayString, displayString) : displayString));
     }
 
-
 }

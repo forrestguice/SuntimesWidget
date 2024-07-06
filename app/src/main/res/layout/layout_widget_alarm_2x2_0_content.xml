@@ -19,6 +19,13 @@
             android:text="@string/configLabel_alarmClock" android:labelFor="@+id/text_alarmtime"
             android:gravity="start" android:layout_gravity="start" />
 
+        <TextView style="@style/WidgetTimeTextView" android:visibility="gone"
+            android:id="@+id/text_empty"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+            android:text="@string/configLabel_alarms_nextAlarm_none"
+            android:gravity="start" android:layout_gravity="start" />
+
         <ListView android:id="@+id/list_alarms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
