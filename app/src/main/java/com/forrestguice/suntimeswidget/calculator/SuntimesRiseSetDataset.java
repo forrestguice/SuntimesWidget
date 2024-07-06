@@ -77,6 +77,9 @@ public class SuntimesRiseSetDataset
 
     public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other, WidgetSettings.TimeMode[] modes)
     {
+        this.calculator = other.calculator;
+        this.calculatorDescriptor = other.calculatorDescriptor;
+
         for (WidgetSettings.TimeMode mode : modes)
         {
             switch (mode)
@@ -131,8 +134,8 @@ public class SuntimesRiseSetDataset
 
     public void calculateData()
     {
-        SuntimesCalculator calculator = null;
-        SuntimesCalculatorDescriptor descriptor = null;
+        SuntimesCalculator calculator = this.calculator;
+        SuntimesCalculatorDescriptor descriptor = this.calculatorDescriptor;
 
         boolean first = true;
         ArrayList<WidgetSettings.TimeMode> events0 = new ArrayList<WidgetSettings.TimeMode>();
@@ -140,7 +143,7 @@ public class SuntimesRiseSetDataset
 
         for (SuntimesRiseSetData data : dataset.values())
         {
-            if (first)
+            if (first && descriptor == null)
             {
                 data.calculate();
                 calculator = data.calculator();
@@ -273,11 +276,6 @@ public class SuntimesRiseSetDataset
         return new SearchResult(mode, nearest, isRising);
     }
 
-    public SuntimesCalculator calculator()
-    {
-        return dataActual.calculator();
-    }
-
     public Calendar todayIs()
     {
         return dataActual.todayIs();
@@ -381,10 +379,24 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public SuntimesCalculatorDescriptor calculatorMode()
-    {
-        return dataActual.calculatorMode();
+    public SuntimesCalculator calculator() {
+        return (calculator != null ? calculator : dataActual.calculator());
     }
+    public SuntimesCalculatorDescriptor calculatorMode() {
+        return (calculatorDescriptor != null ? calculatorDescriptor: dataActual.calculatorMode());
+    }
+
+    public void setCalculator(Context context, SuntimesCalculatorDescriptor value)
+    {
+        this.calculatorDescriptor = value;
+        this.calculator = new SuntimesCalculatorFactory(context, value).createCalculator(location(), timezone());
+    }
+    public void setCalculator(Context context, SuntimesCalculatorDescriptor calculatorDescriptor, SuntimesCalculator calculator) {
+        this.calculatorDescriptor = calculatorDescriptor;
+        this.calculator = calculator;
+    }
+    protected SuntimesCalculator calculator;
+    protected SuntimesCalculatorDescriptor calculatorDescriptor;
 
     public Calendar now()
     {
