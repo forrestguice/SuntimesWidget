@@ -177,7 +177,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         {
             Log.w(LineGraphView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(LineGraphView.this.hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
-        } else Log.d(LineGraphView.class.getSimpleName(), "updateViews: starting task " + data);
+        } // else Log.d(LineGraphView.class.getSimpleName(), "updateViews: starting task " + data);
 
         if (getWidth() == 0 || getHeight() == 0) {
             //Log.d(LineGraphView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");

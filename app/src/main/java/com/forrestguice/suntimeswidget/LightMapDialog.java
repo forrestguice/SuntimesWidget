@@ -187,7 +187,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         WidgetSettings.SolarTimeMode.initDisplayStrings(getActivity());
         initViews(getContext(), dialogContent);
         if (savedState != null) {
-            Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
+            //Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
             loadSettings(savedState);
         }
         themeViews(getContext());
@@ -444,7 +444,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onDataModified( SuntimesRiseSetDataset data ) {
                     LightMapDialog.this.data = data;
-                    Log.d("DEBUG", "onDataModified: " + data.calendar().get(Calendar.DAY_OF_YEAR));
+                    //Log.d("DEBUG", "onDataModified: " + data.calendar().get(Calendar.DAY_OF_YEAR));
                     //if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
                     //    graphView.updateViews(data);
                     //}
@@ -762,7 +762,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         Menu m = menu.getMenu();
         boolean is1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
-        Log.d("DEBUG", "updateSpeedMenu: is1d: " + is1d);
+        //Log.d("DEBUG", "updateSpeedMenu: is1d: " + is1d);
 
         MenuItem speed_5m = m.findItem(R.id.mapSpeed_5m);
         if (speed_5m != null) {
@@ -789,14 +789,14 @@ public class LightMapDialog extends BottomSheetDialogFragment
             {
                 case R.id.mapSpeed_1d:
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP, true);
-                    Log.d("DEBUG", "onSpeedMenuClick: is1d: true");
+                    //Log.d("DEBUG", "onSpeedMenuClick: is1d: true");
                     item.setChecked(true);
                     updateViews();
                     return true;
 
                 case R.id.mapSpeed_5m:
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP, false);
-                    Log.d("DEBUG", "onSpeedMenuClick: is1d: false");
+                    //Log.d("DEBUG", "onSpeedMenuClick: is1d: false");
                     item.setChecked(true);
                     updateViews();
                     return true;
@@ -853,7 +853,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (speedButton != null && context != null)
         {
             boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
-            Log.d("DEBUG", "updateMediaButtons: is1d: " + speed_1d);
+            //Log.d("DEBUG", "updateMediaButtons: is1d: " + speed_1d);
             speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_5m));
             speedButton.setTextColor( speed_1d ? color_warning : color_accent );
         }
@@ -870,7 +870,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 getArguments().putLong(ARG_DATETIME, -1L);
                 options.now = now;
                 options.offsetMinutes = 1;
-                Log.d("DEBUG", "updateOptions: now: " + now);
+                //Log.d("DEBUG", "updateOptions: now: " + now);
             }
             options.anim_lock = anim_lock;
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)

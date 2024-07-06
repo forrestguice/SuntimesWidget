@@ -257,7 +257,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         {
             Log.w(LightGraphView.class.getSimpleName(), "updateViews: task already running: " + data0 + " (" + Integer.toHexString(LightGraphView.this.hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
-        } else Log.d(LightGraphView.class.getSimpleName(), "updateViews: starting task " + data0);
+        } // else Log.d(LightGraphView.class.getSimpleName(), "updateViews: starting task " + data0);
 
         if (getWidth() == 0 || getHeight() == 0) {
             //Log.d(LightGraphView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
