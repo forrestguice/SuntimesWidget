@@ -33,7 +33,7 @@ public class DarkTheme1 extends  DarkTheme
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.DARK;
     public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_dark;
-    public static final int[] THEMEDEF_PADDING = {2, 4, 4, 4};
+    public static final int[] THEMEDEF_PADDING = {4, 4, 4, 4};
 
     public static final float THEMEDEF_TITLESIZE = 12;
     public static final float THEMEDEF_TEXTSIZE = 12;
