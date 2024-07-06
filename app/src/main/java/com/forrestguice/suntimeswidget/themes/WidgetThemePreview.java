@@ -23,10 +23,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
@@ -41,9 +44,12 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.graph.LightGraphView;
+import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_6;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_8;
@@ -58,6 +64,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_FILLPATH;
 import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
@@ -69,6 +77,7 @@ import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_FILL
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWAXIS;
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
 import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWMOON;
+import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
 
 public class WidgetThemePreview
 {
@@ -181,6 +190,7 @@ public class WidgetThemePreview
             updatePreview_position1(previewLayout, values, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
             updatePreview_position2(previewLayout, values);
             updatePreview_position3(previewLayout, values, 256, 256);
+            updatePreview_position4(previewLayout, values, 256, 256);
             //updatePreview_solstice(previewLayout);  // TODO
 
         } else if (WidgetSettings.WidgetModeSun1x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeSun2x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeSun3x1.supportsLayout(layoutID)) {
@@ -211,6 +221,7 @@ public class WidgetThemePreview
             }
             switch (mode) {
                 case MODE3x2_LINEGRAPH: updatePreview_position3(previewLayout, values, 128, 64); break;
+                case MODE3x2_LIGHTGRAPH: updatePreview_position4(previewLayout, values, 128, 64); break;
                 case MODE3x2_WORLDMAP: default:
                     WorldMapWidgetSettings.WorldMapWidgetMode mapMode = WorldMapWidgetSettings.WorldMapWidgetMode.findMode(layoutID);
                     updatePreview_position1(previewLayout, values, (mapMode != null ? mapMode : WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE));
@@ -448,6 +459,88 @@ public class WidgetThemePreview
             view.setMinimumWidth(widthPx);
             view.setMinimumHeight(heightPx);
             drawTask.execute(data0, widthPx, heightPx, options);
+        }
+    }
+
+    public void updatePreview_position4(View previewLayout, ContentValues values, final int widthDp, final int heightDp)
+    {
+        final ImageView view = (ImageView) previewLayout.findViewById(R.id.info_time_graph);
+        if (view != null)
+        {
+            final Context context = view.getContext();
+            final LightGraphView.LightGraphOptions options = new LightGraphView.LightGraphOptions(context);
+
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            options.colors = LightGraphColorValues.getColorDefaults(context, isNightMode);
+
+            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+            options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone()
+                    : WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
+
+            options.graph_width = 365;    // days
+            options.graph_height = 24;    // hours
+            options.graph_x_offset = options.graph_y_offset = 0;
+            options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
+            options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
+
+            options.axisX_show = options.axisY_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
+            options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
+            options.gridX_major_show = options.gridY_major_show = false;
+            options.axisX_width = options.axisY_width = 365;
+            options.sunPath_show_points = true;
+            options.sunPath_show_line = true;
+            options.sunPath_show_fill = true;
+
+            options.colors.setColor(LightGraphColorValues.COLOR_NIGHT, values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_DAY, values.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_CIVIL, values.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_NAUTICAL, values.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_ASTRONOMICAL, values.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_POINT_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_POINT_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_SUN_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_SUN_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_SPRING, values.getAsInteger(SuntimesThemeContract.THEME_SPRINGCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_SUMMER, values.getAsInteger(SuntimesThemeContract.THEME_SUMMERCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_AUTUMN, values.getAsInteger(SuntimesThemeContract.THEME_FALLCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_WINTER, values.getAsInteger(SuntimesThemeContract.THEME_WINTERCOLOR));
+
+            final int widthPx = SuntimesUtils.dpToPixels(context, widthDp);
+            final int heightPx = SuntimesUtils.dpToPixels(context, heightDp);
+            view.setMinimumWidth(widthPx);
+            view.setMinimumHeight(heightPx);
+
+            final LightGraphView.LightGraphTask drawTask = new LightGraphView.LightGraphTask();
+            drawTask.setListener(new LightGraphView.LightGraphTaskListener()
+            {
+                @Override
+                public void onFinished(Bitmap result)
+                {
+                    super.onFinished(result);
+                    view.setImageBitmap(result);
+                }
+            });
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            final Handler handler = new Handler(Looper.getMainLooper());
+            executor.execute(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0);
+                    //data.setCalculator(context, com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
+                    data.calculateData();
+                    drawTask.setData(LightGraphView.LightGraphTask.createYearData(context, data));
+                    handler.post(new Runnable()
+                    {
+                        @Override
+                        public void run() {
+                            drawTask.execute(data0, widthPx, heightPx, options);
+                        }
+                    });
+                }
+            });
         }
     }
 
