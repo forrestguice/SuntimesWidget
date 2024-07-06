@@ -544,13 +544,15 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 date0.set(Calendar.DAY_OF_MONTH, 1);
                 date0.set(Calendar.HOUR_OF_DAY, 12);
 
+                WidgetSettings.TimeMode[] modes = new WidgetSettings.TimeMode[] { WidgetSettings.TimeMode.OFFICIAL, WidgetSettings.TimeMode.CIVIL, WidgetSettings.TimeMode.NAUTICAL, WidgetSettings.TimeMode.ASTRONOMICAL };
+
                 for (int i = 0; i < yearData.length; i++)
                 {
                     Calendar date = Calendar.getInstance(timezone);
                     date.setTimeInMillis(date0.getTimeInMillis());
                     date.add(Calendar.DATE, i);
 
-                    SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0);
+                    SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0, modes);
                     data.setTimeZone(context, timezone);
                     data.setTodayIs(date);
                     data.calculateData();
