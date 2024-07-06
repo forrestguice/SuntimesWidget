@@ -168,7 +168,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
 
         if (fragment != null)
         {
-            Log.d("DEBUG", "load fragment settings2");
+            //Log.d("DEBUG", "load fragment settings2");
             fragment.setAlarmWidgetValue(PREF_KEY_ALARMWIDGET_TYPES, filterTypes.toArray(new String[0]));
             fragment.setAlarmWidgetValue(PREF_KEY_ALARMWIDGET_SORTORDER, sortOrder);
             fragment.setAlarmWidgetValue(PREF_KEY_ALARMWIDGET_ENABLEDONLY, enabledOnly);

@@ -465,7 +465,7 @@ public class AlarmListDialog extends DialogFragment
 
     public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays)
     {
-        Log.d("DEBUG", "createAlarm: ringToneURI: " + ringtoneUri + " (" + ringtoneName + ")" );
+        //Log.d("DEBUG", "createAlarm: ringToneURI: " + ringtoneUri + " (" + ringtoneName + ")" );
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.enabled = AlarmSettings.loadPrefAlarmAutoEnable(context);
         alarm.type = type;
@@ -473,7 +473,7 @@ public class AlarmListDialog extends DialogFragment
         alarm.hour = hour;
         alarm.minute = minute;
         alarm.timezone = timezone;
-        Log.d("DEBUG", "createAlarm: with hour " + hour + " and minute " + minute + " .. timezone " + timezone);
+        //Log.d("DEBUG", "createAlarm: with hour " + hour + " and minute " + minute + " .. timezone " + timezone);
         alarm.setEvent(date != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(date)) : event);   // TODO: event on date
         alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
         alarm.repeating = false;
@@ -781,14 +781,14 @@ public class AlarmListDialog extends DialogFragment
         AlarmListTask listTask = new AlarmListTask(getActivity());
         listTask.setTaskListener(taskListener);
         listTask.execute(rowId);
-        Log.d("DEBUG", "reloadAdapter");
+        //Log.d("DEBUG", "reloadAdapter");
     }
 
     protected AlarmListTask.AlarmListTaskListener onListLoaded = new AlarmListTask.AlarmListTaskListener() {
         @Override
         public void onLoadFinished(List<AlarmClockItem> data)
         {
-            Log.d("DEBUG", "onListLoaded: " + data.size());
+            //Log.d("DEBUG", "onListLoaded: " + data.size());
             adapter.setItems(data);
             updateViews();
             scrollToSelectedItem();
@@ -804,14 +804,14 @@ public class AlarmListDialog extends DialogFragment
                 AlarmClockItem item = data.get(0);
                 if (item != null)
                 {
-                    Log.d("DEBUG", "onItemChanged: " + item.rowID + ", state: " + item.state.getState());
+                    //Log.d("DEBUG", "onItemChanged: " + item.rowID + ", state: " + item.state.getState());
                     switch(item.getState())
                     {
                         case AlarmState.STATE_SOUNDING: case AlarmState.STATE_SNOOZING: case AlarmState.STATE_TIMEOUT:  // sounding/snoozing/timeout alarmtime shouldn't be touched until next transition
                         case AlarmState.STATE_SCHEDULED_SOON: case AlarmState.STATE_SCHEDULED_DISTANT:                  // scheduled_ alarmtime is already assigned
                             break;
                         default:
-                            Log.d("DEBUG", "onItemChanged: updating item timestamp");
+                            //Log.d("DEBUG", "onItemChanged: updating item timestamp");
                             AlarmNotifications.updateAlarmTime(getActivity(), item);
                             break;
                     }
@@ -888,6 +888,7 @@ public class AlarmListDialog extends DialogFragment
 
                 cursor.moveToNext();
             }
+            cursor.close();
             db.releaseUnusedUriPermissions(contextRef.get());
             db.close();
             return items;
@@ -939,7 +940,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         public void setSelectedRowID(long rowID) {
-            Log.d("setSelectedRowID", ""+ rowID);
+            //Log.d("setSelectedRowID", ""+ rowID);
             selectedRowID = rowID;
             notifyDataSetChanged();
             if (listener != null) {
@@ -1114,7 +1115,7 @@ public class AlarmListDialog extends DialogFragment
         {
             Context context = contextRef.get();
 
-            Log.d("DEBUG", "onBindViewHolder: " + holder);
+            //Log.d("DEBUG", "onBindViewHolder: " + holder);
             AlarmClockItem item = items.get(position);
             holder.isSelected = (item.rowID == selectedRowID);
             holder.preview_offset = !holder.isSelected;
@@ -1133,7 +1134,7 @@ public class AlarmListDialog extends DialogFragment
         @Override
         public void onViewRecycled(AlarmListDialogItem holder)
         {
-            Log.d("DEBUG", "onViewRecycled: " + holder);
+            //Log.d("DEBUG", "onViewRecycled: " + holder);
             detachClickListeners(holder);
             holder.isSelected = false;
             holder.resetBackground();
@@ -1143,7 +1144,7 @@ public class AlarmListDialog extends DialogFragment
         public void onViewAttachedToWindow(AlarmListDialogItem holder)
         {
             super.onViewAttachedToWindow(holder);
-            Log.d("DEBUG", "onViewAttachedToWindow: " + holder);
+            //Log.d("DEBUG", "onViewAttachedToWindow: " + holder);
             holder.startBackgroundAnimation(contextRef.get());
         }
 
@@ -1151,7 +1152,7 @@ public class AlarmListDialog extends DialogFragment
         public void onViewDetachedFromWindow(AlarmListDialogItem holder)
         {
             super.onViewDetachedFromWindow(holder);
-            Log.d("DEBUG", "onViewDetachedFromWindow: " + holder);
+            //Log.d("DEBUG", "onViewDetachedFromWindow: " + holder);
             holder.stopBackgroundAnimation(contextRef.get());
         }
 
@@ -1457,15 +1458,15 @@ public class AlarmListDialog extends DialogFragment
             AlarmClockItem item = getItem(rowId);
             if (item != null && item.type != type)
             {
-                Log.d("AlarmList", "alarmTypeMenu: alarm type is changed: " + type);
+                //Log.d("AlarmList", "alarmTypeMenu: alarm type is changed: " + type);
                 if (item.enabled)
                 {
-                    Log.d("AlarmList", "alarmTypeMenu: alarm is enabled (reschedule required?)");
+                    //Log.d("AlarmList", "alarmTypeMenu: alarm is enabled (reschedule required?)");
                     // item is enabled; disable it or reschedule/reenable
                     return false;
 
                 } else {
-                    Log.d("AlarmList", "alarmTypeMenu: alarm is disabled, changing its type..");
+                    //Log.d("AlarmList", "alarmTypeMenu: alarm is disabled, changing its type..");
                     item.type = type;
                     item.setState(AlarmState.STATE_NONE);
 
@@ -2103,13 +2104,13 @@ public class AlarmListDialog extends DialogFragment
                 if (background != null)
                 {
                     if (background instanceof StateListDrawable) {
-                        Log.d("DEBUG", "starting background (StateListDrawable): " + this);
+                        //Log.d("DEBUG", "starting background (StateListDrawable): " + this);
                         AlarmListDialogItem.startStateListAnimations(context, (StateListDrawable) background, this.anim_enterFadeDuration, this.anim_exitFadeDuration);
                     } else if (background instanceof AnimationDrawable) {
-                        Log.d("DEBUG", "starting background (AnimatedDrawable): " + this);
+                        //Log.d("DEBUG", "starting background (AnimatedDrawable): " + this);
                         AlarmListDialogItem.startAnimatedDrawable(context, (AnimationDrawable) background, this.anim_enterFadeDuration, this.anim_exitFadeDuration);
                     } else {
-                        Log.d("DEBUG", "starting background: skipped: " + this);
+                        //Log.d("DEBUG", "starting background: skipped: " + this);
                     }
                 }
             }
@@ -2123,13 +2124,13 @@ public class AlarmListDialog extends DialogFragment
                 if (background != null)
                 {
                     if (background instanceof StateListDrawable) {
-                        Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
+                        //Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
                         AlarmListDialogItem.stopStateListAnimations(context, (StateListDrawable) background);
                     } else if (background instanceof AnimationDrawable) {
-                        Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
+                        //Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
                         ((AnimationDrawable) background).setVisible(false, false);
                     } else {
-                        Log.d("DEBUG", "stopping background: skipped: " + this);
+                        //Log.d("DEBUG", "stopping background: skipped: " + this);
                     }
                 }
             }

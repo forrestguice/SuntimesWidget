@@ -1028,7 +1028,7 @@ public class WidgetActions
 
         public static void initDefaults( Context context )
         {
-            Log.d("DEBUG", "initDefaults");
+            //Log.d("DEBUG", "initDefaults");
             for (SuntimesAction action : SuntimesAction.values())
             {
                 if (!hasActionLaunchPref(context, 0, action.name()))

@@ -2867,7 +2867,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void onThemeSelectionChanged()
     {
-        Log.d("DEBUG", "onThemeSelectionChanged");
+        //Log.d("DEBUG", "onThemeSelectionChanged");
         ThemeDescriptor theme = (ThemeDescriptor) spinner_theme.getSelectedItem();
         this.themeValues = WidgetThemes.loadTheme(this, theme.name()).toContentValues();
         themeViews(themeValues);
