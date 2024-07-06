@@ -107,11 +107,13 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
                 : WidgetTimezones.getTimeZone(tzId, dataset.location().getLongitudeAsDouble(), dataset.calculator());
 
         LightGraphView.LightGraphTask drawTask = new LightGraphView.LightGraphTask();
-        drawTask.setData(new SuntimesRiseSetDataset[] { dataset });
+
+        SuntimesRiseSetDataset[] yearData = LightGraphView.LightGraphTask.createYearData(context, dataset);
+        drawTask.setData(yearData);
 
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
         options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
-        Bitmap bitmap = drawTask.makeBitmap( LightGraphView.LightGraphTask.createYearData(context, dataset), SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options );
+        Bitmap bitmap = drawTask.makeBitmap( yearData, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options );
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_graph, bitmap);
             //Log.d("DEBUG", "graph is " + bitmap.getWidth() + " x " + bitmap.getHeight());
