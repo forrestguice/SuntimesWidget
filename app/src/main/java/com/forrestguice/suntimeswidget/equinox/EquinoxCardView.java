@@ -62,7 +62,6 @@ public class EquinoxCardView extends LinearLayout
     protected RecyclerView card_view;
     protected LinearLayoutManager card_layout;
     protected EquinoxDataAdapter card_adapter;
-    protected CardAdapter.CardViewScroller card_scroller;
     protected ImageButton resetBackButton, resetForwardButton;
 
     public EquinoxCardView(Context context) {
@@ -143,7 +142,6 @@ public class EquinoxCardView extends LinearLayout
         card_view.setItemViewCacheSize(7);
         card_view.addItemDecoration(new CardViewDecorator(context));
 
-        card_scroller = new CardAdapter.CardViewScroller(context);
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
 

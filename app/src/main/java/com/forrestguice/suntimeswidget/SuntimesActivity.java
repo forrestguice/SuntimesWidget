@@ -232,7 +232,6 @@ public class SuntimesActivity extends AppCompatActivity
     // time card views
     private RecyclerView card_view;
     private CardLayoutManager card_layout;
-    private LinearSmoothScroller card_scroller;
     private CardAdapter card_adapter;
 
     private EquinoxCardView card_equinoxSolstice;
@@ -1282,7 +1281,6 @@ public class SuntimesActivity extends AppCompatActivity
 
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
-        card_scroller = new CardAdapter.CardViewScroller(context);
         card_view.setOnScrollListener(onCardScrollListener);
     }
 
@@ -2244,6 +2242,7 @@ public class SuntimesActivity extends AppCompatActivity
             int nextPosition = (position + 1);
             if (nextPosition < card_adapter.getItemCount()) {
                 setUserSwappedCard(true, "onNextClick");
+                CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(SuntimesActivity.this);
                 card_scroller.setTargetPosition(nextPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
@@ -2254,6 +2253,7 @@ public class SuntimesActivity extends AppCompatActivity
             int prevPosition = (position - 1);
             if (prevPosition >= 0) {
                 setUserSwappedCard(true, "onPrevClick");
+                CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(SuntimesActivity.this);
                 card_scroller.setTargetPosition(prevPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
@@ -2646,6 +2646,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (Math.abs(firstPosition - position) > HIGHLIGHT_SCROLLING_ITEMS) {
             card_view.scrollToPosition(position);        // far; jump straight to item
         } else {
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(this);
             card_scroller.setTargetPosition(position);   // near; animated scroll to item
             card_layout.startSmoothScroll(card_scroller);
         }
@@ -2658,7 +2659,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_view.scrollToPosition(position);
         }
     }
-    private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState)

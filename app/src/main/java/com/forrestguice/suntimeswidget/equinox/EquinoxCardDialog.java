@@ -287,6 +287,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             if (Math.abs(position - seekPosition) > SuntimesActivity.HIGHLIGHT_SCROLLING_ITEMS) {
                 card_view.scrollToPosition(seekPosition);
             } else {
+                CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getActivity());
                 card_scroller.setTargetPosition(seekPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
@@ -759,7 +760,6 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
     protected RecyclerView card_view;
     protected GridLayoutManager card_layout;
-    protected CardAdapter.CardViewScroller card_scroller;
 
     protected void initCardView(Context context, View v)
     {
@@ -768,7 +768,6 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         card_view.setItemViewCacheSize(7);
         card_view.addItemDecoration(new CardViewDecorator(context));
 
-        card_scroller = new CardAdapter.CardViewScroller(context);
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
 
@@ -853,6 +852,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         int n = card_adapter.getItemCount();
         if (nextPosition < n) {
             setUserSwappedCard(true);
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getActivity());
             card_scroller.setTargetPosition(nextPosition);
             card_layout.startSmoothScroll(card_scroller);
         }
@@ -864,6 +864,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         int prevPosition = (position - card_itemsPerPage);
         if (prevPosition >= 0) {
             setUserSwappedCard(true);
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getActivity());
             card_scroller.setTargetPosition(prevPosition);
             card_layout.startSmoothScroll(card_scroller);
         }

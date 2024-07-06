@@ -71,7 +71,7 @@ public class EquinoxView extends LinearLayout
     private RecyclerView card_view;
     private CardLayoutManager card_layout;
     private EquinoxViewAdapter card_adapter;
-    private CardAdapter.CardViewScroller card_scroller;
+    //private CardAdapter.CardViewScroller card_scroller;
 
     public EquinoxView(Context context)
     {
@@ -145,7 +145,6 @@ public class EquinoxView extends LinearLayout
 
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
-        card_scroller = new CardAdapter.CardViewScroller(context);
 
         boolean minimized = isMinimized();
         if (!minimized) {
@@ -295,6 +294,7 @@ public class EquinoxView extends LinearLayout
         int nextPosition = (position + 1);
         if (nextPosition < card_adapter.getItemCount()) {
             userSwappedCard = true;
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getContext());
             card_scroller.setTargetPosition(nextPosition);
             card_layout.startSmoothScroll(card_scroller);
         }
@@ -306,6 +306,7 @@ public class EquinoxView extends LinearLayout
         int prevPosition = (position - 1);
         if (prevPosition >= 0) {
             userSwappedCard = true;
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getContext());
             card_scroller.setTargetPosition(prevPosition);
             card_layout.startSmoothScroll(card_scroller);
         }
@@ -422,6 +423,7 @@ public class EquinoxView extends LinearLayout
             if (Math.abs(position - seekPosition) > SuntimesActivity.HIGHLIGHT_SCROLLING_ITEMS) {
                 card_view.scrollToPosition(seekPosition);
             } else {
+                CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getContext());
                 card_scroller.setTargetPosition(seekPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }

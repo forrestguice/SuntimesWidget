@@ -121,7 +121,6 @@ public class MoonPhasesView1 extends LinearLayout
         GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.START); // new LinearSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
 
-        //card_scroller = new CardAdapter.CardViewScroller(context);
         //card_view.setOnScrollListener(onCardScrollListener);
 
         forwardButton = (ImageButton)findViewById(R.id.info_time_nextbtn);
