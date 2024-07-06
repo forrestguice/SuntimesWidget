@@ -551,6 +551,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             PopupMenu popupMenu = PopupMenuCompat.createMenu(context, view, R.menu.bedtime_dnd, menuClickListener, null);
             Menu menu = popupMenu.getMenu();
             boolean dnd = BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
+            //boolean dnd = BedtimeSettings.isAutomaticZenRuleEnabled(context);  //BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
+
             if (dnd)
             {
                 int filter = BedtimeSettings.loadPrefBedtimeDoNotDisturbFilter(context);

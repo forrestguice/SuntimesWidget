@@ -380,6 +380,26 @@ public class BedtimeSettings
         }
     }
 
+    public static boolean isAutomaticZenRuleEnabled(Context context)
+    {
+        NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notifications != null && hasDoNotDisturbPermission(context))
+        {
+            if (Build.VERSION.SDK_INT >= 24)
+            {
+                Map<String, AutomaticZenRule> rules = notifications.getAutomaticZenRules();
+                if (rules.size() > 0)
+                {
+                    String ruleId = rules.keySet().toArray(new String[0])[0];
+                    AutomaticZenRule rule = rules.get(ruleId);
+                    Log.d("DEBUG", "rule is enabled? " + rule.isEnabled());
+                    return rule.isEnabled();
+
+                } else return false;
+            } else return false;
+        } else return false;
+    }
+
     public static void triggerDoNotDisturb(Context context, boolean value)
     {
         if (Build.VERSION.SDK_INT >= 24) {
