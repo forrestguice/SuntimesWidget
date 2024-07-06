@@ -137,7 +137,7 @@ public class AlarmWidget0 extends SuntimesWidget0
         }
         layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
         layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
-        Log.d("getWidgetLayout", "layout is: " + layout);
+        //Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
    }
 
@@ -149,7 +149,7 @@ public class AlarmWidget0 extends SuntimesWidget0
         AlarmClockItem item = AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, rowID);
         db.close();
         long bench_end = System.nanoTime();
-        Log.d("DEBUG", "load single alarm item takes " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        //Log.d("DEBUG", "load single alarm item takes " + ((bench_end - bench_start) / 1000000.0) + " ms");
         return item;
     }
 

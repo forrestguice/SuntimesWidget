@@ -596,7 +596,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
 
             long bench_end = System.nanoTime();
-            Log.d("BENCH", "make light graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+            //Log.d("BENCH", "make light graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
             return b;
         }
         protected void initPaint()

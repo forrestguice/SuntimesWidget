@@ -362,7 +362,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         updateTimeViews(context);
         updateGraphViews(context);
         startUpdateTask();
-        Log.d("DEBUG", "LightGraphDialog updated");
+        //Log.d("DEBUG", "LightGraphDialog updated");
     }
 
     public void updateTimeViews(Context context)
