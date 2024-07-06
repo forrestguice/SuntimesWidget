@@ -1,23 +1,22 @@
 ### ~
 
-
 ### develop
-* adds sidebar navigation, and an option to change the "launcher activity" (#505).
+* adds "sidebar navigation", and an option to change the "launcher activity" (#505).
 * adds support for custom events based on "shadow length" (#331).
 * adds support for customizing the app color scheme; override map, graph, and highlight colors.
 * adds "light graph" dialog (of sunlight over the year) (#735), "earliest/latest sunrise/sunset" info (#753), and a 3x2 graph widget (to sun position widgets).
-* adds "bedtime mode" to alarms; helps schedule do-not-disturb during sleep hours. (#425)
 * adds "use app location" option to alarms; reschedules alarms automatically when the location is changed (#768, #808).
+* adds "bedtime mode" to alarms; helps schedule do-not-disturb during sleep hours (#425).
 * adds "high brightness" option (#741) and swipeable buttons (#738) to the alarm screen.
 * adds "next alarm" quick settings tile, and 2x2 and 3x2 "next alarm" widgets (#766).
-* adds updated light and dark widget themes; adds to default widget actions.
 * adds support for notification channels (api26+); a warning is shown when channels are muted.
-* fixes bug "alarms fail to display over lock screen" (#802); adds `android.permission.USE_FULL_SCREEN_INTENT` [PERMISSION].
+* adds permission `USE_FULL_SCREEN_INTENT` (needed for alarms over the lock screen) [PERMISSION]; fixes bug "alarms fail to display over lock screen" (#802).
+* adds permission `FOREGROUND_SERVICE` (needed for alarms and notifications) [PERMISSION].
+* adds permission `ACCESS_NOTIFICATION_POLICY` (needed to enable do-not-disturb at bedtime) [PERMISSION].
+* updates default widget themes, and adds to default widget actions.
 * updates Time4A dependency from 4.4.2-2019c to 4.8-2021a.
-* updates targetSdkVersion (25 -> 28) (#725); adds `android.permission.FOREGROUND_SERVICE` [PERMISSION].
+* updates targetSdkVersion (25 -> 26 -> 28) (#725).
 * increments minSdkVersion (10 -> 14) (#122); building for api10 is still possible by reverting changes in `build.gradle`.
-
-
 
 ### v0.15.16 (2024-06-17)
 * adds "online help" links to existing help dialogs (#797).
