@@ -140,7 +140,7 @@ public class CalendarFormatDialog extends DialogFragment
 
     public void updateCustomCalendarFormat(String pattern)
     {
-        Log.d("DEBUG", "updateCustomCalendarFormat");
+        //Log.d("DEBUG", "updateCustomCalendarFormat");
         CalendarMode mode = getCalendarMode();
         CalendarFormat.CUSTOM.setPattern(pattern);
         CalendarFormat.CUSTOM.initDisplayString(getActivity(), mode, Calendar.getInstance());
@@ -155,7 +155,7 @@ public class CalendarFormatDialog extends DialogFragment
                 @SuppressWarnings("unchecked")
                 ArrayAdapter<CalendarFormat> adapter = (ArrayAdapter<CalendarFormat>) spinner_calendarFormat.getAdapter();
                 adapter.notifyDataSetChanged();
-                Log.d("DEBUG", "notifyDataSetChanged_calendarFormatAdapter");
+                //Log.d("DEBUG", "notifyDataSetChanged_calendarFormatAdapter");
             } catch (ClassCastException e) {
                 Log.e(getClass().getSimpleName(), "Failed to update calendar format adapter: " + e);
             }

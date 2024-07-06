@@ -1165,7 +1165,7 @@ public class LocationConfigView extends LinearLayout
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             WidgetSettings.LocationMode locationMode = (WidgetSettings.LocationMode) parent.getItemAtPosition(position);
-            Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
+            //Log.d("DEBUG", "onLocationModeSelected " + locationMode.name());
 
             LocationViewMode dialogMode;
             if (locationMode == WidgetSettings.LocationMode.CUSTOM_LOCATION)

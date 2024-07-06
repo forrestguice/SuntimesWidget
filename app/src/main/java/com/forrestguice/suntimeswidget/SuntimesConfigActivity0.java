@@ -2854,7 +2854,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             boolean paramReloadAdapter = data.getBooleanExtra(WidgetThemeListActivity.ADAPTER_MODIFIED, false);
             if (paramReloadAdapter)
             {
-                Log.d("selectTheme", "reloading list of themes...");
+                //Log.d("selectTheme", "reloading list of themes...");
                 initThemeAdapter(this);
             }
 
@@ -2966,7 +2966,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (position >= 0)
         {
             spinner_theme.setSelection(position, true);
-            Log.d("selectTheme", "selected theme: " + themeDescriptor.name());
+            //Log.d("selectTheme", "selected theme: " + themeDescriptor.name());
 
         } else {
             Log.w("selectTheme", "unable to find " + themeDescriptor.name() + " (bad position).");
