@@ -70,10 +70,10 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
                 COLOR_POINT_FILL, COLOR_POINT_STROKE,
                 COLOR_AXIS, COLOR_GRID_MAJOR, COLOR_GRID_MINOR,
                 COLOR_LABELS, COLOR_LABELS_BG,
-                COLOR_SUNPATH_DAY_STROKE, COLOR_SUNPATH_DAY_FILL,
-                COLOR_SUNPATH_NIGHT_STROKE, COLOR_SUNPATH_NIGHT_FILL,
-                COLOR_MOONPATH_DAY_STROKE, COLOR_MOONPATH_DAY_FILL,
-                COLOR_MOONPATH_NIGHT_STROKE, COLOR_MOONPATH_NIGHT_FILL
+                COLOR_SUNPATH_DAY_FILL, COLOR_SUNPATH_DAY_STROKE,
+                COLOR_SUNPATH_NIGHT_FILL, COLOR_SUNPATH_NIGHT_STROKE,
+                COLOR_MOONPATH_DAY_FILL, COLOR_MOONPATH_DAY_STROKE,
+                COLOR_MOONPATH_NIGHT_FILL, COLOR_MOONPATH_NIGHT_STROKE,
         };
     }
     public int[] getColorAttrs() {
@@ -139,8 +139,10 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
                 Color.DKGRAY, Color.DKGRAY,
                 Color.DKGRAY, Color.DKGRAY, Color.DKGRAY,
                 Color.DKGRAY, Color.BLACK,
-                Color.YELLOW, Color.YELLOW, Color.BLUE, Color.BLUE,
-                Color.LTGRAY, Color.LTGRAY, Color.CYAN, Color.CYAN
+                Color.YELLOW, Color.YELLOW,
+                Color.BLUE, Color.BLUE,
+                Color.LTGRAY, Color.LTGRAY,
+                Color.CYAN, Color.CYAN
         };
     }
 
