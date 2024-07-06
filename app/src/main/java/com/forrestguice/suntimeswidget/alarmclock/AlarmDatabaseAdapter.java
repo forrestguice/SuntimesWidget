@@ -1003,6 +1003,7 @@ public class AlarmDatabaseAdapter
                     }
                     cursor.moveToNext();
                 }
+                cursor.close();
             }
 
             db.close();
