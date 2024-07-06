@@ -1097,7 +1097,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (warning != null) {
                     boolean value = AlarmSettings.isChannelMuted(this, types[i]);
                     warning.setShouldShow(value);
-                    Log.d("DEBUG", "setShouldShow: " + value);
+                    //Log.d("DEBUG", "setShouldShow: " + value);
                 }
             }
         }

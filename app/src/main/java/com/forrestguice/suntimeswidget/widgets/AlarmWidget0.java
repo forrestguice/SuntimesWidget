@@ -143,7 +143,7 @@ public class AlarmWidget0 extends SuntimesWidget0
 
     public static AlarmClockItem loadAlarmClockItem(Context context, long rowID)
     {
-        long bench_start = System.nanoTime();    // TODO: use Handler here to avoid blocking
+        long bench_start = System.nanoTime();
         AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);
         db.open();
         AlarmClockItem item = AlarmDatabaseAdapter.AlarmItemTask.loadAlarmClockItem(context, db, rowID);
