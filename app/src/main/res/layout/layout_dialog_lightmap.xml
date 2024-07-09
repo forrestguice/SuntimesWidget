@@ -45,7 +45,7 @@
         style="?attr/actionOverflowButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/configAction_sunDialog" />
+        android:contentDescription="@string/configAction_lightGraphDialog" />
 
     <!-- sun altitude -->
     <include layout="@layout/layout_dialog_lightmap_suninfo0" />

@@ -201,7 +201,9 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         }
 
         ImageButton btn_position = (ImageButton) v.findViewById(R.id.sunposition_button);
-        if (btn_position != null) {
+        if (btn_position != null)
+        {
+            TooltipCompat.setTooltipText(btn_position, btn_position.getContentDescription());
             btn_position.setOnClickListener(onPositionButtonClicked);
         }
 

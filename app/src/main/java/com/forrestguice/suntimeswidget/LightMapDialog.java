@@ -418,7 +418,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
 
         ImageButton lightgraphButton = (ImageButton) dialogView.findViewById(R.id.lightgraph_button);
-        if (lightgraphButton != null) {
+        if (lightgraphButton != null)
+        {
+            TooltipCompat.setTooltipText(lightgraphButton, lightgraphButton.getContentDescription());
             lightgraphButton.setOnClickListener(onLightGraphButtonClicked);
         }
 
