@@ -60,6 +60,7 @@
     <drawable name="baseline_terrain_ref_18">@drawable/baseline_terrain_white_18</drawable>
     <drawable name="ic_action_shadow_ref">@drawable/ic_action_shadow</drawable>
     <drawable name="ic_action_sun_ref">@drawable/ic_action_sun_dark</drawable>
+    <drawable name="ic_action_multiline_chart_ref">@drawable/ic_action_multiline_chart_dark</drawable>
     <drawable name="ic_action_locale_ref">@drawable/ic_action_locale</drawable>
     <drawable name="ic_action_settings_ref">@drawable/ic_action_settings</drawable>
     <drawable name="ic_action_help_ref">@drawable/ic_action_help</drawable>

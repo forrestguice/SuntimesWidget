@@ -141,6 +141,7 @@
         <item name="icActionAltitude">@drawable/baseline_terrain_ref_18</item>
         <item name="icActionShadow">@drawable/ic_action_shadow_ref</item>
         <item name="icActionSun">@drawable/ic_action_sun_ref</item>
+        <item name="icActionSunPosition">@drawable/ic_action_multiline_chart_ref</item>
         <item name="icActionLocale">@drawable/ic_action_locale_ref</item>
         <item name="icActionSettings">@drawable/ic_action_settings_ref</item>
         <item name="icActionHelp">@drawable/ic_action_help_ref</item>
@@ -366,6 +367,7 @@
         <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
         <item name="icActionShadow">@drawable/ic_action_shadow_light</item>
         <item name="icActionSun">@drawable/ic_action_sun_light</item>
+        <item name="icActionSunPosition">@drawable/ic_action_multiline_chart_light</item>
         <item name="icActionLocale">@drawable/ic_action_locale_light</item>
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
@@ -594,6 +596,7 @@
         <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
         <item name="icActionShadow">@drawable/ic_action_shadow</item>
         <item name="icActionSun">@drawable/ic_action_sun_dark</item>
+        <item name="icActionSunPosition">@drawable/ic_action_multiline_chart_dark</item>
         <item name="icActionLocale">@drawable/ic_action_locale</item>
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
