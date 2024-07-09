@@ -2377,6 +2377,16 @@ public class SuntimesActivity extends AppCompatActivity
         dialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTGRAPH);
         return dialog;
     }
+    public void showLightGraphDialogAt(@Nullable Long dateTime)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        LightGraphDialog dialog = (LightGraphDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        dialog = showLightGraphDialog();
+        //dialog.showPositionAt(dateTime);   // TODO
+    }
 
     private final LightGraphDialog.DialogListener lightGraphDialogListener = new LightGraphDialog.DialogListener()
     {
@@ -2419,6 +2429,11 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onShowMap( long suggested) {
             showMapPositionAt(suggested);
+        }
+
+        @Override
+        public void onShowChart( long suggested) {
+            showLightGraphDialogAt(suggested);
         }
 
         @Override

@@ -417,6 +417,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
         }
 
+        ImageButton lightgraphButton = (ImageButton) dialogView.findViewById(R.id.lightgraph_button);
+        if (lightgraphButton != null) {
+            lightgraphButton.setOnClickListener(onLightGraphButtonClicked);
+        }
+
         speedButton = (TextView)dialogView.findViewById(R.id.media_speed);
         if (speedButton != null) {
             speedButton.setOnClickListener(speedClickListener);
@@ -469,6 +474,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
         updateOptions(getContext());
     }
+
+    private final View.OnClickListener onLightGraphButtonClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            if (dialogListener != null) {
+                dialogListener.onShowChart(lightmap.getNow());
+            }
+        }
+    };
 
     protected void resizeLightMapView(Context context, boolean showGraph)
     {
@@ -1902,6 +1917,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         public void onShowDate( long suggestDate ) {}
         public void onShowMap( long suggestDate ) {}
+        public void onShowChart( long suggestDate ) {}
         public void onShowMoonInfo( long suggestDate ) {}
         public void onColorsModified(ColorValues values) {}
     }
