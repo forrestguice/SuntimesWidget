@@ -364,9 +364,9 @@
     <color name="graphColor_night_dark">#ff424242</color>
     <color name="graphColor_pointFill_dark">@color/sunIcon_color_setting_dark</color>
     <color name="graphColor_pointStroke_dark">@color/sunIcon_color_noon_light</color>
-    <color name="graphColor_axis_dark">@color/grey_900</color>  <!-- TODO -->
-    <color name="graphColor_grid_dark">@color/grey_500</color>  <!-- TODO -->
-    <color name="graphColor_labels_dark">@color/grey_300</color>  <!-- TODO -->
+    <color name="graphColor_axis_dark">@color/grey_700</color>
+    <color name="graphColor_grid_dark">@color/grey_500</color>
+    <color name="graphColor_labels_dark">@color/grey_300</color>
     <color name="graphColor_labels_bg_dark">#80000000</color>
 
     <color name="graphColor_bg_light">@color/material_grey_50</color>
@@ -377,10 +377,10 @@
     <color name="graphColor_night_light">@color/grey_400</color>  <!-- #ff757575 -->
     <color name="graphColor_pointFill_light">@color/sunIcon_color_noon_light</color>
     <color name="graphColor_pointStroke_light">@color/sunIcon_color_noonBorder_light</color>
-    <color name="graphColor_axis_light">@color/grey_300</color>  <!-- TODO -->
-    <color name="graphColor_grid_light">@color/grey_300</color>
+    <color name="graphColor_axis_light">@color/grey_700</color>
+    <color name="graphColor_grid_light">@color/grey_600</color>
     <color name="graphColor_labels_light">@color/grey_800</color>
-    <color name="graphColor_labels_bg_light">#80000000</color>
+    <color name="graphColor_labels_bg_light">#80DEDEDE</color>
 
     <!-- Dingy Yellows
     <color name="graphColor_bg_light">@color/material_grey_50</color>
