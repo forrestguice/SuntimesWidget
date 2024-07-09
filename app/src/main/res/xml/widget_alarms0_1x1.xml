@@ -4,7 +4,7 @@
                     tools:ignore="UnusedAttribute"
 
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/clockwidget_1x1_preview"
+    android:previewImage="@drawable/alarmwidget_1x1_preview"
     android:resizeMode="horizontal|vertical"
     android:initialKeyguardLayout="@layout/layout_widget_alarm_1x1_0"
 
@@ -14,4 +14,4 @@
     android:initialLayout="@layout/layout_widget_alarm_1x1_0"
     android:configure="com.forrestguice.suntimeswidget.widgets.AlarmWidget0ConfigActivity">
 
-</appwidget-provider>    <!-- TODO: preview -->
+</appwidget-provider>
