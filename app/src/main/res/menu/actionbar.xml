@@ -38,12 +38,12 @@
           app:showAsAction="never" />
 
     <item android:id="@+id/action_sunposition"
-          android:icon="?attr/icActionSunChart"
+          android:icon="?attr/icActionSun"
           android:title="@string/configAction_sunDialog"
           app:showAsAction="never" />
 
     <item android:id="@+id/action_lightgraph"
-        android:icon="?attr/icActionSun"
+        android:icon="?attr/icActionSunChart"
         android:title="@string/configAction_lightGraphDialog"
         app:showAsAction="never" />
 
