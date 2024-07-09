@@ -200,6 +200,11 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             }
         }
 
+        ImageButton btn_position = (ImageButton) v.findViewById(R.id.sunposition_button);
+        if (btn_position != null) {
+            btn_position.setOnClickListener(onPositionButtonClicked);
+        }
+
         text_sunrise_early = (TextView) v.findViewById(R.id.text_time_sunrise_early);
         text_sunrise_late = (TextView) v.findViewById(R.id.text_time_sunrise_late);
 
@@ -748,6 +753,16 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         }
     });
 
+    private final View.OnClickListener onPositionButtonClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            if (dialogListener != null) {
+                dialogListener.onShowPosition(Calendar.getInstance().getTimeInMillis());
+            }
+        }
+    };
+
     private final View.OnClickListener onTimeClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
@@ -880,7 +895,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         //public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
         //public void onShowMap( long suggestedDate ) {}
-        //public void onShowPosition( long suggestedDate ) {}
+        public void onShowPosition( long suggestedDate ) {}
         //public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified(boolean closeDialog) {}
         public void onColorsModified(ColorValues values) {}

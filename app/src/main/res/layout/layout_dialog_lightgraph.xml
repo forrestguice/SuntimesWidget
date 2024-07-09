@@ -63,6 +63,13 @@
                 android:contentDescription="@string/worldmap_dialog_action_reset"
                 android:src="?attr/icActionTimeReset" android:scaleType="fitXY" />
 
+            <ImageButton android:id="@+id/sunposition_button"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:src="?attr/icActionSun"
+                style="?attr/actionOverflowButtonStyle"
+                android:contentDescription="@string/configAction_sunDialog" />
+
             <ImageButton android:id="@+id/menu_button"
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"

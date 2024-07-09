@@ -2381,6 +2381,11 @@ public class SuntimesActivity extends AppCompatActivity
     private final LightGraphDialog.DialogListener lightGraphDialogListener = new LightGraphDialog.DialogListener()
     {
         @Override
+        public void onShowPosition( long suggestedDate ) {
+            showSunPositionAt(suggestedDate);
+        }
+
+        @Override
         public void onColorsModified(ColorValues values) {
             SuntimesActivity.this.onColorsModified(values);
         }
