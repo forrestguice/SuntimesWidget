@@ -132,17 +132,17 @@ public class AlarmEventProvider extends ContentProvider
         switch (uriMatch)
         {
             case URIMATCH_EVENTS:
-                Log.d(getClass().getSimpleName(), "URIMATCH_EVENTS");
+                //Log.d(getClass().getSimpleName(), "URIMATCH_EVENTS");
                 retValue = queryEvents(null, uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_EVENT:
-                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT: " + uri.getLastPathSegment());
+                //Log.d(getClass().getSimpleName(), "URIMATCH_EVENT: " + uri.getLastPathSegment());
                 retValue = queryEvents(uri.getLastPathSegment(), uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             case URIMATCH_EVENT_CALC:
-                Log.d(getClass().getSimpleName(), "URIMATCH_EVENT_CALC: " + uri.getLastPathSegment());
+                //Log.d(getClass().getSimpleName(), "URIMATCH_EVENT_CALC: " + uri.getLastPathSegment());
                 retValue = calculateEvent(uri.getLastPathSegment(), uri, projection, selection, selectionArgs);
                 break;
 

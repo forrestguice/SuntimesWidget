@@ -91,7 +91,7 @@ public class EventIcons
                 if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING))
                 {
                     suffix = eventID.substring(eventID.length()-1);
-                    Log.d("DEBUG", "suffix::" + suffix);
+                    //Log.d("DEBUG", "suffix::" + suffix);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
                 if (context != null && EventSettings.hasEvent(context, eventID)) {
