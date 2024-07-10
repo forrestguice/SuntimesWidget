@@ -193,6 +193,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             }
             out.write(("\"" + KEY_EVENTITEMS + "\": ").getBytes());    // include EventItems
             List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+            events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
             EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventSettings.EventAlias[0]), out);
             c++;
         }
