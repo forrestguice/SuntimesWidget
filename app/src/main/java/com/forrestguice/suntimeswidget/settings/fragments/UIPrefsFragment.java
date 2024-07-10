@@ -164,18 +164,32 @@ public class UIPrefsFragment extends PreferenceFragment
     public static void initPref_ui_customevents(final SuntimesSettingsActivity context, final PreferenceCategory category)
     {
         ArrayList<Preference> eventPrefs = new ArrayList<>();
-        for (final String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION))
+
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(context);
+        for (final String eventID : eventIDs)
         {
             EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
-            AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
 
             final CheckBoxPreference pref = new CheckBoxPreference(context);
             pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
-            pref.setOrder((event != null ? (int)event.getAngle() : 0));
             pref.setTitle(alias.getLabel());
             pref.setSummary(alias.getSummary(context));
             pref.setPersistent(false);
             pref.setChecked(true);
+
+            switch (alias.getType())
+            {
+                case SUN_ELEVATION:
+                    AlarmEventProvider.SunElevationEvent elevationEvent = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((elevationEvent != null ? (int)elevationEvent.getAngle() : 0));
+                    break;
+
+                case SHADOWLENGTH:
+                    AlarmEventProvider.ShadowLengthEvent shadowEvent = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((shadowEvent != null ? 1000 + (int)shadowEvent.getLength() : 1000));
+                    break;
+            }
+
             pref.setOnPreferenceChangeListener(customEventListener(context, eventID, category, pref));
             eventPrefs.add(pref);
         }

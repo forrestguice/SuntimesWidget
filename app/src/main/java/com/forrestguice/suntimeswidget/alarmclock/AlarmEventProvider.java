@@ -1001,6 +1001,10 @@ public class AlarmEventProvider extends ContentProvider
             //this.displayString = displayString;
         }
 
+        public static AlarmEventProvider.EventType[] visibleTypes() {
+            return new AlarmEventProvider.EventType[] { AlarmEventProvider.EventType.SUN_ELEVATION, AlarmEventProvider.EventType.SHADOWLENGTH };
+        }
+
         //private String displayString;
         //public String getDisplayString()
         //{
@@ -1035,8 +1039,7 @@ public class AlarmEventProvider extends ContentProvider
                     return EventType.SOLAREVENT;
                 }
             }
-            Set<String> eventList = EventSettings.loadEventList(context, EventType.SUN_ELEVATION);
-            eventList.addAll(EventSettings.loadEventList(context, EventType.SHADOWLENGTH));
+            Set<String> eventList = EventSettings.loadEventList(context);
             for (String aliasID : eventList)
             {
                 if (eventID.startsWith(aliasID)) {

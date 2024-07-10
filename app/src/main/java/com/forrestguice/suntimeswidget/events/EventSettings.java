@@ -250,6 +250,17 @@ public class EventSettings
         prefs.apply();
     }
 
+    public static Set<String> loadVisibleEvents(Context context) {
+        return loadVisibleEvents(context, AlarmEventProvider.EventType.visibleTypes());
+    }
+    public static Set<String> loadVisibleEvents(Context context, AlarmEventProvider.EventType... types)
+    {
+        Set<String> result = new TreeSet<>();
+        for (AlarmEventProvider.EventType type : types) {
+            result.addAll(loadVisibleEvents(context, type));
+        }
+        return result;
+    }
     public static Set<String> loadVisibleEvents(Context context, AlarmEventProvider.EventType type)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
@@ -258,6 +269,14 @@ public class EventSettings
         return (eventList != null) ? new TreeSet<String>(eventList) : new TreeSet<String>();
     }
 
+    public static Set<String> loadEventList(Context context)
+    {
+        Set<String> result = new TreeSet<>();
+        for (AlarmEventProvider.EventType type : AlarmEventProvider.EventType.values()) {
+            result.addAll(loadEventList(context, type));
+        }
+        return result;
+    }
     public static Set<String> loadEventList(Context context, AlarmEventProvider.EventType type)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
