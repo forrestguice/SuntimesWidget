@@ -154,8 +154,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         rows.add(row_blue8 = new TimeFieldRow(view, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
         rows.add(row_blue4 = new TimeFieldRow(view, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
 
-        Set<String> customEvents = EventSettings.loadVisibleEvents(view.getContext(), AlarmEventProvider.EventType.SUN_ELEVATION);
-        customEvents.addAll(EventSettings.loadVisibleEvents(view.getContext(), AlarmEventProvider.EventType.SHADOWLENGTH));
+        Set<String> customEvents = EventSettings.loadVisibleEvents(view.getContext());
         customRows = new CustomRows(view, options);
         rows.addAll(customRows.initRows(view.getContext(), customEvents));
 
@@ -885,37 +884,47 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             int color_setting = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.sunIcon_color_setting_dark));
             typedArray.recycle();
 
-            switch (event.getType())
+            if (event.getType() == AlarmEventProvider.EventType.SHADOWLENGTH || event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION)
             {
-                case SUN_ELEVATION:
-                    AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
-                    double angle = (event0 != null ? event0.getAngle() : 0);
-                    int i = getLayoutForAngle(angle);
+                double angle = 0;
+                switch (event.getType())
+                {
+                    case SHADOWLENGTH:
+                        AlarmEventProvider.ShadowLengthEvent event1 = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        angle = (event1 != null ? event1.getAngle() : 0);
+                        break;
 
-                    ArrayList<Double> angles = angleList.get(i);
-                    int j = getPositionForAngle(angles, angle);
-                    angles.add(j, angle);
+                    case SUN_ELEVATION:
+                        AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        angle = (event0 != null ? event0.getAngle() : 0);
+                        break;
+                }
 
-                    int margin = (int)context.getResources().getDimension(R.dimen.table_cell_spacing);
+                int i = getLayoutForAngle(angle);
+                ArrayList<Double> angles = angleList.get(i);
+                int j = getPositionForAngle(angles, angle);
+                angles.add(j, angle);
 
-                    TextView text_label = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_label.setText(event.getLabel());  // + " " + j + " " + angle);
-                    text_label.setTextColor(color_label);
-                    layout_labels[i].addView(text_label, j);
+                int margin = (int)context.getResources().getDimension(R.dimen.table_cell_spacing);
 
-                    TextView text_rising = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_rising.setTextColor(angle > 0 ? color_setting : color_rising);
-                    layout_rising[i].addView(text_rising, j);
+                TextView text_label = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                text_label.setText(event.getLabel());  // + " " + j + " " + angle);
+                text_label.setTextColor(color_label);
+                layout_labels[i].addView(text_label, j);
 
-                    TextView text_setting = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_setting.setTextColor(angle > 0 ? color_rising : color_setting);
-                    layout_setting[i].addView(text_setting, j);
+                TextView text_rising = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                text_rising.setTextColor(angle > 0 ? color_setting : color_rising);
+                layout_rising[i].addView(text_rising, j);
 
-                    setVisibility(i, true);
-                    return new TimeFieldRow(text_label, text_rising, text_setting);
+                TextView text_setting = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                text_setting.setTextColor(angle > 0 ? color_rising : color_setting);
+                layout_setting[i].addView(text_setting, j);
 
-                default:
-                    return null;
+                setVisibility(i, true);
+                return new TimeFieldRow(text_label, text_rising, text_setting);
+
+            } else {
+                return null;
             }
         }
 

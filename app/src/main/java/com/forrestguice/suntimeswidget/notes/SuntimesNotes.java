@@ -188,9 +188,9 @@ public class SuntimesNotes
             notesList.add(note);
         }
 
-        for (String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION)) {
-            notesList.add(createNote(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING));
-            notesList.add(createNote(eventID + "_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING));
+        for (String eventID : EventSettings.loadVisibleEvents(context)) {
+            notesList.add(createNote(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING));
+            notesList.add(createNote(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING));
         }
 
         updateNotes(dataset.now());
@@ -533,10 +533,10 @@ public class SuntimesNotes
             }
 
         } else {
-            boolean isRising = eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
+            boolean isRising = eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING);
             String eventID0 = new String(eventID);
-            if (eventID0.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) ||
-                eventID0.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING)) {
+            if (eventID0.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING) ||
+                eventID0.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
                 eventID0 = eventID0.substring(0, eventID0.lastIndexOf("_"));
             }
 
@@ -654,9 +654,9 @@ public class SuntimesNotes
 
         } else {
             String eventID = note.noteMode;
-            boolean isRising = eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
-            if (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) ||
-                    eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING)) {
+            boolean isRising = eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING);
+            if (eventID.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING) ||
+                    eventID.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
                 eventID = eventID.substring(0, eventID.lastIndexOf("_"));
             }
 

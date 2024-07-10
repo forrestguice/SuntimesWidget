@@ -827,6 +827,10 @@ public class AlarmEventProvider extends ContentProvider
             super(0, offset, rising);
             this.objHeight = objHeight;
             this.length = length;
+
+            if (this.objHeight != 0 && this.length != 0) {
+                this.angle = Math.toDegrees(Math.atan(this.objHeight / this.length));
+            }
         }
 
         protected double length;    // meters
