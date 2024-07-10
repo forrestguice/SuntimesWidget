@@ -350,7 +350,7 @@ public class EventSettings
         prefs.remove(prefs_prefix0 + PREF_KEY_EVENT_SHOWN);
         prefs.apply();
 
-        Set<String> eventList1 = loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        Set<String> eventList1 = loadVisibleEvents(context, type);
         eventList1.remove(id);
         putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LISTSHOWN, eventList1);
         prefs.apply();
@@ -375,12 +375,13 @@ public class EventSettings
     {
         saveEventFlag(context, id, PREF_KEY_EVENT_SHOWN, value);
 
+        AlarmEventProvider.EventType eventType = getType(context, id);
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
-        Set<String> eventList1 = loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        Set<String> eventList1 = loadVisibleEvents(context, eventType);
         if (value) {
             eventList1.add(id);
         } else eventList1.remove(id);
-        putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + AlarmEventProvider.EventType.SUN_ELEVATION.name() + "_" + PREF_KEY_EVENT_LISTSHOWN, eventList1);
+        putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + eventType.name() + "_" + PREF_KEY_EVENT_LISTSHOWN, eventList1);
         prefs.apply();
     }
 
