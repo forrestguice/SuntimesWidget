@@ -1354,13 +1354,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             if (EventSettings.hasEvent(context, eventID))
             {
                 EventSettings.EventAlias event = EventSettings.loadEvent(SuntimesConfigActivity0.this, eventID);
-                if (event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION)
+                if (event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION
+                        || event.getType() == AlarmEventProvider.EventType.SHADOWLENGTH)
                 {
                     WidgetSettings.EventAliasTimeMode item = new WidgetSettings.EventAliasTimeMode(event);
                     adapter.insert(item, 0);
                     return 0;
                 } else {
-                    Log.w("onPickEvent", "event has wrong type! expected " + AlarmEventProvider.EventType.SUN_ELEVATION + ", found " + event.getType());
+                    Log.w("onPickEvent", "event has unexpected type! " + event.getType());
                 }
             }
         }
