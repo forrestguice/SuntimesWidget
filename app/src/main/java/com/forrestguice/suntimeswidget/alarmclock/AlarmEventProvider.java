@@ -863,8 +863,10 @@ public class AlarmEventProvider extends ContentProvider
         protected String getEventSummary(Context context)
         {
             WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-            String height = SuntimesUtils.formatAsHeight(context, getObjHeight(), units, 1, false).getValue();
-            String length = SuntimesUtils.formatAsHeight(context, getLength(), units, 1, false).getUnits();
+            String height = SuntimesUtils.formatAsHeight(context, getObjHeight(), units, 1, true).getValue();
+
+            SuntimesUtils.TimeDisplayText t = SuntimesUtils.formatAsHeight(context, getLength(), units, 1, true);
+            String length = context.getString(R.string.units_format_short, t.getValue(), t.getUnits());
 
             if (offset == 0) {
                 return offsetDisplay(context) + context.getString(R.string.shadowevent_summary_format, context.getString(R.string.shadowevent_title), height, length);
