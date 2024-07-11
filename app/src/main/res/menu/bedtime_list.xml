@@ -3,5 +3,11 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
+        <item android:id="@+id/action_clear"
+            android:icon="?attr/icActionDelete"
+            android:title="@string/configAction_clearAlarms"
+            app:showAsAction="never"
+            android:orderInCategory="510" />
+
     </group>
 </menu>

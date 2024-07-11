@@ -32,6 +32,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -307,6 +308,16 @@ public class BedtimeDialog extends DialogFragment
     {
         switch (item.getItemId())
         {
+            case R.id.action_clear:
+                confirmClearAlarms(getActivity(), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BedtimeAlarmHelper.clearBedtimeItems(getActivity());
+                    }
+                });
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -1267,6 +1278,24 @@ public class BedtimeDialog extends DialogFragment
         updateAddAlarmMenu(context, v, menu);
         updateEditAlarmMenu(context, v, menu);
         popup.show();
+    }
+
+    public static void confirmClearAlarms(@Nullable final Context context, DialogInterface.OnClickListener onDeleteConfirmed)
+    {
+        if (context != null)
+        {
+            int[] attrs = { R.attr.icActionDelete };
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
+            a.recycle();
+
+            String message = context.getString(R.string.clearalarms_dialog_message);
+            AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.clearalarms_dialog_title)).setMessage(message).setIcon(iconResID)
+                    .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), onDeleteConfirmed)
+                    .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
+            confirm.show();
+        }
     }
 
 }

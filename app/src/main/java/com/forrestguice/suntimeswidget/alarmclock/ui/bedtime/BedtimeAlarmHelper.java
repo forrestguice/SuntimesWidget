@@ -285,6 +285,13 @@ public class BedtimeAlarmHelper
         }
     }
 
+    public static void clearBedtimeItems(Context context) {
+        for (String slot : BedtimeSettings.ALL_SLOTS) {
+            clearBedtimeItem(context, slot);
+        }
+        BedtimeSettings.clearAutomaticZenRules(context);
+    }
+
     public static void clearBedtimeItem(Context context, String slotName)
     {
         long rowID = BedtimeSettings.loadAlarmID(context, slotName);
