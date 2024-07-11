@@ -40,7 +40,6 @@ import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
 import android.text.style.ImageSpan;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -55,7 +54,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import com.forrestguice.suntimeswidget.views.Toast;
 
-import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
