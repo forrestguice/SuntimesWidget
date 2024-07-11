@@ -115,7 +115,7 @@
 
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textSize="?attr/text_size_small" android:text="@string/editevent_dialog_height_suffix" />
+                    android:textSize="?attr/text_size_small" tools:text="meters" />
 
             </LinearLayout>
 
@@ -140,7 +140,7 @@
 
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textSize="?attr/text_size_small" android:text="@string/editevent_dialog_length_suffix" />
+                    android:textSize="?attr/text_size_small" tools:text="meters" />
 
             </LinearLayout>
 

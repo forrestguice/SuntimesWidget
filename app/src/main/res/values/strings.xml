@@ -270,6 +270,8 @@
         <item>@string/lengthUnits_imperial</item>
     </string-array>
 
+    <string name="units_format_short">%1$s %2$s</string>   <!-- e.g. 6 ft -->
+
     <string name="units_feet">feet</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">

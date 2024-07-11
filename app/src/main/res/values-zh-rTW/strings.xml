@@ -881,13 +881,11 @@
 
     <string name="editevent_dialog_length">Shadow Length</string>    <!-- TODO -->
     <string name="editevent_dialog_length_hint">6</string>    <!-- TODO -->
-    <string name="editevent_dialog_length_suffix">m</string>    <!-- TODO -->
     <string name="editevent_dialog_length_error">Shadow length is required!</string>    <!-- TODO -->
     <string name="editevent_dialog_label_suggested1">Shadow Length</string>    <!-- TODO -->
 
     <string name="editevent_dialog_height">Object Height</string>    <!-- TODO -->
     <string name="editevent_dialog_height_hint">1</string>    <!-- TODO -->
-    <string name="editevent_dialog_height_suffix">m</string>    <!-- TODO -->
     <string name="editevent_dialog_height_error">Object height is required!</string>    <!-- TODO -->
 
     <string name="delevent_dialog_msg">您確定您想要刪除 %1$s（%2$s）？使用此事件的鬧鐘、通知或小工具將無法繼續運作且需要被重新指派。</string>
