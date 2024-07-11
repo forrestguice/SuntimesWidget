@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -861,8 +862,9 @@ public class AlarmEventProvider extends ContentProvider
         @Override
         protected String getEventSummary(Context context)
         {
-            String height = SuntimesUtils.formatAsHeight(context, getObjHeight(), WidgetSettings.LengthUnit.METRIC, 1, false).getValue();
-            String length = SuntimesUtils.formatAsHeight(context, getLength(), WidgetSettings.LengthUnit.METRIC, 1, false).getUnits();
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            String height = SuntimesUtils.formatAsHeight(context, getObjHeight(), units, 1, false).getValue();
+            String length = SuntimesUtils.formatAsHeight(context, getLength(), units, 1, false).getUnits();
 
             if (offset == 0) {
                 return offsetDisplay(context) + context.getString(R.string.shadowevent_summary_format, context.getString(R.string.shadowevent_title), height, length);
