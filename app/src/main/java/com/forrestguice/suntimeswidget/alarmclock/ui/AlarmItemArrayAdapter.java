@@ -656,7 +656,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         if (view.text_location != null)
         {
             view.text_location.setVisibility((item.getEvent() == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
-            AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
+            AlarmEventDialog.updateLocationLabel(context, view.text_location, item.location);
 
             if (!isSelected || item.enabled) {
                 Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), disabledColor);

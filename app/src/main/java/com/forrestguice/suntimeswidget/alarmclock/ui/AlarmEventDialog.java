@@ -83,7 +83,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.util.Calendar;
 import java.util.List;
 
-public class AlarmDialog extends BottomSheetDialogFragment
+public class AlarmEventDialog extends BottomSheetDialogFragment
 {
     public static final int REQUEST_ADDON_ALARMPICKER = 3000;
     public static final int REQUEST_EVENTALIAS = 4000;
@@ -359,7 +359,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
                         //Log.d("DEBUG", "onItemSelected: " + choice);
                         if (listener != null) {
-                            listener.onChanged(AlarmDialog.this);
+                            listener.onChanged(AlarmEventDialog.this);
                         }
 
                         if (showDesc)
@@ -670,10 +670,10 @@ public class AlarmDialog extends BottomSheetDialogFragment
      */
     public interface DialogListener
     {
-        void onChanged(AlarmDialog dialog);
-        void onAccepted(AlarmDialog dialog);
-        void onCanceled(AlarmDialog dialog);
-        void onLocationClick(AlarmDialog dialog);
+        void onChanged(AlarmEventDialog dialog);
+        void onAccepted(AlarmEventDialog dialog);
+        void onCanceled(AlarmEventDialog dialog);
+        void onLocationClick(AlarmEventDialog dialog);
     }
 
     private DialogListener listener = null;
@@ -714,7 +714,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v) {
             if (listener != null) {
-                listener.onLocationClick(AlarmDialog.this);
+                listener.onLocationClick(AlarmEventDialog.this);
             }
         }
     });
@@ -765,7 +765,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 onCanceled.onClick(getDialog(), 0);
             }
             if (listener != null) {
-                listener.onCanceled(AlarmDialog.this);
+                listener.onCanceled(AlarmEventDialog.this);
             }
         }
     };
@@ -781,7 +781,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 onAccepted.onClick(getDialog(), 0);
             }
             if (listener != null) {
-                listener.onAccepted(AlarmDialog.this);
+                listener.onAccepted(AlarmEventDialog.this);
             }
         }
     };

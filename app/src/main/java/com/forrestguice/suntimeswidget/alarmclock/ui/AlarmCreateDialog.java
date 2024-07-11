@@ -193,14 +193,14 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         FragmentManager fragments = getChildFragmentManager();
         FragmentTransaction transaction = fragments.beginTransaction();
 
-        AlarmDialog fragment = new AlarmDialog();
+        AlarmEventDialog fragment = new AlarmEventDialog();
         fragment.setDialogShowFrame(false);
         fragment.setDialogShowDesc(false);
         fragment.setType(getAlarmType());
         initEventDialog(getActivity(), fragment, getLocation());
-        fragment.setDialogListener(new AlarmDialog.DialogListener() {
+        fragment.setDialogListener(new AlarmEventDialog.DialogListener() {
             @Override
-            public void onChanged(AlarmDialog dialog) {
+            public void onChanged(AlarmEventDialog dialog) {
                 if (Math.abs(getOffset()) >= (1000 * 60 * 60 * 24)) {    // clear multi-day offsets
                     getArguments().putLong(EXTRA_OFFSET, 0);
                 }
@@ -211,13 +211,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             }
 
             @Override
-            public void onAccepted(AlarmDialog dialog) {}
+            public void onAccepted(AlarmEventDialog dialog) {}
 
             @Override
-            public void onCanceled(AlarmDialog dialog) {}
+            public void onCanceled(AlarmEventDialog dialog) {}
 
             @Override
-            public void onLocationClick(AlarmDialog dialog) {
+            public void onLocationClick(AlarmEventDialog dialog) {
                 showLocationDialog(getActivity());
             }
         });
@@ -623,7 +623,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (isAdded())
         {
             FragmentManager fragments = getChildFragmentManager();
-            AlarmDialog fragment0 = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+            AlarmEventDialog fragment0 = (AlarmEventDialog) fragments.findFragmentByTag("AlarmDialog");
             if (fragment0 != null) {
                 initEventDialog(getActivity(), fragment0, getLocation());
                 fragment0.setChoice(getEvent());
@@ -947,7 +947,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (isAdded())
         {
             FragmentManager fragments = getChildFragmentManager();
-            AlarmDialog fragment0 = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+            AlarmEventDialog fragment0 = (AlarmEventDialog) fragments.findFragmentByTag("AlarmDialog");
             if (fragment0 != null) {
                 initEventDialog(getActivity(), fragment0, location);
                 fragment0.setChoice(event);
@@ -1023,7 +1023,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (isAdded())
         {
             FragmentManager fragments = getChildFragmentManager();
-            AlarmDialog fragment = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+            AlarmEventDialog fragment = (AlarmEventDialog) fragments.findFragmentByTag("AlarmDialog");
             if (fragment != null) {
                 fragment.setType(getAlarmType());
             }
@@ -1045,7 +1045,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         return getArguments().getLong(EXTRA_OFFSET, 0);
     }
 
-    private void initEventDialog(Context context, AlarmDialog dialog, Location forLocation)
+    private void initEventDialog(Context context, AlarmEventDialog dialog, Location forLocation)
     {
         SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(context, 0);
         SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
