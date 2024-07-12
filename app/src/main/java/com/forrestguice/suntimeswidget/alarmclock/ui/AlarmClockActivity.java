@@ -287,7 +287,7 @@ public class AlarmClockActivity extends AppCompatActivity
                         Log.d("DEBUG", "adapter reloaded: " + alarmID);
 
                         boolean wasDeleted = intent.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
-                        if (wasDeleted) {
+                        if (wasDeleted && alarmID != null) {
                             list.notifyAlarmDeleted(alarmID);
                         }
 
@@ -717,8 +717,11 @@ public class AlarmClockActivity extends AppCompatActivity
         deselectButton.setOnClickListener(onDeselectClick);
 
         list = (AlarmListDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
-        list.setOnEmptyViewClick(onEmptyViewClick);
-        list.setAdapterListener(listAdapter);
+        if (list != null)
+        {
+            list.setOnEmptyViewClick(onEmptyViewClick);
+            list.setAdapterListener(listAdapter);
+        }
 
         View bottomSheet = findViewById(R.id.app_bottomsheet);
         sheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -830,11 +833,14 @@ public class AlarmClockActivity extends AppCompatActivity
             Context context = AlarmClockActivity.this;
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
-            AlarmClockItem item = AlarmCreateDialog.createAlarm(context, dialog, dialog.getAlarmType());
-            AlarmNotifications.updateAlarmTime(context, item);
-            dialog.saveSettings(context);
-            ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
-            showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
+            if (dialog != null)
+            {
+                AlarmClockItem item = AlarmCreateDialog.createAlarm(context, dialog, dialog.getAlarmType());
+                AlarmNotifications.updateAlarmTime(context, item);
+                dialog.saveSettings(context);
+                ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
+                showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
+            }
         }
     };
     private DialogInterface.OnClickListener onAddAlarmNeutral = new DialogInterface.OnClickListener() {
@@ -873,9 +879,15 @@ public class AlarmClockActivity extends AppCompatActivity
 
         if (Build.VERSION.SDK_INT >= 16 && sharedView != null)
         {
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, ViewCompat.getTransitionName(sharedView));
-            startActivityForResult(intent, requestCode, options.toBundle());
+            String transitionName = ViewCompat.getTransitionName(sharedView);
+            if (transitionName != null)
+            {
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, transitionName);
+                startActivityForResult(intent, requestCode, options.toBundle());
 
+            } else {
+                startActivityForResult(intent, requestCode);
+            }
         } else {
             startActivityForResult(intent, requestCode);
         }
