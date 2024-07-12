@@ -209,7 +209,6 @@ public class AppSettings
     };
     public static final String[] INT_KEYS = new String[] {
             PREF_KEY_UI_SHOWFIELDS,
-            PREF_KEY_NAVIGATION_MODE
     };
     public static final String[] LONG_KEYS = new String[] {
             //PREF_KEY_GETFIX_TIME    // commented; TODO: does it actually make sense to preserve this value across installations? #783
