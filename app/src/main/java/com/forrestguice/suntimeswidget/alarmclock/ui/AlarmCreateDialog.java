@@ -283,7 +283,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         dialog.setDialogListener(onLocationChanged);
         dialog.show(getChildFragmentManager(), DIALOG_LOCATION);
     }
-    private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
+    private final LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
         public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
@@ -464,10 +464,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     }
 
-    private AdapterView.OnItemSelectedListener onTypeSelected = new AdapterView.OnItemSelectedListener() {
+    private final AdapterView.OnItemSelectedListener onTypeSelected = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Log.d("DEBUG", "onItemSelected: " + position);
+            //Log.d("DEBUG", "onItemSelected: " + position);
             setAlarmType((AlarmClockItem.AlarmType) parent.getItemAtPosition(position));
         }
 
@@ -736,7 +736,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog)
@@ -811,7 +811,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     });
 
-    private View.OnClickListener onDialogBottomBarClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogBottomBarClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             setPreviewOffset(!previewOffset());
