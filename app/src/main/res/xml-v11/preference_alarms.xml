@@ -102,7 +102,7 @@
             android:key="app_alarms_bright"
             android:title="@string/configLabel_alarms_brightMode"
             android:summary="@string/configLabel_alarms_brightMode_summary"
-            android:defaultValue="@string/def_app_alarms_bright" />
+            android:defaultValue="@bool/def_app_alarms_bright" />
 
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_bright_fadeinMillis"
@@ -148,7 +148,7 @@
             android:key="app_alarms_allringtones"
             android:title="@string/configLabel_alarms_allRingtones"
             android:summary="@string/configLabel_alarms_allRingtones_summary"
-            android:defaultValue="@string/def_app_alarms_allringtones" />
+            android:defaultValue="@bool/def_app_alarms_allringtones" />
 
     </PreferenceCategory>
 
@@ -159,7 +159,7 @@
             android:key="app_alarms_showlauncher"
             android:title="@string/configLabel_alarms_showlauncher"
             android:summary="@string/configLabel_alarms_showlauncher_summary"
-            android:defaultValue="@string/def_app_alarms_showlauncher" />
+            android:defaultValue="@bool/def_app_alarms_showlauncher" />
 
         <CheckBoxPreference
             android:key="dialog_importwarning_donotshowagain"
