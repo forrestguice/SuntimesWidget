@@ -838,6 +838,9 @@ public class AlarmClockActivity extends AppCompatActivity
             if (dialog != null)
             {
                 AlarmClockItem item = AlarmCreateDialog.createAlarm(context, dialog, dialog.getAlarmType());
+                if (dialog.useAppLocation()) {
+                    item.setFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP, true);
+                }
                 AlarmNotifications.updateAlarmTime(context, item);
                 dialog.saveSettings(context);
                 ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
