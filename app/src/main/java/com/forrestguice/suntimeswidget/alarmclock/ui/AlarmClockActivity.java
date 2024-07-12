@@ -826,7 +826,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    private DialogInterface.OnClickListener onAddAlarmAccepted = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onAddAlarmAccepted = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which)
         {
@@ -843,13 +843,13 @@ public class AlarmClockActivity extends AppCompatActivity
             }
         }
     };
-    private DialogInterface.OnClickListener onAddAlarmNeutral = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onAddAlarmNeutral = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which) {
             dismissAddDialog();
         }
     };
-    private DialogInterface.OnClickListener onAddAlarmCanceled = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onAddAlarmCanceled = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which) {
             dismissAddDialog();
@@ -988,7 +988,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
         restoreWarnings(savedState);
     }
-    private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
+    private final SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
         @Override
         public void onShowNextWarning() {
             showWarnings();
@@ -1199,14 +1199,13 @@ public class AlarmClockActivity extends AppCompatActivity
         return super.onPrepareOptionsPanel(view, menu);
     }
 
-    private View.OnClickListener onFabMenuClick = new View.OnClickListener() {
+    private final View.OnClickListener onFabMenuClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showAddDialog(null);
         }
     };
 
-    private View.OnClickListener onDeselectClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             list.clearSelection();
@@ -1286,7 +1285,7 @@ public class AlarmClockActivity extends AppCompatActivity
             handler.postDelayed(recreateRunnable, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
         }
     }
-    private Runnable recreateRunnable = new Runnable()
+    private final Runnable recreateRunnable = new Runnable()
     {
         @Override
         public void run()
