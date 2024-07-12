@@ -667,6 +667,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putString(EXTRA_TIMEZONE, prefs.getString(EXTRA_TIMEZONE, getTimeZone()));
         args.putString(EXTRA_EVENT, prefs.getString(EXTRA_EVENT, DEF_EVENT));
         args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.valueOf(prefs.getString(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM.name()), DEF_ALARMTYPE));
+        setUseAppLocation(getActivity(), prefs.getBoolean(EXTRA_LOCATION_FROMAPP, true));
 
         if (isAdded())
         {
@@ -706,6 +707,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         out.putString(EXTRA_TIMEZONE, getTimeZone());
         out.putString(EXTRA_EVENT, getEvent());
         out.putString(EXTRA_ALARMTYPE, getAlarmType().name());
+        out.putBoolean(EXTRA_LOCATION_FROMAPP, useAppLocation());
         out.apply();
     }
 
