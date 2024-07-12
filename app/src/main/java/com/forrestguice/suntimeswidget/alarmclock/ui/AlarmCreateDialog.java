@@ -150,10 +150,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
 
         Context context = getActivity();
-        SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
-        AlarmClockItem.AlarmType.initDisplayStrings(context);
-        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
+        if (context != null)
+        {
+            SuntimesUtils.initDisplayStrings(context);
+            SolarEvents.initDisplayStrings(context);
+            AlarmClockItem.AlarmType.initDisplayStrings(context);
+            AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
+        }
 
         //setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
         super.onCreate(savedState);
@@ -415,7 +418,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         text_note = (TextView) dialogContent.findViewById(R.id.text_note);
 
         spin_type = (Spinner) dialogContent.findViewById(R.id.type_spin);
-        AlarmTypeAdapter adapter = new AlarmTypeAdapter(getContext(), R.layout.layout_listitem_alarmtype);
+        AlarmTypeAdapter adapter = new AlarmTypeAdapter(context, R.layout.layout_listitem_alarmtype);
         adapter.setLabels(getLabelOverride());
         spin_type.setAdapter(adapter);
 
