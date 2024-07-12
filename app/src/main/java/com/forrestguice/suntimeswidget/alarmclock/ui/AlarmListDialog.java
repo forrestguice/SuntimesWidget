@@ -33,7 +33,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -70,7 +69,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -95,7 +93,6 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -163,7 +160,7 @@ public class AlarmListDialog extends DialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         saveSettings(outState);
         super.onSaveInstanceState(outState);
@@ -260,12 +257,15 @@ public class AlarmListDialog extends DialogFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        Activity activity = getActivity();
         switch (item.getItemId())
         {
             case R.id.sortByAlarmTime:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_ALARMTIME);
                 if (Build.VERSION.SDK_INT >= 11) {
-                    getActivity().invalidateOptionsMenu();
+                    if (activity != null) {
+                        activity.invalidateOptionsMenu();
+                    }
                 }  // else { TODO }
                 adapter.sortItems();
                 return true;
@@ -273,7 +273,9 @@ public class AlarmListDialog extends DialogFragment
             case R.id.sortByCreation:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
                 if (Build.VERSION.SDK_INT >= 11) {
-                    getActivity().invalidateOptionsMenu();
+                    if (activity != null) {
+                        activity.invalidateOptionsMenu();
+                    }
                 }  // else { TODO }
                 adapter.sortItems();
                 return true;
@@ -281,7 +283,9 @@ public class AlarmListDialog extends DialogFragment
             case R.id.sortEnabledFirst:
                 AlarmSettings.savePrefAlarmSortEnabledFirst(getActivity(), !item.isChecked());
                 if (Build.VERSION.SDK_INT >= 11) {
-                    getActivity().invalidateOptionsMenu();
+                    if (activity != null) {
+                        activity.invalidateOptionsMenu();
+                    }
                 }  // else { TODO }
                 adapter.sortItems();
                 return true;
@@ -289,21 +293,29 @@ public class AlarmListDialog extends DialogFragment
             case R.id.showOffset:
                 AlarmSettings.savePrefAlarmSortShowOffset(getActivity(), !item.isChecked());
                 if (Build.VERSION.SDK_INT >= 11) {
-                    getActivity().invalidateOptionsMenu();
+                    if (activity != null) {
+                        activity.invalidateOptionsMenu();
+                    }
                 }  // else { TODO }
                 adapter.sortItems();
                 return true;
 
             case R.id.action_clear:
-                confirmClearAlarms(getActivity());
+                if (activity != null) {
+                    confirmClearAlarms(activity);
+                }
                 return true;
 
             case R.id.action_export:
-                exportAlarms(getActivity());
+                if (activity != null) {
+                    exportAlarms(activity);
+                }
                 return true;
 
             case R.id.action_import:
-                importAlarms(getActivity());
+                if (activity != null) {
+                    importAlarms(activity);
+                }
                 return true;
 
             default:
@@ -618,7 +630,7 @@ public class AlarmListDialog extends DialogFragment
             if (context != null)
             {
                 File file = results.getExportFile();
-                String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(getContext().getContentResolver(), results.getExportUri()));
+                String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
 
                 if (results.getResult())
                 {
@@ -1103,6 +1115,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         @Override
+        @NonNull
         public AlarmListDialogItem onCreateViewHolder(ViewGroup parent, int viewType)
         {
             LayoutInflater layout = LayoutInflater.from(parent.getContext());
@@ -1132,7 +1145,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         @Override
-        public void onViewRecycled(AlarmListDialogItem holder)
+        public void onViewRecycled(@NonNull AlarmListDialogItem holder)
         {
             //Log.d("DEBUG", "onViewRecycled: " + holder);
             detachClickListeners(holder);
@@ -1141,7 +1154,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         @Override
-        public void onViewAttachedToWindow(AlarmListDialogItem holder)
+        public void onViewAttachedToWindow(@NonNull AlarmListDialogItem holder)
         {
             super.onViewAttachedToWindow(holder);
             //Log.d("DEBUG", "onViewAttachedToWindow: " + holder);
@@ -1149,7 +1162,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         @Override
-        public void onViewDetachedFromWindow(AlarmListDialogItem holder)
+        public void onViewDetachedFromWindow(@NonNull AlarmListDialogItem holder)
         {
             super.onViewDetachedFromWindow(holder);
             //Log.d("DEBUG", "onViewDetachedFromWindow: " + holder);
@@ -1755,7 +1768,10 @@ public class AlarmListDialog extends DialogFragment
             if (resBackground != res_backgroundCurrent)
             {
                 res_backgroundCurrent = resBackground;    // don't set background unless actually changed (avoids interrupting running animations)
-                Drawable background = ContextCompat.getDrawable(context, resBackground).mutate();
+                Drawable background = ContextCompat.getDrawable(context, resBackground);
+                if (background != null) {
+                    background.mutate();
+                }
                 if (Build.VERSION.SDK_INT >= 16) {
                     view.card.setBackground(background);
                 } else {
@@ -2129,9 +2145,9 @@ public class AlarmListDialog extends DialogFragment
                     } else if (background instanceof AnimationDrawable) {
                         //Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
                         ((AnimationDrawable) background).setVisible(false, false);
-                    } else {
+                    } /*else {
                         //Log.d("DEBUG", "stopping background: skipped: " + this);
-                    }
+                    }*/
                 }
             }
         }
@@ -2170,7 +2186,7 @@ public class AlarmListDialog extends DialogFragment
     private final RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
     {
         @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state)
         {
             int position = parent.getChildAdapterPosition(view);
             if (position == adapter.getItemCount() - 1) {   // add bottom margin on last item to avoid blocking FAB
