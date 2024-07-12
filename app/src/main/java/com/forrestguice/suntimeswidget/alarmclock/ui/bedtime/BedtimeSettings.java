@@ -28,8 +28,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * AlarmSettings
@@ -45,19 +47,19 @@ public class BedtimeSettings
     public static final long ID_NONE = -1;
 
     public static final String PREF_KEY_SLEEPCYCLE_LENGTH = "app_bedtime_sleepCycleMillis";
-    public static final int PREF_DEF_SLEEPCYCLE_LENGTH = 1000 * 60 * 90;  // 90 min
+    public static final long PREF_DEF_SLEEPCYCLE_LENGTH = 1000 * 60 * 90;  // 90 min
 
     public static final String PREF_KEY_SLEEPCYCLE_COUNT = "app_bedtime_sleepCycleCount";
     public static final float PREF_DEF_SLEEPCYCLE_COUNT = 5;
 
     public static final String PREF_KEY_SLEEP_OFFSET = "app_bedtime_sleep_offset";
-    public static final int PREF_DEF_SLEEP_OFFSET = 1000 * 60 * 30;  // 30 min
+    public static final long PREF_DEF_SLEEP_OFFSET = 1000 * 60 * 30;  // 30 min
 
     public static final String PREF_KEY_SLEEP_USE_SLEEPCYCLE = "app_bedtime_sleep_use_sleepcycle";
     public static final boolean PREF_DEF_SLEEP_USE_SLEEPCYCLE = true;
 
     public static final String PREF_KEY_SLEEP_LENGTH = "app_bedtime_sleep";
-    public static final int PREF_DEF_SLEEP_LENGTH = 1000 * 60 * 60 * 6;  // 6h
+    public static final long PREF_DEF_SLEEP_LENGTH = 1000 * 60 * 60 * 6;  // 6h
 
     public static final String PREF_KEY_BEDTIME_DND = "app_bedtime_dnd";
     public static final boolean PREF_DEF_BEDTIME_DND = false;
@@ -65,7 +67,7 @@ public class BedtimeSettings
     public static final String PREF_KEY_BEDTIME_AUTOOFF = "app_bedtime_autooff";
     public static final boolean PREF_DEF_BEDTIME_AUTOOFF = true;
 
-    public static final String PREF_KEY_BEDTIME_ALARMOFF = "app_bedtime_autooff";
+    public static final String PREF_KEY_BEDTIME_ALARMOFF = "app_bedtime_alarm_autooff";
     public static final boolean PREF_DEF_BEDTIME_ALARMOFF = true;
 
     public static final int DND_FILTER_PRIORITY = 2;
@@ -231,7 +233,7 @@ public class BedtimeSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getInt(PREF_KEY_SLEEP_LENGTH, PREF_DEF_SLEEP_LENGTH);
+            return prefs.getLong(PREF_KEY_SLEEP_LENGTH, PREF_DEF_SLEEP_LENGTH);
         } else return AlarmSettings.loadStringPrefAsLong(prefs, PREF_KEY_SLEEP_LENGTH, PREF_DEF_SLEEP_LENGTH);
     }
     public static void savePrefSleepMs(Context context, long value)
@@ -415,6 +417,94 @@ public class BedtimeSettings
                 Log.w("BedtimeSettings", "Failed to toggle do-not-disturb! " + e);
             }
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[] {
+            PREF_KEY_BEDTIME_ALARM_ID,
+            PREF_KEY_SLEEPCYCLE_LENGTH,
+            PREF_KEY_SLEEPCYCLE_COUNT,
+            PREF_KEY_SLEEP_OFFSET,
+            PREF_KEY_SLEEP_USE_SLEEPCYCLE,
+            PREF_KEY_SLEEP_LENGTH,
+            PREF_KEY_BEDTIME_DND,
+            PREF_KEY_BEDTIME_AUTOOFF,
+            PREF_KEY_BEDTIME_ALARMOFF,
+            PREF_KEY_BEDTIME_DND_FILTER,
+            PREF_KEY_BEDTIME_REMINDER,
+            PREF_KEY_BEDTIME_REMINDER_OFFSET,
+            PREF_KEY_BEDTIME_STATE,
+    };
+    public static final String[] LONG_KEYS = new String[] {
+            PREF_KEY_BEDTIME_ALARM_ID,
+            PREF_KEY_SLEEPCYCLE_LENGTH,
+            PREF_KEY_SLEEP_LENGTH,
+            PREF_KEY_SLEEP_OFFSET,
+            PREF_KEY_BEDTIME_REMINDER_OFFSET
+    };
+    public static final String[] INT_KEYS = new String[] {
+            PREF_KEY_BEDTIME_DND_FILTER,
+            PREF_KEY_BEDTIME_STATE
+    };
+    public static final String[] BOOL_KEYS = new String[] {
+            PREF_KEY_SLEEP_USE_SLEEPCYCLE,
+            PREF_KEY_BEDTIME_DND,
+            PREF_KEY_BEDTIME_AUTOOFF,
+            PREF_KEY_BEDTIME_ALARMOFF,
+            PREF_KEY_BEDTIME_REMINDER
+    };
+    public static final String[] FLOAT_KEYS = new String[] {
+            PREF_KEY_SLEEPCYCLE_COUNT
+    };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo() {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return LONG_KEYS;
+            }
+            public String[] floatKeys() {
+                return FLOAT_KEYS;
+            }
+            public String[] boolKeys() {
+                return BOOL_KEYS;
+            }
+        };
+    }
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : LONG_KEYS) {
+                types.put(key, Long.class);
+            }
+            for (String key : INT_KEYS) {
+                types.put(key, Integer.class);
+            }
+            for (String key : BOOL_KEYS) {
+                types.put(key, Boolean.class);
+            }
+            for (String key : FLOAT_KEYS) {
+                types.put(key, Float.class);
+            }
+
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
     }
 
 }
