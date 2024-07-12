@@ -1079,6 +1079,7 @@ public class PlacesListFragment extends Fragment
                     result.add(item);
                     cursor.moveToNext();
                 }
+                cursor.close();
             }
             database.close();
             return result;
