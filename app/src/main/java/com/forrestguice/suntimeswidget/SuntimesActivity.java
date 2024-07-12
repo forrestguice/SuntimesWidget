@@ -2392,8 +2392,23 @@ public class SuntimesActivity extends AppCompatActivity
     private final LightGraphDialog.DialogListener lightGraphDialogListener = new LightGraphDialog.DialogListener()
     {
         @Override
+        public void onShowDate(long suggested) {
+            scrollToDate(suggested);
+        }
+
+        @Override
         public void onShowPosition( long suggestedDate ) {
             showSunPositionAt(suggestedDate);
+        }
+
+        @Override
+        public void onShowMap( long suggested) {
+            showMapPositionAt(suggested);
+        }
+
+        @Override
+        public void onShowMoonInfo(long suggestDate) {
+            showMoonPositionAt(suggestDate);
         }
 
         @Override

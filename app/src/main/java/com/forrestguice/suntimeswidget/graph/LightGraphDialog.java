@@ -19,9 +19,14 @@
 package com.forrestguice.suntimeswidget.graph;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -46,6 +51,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.LightMapView;
+import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -62,10 +68,12 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
@@ -103,6 +111,8 @@ public class LightGraphDialog extends BottomSheetDialogFragment
 
     protected TextView text_sunrise_early, text_sunrise_late;
     protected TextView text_sunset_early, text_sunset_late;
+    protected View layout_sunrise_early, layout_sunrise_late;
+    protected View layout_sunset_early, layout_sunset_late;
 
     protected LightGraphView.LightGraphOptions options; // = new LightGraphView.LightGraphOptions();
 
@@ -209,9 +219,13 @@ public class LightGraphDialog extends BottomSheetDialogFragment
 
         text_sunrise_early = (TextView) v.findViewById(R.id.text_time_sunrise_early);
         text_sunrise_late = (TextView) v.findViewById(R.id.text_time_sunrise_late);
-
         text_sunset_early = (TextView) v.findViewById(R.id.text_time_sunset_early);
         text_sunset_late = (TextView) v.findViewById(R.id.text_time_sunset_late);
+
+        layout_sunrise_early = v.findViewById(R.id.layout_time_sunrise_early_layout);
+        layout_sunrise_late = v.findViewById(R.id.layout_time_sunrise_late_layout);
+        layout_sunset_early = v.findViewById(R.id.layout_time_sunset_early_layout);
+        layout_sunset_late = v.findViewById(R.id.layout_time_sunset_late_layout);
 
         if (savedState != null) {
             loadState(savedState);
@@ -517,22 +531,37 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             Pair<Double,Double> value = options.t_sunrise_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
             Calendar calendar = (value != null ? getCalendar(context, value) : null);
             text_sunrise_early.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
+            if (calendar != null && context != null) {
+                layout_sunrise_early.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_earliest_sunrise), calendar.getTimeInMillis()));
+            } else layout_sunrise_early.setOnClickListener(null);
+
         }
         if (text_sunrise_late != null)
         {
             Pair<Double,Double> value = options.t_sunrise_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
             Calendar calendar = (value != null ? getCalendar(context, value) : null);
             text_sunrise_late.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
+            if (calendar != null && context != null) {
+                layout_sunrise_late.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_latest_sunrise), calendar.getTimeInMillis()));
+            } else layout_sunrise_late.setOnClickListener(null);
         }
-        if (text_sunset_early != null) {
+        if (text_sunset_early != null)
+        {
             Pair<Double,Double> value = options.t_sunset_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
             Calendar calendar = (value != null ? getCalendar(context, value) : null);
             text_sunset_early.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
+            if (calendar != null && context != null) {
+                layout_sunset_early.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_earliest_sunset), calendar.getTimeInMillis()));
+            } else layout_sunset_early.setOnClickListener(null);
         }
-        if (text_sunset_late != null) {
+        if (text_sunset_late != null)
+        {
             Pair<Double,Double> value = options.t_sunset_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
             Calendar calendar = (value != null ? getCalendar(context, value) : null);
             text_sunset_late.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
+            if (calendar != null && context != null) {
+                layout_sunset_late.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_latest_sunset), calendar.getTimeInMillis()));
+            } else layout_sunset_late.setOnClickListener(null);
         }
     }
 
@@ -742,7 +771,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.action_share:
-                    shareItem(getContext());
+                    shareItem(getContext(), null);
                     return true;
 
                 case R.id.action_help:
@@ -797,37 +826,157 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         }
     });
 
-
-    protected void shareItem(Context context)
+    protected View.OnClickListener onMoreInfoClicked(final String label, final long datetime)
     {
-        // TODO: share item
-        /*WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
-        long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
-        if (itemMode != null && itemMillis != -1L)
-        {
-            Calendar itemTime = Calendar.getInstance();
-            itemTime.setTimeInMillis(itemMillis);
-            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
-
-            SuntimesUtils utils = new SuntimesUtils();
-            SuntimesUtils.initDisplayStrings(context);
-            String itemDisplay = context.getString(R.string.share_format_equinox, itemMode, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            {
-                ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-                if (clipboard != null) {
-                    clipboard.setPrimaryClip(ClipData.newPlainText(itemMode.getLongDisplayString(), itemDisplay));
-                }
-            } else {
-                android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-                if (clipboard != null) {
-                    clipboard.setText(itemDisplay);
-                }
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showContextMenu(getActivity(), v, label, datetime);
             }
-            Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();
-        }*/
+        };
+    }
+
+    protected void showContextMenu(Context context, View v, final String label, final long datetime)
+    {
+        PopupMenu menu = new PopupMenu(context, v);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.lightgraphmenu_context, menu.getMenu());
+        menu.setOnMenuItemClickListener(onContextMenuClicked);
+        updateContextMenu(context, menu, label, datetime);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+    }
+    private void updateContextMenu(Context context, PopupMenu menu, final String label, final long datetime)
+    {
+        Intent data = new Intent();
+        data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
+        data.putExtra("label", label);
+
+        Menu m = menu.getMenu();
+        setDataToMenu(m, data);
+
+        MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
+        if (addonSubmenuItem != null) {
+            List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
+            if (!addonMenuItems.isEmpty()) {
+                SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
+                MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
+            } //else addonSubmenuItem.setVisible(false);
+        }
+    }
+    private static void setDataToMenu(Menu m, Intent data)
+    {
+        if (m != null) {
+            for (int i = 0; i < m.size(); i++) {
+                m.getItem(i).setIntent(data);
+                setDataToMenu(m.getItem(i).getSubMenu(), data);
+            }
+        }
+    }
+
+    protected PopupMenu.OnMenuItemClickListener onContextMenuClicked = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
+            Intent itemData = item.getIntent();
+            long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
+
+            switch (item.getItemId())
+            {
+                //case R.id.action_alarm:
+                //    if (dialogListener != null) {
+                //        dialogListener.onSetAlarm(itemMode);
+                //    }
+                //    return true;
+
+                case R.id.action_sunposition:
+                    if (dialogListener != null) {
+                        dialogListener.onShowPosition(itemTime);
+                    }
+                    return true;
+
+                case R.id.action_moon:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMoonInfo(itemTime);
+                    }
+                    return true;
+
+                case R.id.action_worldmap:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMap(itemTime);
+                    }
+                    return true;
+
+                case R.id.action_date:
+                    if (dialogListener != null) {
+                        dialogListener.onShowDate(itemTime);
+                    }
+                    collapseSheet(getDialog());
+                    return true;
+
+                case R.id.action_calendar:
+                    openCalendar(context, itemTime);
+                    return true;
+
+                case R.id.action_share:
+                    shareItem(getActivity(), itemData);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
+    protected void openCalendar(Context context, long itemMillis)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("content://com.android.calendar/time/" + itemMillis));
+        context.startActivity(intent);
+    }
+
+    protected void shareItem(Context context, @Nullable Intent itemData)
+    {
+        if (itemData != null)
+        {
+            String label = itemData.getStringExtra("label");
+            long itemMillis = itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L);
+            if (itemMillis != -1L)
+            {
+                Calendar itemTime = Calendar.getInstance();
+                itemTime.setTimeInMillis(itemMillis);
+                boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+                boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
+
+                SuntimesUtils utils = new SuntimesUtils();
+                SuntimesUtils.initDisplayStrings(context);
+                String itemDisplay = context.getString(R.string.share_format, label, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                {
+                    ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (clipboard != null) {
+                        clipboard.setPrimaryClip(ClipData.newPlainText(label, itemDisplay));
+                    }
+                } else {
+                    android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (clipboard != null) {
+                        clipboard.setText(itemDisplay);
+                    }
+                }
+                Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            // share graph bitmap
+            // TODO
+        }
     }
 
     /**
@@ -896,9 +1045,10 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     public static class DialogListener
     {
         //public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
-        //public void onShowMap( long suggestedDate ) {}
+        public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
-        //public void onShowDate( long suggestedDate ) {}
+        public void onShowMoonInfo( long suggestedDate ) {}
+        public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified(boolean closeDialog) {}
         public void onColorsModified(ColorValues values) {}
     }
