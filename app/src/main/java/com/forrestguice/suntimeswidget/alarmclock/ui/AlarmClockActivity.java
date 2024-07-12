@@ -701,7 +701,7 @@ public class AlarmClockActivity extends AppCompatActivity
         addButton = (FloatingActionButton) findViewById(R.id.btn_add);
 
         deselectButton = (FloatingActionButton) findViewById(R.id.btn_deselect);
-        deselectButton.setVisibility(View.GONE);
+        deselectButton.hide();    // deselectButton.setVisibility(View.GONE);
         TooltipCompat.setTooltipText(deselectButton, deselectButton.getContentDescription());
 
         if (Build.VERSION.SDK_INT <= 19)    // override ripple fallback
@@ -757,7 +757,9 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         @Override
         public void onItemSelected(long rowID) {
-            deselectButton.setVisibility(rowID != -1 ? View.VISIBLE : View.GONE);
+            if (rowID != -1)
+                deselectButton.show();
+            else deselectButton.hide();    //deselectButton.setVisibility(rowID != -1 ? View.VISIBLE : View.GONE);
         }
 
         @Override
@@ -1206,10 +1208,11 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
+    private final View.OnClickListener onDeselectClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             list.clearSelection();
-            deselectButton.setVisibility(View.INVISIBLE);
+            deselectButton.hide();    // deselectButton.setVisibility(View.INVISIBLE);
         }
     };
 
