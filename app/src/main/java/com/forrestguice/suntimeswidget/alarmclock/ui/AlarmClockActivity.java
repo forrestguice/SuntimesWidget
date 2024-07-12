@@ -821,7 +821,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    private View.OnClickListener onEmptyViewClick = new View.OnClickListener() {
+    private final View.OnClickListener onEmptyViewClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showHelp();

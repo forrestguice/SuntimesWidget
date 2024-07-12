@@ -599,7 +599,7 @@ public class AlarmListDialog extends DialogFragment
     }
 
     protected AlarmClockItemExportTask exportTask = null;
-    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
         public void onStarted()
         {
@@ -692,7 +692,7 @@ public class AlarmListDialog extends DialogFragment
     }
 
     protected AlarmClockItemImportTask importTask = null;
-    private AlarmClockItemImportTask.TaskListener importListener =  new AlarmClockItemImportTask.TaskListener()
+    private final AlarmClockItemImportTask.TaskListener importListener =  new AlarmClockItemImportTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -2167,7 +2167,7 @@ public class AlarmListDialog extends DialogFragment
         }
     }
 
-    private RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
+    private final RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
     {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
