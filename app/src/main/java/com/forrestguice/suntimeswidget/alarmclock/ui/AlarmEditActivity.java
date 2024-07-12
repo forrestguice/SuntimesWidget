@@ -1048,6 +1048,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setDialogMode(item.getEvent() != null ? 0 : 1);
 
         dialog.setEvent(item.getEvent(), item.location);
+        dialog.setUseAppLocation(AlarmEditActivity.this, item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP));
         dialog.setAlarmTime(item.hour, item.minute, item.timezone);
         dialog.setOffset(item.offset);
         dialog.setOnAcceptedListener(onPickEventAccepted);
@@ -1064,6 +1065,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             if (editor != null && dialog != null)
             {
                 AlarmClockItem item = editor.getItem();
+                if (dialog.useAppLocation()) {
+                    item.setFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP, true);
+                }
                 AlarmCreateDialog.updateAlarmItem(dialog, item);
                 AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
                 editor.notifyItemChanged();

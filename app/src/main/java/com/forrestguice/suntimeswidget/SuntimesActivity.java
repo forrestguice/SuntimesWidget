@@ -1773,6 +1773,7 @@ public class SuntimesActivity extends AppCompatActivity
             AlarmCreateDialog dialog = new AlarmCreateDialog();
             dialog.loadSettings(SuntimesActivity.this);
             dialog.setEvent((alarmID != null ? alarmID : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));    // TODO: bug; dialog fails to switch tabs if already showing "by time"
+            dialog.setUseAppLocation(SuntimesActivity.this, true);
             dialog.setShowAlarmListButton(true);
             dialog.setOnAcceptedListener(onScheduleAlarm);
             dialog.setOnNeutralListener(onManageAlarms);

@@ -36,9 +36,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -85,6 +89,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final String EXTRA_OFFSET = "offset";
     public static final String EXTRA_TIMEZONE = "timezone";
     public static final String EXTRA_LOCATION = "location";
+    public static final String EXTRA_LOCATION_FROMAPP = "useAppLocation";
     public static final String EXTRA_EVENT = "event";
 
     public static final long DEF_DATE = -1L;
@@ -189,7 +194,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     }
 
-    protected void showByEventFragment() {
+    protected void showByEventFragment()
+    {
         FragmentManager fragments = getChildFragmentManager();
         FragmentTransaction transaction = fragments.beginTransaction();
 
@@ -198,9 +204,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         fragment.setDialogShowDesc(false);
         fragment.setType(getAlarmType());
         initEventDialog(getActivity(), fragment, getLocation());
-        fragment.setDialogListener(new AlarmEventDialog.DialogListener() {
+        fragment.setDialogListener(new AlarmEventDialog.DialogListener()
+        {
             @Override
-            public void onChanged(AlarmEventDialog dialog) {
+            public void onChanged(AlarmEventDialog dialog)
+            {
                 if (Math.abs(getOffset()) >= (1000 * 60 * 60 * 24)) {    // clear multi-day offsets
                     getArguments().putLong(EXTRA_OFFSET, 0);
                 }
@@ -217,14 +225,53 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             public void onCanceled(AlarmEventDialog dialog) {}
 
             @Override
-            public void onLocationClick(AlarmEventDialog dialog) {
-                showLocationDialog(getActivity());
+            public void onLocationClick(AlarmEventDialog dialog, View v) {
+                showLocationMenu(getActivity(), v);
             }
         });
         fragment.setChoice(getEvent());
 
         transaction.replace(R.id.fragmentContainer1, fragment, "AlarmDialog");
         transaction.commit();
+    }
+
+    protected void showLocationMenu(final Context context, View v)
+    {
+        PopupMenu popup = new PopupMenu(context, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.alarmlocation, popup.getMenu());
+
+        Menu menu = popup.getMenu();
+        MenuItem menuItem_locationFromApp = menu.findItem(R.id.action_location_fromApp);
+        if (menuItem_locationFromApp != null) {
+            menuItem_locationFromApp.setChecked(useAppLocation());
+        }
+        MenuItem menuItem_location = popup.getMenu().findItem(R.id.action_location_set);
+        if (menuItem_location != null) {
+            menuItem_location.setEnabled(!useAppLocation());
+        }
+
+        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.action_location_fromApp:
+                        setUseAppLocation(getActivity(), !menuItem.isChecked());
+                        updateViews(getActivity());
+                        return true;
+
+                    case R.id.action_location_set:
+                        showLocationDialog(getActivity());
+                        return true;
+                }
+                return false;
+            }
+        }));
+        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        popup.show();
     }
 
     protected void showLocationDialog(Context context)
@@ -245,6 +292,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             LocationConfigDialog dialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOG_LOCATION);
             if (dialog != null)
             {
+                setUseAppLocation(context, false);
                 setEvent(getEvent(), location);
                 updateViews(getActivity());
                 return true;
@@ -920,6 +968,17 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (isAdded()) {
             updateViews(getActivity());
         }
+    }
+
+    public void setUseAppLocation(Context context, boolean value)
+    {
+        getArguments().putBoolean(EXTRA_LOCATION_FROMAPP, value);
+        if (value) {
+            setEvent(getEvent(), WidgetSettings.loadLocationPref(context, 0));
+        }
+    }
+    public boolean useAppLocation() {
+        return getArguments().getBoolean(EXTRA_LOCATION_FROMAPP);
     }
 
     public int getMode() {

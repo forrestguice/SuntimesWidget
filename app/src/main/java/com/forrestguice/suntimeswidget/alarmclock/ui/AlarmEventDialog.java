@@ -673,7 +673,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         void onChanged(AlarmEventDialog dialog);
         void onAccepted(AlarmEventDialog dialog);
         void onCanceled(AlarmEventDialog dialog);
-        void onLocationClick(AlarmEventDialog dialog);
+        void onLocationClick(AlarmEventDialog dialog, View v);
     }
 
     private DialogListener listener = null;
@@ -714,7 +714,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v) {
             if (listener != null) {
-                listener.onLocationClick(AlarmEventDialog.this);
+                listener.onLocationClick(AlarmEventDialog.this, v);
             }
         }
     });
