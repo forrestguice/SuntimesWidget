@@ -273,7 +273,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onTitleClicked = new View.OnClickListener() {
+    private final View.OnClickListener onTitleClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onTitleClicked(currentCardPosition());
@@ -294,7 +294,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onNextClicked = new View.OnClickListener() {
+    private final View.OnClickListener onNextClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onNextClicked(currentCardPosition());
@@ -306,7 +306,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onPrevClicked = new View.OnClickListener() {
+    private final View.OnClickListener onPrevClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onPrevClicked(currentCardPosition());
@@ -647,7 +647,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnDismissListener onContextMenuDismissed = new PopupMenu.OnDismissListener() {
+    private final PopupMenu.OnDismissListener onContextMenuDismissed = new PopupMenu.OnDismissListener() {
         @Override
         public void onDismiss(PopupMenu menu) {
             text_title.post(new Runnable() {
@@ -806,17 +806,23 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
         {
-            int position = currentCardPosition();
+            final int position = currentCardPosition();
             if (position >= 0) {
                 //Log.d("DEBUG", "onScrolled: position: " + position);
-                updateViews(getContext(), card_adapter.initData(getContext(), position));
+                text_title.post(new Runnable()
+                {
+                    @Override
+                    public void run() {
+                        updateViews(getContext(), card_adapter.initData(getContext(), position));
+                    }
+                });
             }
         }
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
