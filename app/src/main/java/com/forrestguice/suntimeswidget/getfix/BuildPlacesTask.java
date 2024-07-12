@@ -297,6 +297,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                     result++;
                 }
             }
+            cursor.close();
 
             Log.i("BuildPlacesTask", "buildPlaces: " + result);
             db.close();

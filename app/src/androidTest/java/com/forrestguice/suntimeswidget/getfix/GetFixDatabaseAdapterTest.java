@@ -291,6 +291,7 @@ public class GetFixDatabaseAdapterTest
             verifyPlace(cursor0, false, id, map.get(id));
             cursor0.moveToNext();
         }
+        cursor0.close();
 
         // testing n=0, fullEntry=true
         Cursor cursor1 = db.getAllPlaces(0, true);
@@ -304,6 +305,7 @@ public class GetFixDatabaseAdapterTest
             verifyPlace(cursor1, true, id, map.get(id));
             cursor1.moveToNext();
         }
+        cursor1.close();
 
         // testing n=length-1, fullEntry=false
         Cursor cursor2 = db.getAllPlaces(rowID.length-1, false);   // all entries but last
@@ -317,6 +319,7 @@ public class GetFixDatabaseAdapterTest
             verifyPlace(cursor2, false, id, map.get(id));
             cursor2.moveToNext();
         }
+        cursor2.close();
 
         db.close();
     }
@@ -355,6 +358,7 @@ public class GetFixDatabaseAdapterTest
         int invalidPosition = GetFixDatabaseAdapter.findPlaceByName("not in database", cursor);
         assertTrue("position should be -1 not found (but was " + invalidPosition + ")", invalidPosition == -1);
 
+        cursor.close();
         db.close();
     }
 

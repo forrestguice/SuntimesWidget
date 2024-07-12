@@ -86,6 +86,7 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
             } // else Log.d("LocationListTask", "Place selection: " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
 
             result = new LocationListTaskResult(cursor, selectedIndex);
+            cursor.close();
         }
         db.close();
         return result;    // the caller has responsibility for eventually closing returned Cursor

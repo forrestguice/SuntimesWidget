@@ -320,12 +320,16 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         ArrayList<ContentValues> values = new ArrayList<>();
         db.open();
         Cursor cursor = db.getAllPlaces(0, true);
-        while (!cursor.isAfterLast())
+        if (cursor != null)
         {
-            ContentValues placeValues = new ContentValues();
-            DatabaseUtils.cursorRowToContentValues(cursor, placeValues);
-            values.add(placeValues);
-            cursor.moveToNext();
+            while (!cursor.isAfterLast())
+            {
+                ContentValues placeValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, placeValues);
+                values.add(placeValues);
+                cursor.moveToNext();
+            }
+            cursor.close();
         }
         db.close();
         writeContentValuesJSONArray(context, values.toArray(new ContentValues[0]), out);
