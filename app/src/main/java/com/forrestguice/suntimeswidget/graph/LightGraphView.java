@@ -285,7 +285,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     private final LightGraphTaskListener drawTaskListener = new LightGraphTaskListener() {
         @Override
         public void onStarted() {
-            Log.d(LightGraphView.class.getSimpleName(), "LightGraphView.updateViews: onStarted: " + Integer.toHexString(LightGraphView.this.hashCode()));
+            //Log.d(LightGraphView.class.getSimpleName(), "LightGraphView.updateViews: onStarted: " + Integer.toHexString(LightGraphView.this.hashCode()));
             if (graphListener != null) {
                 graphListener.onStarted();
             }
@@ -293,7 +293,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
         @Override
         public void onFrame(Bitmap frame, long offsetDays) {
-            Log.d(LightGraphView.class.getSimpleName(), "LightGraphView.updateViews: onFrame: " + Integer.toHexString(LightGraphView.this.hashCode()));
+            //Log.d(LightGraphView.class.getSimpleName(), "LightGraphView.updateViews: onFrame: " + Integer.toHexString(LightGraphView.this.hashCode()));
             setImageBitmap(frame);
             if (graphListener != null) {
                 graphListener.onFrame(frame, offsetDays);
@@ -563,7 +563,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 long bench_end = System.nanoTime();
-                Log.d("BENCH", "make light graph (data) :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+                //Log.d("BENCH", "make light graph (data) :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
                 return yearData;
             }
             return null;

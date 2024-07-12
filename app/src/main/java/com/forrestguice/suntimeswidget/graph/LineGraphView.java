@@ -62,7 +62,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
     private LineGraphTask drawTask = null;
 
-    private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
+    private final int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
     private LineGraphOptions options;
     private SuntimesRiseSetDataset data = null;
@@ -194,10 +194,10 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    private LineGraphTaskListener drawTaskListener = new LineGraphTaskListener() {
+    private final LineGraphTaskListener drawTaskListener = new LineGraphTaskListener() {
         @Override
         public void onStarted() {
-            Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onStarted: " + Integer.toHexString(LineGraphView.this.hashCode()));
+            //Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onStarted: " + Integer.toHexString(LineGraphView.this.hashCode()));
             if (graphListener != null) {
                 graphListener.onStarted();
             }
@@ -214,7 +214,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         @Override
         public void onFrame(Bitmap frame, long offsetMinutes) {
-            Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onFrame: " + Integer.toHexString(LineGraphView.this.hashCode()));
+            //Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onFrame: " + Integer.toHexString(LineGraphView.this.hashCode()));
             setImageBitmap(frame);
             if (graphListener != null) {
                 graphListener.onFrame(frame, offsetMinutes);
@@ -489,7 +489,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             }
 
             long bench_end = System.nanoTime();
-            Log.d("BENCH", "make line graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+            //Log.d("BENCH", "make line graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
             return b;
         }
         protected void initPaint()
