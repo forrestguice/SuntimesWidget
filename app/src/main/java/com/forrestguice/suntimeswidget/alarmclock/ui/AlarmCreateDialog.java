@@ -978,7 +978,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public void setUseAppLocation(Context context, boolean value)
     {
         getArguments().putBoolean(EXTRA_LOCATION_FROMAPP, value);
-        if (value) {
+        if (value && isAdded() && context != null) {
             setEvent(getEvent(), WidgetSettings.loadLocationPref(context, 0));
         }
     }
