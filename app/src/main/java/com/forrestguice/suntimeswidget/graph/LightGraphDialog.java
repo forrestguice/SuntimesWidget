@@ -133,6 +133,8 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         if (isAdded())
         {
             graph.setData(data);
+            lightmap.setData(data);
+
             if (updateNow) {
                 updateViews(getActivity());
             }
