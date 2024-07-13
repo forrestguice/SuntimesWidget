@@ -1756,6 +1756,7 @@
     <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>
     <string name="configActionDesc_moon">Moon Dialog</string>
     <string name="configActionDesc_sunDialog">Sun Dialog</string>
+    <string name="configActionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
     <string name="configActionDesc_setDate">Set date</string>
     <string name="configActionDesc_setTimeZone">Set time zone</string>
     <string name="configActionDesc_setLocation">Set location</string>
@@ -1798,6 +1799,7 @@
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
+        <item>@string/app_name</item>
 
         <item>@string/configLabel_alarmClock</item>
         <item>@string/app_name</item>
@@ -1836,6 +1838,7 @@
         <item>@string/configActionDesc_equinoxDialog</item>
         <item>@string/configActionDesc_moon</item>
         <item>@string/configActionDesc_sunDialog</item>
+        <item>@string/configActionDesc_sunlightDialog</item>
 
         <item>@string/configActionDesc_alarmList</item>
         <item>@string/configActionDesc_themeList</item>

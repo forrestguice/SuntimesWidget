@@ -136,6 +136,7 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String ACTION_VIEW_MOON = "suntimes.action.VIEW_MOON";
     public static final String ACTION_VIEW_SOLSTICE = "suntimes.action.VIEW_SOLSTICE";
     public static final String ACTION_VIEW_WORLDMAP = "suntimes.action.VIEW_WORLDMAP";
+    public static final String ACTION_VIEW_SUNLIGHT = "suntimes.action.VIEW_SUNLIGHT";
 
     public static final String ACTION_CARD_NEXT = "suntimes.action.CARD_NEXT";
     public static final String ACTION_CARD_PREV = "suntimes.action.CARD_PREV";
@@ -159,7 +160,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     public static final String SUNTIMES_ACTION_PREFIX = "suntimes.action";
     public static final String[] SUNTIMES_ACTIONS = new String[] {
-            ACTION_ADD_ALARM, ACTION_VIEW_SUN, ACTION_VIEW_MOON, ACTION_VIEW_SOLSTICE, ACTION_VIEW_WORLDMAP,
+            ACTION_ADD_ALARM, ACTION_VIEW_SUN, ACTION_VIEW_SUNLIGHT, ACTION_VIEW_MOON, ACTION_VIEW_SOLSTICE, ACTION_VIEW_WORLDMAP,
             ACTION_CARD_NEXT, ACTION_CARD_PREV, ACTION_CARD_RESET, ACTION_CARD_SHOW,
             ACTION_NOTE_NEXT, ACTION_NOTE_PREV, ACTION_NOTE_RESET, ACTION_NOTE_SEEK,
             ACTION_CONFIG_LOCATION, ACTION_CONFIG_TIMEZONE, ACTION_CONFIG_DATE,
@@ -326,8 +327,11 @@ public class SuntimesActivity extends AppCompatActivity
             if (action.equals(ACTION_VIEW_SUN)) {
                 showSunPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
+            } else if (action.equals(ACTION_VIEW_SUNLIGHT)) {
+                showLightGraphDialogAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
+
             } else if (action.equals(ACTION_VIEW_MOON)) {
-                showMoonDialog();
+                showMoonPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_VIEW_SOLSTICE)) {
                 showEquinoxDialog();

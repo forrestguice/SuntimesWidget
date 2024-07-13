@@ -808,6 +808,7 @@ public class WidgetActions
         SHOW_DIALOG_SOLSTICE("Suntimes", "Solstices Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         SHOW_DIALOG_MOON("Suntimes", "Moon Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         SHOW_DIALOG_SUN("Suntimes", "Sun Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        SHOW_DIALOG_SUNLIGHT("Suntimes", "Sunlight", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
         OPEN_ALARM_LIST("Alarms", "Alarm List", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
         OPEN_THEME_LIST("Suntimes", "Theme List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
@@ -934,6 +935,7 @@ public class WidgetActions
                     break;
 
                 case SHOW_DIALOG_SUN: launchAction = SuntimesActivity.ACTION_VIEW_SUN; break;
+                case SHOW_DIALOG_SUNLIGHT: launchAction = SuntimesActivity.ACTION_VIEW_SUNLIGHT; break;
                 case SHOW_DIALOG_MOON: launchAction = SuntimesActivity.ACTION_VIEW_MOON; break;
                 case SHOW_DIALOG_SOLSTICE: launchAction = SuntimesActivity.ACTION_VIEW_SOLSTICE; break;
                 case SHOW_DIALOG_WORLDMAP: launchAction = SuntimesActivity.ACTION_VIEW_WORLDMAP; break;
