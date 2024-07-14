@@ -572,7 +572,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     try {
                         Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile());
                         shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
-                        shareIntent.setClipData(ClipData.newRawUri("", shareURI));
+                        if (Build.VERSION.SDK_INT >= 16) {
+                            shareIntent.setClipData(ClipData.newRawUri("", shareURI));
+                        }
 
                         String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
                         Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
