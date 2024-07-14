@@ -470,24 +470,28 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayRepeating(Context context, AlarmClockItem item, boolean isSelected)
     {
-        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
-        boolean noRepeat = (item.repeatingDays != null && item.repeatingDays.isEmpty());
-        String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
-                ? context.getString(R.string.alarmOption_repeat_all)
-                : noRepeat
-                ? context.getString(R.string.alarmOption_repeat_none)
-                : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
-        if (item.repeating)
+        String repeatText = context.getString(R.string.alarmOption_repeat_none);
+        if (item.repeating && item.repeatingDays != null && !item.repeatingDays.isEmpty())
         {
-            AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
-            int repeatSupport = eventItem.supportsRepeating();
-            if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
-                repeatText = context.getString(R.string.alarmOption_repeat);
-            } else if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_NONE) {
-                repeatText = context.getString(R.string.alarmOption_repeat_none);
+            switch (item.getEventItem(context).supportsRepeating())
+            {
+                case AlarmEventContract.REPEAT_SUPPORT_BASIC:
+                    repeatText = context.getString(R.string.alarmOption_repeat);
+                    break;
+
+                case AlarmEventContract.REPEAT_SUPPORT_DAILY:
+                    repeatText = (AlarmClockItem.repeatsEveryDay(item.repeatingDays))
+                            ? context.getString(R.string.alarmOption_repeat_all)
+                            : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
+                    break;
+
+                case AlarmEventContract.REPEAT_SUPPORT_NONE:
+                default:
+                    repeatText = context.getString(R.string.alarmOption_repeat_none);
+                    break;
             }
         }
-        return (isSelected || !noRepeat ? repeatText : "");
+        return (isSelected ? repeatText : "");
     }
 
     public static CharSequence displayRingtone(Context context, AlarmClockItem item, boolean isSelected)

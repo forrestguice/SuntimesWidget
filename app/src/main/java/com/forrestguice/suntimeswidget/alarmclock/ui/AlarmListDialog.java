@@ -1969,26 +1969,32 @@ public class AlarmListDialog extends DialogFragment
             // repeating
             if (view.text_repeat != null)
             {
-                boolean noRepeat = (item.repeatingDays != null && item.repeatingDays.isEmpty());
-                String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
-                        ? context.getString(R.string.alarmOption_repeat_all)
-                        : noRepeat
-                            ? context.getString(R.string.alarmOption_repeat_none)
-                            : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
-
-                if (item.repeating)
+                String repeatText = context.getString(R.string.alarmOption_repeat_none);
+                boolean repeating = (item.repeating && item.repeatingDays != null && !item.repeatingDays.isEmpty());
+                if (repeating)
                 {
-                    int repeatSupport = item.getEventItem(context).supportsRepeating();
-                    if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
-                        repeatText = context.getString(R.string.alarmOption_repeat);
-                    } else if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_NONE) {
-                        repeatText = "";
+                    switch (item.getEventItem(context).supportsRepeating())
+                    {
+                        case AlarmEventContract.REPEAT_SUPPORT_BASIC:
+                            repeatText = context.getString(R.string.alarmOption_repeat);
+                            break;
+
+                        case AlarmEventContract.REPEAT_SUPPORT_DAILY:
+                            repeatText = (AlarmClockItem.repeatsEveryDay(item.repeatingDays))
+                                    ? context.getString(R.string.alarmOption_repeat_all)
+                                    : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
+                            break;
+
+                        case AlarmEventContract.REPEAT_SUPPORT_NONE:
+                        default:
+                            repeatText = context.getString(R.string.alarmOption_repeat_none);
+                            break;
                     }
                 }
 
                 view.text_repeat.setText(repeatText);
                 view.text_repeat.setTextColor(item.enabled ? color_on : color_off);
-                view.text_repeat.setVisibility((noRepeat) ? View.GONE : View.VISIBLE);
+                view.text_repeat.setVisibility(repeating ? View.VISIBLE : View.GONE);
             }
 
             // offset (before / after)
