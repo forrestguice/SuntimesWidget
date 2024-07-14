@@ -19,8 +19,10 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Parcel;
 
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
@@ -56,6 +58,23 @@ public class AppColorValues extends ResourceColorValues
             new MoonApsisColorValues()
     };
 
+    protected static int[] toIntArray(ArrayList<Integer> list)
+    {
+        if (Build.VERSION.SDK_INT >= 24) {
+            return Arrays.stream(list.toArray(new Integer[0])).mapToInt(toInt).toArray();
+
+        } else {
+            int[] result = new int[list.size()];
+            for (int i=0; i<result.length; i++)
+            {
+                Integer value = list.get(i);
+                result[i] = (value != null ? value : 0);
+            }
+            return result;
+        }
+    }
+    
+    @TargetApi(24)
     private static final ToIntFunction<Integer> toInt = new ToIntFunction<Integer>()
     {
         @Override
@@ -134,11 +153,11 @@ public class AppColorValues extends ResourceColorValues
         }
 
         colorKeys = keys.toArray(new String[0]);
-        colorAttrs = Arrays.stream(attrs.toArray(new Integer[0])).mapToInt(toInt).toArray();
-        colorResDark = Arrays.stream(darkRes.toArray(new Integer[0])).mapToInt(toInt).toArray();
-        colorResLight = Arrays.stream(lightRes.toArray(new Integer[0])).mapToInt(toInt).toArray();
-        colorResLabel = Arrays.stream(labelRes.toArray(new Integer[0])).mapToInt(toInt).toArray();
-        colorFallback = Arrays.stream(fallback.toArray(new Integer[0])).mapToInt(toInt).toArray();
+        colorAttrs = toIntArray(attrs);
+        colorResDark = toIntArray(darkRes);
+        colorResLight = toIntArray(lightRes);
+        colorResLabel = toIntArray(labelRes);
+        colorFallback = toIntArray(fallback);
     }
 
     public String[] getColorKeys() {
