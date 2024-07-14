@@ -4,7 +4,7 @@
     <dimen name="activity_margin">8dp</dimen>
     <dimen name="dialog_margin">8dp</dimen>
     <dimen name="dialog_margin1">4dp</dimen>
-    <dimen name="tooltip_margin">8dp</dimen>
+    <dimen name="tooltip_margin0">8dp</dimen>
 
     <dimen name="tooltip_radius">4dp</dimen>
     <dimen name="toast_radius">28dp</dimen>
