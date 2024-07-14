@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.navigation;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -196,15 +197,33 @@ public class SuntimesNavigation
         }
     }
 
+    @TargetApi(16)
     public ActivityOptions getActivityOptions(@NonNull Activity activity) {
         return ActivityOptions.makeCustomAnimation(activity, anim_in, anim_out);
+    }
+
+    private void startActivity(@NonNull Activity activity, @NonNull Intent intent)
+    {
+        if (Build.VERSION.SDK_INT >= 16) {
+            activity.startActivity(intent, getActivityOptions(activity).toBundle());
+        } else {
+            activity.startActivity(intent);
+        }
+    }
+    private void startActivityForResult(@NonNull Activity activity, @NonNull Intent intent, int requestCode)
+    {
+        if (Build.VERSION.SDK_INT >= 16) {
+            activity.startActivityForResult(intent, requestCode, getActivityOptions(activity).toBundle());
+        } else {
+            activity.startActivityForResult(intent, requestCode);
+        }
     }
 
     public void showSuntimes(@NonNull final Activity activity)
     {
         Intent intent = new Intent(activity, SuntimesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(intent, getActivityOptions(activity).toBundle());
+        startActivity(activity, intent);
         overridePendingTransition(activity);
     }
 
@@ -212,7 +231,7 @@ public class SuntimesNavigation
     {
         Intent intent = new Intent(activity, AlarmClockActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(intent, getActivityOptions(activity).toBundle());
+        startActivity(activity, intent);
         overridePendingTransition(activity);
     }
 
@@ -227,14 +246,14 @@ public class SuntimesNavigation
     public void showSettings(@NonNull Activity activity)
     {
         Intent intent = new Intent(activity, SuntimesSettingsActivity.class);
-        activity.startActivityForResult(intent,  REQUEST_SETTINGS, getActivityOptions(activity).toBundle());
+        startActivityForResult(activity, intent, REQUEST_SETTINGS);
         overridePendingTransition(activity);
     }
 
     public void showAbout(@NonNull Activity activity)
     {
         Intent about = new Intent(activity, AboutActivity.class);
-        activity.startActivity(about, getActivityOptions(activity).toBundle());
+        startActivity(activity, about);
         overridePendingTransition(activity);
     }
 
