@@ -69,6 +69,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -145,6 +147,11 @@ public class AlarmListDialog extends DialogFragment
 
         adapter = new AlarmListDialogAdapter(getActivity());
         adapter.setAdapterListener(adapterListener);
+
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(getActivity());
+        if (colors != null) {
+            adapter.getOptions().colors = new AppColorValues(colors);
+        }
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -949,6 +956,15 @@ public class AlarmListDialog extends DialogFragment
             super();
             contextRef = new WeakReference<>(context);
             setHasStableIds(true);
+            initOptions(context);
+        }
+
+        protected AlarmListDialogOptions options;
+        public void initOptions(Context context) {
+            options = new AlarmListDialogOptions(context);
+        }
+        public AlarmListDialogOptions getOptions() {
+            return options;
         }
 
         public void setSelectedRowID(long rowID) {
@@ -1139,7 +1155,7 @@ public class AlarmListDialog extends DialogFragment
             }
 
             detachClickListeners(holder);
-            holder.bindData(context, item);
+            holder.bindData(context, item, options);
             holder.startBackgroundAnimation(context);
             attachClickListeners(holder, item.rowID);
         }
@@ -1542,6 +1558,23 @@ public class AlarmListDialog extends DialogFragment
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static class AlarmListDialogOptions
+    {
+        public AppColorValues colors;
+
+        public AlarmListDialogOptions() {
+            colors = new AppColorValues();
+        }
+
+        public AlarmListDialogOptions(Context context) {
+            init(context);
+        }
+
+        public void init(Context context) {
+            colors = new AppColorValues(context, true);
+        }
+    }
+
     /**
      * RecyclerView.ViewHolder
      */
@@ -1655,7 +1688,7 @@ public class AlarmListDialog extends DialogFragment
             }
         }
 
-        public void triggerPreviewOffset(final Context context, final AlarmClockItem item)
+        public void triggerPreviewOffset(final Context context, final AlarmClockItem item, final AlarmListDialogOptions options)
         {
             if (preview_offset_transition || item.offset == 0) {
                 return;
@@ -1663,14 +1696,14 @@ public class AlarmListDialog extends DialogFragment
 
             preview_offset = true;
             preview_offset_transition = true;
-            bindData(context, item);
+            bindData(context, item, options);
 
             cardTray.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     preview_offset_transition = false;
                     preview_offset = !isSelected;
-                    bindData(context, item);
+                    bindData(context, item, options);
                 }
             }, AlarmEditDialog.PREVIEW_OFFSET_DURATION_MILLIS);
         }
@@ -1711,13 +1744,13 @@ public class AlarmListDialog extends DialogFragment
         }
 
 
-        public void bindData(Context context, @NonNull AlarmClockItem item)
+        public void bindData(Context context, @NonNull AlarmClockItem item, AlarmListDialogOptions options)
         {
             themeViews(context);
-            updateView(context, this, item);
+            updateView(context, this, item, options);
         }
 
-        protected void updateView(Context context, AlarmListDialogItem view, @NonNull final AlarmClockItem item)
+        protected void updateView(Context context, AlarmListDialogItem view, @NonNull final AlarmClockItem item, @NonNull AlarmListDialogOptions options)
         {
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             int eventType = event == null ? -1 : event.getType();
@@ -1829,7 +1862,7 @@ public class AlarmListDialog extends DialogFragment
                 if (event != null)
                 {
                     boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location != null) && (item.location.getLatitudeAsDouble() < 0);
-                    Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)eventIconSize, (int)eventIconSize, northward);
+                    Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)eventIconSize, (int)eventIconSize, northward, options.colors);
                     view.text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
 

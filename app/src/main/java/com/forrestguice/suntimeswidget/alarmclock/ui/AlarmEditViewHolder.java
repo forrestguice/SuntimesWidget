@@ -207,7 +207,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         a.recycle();
     }
 
-    public void bindDataToPosition(Context context, AlarmClockItem item, int position)
+    public void bindDataToPosition(Context context, AlarmClockItem item, AlarmListDialog.AlarmListDialogOptions options, int position)
     {
         this.position = position;
 
@@ -275,7 +275,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             if (event != null)
             {
                 boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && ((item.location != null) && item.location.getLatitudeAsDouble() < 0);
-                Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
+                Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward, options.colors);
                 text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
 

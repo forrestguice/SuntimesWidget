@@ -795,7 +795,7 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onItemNoteClicked(final AlarmClockItem item, final AlarmListDialog.AlarmListDialogItem view)
         {
-            view.triggerPreviewOffset(AlarmClockActivity.this, item);
+            view.triggerPreviewOffset(AlarmClockActivity.this, item, list.getAdapter().getOptions());
             if (item.enabled) {
                 AlarmNotifications.showTimeUntilToast(AlarmClockActivity.this, list.getView(), item);
             }

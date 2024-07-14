@@ -44,6 +44,9 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -74,6 +77,22 @@ public class AlarmEditDialog extends DialogFragment
     {
         super();
         setArguments(new Bundle());
+        options = new AlarmListDialog.AlarmListDialogOptions();
+    }
+
+    protected AlarmListDialog.AlarmListDialogOptions options;
+    public void initOptions(Context context)
+    {
+        options = new AlarmListDialog.AlarmListDialogOptions(context);
+
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(getActivity());
+        if (colors != null) {
+            options.colors = new AppColorValues(colors);
+        }
+
+    }
+    public AlarmListDialog.AlarmListDialogOptions getOptions() {
+        return options;
     }
 
     public void initFromItem(AlarmClockItem item, boolean addItem)
@@ -101,7 +120,7 @@ public class AlarmEditDialog extends DialogFragment
     public void notifyItemChanged() {
         item.modified = true;
         bindItemToHolder(item);
-        itemView.bindDataToPosition(getActivity(), item, 0);
+        itemView.bindDataToPosition(getActivity(), item, options, 0);
     }
 
     protected void bindItemToHolder(AlarmClockItem item)
@@ -113,7 +132,7 @@ public class AlarmEditDialog extends DialogFragment
         if (itemView != null)
         {
             detachClickListeners(itemView);
-            itemView.bindDataToPosition(getActivity(), item, 0);
+            itemView.bindDataToPosition(getActivity(), item, options, 0);
             itemView.menu_overflow.setVisibility(getArguments().getBoolean(EXTRA_SHOW_OVERFLOW, true) ? View.VISIBLE : View.GONE);
             attachClickListeners(itemView, 0);
         }
@@ -127,6 +146,7 @@ public class AlarmEditDialog extends DialogFragment
     {
         super.onCreate(savedState);
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
+        initOptions(getActivity());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
