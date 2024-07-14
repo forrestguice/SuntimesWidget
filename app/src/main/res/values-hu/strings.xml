@@ -1021,7 +1021,7 @@
     <string name="configLabel_alarms_bootcompleted_info">Legutóbb futott <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> újraindítás után (időtartam <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
     <string name="configLabel_alarms_bootcompleted_info_never">Soha</string>
     <string name="configLabel_alarms_bootcompleted_action_confirm">Átütemezi az összes ébresztést és értesítést?</string>
-    <string name="configLabel_alarms_bootcompleted_action_message">Ébresztések és értesítések átütemezése...</string>
+    <string name="configLabel_alarms_bootcompleted_action_message">Ébresztések és értesítések átütemezése…</string>
 
     <string name="configLabel_alarms_silenceAfter">Némítás ennyi idő után</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
