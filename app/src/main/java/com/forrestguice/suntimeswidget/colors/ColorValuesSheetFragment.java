@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ColorValuesSheetFragment extends ColorValuesFragment
 {
@@ -158,7 +159,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected String suggestColorValuesID(Context context)
     {
-        String base = context.getString(R.string.suggest_colorid).toLowerCase();
+        String base = context.getString(R.string.suggest_colorid).toLowerCase(Locale.ROOT);
         String suggestion = base;
         if (colorCollection != null)
         {

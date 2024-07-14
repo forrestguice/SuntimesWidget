@@ -51,6 +51,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -590,7 +591,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                         if (valueType.equals(String.class))    // bool as String
                         {
                             String s = (String) value;
-                            if (s.toLowerCase().equals("true") || s.toLowerCase().equals("false")) {
+                            if (s.toLowerCase(Locale.ROOT).equals("true") || s.toLowerCase(Locale.ROOT).equals("false")) {
                                 importValue(prefs, Boolean.class, k, Boolean.parseBoolean(s));
                             } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + s + " (String)");
                         } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
