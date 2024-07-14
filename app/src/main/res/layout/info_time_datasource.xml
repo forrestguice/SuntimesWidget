@@ -33,7 +33,8 @@
             app:layout_constraintEnd_toEndOf="@+id/txt_datasource"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/check_altitude"
