@@ -39,7 +39,7 @@
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
                 tools:text="Alarm Label" android:labelFor="@+id/text_alarmtime"
                 android:contentDescription="Alarm Label"
-                android:gravity="start" android:layout_gravity="start" />
+                android:gravity="start" android:layout_gravity="start" />   <!-- TODO: i18n -->
 
             <TextView style="@style/WidgetTimeTextView"
                 android:id="@+id/text_alarmtime" android:layout_width="wrap_content"

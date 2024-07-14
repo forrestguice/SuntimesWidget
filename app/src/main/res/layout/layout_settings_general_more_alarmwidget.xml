@@ -36,14 +36,14 @@
 
             <TextView style="@style/ChipText1"
                 android:id="@+id/chip_alarmtypes_alarm"
-                android:drawableStart="?attr/icActionAlarm"
+                android:drawableStart="?attr/icActionAlarm" android:drawableLeft="?attr/icActionAlarm"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/alarmMode_alarm" android:textSize="?attr/text_size_small" />
 
             <TextView style="@style/ChipText1"
                 android:id="@+id/chip_alarmtypes_notification"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:drawableStart="?attr/icActionNotification"
+                android:drawableStart="?attr/icActionNotification" android:drawableLeft="?attr/icActionNotification"
                 android:text="@string/alarmMode_notification" android:textSize="?attr/text_size_small" />
 
             <View

@@ -16,10 +16,10 @@
 
             <TextView android:id="@+id/text_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:drawableStart="?attr/icActionAlarm" android:gravity="center_vertical"
+                android:drawableLeft="?attr/icActionAlarm" android:drawableStart="?attr/icActionAlarm" android:gravity="center_vertical"
                 android:drawablePadding="8dp"
                 android:textSize="?attr/text_size_small"
-                android:text="Wake up time is set to" />
+                android:text="Wake up time is set to" />   <!-- TODO: i18n -->
 
             <LinearLayout
                 android:id="@+id/text_time_layout"
@@ -60,20 +60,22 @@
 
                         <TextView android:id="@+id/status_sound"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:layout_gravity="bottom" android:layout_marginEnd="8dp"
-                            android:drawableStart="?attr/icActionSoundEnabled" android:gravity="center_vertical"
+                            android:layout_gravity="bottom" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                            android:drawableLeft="?attr/icActionSoundEnabled" android:drawableStart="?attr/icActionSoundEnabled" android:gravity="center_vertical"
                             android:maxEms="9" android:maxLines="2" android:ellipsize="end"
                             android:textSize="?attr/text_size_small" tools:text="Pixie Dust" />
 
                         <ImageView android:id="@+id/status_silent"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp" android:layout_marginEnd="8dp"
+                            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+                            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                             android:src="?attr/icActionSoundDisabled"
                             android:contentDescription="@string/alarmOption_ringtone_none" />
 
                         <ImageView android:id="@+id/status_vibrate"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp" android:layout_marginEnd="8dp"
+                            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+                            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                             android:src="?attr/icActionVibrationEnabled"
                             android:contentDescription="@string/alarmOption_vibrate" />
 
@@ -88,13 +90,14 @@
         <FrameLayout
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="8dp" android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
 
             <Switch android:id="@+id/switch_enabled"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
-                android:layout_marginStart="0dp" />
+                android:layout_marginStart="0dp" android:layout_marginLeft="0dp" />
 
             <android.support.design.widget.FloatingActionButton android:id="@+id/button_add"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"

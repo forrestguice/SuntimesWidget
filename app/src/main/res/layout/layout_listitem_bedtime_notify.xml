@@ -16,10 +16,10 @@
 
             <TextView android:id="@+id/text_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:drawableStart="?attr/icActionBedtime" android:gravity="center_vertical"
+                android:drawableLeft="?attr/icActionBedtime" android:drawableStart="?attr/icActionBedtime" android:gravity="center_vertical"
                 android:drawablePadding="8dp"
                 android:textSize="?attr/text_size_small"
-                android:text="Bedtime set to" />
+                android:text="Bedtime set to" />   <!-- TODO: i18n -->
 
             <LinearLayout
                 android:id="@+id/text_time_layout"
@@ -53,7 +53,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:textSize="?attr/text_size_small"
                     android:text="Do Not Disturb"
-                    android:paddingStart="8dp" android:button="?attr/checkDnd" />
+                    android:paddingLeft="8dp" android:paddingStart="8dp" android:button="?attr/checkDnd" />   <!-- TODO: i18n -->
 
             </LinearLayout>
 
@@ -64,7 +64,7 @@
                 <TextView android:id="@+id/dndwarning_text"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:textSize="?attr/text_size_small"
-                    android:drawableStart="?attr/icActionWarning" android:gravity="center_vertical"
+                    android:drawableLeft="?attr/icActionWarning" android:drawableStart="?attr/icActionWarning" android:gravity="center_vertical"
                     android:drawablePadding="8dp"
                     tools:text="@string/privacy_permission_dnd" />
 
@@ -73,7 +73,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:textSize="?attr/text_size_small"
                     android:gravity="center_vertical" android:layout_gravity="end"
-                    android:text="Allow Access" />
+                    android:text="Allow Access" />   <!-- TODO: i18n -->
 
             </LinearLayout>
 
@@ -82,14 +82,15 @@
         <FrameLayout
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="8dp" android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
 
             <Switch android:id="@+id/switch_enabled"
 
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
-                android:layout_marginStart="0dp" />
+                android:layout_marginStart="0dp" android:layout_marginLeft="0dp" />
 
             <android.support.design.widget.FloatingActionButton android:id="@+id/button_add"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
