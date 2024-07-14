@@ -20,6 +20,8 @@ package com.forrestguice.suntimeswidget;
 
 import android.graphics.drawable.Drawable;
 
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
@@ -30,7 +32,7 @@ public class SuntimesWidgetListTest0
     @Test
     public void test_WidgetListItem_new()
     {
-        SuntimesWidgetListActivity.WidgetListItem item0 = new SuntimesWidgetListActivity.WidgetListItem("package", "widgetClass", 1, (Drawable)null, "title", "summary", "configClass");
+        WidgetListAdapter.WidgetListItem item0 = new WidgetListAdapter.WidgetListItem("package", "widgetClass", 1, (Drawable)null, "title", "summary", "configClass");
         assertNull(item0.getIcon());
         assertEquals("title", item0.getTitle());
         assertEquals(item0.getTitle(), item0.toString());

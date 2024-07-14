@@ -574,7 +574,9 @@ public class AlarmNotificationsTest
     {
         AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(mockContext.getApplicationContext());
         db.open();
-        boolean hasValue = (db.getAlarm(rowId).getCount() > 0);
+        Cursor cursor = db.getAlarm(rowId);
+        boolean hasValue = (cursor != null && cursor.getCount() > 0);
+        cursor.close();
         db.close();
         return hasValue;
     }
@@ -585,6 +587,7 @@ public class AlarmNotificationsTest
         db.open();
         Cursor cursor = db.getAlarmState(rowId);
         AlarmDatabaseAdapterTest.verifyAlarmState(cursor, rowId, state);
+        cursor.close();
         db.close();
     }
 
