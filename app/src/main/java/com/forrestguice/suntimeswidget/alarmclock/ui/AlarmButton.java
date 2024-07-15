@@ -456,8 +456,10 @@ public class AlarmButton extends RelativeLayout
         }
     }
 
-    public void setThumbText(CharSequence text) {
+    public void setThumbText(CharSequence text)
+    {
         thumbText.setText(text);
+        thumbIcon.setContentDescription(text);
     }
 
     public void setThumbTextColor(int color) {

@@ -14,7 +14,7 @@
         <ImageView android:id="@+id/thumb_icon"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="?attr/icActionCancel" />
+            android:src="?attr/icActionCancel" tools:ignore="ContentDescription" />
 
         <TextView android:id="@+id/thumb_text"
             android:layout_width="wrap_content" android:layout_height="wrap_content"

@@ -1525,6 +1525,23 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return colorLabel;
     }
 
+    private CharSequence getTextForPosition(Context context, SuntimesCalculator.SunPosition position)
+    {
+        if (position.elevation >= 0) {
+            return context.getString(R.string.timeMode_day);
+        }
+        if (position.elevation >= -6) {
+            return context.getString(R.string.timeMode_civil);
+        }
+        if (position.elevation >= -12) {
+            return context.getString(R.string.timeMode_nautical);
+        }
+        if (position.elevation >= -18) {
+            return context.getString(R.string.timeMode_astronomical);
+        }
+        return context.getString(R.string.timeMode_night);
+    }
+
     private void highlightLightmapKey(double elevation)
     {
         if (elevation >= 0)
@@ -1633,6 +1650,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 sunElevation.setText(styleElevationText(currentPosition.elevation, null, 2));
                 SuntimesUtils.colorizeImageView(sunElevationHighlight, textColor);
                 sunElevationHighlight.setVisibility(View.VISIBLE);
+                sunElevationHighlight.setContentDescription(getTextForPosition(getActivity(), currentPosition));
 
                 highlightLightmapKey(currentPosition.elevation);
 
