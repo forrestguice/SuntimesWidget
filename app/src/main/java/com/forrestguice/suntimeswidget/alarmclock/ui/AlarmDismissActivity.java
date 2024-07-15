@@ -783,6 +783,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateViews(Context context)
     {
         if (alarm != null)
