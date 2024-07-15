@@ -220,11 +220,11 @@
         <item quantity="other">%s méter</item>
     </plurals>
 
-    <string name="units_kilometers">kilóméter</string>
+    <string name="units_kilometers">kilométer</string>
     <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
-        <item quantity="one">%s kilóméter</item>
-        <item quantity="other">%s kilóméter</item>
+        <item quantity="one">%s kilométer</item>
+        <item quantity="other">%s kilométer</item>
     </plurals>
 
     <!--

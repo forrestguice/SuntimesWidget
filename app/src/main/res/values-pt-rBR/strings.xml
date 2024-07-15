@@ -1318,14 +1318,14 @@
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
-    <string name="place_label_AF">Africa</string>    <!-- TODO -->
-    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
-    <string name="place_label_AS">Asia</string>    <!-- TODO -->
-    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
-    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
-    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
-    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
-    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
+    <string name="place_label_AF">África</string>    <!-- TODO -->
+    <string name="place_label_AF_EG">África (Egypt)</string>   <!-- TODO -->
+    <string name="place_label_AS">Ásia</string>    <!-- TODO -->
+    <string name="place_label_AS_CN">Ásia (China)</string>    <!-- TODO -->
+    <string name="place_label_AS_IN">Ásia (Índia)</string>    <!-- TODO -->
+    <string name="place_label_AS_JP">Ásia (Japan)</string>    <!-- TODO -->
+    <string name="place_label_AS_SA">Ásia (Saudi Arabia)</string>    <!-- TODO -->
+    <string name="place_label_AS_VN">Ásia (Vietnam)</string>    <!-- TODO -->
     <string name="place_label_EU">Europe</string>    <!-- TODO -->
     <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
     <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
