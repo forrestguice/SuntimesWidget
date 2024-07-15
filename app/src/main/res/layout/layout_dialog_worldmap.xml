@@ -22,7 +22,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" android:minHeight="125dp"
     android:orientation="vertical" android:gravity="start"
-    android:background="?dialogBackground">
+    android:background="?dialogBackground"
+    tools:ignore="InconsistentLayout">
 
     <TextView android:id="@+id/worldmapdialog_title" style="@style/DialogTitleStyle"
         android:text="@string/worldmap_dialog_title"
