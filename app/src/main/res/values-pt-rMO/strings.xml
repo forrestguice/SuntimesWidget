@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="default_location_label">Macau</string>
     <string name="default_location_latitude">22.1634</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">113.5284</string>  <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>         <!-- meters -->
-    <string name="default_timezone">Asia/Macau</string>         <!-- tzid -->
+    <string name="default_timezone" tools:ignore="Typos">Asia/Macau</string>         <!-- tzid -->
 
 </resources>
