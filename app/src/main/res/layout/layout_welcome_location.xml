@@ -29,6 +29,7 @@
 
     </LinearLayout>
 
-    <include layout="@layout/layout_welcome_location_content" />
+    <include layout="@layout/layout_welcome_location_content"
+        android:id="@+id/content_layout" />
 
 </android.support.constraint.ConstraintLayout>

@@ -32,7 +32,8 @@
         android:contentDescription="@string/configAction_lightGraphDialog" />
 
     <!-- sun altitude -->
-    <include layout="@layout/layout_dialog_lightmap_suninfo0" />
+    <include layout="@layout/layout_dialog_lightmap_suninfo0"
+        android:id="@+id/info_sun_layout" />
 
     <View android:id="@+id/sundialog_gutter2"
         android:layout_width="match_parent" android:layout_height="4dp"

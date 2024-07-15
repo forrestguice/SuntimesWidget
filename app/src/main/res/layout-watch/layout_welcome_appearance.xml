@@ -41,7 +41,8 @@
 
             </LinearLayout>
 
-            <include layout="@layout/layout_welcome_appearance_content" />
+            <include layout="@layout/layout_welcome_appearance_content"
+                android:id="@+id/content_layout" />
 
         </LinearLayout>
 
