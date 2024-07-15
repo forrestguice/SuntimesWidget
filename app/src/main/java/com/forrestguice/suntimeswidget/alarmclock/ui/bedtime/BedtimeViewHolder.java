@@ -356,7 +356,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
                     if (text_label != null)
                     {
-                        Drawable d = DrawableCompat.wrap(text_label.getCompoundDrawablesRelative()[0].mutate());
+                        Drawable d = DrawableCompat.wrap(getCompoundDrawableStart(context, text_label));
                         DrawableCompat.setTint(d, alarmItem.enabled ? colorOn : colorOff);
                     }
                     if (text_time != null) {
@@ -399,7 +399,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     setCardBackground(context, cardBgOff);
                     if (text_label != null)
                     {
-                        Drawable d = DrawableCompat.wrap(text_label.getCompoundDrawablesRelative()[0].mutate());
+                        Drawable d = DrawableCompat.wrap(getCompoundDrawableStart(context, text_label));
                         DrawableCompat.setTint(d, colorOff);
                     }
                     if (text_time_layout != null) {
@@ -419,6 +419,17 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         status_vibrate.setVisibility(View.GONE);
                     }
                 }
+            }
+        }
+
+        protected Drawable getCompoundDrawableStart(Context context, TextView view)
+        {
+            if (Build.VERSION.SDK_INT >= 17) {
+                return view.getCompoundDrawablesRelative()[0].mutate();
+
+            } else {
+                Drawable[] drawables = view.getCompoundDrawables();
+                return (context.getResources().getBoolean(R.bool.is_rtl) ? drawables[2] : drawables[0]).mutate();
             }
         }
 
