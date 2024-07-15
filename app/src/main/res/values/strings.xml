@@ -1370,6 +1370,8 @@
 
     <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
+    <string name="configAction_dnd_allow">Allow Access</string>              <!-- button label when requesting permission -->    <!-- TODO -->
+    <string name="configLabel_dnd">Do Not Disturb</string>              <!-- textview text (next line shows time) -->    <!-- TODO -->
     <string name="configLabel_dnd_disabled">DND: Disabled</string>         <!-- do-not-disturb menu item -->
     <string name="configLabel_dnd_priority">DND: Priority only</string>    <!-- do-not-disturb menu item -->
     <string name="configLabel_dnd_alarms">DND: Alarms only</string>        <!-- do-not-disturb menu item -->

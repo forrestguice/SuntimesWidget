@@ -19,7 +19,7 @@
                 android:drawableLeft="?attr/icActionAlarm" android:drawableStart="?attr/icActionAlarm" android:gravity="center_vertical"
                 android:drawablePadding="8dp"
                 android:textSize="?attr/text_size_small"
-                android:text="Wake up time is set to" />   <!-- TODO: i18n -->
+                android:text="@string/msg_bedtime_wakeup_set" />
 
             <LinearLayout
                 android:id="@+id/text_time_layout"

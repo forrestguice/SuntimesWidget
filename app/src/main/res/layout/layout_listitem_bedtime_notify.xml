@@ -19,7 +19,7 @@
                 android:drawableLeft="?attr/icActionBedtime" android:drawableStart="?attr/icActionBedtime" android:gravity="center_vertical"
                 android:drawablePadding="8dp"
                 android:textSize="?attr/text_size_small"
-                android:text="Bedtime set to" />   <!-- TODO: i18n -->
+                android:text="@string/msg_bedtime_set" />
 
             <LinearLayout
                 android:id="@+id/text_time_layout"
@@ -52,8 +52,8 @@
                 <CheckBox android:id="@+id/check_dnd"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:textSize="?attr/text_size_small"
-                    android:text="Do Not Disturb"
-                    android:paddingLeft="8dp" android:paddingStart="8dp" android:button="?attr/checkDnd" />   <!-- TODO: i18n -->
+                    android:text="@string/configLabel_dnd"
+                    android:paddingLeft="8dp" android:paddingStart="8dp" android:button="?attr/checkDnd" />
 
             </LinearLayout>
 
@@ -73,7 +73,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:textSize="?attr/text_size_small"
                     android:gravity="center_vertical" android:layout_gravity="end"
-                    android:text="Allow Access" />   <!-- TODO: i18n -->
+                    android:text="@string/configAction_dnd_allow" />
 
             </LinearLayout>
 
