@@ -10,7 +10,7 @@
         <CheckBox
             android:id="@+id/check_showIcons"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Show Icons" android:textSize="?attr/text_size_small" />   <!-- TODO: i18n -->
+            android:text="@string/configLabel_appearance_showIcons" android:textSize="?attr/text_size_small" />
 
     </LinearLayout>
 
@@ -21,7 +21,7 @@
         <CheckBox
             android:id="@+id/check_enabledOnly"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Show enabled items only" android:textSize="?attr/text_size_small" />   <!-- TODO: i18n -->
+            android:text="@string/configLabel_appearance_showEnabledOnly" android:textSize="?attr/text_size_small" />
 
     </LinearLayout>
 
@@ -53,8 +53,8 @@
             <TextView style="@style/ChipText1" android:minHeight="32dp" android:minWidth="32dp"
                 android:id="@+id/chip_alarmtypes_add"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text=" +" android:textSize="?attr/text_size_small"
-                android:gravity="center" />   <!-- TODO: i18n -->
+                android:text="@string/configLabel_addSymbol" android:textSize="?attr/text_size_small"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -70,7 +70,7 @@
             android:id="@+id/spin_sortOrder_label" android:labelFor="@+id/spin_sortOrder"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:textSize="?attr/text_size_small"
-            android:text="Sort by" />   <!-- TODO -->
+            android:text="@string/configAction_sortBy" />
 
         <Spinner
             android:id="@+id/spin_sortOrder"

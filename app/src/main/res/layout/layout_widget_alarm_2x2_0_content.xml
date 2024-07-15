@@ -30,27 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView style="@style/WidgetTimeTextView2" android:visibility="visible"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                tools:text="Alarm Label" android:labelFor="@+id/text_alarmtime"
-                android:contentDescription="Alarm Label"
-                android:gravity="start" android:layout_gravity="start" />   <!-- TODO: i18n -->
-
-            <TextView style="@style/WidgetTimeTextView"
-                android:id="@+id/text_alarmtime" android:layout_width="wrap_content"
-                android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
-                android:paddingTop="0dp" android:paddingBottom="0dp"
-                android:gravity="start"
-                android:text=""
-                tools:text="6:00 AM" />
-
-        </LinearLayout>
-
     </LinearLayout>
 
 </merge>

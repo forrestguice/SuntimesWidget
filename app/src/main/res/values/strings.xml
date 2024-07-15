@@ -28,6 +28,7 @@
     <string name="configAction_export">Export</string>
     <string name="configAction_import">Import</string>
     <string name="configAction_info">More Info</string>
+    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
@@ -390,10 +391,12 @@
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
     <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
-
+    <string name="configLabel_addSymbol"> +</string>   <!-- "+", add symbol / simple buttons -->
 
     <!-- Setting: navigation -->
     <string name="configLabel_navigation">Navigation</string>           <!-- group title -->
