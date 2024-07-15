@@ -43,7 +43,7 @@ android
 
     lintOptions
     {
-        disable 'MissingTranslation','WrongRegion'
+        disable 'MissingTranslation','WrongRegion','ObsoleteSdkInt'
     }
 
     useLibrary 'android.test.runner'
