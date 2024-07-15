@@ -171,7 +171,7 @@
                         android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
 
                         <FrameLayout style="@style/ChipArea" android:id="@+id/chip_reminder"
-                            android:paddingRight="14dp" android:layout_width="wrap_content" android:layout_height="match_parent">
+                            android:paddingEnd="14dp" android:paddingRight="14dp" android:layout_width="wrap_content" android:layout_height="match_parent">
 
                             <android.support.v7.widget.AppCompatCheckBox
                                 android:id="@+id/check_reminder" style="@style/ChipTextBase"
