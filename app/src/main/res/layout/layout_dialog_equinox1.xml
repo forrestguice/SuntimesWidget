@@ -30,7 +30,7 @@
 
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="center" android:gravity="center"
-                    android:id="@+id/text_title1" android:text="2022"
+                    android:id="@+id/text_title1" android:text="2022" tools:ignore="HardcodedText"
                     style="@style/EquinoxDialogTitleStyle" android:visibility="visible"
                     android:paddingTop="8dp" android:paddingBottom="8dp"
                     android:background="?attr/selectableItemBackground"
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100dp"
                     android:layout_margin="0dp" android:padding="0dp" android:gravity="start|center_vertical"
                     style="@style/SunsetTextView" android:textSize="?attr/text_size_small"
-                    android:text="365d 5h 41m\n365.24 days" />
+                    android:text="365d 5h 41m\n365.24 days" tools:ignore="HardcodedText" />
 
             </LinearLayout>
 
