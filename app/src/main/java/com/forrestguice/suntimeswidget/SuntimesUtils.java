@@ -2118,7 +2118,7 @@ public class SuntimesUtils
     /**
      * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
      */
-    public static void forceActionBarIcons(Menu menu)
+    public static void forceActionBarIcons(Menu menu)    // TODO: when targetting api29+ this method can be replaced with PopupMenu.setForceShowIcon
     {
         if (menu != null)
         {
