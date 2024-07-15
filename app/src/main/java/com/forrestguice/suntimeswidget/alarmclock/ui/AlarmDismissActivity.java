@@ -607,7 +607,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
         if (v != null)
         {
-            ValueAnimator animation = ValueAnimator.ofArgb(colors);
+            ValueAnimator animation = getColorValueAnimator(colors);
             animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 public void onAnimationUpdate(ValueAnimator animator) {
                     v.setBackgroundColor((int)animator.getAnimatedValue());
@@ -623,6 +623,15 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         return null;
     }
 
+    private static ValueAnimator getColorValueAnimator(int... colors)
+    {
+        if (Build.VERSION.SDK_INT >= 21) {
+            return ValueAnimator.ofArgb(colors);
+        } else {
+            return ValueAnimator.ofInt(colors);
+        }
+    }
+
     private Object pulseAnimationObj, bgAnimationObj;
 
     @Nullable
@@ -633,7 +642,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
         if (icon != null && labels != null)
         {
-            ValueAnimator animation = ValueAnimator.ofArgb(startColor, endColor);
+            ValueAnimator animation = getColorValueAnimator(startColor, endColor);
             animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
             {
                 @Override

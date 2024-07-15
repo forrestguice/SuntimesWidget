@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -72,6 +73,7 @@ public class AlarmButton extends RelativeLayout
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr, -1);
     }
+    @TargetApi(21)
     public AlarmButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs, defStyleAttr, defStyleRes);
