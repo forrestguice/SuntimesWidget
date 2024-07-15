@@ -365,7 +365,9 @@
             </intent-filter>
         </service>
 
-        <service android:name=".alarmclock.ui.bedtime.BedtimeConditionService"
+        <service
+            android:name=".alarmclock.ui.bedtime.BedtimeConditionService"
+            android:enabled="@bool/api_post_24"
             android:label="@string/configLabel_bedtime"
             android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
             <intent-filter>

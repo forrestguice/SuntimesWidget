@@ -2,6 +2,7 @@
 <resources>
     <bool name="api_pre_14">true</bool>
     <bool name="api_post_14">false</bool>
+    <bool name="api_post_24">false</bool>
     <bool name="is_watch">false</bool>
 
     <attr name="dialogFrame" format="reference" />

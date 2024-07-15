@@ -33,6 +33,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 
+@TargetApi(24)
 public class BedtimeConditionService extends ConditionProviderService
 {
     public static final String ACTION_BEDTIME_UPDATE = "suntimeswidget.alarm.update_bedtime";
