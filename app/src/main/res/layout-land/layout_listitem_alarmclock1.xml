@@ -178,7 +178,8 @@
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
                                 android:button="?attr/checkReminder"
-                                android:paddingLeft="8dp" tools:text="12h reminder" android:checked="false" />
+                                android:paddingStart="8dp" android:paddingLeft="8dp"
+                                tools:text="12h reminder" android:checked="false" />
 
                         </FrameLayout>
 
@@ -239,13 +240,13 @@
 
 
                         <FrameLayout style="@style/ChipArea" android:id="@+id/chip_vibrate"
-                            android:paddingRight="14dp" android:layout_width="wrap_content" android:layout_height="match_parent">
+                            android:paddingEnd="14dp" android:paddingRight="14dp" android:layout_width="wrap_content" android:layout_height="match_parent">
 
                             <android.support.v7.widget.AppCompatCheckBox
                                 android:id="@+id/check_vibrate" style="@style/ChipTextBase"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
-                                android:button="?attr/checkVibrate" android:paddingLeft="8dp"
+                                android:button="?attr/checkVibrate" android:paddingLeft="8dp" android:paddingStart="8dp"
                                 android:text="@string/alarmOption_vibrate" android:checked="true" />
 
                         </FrameLayout>
@@ -342,7 +343,8 @@
                     android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
                     android:text="" />
 
-                <TextView android:drawableLeft="?attr/icActionAddLabel"
+                <TextView
+                    android:drawableLeft="?attr/icActionAddLabel" android:drawableStart="?attr/icActionAddLabel"
                     android:id="@+id/edit_note" android:background="?attr/selectableItemBackground"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
