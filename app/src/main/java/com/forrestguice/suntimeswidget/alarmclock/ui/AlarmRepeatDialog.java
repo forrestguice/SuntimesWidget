@@ -348,8 +348,8 @@ public class AlarmRepeatDialog extends DialogFragment
                         button.setChecked(repeatDays.contains(day));
                         button.setEnabled(repeat);
 
-                    } else Log.d("DEBUG", "updateViews: missing button tag " + i);
-                } else Log.d("DEBUG", "updateViews: missing button " + i);
+                    } //else Log.d("DEBUG", "updateViews: missing button tag " + i);
+                } //else Log.d("DEBUG", "updateViews: missing button " + i);
             }
         }
     }

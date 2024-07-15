@@ -140,7 +140,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         Bitmap bitmap = projection.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_worldmap, bitmap);
-            Log.d("DEBUG", "map is " + bitmap.getWidth() + " x " + bitmap.getHeight());
+            //Log.d("DEBUG", "map is " + bitmap.getWidth() + " x " + bitmap.getHeight());
         }
     }
 

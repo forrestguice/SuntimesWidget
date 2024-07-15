@@ -133,7 +133,7 @@ public class EventListHelper
     }
 
     public void setSelected( String eventID ) {
-        Log.d("DEBUG", "setSelected: " + eventID);
+        //Log.d("DEBUG", "setSelected: " + eventID);
         selectedItem = adapter.findItemByID(eventID);
         adapter.setSelected(selectedItem);
     }
@@ -442,7 +442,7 @@ public class EventListHelper
             public void onClick(DialogInterface dialog, int which) {
                 String eventID = saveDialog.getEventID();
                 EventSettings.saveEvent(context, saveDialog.getEvent());
-                Log.d("DEBUG", "onEventSaved " + saveDialog.getEvent().toString());
+                //Log.d("DEBUG", "onEventSaved " + saveDialog.getEvent().toString());
                 //Toast.makeText(context, context.getString(R.string.saveevent_toast, saveDialog.getEventLabel(), eventID), Toast.LENGTH_SHORT).show();  // TODO
                 initAdapter(context);
                 updateViews(context);
@@ -943,11 +943,11 @@ public class EventListHelper
             for (int i=0; i<objects.size(); i++) {
                 EventSettings.EventAlias item = objects.get(i);
                 if (item != null && item.getID().equals(eventID)) {
-                    Log.d("DEBUG", "findItemByID: " + eventID + " .. " + item.toString());
+                    //Log.d("DEBUG", "findItemByID: " + eventID + " .. " + item.toString());
                     return item;
                 }
             }
-            Log.d("DEBUG", "findItemByID: " + eventID + " .. null");
+            //Log.d("DEBUG", "findItemByID: " + eventID + " .. null");
             return null;
         }
 

@@ -131,7 +131,7 @@ public class ClockTileService extends SuntimesTileService
 
     protected void startUpdateTask(Dialog dialog)
     {
-        Log.d("DEBUG", "startUpdateTask");
+        //Log.d("DEBUG", "startUpdateTask");
         if (handler == null) {
             handler = new Handler();
         }
@@ -144,7 +144,7 @@ public class ClockTileService extends SuntimesTileService
 
     protected void stopUpdateTask()
     {
-        Log.d("DEBUG", "stopUpdateTask");
+        //Log.d("DEBUG", "stopUpdateTask");
         if (handler != null && updateTask != null) {
             handler.removeCallbacks(updateTask);
             updateTask = null;

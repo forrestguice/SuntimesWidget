@@ -276,7 +276,7 @@ public class WidgetThemes
         try {
             json.put("set", set);
             String jsonString = json.toString();
-            Log.d("DEBUG", "setToJson :: " + jsonString);
+            //Log.d("DEBUG", "setToJson :: " + jsonString);
             return jsonString;
 
         } catch (JSONException e) {
@@ -301,7 +301,7 @@ public class WidgetThemes
                 Log.e("jsonToSet", "Failed to read string as json object :: " + e);
             }
         }
-        Log.d("DEBUG", "jsonToSet :: " + set);
+        //Log.d("DEBUG", "jsonToSet :: " + set);
         return set;
     }
 

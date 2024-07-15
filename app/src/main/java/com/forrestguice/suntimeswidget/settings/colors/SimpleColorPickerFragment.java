@@ -218,7 +218,7 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         return new ColorChooser.HexColorTextWatcher(showAlpha()) {
             @Override
             protected void onValueChanged(String hexValue) {
-                Log.d("DEBUG", "hexValue:" + hexValue +".");
+                //Log.d("DEBUG", "hexValue:" + hexValue +".");
                 setColor(hexValue);
                 edit.setSelection(edit.getText().length());
             }

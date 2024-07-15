@@ -85,7 +85,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         equinoxView.setTrackingMode(WidgetSettings.loadTrackingModePref(getContext(), 0));
         if (savedState != null)
         {
-            Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
+            //Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
             overrideColumnWidthPx = savedState.getInt("overrideColumnWidthPx", overrideColumnWidthPx);
             equinoxView.loadState(savedState);
         }
@@ -191,7 +191,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     {
         if (equinoxView != null) {
             equinoxView.updateViews(getContext());
-            Log.d("DEBUG", "EquinoxDialog updated");
+            //Log.d("DEBUG", "EquinoxDialog updated");
         }
     }
 

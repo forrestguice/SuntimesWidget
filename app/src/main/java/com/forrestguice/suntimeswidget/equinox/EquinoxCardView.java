@@ -180,7 +180,7 @@ public class EquinoxCardView extends LinearLayout
         if (position != -1) {
             card_view.scrollToPosition(position);
         }
-        Log.d("DEBUG", "EquinoxCardView updated: position: " + position);
+        //Log.d("DEBUG", "EquinoxCardView updated: position: " + position);
     }
 
     protected void updateViews(Context context, SuntimesEquinoxSolsticeData data) {

@@ -75,7 +75,7 @@ public class SunLayout_3x1_0 extends SunLayout_2x1_0
         super.scaleViews(context, appWidgetId, views, adjustedSizeSp);
         Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
         views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2], false));
-        Log.d("DEBUG", "scaleViews: " + adjustedSizeSp[2]);
+        //Log.d("DEBUG", "scaleViews: " + adjustedSizeSp[2]);
     }
 
 }

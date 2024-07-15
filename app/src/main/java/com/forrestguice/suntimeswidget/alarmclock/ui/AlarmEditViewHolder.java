@@ -301,7 +301,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             tray_beforeAlert.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM && (defaultReminderWithin > 0)) ? View.VISIBLE : View.GONE);
 
             long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, defaultReminderWithin);
-            Log.d("DEBUG", "bindDataToPosition: showReminder: " + reminderWithin);
+            //Log.d("DEBUG", "bindDataToPosition: showReminder: " + reminderWithin);
             check_reminder.setText(context.getString(R.string.reminder_label, utils.timeDeltaLongDisplayString(reminderWithin != 0 ? reminderWithin : defaultReminderWithin)));
             check_reminder.setChecked(reminderWithin > 0);
 
