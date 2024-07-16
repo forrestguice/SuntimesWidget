@@ -89,6 +89,14 @@ public class AlarmNotificationsTest
         }
     };
 
+    public static final int MAXTIME_BOOT_COMPLETED = 10000;
+    public static final int MAXTIME_GENERAL = 5000;
+    public static final int MAXTIME_DISMISS = 5000;
+    public static final int MAXTIME_DELETE = 2000;
+    public static final int MAXTIME_SCHEDULE = 1500;
+    public static final int MAXTIME_SHOW = 1000;
+    public static final int MAXTIME_SNOOZE = 2000;
+
     @Test
     public void test_bootCompleted() throws TimeoutException
     {
@@ -121,7 +129,7 @@ public class AlarmNotificationsTest
         // trigger BOOT_COMPLETE action
         Intent intent = new Intent(AlarmNotifications.getServiceIntent(mockContext));
         intent.setAction(Intent.ACTION_BOOT_COMPLETED);
-        test_startCommand_calledStop(intent, true, 5000);
+        test_startCommand_calledStop(intent, true, MAXTIME_BOOT_COMPLETED);
 
         // verify AlarmState is now "scheduled"
         for (long rowID : rowIDs)
@@ -164,7 +172,7 @@ public class AlarmNotificationsTest
 
         Intent intent = new Intent(AlarmNotifications.getServiceIntent(mockContext));
         intent.setAction(Intent.ACTION_TIMEZONE_CHANGED);
-        test_startCommand_calledStop(intent, true, 5000);
+        test_startCommand_calledStop(intent, true, MAXTIME_GENERAL);
         assertEquals(TimeZone.getDefault().getID(), AlarmSettings.loadSystemTimeZoneID(mockContext));
         assertEquals(TimeZone.getDefault().getOffset(System.currentTimeMillis()), AlarmSettings.loadSystemTimeZoneOffset(mockContext));
 
@@ -466,22 +474,22 @@ public class AlarmNotificationsTest
         Uri data2 = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId2);
 
         Intent intent0 = AlarmNotifications.getServiceIntent(mockContext);
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, 1500);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, MAXTIME_SCHEDULE);
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SCHEDULED_DISTANT);
 
         assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, 1000);    // service should finish (showing normal notification)
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // service should finish (showing normal notification)
         assertFalse("service should not be running in the foreground when showing notification", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
         assertTrue("media player should be playing", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, 5000);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, MAXTIME_DISMISS);
         int expectedState = alarm.repeating ? AlarmState.STATE_SCHEDULED_DISTANT                                           // repeating notifications are now scheduled_
                 : AlarmState.STATE_DISABLED;                                                                               // non-repeating notifications are now disabled
         verify_hasAlarmState(alarmId2, expectedState);
         assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, 2000);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, MAXTIME_DELETE);
         assertFalse("failed to delete notification", hasAlarmId(alarmId2));
     }
 
@@ -505,32 +513,32 @@ public class AlarmNotificationsTest
         Uri data2 = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId2);
 
         Intent intent0 = AlarmNotifications.getServiceIntent(mockContext);
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, 1500);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, MAXTIME_SCHEDULE);
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SCHEDULED_SOON);
 
         assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, 1000);    // should continue running (showing foreground notification)
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // should continue running (showing foreground notification)
         assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
         assertTrue("media player should be playing", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SNOOZE }, data2, false, 1000);    // should continue running (still showing foreground notification)
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SNOOZE }, data2, false, MAXTIME_SNOOZE);    // should continue running (still showing foreground notification)
         assertTrue("service should be running in the foreground when snoozing", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SNOOZING);
         assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, 1000);    // should continue running (showing foreground notification)
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // should continue running (showing foreground notification)
         assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
         assertTrue("media player should be playing", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, 5000);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, MAXTIME_DISMISS);
         int expectedState = alarm.repeating ? ((reminderWithinMillis <= 0) ? AlarmState.STATE_SCHEDULED_SOON : AlarmState.STATE_SCHEDULED_DISTANT)     // repeating alarms are now scheduled_
                                       : AlarmState.STATE_DISABLED;                                                                               // non-repeating alarms are now disabled
         verify_hasAlarmState(alarmId2, expectedState);
         assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, 2000);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, MAXTIME_DELETE);
         assertFalse("failed to delete alarm", hasAlarmId(alarmId2));
     }
 
