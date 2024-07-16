@@ -1525,8 +1525,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return colorLabel;
     }
 
-    private CharSequence getTextForPosition(Context context, SuntimesCalculator.SunPosition position)
+    private CharSequence getTextForPosition(@Nullable Context context, @NonNull SuntimesCalculator.SunPosition position)
     {
+        if (context == null) {
+            return "";
+        }
         if (position.elevation >= 0) {
             return context.getString(R.string.timeMode_day);
         }
