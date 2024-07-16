@@ -1780,6 +1780,15 @@
     <string name="configActionDesc_nextSunset">Show next sunset</string>
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
     <string name="configActionDesc_settings">@string/configAction_settings</string>
+    <string name="configActionDesc_timerList">Timer List</string>   <!-- TODO -->
+    <string name="configActionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
+    <string name="configActionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
+    <string name="configActionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
+    <string name="configActionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
+    <string name="configActionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
+    <string name="configActionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
+    <string name="configLabel_android">Android</string>   <!-- TODO -->
+    <string name="configLabel_calendarEvent">Calendar Event</string>   <!-- TODO -->
 
     <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1817,8 +1826,21 @@
         <item>@string/configLabel_alarmClock</item>
         <item>@string/configLabel_alarmClock</item>
         <item>@string/app_name</item>
+
         <item>@string/configLabel_bedtime</item>
         <item>@string/configLabel_bedtime</item>
+
+        <item>@string/configLabel_calendarEvent</item>
+        <item>@string/configLabel_calendarEvent</item>
+
+        <item>@string/app_name_alarmclock</item>
+        <item>@string/configLabel_alarmClock</item>
+
+        <item>@string/configLabel_android</item>
+        <item>@string/configLabel_android</item>
+        <item>@string/configLabel_android</item>
+        <item>@string/configLabel_android</item>
+
     </string-array>
     <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1856,8 +1878,21 @@
         <item>@string/configActionDesc_alarmSnooze</item>
         <item>@string/configActionDesc_alarmDismiss</item>
         <item>@string/configActionDesc_updateWidgets</item>
+
         <item>@string/configActionDesc_triggerBedtime</item>
         <item>@string/configActionDesc_dismissBedtime</item>
+
+        <item>@string/configActionDesc_createCalendarRisingEvent</item>
+        <item>@string/configActionDesc_createCalendarSettingEvent</item>
+
+        <item>@string/configActionDesc_alarmList</item>
+        <item>@string/configActionDesc_timerList</item>
+
+        <item>@string/configActionDesc_dateSettings</item>
+        <item>@string/configActionDesc_displaySettings</item>
+        <item>@string/configActionDesc_localeSettings</item>
+        <item>@string/configActionDesc_locationSettings</item>
+
     </string-array>
 
     <!-- App Setting: time zone sort modes -->
