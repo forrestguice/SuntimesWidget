@@ -358,30 +358,30 @@ public class AlarmNotificationsTest
         assertTrue("failed to create alarm", hasAlarmId(alarmId2));
         Uri data2 = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId2);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, 1500);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, MAXTIME_SCHEDULE);
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SCHEDULED_SOON);
 
         assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, 1000);    // should continue running (showing foreground notification)
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // should continue running (showing foreground notification)
         assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
         assertTrue("media player should be playing", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SNOOZE }, data2, false, 1000);    // should continue running (still showing foreground notification)
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SNOOZE }, data2, false, MAXTIME_SNOOZE);    // should continue running (still showing foreground notification)
         assertTrue("service should be running in the foreground when snoozing", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SNOOZING);
         assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, 1000);    // should continue running (showing foreground notification)
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // should continue running (showing foreground notification)
         assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
         assertTrue("media player should be playing", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, 3500);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, MAXTIME_DISMISS);
         verify_hasAlarmState(alarmId2, AlarmState.STATE_DISABLED);
         assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
 
-        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, 2000);
+        test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, MAXTIME_DELETE);
         assertFalse("failed to delete alarm", hasAlarmId(alarmId2));
     }
 
@@ -841,11 +841,16 @@ public class AlarmNotificationsTest
     }
 
     @Test
-    public void test_startAlertUri_notification0()
+    public void test_startAlertUri_fallback()
     {
-        test_startAlertUri_notification(RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_NOTIFICATION));
         test_startAlertUri_notification(AlarmSettings.getFallbackRingtoneUri(mockContext, AlarmClockItem.AlarmType.NOTIFICATION));
         test_startAlertUri_notification(AlarmSettings.getFallbackRingtoneUri(mockContext, AlarmClockItem.AlarmType.ALARM));
+    }
+
+    @Test
+    public void test_startAlertUri_notification0_default()
+    {
+        test_startAlertUri_notification(RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_NOTIFICATION));
     }
 
     @Test
@@ -855,6 +860,7 @@ public class AlarmNotificationsTest
         test_startAlertUri_alarm(defaultSound, true);
         test_startAlertUri_alarm(defaultSound, false);
     }
+
     @Test
     public void test_startAlertUri_invalid()
     {
