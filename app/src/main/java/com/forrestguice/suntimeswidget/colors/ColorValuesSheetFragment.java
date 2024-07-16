@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -114,6 +115,15 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                     }
                 }, 500);
             }
+        }
+    }
+
+    public void requestFocus()
+    {
+        if (mode == MODE_EDIT) {
+            editDialog.requestFocus();
+        } else {
+            listDialog.requestFocus();
         }
     }
 
@@ -367,6 +377,9 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         if (editDialog.getView() != null) {
             editDialog.getView().setVisibility(mode == MODE_EDIT ? View.VISIBLE : View.GONE);
         }
+        if (AppSettings.isTelevision(getActivity())) {
+            requestFocus();
+        }
     }
 
     public void cancelEdit(Context context)
@@ -458,7 +471,8 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listener.onColorValuesSelected(values);
         }
     }
-    protected void onModeChanged() {
+    protected void onModeChanged()
+    {
         if (listener != null) {
             listener.onModeChanged(mode);
         }

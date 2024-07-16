@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -40,6 +41,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Arrays;
@@ -130,6 +132,25 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     public ColorValuesCollection<ColorValues> getColorCollection() {
         return colorCollection;
     }
+
+    @NonNull @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setOnShowListener(onShowDialogListener);
+        return dialog;
+    }
+
+    private final DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener() {
+        @Override
+        public void onShow(DialogInterface dialog)
+        {
+            if (AppSettings.isTelevision(getActivity())) {
+                colorSheet.requestFocus();
+            }
+        }
+    };
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)

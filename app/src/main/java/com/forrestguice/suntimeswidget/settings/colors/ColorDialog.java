@@ -76,6 +76,7 @@ public class ColorDialog extends BottomSheetDialogFragment
     }
 
     private Button btn_suggest;
+    private Button btn_cancel;
     private ViewPager colorPager;
     private TabLayout colorPagerTabs;
     private ColorPickerPagerAdapter colorPagerAdapter;
@@ -157,8 +158,22 @@ public class ColorDialog extends BottomSheetDialogFragment
             window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         }
 
+        dialog.setOnShowListener(onShowListener);
+
         return dialog;
     }
+
+
+    private final DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener()
+    {
+        @Override
+        public void onShow(DialogInterface dialog)
+        {
+            if (AppSettings.isTelevision(getActivity())) {
+                btn_cancel.requestFocus();
+            }
+        }
+    };
 
     private DialogInterface.OnKeyListener onKeyListener = new DialogInterface.OnKeyListener()
     {
@@ -239,7 +254,7 @@ public class ColorDialog extends BottomSheetDialogFragment
             btn_suggest.setOnClickListener(onDialogSuggestClick);
         }
 
-        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
+        btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
         if (btn_cancel != null) {
             btn_cancel.setOnClickListener(onDialogCancelClick);
         }

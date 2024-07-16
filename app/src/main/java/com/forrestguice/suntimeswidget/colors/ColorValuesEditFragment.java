@@ -64,6 +64,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     protected EditText editID;
     protected GridLayout panel;
+    protected ImageButton cancelButton;
 
     public ColorValuesEditFragment() {
         super();
@@ -96,7 +97,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             saveButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onSaveButtonClicked));
         }
 
-        ImageButton cancelButton = (ImageButton) content.findViewById(R.id.cancelButton);
+        cancelButton = (ImageButton) content.findViewById(R.id.cancelButton);
         if (cancelButton != null) {
             cancelButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onCancelButtonClicked));
         }
@@ -107,6 +108,13 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
         updateViews();
         return content;
+    }
+
+    public void requestFocus()
+    {
+        if (cancelButton != null) {
+            cancelButton.requestFocus();
+        }
     }
 
     /**
