@@ -87,6 +87,16 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("timezoneSort_values", R.array.timezoneSort_values, "timezoneSort_display", R.array.timezoneSort_display);
             verify_stringArrayLength("timezoneSort_display", R.array.timezoneSort_display, "TimeZoneSort (ENUM)", WidgetTimezones.TimeZoneSort.values());
 
+            verify_stringArrayLength("widgetgravity", R.array.widgetgravity, "WidgetGravity (ENUM)", WidgetSettings.WidgetGravity.values());
+
+            verify_stringArrayLength("navMode_values", R.array.navMode_values, "navMode_display", R.array.navMode_display);
+
+            verify_stringArrayLength("compareMode_values", R.array.compareMode_values, "compareMode_display", R.array.compareMode_display);
+            verify_stringArrayValuesOfEnum("compareMode_values", R.array.compareMode_values, WidgetSettings.CompareMode.class);
+
+            verify_stringArrayLength("tapActions_titles", R.array.tapActions_titles, "tapActions_display", R.array.tapActions_display);
+            verify_stringArrayLength("tapActions_display", R.array.tapActions_display, "SuntimesAction (ENUM)", WidgetActions.SuntimesAction.values());
+
             verify_stringArrayLength("clockTapActions_values", R.array.clockTapActions_values, "clockTapActions_display", R.array.clockTapActions_display);
             verify_enumTapActions("clockTapActions_values", R.array.clockTapActions_values);
 
@@ -107,6 +117,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayValuesOfEnum("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, WidgetSettings.TrackingMode.class);
             verify_stringArrayLength("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, "solsticeTrackingMode_display", R.array.solsticeTrackingMode_display);
 
+            verify_stringArrayLength("launcherMode_values", R.array.launcherMode_values, "launcherMode_display", R.array.launcherMode_display);
             verify_stringArrayLength("emphasizefield_values", R.array.emphasizefield_values, "emphasizefield_display", R.array.emphasizefield_display);
             verify_stringArrayLength("headerText_values", R.array.headerText_values, "headerText_display", R.array.headerText_display);
 
@@ -171,7 +182,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
 
     public void verify_arrayLength(String tag1, Object[] a1, String tag2, Object[] a2)
     {
-        assertTrue("The size of " + tag1 + " and " + tag2 + "DOES NOT MATCH! locale: " + AppSettings.getLocale().toString(),
+        assertTrue("The size of " + tag1 + " (" + a1.length + ") and " + tag2 + " (" + a2.length + ") DOES NOT MATCH! locale: " + AppSettings.getLocale().toString(),
                 a1.length == a2.length);
     }
 
@@ -225,6 +236,9 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_pluralFormatI("alarmPlural", R.plurals.alarmPlural, values);
             verify_pluralFormatI("eventPlural", R.plurals.eventPlural, values);
             verify_pluralFormatI("placePlural", R.plurals.placePlural, values);
+            verify_pluralFormatI("cyclePlural", R.plurals.cyclePlural, values);
+            verify_pluralFormatI("itemsPlural", R.plurals.itemsPlural, values);
+            verify_pluralFormatI("widgetPlural", R.plurals.widgetPlural, values);
             verify_pluralFormatI("locationdelete_dialog_success", R.plurals.locationdelete_dialog_success, values);
             verify_pluralFormatI("themePlural", R.plurals.themePlural, values);
 
