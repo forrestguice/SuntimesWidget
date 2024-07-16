@@ -315,9 +315,11 @@ public class LightGraphDialog extends BottomSheetDialogFragment
 
     private final DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
         @Override
-        public void onShow(DialogInterface dialogInterface) {
+        public void onShow(DialogInterface dialogInterface)
+        {
             Context context = getContext();
-            if (context != null) {
+            if (context != null)
+            {
                 updateViews(getContext());
                 if (text_title != null) {
                     text_title.post(new Runnable() {
@@ -327,6 +329,11 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                         }
                     });
                 }
+
+                if (AppSettings.isTelevision(getActivity())) {
+                    btn_menu.requestFocus();
+                }
+
             } else Log.w("LightGraphDialog.onShow", "null context! skipping update");
         }
     };
