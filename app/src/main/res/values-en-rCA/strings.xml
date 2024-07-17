@@ -14,5 +14,13 @@
     <string name="solarevents_event_equinox_autumnal">fall equinox</string>
 
     <string name="configLabel_themeColorFall">Fall Colour:</string> <!-- color label -->
+    <string name="configLabel_themeColorFall_text">Fall (text)</string> <!-- color label -->
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>Winter/Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
+          <b>Spring/Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
+          <b>Summer/Fall Cross-Quarter:</b> The midpoint between Summer Solstice and Fall Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
+          <b>Fall/Winter Cross-Quarter:</b> The midpoint between Fall Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->
 
 </resources>

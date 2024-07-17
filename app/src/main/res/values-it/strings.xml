@@ -2084,11 +2084,11 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
-          <b>Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
-          <b>Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
-          <b>Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->  <!-- TODO -->
+          <b>Winter/Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
+          <b>Spring/Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
+          <b>Summer/Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
+          <b>Autumn/Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO -->
 
     <string name="help_eventlist"><![CDATA[
           [Icon OK] Choose a custom event.\n

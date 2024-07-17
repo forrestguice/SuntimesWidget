@@ -2403,7 +2403,7 @@
           <b>بيلتان (الربع الفاصل):</b> نقطة منتصف الطريق بين ميزان الربيع والانقلاب الصيفي؛ <em>مايو</em> [northern hemisphere]، أو <em>نوفمبر</em> [southern hemisphere].<br/><br/>
           <b>لوناسا (الربع الفاصل):</b> نقطة منتصف الطريق بين الانقلاب الصيفي والميزان الخريفي؛ <em>أغسطس</em> [northern hemisphere]، أو <em>فبراير</em> [southern hemisphere].<br/><br/>
           <b>سمهوين (الربع الفاصل):</b> نقطة منتصف الطريق بين الميزان الخريفي والانقلاب الشتوي؛ <em>نوفمبر</em> [northern hemisphere]، أو <em>مايو</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->
+    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO: update (see default strings.xml); e.g. "Imbolc" to "Spring/Summer Cross-Quarter" -->
 
     <string name="help_eventlist"><![CDATA[
           [Icon OK] اختر حدثاً مخصصاً .\n

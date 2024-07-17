@@ -2067,11 +2067,11 @@
     ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Spring Cross-Quarter:</b> Midtpunktet mellom vintersolverv og vårjevndøgn; <em>Februar</em> [nordlige halvkule], eller <em>August</em> [sørlige halvkule].<br/><br/>
-          <b>Summer Cross-Quarter:</b> Midtpunktet mellom vårjevndøgn og sommersolverv; <em>Mai</em> [nordlige halvkule], eller <em>November</em> [sørlige halvkule].<br/><br/>
-          <b>Autumn Cross-Quarter:</b> Midtpunktet mellom sommersolverv og høstjevndøgn; <em>August</em> [nordlige halvkule], eller <em>Februar</em> [sørlige halvkule].<br/><br/>
-          <b>Winter Cross-Quarter:</b> Midtpunktet mellom høstjevndøgn og vintersolverv; <em>November</em> [nordlige halvkule], eller <em>Mai</em> [sørlige halvkule].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->  <!-- TODO -->
+          <b>Winter/Spring Cross-Quarter:</b> Midtpunktet mellom vintersolverv og vårjevndøgn; <em>Februar</em> [nordlige halvkule], eller <em>August</em> [sørlige halvkule].<br/><br/>
+          <b>Spring/Summer Cross-Quarter:</b> Midtpunktet mellom vårjevndøgn og sommersolverv; <em>Mai</em> [nordlige halvkule], eller <em>November</em> [sørlige halvkule].<br/><br/>
+          <b>Summer/Autumn Cross-Quarter:</b> Midtpunktet mellom sommersolverv og høstjevndøgn; <em>August</em> [nordlige halvkule], eller <em>Februar</em> [sørlige halvkule].<br/><br/>
+          <b>Autumn/Winter Cross-Quarter:</b> Midtpunktet mellom høstjevndøgn og vintersolverv; <em>November</em> [nordlige halvkule], eller <em>Mai</em> [sørlige halvkule].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->  <!-- TODO: review -->
 
     <string name="help_eventlist"><![CDATA[
           [Icon OK] Velg en egendefinert hendelse.\n
