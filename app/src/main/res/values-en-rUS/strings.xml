@@ -25,6 +25,7 @@
     <string name="configLabel_themeColorSpring">Spring</string> <!-- color label -->
     <string name="configLabel_themeColorSummer">Summer</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Fall</string> <!-- color label -->
+    <string name="configLabel_themeColorFall_text">Fall (text)</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Winter</string> <!-- color label -->
 
     <string name="configLabel_themeColorSuffix">Suffix Color</string>   <!-- color label -->
