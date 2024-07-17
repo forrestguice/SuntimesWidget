@@ -27,6 +27,7 @@
     <string name="configAction_export">Eksportuj</string>
     <string name="configAction_import">Importuj</string>
     <string name="configAction_info">Więcej informacji</string>
+    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
     <string name="configAction_worldMap">Mapa świata</string>
@@ -329,6 +330,8 @@
     <string name="configLabel_appearance_scaleBase">Wypełnij całą komórkę</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">Wyrównanie do:</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
     <string name="configLabel_appearance_showTitle">Wyświetl tytuł</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tytuł:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -1190,6 +1193,8 @@
 
     <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->    <!-- TODO -->
 
+    <string name="configAction_dnd_allow">Allow Access</string>              <!-- button label when requesting permission -->    <!-- TODO -->
+    <string name="configLabel_dnd">Do Not Disturb</string>              <!-- textview text (next line shows time) -->    <!-- TODO -->
     <string name="configLabel_dnd_disabled">DND: Disabled</string>         <!-- do-not-disturb menu item -->    <!-- TODO -->
     <string name="configLabel_dnd_priority">DND: Priority only</string>    <!-- do-not-disturb menu item -->    <!-- TODO -->
     <string name="configLabel_dnd_alarms">DND: Alarms only</string>        <!-- do-not-disturb menu item -->    <!-- TODO -->
@@ -1216,6 +1221,9 @@
     <string name="configAction_restoreBackup">Przywróć z kopii zapasowej</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">Alarmy</string>
     <string name="restorebackup_dialog_item_appsettings">Ustawienia aplikacji</string>
+    <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
+    <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>   <!-- TODO -->
+    <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>   <!-- TODO -->
     <string name="restorebackup_dialog_item_widgetsettings">Ustawienia widżetów</string>
     <string name="restorebackup_dialog_item_widgetthemes">Skórki widżetów</string>
     <string name="restorebackup_dialog_item_placeitems">Miejsca</string>
@@ -1602,6 +1610,8 @@
     <string name="graph_option_labels">Etykiety</string>
     <string name="graph_option_axis">Osie</string>
     <string name="graph_option_points">Points</string>    <!-- TODO -->
+    <string name="graph_option_twilights">Twilights</string>   <!-- TODO -->
+    <string name="graph_option_seasons">Seasons</string>  <!-- TODO -->
     <string name="graph_option_filledpath">Pole pod wykresem</string>
     <string name="graph_option_moon">Wyświetl Księżyc</string>
 

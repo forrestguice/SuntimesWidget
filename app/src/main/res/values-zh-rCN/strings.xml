@@ -27,6 +27,7 @@
     <string name="configAction_export">导出</string>
     <string name="configAction_import">导入</string>
     <string name="configAction_info">更多信息</string>
+    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
     <string name="configAction_sunDialog">太阳位置</string>
     <string name="configAction_equinoxDialog">至点/分点</string>
     <string name="configAction_worldMap">世界地图</string>
@@ -337,6 +338,8 @@
     <string name="configLabel_appearance_scaleBase">填充整个单元格</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">对齐底部:</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">显示标签</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
     <string name="configLabel_appearance_showTitle">显示标题</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">标题:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -1185,6 +1188,8 @@
 
     <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->    <!-- TODO -->
 
+    <string name="configAction_dnd_allow">Allow Access</string>              <!-- button label when requesting permission -->    <!-- TODO -->
+    <string name="configLabel_dnd">Do Not Disturb</string>              <!-- textview text (next line shows time) -->    <!-- TODO -->
     <string name="configLabel_dnd_disabled">DND: Disabled</string>         <!-- do-not-disturb menu item -->    <!-- TODO -->
     <string name="configLabel_dnd_priority">DND: Priority only</string>    <!-- do-not-disturb menu item -->    <!-- TODO -->
     <string name="configLabel_dnd_alarms">DND: Alarms only</string>        <!-- do-not-disturb menu item -->    <!-- TODO -->
@@ -1213,6 +1218,9 @@
     <string name="configAction_restoreBackup">恢复备份</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">闹钟</string>
     <string name="restorebackup_dialog_item_appsettings">应用设置</string>
+    <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
+    <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>   <!-- TODO -->
+    <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>   <!-- TODO -->
     <string name="restorebackup_dialog_item_widgetsettings">小部件设置</string>
     <string name="restorebackup_dialog_item_widgetthemes">小部件主题</string>
     <string name="restorebackup_dialog_item_placeitems">地点</string>
@@ -1612,6 +1620,8 @@
     <string name="graph_option_labels">标签</string>
     <string name="graph_option_axis">轴</string>
     <string name="graph_option_points">Points</string>    <!-- TODO -->
+    <string name="graph_option_twilights">Twilights</string>   <!-- TODO -->
+    <string name="graph_option_seasons">Seasons</string>  <!-- TODO -->
     <string name="graph_option_filledpath">填充路径</string>
     <string name="graph_option_moon">显示月亮</string>
 
