@@ -1386,6 +1386,7 @@
     <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
     <string name="configActionDesc_moon">Moon Dialog</string>  <!-- TODO -->
     <string name="configActionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
     <string name="configActionDesc_setDate">Définir la date</string>
     <string name="configActionDesc_setTimeZone">Définir le fuseau horaire</string>
     <string name="configActionDesc_setLocation">Définir l\'emplacement</string>
@@ -1808,6 +1809,7 @@
     <string name="color_dialog_msg">Sélectionnez une couleur</string>
     <string name="color_dialog_ok">Ok</string>
     <string name="color_dialog_cancel">Annuler</string>
+    <string name="color_dialog_suggest">Suggest</string>   <!-- TODO -->
     <string name="color_dialog_tab1">1</string>  <!-- TODO -->
     <string name="color_dialog_tab2">2</string>  <!-- TODO -->
     <string name="color_dialog_tab3">3</string>  <!-- TODO -->
@@ -1817,6 +1819,34 @@
     <string name="color_dialog_label_a">A</string>
     <string name="color_dialog_hint_rgba">0–255</string>
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
+
+    <string name="configAction_colors">Colors</string>    <!-- TODO -->
+    <string name="configAction_filterColors">Filter</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_addColors">Add</string>    <!-- TODO -->
+    <string name="configAction_editColors">Edit</string>    <!-- TODO -->
+    <string name="configAction_saveColors">Save</string>    <!-- TODO -->
+    <string name="configAction_deleteColors">Delete</string>    <!-- TODO -->
+    <string name="configAction_importColors">@string/configAction_import</string>    <!-- TODO -->
+    <string name="configAction_exportColors">@string/configAction_export</string>    <!-- TODO -->
+
+    <string name="suggest_colorid">Custom</string>       <!-- edittext hint -->    <!-- TODO -->
+    <string name="hint_colorid">ID</string>              <!-- edittext hint -->    <!-- TODO -->
+    <string name="error_colorid_empty">ID required</string>                  <!-- edittext error text -->    <!-- TODO -->
+    <string name="error_colorid_spaces">ID may not contains spaces</string>   <!-- edittext error text -->    <!-- TODO -->
+    <string name="msg_colors_saved">Saved %s</string>        <!-- toast -->    <!-- TODO -->
+    <string name="msg_colors_deleted">Removed %s</string>    <!-- toast -->    <!-- TODO -->
+    <string name="msg_colors_imported">Imported colors %s</string>    <!-- toast -->    <!-- TODO -->
+    <string name="msg_colors_import_failed">Failed to import colors!</string>    <!-- toast -->    <!-- TODO -->
+
+    <string name="colorsimport_dialog_title">@string/configAction_importColors</string>    <!-- TODO -->
+    <string name="colorsimport_dialog_hint">Paste previously shared colors here.</string>    <!-- TODO -->
+    <string name="colorsimport_dialog_ok">@string/configAction_importColors</string>    <!-- TODO -->
+    <string name="colorsimport_dialog_cancel">@string/dialog_cancel</string>    <!-- TODO -->
+
+    <string name="colorsdelete_dialog_title">Remove Colors?</string>    <!-- toast -->    <!-- TODO -->
+    <string name="colorsdelete_dialog_message">Are you sure you want to remove %s?</string>    <!-- toast -->    <!-- TODO -->
+    <string name="colorsdelete_dialog_ok">Remove</string>    <!-- toast -->    <!-- TODO -->
+    <string name="colorsdelete_dialog_cancel">@string/dialog_cancel</string>    <!-- toast -->    <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">À propos</string>
