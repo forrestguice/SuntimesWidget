@@ -52,6 +52,29 @@ public class SuntimesResTest extends SuntimesActivityTestBase
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Test
+    public void test_selectFormatGender()
+    {
+        Context context = activityRule.getActivity();
+        String[] locales = context.getResources().getStringArray(R.array.locale_values);
+        for (String languageTag : locales)
+        {
+            AppSettings.loadLocale(context, languageTag);
+            verify_selectFormatGender("time_gender", R.string.time_gender);
+            verify_selectFormatGender("date_gender", R.string.date_gender);
+            verify_selectFormatGender("sunevent_phrase_gender", R.string.sunevent_phrase_gender);
+            verify_selectFormatGender("shadowevent_phrase_gender", R.string.shadowevent_phrase_gender);
+        }
+    }
+
+    protected void verify_selectFormatGender(String tag, int stringID)
+    {
+        Context context = activityRule.getActivity();
+        String value = context.getString(stringID);
+        assertNotNull(value);
+        assertTrue(tag + " be a value supported by SelectFormat", value.equals("female") || value.equals("other"));
+    }
+
+    @Test
     public void test_stringArrays()
     {
         Context context = activityRule.getActivity();
