@@ -963,6 +963,8 @@
     <string name="sunevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> at <xliff:g id="angle">%3$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->  <!-- TODO -->
     <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
+    <string name="shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
+
     <string name="configLabel_manageEvents">إدارة الأحداث</string>  <!-- settings activity / pref -->
     <string name="configLabel_manageEvents_summary">إضافة أو إزالة الأحداث المخصصة.</string>
     <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>
@@ -1184,6 +1186,13 @@
     <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "مُفعل", "مُعطَّل" -->
     <string name="configLabel_alarms_notifications_summary1">على شاشة القفل: %1$s</string>    <!-- "على شاشة القفل: مُعطَّل -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> الإشعارات مُعطلة. قد تفشل التنبيهات في العرض بشكل صحيح.</string>  <!-- snackbar message -->
+
+    <string name="configLabel_alarms_notifications_fullscreen">Full-screen Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_fullscreen_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_fullscreen_off">Off.\nAlarms may fail to display over the lock screen.</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>        <!-- TODO -->
+    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
 
     <string name="configLabel_alarms_bootcompleted">اكتمال التمهيد</string>
     <string name="configLabel_alarms_bootcompleted_summary">تُعيد التنبيهات تلقائيًا بعد بضع دقائق من إعادة التشغيل.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
