@@ -571,12 +571,17 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.w(TAG, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
         }
 
-        if (alarm.vibrate && passesFilter) {
+        boolean isMuted = AlarmSettings.isChannelMuted(context, alarm.type);
+        if (isMuted) {
+            Log.w(TAG, "startAlert: blocked by Notification Channel (muted): " + alarm.rowID);
+        }
+
+        if (alarm.vibrate && passesFilter && !isMuted) {
             startVibration(context, alarm);
         }
 
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
-        if (soundUri != null && passesFilter)
+        if (soundUri != null && passesFilter && !isMuted)
         {
             if (AlarmSettings.VALUE_RINGTONE_DEFAULT.equals(alarm.ringtoneURI)) {
                 soundUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type, true);
@@ -610,6 +615,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e2) {
                         Log.e(TAG, "startAlert: failed to play " + fallbackUri.toString() + " ..(2) " + e);
                         Toast.makeText(context, context.getString(R.string.alarmAction_alertFailedMsg), Toast.LENGTH_SHORT).show();
+                        isPlaying = false;
                     }
                 }
             }
@@ -639,6 +645,24 @@ public class AlarmNotifications extends BroadcastReceiver
 
         try {
             player.setDataSource(context, soundUri);
+            if (BuildConfig.DEBUG)
+            {
+                player.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                    @Override
+                    public boolean onError(MediaPlayer mp, int what, int extra)
+                    {
+                        Log.e(TAG, "onError: MediaPlayer: " + what + ", " + extra);
+                        return false;
+                    }
+                });
+                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        Log.d(TAG, "onCompletion: MediaPlayer");
+                    }
+                });
+            }
+
             player.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
             {
                 @Override
