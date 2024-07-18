@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
@@ -518,7 +519,7 @@ public class BedtimeDialog extends DialogFragment
         {
             Log.d("DEBUG", "onBedtimeChanged_updateBedtimeOff: flags: " + linkedAlarmItem.getAlarmFlags());
             if (linkedAlarmItem.getEvent() != null) {
-                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), -1, -1, 0, linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
+                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), linkedAlarmItem.location, -1, -1, 0, linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
 
             } else {
                 AlarmNotifications.updateAlarmTime(context, linkedAlarmItem);
@@ -540,8 +541,8 @@ public class BedtimeDialog extends DialogFragment
             if (linkedAlarmItem.getEvent() != null)
             {
                 // when bedtime is based on an event, changes to sleep duration modify bedtime
-                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, linkedAlarmItem.getEvent(), -1, -1, -BedtimeSettings.totalSleepTimeMs(context), linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled);
-                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), -1, -1, 0, linkedAlarmItem.getAlarmFlags(), true, BedtimeSettings.loadPrefBedtimeAutoOff(context) && linkedAlarmItem.enabled);
+                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, linkedAlarmItem.getEvent(), linkedAlarmItem.location, -1, -1, -BedtimeSettings.totalSleepTimeMs(context), linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled);
+                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), linkedAlarmItem.location,  -1, -1, 0, linkedAlarmItem.getAlarmFlags(), true, BedtimeSettings.loadPrefBedtimeAutoOff(context) && linkedAlarmItem.enabled);
 
             } else {
                 // when bedtime is based on some time, changes to sleep duration modify "bedtime off"
@@ -701,10 +702,10 @@ public class BedtimeDialog extends DialogFragment
         BedtimeSettings.setAutomaticZenRule(context, BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, hour, minute, 0, null, BedtimeSettings.loadPrefBedtimeReminder(context));
     }
-    protected void configBedtimeOffsetEvent(final Context context, BedtimeItem item, String event, long offset, String flags, boolean modifyEnabled, boolean enabled)
+    protected void configBedtimeOffsetEvent(final Context context, BedtimeItem item, String event, Location location, long offset, String flags, boolean modifyEnabled, boolean enabled)
     {
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, -1, -1, 0, flags, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, event, -1, -1, offset, flags, modifyEnabled, enabled);
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, location, -1, -1, 0, flags, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, event, location, -1, -1, offset, flags, modifyEnabled, enabled);
         BedtimeSettings.setAutomaticZenRule(context, BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, event, offset, flags, BedtimeSettings.loadPrefBedtimeReminder(context));
     }
@@ -735,7 +736,7 @@ public class BedtimeDialog extends DialogFragment
                         if (wakeupItem != null)
                         {
                             if (wakeupItem.getEvent() != null) {
-                                configBedtimeOffsetEvent(context, item, wakeupItem.getEvent(), wakeupItem.offset - sleepTotalMs, wakeupItem.getAlarmFlags(), false, enabled);
+                                configBedtimeOffsetEvent(context, item, wakeupItem.getEvent(), wakeupItem.location, wakeupItem.offset - sleepTotalMs, wakeupItem.getAlarmFlags(), false, enabled);
 
                             } else {
                                 Calendar bedtime = Calendar.getInstance();
@@ -780,12 +781,12 @@ public class BedtimeDialog extends DialogFragment
     }
 
     protected void configureBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, final int hour, final int minute, final long offset, String flags, final boolean modifyEnabled, final boolean enabled) {
-        configureBedtimeAt(context, item, slot, null, hour, minute, offset, flags, modifyEnabled, enabled);
+        configureBedtimeAt(context, item, slot, null, null, hour, minute, offset, flags, modifyEnabled, enabled);
     }
-    protected void configureBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, final String event, final long offset, String flags, final boolean modifyEnabled, final boolean enabled) {
-        configureBedtimeAt(context, item, slot, null, -1, -1, offset, flags, modifyEnabled, enabled);
+    protected void configureBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, final String event, @Nullable Location location, final long offset, String flags, final boolean modifyEnabled, final boolean enabled) {
+        configureBedtimeAt(context, item, slot, event, location, -1, -1, offset, flags, modifyEnabled, enabled);
     }
-    protected void configureBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, @Nullable final String event, final int hour, final int minute, final long offset, final String flags, final boolean modifyEnabled, final boolean enabled)
+    protected void configureBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, @Nullable final String event, @Nullable final Location location, final int hour, final int minute, final long offset, final String flags, final boolean modifyEnabled, final boolean enabled)
     {
         final long alarmID = BedtimeSettings.loadAlarmID(context, slot);
         if (alarmID == BedtimeSettings.ID_NONE)
@@ -794,6 +795,7 @@ public class BedtimeDialog extends DialogFragment
                     ? BedtimeAlarmHelper.createBedtimeEventItem(context, slot, item, hour, minute, offset)
                     : BedtimeAlarmHelper.createBedtimeAlarmItem(context, item, hour, minute, offset);
             alarmItem.setEvent(event);
+            alarmItem.location = location;
             alarmItem.offset = offset;
             alarmItem.enabled = enabled;
             alarmItem.setAlarmFlags(flags);
@@ -812,11 +814,22 @@ public class BedtimeDialog extends DialogFragment
                         alarmItem = (slot.equals(BedtimeSettings.SLOT_BEDTIME_NOTIFY) || slot.equals(BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF))
                                 ? BedtimeAlarmHelper.createBedtimeEventItem(context, slot, item, hour, minute, offset) : BedtimeAlarmHelper.createBedtimeAlarmItem(context, item, hour, minute, offset);
                     }
-                    if (alarmItem.hour != hour || alarmItem.minute != minute || alarmItem.offset != offset) {
+
+                    boolean eventChanged = (alarmItem.getEvent() != null && !alarmItem.getEvent().equals(event))
+                            || (alarmItem.getEvent() == null && event != null)
+                            || (alarmItem.getEvent() != null && event == null);
+
+                    boolean locationChanged = alarmItem.location != null && !alarmItem.location.equals(location)
+                            || (alarmItem.location == null && location != null)
+                            || (alarmItem.location != null && location == null);
+
+                    if (alarmItem.hour != hour || alarmItem.minute != minute || alarmItem.offset != offset || eventChanged || locationChanged)
+                    {
                         alarmItem.hour = hour;
                         alarmItem.minute = minute;
                         alarmItem.offset = offset;
                         alarmItem.setEvent(event);
+                        alarmItem.location = location;
                         alarmItem.modified = true;
                     }
                     if (modifyEnabled && alarmItem.enabled != enabled) {

@@ -254,6 +254,7 @@ public class BedtimeAlarmHelper
             if (eventItem.getEvent() != null)
             {
                 reminderItem.setEvent(eventItem.getEvent());
+                reminderItem.location = eventItem.location;
                 reminderItem.hour = -1;
                 reminderItem.minute = -1;
                 reminderItem.offset = (eventItem.offset + reminderOffset);
