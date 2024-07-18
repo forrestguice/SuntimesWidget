@@ -820,7 +820,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 case NotificationManager.INTERRUPTION_FILTER_PRIORITY:      // (2) allow priority
                     if (Build.VERSION.SDK_INT >= 28) {
                         return (item.type == AlarmClockItem.AlarmType.ALARM) &&
-                                (isCategorySet(getNotificationPolicy(notificationManager), PRIORITY_CATEGORY_ALARMS));
+                                (isCategorySet(getNotificationPolicy(notificationManager), NotificationManager.Policy.PRIORITY_CATEGORY_ALARMS));
                     } else {
                         return (item.type == AlarmClockItem.AlarmType.ALARM);
                     }
@@ -878,7 +878,7 @@ public class AlarmNotifications extends BroadcastReceiver
     private static boolean isCategorySet(@Nullable NotificationManager.Policy policy, int category) {
         return (policy != null && ((policy.priorityCategories & category) != 0));
     }
-    private static final int PRIORITY_CATEGORY_ALARMS = 1 << 5;  // TODO: use constants added in api28
+    //private static final int PRIORITY_CATEGORY_ALARMS = 1 << 5;
 
     protected static boolean isPlaying = false;
     protected static MediaPlayer player = null;
