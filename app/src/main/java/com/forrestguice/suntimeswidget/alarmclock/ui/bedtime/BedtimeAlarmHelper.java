@@ -21,6 +21,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -159,7 +160,7 @@ public class BedtimeAlarmHelper
         }
     }
 
-    public static void scheduleAlarmItem(final Context context, AlarmClockItem item, boolean enabled)
+    public static void scheduleAlarmItem(@NonNull final Context context, AlarmClockItem item, boolean enabled)
     {
         context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_RESCHEDULE, item.getUri())
                                        : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
