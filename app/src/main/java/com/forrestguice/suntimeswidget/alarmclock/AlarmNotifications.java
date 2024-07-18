@@ -494,6 +494,9 @@ public class AlarmNotifications extends BroadcastReceiver
         Intent intent = new Intent(ACTION_UPDATE_UI);
         intent.setPackage(BuildConfig.APPLICATION_ID);
         intent.setData(data);
+        if (data != null) {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
         return intent;
     }
 
