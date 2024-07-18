@@ -204,17 +204,19 @@ public class BedtimeAlarmHelper
         }
     }
 
-    public static void setBedtimeReminder_withEventInfo(final Context context, final int hour, final int minute, final long offset, final boolean enabled)
+    public static void setBedtimeReminder_withEventInfo(final Context context, final int hour, final int minute, final long offset, String flags, final boolean enabled)
     {
         //AlarmClockItem eventItem = (enabled ? BedtimeAlarmHelper.createBedtimeEventItem(context, null, hour, minute, offset) : null);   // to also clear reminder when disabled
         AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, null, hour, minute, offset);
+        eventItem.setAlarmFlags(flags);
         setBedtimeReminder_withEventItem(context, eventItem, enabled);
     }
 
-    public static void setBedtimeReminder_withEventInfo(final Context context, String event, final long offset, final boolean enabled)
+    public static void setBedtimeReminder_withEventInfo(final Context context, String event, final long offset, String flags, final boolean enabled)
     {
         AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, null, -1, -1, offset);
         eventItem.setEvent(event);
+        eventItem.setAlarmFlags(flags);
         setBedtimeReminder_withEventItem(context, eventItem, enabled);
     }
 
@@ -264,6 +266,7 @@ public class BedtimeAlarmHelper
                 reminderItem.offset = (existingOffset != 0) ? existingOffset : reminderOffset;
             }
 
+            reminderItem.setAlarmFlags(eventItem.getAlarmFlags());
             reminderItem.alarmtime = 0;
             reminderItem.enabled = enabled;
             reminderItem.modified = true;
