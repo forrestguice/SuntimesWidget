@@ -59,7 +59,7 @@
     <string name="def_app_alarms_autodismiss" translatable="false">30000</string>    <!-- auto-dismiss after 30s -->
     <bool name="def_app_alarms_autoenable" translatable="false">false</bool>   <!-- automatically enable new alarms (false) -->
     <bool name="def_app_alarms_allringtones" translatable="false">false</bool>   <!-- show all ringtones during selection (ignore ringtone type) -->
-    <bool name="def_app_alarms_showlauncher" translatable="false">true</bool>
+    <bool name="def_app_alarms_showlauncher" translatable="false">false</bool>
     <string name="def_app_alarms_dismiss_challenge" translatable="false">NONE</string>
 
     <string name="def_app_bedtime_sleepCycleMillis" translatable="false">5400000</string>   <!-- 90m -->
