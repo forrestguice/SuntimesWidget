@@ -35,6 +35,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeBroadcastReceiver;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -900,13 +901,13 @@ public class WidgetActions
             {
                 case TRIGGER_BEDTIME:
                     launchType = LaunchType.BROADCAST;
-                    launchString = AlarmNotifications.class.getName();
+                    launchString = BedtimeBroadcastReceiver.class.getName();
                     launchAction = AlarmNotifications.ACTION_BEDTIME;
                     break;
 
                 case DISMISS_BEDTIME:
                     launchType = LaunchType.BROADCAST;
-                    launchString = AlarmNotifications.class.getName();
+                    launchString = BedtimeBroadcastReceiver.class.getName();
                     launchAction = AlarmNotifications.ACTION_BEDTIME_DISMISS;
                     break;
 

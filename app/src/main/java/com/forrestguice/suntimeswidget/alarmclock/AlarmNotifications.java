@@ -129,6 +129,13 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final int NOTIFICATION_BEDTIME_ACTIVE_ID = -1000;
 
+    public static final String[] ALARM_ACTIONS = new String[] {
+            ACTION_SHOW, ACTION_SILENT, ACTION_DISMISS, ACTION_SNOOZE,
+            ACTION_SCHEDULE, ACTION_RESCHEDULE, ACTION_RESCHEDULE1,
+            ACTION_DISABLE, ACTION_TIMEOUT, ACTION_DELETE,
+            ACTION_UPDATE_UI, ACTION_LOCATION_CHANGED,
+    };
+
     private static SuntimesUtils utils = new SuntimesUtils();
 
     /**
@@ -143,8 +150,20 @@ public class AlarmNotifications extends BroadcastReceiver
         Uri data = intent.getData();
         Log.d(TAG, "onReceive: " + action + ", " + data);
         if (action != null) {
-            context.startService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+            if (actionIsPermitted(action)) {
+                context.startService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+            } else Log.e(TAG, "onReceive: `" + action + "` is not on the list of permitted actions! Ignoring...");
         } else Log.w(TAG, "onReceive: null action!");
+    }
+
+    protected boolean actionIsPermitted(String action)
+    {
+        for (String a : ALARM_ACTIONS) {
+            if (a.equals(action)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -1826,7 +1845,7 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         }
 
-        private static Intent getNotificationIntent(Context context, String action, Uri data, @Nullable Bundle extras)
+        public static Intent getNotificationIntent(Context context, String action, Uri data, @Nullable Bundle extras)
         {
             Intent intent = new Intent(context, NotificationService.class);
             intent.setAction(action);
