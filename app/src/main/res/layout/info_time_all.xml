@@ -726,14 +726,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_time_label_noon" />
 
-        <com.forrestguice.suntimeswidget.MoonPhaseView
+        <com.forrestguice.suntimeswidget.moon.MoonPhaseView
             android:id="@+id/moonphase_view" app:illuminationRange="true"
             android:layout_width="0dp" android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/moonriseset_view"
             app:layout_constraintTop_toBottomOf="@+id/text_time_label_moon" />
 
-        <com.forrestguice.suntimeswidget.MoonRiseSetView
+        <com.forrestguice.suntimeswidget.moon.MoonRiseSetView
             android:id="@+id/moonriseset_view"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

@@ -46,8 +46,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.graph.LightMapView;
-import com.forrestguice.suntimeswidget.MoonPhaseView;
-import com.forrestguice.suntimeswidget.MoonRiseSetView;
+import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
+import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
