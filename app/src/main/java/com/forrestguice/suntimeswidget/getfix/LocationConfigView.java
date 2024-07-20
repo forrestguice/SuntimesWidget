@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.getfix;
 
 import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
@@ -49,6 +49,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.getfix.GetFixTaskListener;
 import com.forrestguice.suntimeswidget.getfix.LocationHelper;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -724,7 +726,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * @param context a context used to access shared prefs
      */
-    protected void loadSettings(Context context)
+    public void loadSettings(Context context)
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
         if (isInEditMode())

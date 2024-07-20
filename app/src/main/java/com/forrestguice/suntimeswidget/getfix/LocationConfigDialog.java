@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.getfix;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -40,8 +40,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
@@ -62,7 +62,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     {
         super.onInflate(activity, attrs, savedInstanceState);
 
-        TypedArray a = activity.obtainStyledAttributes(attrs,R.styleable.LocationConfigDialog);
+        TypedArray a = activity.obtainStyledAttributes(attrs, R.styleable.LocationConfigDialog);
         setHideDialogHeader(a.getBoolean(R.styleable.LocationConfigDialog_hideHeader, hideHeader));
         setHideDialogFooter(a.getBoolean(R.styleable.LocationConfigDialog_hideFooter, hideFooter));
         setHideMode(a.getBoolean(R.styleable.LocationConfigDialog_hideMode, hideMode));
@@ -75,8 +75,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     /**
      * The dialog content; in this case just a wrapper around a LocationConfigView.
      */
-    private com.forrestguice.suntimeswidget.LocationConfigView dialogContent;
-    public com.forrestguice.suntimeswidget.LocationConfigView getDialogContent() { return dialogContent; }
+    private LocationConfigView dialogContent;
+    public LocationConfigView getDialogContent() { return dialogContent; }
 
     /**
      * On location accepted listener.

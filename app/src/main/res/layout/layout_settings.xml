@@ -144,7 +144,7 @@
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:background="?attr/settingsCardBackground">
 
-                    <com.forrestguice.suntimeswidget.LocationConfigView
+                    <com.forrestguice.suntimeswidget.getfix.LocationConfigView
                         android:id="@+id/appwidget_location_config"
                         android:layout_width="match_parent" android:layout_height="wrap_content" />
                     <!-- <include layout="@layout/layout_settings_location" /> -->
