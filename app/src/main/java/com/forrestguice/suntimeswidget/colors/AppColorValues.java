@@ -60,7 +60,15 @@ public class AppColorValues extends ResourceColorValues
 
     protected static int[] toIntArray(ArrayList<Integer> list)
     {
-        if (Build.VERSION.SDK_INT >= 24) {
+        if (Build.VERSION.SDK_INT >= 24)
+        {
+            final ToIntFunction<Integer> toInt = new ToIntFunction<Integer>()
+            {
+                @Override
+                public int applyAsInt(Integer integer) {
+                    return integer;
+                }
+            };
             return Arrays.stream(list.toArray(new Integer[0])).mapToInt(toInt).toArray();
 
         } else {
@@ -73,15 +81,6 @@ public class AppColorValues extends ResourceColorValues
             return result;
         }
     }
-    
-    @TargetApi(24)
-    private static final ToIntFunction<Integer> toInt = new ToIntFunction<Integer>()
-    {
-        @Override
-        public int applyAsInt(Integer integer) {
-            return integer;
-        }
-    };
 
     protected static String[] colorKeys;
     protected static final int[] colorAttrs;
