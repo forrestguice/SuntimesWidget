@@ -111,7 +111,6 @@ public class AlarmSettings
     public static final boolean PREF_DEF_ALARM_ALLRINGTONES = false;
 
     public static final String PREF_KEY_ALARM_SHOWLAUNCHER = "app_alarms_showlauncher";
-    public static final boolean PREF_DEF_ALARM_SHOWLAUNCHER = true;
 
     public static final String PREF_KEY_ALARM_POWEROFFALARMS = "app_alarms_poweroffalarms";
     public static final boolean PREF_DEF_ALARM_POWEROFFALARMS = false;
@@ -979,7 +978,7 @@ public class AlarmSettings
 
     public static boolean loadPrefShowLauncher(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, PREF_DEF_ALARM_SHOWLAUNCHER);
+        return prefs.getBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, context.getResources().getBoolean(R.bool.def_app_alarms_showlauncher));
     }
     public static void savePrefShowLauncher(Context context, boolean value)
     {
