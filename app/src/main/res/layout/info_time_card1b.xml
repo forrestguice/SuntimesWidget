@@ -85,7 +85,7 @@
                 android:clickable="true" android:focusable="true"
                 android:orientation="vertical">
 
-                <com.forrestguice.suntimeswidget.LightMapView
+                <com.forrestguice.suntimeswidget.graph.LightMapView
                     android:id="@+id/info_time_lightmap"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/lightmap_height"

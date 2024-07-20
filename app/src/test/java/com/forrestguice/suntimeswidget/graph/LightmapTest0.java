@@ -16,9 +16,11 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.graph;
 
 import android.graphics.Color;
+
+import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 
 import org.junit.Test;
 

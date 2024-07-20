@@ -80,7 +80,7 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <com.forrestguice.suntimeswidget.LightMapView
+    <com.forrestguice.suntimeswidget.graph.LightMapView
         android:id="@+id/info_time_lightmap"
         android:layout_width="match_parent" android:layout_height="12dp"
         android:layout_marginBottom="@dimen/dialog_margin" />
