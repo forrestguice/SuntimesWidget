@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget.alarmclock.ui.bedtime;
+package com.forrestguice.suntimeswidget.alarmclock.bedtime;
 
 import android.app.AutomaticZenRule;
 import android.app.NotificationManager;

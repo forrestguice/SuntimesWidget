@@ -22,13 +22,12 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Icon;
 import android.service.quicksettings.Tile;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
-import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeAlarmHelper;
-import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeAlarmHelper;
+import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 
 import java.util.List;

@@ -343,7 +343,7 @@
             android:exported="true">
         </activity>
 
-        <activity android:name="com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity"
+        <activity android:name=".alarmclock.bedtime.BedtimeActivity"
             android:label="@string/configLabel_bedtime"
             android:icon="@mipmap/ic_launcher_alarms"
             android:taskAffinity=".alarmclock.ui.bedtime.BedtimeActivity"
@@ -366,7 +366,7 @@
         </service>
 
         <service
-            android:name=".alarmclock.ui.bedtime.BedtimeConditionService"
+            android:name=".alarmclock.bedtime.BedtimeConditionService"
             android:enabled="@bool/api_post_24"
             android:label="@string/configLabel_bedtime"
             android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
@@ -398,7 +398,7 @@
                 <data android:scheme="content" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".alarmclock.ui.bedtime.BedtimeBroadcastReceiver"
+        <receiver android:name=".alarmclock.bedtime.BedtimeBroadcastReceiver"
             android:exported="true"
             android:permission="suntimes.permission.READ_CALCULATOR">
             <intent-filter>

@@ -62,7 +62,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
