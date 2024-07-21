@@ -176,6 +176,10 @@ public class BedtimeSettings
         prefs.apply();
     }
 
+    public static long getBedtimeOffOffset(Context context) {
+        return -60000;   // 1 minute before the wakeup alarm
+    }
+
     public static long totalSleepTimeMs(Context context)
     {
         long offset = BedtimeSettings.loadPrefSleepOffsetMs(context);

@@ -518,7 +518,7 @@ public class BedtimeDialog extends DialogFragment
         {
             Log.d("DEBUG", "onBedtimeChanged_updateBedtimeOff: flags: " + linkedAlarmItem.getAlarmFlags());
             if (linkedAlarmItem.getEvent() != null) {
-                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), linkedAlarmItem.location, -1, -1, 0, linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
+                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), linkedAlarmItem.location, -1, -1, BedtimeSettings.getBedtimeOffOffset(context), linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
 
             } else {
                 AlarmNotifications.updateAlarmTime(context, linkedAlarmItem);
@@ -526,7 +526,7 @@ public class BedtimeDialog extends DialogFragment
                 bedtime.set(Calendar.HOUR_OF_DAY, linkedAlarmItem.hour);
                 bedtime.set(Calendar.MINUTE, linkedAlarmItem.minute);
                 bedtime.setTimeInMillis(bedtime.getTimeInMillis() + BedtimeSettings.totalSleepTimeMs(context));
-                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtime.get(Calendar.HOUR_OF_DAY), bedtime.get(Calendar.MINUTE), 0, linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
+                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtime.get(Calendar.HOUR_OF_DAY), bedtime.get(Calendar.MINUTE), BedtimeSettings.getBedtimeOffOffset(context), linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
             }
         }
     }
@@ -541,7 +541,7 @@ public class BedtimeDialog extends DialogFragment
             {
                 // when bedtime is based on an event, changes to sleep duration modify bedtime
                 configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, linkedAlarmItem.getEvent(), linkedAlarmItem.location, -1, -1, -BedtimeSettings.totalSleepTimeMs(context), linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled);
-                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), linkedAlarmItem.location,  -1, -1, 0, linkedAlarmItem.getAlarmFlags(), true, BedtimeSettings.loadPrefBedtimeAutoOff(context) && linkedAlarmItem.enabled);
+                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), linkedAlarmItem.location,  -1, -1, BedtimeSettings.getBedtimeOffOffset(context), linkedAlarmItem.getAlarmFlags(), true, BedtimeSettings.loadPrefBedtimeAutoOff(context) && linkedAlarmItem.enabled);
 
             } else {
                 // when bedtime is based on some time, changes to sleep duration modify "bedtime off"
@@ -550,7 +550,7 @@ public class BedtimeDialog extends DialogFragment
                 bedtime.set(Calendar.HOUR_OF_DAY, linkedAlarmItem.hour);
                 bedtime.set(Calendar.MINUTE, linkedAlarmItem.minute);
                 bedtime.setTimeInMillis(bedtime.getTimeInMillis() + BedtimeSettings.totalSleepTimeMs(context));
-                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtime.get(Calendar.HOUR_OF_DAY), bedtime.get(Calendar.MINUTE), 0, linkedAlarmItem.getAlarmFlags(), true, BedtimeSettings.loadPrefBedtimeAutoOff(context) && linkedAlarmItem.enabled);
+                configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtime.get(Calendar.HOUR_OF_DAY), bedtime.get(Calendar.MINUTE), BedtimeSettings.getBedtimeOffOffset(context), linkedAlarmItem.getAlarmFlags(), true, BedtimeSettings.loadPrefBedtimeAutoOff(context) && linkedAlarmItem.enabled);
             }
         }
     }
@@ -696,14 +696,14 @@ public class BedtimeDialog extends DialogFragment
     protected void configBedtimeToDate(final Context context, BedtimeItem item, int hour, int minute, boolean modifyEnabled, boolean enabled)
     {
         Calendar bedtimeOff = bedtimeOffCalendar(context, hour, minute);
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtimeOff.get(Calendar.HOUR_OF_DAY), bedtimeOff.get(Calendar.MINUTE), 0, null, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, bedtimeOff.get(Calendar.HOUR_OF_DAY), bedtimeOff.get(Calendar.MINUTE), BedtimeSettings.getBedtimeOffOffset(context), null, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, hour, minute, 0, null, modifyEnabled, enabled);
         BedtimeSettings.setAutomaticZenRule(context, BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, hour, minute, 0, null, BedtimeSettings.loadPrefBedtimeReminder(context));
     }
     protected void configBedtimeOffsetEvent(final Context context, BedtimeItem item, String event, Location location, long offset, String flags, boolean modifyEnabled, boolean enabled)
     {
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, location, -1, -1, 0, flags, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, location, -1, -1, BedtimeSettings.getBedtimeOffOffset(context), flags, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, event, location, -1, -1, offset, flags, modifyEnabled, enabled);
         BedtimeSettings.setAutomaticZenRule(context, BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, event, offset, flags, BedtimeSettings.loadPrefBedtimeReminder(context));
