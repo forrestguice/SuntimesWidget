@@ -126,7 +126,6 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET = "app_alarms_systemtz_offset";
 
     public static final String PREF_KEY_ALARM_BRIGHTMODE = "app_alarms_bright";
-    public static final boolean PREF_DEF_ALARM_BRIGHTMODE = true;
 
     public static final String PREF_KEY_ALARM_BRIGHTMODE_FADEIN = "app_alarms_bright_fadeinMillis";
     public static final int PREF_DEF_ALARM_BRIGHTMODE_FADEIN = 1000 * 60;   // 60 s
@@ -408,7 +407,7 @@ public class AlarmSettings
     public static boolean loadPrefAlarmBrightMode(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PREF_KEY_ALARM_BRIGHTMODE, PREF_DEF_ALARM_BRIGHTMODE);
+        return prefs.getBoolean(PREF_KEY_ALARM_BRIGHTMODE, context.getResources().getBoolean(R.bool.def_app_alarms_bright));
     }
 
     public static long loadPrefAlarmBrightFadeIn(Context context)

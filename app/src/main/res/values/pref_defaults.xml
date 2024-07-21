@@ -52,7 +52,7 @@
     <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
     <string name="def_app_alarms_snoozeLimit" translatable="false">0</string>      <!-- no snooze limit -->
     <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
-    <bool name="def_app_alarms_bright" translatable="false">true</bool>       <!-- bright mode alarms -->
+    <bool name="def_app_alarms_bright" translatable="false">false</bool>       <!-- bright mode alarms -->
     <string name="def_app_alarms_bright_fadein" translatable="false">60000</string>       <!-- bright mode fade in 60s -->
     <string name="def_app_alarms_fadein" translatable="false">10000</string>       <!-- fade-in 10s to full volume -->
     <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
