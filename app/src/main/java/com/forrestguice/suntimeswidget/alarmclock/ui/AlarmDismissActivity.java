@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.animation.ArgbEvaluator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 
@@ -628,7 +629,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         if (Build.VERSION.SDK_INT >= 21) {
             return ValueAnimator.ofArgb(colors);
         } else {
-            return ValueAnimator.ofInt(colors);
+            ValueAnimator animator = new ValueAnimator();
+            animator.setIntValues(colors);
+            animator.setEvaluator(new ArgbEvaluator());
+            return animator;
         }
     }
 
