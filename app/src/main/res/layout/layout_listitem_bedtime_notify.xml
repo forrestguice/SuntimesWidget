@@ -41,7 +41,7 @@
                     android:text="" tools:text="p.m." />
             </LinearLayout>
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/layout_check_dnd"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:orientation="vertical" android:layout_gravity="end">
 

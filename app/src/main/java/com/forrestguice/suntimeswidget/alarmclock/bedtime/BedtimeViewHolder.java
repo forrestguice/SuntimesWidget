@@ -469,6 +469,10 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             super(view);
             check_dnd = (CheckBox) view.findViewById(R.id.check_dnd);
+            View layout_check_dnd = view.findViewById(R.id.layout_check_dnd);
+            if (layout_check_dnd != null) {
+                layout_check_dnd.setVisibility(Build.VERSION.SDK_INT >= 23 ? View.VISIBLE : View.GONE);
+            }
             layout_dndWarning = view.findViewById(R.id.dndwarning_layout);
             text_dndWarning = (TextView) view.findViewById(R.id.dndwarning_text);
             button_dndWarning = (Button) view.findViewById(R.id.dndwarning_button);
