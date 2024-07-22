@@ -726,7 +726,13 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             public void onFinished(Boolean result, AlarmClockItem item)
             {
                 if (item != null) {
-                    setAlarmItem(context, item);
+                    if (item.type == AlarmClockItem.AlarmType.ALARM) {
+                        setAlarmItem(context, item);
+
+                    } else {
+                        Log.w(TAG, "setAlarmID: " + item.getUri() + " not of type alarm; ignoring.");
+                        result = false;
+                    }
                 }
                 if (listener != null) {
                     listener.onFinished(result, item);
