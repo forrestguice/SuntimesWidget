@@ -990,8 +990,10 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static boolean isPlaying() {
         return isPlaying.containsValue(true);
     }
-    protected static boolean isPlaying(String channel) {
-        return isPlaying.getOrDefault(channel, false);
+    protected static boolean isPlaying(String channel)
+    {
+        Boolean value = isPlaying.get(channel);
+        return (value != null ? value : false);
     }
     protected static void setIsPlaying(String channel, boolean value) {
         isPlaying.put(channel, value);
