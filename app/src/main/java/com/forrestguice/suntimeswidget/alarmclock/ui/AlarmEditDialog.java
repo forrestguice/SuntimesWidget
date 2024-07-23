@@ -422,9 +422,14 @@ public class AlarmEditDialog extends DialogFragment
     }
 
     protected DialogInterface.OnClickListener onDeleteConfirmed( final AlarmClockItem item ) {
-        return new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                getActivity().sendBroadcast(AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_DELETE, item.getUri()));
+        return new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                Context context = getActivity();
+                if (context != null) {
+                    context.sendBroadcast(AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_DELETE, item.getUri()));
+                } else Log.w("AlarmEditDialog", "null context! delete alarm broadcast was not sent...");
                 dialog.cancel();
             }
         };
