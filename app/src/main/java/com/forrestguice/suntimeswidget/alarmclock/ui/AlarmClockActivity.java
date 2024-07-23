@@ -1271,9 +1271,12 @@ public class AlarmClockActivity extends AppCompatActivity
             if (data != null)
             {
                 AlarmClockItem item = data.getParcelableExtra(AlarmEditActivity.EXTRA_ITEM);
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, isNewAlarm, false);
-                task.setTaskListener(onUpdateItem);
-                task.execute(item);
+                if (item != null && !data.hasExtra(AlarmNotifications.ACTION_DELETE))
+                {
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, isNewAlarm, false);
+                    task.setTaskListener(onUpdateItem);
+                    task.execute(item);
+                }
             }
         }
     }

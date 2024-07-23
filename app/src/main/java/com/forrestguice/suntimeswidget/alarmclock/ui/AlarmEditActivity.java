@@ -108,6 +108,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     private AlarmEditDialog editor;
     private AppSettings.LocaleInfo localeInfo;
+    private boolean isNew = false;
 
     private int colorAlarmEnabled, colorOn, colorOff, colorEnabled, colorDisabled, colorPressed;
     private int resAddIcon, resCloseIcon;
@@ -277,7 +278,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (extras != null && savedState == null)
         {
             AlarmClockItem item = extras.getParcelable(EXTRA_ITEM);
-            boolean isNew = extras.getBoolean(EXTRA_ISNEW, false);
+            isNew = extras.getBoolean(EXTRA_ISNEW, false);
             editor.initFromItem(item, isNew);
         }
 
@@ -449,7 +450,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 return true;
 
             case R.id.action_delete:
-                AlarmEditDialog.confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem(), onDeleteConfirmed(editor.getItem()));
+                if (isNew)
+                {
+                    setResult(RESULT_CANCELED);
+                    finish();
+
+                } else {
+                    AlarmEditDialog.confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem(), onDeleteConfirmed(editor.getItem()));
+                }
                 return true;
 
             case R.id.setAlarmType:
