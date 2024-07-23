@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:state_focused="true"
-        android:drawable="@drawable/card_alarmitem_sounding_focused_dark1" />
+        android:drawable="@drawable/card_alarmitem_timeout_focused_dark" />
 
     <item android:state_pressed="true" android:state_enabled="true"
         android:drawable="@drawable/card_alarmitem_pressed_dark1" />
@@ -13,5 +12,5 @@
     <item android:state_enabled="false"
         android:drawable="@drawable/card_alarmitem_disabled_dark1" />
 
-    <item android:drawable="@drawable/card_alarmitem_sounding_dark1" />
+    <item android:drawable="@drawable/card_alarmitem_timeout_dark" />
 </selector>

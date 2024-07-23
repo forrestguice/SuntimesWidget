@@ -251,6 +251,7 @@
     <color name="grid_selected_light">@color/text_accent_light</color>
     <color name="alarm_pressed_light">#80009688</color>
     <color name="alarm_enabled_light">@color/text_accent_light</color>
+    <color name="alarm_focused_light">#C94700</color>    <!-- TODO -->
     <color name="alarm_enabled_bg_light">@color/grey_50</color>
     <color name="alarm_disabled_bg_light">@color/grey_100</color>
     <color name="alarm_sounding_bg0_light">@color/grey_50</color>
@@ -265,6 +266,7 @@
 
     <color name="grid_selected_dark">@color/text_accent_dark</color>  <!-- #aaff9900-->
     <color name="alarm_pressed_dark">#8080cbc4</color>
+    <color name="alarm_focused_dark">@color/text_accent_dark</color>   <!-- TODO -->
     <color name="alarm_enabled_dark">@color/text_accent_dark</color>
     <color name="alarm_enabled_bg_dark">@color/grey_900</color>
     <color name="alarm_disabled_bg_dark">@color/grey_800</color>
