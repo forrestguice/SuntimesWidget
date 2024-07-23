@@ -1625,9 +1625,9 @@ public class AlarmListDialog extends DialogFragment
         public int res_icPlace = R.drawable.ic_action_place;
         public int res_backgroundOn = R.drawable.card_alarmitem_enabled_dark1;
         public int res_backgroundOff = R.drawable.card_alarmitem_disabled_dark1;
-        public int res_backgroundSounding = R.drawable.card_alarmitem_sounding_dark1;
-        public int res_backgroundSnoozing = R.drawable.card_alarmitem_snoozing_dark1;
-        public int res_backgroundTimeout = R.drawable.card_alarmitem_timeout_dark;
+        public int res_backgroundSounding = R.drawable.card_alarmitem_sounding_dark0;
+        public int res_backgroundSnoozing = R.drawable.card_alarmitem_snoozing_dark0;
+        public int res_backgroundTimeout = R.drawable.card_alarmitem_timeout_dark0;
 
         public boolean animatedBackground = false;
         public int res_backgroundCurrent = -1;
@@ -1733,9 +1733,9 @@ public class AlarmListDialog extends DialogFragment
             color_off = ContextCompat.getColor(context, a.getResourceId(10, android.R.color.secondary_text_dark));
             color_off1 = ContextCompat.getColor(context, a.getResourceId(11, android.R.color.primary_text_dark));
             color_press = ContextCompat.getColor(context, a.getResourceId(12, R.color.btn_tint_pressed_dark));
-            res_backgroundSounding = a.getResourceId(13, R.drawable.card_alarmitem_sounding_dark1);
-            res_backgroundSnoozing = a.getResourceId(14, R.drawable.card_alarmitem_snoozing_dark1);
-            res_backgroundTimeout = a.getResourceId(15, R.drawable.card_alarmitem_timeout_dark);
+            res_backgroundSounding = a.getResourceId(13, R.drawable.card_alarmitem_sounding_dark0);
+            res_backgroundSnoozing = a.getResourceId(14, R.drawable.card_alarmitem_snoozing_dark0);
+            res_backgroundTimeout = a.getResourceId(15, R.drawable.card_alarmitem_timeout_dark0);
             res_iconNotification1 = a.getResourceId(16, R.drawable.ic_action_notification1);
             res_iconNotification2 = a.getResourceId(17, R.drawable.ic_action_notification2);
             res_icHome = a.getResourceId(18, R.drawable.ic_action_home);
