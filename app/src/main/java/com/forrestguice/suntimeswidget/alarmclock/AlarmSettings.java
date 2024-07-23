@@ -245,7 +245,7 @@ public class AlarmSettings
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static boolean hasAlarmSupport(Context context) {
-        return !AppSettings.isTelevision(context);
+        return true;      //return !AppSettings.isTelevision(context);    // TODO: return false for tvs that lack NotificationManager
     }
 
     public static int loadPrefAlarmSort(Context context)
