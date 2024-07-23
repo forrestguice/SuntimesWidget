@@ -129,7 +129,7 @@
     <color name="text_tertiary_dark">@android:color/tertiary_text_dark</color>
     <color name="text_time_dark">@android:color/primary_text_dark</color>
     <color name="text_disabled_dark">@color/grey_500</color>
-    <color name="text_accent_dark">@color/deep_teal_200</color>
+    <color name="text_accent_dark">@color/teal_200</color>
     <color name="nav_bg_dark">@color/grey_800</color>
     <color name="hr_dark">#33ffffff</color>
     <color name="dialog_frame_dark">@color/grey_800</color>
@@ -164,7 +164,7 @@
     <color name="text_tertiary_light">@android:color/tertiary_text_light</color>
     <color name="text_time_light">@android:color/primary_text_light</color>
     <color name="text_disabled_light">#39000000</color>
-    <color name="text_accent_light">@color/deep_teal_500</color>
+    <color name="text_accent_light">@color/teal_500</color>
     <color name="nav_bg_light">@color/grey_400</color>
     <color name="hr_light">#1f000000</color>
     <color name="dialog_frame_light">@android:color/white</color>
@@ -255,7 +255,7 @@
     <color name="alarm_enabled_bg_light">@color/grey_50</color>
     <color name="alarm_disabled_bg_light">@color/grey_100</color>
     <color name="alarm_sounding_bg0_light">@color/grey_50</color>
-    <color name="alarm_sounding_bg1_light">@color/deep_teal_200</color>
+    <color name="alarm_sounding_bg1_light">@color/teal_200</color>
     <color name="alarm_sounding_bg2_light">@color/alarm_pressed_dark</color>
     <color name="alarm_snoozing_bg0_light">@color/grey_50</color>
     <color name="alarm_snoozing_bg1_light">@color/grey_600</color>
@@ -271,7 +271,7 @@
     <color name="alarm_enabled_bg_dark">@color/grey_900</color>
     <color name="alarm_disabled_bg_dark">@color/grey_800</color>
     <color name="alarm_sounding_bg0_dark">@color/grey_900</color>
-    <color name="alarm_sounding_bg1_dark">@color/deep_teal_200</color>
+    <color name="alarm_sounding_bg1_dark">@color/teal_200</color>
     <color name="alarm_sounding_bg2_dark">@color/alarm_pressed_dark</color>
     <color name="alarm_snoozing_bg0_dark">@color/grey_900</color>
     <color name="alarm_snoozing_bg1_dark">@color/grey_600</color>
@@ -458,7 +458,9 @@
     <color name="grey_900">#ff212121</color>
     <color name="grey_999">#ff111111</color>
     <color name="black">#ff000000</color>
-    <color name="deep_teal_200">#ff80cbc4</color>
-    <color name="deep_teal_500">#ff009688</color>
+
+    <color name="teal_200">#ff80cbc4</color>
+    <color name="teal_500">#ff009688</color>
+
 
 </resources>
