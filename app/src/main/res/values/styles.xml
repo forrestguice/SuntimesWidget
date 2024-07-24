@@ -1256,6 +1256,16 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="AppToolbarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">?attr/toolbarTheme</item>
+        <item name="popupTheme">?attr/actionBarPopupTheme</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
+    </style>
+
     <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">?attr/text_size_xlarge</item>
     </style>
@@ -1268,7 +1278,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="AboutToolbarStyle">
+    <style name="AboutToolbarStyle" parent="@style/AppToolbarStyle">
         <item name="android:visibility">visible</item>
     </style>
     <style name="AboutTabStyle">
