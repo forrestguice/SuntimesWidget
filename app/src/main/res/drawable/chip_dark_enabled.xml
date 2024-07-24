@@ -4,8 +4,8 @@
     <shape android:shape="rectangle">
         <size android:width="24dp" android:height="24dp" />
         <solid android:color="@color/chip_bg_enabled_dark" />
-        <stroke android:width="2dp" android:color="@color/chip_bg_enabled_stroke_dark" />
-        <corners android:radius="3dp" />
+        <stroke android:width="@dimen/chip_stroke" android:color="@color/chip_bg_enabled_stroke_dark" />
+        <corners android:radius="@dimen/chip_radius" />
     </shape>
 </item>
 </layer-list>
