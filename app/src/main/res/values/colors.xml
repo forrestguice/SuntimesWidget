@@ -40,6 +40,7 @@
     <color name="chip_bg_pressed">@color/chip_bg_pressed_light</color>
     <color name="chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_light</color>
     <color name="chip_tray_bg">@color/chip_tray_bg_light</color>
+    <color name="chip_bg_focused_stroke">@color/chip_bg_focused_stroke_light</color>
 
     <color name="nav_bg">@color/nav_bg_light</color>
     <color name="hr">@color/hr_light</color>
@@ -186,7 +187,7 @@
     <color name="chip_bg_disabled_light">@color/grey_500</color>
     <color name="chip_bg_disabled_stroke_light">@color/grey_500</color>
     <color name="chip_bg_enabled_light">@color/light_primaryContainerColor</color>
-    <color name="chip_bg_enabled_stroke_light">@color/light_secondaryContainerColor</color>
+    <color name="chip_bg_enabled_stroke_light">@color/light_outlineVariantColor</color>
     <color name="chip_bg_pressed_light">@color/text_accent_light</color>
     <color name="chip_bg_pressed_stroke_light">@color/text_accent_light</color>
     <color name="chip_bg_focused_stroke_light">@color/light_tertiaryColor</color>
@@ -523,6 +524,7 @@
     <color name="dark_onSecondaryContainerColor">@color/black</color>
     <color name="dark_tertiaryColor">@color/orange_500</color>
     <color name="dark_errorColor">@color/red_a400</color>
+    <color name="dark_outlineColor">@color/grey_700</color>
     <color name="dark_outlineVariantColor">@color/grey_700</color>
 
     <color name="dark_surfaceColor">@color/grey_850</color>              <!-- window background -->
@@ -558,6 +560,7 @@
     <color name="light_onSecondaryContainerColor">@color/black</color>
     <color name="light_tertiaryColor">@color/deep_orange_800</color>
     <color name="light_errorColor">@color/red_900</color>
+    <color name="light_outlineColor">@color/grey_300</color>
     <color name="light_outlineVariantColor">@color/grey_300</color>
 
     <color name="light_surfaceColor">@color/grey_50</color>

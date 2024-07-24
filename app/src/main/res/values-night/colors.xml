@@ -27,6 +27,8 @@
     <color name="chip_bg_enabled_stroke">@color/chip_bg_enabled_stroke_dark</color>
     <color name="chip_bg_pressed">@color/chip_bg_pressed_dark</color>
     <color name="chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
+    <color name="chip_tray_bg">@color/chip_tray_bg_dark</color>
+    <color name="chip_bg_focused_stroke">@color/chip_bg_focused_stroke_dark</color>
 
     <color name="nav_bg">@color/nav_bg_dark</color>
     <color name="hr">@color/hr_dark</color>
