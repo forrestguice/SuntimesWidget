@@ -9,7 +9,7 @@
                 android:endColor="@color/alarm_sounding_bg1_dark"
                 android:centerY="0.5" android:centerX="0"
                 android:angle="45" />
-            <stroke android:width="2dp" android:color="@color/alarm_focused_dark" />
+            <stroke android:width="@dimen/alarmcard_stroke_focused" android:color="@color/alarm_focused_dark" />
         </shape>
     </item>
     <!--<item android:left="-5dp" android:right="-5dp" android:top="-5dp" android:bottom="3dp">

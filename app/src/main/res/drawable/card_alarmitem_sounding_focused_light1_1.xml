@@ -3,7 +3,7 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/alarmcard_corners_sounding" />
-            <stroke android:width="2dp" android:color="@color/alarm_focused_light" />
+            <stroke android:width="@dimen/alarmcard_stroke_focused" android:color="@color/alarm_focused_light" />
             <gradient android:type="linear" android:angle="315"
                 android:startColor="@color/alarm_sounding_bg1_light"
                 android:centerColor="@color/alarm_sounding_bg0_light"

@@ -4,7 +4,7 @@
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/alarmcard_corners_sounding" />
             <solid android:color="@color/alarm_sounding_bg0_dark" />
-            <stroke android:width="2dp" android:color="@color/alarm_focused_dark" />
+            <stroke android:width="@dimen/alarmcard_stroke_focused" android:color="@color/alarm_focused_dark" />
         </shape>
     </item>
 </layer-list>
