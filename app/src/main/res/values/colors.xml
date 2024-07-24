@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="is_nightmode">false</bool>
+    <bool name="not_nightmode">true</bool>
 
     <color name="datetext_dark">#cccccc</color>
     <color name="datetext_light">#575757</color>
