@@ -22,7 +22,7 @@
     <ImageView
         android:id="@+id/themegrid_background"
         android:layout_width="match_parent" android:layout_height="match_parent"
-        android:src="?timeCardBackground" android:scaleType="centerCrop" android:alpha="0"
+        android:src="?android:windowBackground" android:scaleType="centerCrop" android:alpha="0"
         tools:ignore="ContentDescription" />
 
     <LinearLayout

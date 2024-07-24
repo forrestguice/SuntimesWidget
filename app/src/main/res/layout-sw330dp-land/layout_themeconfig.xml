@@ -22,7 +22,7 @@
     <ImageView
         android:id="@+id/preview_background"
         android:layout_width="match_parent" android:layout_height="match_parent"
-        android:src="?timeCardBackground" android:scaleType="centerCrop"
+        android:src="?android:attr/windowBackground" android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
     <LinearLayout

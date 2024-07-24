@@ -35,7 +35,8 @@
 			android:layout_gravity="bottom|start" android:layout_margin="8dp"
 			android:src="?attr/icActionDeselect" android:scaleType="center"
 			android:contentDescription="@string/configAction_deselect"
-			app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
+			android:tint="?attr/fab_foregroundColorAlt"
+			app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
 			app:fabSize="mini"
 			app:layout_dodgeInsetEdges="bottom" />
 
@@ -46,6 +47,7 @@
 		android:layout_gravity="bottom|end" android:layout_margin="16dp"
 		android:src="?attr/icActionNew" android:scaleType="center"
 		android:contentDescription="@string/configAction_addAlarm"
+		android:tint="?attr/fab_foregroundColor"
 		app:backgroundTint="?attr/fab_backgroundColor" app:rippleColor="?attr/fab_rippleColor"
 		app:layout_dodgeInsetEdges="bottom" />
 
