@@ -141,7 +141,7 @@
     <color name="text_disabled_dark">@color/grey_500</color>
     <color name="text_accent_dark">@color/dark_secondaryColor</color>
     <color name="nav_bg_dark">@color/dark_surfaceContainer</color>
-    <color name="hr_dark">#33ffffff</color>
+    <color name="hr_dark">@color/dark_outlineVariantColor</color>
     <color name="dialog_frame_dark">@color/dark_surfaceContainer</color>
     <color name="dialog_bg_dark">@color/dark_surfaceContainer_low</color>
     <color name="dialog_bg_alt_dark">@color/dark_surfaceContainer</color>
@@ -154,6 +154,7 @@
     <color name="chip_bg_enabled_stroke_dark">@color/dark_surfaceContainer_low</color>
     <color name="chip_bg_pressed_dark">@color/text_accent_dark</color>
     <color name="chip_bg_pressed_stroke_dark">@color/text_accent_dark</color>
+    <color name="chip_bg_focused_stroke_dark">@color/dark_tertiaryColor</color>
     <color name="chip_tray_bg_dark">@color/dark_surfaceContainer</color>
     <color name="widget_bg_dark">#82212121</color>
     <color name="fab_ripple_dark">@color/dark_primaryColor</color>
@@ -175,7 +176,7 @@
     <color name="text_disabled_light">#39000000</color>
     <color name="text_accent_light">@color/light_secondaryColor</color>
     <color name="nav_bg_light">@color/light_surfaceContainer</color>
-    <color name="hr_light">#1f000000</color>
+    <color name="hr_light">@color/light_outlineVariantColor</color>
     <color name="dialog_frame_light">@color/light_surfaceColor</color>
     <color name="dialog_bg_light">@color/light_surfaceContainer</color>
     <color name="dialog_bg_alt_light">@color/light_surfaceContainer_high</color>
@@ -184,10 +185,11 @@
     <color name="card_bg_lighttrans">#aaffffff</color>
     <color name="chip_bg_disabled_light">@color/grey_500</color>
     <color name="chip_bg_disabled_stroke_light">@color/grey_500</color>
-    <color name="chip_bg_enabled_light">@color/grey_50</color>
-    <color name="chip_bg_enabled_stroke_light">@color/grey_200</color>
+    <color name="chip_bg_enabled_light">@color/light_primaryContainerColor</color>
+    <color name="chip_bg_enabled_stroke_light">@color/light_secondaryContainerColor</color>
     <color name="chip_bg_pressed_light">@color/text_accent_light</color>
     <color name="chip_bg_pressed_stroke_light">@color/text_accent_light</color>
+    <color name="chip_bg_focused_stroke_light">@color/light_tertiaryColor</color>
     <color name="chip_tray_bg_light">@color/light_surfaceContainer</color>
     <color name="widget_bg_light">@color/card_bg_lighttrans</color>
     <color name="fab_ripple_light">@color/light_primaryColor</color>
@@ -497,6 +499,7 @@
 
     <color name="indigo_a100">#FF8C9EFF</color>
     <color name="indigo_a200">#FF536DFE</color>
+    <color name="indigo_a400">#FF3D5AFE</color>
     <color name="indigo_100">#FFC5CAE9</color>
     <color name="indigo_200">#FF9FA8DA</color>
     <color name="indigo_300">#FF7986CB</color>
@@ -520,6 +523,7 @@
     <color name="dark_onSecondaryContainerColor">@color/black</color>
     <color name="dark_tertiaryColor">@color/orange_500</color>
     <color name="dark_errorColor">@color/red_a400</color>
+    <color name="dark_outlineVariantColor">@color/grey_700</color>
 
     <color name="dark_surfaceColor">@color/grey_850</color>              <!-- window background -->
     <color name="dark_surfaceContainer_lowest">@color/grey_800</color>
@@ -535,7 +539,7 @@
     <color name="darkcontrast_secondaryContainerColor">@color/indigo_300</color>
     <color name="darkcontrast_onPrimaryColor">@color/white</color>
     <color name="darkcontrast_onSecondaryContainerColor">@color/white</color>
-    <color name="darkcontrast_tertiaryColor">@color/purple_a100</color>
+    <color name="darkcontrast_tertiaryColor">@color/orange_500</color>
     <color name="darkcontrast_errorColor">@color/red_900</color>
 
     <color name="darkcontrast_surfaceColor">@color/grey_999</color>
@@ -548,16 +552,17 @@
     <!-- Light -->
     <color name="light_primaryColor">@color/grey_100</color>
     <color name="light_primaryContainerColor">@color/grey_50</color>
-    <color name="light_secondaryColor">@color/blue_200</color>
-    <color name="light_secondaryContainerColor">@color/blue_500</color>
+    <color name="light_secondaryColor">@color/indigo_a200</color>
+    <color name="light_secondaryContainerColor">@color/indigo_a100</color>
     <color name="light_onPrimaryColor">@color/black</color>
-    <color name="light_onSecondaryContainerColor">@color/white</color>
+    <color name="light_onSecondaryContainerColor">@color/black</color>
     <color name="light_tertiaryColor">@color/deep_orange_800</color>
     <color name="light_errorColor">@color/red_900</color>
+    <color name="light_outlineVariantColor">@color/grey_300</color>
 
     <color name="light_surfaceColor">@color/grey_50</color>
-    <color name="light_surfaceContainer_lowest">@color/grey_200</color>
-    <color name="light_surfaceContainer_low">@color/grey_100</color>
+    <color name="light_surfaceContainer_lowest">@color/grey_300</color>
+    <color name="light_surfaceContainer_low">@color/grey_200</color>
     <color name="light_surfaceContainer">@color/grey_100</color>
     <color name="light_surfaceContainer_high">@color/grey_50</color>
     <color name="light_surfaceContainer_highest">@color/white</color>
