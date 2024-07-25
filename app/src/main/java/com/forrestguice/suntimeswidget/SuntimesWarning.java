@@ -152,6 +152,12 @@ public class SuntimesWarning
     {
         if (snackbar != null) {
             snackbar.show();
+            snackbar.getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    snackbar.getView().requestFocus();
+                }
+            });
         }
         announceWarning();
     }
