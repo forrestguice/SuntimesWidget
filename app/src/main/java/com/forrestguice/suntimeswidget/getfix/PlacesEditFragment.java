@@ -46,6 +46,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
@@ -68,6 +69,8 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     private EditText text_locationLat;
     private EditText text_locationLon;
     private EditText text_locationName;
+
+    private ImageButton button_cancel, button_save;
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
@@ -220,13 +223,17 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         text_locationAlt = (EditText) content.findViewById(R.id.appwidget_location_alt);
         text_locationAltUnits = (TextView)content.findViewById(R.id.appwidget_location_alt_units);
 
-        ImageButton button_save = (ImageButton) content.findViewById(R.id.save_button);
+        if (text_locationAlt != null) {
+            text_locationAlt.setNextFocusDownId(R.id.save_button);
+        }
+
+        button_save = (ImageButton) content.findViewById(R.id.save_button);
         if (button_save != null) {
             TooltipCompat.setTooltipText(button_save, button_save.getContentDescription());
             button_save.setOnClickListener(onSaveButtonClicked);
         }
 
-        ImageButton button_cancel = (ImageButton) content.findViewById(R.id.cancel_button);
+        button_cancel = (ImageButton) content.findViewById(R.id.cancel_button);
         if (button_cancel != null) {
             TooltipCompat.setTooltipText(button_cancel, button_cancel.getContentDescription());
             button_cancel.setOnClickListener(onCancelButtonClicked);
@@ -302,11 +309,16 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
         @Override
-        public void onShow(DialogInterface dialogInterface) {
+        public void onShow(DialogInterface dialogInterface)
+        {
             expandSheet(dialogInterface);
             disableTouchOutsideBehavior();
+
+            if (AppSettings.isTelevision(getActivity())) {
+                button_cancel.requestFocus();
+            }
         }
     };
 
