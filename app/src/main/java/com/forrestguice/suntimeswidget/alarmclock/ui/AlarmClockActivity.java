@@ -1177,7 +1177,10 @@ public class AlarmClockActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        if (isAddDialogShowing()) {
+        if (navigation != null && navigation.isNavigationDrawerOpen()) {
+            navigation.closeNavigationDrawer();
+
+        } else if (isAddDialogShowing()) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         } else if (list.getSelectedRowID() != -1) {
