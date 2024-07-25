@@ -13,6 +13,8 @@
     <dimen name="chip_radius">6dp</dimen>
     <dimen name="chip_stroke">2dp</dimen>
 
+    <dimen name="snackbar_button_padding">8dp</dimen>
+
     <dimen name="smalltext_size_tiny">6sp</dimen>      <!-- "small" sizes -->
     <dimen name="smalltext_size_xsmall">10sp</dimen>
     <dimen name="smalltext_size_small">12sp</dimen>
