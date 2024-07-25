@@ -119,6 +119,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     protected ImageView icon_offset;
     protected Spinner spin_type;
     protected ImageButton btn_alarms;
+    protected ImageButton btn_accept;
     protected SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmCreateDialog() {
@@ -444,7 +445,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             btn_cancel.setOnClickListener(onDialogCancelClick);
         }
 
-        ImageButton btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
+        btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
         if (btn_accept != null) {
             TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
             btn_accept.setOnClickListener(onDialogAcceptClick);
@@ -760,8 +761,17 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 }, AUTO_EXPAND_DELAY);
             }
 
-            if (AppSettings.isTelevision(getActivity())) {
-                spin_type.requestFocus();
+            if (AppSettings.isTelevision(getActivity()))
+            {
+                if (spin_type != null && spin_type.isEnabled() && spin_type.getVisibility() == View.VISIBLE) {
+                    spin_type.requestFocus();
+
+                } else if (tabs != null && tabs.isEnabled() && tabs.getVisibility() == View.VISIBLE) {
+                    tabs.requestFocus();
+
+                } else if (btn_accept != null && btn_accept.isEnabled() && btn_accept.getVisibility() == View.VISIBLE) {
+                    btn_accept.requestFocus();
+                }
             }
         }
     };
