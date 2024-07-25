@@ -63,7 +63,9 @@
 
     <FrameLayout
         android:id="@+id/fragmentContainer1"
-        android:layout_width="match_parent" android:layout_height="wrap_content" />
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:nextFocusRight="@+id/layout_datetime"
+        />
 
     <FrameLayout android:background="?attr/dialogFrame"
         android:layout_width="match_parent" android:layout_height="wrap_content" >
