@@ -9,9 +9,6 @@
     <color name="labeltext_dark">#cccccc</color>
     <color name="labeltext_light">#575757</color>
 
-    <color name="btn_tint_pressed_dark">#ff9900</color>
-    <color name="btn_tint_pressed_light">#CF4800</color> <!-- #CF4800 -->
-
     <color name="text_alertDialogListItem">#000000</color>
 
     <!-- "night" overridable -->
@@ -254,6 +251,9 @@
     <color name="table_summmer_contrast_light">@color/grey_800</color>
     <color name="table_fall_contrast_light">@color/grey_900</color>
     <color name="table_winter_contrast_light">@color/grey_800</color>
+
+    <color name="btn_tint_pressed_dark">@color/secondaryContainerColor</color>
+    <color name="btn_tint_pressed_light">@color/secondaryContainerColor</color> <!-- #CF4800 -->
 
     <!-- alarm cards -->
     <color name="grid_selected_light">@color/light_secondaryContainerColor</color>
@@ -524,7 +524,7 @@
     <color name="dark_onSecondaryContainerColor">@color/black</color>
     <color name="dark_tertiaryColor">@color/orange_500</color>
     <color name="dark_errorColor">@color/red_a400</color>
-    <color name="dark_outlineColor">@color/grey_700</color>
+    <color name="dark_outlineColor">@color/grey_600</color>
     <color name="dark_outlineVariantColor">@color/grey_700</color>
 
     <color name="dark_surfaceColor">@color/grey_850</color>              <!-- window background -->
@@ -560,7 +560,7 @@
     <color name="light_onSecondaryContainerColor">@color/black</color>
     <color name="light_tertiaryColor">@color/deep_orange_800</color>
     <color name="light_errorColor">@color/red_900</color>
-    <color name="light_outlineColor">@color/grey_300</color>
+    <color name="light_outlineColor">@color/grey_500</color>
     <color name="light_outlineVariantColor">@color/grey_300</color>
 
     <color name="light_surfaceColor">@color/grey_50</color>
