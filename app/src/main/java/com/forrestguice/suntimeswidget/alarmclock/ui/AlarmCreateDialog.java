@@ -759,6 +759,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                     }
                 }, AUTO_EXPAND_DELAY);
             }
+
+            if (AppSettings.isTelevision(getActivity())) {
+                spin_type.requestFocus();
+            }
         }
     };
     public static final int AUTO_EXPAND_DELAY = 500;
