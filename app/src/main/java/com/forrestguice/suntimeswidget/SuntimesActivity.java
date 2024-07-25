@@ -2635,8 +2635,10 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         @Override
-        public void onSetAlarm( SolarEvents suggestedEvent ) {
-            scheduleAlarm(suggestedEvent.name());
+        public void onSetAlarm( @Nullable SolarEvents suggestedEvent ) {
+            if (suggestedEvent != null) {
+                scheduleAlarm(suggestedEvent.name());
+            }
         }
         @Override
         public void onShowMap( long suggestDate ) {
