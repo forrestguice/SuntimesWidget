@@ -121,6 +121,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String CHANNEL_ID_NOTIFICATIONS1 = "suntimes.channel.notifications1";
     public static final String CHANNEL_ID_MISC = "suntimes.channel.misc";
 
+    public static final int NOTIFICATION_SERVICE_IS_ACTIVE_ID = -1;
+
     public static final int NOTIFICATION_SCHEDULE_ALL_ID = -10;
     public static final int NOTIFICATION_SCHEDULE_ALL_DURATION = 4000;
 
@@ -151,7 +153,11 @@ public class AlarmNotifications extends BroadcastReceiver
         Log.d(TAG, "onReceive: " + action + ", " + data);
         if (action != null) {
             if (actionIsPermitted(action)) {
-                context.startService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                if (Build.VERSION.SDK_INT >= 26) {
+                    context.startForegroundService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                } else {
+                    context.startService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                }
             } else Log.e(TAG, "onReceive: `" + action + "` is not on the list of permitted actions! Ignoring...");
         } else Log.w(TAG, "onReceive: null action!");
     }
@@ -1511,8 +1517,13 @@ public class AlarmNotifications extends BroadcastReceiver
         }
         public void stopSelf(@Nullable Integer startId)
         {
-            if (notification == null)
+            if (notification == null || notificationID == NOTIFICATION_SERVICE_IS_ACTIVE_ID)
             {
+                if (notificationID == NOTIFICATION_SERVICE_IS_ACTIVE_ID) {
+                    Log.i(TAG, "stopSelf: dismissing foreground notification");
+                    stopForeground(true);
+                }
+
                 Service service = serviceRef.get();
                 if (service != null) {
                     Log.i(TAG, "stopSelf: stopping service");
@@ -1564,6 +1575,11 @@ public class AlarmNotifications extends BroadcastReceiver
         public int onStartCommand(final Intent intent, int flags, final int startId)
         {
             super.onStartCommand(intent, flags, startId);
+
+            if (Build.VERSION.SDK_INT >= 26) {    // api26+ we have 5s to call startForeground; show a generic progress notification while the service is active
+                notifications.startForeground(NOTIFICATION_SERVICE_IS_ACTIVE_ID, createProgressNotification(NotificationService.this));
+            }
+
             if (intent != null)
             {
                 String action = intent.getAction();
@@ -1711,18 +1727,22 @@ public class AlarmNotifications extends BroadcastReceiver
                     } else if (ACTION_BEDTIME.equals(action)) {
                         Log.d(TAG, "ACTION_BEDTIME");
                         triggerBedtimeMode(getApplicationContext(), true);
+                        notifications.stopSelf(startId);
 
                     } else if (ACTION_BEDTIME_PAUSE.equals(action)) {
                         Log.d(TAG, "ACTION_BEDTIME_PAUSE");
                         pauseBedtimeMode(getApplicationContext());
+                        notifications.stopSelf(startId);
 
                     } else if (ACTION_BEDTIME_RESUME.equals(action)) {
                         Log.d(TAG, "ACTION_BEDTIME_RESUME");
                         resumeBedtimeMode(getApplicationContext());
+                        notifications.stopSelf(startId);
 
                     } else if (ACTION_BEDTIME_DISMISS.equals(action)) {
                         Log.d(TAG, "ACTION_BEDTIME_DISMISS");
                         triggerBedtimeMode(getApplicationContext(), false);
+                        notifications.stopSelf(startId);
 
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
                         Log.d(TAG, "ACTION_DELETE: clear all");
