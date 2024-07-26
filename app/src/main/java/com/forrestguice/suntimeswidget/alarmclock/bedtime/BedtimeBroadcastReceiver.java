@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
@@ -47,7 +48,11 @@ public class BedtimeBroadcastReceiver extends BroadcastReceiver
         Log.d(TAG, "onReceive: " + action + ", " + data);
         if (action != null) {
             if (actionIsPermitted(action)) {
-                context.startService(AlarmNotifications.NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                if (Build.VERSION.SDK_INT >= 26) {
+                    context.startForegroundService(AlarmNotifications.NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                } else {
+                    context.startService(AlarmNotifications.NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                }
             } else Log.e(TAG, "onReceive: `" + action + "` is not on the list of permitted actions! Ignoring...");
         } else Log.w(TAG, "onReceive: null action!");
     }
