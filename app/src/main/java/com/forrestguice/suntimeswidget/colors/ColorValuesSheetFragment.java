@@ -26,6 +26,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +108,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                     @Override
                     public void run() {
                         if (mode == MODE_EDIT) {
-                            onSelectColors(editDialog.getColorValues());
+                            onSelectColors(editDialog.getColorValues(), "onResume");
                         }
                     }
                 }, 500);
@@ -290,7 +291,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             if (context != null) {
                 colorCollection.setSelectedColorsID(context, item.colorsID, getAppWidgetID(), getColorTag());
                 ColorValues selectedColors = colorCollection.getColors(context, item.colorsID);
-                onSelectColors(selectedColors);
+                onSelectColors(selectedColors, "onItemSelected");
             }
         }
     };
@@ -342,7 +343,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                 colorCollection.clearCache();
                 colorCollection.setColors(context, colorsID, values);
                 colorCollection.setSelectedColorsID(context, colorsID, getAppWidgetID(), getColorTag());
-                onSelectColors(colorCollection.getColors(context, colorsID));
+                onSelectColors(colorCollection.getColors(context, colorsID), "onSaveClicked");
 
                 setMode(MODE_SELECT);
                 toggleFragmentVisibility(getMode());
@@ -386,7 +387,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             colorCollection.clearCache();    // cached instance may have been modified
             setMode(MODE_SELECT);
             toggleFragmentVisibility(getMode());
-            onSelectColors(colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag()));
+            onSelectColors(colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag()), "cancelEdit");
         }
     }
 
@@ -463,7 +464,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listener.requestExpandSheet();
         }
     }
-    protected void onSelectColors(ColorValues values) {
+    protected void onSelectColors(ColorValues values, String tag) {
         if (listener != null) {
             listener.onColorValuesSelected(values);
         }

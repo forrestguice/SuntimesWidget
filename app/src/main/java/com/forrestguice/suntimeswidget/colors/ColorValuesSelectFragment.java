@@ -92,35 +92,53 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
 
         label = (TextView) content.findViewById(R.id.color_values_selector_label);
-
         selector = (Spinner) content.findViewById(R.id.colorvalues_selector);
-        if (selector != null) {
-            selector.setOnItemSelectedListener(onItemSelected);
-        }
-
         editButton = (ImageButton) content.findViewById(R.id.editButton);
-        if (editButton != null) {
-            editButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onEditButtonClicked));
-        }
-
         addButton = (ImageButton) content.findViewById(R.id.addButton);
-        if (addButton != null) {
-            addButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onAddButtonClicked));
-        }
-
         backButton = (ImageButton) content.findViewById(R.id.backButton);
-        if (backButton != null) {
-            backButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onBackButtonClicked));
-        }
-
         menuButton = (ImageButton) content.findViewById(R.id.menuButton);
-        if (menuButton != null) {
-            menuButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onMenuButtonClicked));
-        }
 
         updateViews();
         return content;
     }
+
+    protected void attachListeners()
+    {
+        if (selector != null) {
+            selector.setOnItemSelectedListener(onItemSelected);
+        }
+        if (editButton != null) {
+            editButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onEditButtonClicked));
+        }
+        if (addButton != null) {
+            addButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onAddButtonClicked));
+        }
+        if (backButton != null) {
+            backButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onBackButtonClicked));
+        }
+        if (menuButton != null) {
+            menuButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onMenuButtonClicked));
+        }
+    }
+    protected void detachListeners()
+    {
+        if (selector != null) {
+            selector.setOnItemSelectedListener(null);
+        }
+        if (editButton != null) {
+            editButton.setOnClickListener(null);
+        }
+        if (addButton != null) {
+            addButton.setOnClickListener(null);
+        }
+        if (backButton != null) {
+            backButton.setOnClickListener(null);
+        }
+        if (menuButton != null) {
+            menuButton.setOnClickListener(null);
+        }
+    }
+
 
     public void requestFocus()
     {
@@ -276,6 +294,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
     protected void updateViews()
     {
+        detachListeners();
         boolean allowEdit = allowEdit();
 
         if (selector != null)
@@ -321,6 +340,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             //}
         }
         updateControls();
+        attachListeners();
     }
 
     protected void updateControls()

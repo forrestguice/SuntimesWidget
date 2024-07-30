@@ -30,6 +30,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -211,9 +212,6 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     {
         titleText = (TextView) dialogView.findViewById(R.id.dialog_title);
 
-        FragmentManager fragments = getChildFragmentManager();
-        FragmentTransaction transaction = fragments.beginTransaction();
-
         colorSheet = new ColorValuesSheetFragment();
         colorSheet.setAppWidgetID(getAppWidgetID());
         colorSheet.setColorTag(getColorTag());
@@ -223,6 +221,8 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
         colorSheet.setFragmentListener(fragmentListener);
 
+        FragmentManager fragments = getChildFragmentManager();
+        FragmentTransaction transaction = fragments.beginTransaction();
         transaction.replace(R.id.fragmentContainer2, colorSheet, "ColorValuesSheet");
         transaction.commit();
 
