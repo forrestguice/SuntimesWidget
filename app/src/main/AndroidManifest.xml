@@ -315,7 +315,7 @@
         <activity-alias
             android:name=".alarmclock.ui.AlarmClockActivityLauncher"
             android:targetActivity=".alarmclock.ui.AlarmClockActivity"
-            android:enabled="true">
+            android:enabled="@bool/def_app_alarms_showlauncher">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
