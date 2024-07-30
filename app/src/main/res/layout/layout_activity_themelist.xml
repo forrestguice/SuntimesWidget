@@ -22,23 +22,22 @@
     <ImageView
         android:id="@+id/themegrid_background"
         android:layout_width="match_parent" android:layout_height="match_parent"
-        android:src="?timeCardBackground" android:scaleType="centerCrop" android:alpha="0"
+        android:src="?android:windowBackground" android:scaleType="centerCrop" android:alpha="0"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/app_menubar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="?attr/toolbarTheme"
-            app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
-            app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
-            app:title="@string/configLabel_widgetThemeListSelect"
-            app:popupTheme="?attr/actionBarPopupTheme" />
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/layout_app_menubar"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+                app:title="@string/configLabel_widgetThemeListSelect" />
+
+        </android.support.design.widget.AppBarLayout>
 
         <GridView android:id="@+id/themegrid"
             android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"

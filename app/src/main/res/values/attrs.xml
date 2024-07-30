@@ -14,6 +14,7 @@
     <attr name="timeCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />
     <attr name="hrColor" format="reference" />
+
     <attr name="text_primaryColor" format="reference" />
     <attr name="text_secondaryColor" format="reference" />
     <attr name="text_tertiaryColor" format="reference" />
@@ -103,8 +104,15 @@
     <attr name="snackbar_accentColor" format="reference" />
     <attr name="snackbar_backgroundColor" format="reference" />
 
+    <attr name="fab_foregroundColor" format="reference" />
     <attr name="fab_backgroundColor" format="reference" />
     <attr name="fab_rippleColor" format="reference" />
+
+    <attr name="fab_foregroundColorAlt" format="reference" />
+    <attr name="fab_backgroundColorAlt" format="reference" />
+    <attr name="fab_rippleColorAlt" format="reference" />
+
+    <attr name="fab_backgroundDrawable" format="reference" />   <!-- background drawable to make ImageButton look like a fab -->
 
     <attr name="toolbarTheme" format="reference" />
     <attr name="icActionPlace" format="reference" />

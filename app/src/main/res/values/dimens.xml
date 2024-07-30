@@ -6,9 +6,14 @@
     <dimen name="dialog_margin1">4dp</dimen>
     <dimen name="tooltip_margin0">8dp</dimen>
 
+    <dimen name="fab_radius">12dp</dimen>
     <dimen name="tooltip_radius">4dp</dimen>
     <dimen name="toast_radius">28dp</dimen>
     <dimen name="popupmenu_radius">8dp</dimen>
+    <dimen name="chip_radius">6dp</dimen>
+    <dimen name="chip_stroke">2dp</dimen>
+
+    <dimen name="snackbar_button_padding">8dp</dimen>
 
     <dimen name="smalltext_size_tiny">6sp</dimen>      <!-- "small" sizes -->
     <dimen name="smalltext_size_xsmall">10sp</dimen>

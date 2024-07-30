@@ -7,12 +7,13 @@
     <!-- Theme: System (left-to-right) -->
     <style name="AppThemeBase.System" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorBackgroundFloating">@color/surfaceContainerColor</item>
         <item name="dialogFrame">@color/dialog_frame</item>
         <item name="dialogBackground">@color/dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_ref</item>
         <item name="widgetBackground">@drawable/widget_bg_ref</item>
-        <item name="settingsCardBackground">@drawable/widget_bg_ref</item>
+        <item name="settingsCardBackground">@color/card_bg</item>
         <item name="timeCardBackground">@color/card_bg</item>
         <item name="semiTransparentBackground">@color/card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
@@ -104,11 +105,18 @@
         <item name="tagColor_dst">@color/dstTag</item>
 
         <item name="snackbar_textColor">@color/snackbar_text</item>
-        <item name="snackbar_accentColor">?colorAccent</item>
-        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+        <item name="snackbar_accentColor">@color/text_accent</item>
+        <item name="snackbar_backgroundColor">@color/surfaceContainerColor</item>
 
-        <item name="fab_backgroundColor">@color/text_accent</item>
+        <item name="fab_foregroundColor">@color/onSecondaryContainerColor</item>
+        <item name="fab_backgroundColor">@color/secondaryContainerColor</item>
         <item name="fab_rippleColor">@color/fab_ripple</item>
+
+        <item name="fab_foregroundColorAlt">@color/onPrimaryColor</item>
+        <item name="fab_backgroundColorAlt">@color/primaryContainerColor</item>
+        <item name="fab_rippleColorAlt">@color/secondaryContainerColor</item>
+
+        <item name="fab_backgroundDrawable">@drawable/button_fab_ref</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found_ref</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_ref</item>
@@ -233,12 +241,13 @@
 
     <!-- Theme: Light (left-to-right) -->
     <style name="AppThemeBase.Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/primaryColor_light</item>
+        <item name="colorPrimary">@color/light_primaryColor</item>
+        <item name="colorBackgroundFloating">@color/light_surfaceContainer</item>
         <item name="dialogFrame">@color/dialog_frame_light</item>
         <item name="dialogBackground">@color/dialog_bg_light</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_light</item>
         <item name="widgetBackground">@drawable/bg_widget</item>
-        <item name="settingsCardBackground">@drawable/bg_widget</item>
+        <item name="settingsCardBackground">@color/card_bg_light</item>
         <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
@@ -258,7 +267,7 @@
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light0</item>
         <item name="alarmCardSounding">@drawable/card_alarmitem_sounding_light0</item>
         <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_light0</item>
-        <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_light0</item>    <!-- TODO -->
+        <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_light0</item>
         <item name="alarmCardControls">@drawable/card_alarmitem_controls_light</item>
         <item name="alarmCardBackdrop">@drawable/card_alarmitem_backdrop_light</item>
         <item name="gridItemSelected">@color/grid_selected_light</item>
@@ -330,11 +339,18 @@
         <item name="tagColor_dst">@color/dstTag_light</item>
 
         <item name="snackbar_textColor">@color/snackbar_text_light</item>
-        <item name="snackbar_accentColor">?colorAccent</item>
-        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+        <item name="snackbar_accentColor">@color/text_accent_light</item>
+        <item name="snackbar_backgroundColor">@color/light_surfaceContainer</item>
 
-        <item name="fab_backgroundColor">@color/text_accent_light</item>
+        <item name="fab_foregroundColor">@color/light_onSecondaryContainerColor</item>
+        <item name="fab_backgroundColor">@color/light_secondaryContainerColor</item>
         <item name="fab_rippleColor">@color/fab_ripple_light</item>
+
+        <item name="fab_foregroundColorAlt">@color/light_onPrimaryColor</item>
+        <item name="fab_backgroundColorAlt">@color/light_primaryContainerColor</item>
+        <item name="fab_rippleColorAlt">@color/light_secondaryContainerColor</item>
+
+        <item name="fab_backgroundDrawable">@drawable/button_fab_light</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
@@ -462,12 +478,13 @@
 
     <!-- Theme: Dark (left-to-right) -->
     <style name="AppThemeBase.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/primaryColor_dark</item>
+        <item name="colorPrimary">@color/dark_primaryColor</item>
+        <item name="colorBackgroundFloating">@color/dark_surfaceContainer</item>
         <item name="dialogFrame">@color/dialog_frame_dark</item>
         <item name="dialogBackground">@color/dialog_bg_dark</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_dark</item>
         <item name="widgetBackground">@drawable/bg_widget_dark</item>
-        <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
+        <item name="settingsCardBackground">@color/card_bg_dark</item>
         <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
@@ -559,11 +576,18 @@
         <item name="tagColor_dst">@color/dstTag_dark</item>
 
         <item name="snackbar_textColor">@color/snackbar_text_dark</item>
-        <item name="snackbar_accentColor">?colorAccent</item>
-        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+        <item name="snackbar_accentColor">@color/text_accent_dark</item>
+        <item name="snackbar_backgroundColor">@color/dark_surfaceContainer</item>
 
-        <item name="fab_backgroundColor">@color/text_accent_dark</item>
+        <item name="fab_foregroundColor">@color/dark_onSecondaryContainerColor</item>
+        <item name="fab_backgroundColor">@color/dark_secondaryContainerColor</item>
         <item name="fab_rippleColor">@color/fab_ripple_dark</item>
+
+        <item name="fab_foregroundColorAlt">@color/dark_onPrimaryColor</item>
+        <item name="fab_backgroundColorAlt">@color/dark_primaryContainerColor</item>
+        <item name="fab_rippleColorAlt">@color/dark_secondaryContainerColor</item>
+
+        <item name="fab_backgroundDrawable">@drawable/button_fab_dark</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
@@ -696,12 +720,13 @@
     <!-- Contrast System Theme -->
     <style name="AppTheme.System1" parent="AppTheme.System">
         <item name="colorPrimary">@color/primaryColor_contrast</item>
+        <item name="colorBackgroundFloating">@color/surfaceColor_contrast</item>
         <item name="settingsCardBackground">@color/card_bg_contrast</item>
         <item name="timeCardBackground">@color/card_bg_contrast</item>
         <item name="dialogFrame">@color/dialog_frame_contrast</item>
         <item name="dialogBackground">@color/dialog_bg_contrast</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast</item>
-        <item name="android:windowBackground">@color/window_bg_contrast</item>
+        <item name="android:windowBackground">@color/backgroundColor_contrast</item>
         <item name="table_risingColor">@color/table_rising_contrast</item>
         <item name="table_settingColor">@color/table_setting_contrast</item>
         <item name="table_civilColor">@color/table_civil_contrast</item>
@@ -717,6 +742,10 @@
         <item name="table_winterColor">@color/table_winter_contrast</item>
         <item name="chipTrayBackground">@drawable/chip_tray_contrast</item>
         <item name="chipBackground">@drawable/chip_contrast</item>
+
+        <item name="tagColor_warning">@color/warningTag_contrast</item>
+        <item name="tagColor_error">@color/errorTag_contrast</item>
+        <item name="tagColor_dst">@color/dstTag_contrast</item>
 
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
@@ -764,13 +793,14 @@
 
     <!-- Contrast Light Theme -->
     <style name="AppTheme.Light1" parent="AppTheme.Light">
-        <item name="colorPrimary">@color/primaryColor_contrast_light</item>
+        <item name="colorPrimary">@color/lightcontrast_primaryColor</item>
+        <item name="colorBackgroundFloating">@color/lightcontrast_surfaceContainer</item>
         <item name="settingsCardBackground">@color/card_bg_contrast_light</item>
         <item name="timeCardBackground">@color/card_bg_contrast_light</item>
         <item name="dialogFrame">@color/dialog_frame_contrast_light</item>
         <item name="dialogBackground">@color/dialog_bg_contrast_light</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast_light</item>
-        <item name="android:windowBackground">@color/window_bg_contrast_light</item>
+        <item name="android:windowBackground">@color/lightcontrast_surfaceColor</item>
         <item name="table_risingColor">@color/table_rising_contrast_light</item>
         <item name="table_settingColor">@color/table_setting_contrast_light</item>
         <item name="table_civilColor">@color/table_civil_contrast_light</item>
@@ -786,6 +816,10 @@
         <item name="table_winterColor">@color/table_winter_contrast_light</item>
         <item name="chipTrayBackground">@drawable/chip_tray_contrast_light</item>
         <item name="chipBackground">@drawable/chip_contrast_light</item>
+
+        <item name="tagColor_warning">@color/warningTag_contrast_light</item>
+        <item name="tagColor_error">@color/errorTag_contrast_light</item>
+        <item name="tagColor_dst">@color/dstTag_contrast_light</item>
 
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
@@ -833,13 +867,16 @@
 
     <!-- Contrast Dark Theme -->
     <style name="AppTheme.Dark1" parent="AppTheme.Dark">
-        <item name="colorPrimary">@color/primaryColor_contrast_dark</item>
+        <item name="colorPrimary">@color/darkcontrast_primaryColor</item>
+        <item name="colorPrimaryDark">@color/darkcontrast_primaryContainerColor</item>
+        <item name="colorSecondary">@color/darkcontrast_secondaryColor</item>
+        <item name="colorBackgroundFloating">@color/darkcontrast_surfaceContainer</item>
         <item name="settingsCardBackground">@color/card_bg_contrast_dark</item>
         <item name="timeCardBackground">@color/card_bg_contrast_dark</item>
         <item name="dialogFrame">@color/dialog_frame_contrast_dark</item>
         <item name="dialogBackground">@color/dialog_bg_contrast_dark</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast_dark</item>
-        <item name="android:windowBackground">@color/window_bg_contrast_dark</item>
+        <item name="android:windowBackground">@color/darkcontrast_surfaceColor</item>
         <item name="table_risingColor">@color/table_rising_contrast_dark</item>
         <item name="table_settingColor">@color/table_setting_contrast_dark</item>
         <item name="table_civilColor">@color/table_civil_contrast_dark</item>
@@ -855,6 +892,10 @@
         <item name="table_winterColor">@color/table_winter_contrast_dark</item>
         <item name="chipTrayBackground">@drawable/chip_tray_contrast_dark</item>
         <item name="chipBackground">@drawable/chip_contrast_dark</item>
+
+        <item name="tagColor_warning">@color/warningTag_contrast_dark</item>
+        <item name="tagColor_error">@color/errorTag_contrast_dark</item>
+        <item name="tagColor_dst">@color/dstTag_contrast_dark</item>
 
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
@@ -1221,6 +1262,16 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="AppToolbarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">?attr/toolbarTheme</item>
+        <item name="popupTheme">?attr/actionBarPopupTheme</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
+    </style>
+
     <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">?attr/text_size_xlarge</item>
     </style>
@@ -1233,7 +1284,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="AboutToolbarStyle">
+    <style name="AboutToolbarStyle" parent="@style/AppToolbarStyle">
         <item name="android:visibility">visible</item>
     </style>
     <style name="AboutTabStyle">

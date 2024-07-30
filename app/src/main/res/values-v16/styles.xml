@@ -3,7 +3,7 @@
 
     <style name="NavDrawerTextAppearance">
         <item name="android:textSize">?attr/text_size_medium</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <!--<item name="android:fontFamily">sans-serif-light</item>-->
         <item name="android:textStyle">bold</item>
     </style>
 

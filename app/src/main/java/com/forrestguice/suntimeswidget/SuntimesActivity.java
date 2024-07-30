@@ -306,6 +306,16 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     @Override
+    public void onBackPressed()
+    {
+        if (navigation != null && navigation.isNavigationDrawerOpen()) {
+            navigation.closeNavigationDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void onNewIntent( Intent intent ) {
         Log.d("onNewIntent", intent.toString());
         handleIntent(intent);

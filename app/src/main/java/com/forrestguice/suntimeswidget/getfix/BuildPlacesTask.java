@@ -23,13 +23,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Pair;
@@ -438,9 +441,14 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             displayStrings[i] = items.get(i).second;
         }
 
+        int[] attrs = { R.attr.icActionWorldMap };
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        int iconResID = a.getResourceId(0, R.drawable.ic_action_map);
+        a.recycle();
+
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.configLabel_places_build))
-                .setIcon(R.drawable.ic_action_map)
+                .setIcon(iconResID)
                 .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {

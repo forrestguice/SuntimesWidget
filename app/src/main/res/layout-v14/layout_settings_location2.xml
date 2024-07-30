@@ -70,7 +70,8 @@
                     style="@android:style/Widget.ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionPlace"
-                    android:contentDescription="@string/configAction_selectPlace" />
+                    android:contentDescription="@string/configAction_selectPlace"
+                    android:nextFocusUp="@+id/appwidget_location_mode" />
 
                 <ImageButton android:id="@+id/appwidget_location_cancel"
                     style="@android:style/Widget.ActionButton"
@@ -139,7 +140,8 @@
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              style="@android:style/Widget.ActionButton"
                              android:src="?attr/icActionEdit"
-                             android:contentDescription="@string/configAction_editPlace" />
+                             android:contentDescription="@string/configAction_editPlace"
+                             android:nextFocusUp="@+id/appwidget_location_mode" />
 
                 <ImageButton android:id="@+id/appwidget_location_save"
                              style="@android:style/Widget.ActionButton"

@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="is_nightmode">true</bool>
+    <bool name="not_nightmode">false</bool>
 
     <!-- "system default" colors -->
-    <color name="primaryColor">@color/primaryColor_dark</color>
+    <color name="primaryColor">@color/dark_primaryColor</color>
+    <color name="primaryContainerColor">@color/dark_primaryContainerColor</color>
+    <color name="onPrimaryColor">@color/dark_onPrimaryColor</color>
+    <color name="secondaryColor">@color/dark_secondaryColor</color>
+    <color name="secondaryContainerColor">@color/dark_secondaryContainerColor</color>
+    <color name="onSecondaryContainerColor">@color/dark_onSecondaryContainerColor</color>
+    <color name="tertiaryColor">@color/dark_tertiaryColor</color>
+    <color name="surfaceColor">@color/dark_surfaceColor</color>
+    <color name="surfaceContainerColor">@color/dark_surfaceContainer</color>
+    <color name="errorColor">@color/dark_errorColor</color>
+
     <color name="dialog_frame">@color/dialog_frame_dark</color>
     <color name="dialog_bg">@color/dialog_bg_dark</color>
     <color name="dialog_bg_alt">@color/dialog_bg_alt_dark</color>
@@ -16,6 +27,8 @@
     <color name="chip_bg_enabled_stroke">@color/chip_bg_enabled_stroke_dark</color>
     <color name="chip_bg_pressed">@color/chip_bg_pressed_dark</color>
     <color name="chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_dark</color>
+    <color name="chip_tray_bg">@color/chip_tray_bg_dark</color>
+    <color name="chip_bg_focused_stroke">@color/chip_bg_focused_stroke_dark</color>
 
     <color name="nav_bg">@color/nav_bg_dark</color>
     <color name="hr">@color/hr_dark</color>
@@ -80,8 +93,14 @@
     <color name="tagColor_dst">@color/dstTag_dark</color>
 
     <!-- high contrast colors -->
-    <color name="primaryColor_contrast">@color/primaryColor_contrast_dark</color>
-    <color name="window_bg_contrast">@color/window_bg_contrast_dark</color>
+    <color name="primaryColor_contrast">@color/darkcontrast_primaryColor</color>
+    <color name="backgroundColor_contrast">@color/darkcontrast_surfaceColor</color>
+    <color name="surfaceColor_contrast">@color/darkcontrast_surfaceContainer</color>
+
+    <color name="warningTag_contrast">@color/warningTag_contrast_dark</color>
+    <color name="errorTag_contrast">@color/errorTag_contrast_dark</color>
+    <color name="dstTag_contrast">@color/dstTag_contrast_dark</color>
+
     <color name="dialog_frame_contrast">@color/dialog_frame_contrast_dark</color>
     <color name="dialog_bg_contrast">@color/dialog_bg_contrast_dark</color>
     <color name="dialog_bg_alt_contrast">@color/dialog_bg_alt_contrast_dark</color>

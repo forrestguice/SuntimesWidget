@@ -706,7 +706,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
         if (Build.VERSION.SDK_INT <= 19)    // override ripple fallback
         {
-            addButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
+            addButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));    // TODO
             addButton.setRippleColor(Color.TRANSPARENT);
 
             deselectButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
@@ -1177,7 +1177,10 @@ public class AlarmClockActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        if (isAddDialogShowing()) {
+        if (navigation != null && navigation.isNavigationDrawerOpen()) {
+            navigation.closeNavigationDrawer();
+
+        } else if (isAddDialogShowing()) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         } else if (list.getSelectedRowID() != -1) {

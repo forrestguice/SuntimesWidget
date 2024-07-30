@@ -48,7 +48,8 @@
                 style="@style/SunsetTimeTextView" android:layout_marginTop="2dp"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="start|left"
                 tools:text="June 3, 6:00 PM"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/sundialog_title"
+                android:background="?attr/selectableItemBackground" />
 
         </LinearLayout>
 

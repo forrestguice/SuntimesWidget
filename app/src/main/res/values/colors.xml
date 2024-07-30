@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="is_nightmode">false</bool>
-
-    <color name="primary">#ff9900</color>
-    <color name="primary_dark">#ff9900</color>
-
-    <color name="accent">#ffd500</color>
+    <bool name="not_nightmode">true</bool>
 
     <color name="datetext_dark">#cccccc</color>
     <color name="datetext_light">#575757</color>
@@ -13,14 +9,21 @@
     <color name="labeltext_dark">#cccccc</color>
     <color name="labeltext_light">#575757</color>
 
-    <color name="btn_tint_pressed_dark">#ff9900</color>
-    <color name="btn_tint_pressed_light">#CF4800</color> <!-- #CF4800 -->
-
     <color name="text_alertDialogListItem">#000000</color>
 
     <!-- "night" overridable -->
 
-    <color name="primaryColor">@color/primaryColor_light</color>
+    <color name="primaryColor">@color/light_primaryColor</color>
+    <color name="primaryContainerColor">@color/light_primaryContainerColor</color>
+    <color name="onPrimaryColor">@color/light_onPrimaryColor</color>
+    <color name="secondaryColor">@color/light_secondaryColor</color>
+    <color name="secondaryContainerColor">@color/light_secondaryContainerColor</color>
+    <color name="onSecondaryContainerColor">@color/light_onSecondaryContainerColor</color>
+    <color name="tertiaryColor">@color/light_tertiaryColor</color>
+    <color name="surfaceColor">@color/light_surfaceColor</color>
+    <color name="surfaceContainerColor">@color/light_surfaceContainer</color>
+    <color name="errorColor">@color/light_errorColor</color>
+
     <color name="dialog_frame">@color/dialog_frame_light</color>
     <color name="dialog_bg">@color/dialog_bg_light</color>
     <color name="dialog_bg_alt">@color/dialog_bg_light</color>
@@ -34,6 +37,7 @@
     <color name="chip_bg_pressed">@color/chip_bg_pressed_light</color>
     <color name="chip_bg_pressed_stroke">@color/chip_bg_pressed_stroke_light</color>
     <color name="chip_tray_bg">@color/chip_tray_bg_light</color>
+    <color name="chip_bg_focused_stroke">@color/chip_bg_focused_stroke_light</color>
 
     <color name="nav_bg">@color/nav_bg_light</color>
     <color name="hr">@color/hr_light</color>
@@ -93,8 +97,9 @@
     <color name="tagColor_dst">@color/dstTag_light</color>
 
     <!-- night overrideable (high contrast) -->
-    <color name="primaryColor_contrast">@color/primaryColor_contrast_light</color>
-    <color name="window_bg_contrast">@color/window_bg_contrast_light</color>
+    <color name="primaryColor_contrast">@color/lightcontrast_primaryColor</color>
+    <color name="backgroundColor_contrast">@color/lightcontrast_surfaceColor</color>
+    <color name="surfaceColor_contrast">@color/lightcontrast_surfaceContainer</color>
     <color name="dialog_frame_contrast">@color/dialog_frame_contrast_light</color>
     <color name="dialog_bg_contrast">@color/dialog_bg_contrast_light</color>
     <color name="dialog_bg_alt_contrast">@color/dialog_bg_alt_contrast_light</color>
@@ -113,6 +118,10 @@
     <color name="table_fall_contrast">@color/table_fall_contrast_light</color>
     <color name="table_winter_contrast">@color/table_winter_contrast_light</color>
 
+    <color name="warningTag_contrast">@color/warningTag_contrast_light</color>
+    <color name="errorTag_contrast">@color/errorTag_contrast_light</color>
+    <color name="dstTag_contrast">@color/dstTag_contrast_light</color>
+
     <color name="chip_bg_disabled_contrast">@color/chip_bg_disabled_contrast_light</color>
     <color name="chip_bg_disabled_stroke_contrast">@color/chip_bg_disabled_stroke_contrast_light</color>
     <color name="chip_bg_enabled_contrast">@color/chip_bg_enabled_contrast_light</color>
@@ -123,30 +132,30 @@
 
     <!-- general -->
 
-    <color name="primaryColor_dark">@color/grey_900</color>
     <color name="text_primary_dark">@android:color/primary_text_dark</color>
     <color name="text_secondary_dark">@android:color/secondary_text_dark</color>
     <color name="text_tertiary_dark">@android:color/tertiary_text_dark</color>
     <color name="text_time_dark">@android:color/primary_text_dark</color>
     <color name="text_disabled_dark">@color/grey_500</color>
-    <color name="text_accent_dark">@color/teal_200</color>
-    <color name="nav_bg_dark">@color/grey_800</color>
-    <color name="hr_dark">#33ffffff</color>
-    <color name="dialog_frame_dark">@color/grey_800</color>
-    <color name="dialog_bg_dark">@color/grey_850</color>
-    <color name="dialog_bg_alt_dark">@color/grey_900</color>
-    <color name="popupmenu_bg_dark">@color/grey_900</color>
-    <color name="card_bg_dark">@color/grey_800</color>
+    <color name="text_accent_dark">@color/dark_secondaryColor</color>
+    <color name="nav_bg_dark">@color/dark_surfaceContainer</color>
+    <color name="hr_dark">@color/dark_outlineVariantColor</color>
+    <color name="dialog_frame_dark">@color/dark_surfaceContainer</color>
+    <color name="dialog_bg_dark">@color/dark_surfaceContainer_low</color>
+    <color name="dialog_bg_alt_dark">@color/dark_surfaceContainer</color>
+    <color name="popupmenu_bg_dark">@color/dark_surfaceContainer</color>
+    <color name="card_bg_dark">@color/dark_surfaceContainer_lowest</color>
     <color name="card_bg_darktrans">#aa212121</color>
     <color name="chip_bg_disabled_dark">@color/grey_500</color>
     <color name="chip_bg_disabled_stroke_dark">@color/grey_500</color>
-    <color name="chip_bg_enabled_dark">@color/grey_850</color>
-    <color name="chip_bg_enabled_stroke_dark">@color/grey_850</color>
+    <color name="chip_bg_enabled_dark">@color/dark_surfaceContainer_low</color>
+    <color name="chip_bg_enabled_stroke_dark">@color/dark_surfaceContainer_low</color>
     <color name="chip_bg_pressed_dark">@color/text_accent_dark</color>
     <color name="chip_bg_pressed_stroke_dark">@color/text_accent_dark</color>
-    <color name="chip_tray_bg_dark">@color/grey_800</color>
+    <color name="chip_bg_focused_stroke_dark">@color/dark_tertiaryColor</color>
+    <color name="chip_tray_bg_dark">@color/dark_surfaceContainer</color>
     <color name="widget_bg_dark">#82212121</color>
-    <color name="fab_ripple_dark">@color/grey_900</color>
+    <color name="fab_ripple_dark">@color/dark_primaryColor</color>
     <color name="snackbar_text_dark">@android:color/primary_text_dark</color>
     <color name="table_rising_dark">@color/sunIcon_color_rising_dark</color>
     <color name="table_setting_dark">@color/sunIcon_color_setting_dark</color>
@@ -158,30 +167,30 @@
     <color name="table_moon_rising_dark">@color/moonIcon_color_rising_dark</color>
     <color name="table_moon_setting_dark">@color/moonIcon_color_setting_dark</color>
 
-    <color name="primaryColor_light">@color/grey_100</color>
     <color name="text_primary_light">@android:color/primary_text_light</color>
     <color name="text_secondary_light">@android:color/secondary_text_light</color>
     <color name="text_tertiary_light">@android:color/tertiary_text_light</color>
     <color name="text_time_light">@android:color/primary_text_light</color>
     <color name="text_disabled_light">#39000000</color>
-    <color name="text_accent_light">@color/teal_500</color>
-    <color name="nav_bg_light">@color/grey_400</color>
-    <color name="hr_light">#1f000000</color>
-    <color name="dialog_frame_light">@android:color/white</color>
-    <color name="dialog_bg_light">@color/grey_50</color>
-    <color name="dialog_bg_alt_light">@color/grey_300</color>
-    <color name="popupmenu_bg_light">@color/grey_50</color>
-    <color name="card_bg_light">@android:color/white</color>
+    <color name="text_accent_light">@color/light_secondaryColor</color>
+    <color name="nav_bg_light">@color/light_surfaceContainer</color>
+    <color name="hr_light">@color/light_outlineVariantColor</color>
+    <color name="dialog_frame_light">@color/light_surfaceColor</color>
+    <color name="dialog_bg_light">@color/light_surfaceContainer</color>
+    <color name="dialog_bg_alt_light">@color/light_surfaceContainer_high</color>
+    <color name="popupmenu_bg_light">@color/light_surfaceContainer</color>
+    <color name="card_bg_light">@color/light_surfaceContainer</color>
     <color name="card_bg_lighttrans">#aaffffff</color>
     <color name="chip_bg_disabled_light">@color/grey_500</color>
     <color name="chip_bg_disabled_stroke_light">@color/grey_500</color>
-    <color name="chip_bg_enabled_light">@color/grey_50</color>
-    <color name="chip_bg_enabled_stroke_light">@color/grey_200</color>
+    <color name="chip_bg_enabled_light">@color/light_primaryContainerColor</color>
+    <color name="chip_bg_enabled_stroke_light">@color/light_outlineVariantColor</color>
     <color name="chip_bg_pressed_light">@color/text_accent_light</color>
     <color name="chip_bg_pressed_stroke_light">@color/text_accent_light</color>
-    <color name="chip_tray_bg_light">@color/grey_200</color>
+    <color name="chip_bg_focused_stroke_light">@color/light_tertiaryColor</color>
+    <color name="chip_tray_bg_light">@color/light_surfaceContainer</color>
     <color name="widget_bg_light">@color/card_bg_lighttrans</color>
-    <color name="fab_ripple_light">@color/grey_50</color>
+    <color name="fab_ripple_light">@color/light_primaryColor</color>
     <color name="snackbar_text_light">@android:color/primary_text_light</color>
     <color name="table_rising_light">@color/sunIcon_color_rising_light</color>
     <color name="table_setting_light">@color/sunIcon_color_setting_light</color>
@@ -193,12 +202,10 @@
     <color name="table_moon_rising_light">@color/moonIcon_color_rising_light</color>
     <color name="table_moon_setting_light">@color/moonIcon_color_setting_light</color>
 
-    <color name="primaryColor_contrast_dark">@color/grey_900</color>
-    <color name="window_bg_contrast_dark">@color/grey_999</color>
-    <color name="dialog_frame_contrast_dark">@color/grey_900</color>
-    <color name="dialog_bg_contrast_dark">@color/grey_999</color>
-    <color name="dialog_bg_alt_contrast_dark">@color/grey_900</color>
-    <color name="card_bg_contrast_dark">@color/grey_900</color>
+    <color name="dialog_frame_contrast_dark">@color/darkcontrast_surfaceColor</color>
+    <color name="dialog_bg_contrast_dark">@color/darkcontrast_surfaceContainer</color>
+    <color name="dialog_bg_alt_contrast_dark">@color/darkcontrast_surfaceContainer_high</color>
+    <color name="card_bg_contrast_dark">@color/darkcontrast_surfaceContainer</color>
     <color name="chip_bg_disabled_contrast_dark">@color/grey_500</color>
     <color name="chip_bg_disabled_stroke_contrast_dark">@color/grey_500</color>
     <color name="chip_bg_enabled_contrast_dark">@color/grey_900</color>
@@ -220,12 +227,10 @@
     <color name="table_fall_contrast_dark">@android:color/white</color>
     <color name="table_winter_contrast_dark">@color/grey_300</color>
 
-    <color name="primaryColor_contrast_light">@color/grey_100</color>
-    <color name="window_bg_contrast_light">@color/grey_50</color>
-    <color name="dialog_frame_contrast_light">@android:color/white</color>
-    <color name="dialog_bg_contrast_light">@color/grey_50</color>
-    <color name="dialog_bg_alt_contrast_light">@color/grey_300</color>
-    <color name="card_bg_contrast_light">@android:color/white</color>
+    <color name="dialog_frame_contrast_light">@color/lightcontrast_surfaceColor</color>
+    <color name="dialog_bg_contrast_light">@color/lightcontrast_surfaceContainer</color>
+    <color name="dialog_bg_alt_contrast_light">@color/lightcontrast_surfaceContainer_high</color>
+    <color name="card_bg_contrast_light">@color/lightcontrast_surfaceContainer</color>
     <color name="chip_bg_disabled_contrast_light">@color/grey_500</color>
     <color name="chip_bg_disabled_stroke_contrast_light">@color/grey_500</color>
     <color name="chip_bg_enabled_contrast_light">@color/grey_50</color>
@@ -247,38 +252,41 @@
     <color name="table_fall_contrast_light">@color/grey_900</color>
     <color name="table_winter_contrast_light">@color/grey_800</color>
 
+    <color name="btn_tint_pressed_dark">@color/secondaryContainerColor</color>
+    <color name="btn_tint_pressed_light">@color/secondaryContainerColor</color> <!-- #CF4800 -->
+
     <!-- alarm cards -->
-    <color name="grid_selected_light">@color/text_accent_light</color>
-    <color name="alarm_pressed_light">#80009688</color>
-    <color name="alarm_enabled_light">@color/text_accent_light</color>
-    <color name="alarm_focused_light">#C94700</color>    <!-- TODO -->
-    <color name="alarm_enabled_bg_light">@color/grey_50</color>
-    <color name="alarm_disabled_bg_light">@color/grey_100</color>
-    <color name="alarm_sounding_bg0_light">@color/grey_50</color>
-    <color name="alarm_sounding_bg1_light">@color/teal_200</color>
+    <color name="grid_selected_light">@color/light_secondaryContainerColor</color>
+    <color name="alarm_pressed_light">@color/light_secondaryColor</color>
+    <color name="alarm_focused_light">@color/light_secondaryContainerColor</color>    <!-- TODO -->
+    <color name="alarm_enabled_light">@color/light_secondaryColor</color>
+    <color name="alarm_enabled_bg_light">@color/light_surfaceContainer</color>
+    <color name="alarm_disabled_bg_light">@color/light_surfaceContainer_lowest</color>
+    <color name="alarm_sounding_bg0_light">@color/light_surfaceContainer</color>
+    <color name="alarm_sounding_bg1_light">@color/alarm_enabled_light</color>
     <color name="alarm_sounding_bg2_light">@color/alarm_pressed_dark</color>
-    <color name="alarm_snoozing_bg0_light">@color/grey_50</color>
+    <color name="alarm_snoozing_bg0_light">@color/light_surfaceContainer</color>
     <color name="alarm_snoozing_bg1_light">@color/grey_600</color>
     <color name="alarm_snoozing_bg2_light">#000000</color>
     <color name="alarm_snoozing_bg3_light">@color/grey_500</color>
-    <color name="alarm_timeout_bg0_light">@color/grey_50</color>
+    <color name="alarm_timeout_bg0_light">@color/light_surfaceContainer</color>
     <color name="alarm_timeout_bg1_light">@color/tagColor_warning</color>
 
-    <color name="grid_selected_dark">@color/text_accent_dark</color>  <!-- #aaff9900-->
-    <color name="alarm_pressed_dark">#8080cbc4</color>
-    <color name="alarm_focused_dark">@color/text_accent_dark</color>   <!-- TODO -->
-    <color name="alarm_enabled_dark">@color/text_accent_dark</color>
-    <color name="alarm_enabled_bg_dark">@color/grey_900</color>
-    <color name="alarm_disabled_bg_dark">@color/grey_800</color>
-    <color name="alarm_sounding_bg0_dark">@color/grey_900</color>
-    <color name="alarm_sounding_bg1_dark">@color/teal_200</color>
+    <color name="grid_selected_dark">@color/dark_secondaryContainerColor</color>  <!-- #aaff9900-->
+    <color name="alarm_pressed_dark">@color/dark_secondaryColor</color>
+    <color name="alarm_focused_dark">@color/dark_secondaryContainerColor</color>
+    <color name="alarm_enabled_dark">@color/dark_secondaryColor</color>
+    <color name="alarm_enabled_bg_dark">@color/dark_surfaceContainer</color>
+    <color name="alarm_disabled_bg_dark">@color/dark_surfaceContainer_lowest</color>
+    <color name="alarm_sounding_bg0_dark">@color/dark_surfaceContainer</color>
+    <color name="alarm_sounding_bg1_dark">@color/alarm_enabled_dark</color>
     <color name="alarm_sounding_bg2_dark">@color/alarm_pressed_dark</color>
-    <color name="alarm_snoozing_bg0_dark">@color/grey_900</color>
+    <color name="alarm_snoozing_bg0_dark">@color/dark_surfaceContainer</color>
     <color name="alarm_snoozing_bg1_dark">@color/grey_600</color>
     <color name="alarm_snoozing_bg2_dark">#000000</color>
     <color name="alarm_snoozing_bg3_dark">@color/grey_500</color>
-    <color name="alarm_timeout_bg0_dark">@color/grey_900</color>
-    <color name="alarm_timeout_bg1_dark">@color/tagColor_warning</color>
+    <color name="alarm_timeout_bg0_dark">@color/dark_surfaceContainer</color>
+    <color name="alarm_timeout_bg1_dark">@color/warningTag_dark</color>
 
     <color name="alarm_notification_sounding">#AAEB5B</color>
     <color name="alarm_notification_snoozing">@color/grey_600</color>
@@ -286,13 +294,21 @@
     <color name="alarm_notification_warning">#ff9900</color>
 
     <!-- tags -->
-    <color name="warningTag_dark">#ff9900</color>
-    <color name="errorTag_dark">#FF5252</color>
-    <color name="dstTag_dark">#ffd500</color>
+    <color name="warningTag_dark">@color/dark_tertiaryColor</color>
+    <color name="errorTag_dark">@color/dark_errorColor</color>
+    <color name="dstTag_dark">@color/dark_tertiaryColor</color>
 
-    <color name="warningTag_light">#CF4800</color>    <!-- #ff9900 -->
-    <color name="errorTag_light">#CF4800</color>
-    <color name="dstTag_light">#CF4800</color>
+    <color name="warningTag_light">@color/light_tertiaryColor</color>    <!-- #ff9900 -->
+    <color name="errorTag_light">@color/light_errorColor</color>
+    <color name="dstTag_light">@color/light_tertiaryColor</color>
+
+    <color name="warningTag_contrast_dark">@color/darkcontrast_tertiaryColor</color>
+    <color name="errorTag_contrast_dark">@color/darkcontrast_errorColor</color>
+    <color name="dstTag_contrast_dark">@color/darkcontrast_tertiaryColor</color>
+
+    <color name="warningTag_contrast_light">@color/lightcontrast_tertiaryColor</color>
+    <color name="errorTag_contrast_light">@color/lightcontrast_errorColor</color>
+    <color name="dstTag_contrast_light">@color/lightcontrast_tertiaryColor</color>
 
     <!-- moon icons (rising, setting) -->
     <color name="moonIcon_color_rising_dark">@color/grey_50</color>
@@ -462,5 +478,113 @@
     <color name="teal_200">#ff80cbc4</color>
     <color name="teal_500">#ff009688</color>
 
+    <color name="orange_a400">#FFFF9100</color>
+    <color name="orange_500">#FFFF9800</color>
+    <color name="deep_orange_800">#FFD84315</color>
+
+    <color name="pink_a100">#FFFF80AB</color>
+
+    <color name="red_a100">#FFFF8A80</color>
+    <color name="red_a400">#FFFF1744</color>
+    <color name="red_900">#FFB71C1C</color>
+
+    <color name="purple_a100">#FFEA80FC</color>
+    <color name="purple_200">#FFCE93D8</color>
+    <color name="purple_400">#FFAB47BC</color>
+    <color name="purple_500">#FF9C27B0</color>
+
+    <color name="deep_purple_a100">#FFB388FF</color>
+    <color name="deep_purple_100">#FFD1C4E9</color>
+
+    <color name="green_a100">#FFB9F6CA</color>
+
+    <color name="indigo_a100">#FF8C9EFF</color>
+    <color name="indigo_a200">#FF536DFE</color>
+    <color name="indigo_a400">#FF3D5AFE</color>
+    <color name="indigo_100">#FFC5CAE9</color>
+    <color name="indigo_200">#FF9FA8DA</color>
+    <color name="indigo_300">#FF7986CB</color>
+    <color name="indigo_400">#FF5C6BC0</color>
+    <color name="indigo_500">#FF3F51B5</color>
+
+    <color name="blue_a100">#FF82B1FF</color>
+    <color name="blue_100">#FFBBDEFB</color>
+    <color name="blue_200">#FF90CAF9</color>
+    <color name="blue_300">#FF64B5F6</color>
+    <color name="blue_400">#FF42A5F5</color>
+    <color name="blue_500">#FF2196F3</color>
+
+
+    <!-- Dark -->
+    <color name="dark_primaryColor">@color/grey_900</color>
+    <color name="dark_primaryContainerColor">@color/grey_999</color>
+    <color name="dark_secondaryColor">@color/indigo_a100</color>
+    <color name="dark_secondaryContainerColor">@color/indigo_300</color>
+    <color name="dark_onPrimaryColor">@color/white</color>
+    <color name="dark_onSecondaryContainerColor">@color/black</color>
+    <color name="dark_tertiaryColor">@color/orange_500</color>
+    <color name="dark_errorColor">@color/red_a400</color>
+    <color name="dark_outlineColor">@color/grey_600</color>
+    <color name="dark_outlineVariantColor">@color/grey_700</color>
+
+    <color name="dark_surfaceColor">@color/grey_850</color>              <!-- window background -->
+    <color name="dark_surfaceContainer_lowest">@color/grey_800</color>
+    <color name="dark_surfaceContainer_low">@color/grey_850</color>      <!-- low; floating cards -->
+    <color name="dark_surfaceContainer">@color/grey_900</color>          <!-- mid; top/bottom bars -->
+    <color name="dark_surfaceContainer_high">@color/grey_999</color>     <!-- high; dialogs -->
+    <color name="dark_surfaceContainer_highest">@color/grey_999</color>  <!-- highest; input fields -->
+
+    <!-- Dark (Contrast) -->
+    <color name="darkcontrast_primaryColor">@color/grey_900</color>
+    <color name="darkcontrast_primaryContainerColor">@color/grey_999</color>
+    <color name="darkcontrast_secondaryColor">@color/indigo_a100</color>
+    <color name="darkcontrast_secondaryContainerColor">@color/indigo_300</color>
+    <color name="darkcontrast_onPrimaryColor">@color/white</color>
+    <color name="darkcontrast_onSecondaryContainerColor">@color/white</color>
+    <color name="darkcontrast_tertiaryColor">@color/orange_500</color>
+    <color name="darkcontrast_errorColor">@color/red_900</color>
+
+    <color name="darkcontrast_surfaceColor">@color/grey_999</color>
+    <color name="darkcontrast_surfaceContainer_lowest">@color/grey_700</color>
+    <color name="darkcontrast_surfaceContainer_low">@color/grey_800</color>      <!-- low; floating cards -->
+    <color name="darkcontrast_surfaceContainer">@color/grey_900</color>
+    <color name="darkcontrast_surfaceContainer_high">@color/grey_999</color>     <!-- high; dialogs -->
+    <color name="darkcontrast_surfaceContainer_highest">@color/grey_999</color>  <!-- highest; input fields -->
+
+    <!-- Light -->
+    <color name="light_primaryColor">@color/grey_100</color>
+    <color name="light_primaryContainerColor">@color/grey_50</color>
+    <color name="light_secondaryColor">@color/indigo_a200</color>
+    <color name="light_secondaryContainerColor">@color/indigo_a100</color>
+    <color name="light_onPrimaryColor">@color/black</color>
+    <color name="light_onSecondaryContainerColor">@color/black</color>
+    <color name="light_tertiaryColor">@color/deep_orange_800</color>
+    <color name="light_errorColor">@color/red_900</color>
+    <color name="light_outlineColor">@color/grey_500</color>
+    <color name="light_outlineVariantColor">@color/grey_300</color>
+
+    <color name="light_surfaceColor">@color/grey_50</color>
+    <color name="light_surfaceContainer_lowest">@color/grey_300</color>
+    <color name="light_surfaceContainer_low">@color/grey_200</color>
+    <color name="light_surfaceContainer">@color/grey_100</color>
+    <color name="light_surfaceContainer_high">@color/grey_50</color>
+    <color name="light_surfaceContainer_highest">@color/white</color>
+
+    <!-- Light (Contrast) -->
+    <color name="lightcontrast_primaryColor">@color/grey_100</color>
+    <color name="lightcontrast_primaryContainerColor">@color/grey_50</color>
+    <color name="lightcontrast_secondaryColor">@color/blue_200</color>
+    <color name="lightcontrast_secondaryContainerColor">@color/blue_500</color>
+    <color name="lightcontrast_onPrimaryColor">@color/black</color>
+    <color name="lightcontrast_onSecondaryContainerColor">@color/white</color>
+    <color name="lightcontrast_tertiaryColor">@color/deep_orange_800</color>
+    <color name="lightcontrast_errorColor">@color/red_900</color>
+
+    <color name="lightcontrast_surfaceColor">@color/grey_50</color>
+    <color name="lightcontrast_surfaceContainer_lowest">@color/grey_200</color>
+    <color name="lightcontrast_surfaceContainer_low">@color/grey_100</color>
+    <color name="lightcontrast_surfaceContainer">@color/grey_100</color>
+    <color name="lightcontrast_surfaceContainer_high">@color/grey_50</color>
+    <color name="lightcontrast_surfaceContainer_highest">@color/white</color>
 
 </resources>

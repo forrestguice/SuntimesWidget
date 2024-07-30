@@ -191,7 +191,8 @@
 				android:layout_gravity="bottom|start" android:layout_margin="8dp"
 				android:src="?attr/icActionBack" android:scaleType="center"
 				android:contentDescription="@android:string/cancel"
-				app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
+				android:tint="?attr/fab_foregroundColorAlt"
+				app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
 				app:fabSize="normal" app:useCompatPadding="true"
 				app:layout_dodgeInsetEdges="bottom" />
 

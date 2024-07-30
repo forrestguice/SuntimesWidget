@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_focused="true"
-        android:drawable="@drawable/chip_light_enabled" />
+
+    <item android:state_focused="true" android:state_enabled="true"
+        android:drawable="@drawable/chip_light_enabled_focused" />
+
+    <item android:state_focused="true" android:state_enabled="false"
+        android:drawable="@drawable/chip_light_disabled_focused" />
 
     <item android:state_pressed="true" android:state_enabled="true"
         android:drawable="@drawable/chip_light_pressed" />

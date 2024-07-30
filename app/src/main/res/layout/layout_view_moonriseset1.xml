@@ -11,14 +11,15 @@
             tools:listitem="@layout/info_time_moonriseset" />
 
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:layout_gravity="end|bottom" android:elevation="8dp">
+            android:orientation="horizontal" android:layout_gravity="end|bottom"
+            android:padding="3dp">
             <ImageButton
                 android:id="@+id/info_time_prevbtn"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:scaleX="0.9" android:scaleY="0.9"
                 android:layout_gravity="end"
                 android:src="?attr/icActionPrevious"
-                android:background="@drawable/ic_colortab1"
+                android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                 android:padding="4dp"
                 android:contentDescription="@string/today" />
 
@@ -28,7 +29,7 @@
                 android:scaleX="0.9" android:scaleY="0.9"
                 android:layout_gravity="end"
                 android:src="?attr/icActionNext"
-                android:background="@drawable/ic_colortab1"
+                android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                 android:padding="4dp"
                 android:contentDescription="@string/today" />
         </LinearLayout>

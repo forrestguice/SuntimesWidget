@@ -482,8 +482,13 @@ public class BedtimeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void onBackPressed()
+    {
+        if (navigation != null && navigation.isNavigationDrawerOpen()) {
+            navigation.closeNavigationDrawer();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     protected void onHomePressed()

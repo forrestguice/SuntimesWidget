@@ -193,8 +193,7 @@ public class GetFixDatabaseAdapter
         return values != null
                 && values.containsKey(KEY_PLACE_NAME)
                 && values.containsKey(KEY_PLACE_LATITUDE) && verifyValueIsANumber(values, KEY_PLACE_LATITUDE)
-                && values.containsKey(KEY_PLACE_LONGITUDE) && verifyValueIsANumber(values, KEY_PLACE_LONGITUDE)
-                && values.containsKey(KEY_PLACE_ALTITUDE) && verifyValueIsANumber(values, KEY_PLACE_ALTITUDE);
+                && values.containsKey(KEY_PLACE_LONGITUDE) && verifyValueIsANumber(values, KEY_PLACE_LONGITUDE);
     }
     protected boolean verifyValueIsANumber(@NonNull ContentValues values, @NonNull String key)
     {

@@ -91,17 +91,20 @@
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
-            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
+            android:paddingRight="8dp" android:paddingEnd="8dp"
+            android:paddingTop="8dp" android:paddingBottom="8dp"
+            android:clipToPadding="false">
 
             <Switch android:id="@+id/switch_enabled"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
-                android:layout_marginStart="0dp" android:layout_marginLeft="0dp" />
+                android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
+                />
 
             <android.support.design.widget.FloatingActionButton android:id="@+id/button_add"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
+                android:tint="?attr/fab_foregroundColorAlt"
+                app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
                 android:scaleType="center"
                 android:src="?attr/icActionNew" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="4dp"
@@ -109,7 +112,8 @@
 
             <android.support.design.widget.FloatingActionButton android:id="@+id/button_edit"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:backgroundTint="?attr/fab_rippleColor" app:rippleColor="?attr/fab_backgroundColor"
+                android:tint="?attr/fab_foregroundColorAlt"
+                app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
                 android:scaleType="center"
                 android:src="?attr/icActionEdit" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="4dp"

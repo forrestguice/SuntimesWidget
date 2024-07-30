@@ -53,7 +53,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" style="@style/SunsetTimeWidget_dark"
             android:padding="0dp"
-            android:background="?attr/dialogBackground">
+            android:background="?android:attr/windowBackground">
 
             <include layout="@layout/layout_listitem_alarmclock1" />
 
