@@ -28,6 +28,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
@@ -361,25 +362,25 @@ public class AlarmNotificationsTest
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, MAXTIME_SCHEDULE);
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SCHEDULED_SOON);
 
-        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying());
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // should continue running (showing foreground notification)
         assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
-        assertTrue("media player should be playing", AlarmNotifications.isPlaying);
+        assertTrue("media player should be playing", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SNOOZE }, data2, false, MAXTIME_SNOOZE);    // should continue running (still showing foreground notification)
         assertTrue("service should be running in the foreground when snoozing", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SNOOZING);
-        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // should continue running (showing foreground notification)
         assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
-        assertTrue("media player should be playing", AlarmNotifications.isPlaying);
+        assertTrue("media player should be playing", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, MAXTIME_DISMISS);
         verify_hasAlarmState(alarmId2, AlarmState.STATE_DISABLED);
-        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, MAXTIME_DELETE);
         assertFalse("failed to delete alarm", hasAlarmId(alarmId2));
@@ -477,17 +478,17 @@ public class AlarmNotificationsTest
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, MAXTIME_SCHEDULE);
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SCHEDULED_DISTANT);
 
-        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying());
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // service should finish (showing normal notification)
         assertFalse("service should not be running in the foreground when showing notification", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
-        assertTrue("media player should be playing", AlarmNotifications.isPlaying);
+        assertTrue("media player should be playing", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, MAXTIME_DISMISS);
         int expectedState = alarm.repeating ? AlarmState.STATE_SCHEDULED_DISTANT                                           // repeating notifications are now scheduled_
                 : AlarmState.STATE_DISABLED;                                                                               // non-repeating notifications are now disabled
         verify_hasAlarmState(alarmId2, expectedState);
-        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, MAXTIME_DELETE);
         assertFalse("failed to delete notification", hasAlarmId(alarmId2));
@@ -516,27 +517,27 @@ public class AlarmNotificationsTest
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SCHEDULE }, data2, true, MAXTIME_SCHEDULE);
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SCHEDULED_SOON);
 
-        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying());
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // should continue running (showing foreground notification)
         assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
-        assertTrue("media player should be playing", AlarmNotifications.isPlaying);
+        assertTrue("media player should be playing", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SNOOZE }, data2, false, MAXTIME_SNOOZE);    // should continue running (still showing foreground notification)
         assertTrue("service should be running in the foreground when snoozing", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SNOOZING);
-        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_SHOW }, data2, false, MAXTIME_SHOW);    // should continue running (showing foreground notification)
         assertTrue("service should be running in the foreground when showing alarm", isForegroundService(mockContext, AlarmNotifications.NotificationService.class));
         verify_hasAlarmState(alarmId2, AlarmState.STATE_SOUNDING);
-        assertTrue("media player should be playing", AlarmNotifications.isPlaying);
+        assertTrue("media player should be playing", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DISMISS }, data2, true, MAXTIME_DISMISS);
         int expectedState = alarm.repeating ? ((reminderWithinMillis <= 0) ? AlarmState.STATE_SCHEDULED_SOON : AlarmState.STATE_SCHEDULED_DISTANT)     // repeating alarms are now scheduled_
                                       : AlarmState.STATE_DISABLED;                                                                               // non-repeating alarms are now disabled
         verify_hasAlarmState(alarmId2, expectedState);
-        assertFalse("media player should be stopped", AlarmNotifications.isPlaying);
+        assertFalse("media player should be stopped", AlarmNotifications.isPlaying());
 
         test_startComand_withData_calledStop(intent0, new String[] { AlarmNotifications.ACTION_DELETE }, data2, true, MAXTIME_DELETE);
         assertFalse("failed to delete alarm", hasAlarmId(alarmId2));
@@ -725,20 +726,20 @@ public class AlarmNotificationsTest
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Test
-    public void test_initPlayer()
+    public void test_initPlayer(String channel)
     {
         AlarmNotifications.audioManager = null;
         AlarmNotifications.vibrator = null;
-        AlarmNotifications.player = null;
-        AlarmNotifications.initPlayer(mockContext, false);
-        verify_initPlayer();
+        AlarmNotifications.players.remove(channel);
+        AlarmNotifications.initPlayer(mockContext, channel, false);
+        verify_initPlayer(channel);
     }
-    public void verify_initPlayer()
+    public void verify_initPlayer(String channel)
     {
         assertNotNull(AlarmNotifications.audioManager);
         assertNotNull(AlarmNotifications.vibrator);
-        assertNotNull(AlarmNotifications.player);
-        assertNotEqual(0, AlarmNotifications.player.getAudioSessionId());
+        assertNotNull(AlarmNotifications.players.get(channel));
+        assertNotEqual(0, AlarmNotifications.players.get(channel).getAudioSessionId());
     }
 
     @Test
@@ -821,22 +822,24 @@ public class AlarmNotificationsTest
     public void test_startAlert(AlarmClockItem item)
     {
         assertTrue("test requires disabling do-not-disturb", AlarmNotifications.passesInterruptionFilter(mockContext, item));
-        assertFalse(AlarmNotifications.isPlaying);
+        assertFalse(AlarmNotifications.isPlaying());
+
+        String channel = item.type.name();
 
         AlarmNotifications.t_player_error = 0;
         AlarmNotifications.startAlert(mockContext, item);
-        verify_initPlayer();
-        assertTrue(AlarmNotifications.isPlaying);
+        verify_initPlayer(channel);
+        assertTrue(AlarmNotifications.isPlaying(channel));
         assertEquals(item.vibrate, AlarmNotifications.isVibrating);
 
         long now = System.currentTimeMillis();
         while (System.currentTimeMillis() < (now + 250)) { /* empty */ }
-        assertEquals((item.ringtoneURI != null), AlarmNotifications.player.isPlaying());
+        assertEquals((item.ringtoneURI != null), AlarmNotifications.isPlaying(channel));
         assertEquals(0, AlarmNotifications.t_player_error);
 
         AlarmNotifications.stopAlert();
-        assertFalse(AlarmNotifications.isPlaying);
-        assertFalse(AlarmNotifications.player.isPlaying());
+        assertFalse(AlarmNotifications.isPlaying(channel));
+        assertFalse(AlarmNotifications.players.get(channel).isPlaying());
         assertFalse(AlarmNotifications.isVibrating);
     }
 
@@ -876,7 +879,7 @@ public class AlarmNotificationsTest
     public void test_startAlertUri_alarm(Uri uri, boolean fadeIn)
     {
         // pre-conditions
-        assertFalse(AlarmNotifications.isPlaying);
+        assertFalse(AlarmNotifications.isPlaying());
         assertFalse(AlarmNotifications.isFadingIn);
         assertFalse(AlarmNotifications.isVibrating);
 
@@ -884,12 +887,13 @@ public class AlarmNotificationsTest
         prefs.putInt(AlarmSettings.PREF_KEY_ALARM_FADEIN, fadeIn ? 3000 : 0).apply();
 
         AlarmNotifications.t_player_error = AlarmNotifications.t_player_error_extra = 0;
-        AlarmNotifications.initPlayer(mockContext, true);    // player must be initialized first
-        verify_initPlayer();
+        String channel = AlarmClockItem.AlarmType.ALARM.name();
+        MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel, true);    // player must be initialized first
+        verify_initPlayer(channel);
         AlarmNotifications.t_volume = 0;
         try {
-            AlarmNotifications.startAlert(mockContext, uri, true);
-            assertFalse(AlarmNotifications.isPlaying);    // startAlert(Uri) doesn't toggle isPlaying (or call startVibration)
+            AlarmNotifications.startAlert(mockContext, player, uri, true);
+            assertFalse(AlarmNotifications.isPlaying());    // startAlert(Uri) doesn't toggle isPlaying (or call startVibration)
         } catch (Exception e) {
             Assert.fail("failed to startAlert: " + e);
         }
@@ -899,8 +903,8 @@ public class AlarmNotificationsTest
             /* give it a second; mediaPlayer.start is async */
         }
         assertEquals(0, AlarmNotifications.t_player_error);
-        assertTrue(AlarmNotifications.player.isPlaying());
-        assertTrue(AlarmNotifications.player.isLooping());
+        assertTrue(player.isPlaying());
+        assertTrue(player.isLooping());
         assertEquals(fadeIn, AlarmNotifications.isFadingIn);
 
         now = System.currentTimeMillis();
@@ -916,26 +920,27 @@ public class AlarmNotificationsTest
         assertEquals(1f, AlarmNotifications.t_volume);
 
         // stopAlert
-        AlarmNotifications.isPlaying = true;
+        AlarmNotifications.setIsPlaying(channel, true);
         AlarmNotifications.stopAlert(true);
-        assertFalse(AlarmNotifications.isPlaying);
+        assertFalse(AlarmNotifications.isPlaying());
         assertFalse(AlarmNotifications.isVibrating);
-        assertFalse(AlarmNotifications.player.isPlaying());
+        assertFalse(player.isPlaying());
     }
 
     public void test_startAlertUri_notification(Uri uri)
     {
-        assertFalse(AlarmNotifications.isPlaying);    // test pre-conditions
+        assertFalse(AlarmNotifications.isPlaying());    // test pre-conditions
         assertFalse(AlarmNotifications.isFadingIn);
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(mockContext).edit();
         prefs.putInt(AlarmSettings.PREF_KEY_ALARM_FADEIN, 0).apply();
 
         AlarmNotifications.t_player_error = AlarmNotifications.t_player_error_extra = 0;
-        AlarmNotifications.initPlayer(mockContext, true);    // player must be initialized first
-        verify_initPlayer();
+        String channel = AlarmClockItem.AlarmType.NOTIFICATION.name();
+        MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel, true);    // player must be initialized first
+        verify_initPlayer(channel);
         try {
-            AlarmNotifications.startAlert(mockContext, uri, false);
+            AlarmNotifications.startAlert(mockContext, player, uri, false);
         } catch (Exception e) {
             Assert.fail("failed to startAlert: " + e);
         }
@@ -945,8 +950,8 @@ public class AlarmNotificationsTest
             /* give it a second; the call to mediaPlayer.start is async */
         }
         assertEquals(0, AlarmNotifications.t_player_error);
-        assertTrue(AlarmNotifications.player.isPlaying());
-        assertFalse(AlarmNotifications.player.isLooping());
+        assertTrue(player.isPlaying());
+        assertFalse(player.isLooping());
         assertEquals(1f, AlarmNotifications.t_volume);
         assertFalse(AlarmNotifications.isFadingIn);
 
@@ -954,27 +959,29 @@ public class AlarmNotificationsTest
         while (System.currentTimeMillis() < (now + 5000)) {
             /* give it a few seconds for the sound to finish */
         }
-        assertFalse(AlarmNotifications.player.isPlaying());
+        assertFalse(player.isPlaying());
     }
 
     public void test_startAlertUri_exception(Uri uri, boolean isAlarm)
     {
-        AlarmNotifications.initPlayer(mockContext, true);
-        verify_initPlayer();
+        String channel = (isAlarm ? AlarmClockItem.AlarmType.ALARM : AlarmClockItem.AlarmType.NOTIFICATION).name();
+        MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel,true);
+        verify_initPlayer(channel);
         try {
-            AlarmNotifications.startAlert(mockContext, uri, isAlarm);
+            AlarmNotifications.startAlert(mockContext, player, uri, isAlarm);
             Assert.fail("should have failed with IOException or SecurityException.. uri: " + uri);    // this line should be unreachable
         } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException e) { /* EMPTY */ }
-        assertFalse(AlarmNotifications.player.isPlaying());
+        assertFalse(player.isPlaying());
     }
 
     public void test_startAlertUri_errorCode(Uri uri, boolean isAlarm, Integer code)
     {
         AlarmNotifications.t_player_error = AlarmNotifications.t_player_error_extra = 0;
-        AlarmNotifications.initPlayer(mockContext, true);
-        verify_initPlayer();
+        String channel = (isAlarm ? AlarmClockItem.AlarmType.ALARM : AlarmClockItem.AlarmType.NOTIFICATION).name();
+        MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel, true);
+        verify_initPlayer(channel);
         try {
-            AlarmNotifications.startAlert(mockContext, uri, isAlarm);
+            AlarmNotifications.startAlert(mockContext, player, uri, isAlarm);
         } catch (Exception e) {
             Assert.fail("failed to startAlert: uri: " + uri + ", " + e);
         }
@@ -983,7 +990,7 @@ public class AlarmNotificationsTest
             /* give it a second; mediaPlayer.start is async */
         }
         assertNotEqual(0, AlarmNotifications.t_player_error);    // expecting some error code
-        assertFalse(AlarmNotifications.player.isPlaying());
+        assertFalse(player.isPlaying());
         if (code != null) {
             assertEquals((int)code, AlarmNotifications.t_player_error);
         }

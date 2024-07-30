@@ -942,8 +942,8 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     //private static final int PRIORITY_CATEGORY_ALARMS = 1 << 5;
 
-    private static final HashMap<String, Boolean> isPlaying = new HashMap<>();
-    private static final HashMap<String, MediaPlayer> players = new HashMap<>();
+    protected static final HashMap<String, Boolean> isPlaying = new HashMap<>();
+    protected static final HashMap<String, MediaPlayer> players = new HashMap<>();
     protected static Vibrator vibrator = null;
     protected static AudioManager audioManager;
     protected static int t_player_error = 0, t_player_error_extra = 0;
