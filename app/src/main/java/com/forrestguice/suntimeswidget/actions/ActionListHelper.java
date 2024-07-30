@@ -44,10 +44,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -252,7 +253,7 @@ public class ActionListHelper
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.editintent1, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         prepareOverflowMenu(context, menu.getMenu());
         menu.show();
     }
@@ -669,7 +670,7 @@ public class ActionListHelper
             String actionId = getIntentID();
             boolean isModifiable = (actionId != null && !actionId.trim().isEmpty());
 
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
             MenuItem selectItem = menu.findItem(R.id.selectAction);
             selectItem.setVisible( !disallowSelect );
 

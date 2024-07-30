@@ -71,14 +71,10 @@ import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
-import com.forrestguice.suntimeswidget.moon.MoonPhaseView1;
-import com.forrestguice.suntimeswidget.moon.MoonPhasesView1;
-import com.forrestguice.suntimeswidget.moon.MoonRiseSetView1;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.moon.MoonApsisView;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
@@ -1027,7 +1023,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         if (addonSubmenuItem != null) {
             List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
-                SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
+                PopupMenuCompat.forceActionBarIcons(addonSubmenuItem.getSubMenu());
                 long datetime = data.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, 0);
                 MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
             }

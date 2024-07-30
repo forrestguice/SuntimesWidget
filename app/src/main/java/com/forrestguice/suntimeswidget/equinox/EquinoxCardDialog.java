@@ -62,6 +62,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -447,7 +448,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         inflater.inflate(R.menu.equinoxmenu, menu.getMenu());
         menu.setOnMenuItemClickListener(onOverflowMenuClick);
         updateOverflowMenu(context, menu);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }
@@ -606,7 +607,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         menu.setOnMenuItemClickListener(onContextMenuClick);
         menu.setOnDismissListener(onContextMenuDismissed);
         updateContextMenu(context, menu, mode, datetime);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 
         lockScrolling();   // prevent the popupmenu from nudging the view
         menu.show();
@@ -631,7 +632,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         if (addonSubmenuItem != null) {
             List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
-                SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
+                PopupMenuCompat.forceActionBarIcons(addonSubmenuItem.getSubMenu());
                 MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
             } //else addonSubmenuItem.setVisible(false);
         }

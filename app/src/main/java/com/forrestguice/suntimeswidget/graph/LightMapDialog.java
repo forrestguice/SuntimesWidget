@@ -761,7 +761,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         inflater.inflate(R.menu.lightmapmenu, menu.getMenu());
         menu.setOnMenuItemClickListener(onContextMenuClick);
         updateContextMenu(context, menu);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }

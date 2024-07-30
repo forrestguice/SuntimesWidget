@@ -27,11 +27,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,13 +53,11 @@ import com.forrestguice.suntimeswidget.settings.SuntimesBackupRestoreTask;
 import com.forrestguice.suntimeswidget.settings.SuntimesBackupTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -631,7 +624,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
 

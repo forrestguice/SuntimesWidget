@@ -71,6 +71,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -1445,7 +1446,7 @@ public class AlarmListDialog extends DialogFragment
                 }
             }));
 
-            SuntimesUtils.forceActionBarIcons(menu.getMenu());
+            PopupMenuCompat.forceActionBarIcons(menu.getMenu());
             menu.show();
         }
 
@@ -1478,7 +1479,7 @@ public class AlarmListDialog extends DialogFragment
                 }
             }));
 
-            SuntimesUtils.forceActionBarIcons(menu.getMenu());
+            PopupMenuCompat.forceActionBarIcons(menu.getMenu());
             menu.show();
         }
 

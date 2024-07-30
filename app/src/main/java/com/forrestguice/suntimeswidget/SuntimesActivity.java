@@ -86,6 +86,7 @@ import com.forrestguice.suntimeswidget.graph.LightGraphDialog;
 import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -1398,7 +1399,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
 
         MenuItem alarmItem = menu.findItem(R.id.action_alarm);
         if (alarmItem != null) {

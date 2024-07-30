@@ -51,6 +51,7 @@ import android.view.SubMenu;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -525,7 +526,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
 
         AlarmClockItem item = editor.getItem();
         boolean alarmEnabled = (item != null && item.enabled);
@@ -748,7 +749,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             }
         }));
 
-        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
         popup.show();
     }
 
@@ -793,7 +794,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 return false;
             }
         }));
-        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
         popup.show();
     }
 
@@ -1139,7 +1140,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 return false;
             }
         }));
-        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
         popup.show();
     }
 

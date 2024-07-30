@@ -50,12 +50,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -528,7 +529,7 @@ public class EditActionView extends LinearLayout
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.editintent, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 
         MenuItem[] restrictedItems = new MenuItem[] { menu.getMenu().findItem(R.id.saveIntent), menu.getMenu().findItem(R.id.loadIntent) };
         for (MenuItem item : restrictedItems)

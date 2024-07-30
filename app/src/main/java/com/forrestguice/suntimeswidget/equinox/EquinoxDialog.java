@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -235,7 +236,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         inflater.inflate(R.menu.equinoxmenu, menu.getMenu());
         menu.setOnMenuItemClickListener(onOverflowMenuClick);
         updateOverflowMenu(context, menu);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }
@@ -322,7 +323,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         menu.setOnMenuItemClickListener(onContextMenuClick);
         menu.setOnDismissListener(onContextMenuDismissed);
         updateContextMenu(context, menu, mode, datetime);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 
         equinoxView.lockScrolling();   // prevent the popupmenu from nudging the view
         menu.show();
@@ -342,7 +343,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         if (addonSubmenuItem != null) {
             List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
-                SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
+                PopupMenuCompat.forceActionBarIcons(addonSubmenuItem.getSubMenu());
                 MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
             } //else addonSubmenuItem.setVisible(false);
         }

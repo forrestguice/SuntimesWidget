@@ -71,6 +71,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -274,7 +275,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 return false;
             }
         }));
-        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
         popup.show();
     }
 

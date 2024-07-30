@@ -58,6 +58,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -1671,7 +1672,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
 

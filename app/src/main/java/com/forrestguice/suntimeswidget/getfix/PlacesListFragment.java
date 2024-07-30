@@ -55,6 +55,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -351,7 +352,7 @@ public class PlacesListFragment extends Fragment
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu)
         {
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
 
             int[] singleSelectItems = new int[] { R.id.pickPlace, R.id.sharePlace, R.id.editPlace, R.id.copyPlace };
             for (int resID : singleSelectItems)

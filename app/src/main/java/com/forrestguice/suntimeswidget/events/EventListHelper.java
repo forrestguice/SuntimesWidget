@@ -56,6 +56,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -335,7 +337,7 @@ public class EventListHelper
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.eventlist, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         prepareOverflowMenu(context, menu.getMenu());
         menu.show();
     }
@@ -1162,7 +1164,7 @@ public class EventListHelper
 
         protected boolean onPrepareActionMode(Menu menu)
         {
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
             MenuItem selectItem = menu.findItem(R.id.selectEvent);
             selectItem.setVisible( !disallowSelect );
 

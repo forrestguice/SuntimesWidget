@@ -642,7 +642,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         inflater.inflate(R.menu.lightgraphmenu, menu.getMenu());
         menu.setOnMenuItemClickListener(onOverflowMenuClick);
         updateOverflowMenu(context, menu);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }
@@ -851,7 +851,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         inflater.inflate(R.menu.lightgraphmenu_context, menu.getMenu());
         menu.setOnMenuItemClickListener(onContextMenuClicked);
         updateContextMenu(context, menu, label, datetime);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
     }
     private void updateContextMenu(Context context, PopupMenu menu, final String label, final long datetime)
@@ -867,7 +867,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         if (addonSubmenuItem != null) {
             List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
-                SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
+                PopupMenuCompat.forceActionBarIcons(addonSubmenuItem.getSubMenu());
                 MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
             } //else addonSubmenuItem.setVisible(false);
         }

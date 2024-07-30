@@ -774,7 +774,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
         updateMapModeMenu(context, menu);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }
@@ -871,7 +871,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
         updateContextMenu(context, menu);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }

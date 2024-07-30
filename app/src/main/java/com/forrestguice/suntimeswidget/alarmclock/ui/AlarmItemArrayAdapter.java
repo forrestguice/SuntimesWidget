@@ -52,6 +52,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -899,7 +901,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             }
         }));
 
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
     }
 
@@ -938,7 +940,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             }
         }));
 
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
     }
 

@@ -58,6 +58,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
@@ -460,7 +461,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
             MenuItem item0 = menu.add(0, -1, 0, context.getString(R.string.configAction_manageEvents));
             item0.setIcon(icon1);
 
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
             popup.setOnMenuItemClickListener(onMoreMenuClick);
             popup.show();
         }

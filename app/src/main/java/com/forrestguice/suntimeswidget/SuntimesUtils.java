@@ -2116,27 +2116,6 @@ public class SuntimesUtils
     }
 
     /**
-     * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
-     */
-    public static void forceActionBarIcons(Menu menu)    // TODO: when targetting api29+ this method can be replaced with PopupMenu.setForceShowIcon
-    {
-        if (menu != null)
-        {
-            if (menu.getClass().getSimpleName().equals("MenuBuilder"))
-            {
-                try {
-                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    m.invoke(menu, true);
-
-                } catch (Exception e) {
-                    Log.e("SuntimesActivity", "failed to set show overflow icons", e);
-                }
-            }
-        }
-    }
-
-    /**
      * @param htmlString html markup
      * @return an html span
      */

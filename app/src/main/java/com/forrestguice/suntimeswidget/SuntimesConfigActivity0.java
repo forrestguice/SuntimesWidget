@@ -1285,7 +1285,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.timemode_overflow, menu.getMenu());
         menu.setOnMenuItemClickListener(onTimeModeMenuClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         prepareTimeModeMenu(context, menu.getMenu());
         menu.show();
     }
@@ -3041,7 +3041,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
 
