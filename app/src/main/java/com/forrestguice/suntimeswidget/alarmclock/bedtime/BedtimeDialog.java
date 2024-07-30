@@ -63,6 +63,7 @@ import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -1025,7 +1026,7 @@ public class BedtimeDialog extends DialogFragment
                 configBedtimeFromWakeup(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.BEDTIME)), false);
             }
         });
-        SuntimesUtils.themeSnackbar(context, snackbar, null);
+        ViewUtils.themeSnackbar(context, snackbar, null);
         snackbar.show();
     }
 
@@ -1048,7 +1049,7 @@ public class BedtimeDialog extends DialogFragment
                 configWakeupFromBedtime(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM)), false);
             }
         });
-        SuntimesUtils.themeSnackbar(context, snackbar, null);
+        ViewUtils.themeSnackbar(context, snackbar, null);
         snackbar.show();
     }
 

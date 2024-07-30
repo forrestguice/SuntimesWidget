@@ -2241,7 +2241,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     importSettings(context, previous, false);
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_IMPORT_MILLIS);
             snackbar.show();
         }

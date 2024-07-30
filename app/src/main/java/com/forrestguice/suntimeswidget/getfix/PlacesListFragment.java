@@ -63,6 +63,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -809,7 +810,7 @@ public class PlacesListFragment extends Fragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
@@ -896,7 +897,7 @@ public class PlacesListFragment extends Fragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }

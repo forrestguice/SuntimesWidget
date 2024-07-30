@@ -56,6 +56,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.io.BufferedOutputStream;
@@ -566,7 +567,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 snackbar.setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri));
             }
 
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.show();
         }
     }

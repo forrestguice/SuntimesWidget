@@ -440,7 +440,7 @@ public class AlarmListDialog extends DialogFragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
@@ -462,7 +462,7 @@ public class AlarmListDialog extends DialogFragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
@@ -779,7 +779,7 @@ public class AlarmListDialog extends DialogFragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_IMPORT_MILLIS);
             snackbar.show();
         }

@@ -81,6 +81,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -210,7 +211,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 if (actionText != null && actionListener != null) {
                     snackbar.setAction(actionText, actionListener);
                 }
-                SuntimesUtils.themeSnackbar(context, snackbar, null);
+                ViewUtils.themeSnackbar(context, snackbar, null);
                 snackbar.show();
                 return snackbar;
 

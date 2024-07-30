@@ -486,7 +486,7 @@ public class EditActionView extends LinearLayout
                 } catch (Exception e) {
                     Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
                     Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-                    SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+                    ViewUtils.themeSnackbar(getContext(), snackbar, null);
                     snackbar.show();
                     return;
                 }
@@ -506,7 +506,7 @@ public class EditActionView extends LinearLayout
         } catch (Exception e) {
             Log.e(TAG, "testIntent: unable to start + " + launchType + " :: " + e);
             Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-            SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+            ViewUtils.themeSnackbar(getContext(), snackbar, null);
             snackbar.show();
         }
     }
