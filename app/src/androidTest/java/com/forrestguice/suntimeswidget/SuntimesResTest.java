@@ -38,11 +38,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -317,19 +319,24 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         assertTrue("The format of " + tag1 + " is INVALID! locale: " + AppSettings.getLocale().toString(), allTrue);
     }
 
+    protected HashMap<String,String> latitudeMap = new HashMap<>();    // latitude string to label
+    protected HashMap<String,String> longitudeMap = new HashMap<>();   // longitude string to label
+
     @Test
     public void test_places()
     {
         Context context = activityRule.getActivity();
         Resources r = context.getResources();
 
+        latitudeMap.clear();
+        longitudeMap.clear();
+
         String[] groups = r.getStringArray(R.array.place_groups);
         for (String group : groups) {
             test_placeGroup(context, group);
         }
-
     }
-
+    
     protected void test_placeGroup(Context context, String groupItem)
     {
         assertNotNull(groupItem);
@@ -361,7 +368,31 @@ public class SuntimesResTest extends SuntimesActivityTestBase
                 assertNotNull(item);
                 String[] itemParts = BuildPlacesTask.splitCSV(item, ','); //item.split(",");
                 assertEquals(item + " should have 4 parts but has " + itemParts.length, 4, itemParts.length);
+                assertNotNull(itemParts[0]);
+                assertNotNull(itemParts[1]);
+                assertNotNull(itemParts[2]);
+                assertNotNull(itemParts[3]);
+
+                verifyStringIsDouble("latitude of " + itemParts[0] + " should be a double; was " + itemParts[1], itemParts[1]);
+                verifyStringIsDouble("longitude of " + itemParts[0] + " should be a double; was " + itemParts[2], itemParts[2]);
+                verifyStringIsDouble("altitude of " + itemParts[0] + " should be a double; was " + itemParts[3], itemParts[3]);
+
+                String latitude = itemParts[1].trim();
+                String longitude = itemParts[2].trim();
+                assertFalse("places should be unique; " + itemParts[0] + " has latitude of " + latitude + ", but so does " + latitudeMap.get(latitude), latitudeMap.containsKey(latitude));
+                assertFalse("places should be unique; " + itemParts[0] + " has longitude of " + longitude + ", but so does " + longitudeMap.get(longitude), longitudeMap.containsKey(longitude));
+                latitudeMap.put(latitude, itemParts[0]);
+                longitudeMap.put(longitude, itemParts[0]);
             }
+        }
+    }
+
+    protected void verifyStringIsDouble(String message, String value)
+    {
+        try {
+            double d = Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            fail(message);
         }
     }
 
