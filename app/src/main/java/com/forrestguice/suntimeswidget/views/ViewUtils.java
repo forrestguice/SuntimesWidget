@@ -178,8 +178,11 @@ public class ViewUtils
 
         View snackbarAction = snackbarView.findViewById(android.support.design.R.id.snackbar_action);
         if (snackbarAction != null) {
-            snackbarAction.setBackground(buttonDrawable);
-            snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            if (Build.VERSION.SDK_INT >= 16)
+            {
+                snackbarAction.setBackground(buttonDrawable);
+                snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            }
         }
     }
 

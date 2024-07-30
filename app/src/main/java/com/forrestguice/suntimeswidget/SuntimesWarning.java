@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -115,8 +116,10 @@ public class SuntimesWarning
 
         View snackbarAction = snackbarView.findViewById(android.support.design.R.id.snackbar_action);
         if (snackbarAction != null) {
-            snackbarAction.setBackground(buttonDrawable);
-            snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            if (Build.VERSION.SDK_INT >= 16) {
+                snackbarAction.setBackground(buttonDrawable);
+                snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            }
         }
     }
 
