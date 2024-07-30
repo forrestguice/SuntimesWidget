@@ -35,6 +35,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -42,6 +43,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 
 public class ViewUtils
@@ -229,7 +231,7 @@ public class ViewUtils
         protected PopupMenu.OnMenuItemClickListener listener;
 
         public ThrottledMenuItemClickListener(@NonNull PopupMenu.OnMenuItemClickListener listener) {
-            this(listener, 1000);
+            this(listener, 750);
         }
 
         public ThrottledMenuItemClickListener(@NonNull PopupMenu.OnMenuItemClickListener listener, long delayMs)
@@ -248,6 +250,9 @@ public class ViewUtils
             if (previousClickAt == null || Math.abs(currentClickAt - previousClickAt) > delayMs) {
                 previousClickAt = currentClickAt;
                 return listener.onMenuItemClick(item);
+            }
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "onMenuItemClick: throttled: " + Math.abs(currentClickAt - previousClickAt));
             }
             return true;
         }
