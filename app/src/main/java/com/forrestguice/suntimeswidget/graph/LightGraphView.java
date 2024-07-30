@@ -40,6 +40,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -899,8 +900,14 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             {
                 SuntimesRiseSetData d = data[day].getData(mode.name());
                 event = (rising ? d.sunriseCalendarToday() : d.sunsetCalendarToday());
-                hour = event.get(Calendar.HOUR_OF_DAY) + (event.get(Calendar.MINUTE) / 60d) + (event.get(Calendar.SECOND) / (60d * 60d));
-                trackMinMax(mode.name(), rising, hour, day);
+                if (event != null)
+                {
+                    hour = event.get(Calendar.HOUR_OF_DAY) + (event.get(Calendar.MINUTE) / 60d) + (event.get(Calendar.SECOND) / (60d * 60d));
+                    trackMinMax(mode.name(), rising, hour, day);
+
+                } else {
+                    hour = (rising ? 0 : 24);
+                }
 
                 x = (float) daysToBitmapCoords(c, day, options);
                 y = (float) hoursToBitmapCoords(c, hour, options);
