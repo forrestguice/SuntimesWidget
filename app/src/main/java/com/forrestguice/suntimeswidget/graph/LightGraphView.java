@@ -727,7 +727,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         {
             if (options.option_drawNow > 0)
             {
-                int pointRadius = (options.option_drawNow_pointSizePx <= 0) ? (int)(c.getWidth() * (5 / 365d)) : options.option_drawNow_pointSizePx;
+                int pointRadius = (options.option_drawNow_pointSizePx <= 0)
+                        ? (int) textSize(c, 365 / 7f) //(int)(c.getWidth() * (5 / 365d))
+                        : options.option_drawNow_pointSizePx;
                 int pointStroke = (int)Math.ceil(pointRadius / 3d);
 
                 switch (options.option_drawNow)
@@ -963,14 +965,14 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void drawLabels(Calendar now, SuntimesRiseSetDataset[] data, Canvas c, Paint p, LightGraphOptions options)
         {
-            if (options.axisY_labels_show) {
-                drawXLabels(c, p, options);
+            if (options.showSeasons) {
+                drawSeasonsBar(c, p, options);
             }
             if (options.axisX_labels_show) {
                 drawYLabels(c, p, options);
             }
-            if (options.showSeasons) {
-                drawSeasonsBar(c, p, options);
+            if (options.axisY_labels_show) {
+                drawXLabels(c, p, options);
             }
         }
 
@@ -1124,8 +1126,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         }
         private Calendar drawAxisY_calendar = null;
 
-        protected float textSize(Canvas c, float ratio) {
-            return (float)(Math.sqrt(c.getWidth() * (c.getWidth()/2d)) / ratio);
+        protected float textSize(Canvas c, float ratio)
+        {
+            //int s = Math.min(c.getWidth(), c.getHeight());
+            int s = (int)((c.getWidth() + c.getHeight()) / 2d);
+            return (float)(Math.sqrt(s * (s/2d)) / ratio);
         }
 
         protected void drawYLabels(Canvas c, Paint p, LightGraphOptions options)
@@ -1165,7 +1170,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             int colorWinter = options.colors.getColor(LightGraphColorValues.COLOR_WINTER);
 
             int gradientWidth = (int)(c.getWidth() / 4d);
-            int[] gradientColors = (options.location.getLatitudeAsDouble() < 0)
+            int[] gradientColors = (options.location.getLatitudeAsDouble() < 0 && options.localizeToHemisphere)
                     ? new int[] { colorSummer, colorAutumn, colorWinter, colorSpring, colorSummer}
                     : new int[] { colorWinter, colorSpring, colorSummer, colorAutumn, colorWinter};
 
@@ -1178,8 +1183,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             Shader shader0 = p.getShader();
             p.setDither(true);
 
-            int y0 = c.getHeight() - 65;
-            int y1 = c.getHeight() - 50;
+            int height = (int) textSize(c, options.axisX_labels_textsize_ratio) / 2;
+            int offset = (int) (1.25 * textSize(c, options.axisX_labels_textsize_ratio));
+
+            int y0 = c.getHeight() - (offset + height);
+            int y1 = c.getHeight() - offset;
 
             int x0, x1 = 0;
             for (int i=0; i < seasonGradients.length; i++)
@@ -1369,6 +1377,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         //public int sunPath_points_color = Color.MAGENTA;
         public float sunPath_points_width = 150;
 
+        public boolean localizeToHemisphere = true;
         public boolean showSeasons = true;
         public boolean showCivil = true, showNautical = true, showAstro = true;
         public int option_drawNow = DRAW_NOW1;
