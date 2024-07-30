@@ -59,7 +59,8 @@
         </LinearLayout>
 
         <LinearLayout android:orientation="horizontal"
-            android:layout_width="match_parent" android:layout_height="match_parent">
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:baselineAligned="false">
 
             <include layout="@layout/layout_listitem_alarmtime"
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
@@ -147,7 +148,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            android:baselineAligned="false">
 
             <!-- Before Alert Tray -->
             <LinearLayout android:id="@+id/tray_beforeAlert"
@@ -283,7 +285,8 @@
             app:layout_constraintStart_toEndOf="@+id/option_repeat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:baselineAligned="false">
 
             <!-- On-Dismiss Tray -->
             <LinearLayout android:orientation="vertical"
