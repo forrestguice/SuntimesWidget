@@ -296,7 +296,7 @@
         <item>"Vancouver", 49.27934, -123.13920, 0</item>
     </string-array>
     <string-array name="places_NA_US">
-        <item>\"Anchorage, AK\", 34.05094, -118.2506, 31</item>
+        <item>\"Anchorage, AK\", 61.15496, -150.05585, 31</item>
         <item>"Chicago", 41.86859, -87.61582, 176</item>
         <item>"Houston", 29.76010, -95.37176, 32</item>
         <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731</item>
