@@ -23,6 +23,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -217,10 +218,12 @@ public class MoonApsisView extends LinearLayout
     private void themeDrawables()
     {
         ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
-        SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
-
         ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
-        SuntimesUtils.colorizeImageView(backButton, colorBackground);
+
+        if (Build.VERSION.SDK_INT < 21) {
+            SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
+            SuntimesUtils.colorizeImageView(backButton, colorBackground);
+        }
     }
 
     public void updateViews( Context context ) { /* EMPTY */ }

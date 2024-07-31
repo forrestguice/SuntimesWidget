@@ -241,10 +241,12 @@ public class MoonRiseSetView1 extends LinearLayout
     private void themeDrawables()
     {
         ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorWarning, colorDisabled, colorPressed));
-        SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
-
         ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorWarning, colorDisabled, colorPressed));
-        SuntimesUtils.colorizeImageView(backButton, colorBackground);
+
+        if (Build.VERSION.SDK_INT < 21) {
+            SuntimesUtils.colorizeImageView(backButton, colorBackground);
+            SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
+        }
     }
 
     public void updateViews(Context context) {
