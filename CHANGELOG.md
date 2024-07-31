@@ -1,6 +1,6 @@
 ### ~
 
-### develop
+### v0.16.0 (2024-07-31)
 * adds "sidebar navigation", and an option to change the "launcher activity" (#505).
 * adds support for custom events based on "shadow length" (#331).
 * adds support for customizing the app color scheme; override map, graph, and highlight colors.
@@ -20,7 +20,6 @@
 * updates constraint-layout dependency from 1.0.2 to 2.0.4.
 * updates targetSdkVersion (25 -> 26 -> 28) (#725), and build tools to 28.0.3.
 * increments minSdkVersion (10 -> 14) (#122); building for api10 remains possible for now by reverting changes in `build.gradle`.
-
 
 ### v0.15.16 (2024-06-17)
 * adds "online help" links to existing help dialogs (#797).
