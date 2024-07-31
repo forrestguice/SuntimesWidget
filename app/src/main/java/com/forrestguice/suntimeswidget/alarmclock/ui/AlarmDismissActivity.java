@@ -881,6 +881,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             snoozeButton.setVisibility(isTesting ? View.GONE : View.VISIBLE);
             snoozeButton.setEnabled(true);
             dismissButton.setEnabled(true);
+            backButton.hide();
 
             pulseAnimationObj = animateColors(labels, buttons, iconSounding, colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_START), colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_END), pulseSoundingDuration, new AccelerateInterpolator());
             if (isBrightMode) {
