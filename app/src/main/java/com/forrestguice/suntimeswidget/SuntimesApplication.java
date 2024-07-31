@@ -33,15 +33,8 @@ public class SuntimesApplication extends Application
 
         if (BuildConfig.DEBUG)
         {
-            //StrictMode.enableDefaults();
-            //StrictMode.allowThreadDiskReads();
-            //StrictMode.allowThreadDiskWrites();
-
-            /*try {
-                Class.forName("dalvik.system.CloseGuard").getMethod("setEnabled", boolean.class).invoke(null, true);
-            } catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }*/
+            StrictMode.enableDefaults();
+            StrictMode.allowThreadDiskWrites();
         }
     }
 }
