@@ -22,6 +22,7 @@
             <TextView android:id="@+id/text_time_sunrise_early"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
+                android:singleLine="true" android:ellipsize="marquee"
                 tools:text="Month Day, Year" />
         </LinearLayout>
 
@@ -36,6 +37,7 @@
             <TextView android:id="@+id/text_time_sunset_late"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
+                android:singleLine="true" android:ellipsize="marquee"
                 tools:text="Month Day, Year" />
         </LinearLayout>
 
@@ -58,6 +60,7 @@
             <TextView android:id="@+id/text_time_sunrise_late"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
+                android:singleLine="true" android:ellipsize="marquee"
                 tools:text="Month Day, Year" />
         </LinearLayout>
 
@@ -72,6 +75,7 @@
             <TextView android:id="@+id/text_time_sunset_early"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
+                android:singleLine="true" android:ellipsize="marquee"
                 tools:text="Month Day, Year" />
         </LinearLayout>
 
