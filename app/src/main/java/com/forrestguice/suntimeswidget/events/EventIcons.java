@@ -35,6 +35,8 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.colors.AppColorKeys;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -91,7 +93,7 @@ public class EventIcons
                 if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING))
                 {
                     suffix = eventID.substring(eventID.length()-1);
-                    Log.d("DEBUG", "suffix::" + suffix);
+                    //Log.d("DEBUG", "suffix::" + suffix);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
                 if (context != null && EventSettings.hasEvent(context, eventID)) {
@@ -117,28 +119,28 @@ public class EventIcons
     }
 
     @SuppressLint("ResourceType")
-    public static Integer getIconTint(@Nullable Context context, SolarEvents event)
+    public static Integer getIconTint(@Nullable Context context, SolarEvents event, ColorValues colors)
     {
         switch (event)
         {
             case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL:
             case MORNING_BLUE8: case MORNING_CIVIL:
             case MORNING_BLUE4: case SUNRISE: case MORNING_GOLDEN:
-                return getColor(context, R.attr.sunriseColor, R.color.sunIcon_color_rising_dark);
+                return colors.getColor(AppColorKeys.COLOR_RISING_SUN); //getColor(context, R.attr.sunriseColor, R.color.sunIcon_color_rising_dark);
 
             case EVENING_GOLDEN: case SUNSET:
             case EVENING_BLUE4: case EVENING_CIVIL:
             case EVENING_BLUE8: case EVENING_NAUTICAL:
             case EVENING_ASTRONOMICAL:
-                return getColor(context, R.attr.sunsetColor, R.color.sunIcon_color_setting_dark);
+                return colors.getColor(AppColorKeys.COLOR_SETTING_SUN); //getColor(context, R.attr.sunsetColor, R.color.sunIcon_color_setting_dark);
 
-            case EQUINOX_SPRING: case CROSS_SPRING: return getColor(context, R.attr.springColor, R.color.springColor_dark);
-            case SOLSTICE_SUMMER: case CROSS_SUMMER: return getColor(context, R.attr.summerColor, R.color.summerColor_dark);
-            case EQUINOX_AUTUMNAL: case CROSS_AUTUMNAL: return getColor(context, R.attr.fallColor, R.color.fallColor_dark);
-            case SOLSTICE_WINTER: case CROSS_WINTER: return getColor(context, R.attr.winterColor, R.color.winterColor_dark);
+            case EQUINOX_SPRING: case CROSS_SPRING: return colors.getColor(AppColorKeys.COLOR_SPRING); //getColor(context, R.attr.springColor, R.color.springColor_dark);
+            case SOLSTICE_SUMMER: case CROSS_SUMMER: return colors.getColor(AppColorKeys.COLOR_SUMMER); //getColor(context, R.attr.summerColor, R.color.summerColor_dark);
+            case EQUINOX_AUTUMNAL: case CROSS_AUTUMNAL: colors.getColor(AppColorKeys.COLOR_AUTUMN); //return getColor(context, R.attr.fallColor, R.color.fallColor_dark);
+            case SOLSTICE_WINTER: case CROSS_WINTER: return colors.getColor(AppColorKeys.COLOR_WINTER); //getColor(context, R.attr.winterColor, R.color.winterColor_dark);
 
-            case MOONRISE: case MOONNOON: case FIRSTQUARTER: return getColor(context, R.attr.moonriseColor, R.color.moonIcon_color_rising_dark);
-            case MOONSET: case MOONNIGHT: case THIRDQUARTER: return getColor(context, R.attr.moonsetColor, R.color.moonIcon_color_setting_dark);
+            case MOONRISE: case MOONNOON: case FIRSTQUARTER: return colors.getColor(AppColorKeys.COLOR_RISING_MOON); //getColor(context, R.attr.moonriseColor, R.color.moonIcon_color_rising_dark);
+            case MOONSET: case MOONNIGHT: case THIRDQUARTER: return colors.getColor(AppColorKeys.COLOR_SETTING_MOON); //getColor(context, R.attr.moonsetColor, R.color.moonIcon_color_setting_dark);
 
             default: return null;
         }
@@ -194,8 +196,8 @@ public class EventIcons
     public static Drawable getIconDrawable(Context context, String tag, int width, int height) {
         return getIconDrawable(context, EventIcons.getIconResID(context, tag), width, height, getIconScale(tag), getIconDrawableInset(context, tag), EventIcons.getIconTint(context, tag));
     }
-    public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event, int width, int height, boolean northward) {
-        return getIconDrawable(context, EventIcons.getIconResID(context, event, northward), width, height, getIconScale(event), getIconDrawableInset(context, event), EventIcons.getIconTint(context, event));
+    public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event, int width, int height, boolean northward, ColorValues colors) {
+        return getIconDrawable(context, EventIcons.getIconResID(context, event, northward), width, height, getIconScale(event), getIconDrawableInset(context, event), EventIcons.getIconTint(context, event, colors));
     }
     public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, Integer tint)
     {

@@ -30,20 +30,21 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
+import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_FILLPATH;
-import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
-import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWLABELS;
-import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_GRAPH_SHOWMOON;
-import static com.forrestguice.suntimeswidget.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
-import static com.forrestguice.suntimeswidget.LightMapDialog.MAPTAG_LIGHTMAP;
-import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_FILLPATH;
-import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWAXIS;
-import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
-import static com.forrestguice.suntimeswidget.LightMapDialog.PREF_KEY_GRAPH_SHOWMOON;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_FILLPATH;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWLABELS;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWMOON;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.MAPTAG_LIGHTMAP;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_FILLPATH;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWAXIS;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWMOON;
 
 /**
  * A 3x2 line graph
@@ -122,24 +123,26 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        options = new LineGraphView.LineGraphOptions();
+        options = new LineGraphView.LineGraphOptions(context);
         if (theme.getBackground() == SuntimesTheme.ThemeBackground.LIGHT)
             options.initDefaultLight(context);
         else options.initDefaultDark(context);
 
-        options.colorDay = theme.getDayColor();
-        options.colorCivil = theme.getCivilColor();
-        options.colorNautical = theme.getNauticalColor();
-        options.colorAstro = theme.getAstroColor();
-        options.colorNight = theme.getNightColor();
-        options.colorPointFill = theme.getGraphPointFillColor();
-        options.colorPointStroke = theme.getGraphPointStrokeColor();
+        options.colors.setColor(LineGraphColorValues.COLOR_GRAPH_BG, theme.getNightColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
 
-        options.colorBackground = options.colorNight;
-        options.sunPath_color_day = options.sunPath_color_day_closed = options.colorDay;
-        options.sunPath_color_night = options.sunPath_color_night_closed = options.colorNautical;
-        options.moonPath_color_day = options.moonPath_color_day_closed = theme.getMoonriseTextColor();
-        options.moonPath_color_night = options.moonPath_color_night_closed = theme.getMoonsetTextColor();
+        options.colors.setColor(LineGraphColorValues.COLOR_SUNPATH_DAY_STROKE, theme.getDayColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUNPATH_DAY_FILL, theme.getDayColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUNPATH_NIGHT_STROKE, theme.getNauticalColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUNPATH_NIGHT_FILL, theme.getNauticalColor());
+
+        options.colors.setColor(LineGraphColorValues.COLOR_MOONPATH_DAY_STROKE, theme.getMoonriseTextColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_MOONPATH_DAY_FILL, theme.getMoonriseTextColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_STROKE, theme.getMoonsetTextColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_FILL, theme.getMoonsetTextColor());
 
         options.graph_width = LineGraphView.MINUTES_IN_DAY;
         options.graph_height = 180;

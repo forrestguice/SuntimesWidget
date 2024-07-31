@@ -25,19 +25,21 @@
 		android:layout_width="match_parent" android:layout_height="match_parent"
 		android:orientation="vertical">
 
-		<android.support.v7.widget.Toolbar
-			android:id="@+id/app_menubar"
-			android:layout_width="match_parent"
-			android:layout_height="?attr/actionBarSize"
-			android:background="?attr/colorPrimary"
-			android:theme="?attr/toolbarTheme"
-			app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
-			app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
-			app:popupTheme="?attr/actionBarPopupTheme"
-			app:title="@string/configLabel_alarmClock"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+		<android.support.design.widget.AppBarLayout
+			android:id="@+id/layout_app_menubar"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<android.support.v7.widget.Toolbar
+				android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+				app:title="@string/configLabel_alarmClock"
+            	app:layout_constraintStart_toStartOf="parent"
+            	app:layout_constraintEnd_toEndOf="parent"
+            	app:layout_constraintTop_toTopOf="parent" />
+
+		</android.support.design.widget.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="0dp"
@@ -45,7 +47,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_menubar"
+            app:layout_constraintTop_toBottomOf="@+id/layout_app_menubar"
 			android:paddingTop="4dp">
 
             <ListView
@@ -80,9 +82,10 @@
 				<android.support.design.widget.FloatingActionButton
 					android:id="@+id/btn_addAlarm"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:layout_marginRight="8dp" android:layout_gravity="center_vertical"
+					android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_gravity="center_vertical"
 					android:src="?attr/icActionNewAlarm" android:scaleType="center"
 					android:contentDescription="@string/configAction_addAlarm"
+					android:tint="?attr/fab_foregroundColor"
 					app:backgroundTint="?attr/fab_backgroundColor"
 					app:rippleColor="?attr/fab_rippleColor"
 					app:fabSize="mini" />
@@ -106,9 +109,10 @@
 				<android.support.design.widget.FloatingActionButton
 					android:id="@+id/btn_addNotification"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:layout_marginRight="8dp" android:layout_gravity="center_vertical"
+					android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_gravity="center_vertical"
 					android:src="?attr/icActionNewNotification" android:scaleType="center"
 					android:contentDescription="@string/configAction_addNotification"
+					android:tint="?attr/fab_foregroundColor"
 					app:backgroundTint="?attr/fab_backgroundColor"
 					app:rippleColor="?attr/fab_rippleColor"
 					app:fabSize="mini" />
@@ -121,6 +125,7 @@
 				android:layout_gravity="end" android:layout_marginTop="12dp"
 				android:src="?attr/icActionNew" android:scaleType="center"
 				android:contentDescription="@string/configAction_addAlarm"
+				android:tint="?attr/fab_foregroundColor"
 				app:backgroundTint="?attr/fab_backgroundColor"
 				app:rippleColor="?attr/fab_rippleColor" />
 

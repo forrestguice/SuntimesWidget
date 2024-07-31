@@ -40,9 +40,11 @@ The app:
 * displays the sunrise and sunset, blue and golden hour, and twilight times (civil / nautical / astronomical).
 * displays the current moon phase, illumination, moonrise, moonset, lunar noon, lunar midnight, apogee, perigee, and major phase dates.
 * displays the current sunlight and moonlight projected over a world map (basic equirectangular, blue marble, or azimuthal maps).
+* displays the total amount of sunlight over the year, and earliest/latest sunrise and sunset times.
 * displays the solstices, equinoxes, and cross-quarter days, and notes the time until the next event.
 * displays the sun's current position, and its position at sunrise, sunset, and noon.
 * displays the moon's current position, and its position at moonrise and moonset.
+* includes support for custom rising/setting events; the time when the sun is at a given angle, or an object casts a shadow of given length.
 * includes an Alarm Clock that can set a repeating alarm or notification for the next sunrise or sunset (or other rising/setting event).
 * includes a "Quick Settings" tile that displays information as part of the settings tray.
 * can display the configured location on a map (requires a map application) and configure the location from a map (using geo intent).
@@ -50,6 +52,12 @@ The app:
 The app:
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
 * *does not* require network connectivity (or other unnecessary permissions). All calculations are performed locally on the device. 
+
+The alarm clock:
+* supports different types; schedule "alarms", "notifications", or "quick notifications".
+* supports astronomical events (in addition to ordinary alarms), and repeating alarms that are rescheduled as event times change throughout the year.
+* includes features for heavy sleepers; challenges to dismiss alarms ("easy math"), snooze limits, and bright fullscreen alarms.
+* includes a bedtime mode that schedules alarms using sleep cycles, and manages do-not-disturb during sleep hours.
 
 Widgets are (re)configurable:
 * location (latitude, longitude, elevation).
@@ -66,6 +74,11 @@ Widgets are resizable and include...
 
 **Clock widgets:**
 * 1x1 digital clock widget that displays solar time (or a given timezone).
+
+**Alarm widgets:**
+* 1x1 alarm widget that displays the time of the next alarm.
+* 2x2 alarm widget that displays a basic list of upcoming alarms.
+* 3x2 alarm widget that displays a detailed list of upcoming alarms.
 
 **Date widgets:**
 * 1x1 date widget that displays the date with a given calendars (Chinese, Coptic, Ethiopian, Gregorian, Hebrew, Indian, Japanese, Julian, Korean, Minguo, Solar Hijiri, Thai Solar, or Vietnamese).
@@ -93,7 +106,11 @@ Widgets are resizable and include...
 * 3x1 sun position widget that displays the lightmap graph, and tracks the sun's altitude and azimuth (current, sunrise/sunset, and at noon).
 * 3x2 sun position widget that displays current sunlight and moonlight projected over a world map.
 * 3x2 sun position widget that displays the sun's altitude as a line graph.
+* 3x2 sun position widget that displays sunlight over the year.
 
+<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/alarmwidget_1x1_preview.png" align="center"></img>
+<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/alarmwidget_2x2_preview.png" align="center"></img>
+<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/alarmwidget_3x2_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/clockwidget_1x1_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget1_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget0_1x1_preview.png" align="center"></img>
@@ -121,11 +138,14 @@ The app benefits from the following permissions...
 |---|---|---|
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
+|ACCESS_NOTIFICATION_POLICY|To enable do-not-disturb at bedtime.|v0.16.0|
 |BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
+|FOREGROUND_SERVICE|To display alarms and notifications.|v0.16.0|
 |POWER_OFF_ALARM|To wake the device from the power off state.|v0.14.0|
 |READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5, v0.13.8 (api&le;18)|
-|SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
 |REQUEST_IGNORE_BATTERY_OPTIMIZATIONS|To help ensure reliable delivery of alarms.|v0.14.11|
+|SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
+|USE_FULL_SCREEN_INTENT|To display alarms over the lock screen.|v0.16.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api&le;18)|
 
 Version `v0.13.8` removed READ_EXTERNAL_STORAGE for api&ge;19 (replaced with persistent URI permissions). 

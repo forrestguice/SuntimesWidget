@@ -201,6 +201,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     protected WidgetModeAdapter createAdapter_widgetMode3x2()
     {
         ArrayList<WidgetSettings.WidgetModeDisplay> modes = new ArrayList<>();
+        modes.add(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LIGHTGRAPH);
         modes.add(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
@@ -229,7 +230,9 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
             WidgetSettings.WidgetModeDisplay mode = (WidgetSettings.WidgetModeDisplay) spinner_3x2mode.getSelectedItem();
             WidgetSettings.WidgetModeSunPos3x2 widgetMode;
 
-            if (mode.name().equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH.name())) {
+            if (mode.name().equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH.name())
+                    || mode.name().equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LIGHTGRAPH.name()))
+            {
                 widgetMode = (WidgetSettings.WidgetModeSunPos3x2) spinner_3x2mode.getSelectedItem();
 
             } else {

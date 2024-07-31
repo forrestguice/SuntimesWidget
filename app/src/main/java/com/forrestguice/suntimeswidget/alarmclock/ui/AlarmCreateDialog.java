@@ -19,7 +19,6 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,9 +36,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -52,8 +55,7 @@ import android.widget.Spinner;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.AlarmDialog;
-import com.forrestguice.suntimeswidget.LocationConfigDialog;
+import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.TimeDateDialog;
@@ -69,11 +71,13 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmCreateDialog extends BottomSheetDialogFragment
@@ -86,6 +90,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final String EXTRA_OFFSET = "offset";
     public static final String EXTRA_TIMEZONE = "timezone";
     public static final String EXTRA_LOCATION = "location";
+    public static final String EXTRA_LOCATION_FROMAPP = "useAppLocation";
     public static final String EXTRA_EVENT = "event";
 
     public static final long DEF_DATE = -1L;
@@ -97,6 +102,12 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     public static final String EXTRA_PREVIEW_OFFSET = "previewOffset";
     public static final String EXTRA_BUTTON_ALARMLIST = "showAlarmListButton";
+    public static final String EXTRA_BUTTON_DATESELECT = "showDateSelectButton";
+    public static final String EXTRA_ALLOW_SELECT_TYPE = "allowSelectType";
+    public static final String EXTRA_BUTTON_TZSLECT = "showTimeZoneButton";
+    public static final String EXTRA_LABEL_OVERRIDE = "overrideLabel";
+    public static final String EXTRA_PREVIEW_TIME = "previewTime";
+    public static final String EXTRA_SHOW_TABS = "showTabs";
 
     public static final String DIALOG_LOCATION = "locationDialog";
     public static final String DIALOG_DATE = "dateDialog";
@@ -109,6 +120,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     protected ImageView icon_offset;
     protected Spinner spin_type;
     protected ImageButton btn_alarms;
+    protected ImageButton btn_accept;
     protected SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmCreateDialog() {
@@ -140,10 +152,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
 
         Context context = getActivity();
-        SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
-        AlarmClockItem.AlarmType.initDisplayStrings(context);
-        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
+        if (context != null)
+        {
+            SuntimesUtils.initDisplayStrings(context);
+            SolarEvents.initDisplayStrings(context);
+            AlarmClockItem.AlarmType.initDisplayStrings(context);
+            AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
+        }
 
         //setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
         super.onCreate(savedState);
@@ -164,6 +179,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             tab.select();
         }
         showFragmentForMode(tab != null ? tab.getPosition() : 0);
+        updateViews(getActivity());
 
         return dialogContent;
     }
@@ -183,18 +199,21 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     }
 
-    protected void showByEventFragment() {
+    protected void showByEventFragment()
+    {
         FragmentManager fragments = getChildFragmentManager();
         FragmentTransaction transaction = fragments.beginTransaction();
 
-        AlarmDialog fragment = new AlarmDialog();
+        AlarmEventDialog fragment = new AlarmEventDialog();
         fragment.setDialogShowFrame(false);
         fragment.setDialogShowDesc(false);
         fragment.setType(getAlarmType());
         initEventDialog(getActivity(), fragment, getLocation());
-        fragment.setDialogListener(new AlarmDialog.DialogListener() {
+        fragment.setDialogListener(new AlarmEventDialog.DialogListener()
+        {
             @Override
-            public void onChanged(AlarmDialog dialog) {
+            public void onChanged(AlarmEventDialog dialog)
+            {
                 if (Math.abs(getOffset()) >= (1000 * 60 * 60 * 24)) {    // clear multi-day offsets
                     getArguments().putLong(EXTRA_OFFSET, 0);
                 }
@@ -205,20 +224,59 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             }
 
             @Override
-            public void onAccepted(AlarmDialog dialog) {}
+            public void onAccepted(AlarmEventDialog dialog) {}
 
             @Override
-            public void onCanceled(AlarmDialog dialog) {}
+            public void onCanceled(AlarmEventDialog dialog) {}
 
             @Override
-            public void onLocationClick(AlarmDialog dialog) {
-                showLocationDialog(getActivity());
+            public void onLocationClick(AlarmEventDialog dialog, View v) {
+                showLocationMenu(getActivity(), v);
             }
         });
         fragment.setChoice(getEvent());
 
         transaction.replace(R.id.fragmentContainer1, fragment, "AlarmDialog");
         transaction.commit();
+    }
+
+    protected void showLocationMenu(final Context context, View v)
+    {
+        PopupMenu popup = new PopupMenu(context, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.alarmlocation, popup.getMenu());
+
+        Menu menu = popup.getMenu();
+        MenuItem menuItem_locationFromApp = menu.findItem(R.id.action_location_fromApp);
+        if (menuItem_locationFromApp != null) {
+            menuItem_locationFromApp.setChecked(useAppLocation());
+        }
+        MenuItem menuItem_location = popup.getMenu().findItem(R.id.action_location_set);
+        if (menuItem_location != null) {
+            menuItem_location.setEnabled(!useAppLocation());
+        }
+
+        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.action_location_fromApp:
+                        setUseAppLocation(getActivity(), !menuItem.isChecked());
+                        updateViews(getActivity());
+                        return true;
+
+                    case R.id.action_location_set:
+                        showLocationDialog(getActivity());
+                        return true;
+                }
+                return false;
+            }
+        }));
+        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
+        popup.show();
     }
 
     protected void showLocationDialog(Context context)
@@ -230,7 +288,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         dialog.setDialogListener(onLocationChanged);
         dialog.show(getChildFragmentManager(), DIALOG_LOCATION);
     }
-    private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
+    private final LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
         public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
@@ -239,6 +297,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             LocationConfigDialog dialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOG_LOCATION);
             if (dialog != null)
             {
+                setUseAppLocation(context, false);
                 setEvent(getEvent(), location);
                 updateViews(getActivity());
                 return true;
@@ -310,6 +369,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         AlarmTimeDialog fragment = new AlarmTimeDialog();
         fragment.setDate(getDate());
+        fragment.setShowDateButton(showDateSelectButton());
+        fragment.setShowTimeZoneSelect(showTimeZoneSelectButton());
         fragment.setTime(getHour(), getMinute());
         fragment.setTimeZone(getTimeZone());
         fragment.setLocation(getLocation());
@@ -359,7 +420,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         text_note = (TextView) dialogContent.findViewById(R.id.text_note);
 
         spin_type = (Spinner) dialogContent.findViewById(R.id.type_spin);
-        spin_type.setAdapter(new AlarmTypeAdapter(getContext(), R.layout.layout_listitem_alarmtype));
+        AlarmTypeAdapter adapter = new AlarmTypeAdapter(context, R.layout.layout_listitem_alarmtype);
+        adapter.setLabels(getLabelOverride());
+        spin_type.setAdapter(adapter);
 
         tabs = (TabLayout) dialogContent.findViewById(R.id.tabLayout);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -383,7 +446,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             btn_cancel.setOnClickListener(onDialogCancelClick);
         }
 
-        ImageButton btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
+        btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
         if (btn_accept != null) {
             TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
             btn_accept.setOnClickListener(onDialogAcceptClick);
@@ -406,10 +469,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     }
 
-    private AdapterView.OnItemSelectedListener onTypeSelected = new AdapterView.OnItemSelectedListener() {
+    private final AdapterView.OnItemSelectedListener onTypeSelected = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Log.d("DEBUG", "onItemSelected: " + position);
+            //Log.d("DEBUG", "onItemSelected: " + position);
             setAlarmType((AlarmClockItem.AlarmType) parent.getItemAtPosition(position));
         }
 
@@ -424,6 +487,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
         detachListeners();
 
+        tabs.setVisibility(showTabs() ? View.VISIBLE : View.GONE);
+        //if (!allowPickEvent() && tabs.getTabCount() > 1) {
+            //tabs.removeTabAt(0);
+        //}
+
         if (btn_alarms != null) {
             btn_alarms.setVisibility(showAlarmListButton() ? View.VISIBLE : View.GONE);
         }
@@ -433,23 +501,28 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         item.offset = getOffset();
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
 
+        boolean showPreview = showTimePreview();
+
         if (text_title != null) {
             text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.ALARM ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
         }
         if (spin_type != null) {
+            spin_type.setEnabled(allowSelectType());
             spin_type.setSelection(alarmType.ordinal(), false);
         }
 
         if (text_offset != null) {
             text_offset.setText(isSchedulable ? AlarmEditViewHolder.displayOffset(context, item) : "");
+            text_offset.setVisibility(showPreview ? View.VISIBLE : View.GONE);
         }
         if (text_time != null) {
             text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, previewOffset()) : "");
+            text_time.setVisibility(showPreview ? View.VISIBLE : View.GONE);
         }
         if (text_date != null)
         {
             text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item, previewOffset()) : "");
-            text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
+            text_date.setVisibility(showTimePreview() && isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
         }
         if (text_note != null) {    // TODO: periodic update
             text_note.setText(AlarmEditViewHolder.displayAlarmNote(context, item, isSchedulable));
@@ -489,6 +562,33 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 }
             }
         }
+
+        public String getLabel(int position)
+        {
+            if (labels != null && labels.size() > 0) {
+                if (position >= 0 && position < getCount()) {
+                    return labels.get(position);
+                }
+            }
+            AlarmClockItem.AlarmType alarmType = getItem(position);
+            return (alarmType != null ? alarmType.getDisplayString() : "");
+        }
+        public void setLabels(@Nullable String label)
+        {
+            if (label != null)
+            {
+                labels = new ArrayList<>(getCount());
+                for (int i=0; i<getCount(); i++) {
+                    this.labels.add(label);
+                }
+            } else {
+                labels = null;
+            }
+        }
+        public void setLabels(String[] labels) {
+            this.labels = new ArrayList<>(Arrays.asList(labels));
+        }
+        protected ArrayList<String> labels = null;
 
         @Override
         public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -530,7 +630,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                     case ALARM: default: backgroundResource = res_iconAlarm; break;
                 }
                 icon.setBackgroundResource(backgroundResource);
-                text.setText(alarmType.getDisplayString());
+                text.setText(getLabel(position));
             } else {
                 icon.setImageDrawable(null);
                 icon.setBackgroundResource(0);
@@ -572,11 +672,12 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putString(EXTRA_TIMEZONE, prefs.getString(EXTRA_TIMEZONE, getTimeZone()));
         args.putString(EXTRA_EVENT, prefs.getString(EXTRA_EVENT, DEF_EVENT));
         args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.valueOf(prefs.getString(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM.name()), DEF_ALARMTYPE));
+        setUseAppLocation(getActivity(), prefs.getBoolean(EXTRA_LOCATION_FROMAPP, true));
 
         if (isAdded())
         {
             FragmentManager fragments = getChildFragmentManager();
-            AlarmDialog fragment0 = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+            AlarmEventDialog fragment0 = (AlarmEventDialog) fragments.findFragmentByTag("AlarmDialog");
             if (fragment0 != null) {
                 initEventDialog(getActivity(), fragment0, getLocation());
                 fragment0.setChoice(getEvent());
@@ -611,6 +712,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         out.putString(EXTRA_TIMEZONE, getTimeZone());
         out.putString(EXTRA_EVENT, getEvent());
         out.putString(EXTRA_ALARMTYPE, getAlarmType().name());
+        out.putBoolean(EXTRA_LOCATION_FROMAPP, useAppLocation());
         out.apply();
     }
 
@@ -641,7 +743,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog)
@@ -658,6 +760,19 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     }
                 }, AUTO_EXPAND_DELAY);
+            }
+
+            if (AppSettings.isTelevision(getActivity()))
+            {
+                if (spin_type != null && spin_type.isEnabled() && spin_type.getVisibility() == View.VISIBLE) {
+                    spin_type.requestFocus();
+
+                } else if (tabs != null && tabs.isEnabled() && tabs.getVisibility() == View.VISIBLE) {
+                    tabs.requestFocus();
+
+                } else if (btn_accept != null && btn_accept.isEnabled() && btn_accept.getVisibility() == View.VISIBLE) {
+                    btn_accept.requestFocus();
+                }
             }
         }
     };
@@ -716,7 +831,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     });
 
-    private View.OnClickListener onDialogBottomBarClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogBottomBarClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             setPreviewOffset(!previewOffset());
@@ -789,15 +904,101 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public boolean previewOffset() {
         return getArguments().getBoolean(EXTRA_PREVIEW_OFFSET, false);
     }
-    public void setPreviewOffset(boolean value) {
+    public void setPreviewOffset(boolean value)
+    {
         getArguments().putBoolean(EXTRA_PREVIEW_OFFSET, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
     }
 
     public boolean showAlarmListButton() {
         return getArguments().getBoolean(EXTRA_BUTTON_ALARMLIST, false);
     }
-    public void setShowAlarmListButton(boolean value) {
+    public void setShowAlarmListButton(boolean value)
+    {
         getArguments().putBoolean(EXTRA_BUTTON_ALARMLIST, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+
+    public boolean showDateSelectButton() {
+        return getArguments().getBoolean(EXTRA_BUTTON_DATESELECT, true);
+    }
+    public void setShowDateSelectButton(boolean value)
+    {
+        getArguments().putBoolean(EXTRA_BUTTON_DATESELECT, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+
+    public boolean showTimePreview() {
+        return getArguments().getBoolean(EXTRA_PREVIEW_TIME, true);
+    }
+    public void setShowTimePreview(boolean value)
+    {
+        getArguments().putBoolean(EXTRA_PREVIEW_TIME, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+
+    public boolean showTabs() {
+        return getArguments().getBoolean(EXTRA_SHOW_TABS, true);
+    }
+    public void setShowTabs(boolean value)
+    {
+        getArguments().putBoolean(EXTRA_SHOW_TABS, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+
+    public boolean showTimeZoneSelectButton() {
+        return getArguments().getBoolean(EXTRA_BUTTON_TZSLECT, true);
+    }
+    public void setShowTimeZoneSelectButton(boolean value)
+    {
+        getArguments().putBoolean(EXTRA_BUTTON_TZSLECT, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+
+    public boolean allowSelectType() {
+        return getArguments().getBoolean(EXTRA_ALLOW_SELECT_TYPE, true);
+    }
+    public void setAllowSelectType(boolean value)
+    {
+        getArguments().putBoolean(EXTRA_ALLOW_SELECT_TYPE, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+
+    @Nullable
+    public String getLabelOverride() {
+        return getArguments().getString(EXTRA_LABEL_OVERRIDE, null);
+    }
+    public void setLabelOverride(@Nullable String value)
+    {
+        getArguments().putString(EXTRA_LABEL_OVERRIDE, value);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+
+    public void setUseAppLocation(Context context, boolean value)
+    {
+        getArguments().putBoolean(EXTRA_LOCATION_FROMAPP, value);
+        if (value && isAdded() && context != null) {
+            setEvent(getEvent(), WidgetSettings.loadLocationPref(context, 0));
+        }
+    }
+    public boolean useAppLocation() {
+        return getArguments().getBoolean(EXTRA_LOCATION_FROMAPP);
     }
 
     public int getMode() {
@@ -825,7 +1026,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (isAdded())
         {
             FragmentManager fragments = getChildFragmentManager();
-            AlarmDialog fragment0 = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+            AlarmEventDialog fragment0 = (AlarmEventDialog) fragments.findFragmentByTag("AlarmDialog");
             if (fragment0 != null) {
                 initEventDialog(getActivity(), fragment0, location);
                 fragment0.setChoice(event);
@@ -901,7 +1102,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (isAdded())
         {
             FragmentManager fragments = getChildFragmentManager();
-            AlarmDialog fragment = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+            AlarmEventDialog fragment = (AlarmEventDialog) fragments.findFragmentByTag("AlarmDialog");
             if (fragment != null) {
                 fragment.setType(getAlarmType());
             }
@@ -923,7 +1124,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         return getArguments().getLong(EXTRA_OFFSET, 0);
     }
 
-    private void initEventDialog(Context context, AlarmDialog dialog, Location forLocation)
+    private void initEventDialog(Context context, AlarmEventDialog dialog, Location forLocation)
     {
         SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(context, 0);
         SuntimesMoonData moonData = new SuntimesMoonData(context, 0);

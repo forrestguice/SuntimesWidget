@@ -13,7 +13,7 @@
 
         <ImageView android:id="@android:id/icon1"
             android:layout_width="8dp" android:layout_height="32dp"
-            android:background="@color/accent" tools:ignore="contentDescription" />
+            android:background="@color/tertiaryColor" tools:ignore="contentDescription" />
 
     </LinearLayout>
 

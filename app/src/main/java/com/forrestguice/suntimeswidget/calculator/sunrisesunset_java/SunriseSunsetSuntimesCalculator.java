@@ -270,6 +270,16 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getTimeOfShadowBeforeNoon(Calendar calendar, double objHeight, double shadowLength) {
+        return null;
+    }
+
+    @Override
+    public Calendar getTimeOfShadowAfterNoon(Calendar calendar, double objHeight, double shadowLength) {
+        return null;
+    }
+
+    @Override
     public double equationOfTime(Calendar dateTime)
     {
         return Double.POSITIVE_INFINITY;

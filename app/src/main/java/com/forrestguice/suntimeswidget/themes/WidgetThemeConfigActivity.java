@@ -59,7 +59,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.LightMapView;
+import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
@@ -67,6 +67,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
@@ -176,6 +178,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public static final int PREVIEWID_SUNPOS_3x2 = 4;
     public static final int PREVIEWID_CLOCK_1x1 = 5;
     public static final int PREVIEWID_DATE_1x1 = 6;    // TODO
+    public static final int PREVIEWID_ALARM_1x1 = 7;    // TODO
+    public static final int PREVIEWID_ALARM_2x2 = 8;    // TODO
+    public static final int PREVIEWID_ALARM_3x2 = 9;    // TODO
 
     public static final int ADD_THEME_REQUEST = 0;
     public static final int EDIT_THEME_REQUEST = 1;
@@ -820,13 +825,15 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
             colors.initDefaultDark(this);
 
-            colors.colorDay = chooseColorDay.getColor();
-            colors.colorCivil = chooseColorCivil.getColor();
-            colors.colorNautical = chooseColorNautical.getColor();
-            colors.colorAstro = chooseColorAstro.getColor();
-            colors.colorNight = chooseColorNight.getColor();
-            colors.colorPointFill = chooseColorPointFill.getColor();
-            colors.colorPointStroke = chooseColorPointStroke.getColor();
+            colors.values.setColor(LightMapColorValues.COLOR_DAY, chooseColorDay.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_CIVIL, chooseColorCivil.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_NAUTICAL, chooseColorNautical.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, chooseColorAstro.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_NIGHT, chooseColorNight.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, chooseColorPointFill.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, chooseColorPointStroke.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, chooseColorPointFill.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, chooseColorPointStroke.getColor());
 
             colors.option_drawNow = LightMapView.LightMapColors.DRAW_SUN1;
             colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);
@@ -854,17 +861,17 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
             options.map = ContextCompat.getDrawable(this, R.drawable.worldmap);
-            options.backgroundColor = chooseColorMapBackground.getColor();
-            options.foregroundColor = chooseColorMapForeground.getColor();
-            options.sunShadowColor = chooseColorMapShadow.getColor();
-            options.moonLightColor = chooseColorMapHighlight.getColor();
+            options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, chooseColorMapBackground.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, chooseColorMapForeground.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, chooseColorMapShadow.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_LIGHT, chooseColorMapHighlight.getColor());
 
-            options.sunFillColor = chooseColorPointFill.getColor();
-            options.sunStrokeColor = chooseColorPointStroke.getColor();
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_FILL, chooseColorPointFill.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_STROKE, chooseColorPointStroke.getColor());
             options.sunScale = 24;      // extra large so preview of colors is visible
 
-            options.moonFillColor = chooseColorMoonFull.getColor();
-            options.moonStrokeColor = chooseColorMoonWaning.getColor();
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_FILL, chooseColorMoonFull.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_STROKE, chooseColorMoonWaning.getColor());
             options.moonScale = 32;
 
             int dpWidth = 128;

@@ -18,7 +18,6 @@
 package com.forrestguice.suntimeswidget.graph;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -31,17 +30,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -64,7 +62,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
     private LineGraphTask drawTask = null;
 
-    private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
+    private final int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
     private LineGraphOptions options;
     private SuntimesRiseSetDataset data = null;
@@ -93,7 +91,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         options = new LineGraphOptions(context);
         if (isInEditMode())
         {
-            setBackgroundColor(options.colorBackground);
+            setBackgroundColor(options.getColor(LineGraphColorValues.COLOR_GRAPH_BG));
         }
     }
 
@@ -142,15 +140,13 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
     public void themeViews( Context context, @NonNull SuntimesTheme theme )
     {
         if (options == null) {
-            options = new LineGraphOptions();
+            options = new LineGraphOptions(context);
         }
-        options.colorNight = options.colorBackground = theme.getNightColor();
-        options.colorDay = theme.getDayColor();
-        options.colorAstro = theme.getAstroColor();
-        options.colorNautical = theme.getNauticalColor();
-        options.colorCivil = theme.getCivilColor();
-        options.colorPointFill = theme.getGraphPointFillColor();
-        options.colorPointStroke = theme.getGraphPointStrokeColor();
+        options.colors.setColor(LineGraphColorValues.COLOR_GRAPH_BG, theme.getNightColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(LineGraphColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
     }
 
     public void setData(@Nullable SuntimesRiseSetDataset data) {
@@ -181,7 +177,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         {
             Log.w(LineGraphView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(LineGraphView.this.hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
-        } else Log.d(LineGraphView.class.getSimpleName(), "updateViews: starting task " + data);
+        } // else Log.d(LineGraphView.class.getSimpleName(), "updateViews: starting task " + data);
 
         if (getWidth() == 0 || getHeight() == 0) {
             //Log.d(LineGraphView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
@@ -198,10 +194,10 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    private LineGraphTaskListener drawTaskListener = new LineGraphTaskListener() {
+    private final LineGraphTaskListener drawTaskListener = new LineGraphTaskListener() {
         @Override
         public void onStarted() {
-            Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onStarted: " + Integer.toHexString(LineGraphView.this.hashCode()));
+            //Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onStarted: " + Integer.toHexString(LineGraphView.this.hashCode()));
             if (graphListener != null) {
                 graphListener.onStarted();
             }
@@ -218,7 +214,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         @Override
         public void onFrame(Bitmap frame, long offsetMinutes) {
-            Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onFrame: " + Integer.toHexString(LineGraphView.this.hashCode()));
+            //Log.d(LineGraphView.class.getSimpleName(), "LineGraphView.updateViews: onFrame: " + Integer.toHexString(LineGraphView.this.hashCode()));
             setImageBitmap(frame);
             if (graphListener != null) {
                 graphListener.onFrame(frame, offsetMinutes);
@@ -493,7 +489,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             }
 
             long bench_end = System.nanoTime();
-            Log.d("BENCH", "make line graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+            //Log.d("BENCH", "make line graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
             return b;
         }
         protected void initPaint()
@@ -643,7 +639,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void drawBackground(Canvas c, Paint p, LineGraphOptions options)
         {
-            p.setColor(options.colorBackground);
+            p.setColor(options.getColor(LineGraphColorValues.COLOR_GRAPH_BG));
             drawRect(c, p);
         }
 
@@ -657,12 +653,12 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 switch (options.option_drawNow) {
                     case LineGraphOptions.DRAW_SUN2:
                         DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
-                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, Color.TRANSPARENT, options.colorPointStroke, dashed);
+                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, Color.TRANSPARENT, options.getColor(LineGraphColorValues.COLOR_SUN_STROKE), dashed);
                         break;
 
                     case LineGraphOptions.DRAW_SUN1:
                     default:
-                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, options.colorPointFill, options.colorPointStroke, null);
+                        drawPoint(now, calculator, pointRadius, pointStroke, c, p, options.getColor(LineGraphColorValues.COLOR_SUN_FILL), options.getColor(LineGraphColorValues.COLOR_SUN_STROKE), null);
                         break;
                 }
             }
@@ -678,7 +674,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                     Integer[] minutes = findMinutes(now, degrees, calculator);
                     if (minutes != null) {
                         for (Integer m : minutes) {
-                            drawPoint(m, degrees, (int)pointSize, 0, c, p, options.sunPath_points_color, options.sunPath_points_color, null);
+                            drawPoint(m, degrees, (int)pointSize, 0, c, p, options.colors.getColor(LineGraphColorValues.COLOR_POINT_FILL), options.colors.getColor(LineGraphColorValues.COLOR_POINT_STROKE), null);
                         }
                     }
                 }
@@ -782,7 +778,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 for (Path path : moonFill.keySet())
                 {
                     boolean isDay = (moonFill.get(path) >= 0);
-                    p.setColor(isDay ? options.moonPath_color_day_closed : options.moonPath_color_night_closed);
+                    p.setColor(isDay ? options.getColor(LineGraphColorValues.COLOR_MOONPATH_DAY_FILL) : options.getColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_FILL));
                     p.setAlpha(isDay ? options.moonPath_color_day_closed_alpha : options.moonPath_color_night_closed_alpha);
                     c.drawPath(path, p);
                 }
@@ -797,7 +793,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 for (Path path : moonPath.keySet())
                 {
                     boolean isDay = (moonPath.get(path) >= 0);
-                    p.setColor(isDay ? options.moonPath_color_day : options.moonPath_color_night);
+                    p.setColor(isDay ? options.getColor(LineGraphColorValues.COLOR_MOONPATH_DAY_STROKE) : options.getColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_STROKE));
                     p.setAlpha(255);
                     c.drawPath(path, p);
                 }
@@ -886,7 +882,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 for (Path path : sunFill.keySet())
                 {
                     boolean isDay = (sunFill.get(path) >= 0);
-                    p.setColor(isDay ? options.sunPath_color_day_closed : options.sunPath_color_night_closed);
+                    p.setColor(isDay ? options.getColor(LineGraphColorValues.COLOR_SUNPATH_DAY_FILL) : options.getColor(LineGraphColorValues.COLOR_SUNPATH_NIGHT_FILL));
                     p.setAlpha(isDay ? options.sunPath_color_day_closed_alpha : options.sunPath_color_night_closed_alpha);
                     c.drawPath(path, p);
                 }
@@ -901,7 +897,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 for (Path path : sunPath.keySet())
                 {
                     boolean isDay = (sunPath.get(path) >= 0);
-                    p.setColor(isDay ? options.sunPath_color_day : options.sunPath_color_night);
+                    p.setColor(isDay ? options.getColor(LineGraphColorValues.COLOR_SUNPATH_DAY_STROKE) : options.getColor(LineGraphColorValues.COLOR_SUNPATH_NIGHT_STROKE));
                     p.setAlpha(255);
                     c.drawPath(path, p);
                 }
@@ -1004,7 +1000,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             if (options.axisY_show)
             {
                 p.setStyle(Paint.Style.STROKE);
-                p.setColor(options.axisY_color);
+                p.setColor(options.getColor(LineGraphColorValues.COLOR_AXIS));
                 p.setStrokeWidth((float)(r / options.axisY_width));
                 drawAxisY(now, data, c, p, options);
             }
@@ -1015,7 +1011,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             if (options.axisX_show)
             {
                 p.setStyle(Paint.Style.STROKE);
-                p.setColor(options.axisX_color);
+                p.setColor(options.getColor(LineGraphColorValues.COLOR_AXIS));
                 p.setStrokeWidth((float)(r / options.axisX_width));
                 drawAxisX(c, p, options);
             }
@@ -1028,28 +1024,28 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             {
                 p.setStyle(Paint.Style.STROKE);
                 p.setStrokeWidth((float)(r / options.gridX_minor_width));
-                p.setColor(options.gridX_minor_color);
+                p.setColor(options.getColor(LineGraphColorValues.COLOR_GRID_MINOR));
                 drawGridX(c, p, options.gridX_minor_interval, options);
             }
             if (options.gridY_minor_show)
             {
                 p.setStyle(Paint.Style.STROKE);
                 p.setStrokeWidth((float)(r / options.gridY_minor_width));
-                p.setColor(options.gridY_minor_color);
+                p.setColor(options.getColor(LineGraphColorValues.COLOR_GRID_MINOR));
                 drawGridY(now, data, c, p, options.gridY_minor_interval, options);
             }
             if (options.gridX_major_show)
             {
                 p.setStyle(Paint.Style.STROKE);
                 p.setStrokeWidth((float)(r / options.gridX_major_width));
-                p.setColor(options.gridX_major_color);
+                p.setColor(options.getColor(LineGraphColorValues.COLOR_GRID_MAJOR));
                 drawGridX(c, p, options.gridX_major_interval, options);
             }
             if (options.gridY_major_show)
             {
                 p.setStyle(Paint.Style.STROKE);
                 p.setStrokeWidth((float)(r / options.gridY_major_width));
-                p.setColor(options.gridY_major_color);
+                p.setColor(options.getColor(LineGraphColorValues.COLOR_GRID_MAJOR));
                 drawGridY(now, data, c, p, options.gridY_major_interval, options);
             }
         }
@@ -1099,7 +1095,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 if (!options.is24 && hour == 0) {
                     hour = 12;
                 }
-                p.setColor(options.axisX_labels_color);
+                p.setColor(options.getColor(LineGraphColorValues.COLOR_LABELS));
                 p.setTextSize((float)textSize);
                 c.drawText("" + hour, x - textSize/2, h - textSize/4, p);
                 i += options.axisX_labels_interval;
@@ -1112,7 +1108,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             while (i < 90)
             {
                 float y = (float) degreesToBitmapCoords(c, i, options);
-                p.setColor(options.axisY_labels_color);
+                p.setColor(options.getColor(LineGraphColorValues.COLOR_LABELS));
                 p.setTextSize((float)textSize);
                 c.drawText((i > 0 ? "+" : "") + i + "°", 0 + (float)(1.25 * textSize), y + textSize/3 , p);
                 i += options.axisY_labels_interval;
@@ -1253,81 +1249,71 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         // X-Axis
         public boolean axisX_show = true;
-        public int axisX_color = Color.BLACK;
         public double axisX_width = 140;   // minutes
 
         public boolean axisX_labels_show = true;
-        public int axisX_labels_color = Color.WHITE;
         public float axisX_labels_textsize_ratio = 20;
         public float axisX_labels_interval = 60 * 3;  // minutes
 
         // Y-Axis
         public boolean axisY_show = true;
-        public int axisY_color = Color.BLACK;
         public double axisY_width = 300;    // ~5m minutes
         public int axisY_interval = 60 * 12;        // dp
 
         public boolean axisY_labels_show = true;
-        public int axisY_labels_color = Color.LTGRAY;
         public float axisY_labels_textsize_ratio = 20;
         public float axisY_labels_interval = 45;  // degrees
 
         // Grid-X
         public boolean gridX_major_show = true;
-        public int gridX_major_color = Color.BLACK;
         public double gridX_major_width = 300;        // minutes
         public float gridX_major_interval = axisY_labels_interval;    // degrees
 
         public boolean gridX_minor_show = true;
-        public int gridX_minor_color = Color.GRAY;
         public double gridX_minor_width = 400;        // minutes
         public float gridX_minor_interval = 5;    // degrees
 
         // Grid-Y
         public boolean gridY_major_show = true;
-        public int gridY_major_color = Color.BLACK;
         public double gridY_major_width = 300;       // minutes
         public float gridY_major_interval = axisX_labels_interval;   // minutes
 
         public boolean gridY_minor_show = true;
-        public int gridY_minor_color = Color.GRAY;
         public double gridY_minor_width = 400;       // minutes
         public float gridY_minor_interval = 60;   // minutes
 
         public boolean sunPath_show_line = true;
         public boolean sunPath_show_fill = true;
         public boolean sunPath_show_points = false;
-        public int sunPath_color_day = Color.YELLOW;
-        public int sunPath_color_day_closed = Color.YELLOW;
+        //public int sunPath_color_day_closed = Color.YELLOW;
         public int sunPath_color_day_closed_alpha = 200;
-        public int sunPath_color_night = Color.BLUE;
-        public int sunPath_color_night_closed = Color.BLUE;
+        //public int sunPath_color_night_closed = Color.BLUE;
         public int sunPath_color_night_closed_alpha = 200;
         public double sunPath_width = 140;       // (1440 min/day) / 140 = 10 min wide
         public int sunPath_interval = 5;   // minutes
 
         public double[] sunPath_points_elevations = new double[] { 30, -50 };  // TODO
-        public int sunPath_points_color = Color.MAGENTA;    // TODO
+        //public int sunPath_points_color = Color.MAGENTA;    // TODO
         public float sunPath_points_width = 150;
 
         public boolean moonPath_show_line = true;
         public boolean moonPath_show_fill = true;
-        public int moonPath_color_day = Color.LTGRAY;
-        public int moonPath_color_day_closed = Color.LTGRAY;
+        //public int moonPath_color_day_closed = Color.LTGRAY;
         public int moonPath_color_day_closed_alpha = 200;
-        public int moonPath_color_night = Color.CYAN;
-        public int moonPath_color_night_closed = Color.CYAN;
+        //public int moonPath_color_night_closed = Color.CYAN;
         public int moonPath_color_night_closed_alpha = 200;
         public double moonPath_width = 140;       // (1440 min/day) / 140 = 10 min wide
         public int moonPath_interval = 5;   // minutes
 
-        public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
-        public int colorBackground;
-        public int colorPointFill, colorPointStroke;
         public int option_drawNow = DRAW_SUN1;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
 
         public int densityDpi = DisplayMetrics.DENSITY_DEFAULT;
+
+        public LineGraphColorValues colors;
+        public int getColor(String key) {
+            return colors.getColor(key);
+        }
 
         public boolean is24 = false;
         public void setTimeFormat(Context context, WidgetSettings.TimeFormatMode timeFormat) {
@@ -1342,43 +1328,18 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
         public Lock anim_lock = null;
 
-        public LineGraphOptions() {}
+        public LineGraphOptions() {
+            colors = new LineGraphColorValues();
+        }
 
         @SuppressWarnings("ResourceType")
-        public LineGraphOptions(Context context)
-        {
-            int[] colorAttrs = { R.attr.graphColor_day,     // 0
-                    R.attr.graphColor_civil,                // 1
-                    R.attr.graphColor_nautical,             // 2
-                    R.attr.graphColor_astronomical,         // 3
-                    R.attr.graphColor_night,                // 4
-                    R.attr.graphColor_pointFill,            // 5
-                    R.attr.graphColor_pointStroke,          // 6
-                    R.attr.graphColor_axis,                 // 7
-                    R.attr.graphColor_grid,                 // 8
-                    R.attr.graphColor_labels,               // 9
-                    R.attr.moonriseColor,                   // 10
-                    R.attr.moonsetColor                     // 11
-            };
-            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-            colorDay = sunPath_color_day = sunPath_color_day_closed = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
-            colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.transparent));
-            colorNautical = sunPath_color_night = sunPath_color_night_closed = ContextCompat.getColor(context, typedArray.getResourceId(2,R.color.transparent));
-            colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(3, R.color.transparent));
-            colorNight = colorBackground = ContextCompat.getColor(context, typedArray.getResourceId(4, R.color.transparent));
-            colorPointFill = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.transparent));
-            colorPointStroke = ContextCompat.getColor(context, typedArray.getResourceId(6, R.color.transparent));
-            axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, typedArray.getResourceId(7, R.color.graphColor_axis_dark));
-            gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, typedArray.getResourceId(8, R.color.graphColor_grid_dark));
-            axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, typedArray.getResourceId(9, R.color.graphColor_labels_dark));
-            moonPath_color_day = moonPath_color_day_closed = ContextCompat.getColor(context, typedArray.getResourceId(10, R.color.moonIcon_color_rising_dark));
-            moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, typedArray.getResourceId(11, R.color.moonIcon_color_setting_dark));
-            typedArray.recycle();
+        public LineGraphOptions(Context context) {
             init(context);
         }
 
-        protected void init(Context context)
+        public void init(Context context)
         {
+            colors = new LineGraphColorValues(context);
             //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
             //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
             //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
@@ -1386,43 +1347,18 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             //sunPath_width = SuntimesUtils.dpToPixels(context, sunPath_width);
             //axisX_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisX_labels_textsize, context.getResources().getDisplayMetrics());
             //axisY_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisY_labels_textsize, context.getResources().getDisplayMetrics());
-
-            //ColorUtils.setAlphaComponent(sunPath_color_day, sunPath_color_day_alpha);
-            //ColorUtils.setAlphaComponent(sunPath_color_night, sunPath_color_night_alpha);
         }
 
         public void initDefaultDark(Context context)
         {
-            colorDay = sunPath_color_day = sunPath_color_day_closed = ContextCompat.getColor(context, R.color.graphColor_day_dark);
-            colorCivil = ContextCompat.getColor(context, R.color.graphColor_civil_dark);
-            colorNautical = sunPath_color_night = sunPath_color_night_closed = ContextCompat.getColor(context, R.color.graphColor_nautical_dark);
-            colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
-            colorNight = colorBackground = ContextCompat.getColor(context, R.color.graphColor_night_dark);
-            colorPointFill = ContextCompat.getColor(context, R.color.graphColor_pointFill_dark);
-            colorPointStroke = ContextCompat.getColor(context, R.color.graphColor_pointStroke_dark);
-            axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, R.color.graphColor_axis_dark);
-            gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, R.color.graphColor_grid_dark);
-            axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, R.color.graphColor_labels_dark);
-            moonPath_color_day = moonPath_color_day_closed = ContextCompat.getColor(context, R.color.moonIcon_color_rising_dark);
-            moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, R.color.moonIcon_color_setting_dark);
             init(context);
+            colors = new LineGraphColorValues(colors.getDefaultValues(context, true));
         }
 
         public void initDefaultLight(Context context)
         {
-            colorDay = sunPath_color_day = sunPath_color_day_closed = ContextCompat.getColor(context, R.color.graphColor_day_light);
-            colorCivil = ContextCompat.getColor(context, R.color.graphColor_civil_light);
-            colorNautical = sunPath_color_night = sunPath_color_night_closed = ContextCompat.getColor(context, R.color.graphColor_nautical_light);
-            colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
-            colorNight = colorBackground = ContextCompat.getColor(context, R.color.graphColor_night_light);
-            colorPointFill = ContextCompat.getColor(context, R.color.graphColor_pointFill_light);
-            colorPointStroke = ContextCompat.getColor(context, R.color.graphColor_pointStroke_light);
-            axisX_color = axisY_color = gridX_major_color = gridY_major_color = ContextCompat.getColor(context, R.color.graphColor_axis_light);
-            gridX_minor_color = gridY_minor_color = ContextCompat.getColor(context, R.color.graphColor_grid_light);
-            axisX_labels_color = axisY_labels_color = ContextCompat.getColor(context, R.color.graphColor_labels_light);
-            moonPath_color_day = moonPath_color_day_closed = ContextCompat.getColor(context, R.color.moonIcon_color_rising_light);
-            moonPath_color_night = moonPath_color_night_closed = ContextCompat.getColor(context, R.color.moonIcon_color_setting_light);
             init(context);
+            colors = new LineGraphColorValues(colors.getDefaultValues(context, false));
         }
 
         public void acquireDrawLock()

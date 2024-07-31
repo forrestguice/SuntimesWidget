@@ -84,10 +84,22 @@
 
         <Button
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:id="@+id/dialog_button_suggest"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/color_dialog_suggest" />
+
+        <View android:layout_weight="1"
+            android:layout_width="0dp" android:layout_height="match_parent"
+            android:background="@null" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:id="@+id/dialog_button_cancel"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/color_dialog_cancel" />
+            android:text="@string/color_dialog_cancel"
+            tools:ignore="ButtonOrder" />
 
         <Button
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"

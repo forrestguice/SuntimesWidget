@@ -10,10 +10,11 @@
     <drawable name="card_alarmitem_disabled_ref">@drawable/card_alarmitem_disabled_light0</drawable>
     <drawable name="card_alarmitem_sounding_ref">@drawable/card_alarmitem_sounding_light0</drawable>
     <drawable name="card_alarmitem_snoozing_ref">@drawable/card_alarmitem_snoozing_light0</drawable>
-    <drawable name="card_alarmitem_timeout_ref">@drawable/card_alarmitem_timeout_light</drawable>   <!-- TODO -->
+    <drawable name="card_alarmitem_timeout_ref">@drawable/card_alarmitem_timeout_light0</drawable>
     <drawable name="card_alarmitem_controls_ref">@drawable/card_alarmitem_controls_light</drawable>
     <drawable name="card_alarmitem_backdrop_ref">@drawable/card_alarmitem_backdrop_light</drawable>
 
+    <drawable name="button_fab_ref">@drawable/button_fab_light</drawable>
 
     <drawable name="selectable_item_ref">@drawable/selectable_item_light</drawable>
     <drawable name="btn_txt_ref">@drawable/btn_txt_light</drawable>
@@ -40,7 +41,10 @@
     <drawable name="ic_action_timeline_ref">@drawable/ic_action_timeline_light</drawable>
     <drawable name="ic_action_time_ref">@drawable/ic_action_time_light</drawable>
     <drawable name="ic_weather_sunny_ref">@drawable/ic_weather_sunny_light</drawable>
+    <drawable name="ic_action_dnd_ref">@drawable/ic_action_dnd_light</drawable>
     <drawable name="ic_action_alarms_ref">@drawable/ic_action_alarms_light</drawable>
+    <drawable name="ic_action_home_ref">@drawable/ic_action_home_light</drawable>
+    <drawable name="ic_action_bedtime_ref">@drawable/ic_action_bedtime_light</drawable>
     <drawable name="ic_calendar_ref">@drawable/ic_calendar_light</drawable>
     <drawable name="ic_action_notification_ref">@drawable/ic_action_notification_light</drawable>
     <drawable name="ic_action_notification1_ref">@drawable/ic_action_notification1_light</drawable>
@@ -57,6 +61,8 @@
     <drawable name="ic_action_extension_ref">@drawable/ic_action_extension_light</drawable>
     <drawable name="baseline_terrain_ref_18">@drawable/baseline_terrain_black_18</drawable>
     <drawable name="ic_action_shadow_ref">@drawable/ic_action_shadow_light</drawable>
+    <drawable name="ic_action_sun_ref">@drawable/ic_action_sun_light</drawable>
+    <drawable name="ic_action_multiline_chart_ref">@drawable/ic_action_multiline_chart_light</drawable>
     <drawable name="ic_action_locale_ref">@drawable/ic_action_locale_light</drawable>
     <drawable name="ic_action_settings_ref">@drawable/ic_action_settings_light</drawable>
     <drawable name="ic_action_help_ref">@drawable/ic_action_help_light</drawable>
@@ -91,10 +97,13 @@
     <drawable name="check_favorite_ref">@drawable/check_favorite_light</drawable>
     <drawable name="check_altitude_ref">@drawable/check_altitude_light</drawable>
     <drawable name="check_vibrate_ref">@drawable/check_vibrate_light</drawable>
+    <drawable name="check_dnd_ref">@drawable/check_dnd_light</drawable>
     <drawable name="check_visible_ref">@drawable/check_visible_light</drawable>
     <drawable name="check_reminder_ref">@drawable/check_reminder_light</drawable>
 
     <drawable name="ic_action_next_item_ref">@drawable/ic_action_next_item_light</drawable>
     <drawable name="ic_action_previous_item_ref">@drawable/ic_action_previous_item_light</drawable>
+
+    <drawable name="popupmenu_frame_ref">@drawable/popupmenu_frame_light</drawable>
 
 </resources>

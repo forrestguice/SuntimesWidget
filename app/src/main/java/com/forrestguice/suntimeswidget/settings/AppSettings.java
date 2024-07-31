@@ -47,15 +47,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Shared preferences used by the app; uses getDefaultSharedPreferences (stored in com.forrestguice.suntimeswidget_preferences.xml).
@@ -90,6 +95,13 @@ public class AppSettings
 
     public static final String PREF_KEY_LOCALE = "app_locale";
     public static final String PREF_DEF_LOCALE = "en";
+
+    public static final String PREF_KEY_LAUNCHER_MODE = "app_launcher_mode";
+    public static final String PREF_DEF_LAUNCHER_MODE = "default";
+
+    public static final String NAVIGATION_SIMPLE = "SIMPLE";
+    public static final String NAVIGATION_SIDEBAR = "SIDEBAR";
+    public static final String PREF_KEY_NAVIGATION_MODE = "app_navigation_mode";
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final String PREF_DEF_UI_DATETAPACTION = WidgetActions.SuntimesAction.SWAP_CARD.name();
@@ -190,12 +202,15 @@ public class AppSettings
             PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
             PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON, PREF_KEY_UI_SHOWHEADER_TEXT,
             PREF_KEY_UI_EMPHASIZEFIELD, PREF_KEY_UI_SHOWFIELDS, PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_UI_TIMEZONESORT,
+            PREF_KEY_UI_MOONPHASECOLUMNS,
             PREF_KEY_GETFIX_MINELAPSED, PREF_KEY_GETFIX_MAXELAPSED, PREF_KEY_GETFIX_MAXAGE, PREF_KEY_GETFIX_PASSIVE,
             PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG, PREF_KEY_DIALOG_DONOTSHOWAGAIN,
             //PREF_KEY_GETFIX_TIME,
+            PREF_KEY_NAVIGATION_MODE, PREF_KEY_LAUNCHER_MODE
     };
     public static final String[] INT_KEYS = new String[] {
-            PREF_KEY_UI_SHOWFIELDS
+            PREF_KEY_UI_SHOWFIELDS,
+            PREF_KEY_UI_MOONPHASECOLUMNS
     };
     public static final String[] LONG_KEYS = new String[] {
             //PREF_KEY_GETFIX_TIME    // commented; TODO: does it actually make sense to preserve this value across installations? #783
@@ -471,6 +486,24 @@ public class AppSettings
     public static boolean isLocaleRtl(Context context)
     {
         return context.getResources().getBoolean(R.bool.is_rtl);
+    }
+
+    /**
+     * @param context Context
+     * @return launcher class name
+     */
+    @NonNull
+    public static String loadLauncherModePref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_LAUNCHER_MODE, PREF_DEF_LAUNCHER_MODE);
+    }
+
+    @NonNull
+    public static String loadNavModePref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_NAVIGATION_MODE, context.getString(R.string.def_app_navigation_mode));
     }
 
     /**
@@ -952,6 +985,38 @@ public class AppSettings
         intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
+    }
+
+    public static void saveLocationPref(final Context context, Location location) {
+        saveLocationPref(context, location, true);
+    }
+    public static void saveLocationPref(final Context context, Location location, boolean withSideEffects)
+    {
+        WidgetSettings.saveLocationPref(context, 0, location);
+
+        if (withSideEffects)
+        {
+            ExecutorService executor = Executors.newScheduledThreadPool(2);
+            executor.execute(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    long bench_start = System.nanoTime();
+                    WidgetListAdapter.updateAllWidgetAlarms(context);
+                    long bench_end = System.nanoTime();
+                    Log.d("DEBUG", "update all widgets :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+                }
+            });
+            executor.execute(new Runnable()
+            {
+                @Override
+                public void run() {
+                    context.sendBroadcast(new Intent(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_LOCATION_CHANGED, null)));
+                }
+            });
+            executor.shutdown();
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

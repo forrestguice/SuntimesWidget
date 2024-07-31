@@ -34,6 +34,7 @@ import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
@@ -42,6 +43,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
@@ -175,6 +177,10 @@ public class SuntimesWidget0 extends AppWidgetProvider
                 }
             }*/
 
+        } else if (action != null && action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
+            Log.d(TAG, "onReceive: suntimeswidget.alarm.ui.update :: " + getClass());
+            onAlarmUpdateUIBroadcast(context);
+
         } else if (action != null && action.equals(SUNTIMES_THEME_UPDATE)) {
             String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);
             Log.d(TAG, "onReceive: SUNTIMES_THEME_UPDATE :: " + getClass() + " :: " + themeName);
@@ -208,6 +214,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
             Log.d(TAG, "onReceive: unhandled :: " + action + " :: " + getClass());
         }
     }
+
+    protected void onAlarmUpdateUIBroadcast(Context context) {}
 
     public boolean isClickAction(String action)
     {
@@ -262,7 +270,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         // OnTap: Update All
         if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE_ALL.name()))
         {
-            updateAllWidgets(context);
+            WidgetListAdapter.updateAllWidgetAlarms(context);
             return true;
         }
 
@@ -380,13 +388,6 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
-    }
-
-    public static void updateAllWidgets(Context context)
-    {
-        Intent intent = new Intent();
-        intent.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-        context.sendBroadcast(intent);
     }
 
     public void initLocale(Context context)

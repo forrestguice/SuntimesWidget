@@ -108,7 +108,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
         viewCount = viewCount0;
 
         initLocale(context);
-        Log.d("DEBUG", "onDataSetChanged");
+        //Log.d("DEBUG", "onDataSetChanged");
     }
 
     private void initLocale( Context context )

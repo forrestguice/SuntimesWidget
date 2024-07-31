@@ -10,12 +10,12 @@
 
     </header>
 
-    <!-- <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment"
+    <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment"
         android:icon="?attr/icActionAlarm"
         android:title="@string/configLabel_alarmClock"
         android:summary=""
         tools:ignore="UnusedAttribute">
-    </header>                                .. not supported on television -->
+    </header>
 
     <!-- <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.CalendarPrefsFragment"
         android:icon="?attr/icActionCalendar"

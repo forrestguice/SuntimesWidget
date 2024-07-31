@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="default_location_label">Bogotá</string>
     <string name="default_location_latitude">4.71111</string>      <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-74.07222</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">2640</string>         <!-- meters -->
-    <string name="default_timezone">America/Bogota</string>         <!-- tzid -->
+    <string name="default_timezone" tools:ignore="Typos">America/Bogota</string>         <!-- tzid -->
 </resources>

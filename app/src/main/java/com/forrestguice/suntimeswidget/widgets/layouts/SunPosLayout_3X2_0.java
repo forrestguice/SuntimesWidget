@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 /**
@@ -139,7 +140,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         Bitmap bitmap = projection.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_worldmap, bitmap);
-            Log.d("DEBUG", "map is " + bitmap.getWidth() + " x " + bitmap.getHeight());
+            //Log.d("DEBUG", "map is " + bitmap.getWidth() + " x " + bitmap.getHeight());
         }
     }
 
@@ -153,25 +154,26 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         super.themeViews(context, views, theme);
         options = new WorldMapTask.WorldMapOptions();
 
-        options.backgroundColor = theme.getMapBackgroundColor();
+        options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, theme.getMapBackgroundColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, theme.getMapForegroundColor());
         options.foregroundColor = theme.getMapForegroundColor();
 
-        options.sunShadowColor = theme.getMapShadowColor();
-        options.moonLightColor = theme.getMapHighlightColor();
+        options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, theme.getMapShadowColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_MOON_LIGHT, theme.getMapHighlightColor());
 
-        options.sunFillColor = theme.getGraphPointFillColor();
-        options.sunStrokeColor = theme.getGraphPointStrokeColor();
+        options.colors.setColor(WorldMapColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
 
-        options.moonFillColor = theme.getMoonFullColor();
-        options.moonStrokeColor = theme.getMoonWaningColor();
+        options.colors.setColor(WorldMapColorValues.COLOR_MOON_FILL, theme.getMoonFullColor());
+        options.colors.setColor(WorldMapColorValues.COLOR_MOON_STROKE, theme.getMoonWaningColor());
 
-        options.gridXColor = options.moonLightColor;
-        options.gridYColor = options.moonLightColor;
-        options.locationFillColor = theme.getActionColor();
+        options.colors.setColor(WorldMapColorValues.COLOR_GRID_MAJOR, options.colors.getColor(WorldMapColorValues.COLOR_MOON_LIGHT));
+        options.colors.setColor(WorldMapColorValues.COLOR_GRID_MINOR, options.colors.getColor(WorldMapColorValues.COLOR_MOON_LIGHT));
+        options.colors.setColor(WorldMapColorValues.COLOR_POINT_FILL, theme.getActionColor());
 
-        options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
-        options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
-        options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
+        options.latitudeColors[0] = options.colors.getColor(WorldMapColorValues.COLOR_AXIS);
+        options.latitudeColors[1] = options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR);
+        options.latitudeColors[2] = options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR);
 
         options.showSunShadow = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2);             // uses app setting // TODO: from widget settings
         options.showMoonLight = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2);             // uses app setting // TODO: from widget settings

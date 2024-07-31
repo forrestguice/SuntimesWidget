@@ -22,8 +22,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />
 
+    <ImageButton android:id="@+id/lightgraph_button"
+        android:layout_width="48dp" android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:src="?attr/icActionSunChart"
+        style="?attr/actionOverflowButtonStyle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/configAction_lightGraphDialog" />
+
     <!-- sun altitude -->
-    <include layout="@layout/layout_dialog_lightmap_suninfo0" />
+    <include layout="@layout/layout_dialog_lightmap_suninfo0"
+        android:id="@+id/info_sun_layout" />
 
     <View android:id="@+id/sundialog_gutter2"
         android:layout_width="match_parent" android:layout_height="4dp"
@@ -37,7 +47,8 @@
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- lightmap -->
-    <com.forrestguice.suntimeswidget.LightMapView android:id="@+id/info_time_lightmap"
+    <com.forrestguice.suntimeswidget.graph.LightMapView
+        android:id="@+id/info_time_lightmap"
         android:layout_width="0dp" android:layout_height="12dp"
         android:layout_marginTop="@dimen/dialog_margin"
         app:layout_constraintTop_toBottomOf="@+id/info_time_graph"

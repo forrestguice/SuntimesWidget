@@ -7,17 +7,17 @@
         android:id="@+id/info_equinoxsolstice_flipper1"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        tools:listitem="@layout/info_time_solsticequinox2" tools:itemCount="1"
-        android:elevation="5dp" />
+        tools:listitem="@layout/info_time_solsticequinox2" tools:itemCount="1" />
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:layout_gravity="end|center_vertical" android:elevation="8dp">
+        android:orientation="horizontal" android:layout_gravity="end|center_vertical"
+        android:padding="3dp">
         <ImageButton
             android:id="@+id/info_time_prevbtn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="end" android:padding="4dp"
             android:src="?attr/icActionPrevious"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
             android:contentDescription="@string/today" />
 
         <ImageButton
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="end" android:padding="4dp"
             android:src="?attr/icActionNext"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
             android:contentDescription="@string/today" />
     </LinearLayout>
 

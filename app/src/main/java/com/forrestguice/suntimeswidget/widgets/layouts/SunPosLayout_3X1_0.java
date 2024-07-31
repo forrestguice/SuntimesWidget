@@ -25,11 +25,12 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.forrestguice.suntimeswidget.LightMapView;
+import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -147,13 +148,15 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
             colors.initDefaultLight(context);
         else colors.initDefaultDark(context);
 
-        colors.colorDay = theme.getDayColor();
-        colors.colorCivil = theme.getCivilColor();
-        colors.colorNautical = theme.getNauticalColor();
-        colors.colorAstro = theme.getAstroColor();
-        colors.colorNight = theme.getNightColor();
-        colors.colorPointFill = theme.getGraphPointFillColor();
-        colors.colorPointStroke = theme.getGraphPointStrokeColor();
+        colors.values.setColor(LightMapColorValues.COLOR_DAY, theme.getDayColor());
+        colors.values.setColor(LightMapColorValues.COLOR_CIVIL, theme.getCivilColor());
+        colors.values.setColor(LightMapColorValues.COLOR_NAUTICAL, theme.getNauticalColor());
+        colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, theme.getAstroColor());
+        colors.values.setColor(LightMapColorValues.COLOR_NIGHT, theme.getNightColor());
+        colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
+        colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
+        colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
+        colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
     }
 
 }

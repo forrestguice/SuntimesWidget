@@ -53,6 +53,8 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
+import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -188,7 +190,7 @@ public class WelcomeActivity extends AppCompatActivity
         @Override
         public void onPageSelected(int position)
         {
-            Log.d("DEBUG", "onPageSelected: " + position);
+            //Log.d("DEBUG", "onPageSelected: " + position);
             if (saveSettings(getSupportFragmentManager(), previousPosition))
             {
                 updateViews(getSupportFragmentManager(), position);
@@ -198,7 +200,7 @@ public class WelcomeActivity extends AppCompatActivity
                 previousPosition = position;
 
             } else {
-                Log.d("DEBUG", "onPageSelected: reverting to " + previousPosition);
+                //Log.d("DEBUG", "onPageSelected: reverting to " + previousPosition);
                 pager.setCurrentItem(previousPosition);
             }
         }
@@ -302,14 +304,14 @@ public class WelcomeActivity extends AppCompatActivity
     }
 
     public void setNeedsRecreateFlag() {
-        Log.d("DEBUG", "setNeedsRecreateFlag");
+        //Log.d("DEBUG", "setNeedsRecreateFlag");
         getIntent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, true);
         setResult(RESULT_OK, getResultData());
     }
 
     public Intent getResultData() {
         boolean value = getIntent().getBooleanExtra(SettingsActivityInterface.RECREATE_ACTIVITY, false);
-        Log.d("DEBUG", "getResultData: needsRecreate? " + value);
+        //Log.d("DEBUG", "getResultData: needsRecreate? " + value);
         return new Intent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, value);
     }
 
@@ -797,7 +799,7 @@ public class WelcomeActivity extends AppCompatActivity
             if (locationConfig != null)
             {
                 boolean saved = locationConfig.getDialogContent().saveSettings(context);
-                Log.d("DEBUG", "saveSettings: location " + saved);
+                //Log.d("DEBUG", "saveSettings: location " + saved);
                 return saved;
             }
             return false;
@@ -996,7 +998,7 @@ public class WelcomeActivity extends AppCompatActivity
 
                 WidgetSettings.TimeFormatMode timeFormat = (WidgetSettings.TimeFormatMode) timeFormatSpinner.getSelectedItem();
                 WidgetSettings.saveTimeFormatModePref(context, 0, timeFormat);
-                Log.d("DEBUG", "saveSettings: timezone");
+                //Log.d("DEBUG", "saveSettings: timezone");
                 return true;
             }
             return false;
@@ -1397,7 +1399,7 @@ public class WelcomeActivity extends AppCompatActivity
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
                 {
                     if (position == currentPosition) {
-                        Log.d("DEBUG", "spinner position is already at " + position + ", skipping onItemSelected...");
+                        //Log.d("DEBUG", "spinner position is already at " + position + ", skipping onItemSelected...");
                         return;
                     }
                     currentPosition = position;

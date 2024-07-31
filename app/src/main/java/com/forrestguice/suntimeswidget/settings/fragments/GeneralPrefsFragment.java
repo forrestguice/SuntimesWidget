@@ -107,7 +107,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
 
     private void onWelcomeScreen(int requestCode, int resultCode, Intent data)
     {
-        Log.d("DEBUG", "onWelcomeScreen");
+        //Log.d("DEBUG", "onWelcomeScreen");
         if (!isAdded()) {
             Log.w(SuntimesSettingsActivity.LOG_TAG, "onWelcomeScreen: fragment has not yet been added to activity; ignoring result..");
             return;

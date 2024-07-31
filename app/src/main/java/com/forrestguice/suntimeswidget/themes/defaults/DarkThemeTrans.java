@@ -24,7 +24,7 @@ import android.graphics.Color;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 
-public class DarkThemeTrans extends DarkTheme
+public class DarkThemeTrans extends DarkTheme1
 {
     public static final String THEMEDEF_NAME = "dark_transparent";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;

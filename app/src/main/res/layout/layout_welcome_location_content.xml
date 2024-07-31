@@ -50,7 +50,7 @@
         android:layout_height="wrap_content" android:layout_width="match_parent"
         app:hideHeader="true" app:hideFooter="true" app:hideTitle="true" app:hideMode="true"
         app:collapse="true" app:showAddButton="true"
-        android:name="com.forrestguice.suntimeswidget.LocationConfigDialog"
+        android:name="com.forrestguice.suntimeswidget.getfix.LocationConfigDialog"
         android:tag="LocationConfigDialog" />
 
     <LinearLayout android:id="@+id/layout_permissions"

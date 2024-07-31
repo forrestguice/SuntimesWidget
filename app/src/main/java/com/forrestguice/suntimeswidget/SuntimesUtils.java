@@ -25,6 +25,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -49,9 +50,11 @@ import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
@@ -949,7 +952,10 @@ public class SuntimesUtils
     }
 
     @SuppressWarnings("ConstantConditions")
-    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds)
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds) {
+        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, showWeeks, showHours, true, showSeconds);
+    }
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showMinutes, boolean showSeconds)
     {
         String value = strEmpty;
         String units = strEmpty;
@@ -991,7 +997,7 @@ public class SuntimesUtils
                      String.format(strTimeDeltaFormat, remainingDays, strDays);
 
         boolean showingHours = (!showingYears && !showingWeeks && remainingHours > 0);
-        boolean showingMinutes = (!showingDays && !showingWeeks && !showingYears && remainingMinutes > 0);
+        boolean showingMinutes = (showMinutes && !showingDays && !showingWeeks && !showingYears && remainingMinutes > 0);
         boolean showingSeconds = (showSeconds && !showingDays && !showingWeeks && !showingYears && (remainingSeconds > 0));
 
         if (showHours || !showingYears && !showingWeeks && remainingDays < 2)
@@ -1164,26 +1170,31 @@ public class SuntimesUtils
 
     public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)
     {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        String formatted;
+
         double value;
         String unitsString;
         switch (units)
         {
             case IMPERIAL:
                 value = WidgetSettings.LengthUnit.metersToFeet(meters);
-                unitsString = (shortForm ? context.getString(R.string.units_feet_short) : context.getString(R.string.units_feet));
+                formatted = formatter.format(value);
+                unitsString = (shortForm ? context.getString(R.string.units_feet_short)
+                                         : context.getResources().getQuantityString(R.plurals.units_feet_long, (int)value, formatted));
                 break;
 
             case METRIC:
             default:
                 value = meters;
-                unitsString = (shortForm ? context.getString(R.string.units_meters_short) : context.getString(R.string.units_meters));
+                formatted = formatter.format(value);
+                unitsString = (shortForm ? context.getString(R.string.units_meters_short)
+                                         : context.getResources().getQuantityString(R.plurals.units_meters_long, (int)value, formatted));
                 break;
         }
-
-        NumberFormat formatter = NumberFormat.getInstance();
-        formatter.setMinimumFractionDigits(0);
-        formatter.setMaximumFractionDigits(places);
-        return new TimeDisplayText(formatter.format(value), unitsString, "");
+        return new TimeDisplayText(formatted, unitsString, "");
     }
 
     public static TimeDisplayText formatAsDistance(Context context, double kilometers, WidgetSettings.LengthUnit units, int places, boolean shortForm)
@@ -1788,7 +1799,7 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(percentPattern, "%");
         return displayString;
     }
-
+    
     public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan)
     {
         return createSpan(context, text, spanTag, imageSpan, ImageSpan.ALIGN_BASELINE);
@@ -1851,6 +1862,20 @@ public class SuntimesUtils
         return span;
     }
 
+    public static SpannableString createBackgroundColorSpan(SpannableString span, String text, String toColorize, int color)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toColorize);
+        if (start >= 0)
+        {
+            int end = start + toColorize.length();
+            span.setSpan(new BackgroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
+    }
+
     public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color)
     {
         if (span == null) {
@@ -1882,6 +1907,23 @@ public class SuntimesUtils
         {
             int end = start + toUnderline.length();
             span.setSpan(new UnderlineSpan(), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
+    }
+    public static SpannableString createUnderlineSpan(SpannableString span, String text, String toUnderline, int color)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toUnderline);
+        if (start >= 0)
+        {
+            UnderlineSpan underline = new UnderlineSpan();
+            TextPaint paint = new TextPaint();
+            paint.setColor(color);
+            underline.updateDrawState(paint);
+            int end = start + toUnderline.length();
+            span.setSpan(underline, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return span;
     }
@@ -2070,27 +2112,6 @@ public class SuntimesUtils
         public String getBlank()
         {
             return blank;
-        }
-    }
-
-    /**
-     * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
-     */
-    public static void forceActionBarIcons(Menu menu)
-    {
-        if (menu != null)
-        {
-            if (menu.getClass().getSimpleName().equals("MenuBuilder"))
-            {
-                try {
-                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    m.invoke(menu, true);
-
-                } catch (Exception e) {
-                    Log.e("SuntimesActivity", "failed to set show overflow icons", e);
-                }
-            }
         }
     }
 
@@ -2477,36 +2498,6 @@ public class SuntimesUtils
             }
         }
         return drawables;
-    }
-
-    @SuppressLint("ResourceType")
-    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
-    {
-        Integer[] colors = new Integer[] {null, null, null};
-        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
-        TypedArray a = context.obtainStyledAttributes(colorAttrs);
-        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
-        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
-        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
-        a.recycle();
-
-        if (colorOverrides != null && colorOverrides.length == colors.length) {
-            for (int i=0; i<colors.length; i++) {
-                if (colorOverrides[i] != null) {
-                    colors[i] = colorOverrides[i];
-                }
-            }
-        }
-
-        View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(colors[2]);
-        snackbar.setActionTextColor(colors[1]);
-
-        TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-        if (snackbarText != null) {
-            snackbarText.setTextColor(colors[0]);
-            snackbarText.setMaxLines(3);
-        }
     }
 
 }

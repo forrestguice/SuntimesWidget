@@ -104,14 +104,15 @@ public class MapProjectionTest
 
     protected void test_WorldMapEquiazimuthal2_points(double[] center, double R, double[][][] testCoords, double[][][] testResult)
     {
-        WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
-        options.map = null;
-        options.map_night = null;
-        options.hasTransparentBaseMap = true;
-        options.center = center;
+        //WorldMapTask.WorldMapOptions optionsh = new WorldMapTask.WorldMapOptions();
+        //options.map = null;
+        //options.map_night = null;
+        //options.hasTransparentBaseMap = true;
+        //options.center = center;
 
         WorldMapEquiazimuthal2 projection = new WorldMapEquiazimuthal2();
-        projection.center = options.center;
+        //projection.center = options.center;
+        projection.center = center;
         projection.initMatrix();
 
         double[] point, coords;

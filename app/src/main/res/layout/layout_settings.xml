@@ -22,15 +22,16 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical" android:id="@+id/root_layout">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/app_menubar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="?attr/toolbarTheme"
-        app:popupTheme="?attr/actionBarPopupTheme"
-        app:navigationIcon="?attr/icActionWidgets"
-        app:title="" />
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/layout_app_menubar"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+            app:navigationIcon="?attr/icActionWidgets"
+            app:title="" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,11 +69,13 @@
 
             <Button android:id="@+id/add_button" android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configAction_addWidget"
-                android:layout_gravity="end" />
+                android:layout_gravity="end"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button android:id="@+id/about_button" android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configAction_aboutWidget"
-                android:layout_gravity="end" />
+                android:layout_gravity="end"
+                style="?android:attr/buttonBarButtonStyle" />
 
         </LinearLayout>
 
@@ -142,7 +145,7 @@
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:background="?attr/settingsCardBackground">
 
-                    <com.forrestguice.suntimeswidget.LocationConfigView
+                    <com.forrestguice.suntimeswidget.getfix.LocationConfigView
                         android:id="@+id/appwidget_location_config"
                         android:layout_width="match_parent" android:layout_height="wrap_content" />
                     <!-- <include layout="@layout/layout_settings_location" /> -->

@@ -59,6 +59,12 @@ public class AlarmTimeDialog extends DialogFragment
     public static final String PREF_KEY_ALARM_TIME_DATE = "alarmdate";
     public static final long PREF_DEF_ALARM_TIME_DATE = -1L;
 
+    public static final String PREF_KEY_ALARM_TIME_DATE_SHOW = "showalarmdate";
+    public static final boolean PREF_DEF_ALARM_TIME_DATE_SHOW = true;
+
+    public static final String PREF_KEY_ALARM_TIMEZONE_SHOW = "showtimezone";
+    public static final boolean PREF_DEF_ALARM_TIMEZONE_SHOW = true;
+
     public static final String PREF_KEY_ALARM_TIME_HOUR = "alarmhour";
     public static final int PREF_DEF_ALARM_TIME_HOUR = 0;
 
@@ -83,6 +89,8 @@ public class AlarmTimeDialog extends DialogFragment
         super();
 
         Bundle defaultArgs = new Bundle();
+        defaultArgs.putBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, PREF_DEF_ALARM_TIMEZONE_SHOW);
+        defaultArgs.putBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, PREF_DEF_ALARM_TIME_DATE_SHOW);
         defaultArgs.putLong(PREF_KEY_ALARM_TIME_DATE, PREF_DEF_ALARM_TIME_DATE);
         defaultArgs.putInt(PREF_KEY_ALARM_TIME_HOUR, PREF_DEF_ALARM_TIME_HOUR);
         defaultArgs.putInt(PREF_KEY_ALARM_TIME_MINUTE, PREF_DEF_ALARM_TIME_MINUTE);
@@ -119,6 +127,12 @@ public class AlarmTimeDialog extends DialogFragment
     public void setLocation(Location location) {
         getArguments().putParcelable(PREF_KEY_ALARM_LOCATION, location);
         updateDate();
+    }
+    public void setShowDateButton(boolean value) {
+        getArguments().putBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, value);
+    }
+    public void setShowTimeZoneSelect(boolean value) {
+        getArguments().putBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, value);
     }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
@@ -259,10 +273,12 @@ public class AlarmTimeDialog extends DialogFragment
         if (modePicker != null && modeAdapter != null) {
             AlarmClockItem.AlarmTimeZone mode = AlarmClockItem.AlarmTimeZone.valueOfID(getArguments().getString(PREF_KEY_ALARM_TIME_MODE));
             modePicker.setSelection(modeAdapter.getPosition(mode));
+            modePicker.setVisibility(getShowTimeZoneSelect() ? View.VISIBLE : View.GONE);
         }
 
         if (datePicker != null) {
             datePicker.setText(displayDate(getActivity(), getDate()));
+            datePicker.setVisibility(getShowDateButton() ? View.VISIBLE : View.GONE);
         }
 
         if (timePicker != null)
@@ -322,6 +338,14 @@ public class AlarmTimeDialog extends DialogFragment
 
     public Location getLocation() {
         return (Location)getArguments().getParcelable(PREF_KEY_ALARM_LOCATION);
+    }
+
+    public boolean getShowDateButton() {
+        return getArguments().getBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, PREF_DEF_ALARM_TIME_DATE_SHOW);
+    }
+
+    public boolean getShowTimeZoneSelect() {
+        return getArguments().getBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, PREF_DEF_ALARM_TIMEZONE_SHOW);
     }
 
     public interface DialogListener

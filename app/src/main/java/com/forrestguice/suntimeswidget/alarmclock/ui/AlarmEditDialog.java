@@ -21,7 +21,6 @@ import android.animation.Animator;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -44,14 +43,16 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import com.forrestguice.suntimeswidget.views.Toast;
+
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
@@ -74,6 +75,22 @@ public class AlarmEditDialog extends DialogFragment
     {
         super();
         setArguments(new Bundle());
+        options = new AlarmListDialog.AlarmListDialogOptions();
+    }
+
+    protected AlarmListDialog.AlarmListDialogOptions options;
+    public void initOptions(Context context)
+    {
+        options = new AlarmListDialog.AlarmListDialogOptions(context);
+
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(getActivity());
+        if (colors != null) {
+            options.colors = new AppColorValues(colors);
+        }
+
+    }
+    public AlarmListDialog.AlarmListDialogOptions getOptions() {
+        return options;
     }
 
     public void initFromItem(AlarmClockItem item, boolean addItem)
@@ -101,7 +118,7 @@ public class AlarmEditDialog extends DialogFragment
     public void notifyItemChanged() {
         item.modified = true;
         bindItemToHolder(item);
-        itemView.bindDataToPosition(getActivity(), item, 0);
+        itemView.bindDataToPosition(getActivity(), item, options, 0);
     }
 
     protected void bindItemToHolder(AlarmClockItem item)
@@ -113,7 +130,7 @@ public class AlarmEditDialog extends DialogFragment
         if (itemView != null)
         {
             detachClickListeners(itemView);
-            itemView.bindDataToPosition(getActivity(), item, 0);
+            itemView.bindDataToPosition(getActivity(), item, options, 0);
             itemView.menu_overflow.setVisibility(getArguments().getBoolean(EXTRA_SHOW_OVERFLOW, true) ? View.VISIBLE : View.GONE);
             attachClickListeners(itemView, 0);
         }
@@ -127,6 +144,7 @@ public class AlarmEditDialog extends DialogFragment
     {
         super.onCreate(savedState);
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
+        initOptions(getActivity());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
@@ -339,7 +357,7 @@ public class AlarmEditDialog extends DialogFragment
             }
         }));
 
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
     }
 
@@ -377,7 +395,7 @@ public class AlarmEditDialog extends DialogFragment
             }
         }));
 
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
     }
 
@@ -402,9 +420,14 @@ public class AlarmEditDialog extends DialogFragment
     }
 
     protected DialogInterface.OnClickListener onDeleteConfirmed( final AlarmClockItem item ) {
-        return new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                getActivity().sendBroadcast(AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_DELETE, item.getUri()));
+        return new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                Context context = getActivity();
+                if (context != null) {
+                    context.sendBroadcast(AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_DELETE, item.getUri()));
+                } else Log.w("AlarmEditDialog", "null context! delete alarm broadcast was not sent...");
                 dialog.cancel();
             }
         };

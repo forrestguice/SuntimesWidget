@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.events;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,8 +34,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -57,6 +56,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -133,7 +134,7 @@ public class EventListHelper
     }
 
     public void setSelected( String eventID ) {
-        Log.d("DEBUG", "setSelected: " + eventID);
+        //Log.d("DEBUG", "setSelected: " + eventID);
         selectedItem = adapter.findItemByID(eventID);
         adapter.setSelected(selectedItem);
     }
@@ -295,6 +296,8 @@ public class EventListHelper
     protected void initAdapter(Context context)
     {
         List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+
         Collections.sort(events, new Comparator<EventSettings.EventAlias>() {
             @Override
             public int compare(EventSettings.EventAlias o1, EventSettings.EventAlias o2) {
@@ -334,7 +337,7 @@ public class EventListHelper
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.eventlist, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         prepareOverflowMenu(context, menu.getMenu());
         menu.show();
     }
@@ -364,9 +367,9 @@ public class EventListHelper
         {
             switch (menuItem.getItemId())
             {
-                case R.id.addEvent:
-                    addEvent();
-                    return true;
+                //case R.id.addEvent:
+                //    addEvent();
+                //    return true;
 
                 case R.id.editEvent:
                     editEvent(getEventID());
@@ -390,10 +393,14 @@ public class EventListHelper
         }
     });
 
-    public void addEvent()
+    public void addEvent() {
+        addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
+    }
+    public void addEvent(AlarmEventProvider.EventType type)
     {
         final Context context = contextRef.get();
         final EditEventDialog saveDialog = new EditEventDialog();
+        saveDialog.setType(type);
         saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_ADD);
         saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -410,12 +417,15 @@ public class EventListHelper
         final Context context = contextRef.get();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
+            final EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID);
+
             final EditEventDialog saveDialog = new EditEventDialog();
             saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_EDIT);
+            saveDialog.setType(event.getType());
             saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface dialog) {
-                    saveDialog.setEvent(EventSettings.loadEvent(context, eventID));
+                    saveDialog.setEvent(event);
                     saveDialog.setIsModified(false);
                 }
             });
@@ -433,6 +443,7 @@ public class EventListHelper
             public void onClick(DialogInterface dialog, int which) {
                 String eventID = saveDialog.getEventID();
                 EventSettings.saveEvent(context, saveDialog.getEvent());
+                //Log.d("DEBUG", "onEventSaved " + saveDialog.getEvent().toString());
                 //Toast.makeText(context, context.getString(R.string.saveevent_toast, saveDialog.getEventLabel(), eventID), Toast.LENGTH_SHORT).show();  // TODO
                 initAdapter(context);
                 updateViews(context);
@@ -650,7 +661,7 @@ public class EventListHelper
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_IMPORT_MILLIS);
             snackbar.show();
         }
@@ -933,11 +944,11 @@ public class EventListHelper
             for (int i=0; i<objects.size(); i++) {
                 EventSettings.EventAlias item = objects.get(i);
                 if (item != null && item.getID().equals(eventID)) {
-                    Log.d("DEBUG", "findItemByID: " + eventID + " .. " + item.toString());
+                    //Log.d("DEBUG", "findItemByID: " + eventID + " .. " + item.toString());
                     return item;
                 }
             }
-            Log.d("DEBUG", "findItemByID: " + eventID + " .. null");
+            //Log.d("DEBUG", "findItemByID: " + eventID + " .. null");
             return null;
         }
 
@@ -1153,7 +1164,7 @@ public class EventListHelper
 
         protected boolean onPrepareActionMode(Menu menu)
         {
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
             MenuItem selectItem = menu.findItem(R.id.selectEvent);
             selectItem.setVisible( !disallowSelect );
 

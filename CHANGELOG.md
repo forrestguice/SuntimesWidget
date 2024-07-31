@@ -1,5 +1,27 @@
 ### ~
 
+### develop
+* adds "sidebar navigation", and an option to change the "launcher activity" (#505).
+* adds support for custom events based on "shadow length" (#331).
+* adds support for customizing the app color scheme; override map, graph, and highlight colors.
+* adds "light graph" dialog (of sunlight over the year) (#735), "earliest/latest sunrise/sunset" info (#753), and a 3x2 graph widget (to sun position widgets).
+* adds "use app location" option to alarms; reschedules alarms automatically when the location is changed (#768, #808).
+* adds "bedtime mode" to alarms; helps schedule do-not-disturb during sleep hours (#425).
+* adds "high brightness" option (#741) and swipeable buttons (#738) to the alarm screen.
+* adds "next alarm" quick settings tile, and 2x2 and 3x2 "next alarm" widgets (#766).
+* adds support for notification channels (api26+).
+* adds permission `USE_FULL_SCREEN_INTENT` (needed for alarms over the lock screen) [PERMISSION]; fixes bug "alarms fail to display over lock screen" (#802).
+* adds permission `FOREGROUND_SERVICE` (needed for alarms and notifications) [PERMISSION].
+* adds permission `ACCESS_NOTIFICATION_POLICY` (needed to enable do-not-disturb at bedtime) [PERMISSION].
+* fixes navigation bugs when using D-pad within alarm screens (Android TV).
+* fixes incorrect default places coordinates (3 places updated).
+* updates default app and widget themes, and adds additional default widget actions.
+* updates Time4A dependency from 4.4.2-2019c to 4.8-2021a.
+* updates constraint-layout dependency from 1.0.2 to 2.0.4.
+* updates targetSdkVersion (25 -> 26 -> 28) (#725), and build tools to 28.0.3.
+* increments minSdkVersion (10 -> 14) (#122); building for api10 remains possible for now by reverting changes in `build.gradle`.
+
+
 ### v0.15.16 (2024-06-17)
 * adds "online help" links to existing help dialogs (#797).
 * fixes bug where "moon phase alarm time is incorrect" (#803).

@@ -79,6 +79,41 @@
 
     </PreferenceCategory>
 
+    <!--<PreferenceCategory
+        android:title="@string/configLabel_bedtime"
+        android:key="app_alarms_category3">
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_bedtime_sleepCycleMillis"
+            android:title="@string/configLabel_sleepCycle"
+            android:summary="%s"
+            android:defaultValue="@string/def_app_bedtime_sleepCycleMillis"
+            app:mode="minutes" app:minValue="@integer/minSleepCycleMinutes"
+            app:maxValue="@integer/maxSleepCycleMinutes"
+            />
+
+    </PreferenceCategory>-->
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmFullscreen"
+        android:key="app_alarms_category3">
+
+        <CheckBoxPreference
+            android:key="app_alarms_bright"
+            android:title="@string/configLabel_alarms_brightMode"
+            android:summary="@string/configLabel_alarms_brightMode_summary"
+            android:defaultValue="@bool/def_app_alarms_bright" />
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_bright_fadeinMillis"
+            android:title="@string/configLabel_alarms_brightMode_fadein"
+            android:summary="@string/configLabel_alarms_brightMode_fadein_summary"
+            app:mode="seconds" app:minValue="@integer/minAlarmFullscreenFadeinSeconds"
+            app:maxValue="@integer/maxAlarmFullscreenFadeinSeconds"
+            android:defaultValue="@string/def_app_alarms_bright_fadein" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/configLabel_alarmQuick_notification"
         android:key="app_alarms_category2">
@@ -113,7 +148,7 @@
             android:key="app_alarms_allringtones"
             android:title="@string/configLabel_alarms_allRingtones"
             android:summary="@string/configLabel_alarms_allRingtones_summary"
-            android:defaultValue="@string/def_app_alarms_allringtones" />
+            android:defaultValue="@bool/def_app_alarms_allringtones" />
 
     </PreferenceCategory>
 
@@ -124,7 +159,7 @@
             android:key="app_alarms_showlauncher"
             android:title="@string/configLabel_alarms_showlauncher"
             android:summary="@string/configLabel_alarms_showlauncher_summary"
-            android:defaultValue="@string/def_app_alarms_showlauncher" />
+            android:defaultValue="@bool/def_app_alarms_showlauncher" />
 
         <CheckBoxPreference
             android:key="dialog_importwarning_donotshowagain"

@@ -24,6 +24,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
@@ -183,8 +185,28 @@ public class GetFixDatabaseAdapter
         return addPlace(values);
     }
 
-    public long addPlace(ContentValues values) {   // TODO: verify contents before calling insert
-        return database.insert(TABLE_PLACES, null, values);
+    public long addPlace(ContentValues values) {
+        return (verifyContentValues(values) ? database.insert(TABLE_PLACES, null, values) : -1);
+    }
+    protected boolean verifyContentValues(@Nullable ContentValues values)
+    {
+        return values != null
+                && values.containsKey(KEY_PLACE_NAME)
+                && values.containsKey(KEY_PLACE_LATITUDE) && verifyValueIsANumber(values, KEY_PLACE_LATITUDE)
+                && values.containsKey(KEY_PLACE_LONGITUDE) && verifyValueIsANumber(values, KEY_PLACE_LONGITUDE);
+    }
+    protected boolean verifyValueIsANumber(@NonNull ContentValues values, @NonNull String key)
+    {
+        try {
+            String value = values.getAsString(key);
+            if (value != null) {
+                Double.parseDouble(value);
+            }
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void updatePlace( Location place )

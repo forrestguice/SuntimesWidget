@@ -88,7 +88,7 @@
     <TextView
         android:id="@+id/text_note" android:visibility="visible"
         android:layout_width="0dp" android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp" android:layout_marginTop="8dp" android:layout_marginRight="16dp" android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp" android:layout_marginTop="8dp" android:layout_marginRight="16dp" android:layout_marginBottom="16dp"
         tools:text="~15m\nfrom now"
         android:gravity="end"
         android:textSize="?attr/text_size_xsmall" android:maxLines="3" android:ellipsize="end"

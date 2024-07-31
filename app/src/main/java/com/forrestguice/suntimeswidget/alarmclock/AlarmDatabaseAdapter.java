@@ -39,6 +39,7 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -186,7 +187,7 @@ public class AlarmDatabaseAdapter
                                                                             "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_NOTE };
     private static final String[] TABLE_ALARMS_DOWNGRADE = new String[] { "DROP TABLE " + TABLE_ALARMS, TABLE_ALARMS_CREATE };
 
-    private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME, KEY_ALARM_LABEL };
+    private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME, KEY_ALARM_LABEL, KEY_ALARM_FLAGS };
     private static final String[] QUERY_ALARMS_FULLENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_LABEL,
                                                                           KEY_ALARM_REPEATING, KEY_ALARM_REPEATING_DAYS,
                                                                           KEY_ALARM_DATETIME_ADJUSTED, KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_HOUR, KEY_ALARM_DATETIME_MINUTE, KEY_ALARM_DATETIME_OFFSET,
@@ -354,13 +355,40 @@ public class AlarmDatabaseAdapter
         return cursor;
     }
 
-    public Long findUpcomingAlarmId(long nowMillis) throws SQLException
+    public Long findUpcomingAlarmId(long nowMillis) throws SQLException {
+        return findUpcomingAlarmId(nowMillis, new String[] { AlarmClockItem.AlarmType.ALARM.name() });
+    }
+    public Long findUpcomingAlarmId(long nowMillis, @Nullable String[] types) throws SQLException
     {
         String[] columns = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME_ADJUSTED };
-        String selection = KEY_ALARM_TYPE + "= ? AND " + KEY_ALARM_ENABLED + " = ?";
-        String[] selectionArgs = new String[] { "ALARM", "1" };
+        StringBuilder selection = new StringBuilder(KEY_ALARM_ENABLED + " = ?");
+        List<String> selectionArgs = new ArrayList<>(Collections.singletonList("1"));
+        if (types != null && types.length > 0)
+        {
+            boolean multipleTypes = (types.length > 1);
 
-        Cursor cursor = database.query( true, TABLE_ALARMS, columns, selection, selectionArgs, null, null, null, null );
+            selection.append(" AND ");
+            if (multipleTypes) {
+                selection.append("(");
+            }
+            for (int i=0; i<types.length; i++)
+            {
+                if (i > 0) {
+                    selection.append(" OR ");
+                }
+                selection.append(KEY_ALARM_TYPE + "= ?");
+                selectionArgs.add(types[i]);
+            }
+            if (multipleTypes) {
+                selection.append(")");
+            }
+        }
+        //String selection = KEY_ALARM_TYPE + "= ? AND " + KEY_ALARM_ENABLED + " = ?";
+        //String[] selectionArgs = ((type != null)
+        //        ? new String[] { "1", type }
+        //        : new String[] { "1" });
+
+        Cursor cursor = database.query( true, TABLE_ALARMS, columns, selection.toString(), selectionArgs.toArray(new String[0]), null, null, null, null );
         if (cursor != null)
         {
             Long upcomingAlarmId = null;
@@ -665,32 +693,39 @@ public class AlarmDatabaseAdapter
             if (rowIDs.length > 0)
             {
                 db.open();
-                Cursor cursor0 = db.getAlarm(rowIDs[0]);
-                if (cursor0 != null)
-                {
-                    cursor0.moveToFirst();
-                    if (!cursor0.isAfterLast())
-                    {
-                        ContentValues itemValues = new ContentValues();
-                        DatabaseUtils.cursorRowToContentValues(cursor0, itemValues);
-                        item = new AlarmClockItem(contextRef.get(), itemValues);
-
-                        Cursor cursor1 = db.getAlarmState(rowIDs[0]);
-                        if (cursor1 != null)
-                        {
-                            cursor1.moveToFirst();
-                            if (!cursor1.isAfterLast())
-                            {
-                                ContentValues stateValues = new ContentValues();
-                                DatabaseUtils.cursorRowToContentValues(cursor1, stateValues);
-                                item.state = new AlarmState(stateValues);
-                            }
-                            cursor1.close();
-                        }
-                    }
-                    cursor0.close();
-                }
+                item = loadAlarmClockItem(contextRef.get(), db, rowIDs[0]);
                 db.close();
+            }
+            return item;
+        }
+
+        public static AlarmClockItem loadAlarmClockItem(Context context, AlarmDatabaseAdapter db, long rowId)
+        {
+            AlarmClockItem item = null;
+            Cursor cursor0 = db.getAlarm(rowId);
+            if (cursor0 != null)
+            {
+                cursor0.moveToFirst();
+                if (!cursor0.isAfterLast())
+                {
+                    ContentValues itemValues = new ContentValues();
+                    DatabaseUtils.cursorRowToContentValues(cursor0, itemValues);
+                    item = new AlarmClockItem(context, itemValues);
+
+                    Cursor cursor1 = db.getAlarmState(rowId);
+                    if (cursor1 != null)
+                    {
+                        cursor1.moveToFirst();
+                        if (!cursor1.isAfterLast())
+                        {
+                            ContentValues stateValues = new ContentValues();
+                            DatabaseUtils.cursorRowToContentValues(cursor1, stateValues);
+                            item.state = new AlarmState(stateValues);
+                        }
+                        cursor1.close();
+                    }
+                }
+                cursor0.close();
             }
             return item;
         }

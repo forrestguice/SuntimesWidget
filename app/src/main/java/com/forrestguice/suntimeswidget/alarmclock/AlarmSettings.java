@@ -19,6 +19,8 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -28,6 +30,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -40,6 +43,7 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -65,6 +69,7 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_AUTOSTART = "app_alarms_autostart";
     public static final String PREF_KEY_ALARM_BATTERYOPT = "app_alarms_batterytopt";
     public static final String PREF_KEY_ALARM_NOTIFICATIONS = "app_alarms_notifications";
+    public static final String PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN = "app_alarms_notifications_fullscreen";
     public static final String PREF_KEY_ALARM_VOLUMES = "app_alarms_volumes";
 
     public static final String PREF_KEY_ALARM_HARDAREBUTTON_ACTION = "app_alarms_hardwarebutton_action";
@@ -106,7 +111,6 @@ public class AlarmSettings
     public static final boolean PREF_DEF_ALARM_ALLRINGTONES = false;
 
     public static final String PREF_KEY_ALARM_SHOWLAUNCHER = "app_alarms_showlauncher";
-    public static final boolean PREF_DEF_ALARM_SHOWLAUNCHER = true;
 
     public static final String PREF_KEY_ALARM_POWEROFFALARMS = "app_alarms_poweroffalarms";
     public static final boolean PREF_DEF_ALARM_POWEROFFALARMS = false;
@@ -120,6 +124,17 @@ public class AlarmSettings
 
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID = "app_alarms_systemtz_id";
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET = "app_alarms_systemtz_offset";
+
+    public static final String PREF_KEY_ALARM_BRIGHTMODE = "app_alarms_bright";
+
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_FADEIN = "app_alarms_bright_fadeinMillis";
+    public static final int PREF_DEF_ALARM_BRIGHTMODE_FADEIN = 1000 * 60;   // 60 s
+
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR = "app_alarms_bright_colorend";
+    public static final int PREF_DEF_ALARM_BRIGHTMODE_STARTCOLOR = Color.BLACK;
+
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR = "app_alarms_bright_colorstart";
+    public static final int PREF_DEF_ALARM_BRIGHTMODE_ENDCOLOR = Color.WHITE;
 
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
     public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
@@ -155,6 +170,7 @@ public class AlarmSettings
             PREF_KEY_ALARM_ALLRINGTONES, PREF_KEY_ALARM_SHOWLAUNCHER,
             PREF_KEY_ALARM_POWEROFFALARMS, PREF_KEY_ALARM_UPCOMING_ALARMID,
             PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET,
+            PREF_KEY_ALARM_BRIGHTMODE, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR,
             PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_DISMISS_CHALLENGE,
             PREF_KEY_ALARM_SORT, PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
             PREF_KEY_ALARM_BOOTCOMPLETED, PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, PREF_KEY_ALARM_BOOTCOMPLETED_DURATION, PREF_KEY_ALARM_BOOTCOMPLETED_RESULT,
@@ -169,13 +185,15 @@ public class AlarmSettings
             PREF_KEY_ALARM_SNOOZE, PREF_KEY_ALARM_SNOOZE_LIMIT,
             PREF_KEY_ALARM_UPCOMING, PREF_KEY_ALARM_AUTODISMISS,
             PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_SORT,
+            PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR,
     };
     public static final String[] BOOL_KEYS = new String[]
     {
             PREF_KEY_ALARM_AUTOENABLE, PREF_KEY_ALARM_AUTOVIBRATE,
             PREF_KEY_ALARM_ALLRINGTONES, PREF_KEY_ALARM_SHOWLAUNCHER, PREF_KEY_ALARM_POWEROFFALARMS,
             PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
-            PREF_KEY_ALARM_BOOTCOMPLETED_RESULT
+            PREF_KEY_ALARM_BOOTCOMPLETED_RESULT,
+            PREF_KEY_ALARM_BRIGHTMODE,
     };
 
     public static PrefTypeInfo getPrefTypeInfo()
@@ -227,7 +245,7 @@ public class AlarmSettings
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static boolean hasAlarmSupport(Context context) {
-        return !AppSettings.isTelevision(context);
+        return true;      //return !AppSettings.isTelevision(context);    // TODO: return false for tvs that lack NotificationManager
     }
 
     public static int loadPrefAlarmSort(Context context)
@@ -309,7 +327,7 @@ public class AlarmSettings
     }
 
     @TargetApi(10)
-    private static long loadStringPrefAsLong(SharedPreferences prefs, String key, long defaultValue)
+    public static long loadStringPrefAsLong(SharedPreferences prefs, String key, long defaultValue)
     {
         try {
             return Long.parseLong(prefs.getString(key, defaultValue + ""));
@@ -384,6 +402,36 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(PREF_KEY_ALARM_ALLRINGTONES, PREF_DEF_ALARM_ALLRINGTONES);
+    }
+
+    public static boolean loadPrefAlarmBrightMode(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_BRIGHTMODE, context.getResources().getBoolean(R.bool.def_app_alarms_bright));
+    }
+
+    public static long loadPrefAlarmBrightFadeIn(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
+    }
+
+    public static int[] loadPrefAlarmBrightColors(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return new int[] {
+                    prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_DEF_ALARM_BRIGHTMODE_STARTCOLOR),
+                    prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR, PREF_DEF_ALARM_BRIGHTMODE_ENDCOLOR)
+            };
+        } else {
+            return new int[]{
+                    (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_DEF_ALARM_BRIGHTMODE_STARTCOLOR),
+                    (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR, PREF_DEF_ALARM_BRIGHTMODE_ENDCOLOR)
+            };
+        }
     }
 
     public static long loadPrefAlarmFadeIn(Context context)
@@ -573,6 +621,34 @@ public class AlarmSettings
         }
     }
 
+    @TargetApi(26)
+    public static void openChannelSettings(@NonNull Context context, @NonNull AlarmClockItem.AlarmType type)
+    {
+        Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+        intent.putExtra(Settings.EXTRA_CHANNEL_ID, AlarmNotifications.createNotificationChannel(context, type));
+        context.startActivity(intent);
+    }
+
+    /**
+     * isChannelMuted
+     * @return true if NotificationChannel is blocked
+     */
+    public static boolean isChannelMuted(Context context, @NonNull AlarmClockItem.AlarmType type)
+    {
+        if (Build.VERSION.SDK_INT >= 26)
+        {
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null)
+            {
+                String channelID = AlarmNotifications.createNotificationChannel(context, type);
+                NotificationChannel channel = notificationManager.getNotificationChannel(channelID);
+                return (channel.getImportance() == NotificationManager.IMPORTANCE_NONE);
+            }
+        }
+        return false;
+    }
+
     /**
      * @return true optimization is disabled (recommended), false optimization is enabled (alarms may be delayed or fail to sound)
      */
@@ -735,6 +811,26 @@ public class AlarmSettings
     }
 
     /**
+     * shows the screen to manage permissions for full screen intents.
+     */
+    @TargetApi(34)
+    public static Intent getFullScreenIntentSettingsIntent(Context context) {
+        return new Intent(ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+    }
+    public static final String ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT = "android.settings.MANAGE_APP_USE_FULL_SCREEN_INTENT";    // TODO: remove and use constant from api29+
+
+    public static void openFullScreenIntentSettings(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 34) {
+            try {
+                context.startActivity(AlarmSettings.getFullScreenIntentSettingsIntent(context));
+            } catch (ActivityNotFoundException e) {
+                Log.e("AlarmSettings", "Failed to launch 'fullscreen intent settings': " + e);
+            }
+        }
+    }
+
+    /**
      * BootCompletedInfo
      */
     public static class BootCompletedInfo
@@ -881,7 +977,7 @@ public class AlarmSettings
 
     public static boolean loadPrefShowLauncher(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, PREF_DEF_ALARM_SHOWLAUNCHER);
+        return prefs.getBoolean(PREF_KEY_ALARM_SHOWLAUNCHER, context.getResources().getBoolean(R.bool.def_app_alarms_showlauncher));
     }
     public static void savePrefShowLauncher(Context context, boolean value)
     {

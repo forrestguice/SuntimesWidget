@@ -4,7 +4,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:paddingBottom="48dp" android:animateLayoutChanges="true">
 
-    <LinearLayout android:id="@+id/icon_layout"
+    <LinearLayout
         android:layout_width="wrap_content" android:layout_height="0dp"
         android:gravity="center" android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView android:visibility="visible"
-            android:id="@+id/txt_about_name"
+            android:id="@+id/txt_title"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             android:text="@string/location_dialog_title"
             android:gravity="center" android:textSize="?attr/text_size_xlarge"
@@ -29,6 +29,7 @@
 
     </LinearLayout>
 
-    <include layout="@layout/layout_welcome_location_content" />
+    <include layout="@layout/layout_welcome_location_content"
+        android:id="@+id/content_layout" />
 
 </android.support.constraint.ConstraintLayout>

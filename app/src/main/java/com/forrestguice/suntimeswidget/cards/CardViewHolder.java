@@ -45,9 +45,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.LightMapView;
-import com.forrestguice.suntimeswidget.MoonPhaseView;
-import com.forrestguice.suntimeswidget.MoonRiseSetView;
+import com.forrestguice.suntimeswidget.graph.LightMapView;
+import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
+import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
@@ -56,7 +56,11 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -150,8 +154,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         rows.add(row_blue8 = new TimeFieldRow(view, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
         rows.add(row_blue4 = new TimeFieldRow(view, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
 
+        Set<String> customEvents = EventSettings.loadVisibleEvents(view.getContext());
         customRows = new CustomRows(view, options);
-        rows.addAll(customRows.initRows(view.getContext(), EventSettings.loadVisibleEvents(view.getContext(), AlarmEventProvider.EventType.SUN_ELEVATION)));
+        rows.addAll(customRows.initRows(view.getContext(), customEvents));
 
         timeFields = new HashMap<>();
         timeFields.put(SolarEvents.SUNRISE.name(), row_actual.getField(0));
@@ -204,6 +209,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         this.position = position;
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         SuntimesMoonData moon = ((data == null) ? null : data.second);
+
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(context);
 
         updateHeaderViews(context, data, options);
         row_actual.setVisible(options.showActual);
@@ -352,11 +359,15 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
             int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
             moonrise.adjustColumnWidth(context, sunsetHeaderWidth);
-            moonphase.updateViews(context, moon);
+            moonrise.setColors(context, colors);
             moonrise.updateViews(context, moon);
+
+            moonphase.setColors(context, colors);
+            moonphase.updateViews(context, moon);
         }
 
         // lightmap
+        updateLightmapColors(context, colors);
         lightmapLayout.setVisibility(options.showLightmap ? View.VISIBLE : View.GONE);
         LightMapView.LightMapColors lightmapOptions = lightmap.getColors();
         lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
@@ -364,7 +375,18 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         lightmap.setData(options.showLightmap ? sun : null);
         //Log.d("DEBUG", "bindDataToPosition: " + sun.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
 
+        themeCardViews(context, colors);
+
         toggleNextPrevButtons(position);
+    }
+
+    protected void updateLightmapColors(Context context, ColorValues values)
+    {
+        if (values != null) {
+            lightmap.getColors().values = new LightMapColorValues(values);
+        } else if (lightmap.getColors().values == null) {
+            lightmap.getColors().init(context);
+        }
     }
 
     protected CharSequence comparisonDisplayString(Context context, SuntimesRiseSetData data, CardAdapter.CardAdapterOptions options)
@@ -394,6 +416,49 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
         ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
         ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
+    }
+
+    protected void themeCardViews(Context context, @Nullable ColorValues colors)
+    {
+        if (colors == null) {
+            return;
+        }
+
+        int color_sunrise = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
+        int color_sunset =  colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
+
+        for (CardViewHolder.TimeFieldRow row : rows)
+        {
+            if (row != null)
+            {
+                TextView v0 = row.getField(0);
+                if (v0 != null) {
+                    v0.setTextColor(color_sunrise);
+                }
+                TextView v1 = row.getField(1);
+                if (v1 != null) {
+                    v1.setTextColor(color_sunset);
+                }
+            }
+        }
+
+        row_blue4.getField(0).setTextColor(color_sunset);
+        row_blue4.getField(1).setTextColor(color_sunrise);
+        row_gold.getField(0).setTextColor(color_sunset);
+        row_gold.getField(1).setTextColor(color_sunrise);
+        row_solarnoon.getField(0).setTextColor(color_sunset);
+
+        int sunriseIconColor = colors.getColor(CardColorValues.COLOR_RISING_SUN);
+        int sunriseIconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
+        int sunriseIconStrokeWidth = 0;
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunrise.getBackground(), sunriseIconColor, sunriseIconColor2, sunriseIconStrokeWidth);
+        header_sunrise.setTextColor(color_sunrise);
+
+        int sunsetIconColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
+        int sunsetIconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
+        int sunsetIconStrokeWidth = 0;
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunset.getBackground(), sunsetIconColor, sunsetIconColor2, sunsetIconStrokeWidth);
+        header_sunset.setTextColor(color_sunset);
     }
 
     protected void themeCardViews(Context context, @NonNull SuntimesTheme theme, CardAdapter.CardAdapterOptions options)
@@ -819,37 +884,47 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             int color_setting = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.sunIcon_color_setting_dark));
             typedArray.recycle();
 
-            switch (event.getType())
+            if (event.getType() == AlarmEventProvider.EventType.SHADOWLENGTH || event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION)
             {
-                case SUN_ELEVATION:
-                    AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
-                    double angle = (event0 != null ? event0.getAngle() : 0);
-                    int i = getLayoutForAngle(angle);
+                double angle = 0;
+                switch (event.getType())
+                {
+                    case SHADOWLENGTH:
+                        AlarmEventProvider.ShadowLengthEvent event1 = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        angle = (event1 != null ? event1.getAngle() : 0);
+                        break;
 
-                    ArrayList<Double> angles = angleList.get(i);
-                    int j = getPositionForAngle(angles, angle);
-                    angles.add(j, angle);
+                    case SUN_ELEVATION:
+                        AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        angle = (event0 != null ? event0.getAngle() : 0);
+                        break;
+                }
 
-                    int margin = (int)context.getResources().getDimension(R.dimen.table_cell_spacing);
+                int i = getLayoutForAngle(angle);
+                ArrayList<Double> angles = angleList.get(i);
+                int j = getPositionForAngle(angles, angle);
+                angles.add(j, angle);
 
-                    TextView text_label = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_label.setText(event.getLabel());  // + " " + j + " " + angle);
-                    text_label.setTextColor(color_label);
-                    layout_labels[i].addView(text_label, j);
+                int margin = (int)context.getResources().getDimension(R.dimen.table_cell_spacing);
 
-                    TextView text_rising = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_rising.setTextColor(angle > 0 ? color_setting : color_rising);
-                    layout_rising[i].addView(text_rising, j);
+                TextView text_label = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                text_label.setText(event.getLabel());  // + " " + j + " " + angle);
+                text_label.setTextColor(color_label);
+                layout_labels[i].addView(text_label, j);
 
-                    TextView text_setting = initTextView(context, initLayoutParams(0, 0, 0, margin));
-                    text_setting.setTextColor(angle > 0 ? color_rising : color_setting);
-                    layout_setting[i].addView(text_setting, j);
+                TextView text_rising = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                text_rising.setTextColor(angle > 0 ? color_setting : color_rising);
+                layout_rising[i].addView(text_rising, j);
 
-                    setVisibility(i, true);
-                    return new TimeFieldRow(text_label, text_rising, text_setting);
+                TextView text_setting = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                text_setting.setTextColor(angle > 0 ? color_rising : color_setting);
+                layout_setting[i].addView(text_setting, j);
 
-                default:
-                    return null;
+                setVisibility(i, true);
+                return new TimeFieldRow(text_label, text_rising, text_setting);
+
+            } else {
+                return null;
             }
         }
 

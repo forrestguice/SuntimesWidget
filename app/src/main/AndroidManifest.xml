@@ -18,10 +18,14 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />                 <!-- needed by AlarmClock -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />  <!-- needed by AlarmClock to restore alarms after shutdown/reboot -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />      <!-- needed by AlarmClock -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />  <!-- needed by AlarmClock -->
 
     <uses-permission android:name="org.codeaurora.permission.POWER_OFF_ALARM" />  <!-- needed for hardware dependent 'power off' alarms -->
 
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />  <!-- needed for reliable delivery of alarms and notifications -->
+
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />  <!-- needed by Bedtime to trigger do-not-disturb -->
 
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
@@ -36,7 +40,7 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
-        android:supportsRtl="true"
+        android:supportsRtl="true" tools:ignore="RtlEnabled"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
@@ -44,7 +48,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name=".SuntimesActivity"
+            android:name=".SuntimesLaunchActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher">
 
@@ -56,6 +60,22 @@
 
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
+
+        </activity>
+
+        <activity
+            android:name=".SuntimesActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher">
+
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />-->
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -295,7 +315,7 @@
         <activity-alias
             android:name=".alarmclock.ui.AlarmClockActivityLauncher"
             android:targetActivity=".alarmclock.ui.AlarmClockActivity"
-            android:enabled="true">
+            android:enabled="@bool/def_app_alarms_showlauncher">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -322,6 +342,42 @@
             android:exported="true">
         </activity>
 
+        <activity android:name=".alarmclock.bedtime.BedtimeActivity"
+            android:label="@string/configLabel_bedtime"
+            android:icon="@mipmap/ic_launcher_alarms"
+            android:taskAffinity=".alarmclock.ui.bedtime.BedtimeActivity"
+            android:launchMode="singleTask"
+            android:exported="true">
+            <!--<meta-data android:name="android.service.zen.automatic.ruleType" android:value="Bedtime (Suntimes)" />
+            <intent-filter>
+                <action android:name="android.app.action.AUTOMATIC_ZEN_RULE"/>
+            </intent-filter>-->
+        </activity>
+
+        <service
+            android:name=".tiles.BedtimeTileService"
+            android:label="@string/configLabel_bedtime"
+            android:icon="@drawable/ic_action_bedtime"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".alarmclock.bedtime.BedtimeConditionService"
+            android:enabled="@bool/api_post_24"
+            android:label="@string/configLabel_bedtime"
+            android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.ConditionProviderService" />
+            </intent-filter>
+            <meta-data android:name="android.service.zen.automatic.ruleType" android:value="Bedtime (Suntimes)" />
+            <meta-data android:name="android.service.zen.automatic.ruleInstanceLimit" android:value="1" />
+            <meta-data android:name="android.service.zen.automatic.configurationActivity"
+                android:value="com.forrestguice.suntimeswidget/com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity" />
+        </service>
+
         <service android:name=".alarmclock.AlarmNotifications$NotificationService" />
         <receiver android:name=".alarmclock.AlarmNotifications">
             <intent-filter>
@@ -341,6 +397,31 @@
                 <data android:scheme="content" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".alarmclock.bedtime.BedtimeBroadcastReceiver"
+            android:exported="true"
+            android:permission="suntimes.permission.READ_CALCULATOR">
+            <intent-filter>
+                <action android:name="suntimeswidget.alarm.start_bedtime" />
+                <action android:name="suntimeswidget.alarm.pause_bedtime" />
+                <action android:name="suntimeswidget.alarm.resume_bedtime" />
+                <action android:name="suntimeswidget.alarm.dismiss_bedtime" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Alarm Tile                                                                  -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+        <service
+            android:name=".tiles.AlarmTileService"
+            android:label="@string/app_name_alarmtile"
+            android:icon="@drawable/ic_action_alarms"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+        <activity android:name=".tiles.AlarmTileConfigActivity" />
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Clock Tile                                                                  -->
@@ -725,6 +806,107 @@
         </activity>-->
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget: Alarms (1x1)                                                         -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".widgets.AlarmWidget0"
+            android:label="@string/app_name_alarmwidget0"
+            android:icon="@mipmap/ic_launcher_alarms">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="suntimes.ALARM_WIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+                <action android:name="suntimeswidget.alarm.ui.update" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="suntimeswidget.alarm.ui.update" />
+                <data android:scheme="content" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_alarms0_1x1" />
+        </receiver>
+
+        <activity
+            android:name=".widgets.AlarmWidget0ConfigActivity" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget: Alarms (2x2)                                                        -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".widgets.AlarmWidget0_2x2"
+            android:label="@string/app_name_alarmwidget0"
+            android:icon="@mipmap/ic_launcher_alarms">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="suntimes.ALARM_WIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+                <action android:name="suntimeswidget.alarm.ui.update" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="suntimeswidget.alarm.ui.update" />
+                <data android:scheme="content" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_alarms0_2x2" />
+        </receiver>
+
+        <activity
+            android:name=".widgets.AlarmWidget0ConfigActivity_2x2" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".widgets.AlarmWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:enabled="@bool/api_post_14" />    <!-- AlarmWidget Service: Collections widget [requires api 14+] -->
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget: Alarms (3x2)                                                        -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".widgets.AlarmWidget0_3x2"
+            android:label="@string/app_name_alarmwidget0"
+            android:icon="@mipmap/ic_launcher_alarms">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="suntimes.ALARM_WIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+                <action android:name="suntimeswidget.alarm.ui.update" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="suntimeswidget.alarm.ui.update" />
+                <data android:scheme="content" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_alarms0_3x2" />
+        </receiver>
+
+        <activity
+            android:name=".widgets.AlarmWidget0ConfigActivity_3x2" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Clock (1x1)                                                               -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".ClockWidget0"
@@ -802,6 +984,8 @@
             </intent-filter>
         </activity>
 
+        <!-- https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/test-setup#deprecated-classes -->
+        <uses-library android:name="android.test.runner" android:required="false" />
 
     </application>
 

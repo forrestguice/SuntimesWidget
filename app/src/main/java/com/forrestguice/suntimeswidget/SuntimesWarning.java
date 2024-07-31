@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -93,11 +95,13 @@ public class SuntimesWarning
     @SuppressLint("ResourceType")
     private void themeWarning(@NonNull Context context, @NonNull Snackbar snackbarWarning)
     {
-        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
+        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
         TypedArray a = context.obtainStyledAttributes(colorAttrs);
         int textColor = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
         int accentColor = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
         int backgroundColor = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
+        Drawable buttonDrawable = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.button_fab_dark));
+        int buttonPadding = (int)context.getResources().getDimension(R.dimen.snackbar_button_padding);
         a.recycle();
 
         View snackbarView = snackbarWarning.getView();
@@ -108,6 +112,14 @@ public class SuntimesWarning
         if (snackbarText != null) {
             snackbarText.setTextColor(textColor);
             snackbarText.setMaxLines(5);
+        }
+
+        View snackbarAction = snackbarView.findViewById(android.support.design.R.id.snackbar_action);
+        if (snackbarAction != null) {
+            if (Build.VERSION.SDK_INT >= 16) {
+                snackbarAction.setBackground(buttonDrawable);
+                snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            }
         }
     }
 
@@ -143,6 +155,12 @@ public class SuntimesWarning
     {
         if (snackbar != null) {
             snackbar.show();
+            snackbar.getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    snackbar.getView().requestFocus();
+                }
+            });
         }
         announceWarning();
     }

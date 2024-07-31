@@ -29,9 +29,10 @@ import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
-import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
+import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -169,7 +170,7 @@ public class WidgetSettingsExportTask extends ExportTask
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         String packageName = context.getPackageName();
-        for (Class widgetClass : SuntimesWidgetListActivity.WidgetListAdapter.ALL_WIDGETS)
+        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
         {
             Bundle bundle = new Bundle();
             bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, widgetClass.getSimpleName());
@@ -191,6 +192,9 @@ public class WidgetSettingsExportTask extends ExportTask
 
         bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, NextEventTileService.class.getSimpleName());
         WidgetSettingsMetadata.saveMetaData(context, NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID, bundle);
+
+        bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, AlarmTileService.class.getSimpleName());
+        WidgetSettingsMetadata.saveMetaData(context, AlarmTileService.ALARMTILE_APPWIDGET_ID, bundle);
     }
 
 }

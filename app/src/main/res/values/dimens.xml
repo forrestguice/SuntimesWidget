@@ -4,7 +4,16 @@
     <dimen name="activity_margin">8dp</dimen>
     <dimen name="dialog_margin">8dp</dimen>
     <dimen name="dialog_margin1">4dp</dimen>
-    <dimen name="tooltip_margin">8dp</dimen>
+    <dimen name="tooltip_margin0">8dp</dimen>
+
+    <dimen name="fab_radius">12dp</dimen>
+    <dimen name="tooltip_radius">4dp</dimen>
+    <dimen name="toast_radius">28dp</dimen>
+    <dimen name="popupmenu_radius">8dp</dimen>
+    <dimen name="chip_radius">6dp</dimen>
+    <dimen name="chip_stroke">2dp</dimen>
+
+    <dimen name="snackbar_button_padding">8dp</dimen>
 
     <dimen name="smalltext_size_tiny">6sp</dimen>      <!-- "small" sizes -->
     <dimen name="smalltext_size_xsmall">10sp</dimen>
@@ -92,6 +101,8 @@
     <dimen name="sunIcon_width_risingBorder">@dimen/sunIcon_width_border</dimen>
     <dimen name="sunIcon_width_settingBorder">@dimen/sunIcon_width_border</dimen>
 
+    <dimen name="noonIcon_width_border">2dp</dimen>
+
     <dimen name="moonIcon_inset">-9dip</dimen>
     <dimen name="moonIcon_height">9dip</dimen>
     <dimen name="moonIcon_width">18dip</dimen>
@@ -107,8 +118,8 @@
     <integer name="anim_slidein_fade_duration">700</integer>
     <integer name="anim_slidein_move_duration">700</integer>
 
-    <integer name="anim_fadein_duration">1750</integer>
-    <integer name="anim_fadeout_duration">700</integer>
+    <integer name="anim_fadein_duration">750</integer>
+    <integer name="anim_fadeout_duration">50</integer>
     <item name="anim_slideout_fade_fromalpha" format="float" type="dimen">1.0</item>
     <item name="anim_slideout_fade_toalpha" format="float" type="dimen">0.1</item>
     <integer name="anim_slideout_fade_duration">700</integer>
@@ -138,5 +149,7 @@
     <dimen name="equinoxItem_height">56dp</dimen>
     <dimen name="equinoxItem_margin">12dp</dimen>
     <dimen name="equinoxList_topMargin">6dp</dimen>
+
+    <dimen name="colortext_margin">3dp</dimen>
 
 </resources>

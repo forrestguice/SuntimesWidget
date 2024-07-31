@@ -24,7 +24,7 @@ import android.graphics.Color;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 
-public class LightThemeTrans extends LightTheme
+public class LightThemeTrans extends LightTheme1
 {
     public static final String THEMEDEF_NAME = "light_transparent";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;

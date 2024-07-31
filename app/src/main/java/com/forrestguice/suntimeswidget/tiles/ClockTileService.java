@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.tiles;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +29,7 @@ import android.os.Handler;
 import android.service.quicksettings.Tile;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
@@ -131,7 +131,7 @@ public class ClockTileService extends SuntimesTileService
 
     protected void startUpdateTask(Dialog dialog)
     {
-        Log.d("DEBUG", "startUpdateTask");
+        //Log.d("DEBUG", "startUpdateTask");
         if (handler == null) {
             handler = new Handler();
         }
@@ -139,12 +139,12 @@ public class ClockTileService extends SuntimesTileService
             stopUpdateTask();
         }
         updateTask = updateTask(dialog);
-        handler.postDelayed(updateTask, UPDATE_RATE);
+        handler.postDelayed(updateTask, updateTaskRateMs());
     }
 
     protected void stopUpdateTask()
     {
-        Log.d("DEBUG", "stopUpdateTask");
+        //Log.d("DEBUG", "stopUpdateTask");
         if (handler != null && updateTask != null) {
             handler.removeCallbacks(updateTask);
             updateTask = null;
@@ -169,11 +169,14 @@ public class ClockTileService extends SuntimesTileService
             public void run()
             {
                 updateDialogViews(getApplicationContext(), dialog);
-                handler.postDelayed(this, UPDATE_RATE);
+                handler.postDelayed(this, updateTaskRateMs());
             }
         };
     }
     public static final int UPDATE_RATE = 3000;     // update rate: 3s
+    public int updateTaskRateMs() {
+        return UPDATE_RATE;
+    }
 
     protected SpannableStringBuilder formatDialogTitle(Context context)
     {

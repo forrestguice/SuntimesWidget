@@ -69,7 +69,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -147,6 +149,11 @@ public class AlarmListDialog extends DialogFragment
         adapter = new AlarmListDialogAdapter(getActivity());
         adapter.setAdapterListener(adapterListener);
 
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(getActivity());
+        if (colors != null) {
+            adapter.getOptions().colors = new AppColorValues(colors);
+        }
+
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.addItemDecoration(itemDecoration);
@@ -161,7 +168,7 @@ public class AlarmListDialog extends DialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         saveSettings(outState);
         super.onSaveInstanceState(outState);
@@ -258,12 +265,15 @@ public class AlarmListDialog extends DialogFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        Activity activity = getActivity();
         switch (item.getItemId())
         {
             case R.id.sortByAlarmTime:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_ALARMTIME);
                 if (Build.VERSION.SDK_INT >= 11) {
-                    getActivity().invalidateOptionsMenu();
+                    if (activity != null) {
+                        activity.invalidateOptionsMenu();
+                    }
                 }  // else { TODO }
                 adapter.sortItems();
                 return true;
@@ -271,7 +281,9 @@ public class AlarmListDialog extends DialogFragment
             case R.id.sortByCreation:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
                 if (Build.VERSION.SDK_INT >= 11) {
-                    getActivity().invalidateOptionsMenu();
+                    if (activity != null) {
+                        activity.invalidateOptionsMenu();
+                    }
                 }  // else { TODO }
                 adapter.sortItems();
                 return true;
@@ -279,7 +291,9 @@ public class AlarmListDialog extends DialogFragment
             case R.id.sortEnabledFirst:
                 AlarmSettings.savePrefAlarmSortEnabledFirst(getActivity(), !item.isChecked());
                 if (Build.VERSION.SDK_INT >= 11) {
-                    getActivity().invalidateOptionsMenu();
+                    if (activity != null) {
+                        activity.invalidateOptionsMenu();
+                    }
                 }  // else { TODO }
                 adapter.sortItems();
                 return true;
@@ -287,21 +301,29 @@ public class AlarmListDialog extends DialogFragment
             case R.id.showOffset:
                 AlarmSettings.savePrefAlarmSortShowOffset(getActivity(), !item.isChecked());
                 if (Build.VERSION.SDK_INT >= 11) {
-                    getActivity().invalidateOptionsMenu();
+                    if (activity != null) {
+                        activity.invalidateOptionsMenu();
+                    }
                 }  // else { TODO }
                 adapter.sortItems();
                 return true;
 
             case R.id.action_clear:
-                confirmClearAlarms(getActivity());
+                if (activity != null) {
+                    confirmClearAlarms(activity);
+                }
                 return true;
 
             case R.id.action_export:
-                exportAlarms(getActivity());
+                if (activity != null) {
+                    exportAlarms(activity);
+                }
                 return true;
 
             case R.id.action_import:
-                importAlarms(getActivity());
+                if (activity != null) {
+                    importAlarms(activity);
+                }
                 return true;
 
             default:
@@ -419,7 +441,7 @@ public class AlarmListDialog extends DialogFragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
@@ -441,7 +463,7 @@ public class AlarmListDialog extends DialogFragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
@@ -463,7 +485,7 @@ public class AlarmListDialog extends DialogFragment
 
     public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays)
     {
-        Log.d("DEBUG", "createAlarm: ringToneURI: " + ringtoneUri + " (" + ringtoneName + ")" );
+        //Log.d("DEBUG", "createAlarm: ringToneURI: " + ringtoneUri + " (" + ringtoneName + ")" );
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.enabled = AlarmSettings.loadPrefAlarmAutoEnable(context);
         alarm.type = type;
@@ -471,10 +493,11 @@ public class AlarmListDialog extends DialogFragment
         alarm.hour = hour;
         alarm.minute = minute;
         alarm.timezone = timezone;
-        Log.d("DEBUG", "createAlarm: with hour " + hour + " and minute " + minute + " .. timezone " + timezone);
+        //Log.d("DEBUG", "createAlarm: with hour " + hour + " and minute " + minute + " .. timezone " + timezone);
         alarm.setEvent(date != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(date)) : event);   // TODO: event on date
         alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
         alarm.repeating = false;
+        alarm.repeatingDays = new ArrayList<>(repetitionDays);
         alarm.vibrate = vibrate;
 
         alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
@@ -596,7 +619,7 @@ public class AlarmListDialog extends DialogFragment
     }
 
     protected AlarmClockItemExportTask exportTask = null;
-    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
         public void onStarted()
         {
@@ -615,7 +638,7 @@ public class AlarmListDialog extends DialogFragment
             if (context != null)
             {
                 File file = results.getExportFile();
-                String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(getContext().getContentResolver(), results.getExportUri()));
+                String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
 
                 if (results.getResult())
                 {
@@ -689,7 +712,7 @@ public class AlarmListDialog extends DialogFragment
     }
 
     protected AlarmClockItemImportTask importTask = null;
-    private AlarmClockItemImportTask.TaskListener importListener =  new AlarmClockItemImportTask.TaskListener()
+    private final AlarmClockItemImportTask.TaskListener importListener =  new AlarmClockItemImportTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -757,7 +780,7 @@ public class AlarmListDialog extends DialogFragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_IMPORT_MILLIS);
             snackbar.show();
         }
@@ -778,14 +801,14 @@ public class AlarmListDialog extends DialogFragment
         AlarmListTask listTask = new AlarmListTask(getActivity());
         listTask.setTaskListener(taskListener);
         listTask.execute(rowId);
-        Log.d("DEBUG", "reloadAdapter");
+        //Log.d("DEBUG", "reloadAdapter");
     }
 
     protected AlarmListTask.AlarmListTaskListener onListLoaded = new AlarmListTask.AlarmListTaskListener() {
         @Override
         public void onLoadFinished(List<AlarmClockItem> data)
         {
-            Log.d("DEBUG", "onListLoaded: " + data.size());
+            //Log.d("DEBUG", "onListLoaded: " + data.size());
             adapter.setItems(data);
             updateViews();
             scrollToSelectedItem();
@@ -801,14 +824,14 @@ public class AlarmListDialog extends DialogFragment
                 AlarmClockItem item = data.get(0);
                 if (item != null)
                 {
-                    Log.d("DEBUG", "onItemChanged: " + item.rowID + ", state: " + item.state.getState());
+                    //Log.d("DEBUG", "onItemChanged: " + item.rowID + ", state: " + item.state.getState());
                     switch(item.getState())
                     {
                         case AlarmState.STATE_SOUNDING: case AlarmState.STATE_SNOOZING: case AlarmState.STATE_TIMEOUT:  // sounding/snoozing/timeout alarmtime shouldn't be touched until next transition
                         case AlarmState.STATE_SCHEDULED_SOON: case AlarmState.STATE_SCHEDULED_DISTANT:                  // scheduled_ alarmtime is already assigned
                             break;
                         default:
-                            Log.d("DEBUG", "onItemChanged: updating item timestamp");
+                            //Log.d("DEBUG", "onItemChanged: updating item timestamp");
                             AlarmNotifications.updateAlarmTime(getActivity(), item);
                             break;
                     }
@@ -885,6 +908,7 @@ public class AlarmListDialog extends DialogFragment
 
                 cursor.moveToNext();
             }
+            cursor.close();
             db.releaseUnusedUriPermissions(contextRef.get());
             db.close();
             return items;
@@ -933,10 +957,19 @@ public class AlarmListDialog extends DialogFragment
             super();
             contextRef = new WeakReference<>(context);
             setHasStableIds(true);
+            initOptions(context);
+        }
+
+        protected AlarmListDialogOptions options;
+        public void initOptions(Context context) {
+            options = new AlarmListDialogOptions(context);
+        }
+        public AlarmListDialogOptions getOptions() {
+            return options;
         }
 
         public void setSelectedRowID(long rowID) {
-            Log.d("setSelectedRowID", ""+ rowID);
+            //Log.d("setSelectedRowID", ""+ rowID);
             selectedRowID = rowID;
             notifyDataSetChanged();
             if (listener != null) {
@@ -1099,6 +1132,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         @Override
+        @NonNull
         public AlarmListDialogItem onCreateViewHolder(ViewGroup parent, int viewType)
         {
             LayoutInflater layout = LayoutInflater.from(parent.getContext());
@@ -1111,7 +1145,7 @@ public class AlarmListDialog extends DialogFragment
         {
             Context context = contextRef.get();
 
-            Log.d("DEBUG", "onBindViewHolder: " + holder);
+            //Log.d("DEBUG", "onBindViewHolder: " + holder);
             AlarmClockItem item = items.get(position);
             holder.isSelected = (item.rowID == selectedRowID);
             holder.preview_offset = !holder.isSelected;
@@ -1122,33 +1156,33 @@ public class AlarmListDialog extends DialogFragment
             }
 
             detachClickListeners(holder);
-            holder.bindData(context, item);
+            holder.bindData(context, item, options);
             holder.startBackgroundAnimation(context);
             attachClickListeners(holder, item.rowID);
         }
 
         @Override
-        public void onViewRecycled(AlarmListDialogItem holder)
+        public void onViewRecycled(@NonNull AlarmListDialogItem holder)
         {
-            Log.d("DEBUG", "onViewRecycled: " + holder);
+            //Log.d("DEBUG", "onViewRecycled: " + holder);
             detachClickListeners(holder);
             holder.isSelected = false;
             holder.resetBackground();
         }
 
         @Override
-        public void onViewAttachedToWindow(AlarmListDialogItem holder)
+        public void onViewAttachedToWindow(@NonNull AlarmListDialogItem holder)
         {
             super.onViewAttachedToWindow(holder);
-            Log.d("DEBUG", "onViewAttachedToWindow: " + holder);
+            //Log.d("DEBUG", "onViewAttachedToWindow: " + holder);
             holder.startBackgroundAnimation(contextRef.get());
         }
 
         @Override
-        public void onViewDetachedFromWindow(AlarmListDialogItem holder)
+        public void onViewDetachedFromWindow(@NonNull AlarmListDialogItem holder)
         {
             super.onViewDetachedFromWindow(holder);
-            Log.d("DEBUG", "onViewDetachedFromWindow: " + holder);
+            //Log.d("DEBUG", "onViewDetachedFromWindow: " + holder);
             holder.stopBackgroundAnimation(contextRef.get());
         }
 
@@ -1412,7 +1446,7 @@ public class AlarmListDialog extends DialogFragment
                 }
             }));
 
-            SuntimesUtils.forceActionBarIcons(menu.getMenu());
+            PopupMenuCompat.forceActionBarIcons(menu.getMenu());
             menu.show();
         }
 
@@ -1445,7 +1479,7 @@ public class AlarmListDialog extends DialogFragment
                 }
             }));
 
-            SuntimesUtils.forceActionBarIcons(menu.getMenu());
+            PopupMenuCompat.forceActionBarIcons(menu.getMenu());
             menu.show();
         }
 
@@ -1454,15 +1488,15 @@ public class AlarmListDialog extends DialogFragment
             AlarmClockItem item = getItem(rowId);
             if (item != null && item.type != type)
             {
-                Log.d("AlarmList", "alarmTypeMenu: alarm type is changed: " + type);
+                //Log.d("AlarmList", "alarmTypeMenu: alarm type is changed: " + type);
                 if (item.enabled)
                 {
-                    Log.d("AlarmList", "alarmTypeMenu: alarm is enabled (reschedule required?)");
+                    //Log.d("AlarmList", "alarmTypeMenu: alarm is enabled (reschedule required?)");
                     // item is enabled; disable it or reschedule/reenable
                     return false;
 
                 } else {
-                    Log.d("AlarmList", "alarmTypeMenu: alarm is disabled, changing its type..");
+                    //Log.d("AlarmList", "alarmTypeMenu: alarm is disabled, changing its type..");
                     item.type = type;
                     item.setState(AlarmState.STATE_NONE);
 
@@ -1525,6 +1559,23 @@ public class AlarmListDialog extends DialogFragment
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static class AlarmListDialogOptions
+    {
+        public AppColorValues colors;
+
+        public AlarmListDialogOptions() {
+            colors = new AppColorValues();
+        }
+
+        public AlarmListDialogOptions(Context context) {
+            init(context);
+        }
+
+        public void init(Context context) {
+            colors = new AppColorValues(context, true);
+        }
+    }
+
     /**
      * RecyclerView.ViewHolder
      */
@@ -1571,11 +1622,13 @@ public class AlarmListDialog extends DialogFragment
         public int res_iconSoundOff = R.drawable.ic_action_sounddisabled;
         public int res_iconVibrate = R.drawable.ic_action_vibration;
         public int res_iconAction = R.drawable.ic_action_extension;
+        public int res_icHome = R.drawable.ic_action_home;
+        public int res_icPlace = R.drawable.ic_action_place;
         public int res_backgroundOn = R.drawable.card_alarmitem_enabled_dark1;
         public int res_backgroundOff = R.drawable.card_alarmitem_disabled_dark1;
-        public int res_backgroundSounding = R.drawable.card_alarmitem_sounding_dark1;
-        public int res_backgroundSnoozing = R.drawable.card_alarmitem_snoozing_dark1;
-        public int res_backgroundTimeout = R.drawable.card_alarmitem_timeout_dark;
+        public int res_backgroundSounding = R.drawable.card_alarmitem_sounding_dark0;
+        public int res_backgroundSnoozing = R.drawable.card_alarmitem_snoozing_dark0;
+        public int res_backgroundTimeout = R.drawable.card_alarmitem_timeout_dark0;
 
         public boolean animatedBackground = false;
         public int res_backgroundCurrent = -1;
@@ -1636,7 +1689,7 @@ public class AlarmListDialog extends DialogFragment
             }
         }
 
-        public void triggerPreviewOffset(final Context context, final AlarmClockItem item)
+        public void triggerPreviewOffset(final Context context, final AlarmClockItem item, final AlarmListDialogOptions options)
         {
             if (preview_offset_transition || item.offset == 0) {
                 return;
@@ -1644,14 +1697,14 @@ public class AlarmListDialog extends DialogFragment
 
             preview_offset = true;
             preview_offset_transition = true;
-            bindData(context, item);
+            bindData(context, item, options);
 
             cardTray.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     preview_offset_transition = false;
                     preview_offset = !isSelected;
-                    bindData(context, item);
+                    bindData(context, item, options);
                 }
             }, AlarmEditDialog.PREVIEW_OFFSET_DURATION_MILLIS);
         }
@@ -1665,7 +1718,8 @@ public class AlarmListDialog extends DialogFragment
                             R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
                             R.attr.alarmColorEnabled, android.R.attr.textColorSecondary, android.R.attr.textColorPrimary,
                             R.attr.buttonPressColor, R.attr.alarmCardSounding, R.attr.alarmCardSnoozing, R.attr.alarmCardTimeout,
-                            R.attr.icActionNotification1, R.attr.icActionNotification2 };
+                            R.attr.icActionNotification1, R.attr.icActionNotification2,
+                            R.attr.icActionHome, R.attr.icActionPlace };
             TypedArray a = context.obtainStyledAttributes(attrs);
             res_iconAlarm = a.getResourceId(0, R.drawable.ic_action_alarms);
             res_iconNotification = a.getResourceId(1, R.drawable.ic_action_notification);
@@ -1680,22 +1734,24 @@ public class AlarmListDialog extends DialogFragment
             color_off = ContextCompat.getColor(context, a.getResourceId(10, android.R.color.secondary_text_dark));
             color_off1 = ContextCompat.getColor(context, a.getResourceId(11, android.R.color.primary_text_dark));
             color_press = ContextCompat.getColor(context, a.getResourceId(12, R.color.btn_tint_pressed_dark));
-            res_backgroundSounding = a.getResourceId(13, R.drawable.card_alarmitem_sounding_dark1);
-            res_backgroundSnoozing = a.getResourceId(14, R.drawable.card_alarmitem_snoozing_dark1);
-            res_backgroundTimeout = a.getResourceId(15, R.drawable.card_alarmitem_timeout_dark);
+            res_backgroundSounding = a.getResourceId(13, R.drawable.card_alarmitem_sounding_dark0);
+            res_backgroundSnoozing = a.getResourceId(14, R.drawable.card_alarmitem_snoozing_dark0);
+            res_backgroundTimeout = a.getResourceId(15, R.drawable.card_alarmitem_timeout_dark0);
             res_iconNotification1 = a.getResourceId(16, R.drawable.ic_action_notification1);
             res_iconNotification2 = a.getResourceId(17, R.drawable.ic_action_notification2);
+            res_icHome = a.getResourceId(18, R.drawable.ic_action_home);
+            res_icPlace = a.getResourceId(19, R.drawable.ic_action_place);
             a.recycle();
         }
 
 
-        public void bindData(Context context, @NonNull AlarmClockItem item)
+        public void bindData(Context context, @NonNull AlarmClockItem item, AlarmListDialogOptions options)
         {
             themeViews(context);
-            updateView(context, this, item);
+            updateView(context, this, item, options);
         }
 
-        protected void updateView(Context context, AlarmListDialogItem view, @NonNull final AlarmClockItem item)
+        protected void updateView(Context context, AlarmListDialogItem view, @NonNull final AlarmClockItem item, @NonNull AlarmListDialogOptions options)
         {
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             int eventType = event == null ? -1 : event.getType();
@@ -1746,7 +1802,10 @@ public class AlarmListDialog extends DialogFragment
             if (resBackground != res_backgroundCurrent)
             {
                 res_backgroundCurrent = resBackground;    // don't set background unless actually changed (avoids interrupting running animations)
-                Drawable background = ContextCompat.getDrawable(context, resBackground).mutate();
+                Drawable background = ContextCompat.getDrawable(context, resBackground);
+                if (background != null) {
+                    background.mutate();
+                }
                 if (Build.VERSION.SDK_INT >= 16) {
                     view.card.setBackground(background);
                 } else {
@@ -1804,7 +1863,7 @@ public class AlarmListDialog extends DialogFragment
                 if (event != null)
                 {
                     boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location != null) && (item.location.getLatitudeAsDouble() < 0);
-                    Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)eventIconSize, (int)eventIconSize, northward);
+                    Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)eventIconSize, (int)eventIconSize, northward, options.colors);
                     view.text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
 
@@ -1815,9 +1874,10 @@ public class AlarmListDialog extends DialogFragment
                     if (tint == null) {    // re-tint uncolored icons
                         EventIcons.tintDrawable(eventIcon, item.enabled ? color_on : color_off);
                     }
-                    text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, item.timezone));
-                    text_event.setCompoundDrawables(eventIcon, null, null, null);
+                    view.text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, item.timezone));
+                    view.text_event.setCompoundDrawables(eventIcon, null, null, null);
                 }
+                view.text_event.setVisibility(item.getEvent() == null && item.timezone == null ? View.GONE : View.VISIBLE);
             }
 
             // time
@@ -1862,6 +1922,11 @@ public class AlarmListDialog extends DialogFragment
                 view.text_location.setText(item.location != null ? item.location.getLabel() : "");
                 view.text_location.setTextColor(item.enabled ? color_on : color_off);
 
+                int iconMargin = (int)context.getResources().getDimension(R.dimen.eventIcon_margin);
+                boolean useAppLocation = item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+                text_location.setCompoundDrawablePadding(iconMargin);
+                text_location.setCompoundDrawablesWithIntrinsicBounds((useAppLocation ? res_icHome : res_icPlace), 0, 0, 0);
+
                 Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), (item.enabled ? color_on : color_off));
                 view.text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
             }
@@ -1905,26 +1970,32 @@ public class AlarmListDialog extends DialogFragment
             // repeating
             if (view.text_repeat != null)
             {
-                boolean noRepeat = (item.repeatingDays != null && item.repeatingDays.isEmpty());
-                String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
-                        ? context.getString(R.string.alarmOption_repeat_all)
-                        : noRepeat
-                            ? context.getString(R.string.alarmOption_repeat_none)
-                            : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
-
-                if (item.repeating)
+                String repeatText = context.getString(R.string.alarmOption_repeat_none);
+                boolean repeating = (item.repeating && item.repeatingDays != null && !item.repeatingDays.isEmpty());
+                if (repeating)
                 {
-                    int repeatSupport = item.getEventItem(context).supportsRepeating();
-                    if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
-                        repeatText = context.getString(R.string.alarmOption_repeat);
-                    } else if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_NONE) {
-                        repeatText = "";
+                    switch (item.getEventItem(context).supportsRepeating())
+                    {
+                        case AlarmEventContract.REPEAT_SUPPORT_BASIC:
+                            repeatText = context.getString(R.string.alarmOption_repeat);
+                            break;
+
+                        case AlarmEventContract.REPEAT_SUPPORT_DAILY:
+                            repeatText = (AlarmClockItem.repeatsEveryDay(item.repeatingDays))
+                                    ? context.getString(R.string.alarmOption_repeat_all)
+                                    : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
+                            break;
+
+                        case AlarmEventContract.REPEAT_SUPPORT_NONE:
+                        default:
+                            repeatText = context.getString(R.string.alarmOption_repeat_none);
+                            break;
                     }
                 }
 
                 view.text_repeat.setText(repeatText);
                 view.text_repeat.setTextColor(item.enabled ? color_on : color_off);
-                view.text_repeat.setVisibility((noRepeat) ? View.GONE : View.VISIBLE);
+                view.text_repeat.setVisibility(repeating ? View.VISIBLE : View.GONE);
             }
 
             // offset (before / after)
@@ -2089,13 +2160,13 @@ public class AlarmListDialog extends DialogFragment
                 if (background != null)
                 {
                     if (background instanceof StateListDrawable) {
-                        Log.d("DEBUG", "starting background (StateListDrawable): " + this);
+                        //Log.d("DEBUG", "starting background (StateListDrawable): " + this);
                         AlarmListDialogItem.startStateListAnimations(context, (StateListDrawable) background, this.anim_enterFadeDuration, this.anim_exitFadeDuration);
                     } else if (background instanceof AnimationDrawable) {
-                        Log.d("DEBUG", "starting background (AnimatedDrawable): " + this);
+                        //Log.d("DEBUG", "starting background (AnimatedDrawable): " + this);
                         AlarmListDialogItem.startAnimatedDrawable(context, (AnimationDrawable) background, this.anim_enterFadeDuration, this.anim_exitFadeDuration);
                     } else {
-                        Log.d("DEBUG", "starting background: skipped: " + this);
+                        //Log.d("DEBUG", "starting background: skipped: " + this);
                     }
                 }
             }
@@ -2109,14 +2180,14 @@ public class AlarmListDialog extends DialogFragment
                 if (background != null)
                 {
                     if (background instanceof StateListDrawable) {
-                        Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
+                        //Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
                         AlarmListDialogItem.stopStateListAnimations(context, (StateListDrawable) background);
                     } else if (background instanceof AnimationDrawable) {
-                        Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
+                        //Log.d("DEBUG", "stopping background (StateListDrawable): " + this);
                         ((AnimationDrawable) background).setVisible(false, false);
-                    } else {
-                        Log.d("DEBUG", "stopping background: skipped: " + this);
-                    }
+                    } /*else {
+                        //Log.d("DEBUG", "stopping background: skipped: " + this);
+                    }*/
                 }
             }
         }
@@ -2152,10 +2223,10 @@ public class AlarmListDialog extends DialogFragment
         }
     }
 
-    private RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
+    private final RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
     {
         @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state)
         {
             int position = parent.getChildAdapterPosition(view);
             if (position == adapter.getItemCount() - 1) {   // add bottom margin on last item to avoid blocking FAB

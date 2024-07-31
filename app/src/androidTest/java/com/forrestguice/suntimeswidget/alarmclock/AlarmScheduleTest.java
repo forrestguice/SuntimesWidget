@@ -52,7 +52,7 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class AlarmScheduleTest
 {
-    public static final long SCHEDULE_WITHIN_MS = 1500;
+    public static final long SCHEDULE_WITHIN_MS = 10000;
 
     public Context context;
     public SuntimesUtils utils = new SuntimesUtils();

@@ -7,6 +7,14 @@
     <integer name="minAlarmAutoDismissSeconds">5</integer>
     <integer name="maxAlarmAutoDismissSeconds">300</integer>
 
+    <integer name="minAlarmFullscreenFadeinSeconds">15</integer>
+    <integer name="maxAlarmFullscreenFadeinSeconds">180</integer>
+
+    <integer name="minSleepCycleMinutes">60</integer>
+    <integer name="maxSleepCycleMinutes">120</integer>
+    <integer name="minFallAsleepMinutes">0</integer>
+    <integer name="maxFallAsleepMinutes">90</integer>
+
     <integer name="anim_alarmscreen_sounding_pulse_duration">4000</integer>
     <integer name="anim_alarmscreen_snoozing_pulse_duration">6000</integer>
     <integer name="anim_alarmscreen_snoozing_dimming_duration">1000</integer>
@@ -29,12 +37,18 @@
 
     <dimen name="alarmdismiss_margin">16dp</dimen>
 
+    <dimen name="alarmcard_stroke_focused">3dp</dimen>
+
     <dimen name="alarmcard_corners_controls">8dp</dimen>
     <dimen name="alarmcard_corners_pressed">8dp</dimen>
     <dimen name="alarmcard_corners_enabled">8dp</dimen>
-    <dimen name="alarmcard_corners_disabled">1dp</dimen>
+    <dimen name="alarmcard_corners_disabled">8dp</dimen>
     <dimen name="alarmcard_corners_sounding">8dp</dimen>
     <dimen name="alarmcard_corners_snoozing">8dp</dimen>
     <dimen name="alarmcard_corners_timeout">8dp</dimen>
+    <dimen name="alarmcard_corners">8dp</dimen>
+
+    <dimen name="clockcard_corners">4dp</dimen>
+    <dimen name="clockcard_corners_controls">8dp</dimen>
 
 </resources>

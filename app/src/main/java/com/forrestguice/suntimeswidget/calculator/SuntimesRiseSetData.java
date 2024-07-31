@@ -88,7 +88,12 @@ public class SuntimesRiseSetData extends SuntimesData
         if (dataMode instanceof WidgetSettings.EventAliasTimeMode)
         {
             EventSettings.EventAlias alias = ((WidgetSettings.EventAliasTimeMode) dataMode).getEvent();
-            AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+            AlarmEventProvider.ElevationEvent event;
+            switch (alias.getType()) {
+                case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
+                case SHADOWLENGTH: event = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
+                default: event = null; break;
+            }
             this.angle = (event == null ? null : event.getAngle());
             this.offset = (event == null ? 0 : event.getOffset());
         }

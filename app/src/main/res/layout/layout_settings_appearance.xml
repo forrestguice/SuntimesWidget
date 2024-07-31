@@ -51,6 +51,7 @@
 
         <CheckBox android:id="@+id/appwidget_appearance_scaleText" android:layout_width="match_parent"
             android:layout_marginLeft="@dimen/widget_settings_check_padding_left" android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/widget_settings_check_padding_left" android:layout_marginEnd="8dp"
             android:layout_height="wrap_content"  android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_scaleText" />
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -71,7 +72,9 @@
         </LinearLayout>
 
         <CheckBox android:id="@+id/appwidget_appearance_scaleBase" android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/widget_settings_check_padding_left" android:layout_marginRight="8dp" android:textSize="?attr/text_size_small"
+            android:layout_marginLeft="@dimen/widget_settings_check_padding_left" android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/widget_settings_check_padding_left" android:layout_marginEnd="8dp"
+            android:textSize="?attr/text_size_small"
             android:layout_height="wrap_content" android:text="@string/configLabel_appearance_scaleBase" />
 
     </LinearLayout>

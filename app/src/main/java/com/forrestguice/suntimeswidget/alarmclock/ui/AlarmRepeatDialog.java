@@ -312,7 +312,7 @@ public class AlarmRepeatDialog extends DialogFragment
         {
             if (switchRepeat != null)
             {
-                if (repeatDays == null || repeatDays.isEmpty())
+                if (!repeat || repeatDays == null || repeatDays.isEmpty())
                     switchRepeat.setText(context.getString(R.string.alarmOption_repeat_none));
                 else switchRepeat.setText(AlarmClockItem.repeatsEveryDay(repeatDays) ? context.getString(R.string.alarmOption_repeat_all) : context.getString(R.string.alarmOption_repeat));
 
@@ -324,7 +324,7 @@ public class AlarmRepeatDialog extends DialogFragment
         } else {
             if (checkRepeat != null)
             {
-                if (repeatDays == null || repeatDays.isEmpty())
+                if (!repeat || repeatDays == null || repeatDays.isEmpty())
                     checkRepeat.setText(context.getString(R.string.alarmOption_repeat_none));
                 else checkRepeat.setText(AlarmClockItem.repeatsEveryDay(repeatDays) ? context.getString(R.string.alarmOption_repeat_all) : context.getString(R.string.alarmOption_repeat));
 
@@ -348,8 +348,8 @@ public class AlarmRepeatDialog extends DialogFragment
                         button.setChecked(repeatDays.contains(day));
                         button.setEnabled(repeat);
 
-                    } else Log.d("DEBUG", "updateViews: missing button tag " + i);
-                } else Log.d("DEBUG", "updateViews: missing button " + i);
+                    } //else Log.d("DEBUG", "updateViews: missing button tag " + i);
+                } //else Log.d("DEBUG", "updateViews: missing button " + i);
             }
         }
     }

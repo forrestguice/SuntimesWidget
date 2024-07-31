@@ -231,7 +231,7 @@ public abstract class SuntimesLayout
         retValue[1] = adjustedSuffixSizeSp;
         retValue[2] = adjustedIconWidthDp;
 
-        Log.d("ClockLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + timeSizeSp + ", adjustedSp:" + retValue[0] + ", baseIconDp: " + iconWidthDp +  ", adjustedIconDp: " + retValue[2]);
+        //Log.d("ClockLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + timeSizeSp + ", adjustedSp:" + retValue[0] + ", baseIconDp: " + iconWidthDp +  ", adjustedIconDp: " + retValue[2]);
         return retValue;
     }
 
@@ -290,7 +290,7 @@ public abstract class SuntimesLayout
         }
 
         //Log.w("SuntimesLayout", "adjustTextSize: " + rect.height() + "px > " + maxHeightPixels + "px [" + maxHeightDp + "dp]");
-        Log.d("SuntimesLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + textSizeSp + ", adjustedSp:" + adjustedTextSizeSp);
+        //Log.d("SuntimesLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + textSizeSp + ", adjustedSp:" + adjustedTextSizeSp);
         return adjustedTextSizeSp;
     }
 

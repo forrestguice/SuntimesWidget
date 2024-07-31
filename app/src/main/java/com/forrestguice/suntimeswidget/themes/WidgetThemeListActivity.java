@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.appwidget.AppWidgetManager;
@@ -39,6 +38,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
@@ -57,6 +57,7 @@ import android.widget.GridView;
 
 import android.widget.ImageView;
 
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -64,12 +65,12 @@ import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.io.File;
 
@@ -652,7 +653,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         @Override
         public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
         {
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
 
             MenuItem selectItem = menu.findItem(R.id.selectTheme);
             selectItem.setVisible( !disallowSelect );
@@ -788,12 +789,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
-    public static void updateWidgetsMatchingTheme(Context context, String themeName)
-    {
-        Intent updateIntent = new Intent();
-        updateIntent.setAction(SuntimesWidget0.SUNTIMES_THEME_UPDATE);
-        updateIntent.putExtra(SuntimesWidget0.KEY_THEME, themeName);
-        context.sendBroadcast(updateIntent);
+    public static void updateWidgetsMatchingTheme(Context context, String themeName) {
+        WidgetListAdapter.updateWidgetsMatchingTheme(context, WidgetListAdapter.createWidgetListAdapter(context), themeName);
     }
 
     @Override
@@ -973,7 +970,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
 }

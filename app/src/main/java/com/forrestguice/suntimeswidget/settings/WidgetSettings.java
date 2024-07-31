@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_1;
@@ -60,6 +61,7 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_2;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -776,7 +778,8 @@ public class WidgetSettings
      */
     public static enum WidgetModeSunPos3x2 implements WidgetModeDisplay
     {
-        MODE3x2_LINEGRAPH("Graph", R.layout.layout_widget_sunpos_3x2_1),
+        MODE3x2_LIGHTGRAPH("Light Graph", R.layout.layout_widget_sunpos_3x2_2),
+        MODE3x2_LINEGRAPH("Altitude Graph", R.layout.layout_widget_sunpos_3x2_1),
         MODE3x2_WORLDMAP("World Map", R.layout.layout_widget_sunpos_3x2_0);
 
         private final int layoutID;
@@ -806,6 +809,7 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            MODE3x2_LIGHTGRAPH.setDisplayString(context.getString(R.string.widgetMode3x2_lightgraph));
             MODE3x2_LINEGRAPH.setDisplayString(context.getString(R.string.widgetMode3x2_linegraph));
             MODE3x2_WORLDMAP.setDisplayString(context.getString(R.string.widgetMode3x2_worldmap));
         }
@@ -2044,6 +2048,7 @@ public class WidgetSettings
     {
         WidgetModeSunPos3x2 mode = loadSunPos3x2ModePref(context, appWidgetId);
         switch (mode) {
+            case MODE3x2_LIGHTGRAPH: return new SunPosLayout_3X2_2();
             case MODE3x2_LINEGRAPH: return new SunPosLayout_3X2_1();
             case MODE3x2_WORLDMAP: default: return new SunPosLayout_3X2_0();
         }
@@ -3412,6 +3417,7 @@ public class WidgetSettings
 
         WidgetActions.deletePrefs(context, appWidgetId);
         WidgetSettingsMetadata.deleteMetaData(context, appWidgetId);
+        AlarmWidgetSettings.deletePrefs(context, appWidgetId);
     }
 
     public static void initDefaults( Context context )
@@ -3453,6 +3459,7 @@ public class WidgetSettings
         RiseSetOrder.initDisplayStrings(context);
         CalendarSettings.initDisplayStrings(context);
         WidgetActions.initDisplayStrings(context);
+        AlarmWidgetSettings.initDisplayStrings(context);
     }
 
 }

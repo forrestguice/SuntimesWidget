@@ -30,7 +30,7 @@
             android:key="getFix_passiveMode"
             android:title="@string/configLabel_getFix_passiveMode"
             android:summary="@string/configLabel_getFix_passiveMode_summary"
-            android:defaultValue="@string/def_getFix_passiveMode" />
+            android:defaultValue="@bool/def_getFix_passiveMode" />
 
     </PreferenceCategory>
 

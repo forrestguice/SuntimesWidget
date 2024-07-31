@@ -21,11 +21,13 @@ package com.forrestguice.suntimeswidget.views;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import java.lang.reflect.Method;
 
 /**
  * PopupMenuCompat
@@ -52,7 +54,28 @@ public class PopupMenuCompat
         if (onClickListener != null) {
             menu.setOnMenuItemClickListener(onClickListener);
         }
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        forceActionBarIcons(menu.getMenu());
         return menu;
+    }
+
+    /**
+     * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
+     */
+    public static void forceActionBarIcons(Menu menu)    // TODO: when targetting api29+ this method can be replaced with PopupMenu.setForceShowIcon
+    {
+        if (menu != null)
+        {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder"))
+            {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+
+                } catch (Exception e) {
+                    Log.e("SuntimesActivity", "failed to set show overflow icons", e);
+                }
+            }
+        }
     }
 }

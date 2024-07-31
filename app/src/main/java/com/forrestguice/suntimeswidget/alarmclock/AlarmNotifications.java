@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -55,10 +56,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
+
+import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -77,11 +81,13 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
@@ -101,15 +107,44 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
     public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
     public static final String ACTION_UPDATE_UI = "suntimeswidget.alarm.ui.update";
+    public static final String ACTION_LOCATION_CHANGED = "suntimeswidget.alarm.location_changed";  // signals home location is changed/reconfigured; reschedule these alarms
+
+    public static final String ACTION_BEDTIME = "suntimeswidget.alarm.start_bedtime";              // enable bedtime mode
+    public static final String ACTION_BEDTIME_PAUSE = "suntimeswidget.alarm.pause_bedtime";        // pause bedtime mode
+    public static final String ACTION_BEDTIME_RESUME = "suntimeswidget.alarm.resume_bedtime";      // resume bedtime mode
+    public static final String ACTION_BEDTIME_DISMISS = "suntimeswidget.alarm.dismiss_bedtime";    // disable bedtime mode
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
+
+    public static final String CHANNEL_ID_ALARMS = "suntimes.channel.alarms";
+    public static final String CHANNEL_ID_NOTIFICATIONS0 = "suntimes.channel.notifications0";
+    public static final String CHANNEL_ID_NOTIFICATIONS1 = "suntimes.channel.notifications1";
+    public static final String CHANNEL_ID_MISC = "suntimes.channel.misc";
+
+    public static final int NOTIFICATION_SERVICE_IS_ACTIVE_ID = -1;
 
     public static final int NOTIFICATION_SCHEDULE_ALL_ID = -10;
     public static final int NOTIFICATION_SCHEDULE_ALL_DURATION = 4000;
 
     public static final int NOTIFICATION_BATTERYOPT_WARNING_ID = -20;
     public static final int NOTIFICATION_AUTOSTART_WARNING_ID = -30;
+
+    public static final int NOTIFICATION_BEDTIME_ACTIVE_ID = -1000;
+
+    public static final String[] ALARM_ACTIONS = new String[] {
+            ACTION_SHOW, ACTION_SILENT, ACTION_DISMISS, ACTION_SNOOZE,
+            ACTION_SCHEDULE, ACTION_RESCHEDULE, ACTION_RESCHEDULE1,
+            ACTION_DISABLE, ACTION_TIMEOUT, ACTION_DELETE,
+            ACTION_UPDATE_UI, ACTION_LOCATION_CHANGED,
+    };
+    public static final String[] BEDTIME_ACTIONS = new String[] {
+            ACTION_BEDTIME, ACTION_BEDTIME_PAUSE, ACTION_BEDTIME_RESUME, ACTION_BEDTIME_DISMISS
+    };
+    public static final String[] SYSTEM_ACTIONS = new String[] {
+            Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_MY_PACKAGE_REPLACED,
+            Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_TIME_CHANGED
+    };
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -125,8 +160,29 @@ public class AlarmNotifications extends BroadcastReceiver
         Uri data = intent.getData();
         Log.d(TAG, "onReceive: " + action + ", " + data);
         if (action != null) {
-            context.startService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+            if (actionIsPermitted(action)) {
+                if (Build.VERSION.SDK_INT >= 26) {
+                    context.startForegroundService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                } else {
+                    context.startService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                }
+            } else Log.e(TAG, "onReceive: `" + action + "` is not on the list of permitted actions! Ignoring...");
         } else Log.w(TAG, "onReceive: null action!");
+    }
+
+    protected boolean actionIsPermitted(String action)
+    {
+        for (String a : ALARM_ACTIONS) {
+            if (a.equals(action)) {
+                return true;
+            }
+        }
+        for (String a : SYSTEM_ACTIONS) {
+            if (a.equals(action)) {
+                 return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -167,7 +223,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 if (actionText != null && actionListener != null) {
                     snackbar.setAction(actionText, actionListener);
                 }
-                SuntimesUtils.themeSnackbar(context, snackbar, null);
+                ViewUtils.themeSnackbar(context, snackbar, null);
                 snackbar.show();
                 return snackbar;
 
@@ -355,6 +411,26 @@ public class AlarmNotifications extends BroadcastReceiver
         findTask.execute();
     }
 
+    public static void findAppLocationAlarms(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished)
+    {
+        AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context)
+        {
+            @Override
+            protected boolean passesFilter(Cursor cursor, long rowID)
+            {
+                int index = cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ALARM_FLAGS);
+                String rawFlags = (index >= 0) ? cursor.getString(index) : null;
+                flags.clear();
+                AlarmClockItem.parseAlarmFlags(flags, rawFlags);
+                return AlarmClockItem.flagIsTrue(flags, AlarmClockItem.FLAG_LOCATION_FROM_APP);
+            }
+            private final HashMap<String,Long> flags = new HashMap<>();
+        };
+        findTask.setAlarmItemTaskListener(onFinished);
+        findTask.setParam_enabledOnly(true);
+        findTask.execute();
+    }
+
     /**
      * Find the alarm expected to trigger next and cache its ID in prefs.
      * If using 'power off alarms' this is the alarm that should wake the device.
@@ -454,10 +530,20 @@ public class AlarmNotifications extends BroadcastReceiver
     public static Intent getFullscreenBroadcast(Uri data)
     {
         Intent intent = new Intent(ACTION_UPDATE_UI);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
         intent.setData(data);
+        if (data != null) {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
         return intent;
     }
-    
+
+    public static Intent getBedtimeBroadcast(String action) {
+        Intent intent = new Intent(action);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
+        return intent;
+    }
+
     public static Intent getSuntimesIntent(Context context) {
         Intent intent = new Intent(context, SuntimesActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -514,11 +600,12 @@ public class AlarmNotifications extends BroadcastReceiver
      */
     public static void startAlert(@NonNull final Context context, @NonNull AlarmClockItem alarm)
     {
-        initPlayer(context,false);
-        if (isPlaying) {
-            stopAlert();
+        String channel = (alarm.type != null ? alarm.type.name() : AlarmClockItem.AlarmType.ALARM.name());
+        MediaPlayer player = initPlayer(context, channel, false);
+        if (isPlaying(channel)) {
+            stopAlert(channel);
         }
-        isPlaying = true;
+        setIsPlaying(channel, true);
 
         boolean isAlarm = (alarm.type == AlarmClockItem.AlarmType.ALARM);
         boolean passesFilter = passesInterruptionFilter(context, alarm);
@@ -526,12 +613,17 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.w(TAG, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
         }
 
-        if (alarm.vibrate && passesFilter) {
+        boolean isMuted = AlarmSettings.isChannelMuted(context, alarm.type);
+        if (isMuted) {
+            Log.w(TAG, "startAlert: blocked by Notification Channel (muted): " + alarm.rowID);
+        }
+
+        if (alarm.vibrate && passesFilter && !isMuted) {
             startVibration(context, alarm);
         }
 
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
-        if (soundUri != null && passesFilter)
+        if (soundUri != null && passesFilter && !isMuted)
         {
             if (AlarmSettings.VALUE_RINGTONE_DEFAULT.equals(alarm.ringtoneURI)) {
                 soundUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type, true);
@@ -548,23 +640,24 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             try {
-                startAlert(context, soundUri, isAlarm);  // (0)
+                startAlert(context, player, soundUri, isAlarm);  // (0)
 
             } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {    // fallback to default
                 Log.e(TAG, "startAlert: failed to play " + (soundUri != null ? soundUri.toString() : "null") + " ..(0) " + e);
                 Uri defaultUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
                 try {
-                    startAlert(context, defaultUri, isAlarm);  // (1)
+                    startAlert(context, player, defaultUri, isAlarm);  // (1)
 
                 } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e1) {    // default failed too..
                     Log.e(TAG, "startAlert: failed to play " + (defaultUri != null ? defaultUri.toString() : "null") + " ..(1) " + e);
                     Uri fallbackUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.type);
                     try {
-                        startAlert(context, fallbackUri, isAlarm);  // (2)
+                        startAlert(context, player, fallbackUri, isAlarm);  // (2)
 
                     } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e2) {
                         Log.e(TAG, "startAlert: failed to play " + fallbackUri.toString() + " ..(2) " + e);
                         Toast.makeText(context, context.getString(R.string.alarmAction_alertFailedMsg), Toast.LENGTH_SHORT).show();
+                        setIsPlaying(channel, false);
                     }
                 }
             }
@@ -578,7 +671,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    protected static void startAlert(Context context, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
+    protected static void startAlert(Context context, @NonNull final MediaPlayer player, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
     {
         if (soundUri == null) {
             throw new IOException("URI must not be null!");
@@ -594,6 +687,24 @@ public class AlarmNotifications extends BroadcastReceiver
 
         try {
             player.setDataSource(context, soundUri);
+            if (BuildConfig.DEBUG)
+            {
+                player.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                    @Override
+                    public boolean onError(MediaPlayer mp, int what, int extra)
+                    {
+                        Log.e(TAG, "onError: MediaPlayer: " + what + ", " + extra);
+                        return false;
+                    }
+                });
+                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        Log.d(TAG, "onCompletion: MediaPlayer");
+                    }
+                });
+            }
+
             player.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
             {
                 @Override
@@ -608,7 +719,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
 
                     if (fadeInMillis > 0) {
-                        startFadeIn(fadeInMillis);
+                        startFadeIn(player, fadeInMillis);
                     } else player.setVolume(1, t_volume = 1);
 
                     mediaPlayer.start();
@@ -634,19 +745,19 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static boolean isVibrating = false;
     private static Handler vibrationHandler;
     private static Runnable vibration;
-    private static Runnable vibrate(final long[] pattern, final int repeat)
+    private static Runnable vibrate(final String channel, final long[] pattern, final int repeat)
     {
-        return vibration = new Runnable()
+        return new Runnable()
         {
             @Override
             public void run()
             {
-                if (isPlaying && vibrator != null)
+                if (isPlaying(channel) && vibrator != null)
                 {
                     isVibrating = true;
                     vibrator.vibrate(pattern, -1);   // manually loop vibration; this triggers a (re)start if vibration was stopped by screen-off.
-                    if (isPlaying && repeat >= 0) {             // TODO: better workaround?
-                        vibrationHandler.postDelayed(vibration, vibrationLength(pattern));
+                    if (isPlaying(channel) && repeat >= 0) {             // TODO: better workaround?
+                        vibrationHandler.postDelayed(this, vibrationLength(pattern));
                     } else isVibrating = false;
                 }
             }
@@ -666,17 +777,28 @@ public class AlarmNotifications extends BroadcastReceiver
             vibrationHandler = new Handler();
         }
         int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM) ? 0 : -1;
-        vibrationHandler.post(vibrate(AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom));
+        vibration = vibrate(alarm.type.name(), AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom);
+        vibrationHandler.post(vibration);
+    }
+    public static void stopVibration()
+    {
+        if (vibrator != null)
+        {
+            vibrator.cancel();
+            if (vibrationHandler != null) {
+                vibrationHandler.removeCallbacks(vibration);
+            }
+        }
     }
 
     public static int FADEIN_STEP_MILLIS = 50;
     protected static boolean isFadingIn = false;
     protected static float t_volume = 0;
-    private static Handler fadeHandler;
-    private static Runnable fadein;
-    private static Runnable fadeIn(final long duration)    // TODO: use VolumeShaper for api 26+
+    protected static Handler fadeHandler;
+
+    private static Runnable fadeIn(@NonNull final Handler handler, @NonNull final MediaPlayer player, final long duration)    // TODO: use VolumeShaper for api 26+
     {
-        return fadein = new Runnable()
+        return new Runnable()
         {
             private float elapsed = 0;
 
@@ -690,37 +812,60 @@ public class AlarmNotifications extends BroadcastReceiver
 
                 //Log.d("DEBUG", "fadeIn: " + elapsed + ":" + volume);
                 if ((elapsed + FADEIN_STEP_MILLIS) <= duration) {
-                    fadeHandler.postDelayed(fadein, FADEIN_STEP_MILLIS);
+                    handler.postDelayed(this, FADEIN_STEP_MILLIS);
                 } else isFadingIn = false;
             }
         };
     }
-    private static void startFadeIn(final long duration)
+
+    @NonNull
+    private static void startFadeIn(@Nullable MediaPlayer player, final long duration)
     {
-        if (fadeHandler == null) {
-            fadeHandler = new Handler();
+        if (player != null)
+        {
+            player.setVolume(0, t_volume = 0);
+            if (fadeHandler == null) {
+                fadeHandler = new Handler();
+            }
+            fadeHandler.postDelayed(fadeIn(fadeHandler, player, duration), FADEIN_STEP_MILLIS);
+        } else {
+            Log.w(TAG, "startFadeIn: null MediaPlayer!");
         }
-        player.setVolume(0, t_volume = 0);
-        fadeHandler.postDelayed(fadeIn(duration), FADEIN_STEP_MILLIS);
     }
 
     /**
      * Stop playing sound / vibration.
      */
-    public static void stopAlert()
-    {
+    public static void stopAlert() {
         stopAlert(true);
     }
     public static void stopAlert(boolean stopVibrate)
     {
-        if (vibrator != null && stopVibrate)
+        if (stopVibrate) {
+            stopVibration();
+        }
+        for (MediaPlayer player : players.values())
         {
-            vibrator.cancel();
-            if (vibrationHandler != null) {
-                vibrationHandler.removeCallbacks(vibration);
+            if (player != null) {
+                stopSound(player);
             }
         }
+    }
 
+    public static void stopAlert(String channel) {
+        stopAlert(channel, true);
+    }
+    public static void stopAlert(String channel, boolean stopVibrate)
+    {
+        if (stopVibrate) {
+            stopVibration();
+        }
+        stopSound(players.get(channel));
+        setIsPlaying(channel, false);
+    }
+
+    public static void stopSound(MediaPlayer player)
+    {
         if (player != null)
         {
             player.stop();
@@ -729,8 +874,6 @@ public class AlarmNotifications extends BroadcastReceiver
             }
             player.reset();
         }
-
-        isPlaying = false;
     }
 
     protected static boolean passesInterruptionFilter(Context context, @NonNull AlarmClockItem item)
@@ -751,7 +894,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 case NotificationManager.INTERRUPTION_FILTER_PRIORITY:      // (2) allow priority
                     if (Build.VERSION.SDK_INT >= 28) {
                         return (item.type == AlarmClockItem.AlarmType.ALARM) &&
-                                (isCategorySet(getNotificationPolicy(notificationManager), PRIORITY_CATEGORY_ALARMS));
+                                (isCategorySet(getNotificationPolicy(notificationManager), NotificationManager.Policy.PRIORITY_CATEGORY_ALARMS));
                     } else {
                         return (item.type == AlarmClockItem.AlarmType.ALARM);
                     }
@@ -809,14 +952,16 @@ public class AlarmNotifications extends BroadcastReceiver
     private static boolean isCategorySet(@Nullable NotificationManager.Policy policy, int category) {
         return (policy != null && ((policy.priorityCategories & category) != 0));
     }
-    private static final int PRIORITY_CATEGORY_ALARMS = 1 << 5;  // TODO: use constants added in api28
+    //private static final int PRIORITY_CATEGORY_ALARMS = 1 << 5;
 
-    protected static boolean isPlaying = false;
-    protected static MediaPlayer player = null;
+    protected static final HashMap<String, Boolean> isPlaying = new HashMap<>();
+    protected static final HashMap<String, MediaPlayer> players = new HashMap<>();
     protected static Vibrator vibrator = null;
     protected static AudioManager audioManager;
     protected static int t_player_error = 0, t_player_error_extra = 0;
-    protected static void initPlayer(final Context context, @SuppressWarnings("SameParameterValue") boolean reinit)
+
+    @NonNull
+    protected static MediaPlayer initPlayer(final Context context, final String channel, @SuppressWarnings("SameParameterValue") boolean reinit)
     {
         if (vibrator == null || reinit) {
             vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -826,9 +971,12 @@ public class AlarmNotifications extends BroadcastReceiver
             audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         }
 
+        MediaPlayer player = players.get(channel);
         if (player == null || reinit)
         {
             player = new MediaPlayer();
+            players.put(channel, player);
+
             player.setOnErrorListener(new MediaPlayer.OnErrorListener()
             {
                 @Override
@@ -847,15 +995,99 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onSeekComplete(MediaPlayer mediaPlayer)
                 {
                     if (!mediaPlayer.isLooping()) {                // some sounds (mostly ringtones) have a built-in loop - they repeat despite !isLooping!
-                        stopAlert();                            // so manually stop them after playing once
+                        stopAlert(channel);                            // so manually stop them after playing once
                     }
                 }
             });
         }
+        return player;
+    }
+
+    /**
+     * isPlaying
+     */
+    protected static boolean isPlaying() {
+        return isPlaying.containsValue(true);
+    }
+    protected static boolean isPlaying(String channel)
+    {
+        Boolean value = isPlaying.get(channel);
+        return (value != null ? value : false);
+    }
+    protected static void setIsPlaying(String channel, boolean value) {
+        isPlaying.put(channel, value);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * createNotificationChannel
+     * @param type AlarmType
+     * @return channelID
+     */
+    @TargetApi(26)
+    public static String createNotificationChannel(Context context, @Nullable AlarmClockItem.AlarmType type)
+    {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null)
+        {
+            int importance;
+            String channelID, title, desc;
+            if (type == null)
+            {
+                channelID = CHANNEL_ID_MISC;
+                title = context.getString(R.string.notificationChannel_misc_title);
+                desc = context.getString(R.string.notificationChannel_misc_desc);
+                importance = NotificationManagerCompat.IMPORTANCE_LOW;
+
+            } else {
+                switch (type)
+                {
+                    case ALARM:
+                        channelID = CHANNEL_ID_ALARMS;
+                        title = context.getString(R.string.notificationChannel_alarms_title);
+                        desc = context.getString(R.string.notificationChannel_alarms_desc);
+                        importance = NotificationManagerCompat.IMPORTANCE_MAX;
+                        break;
+
+                    case NOTIFICATION1:
+                        channelID = CHANNEL_ID_NOTIFICATIONS1;
+                        title = context.getString(R.string.notificationChannel_notifications1_title);
+                        desc = context.getString(R.string.notificationChannel_notifications1_desc);
+                        importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
+                        break;
+
+                    case NOTIFICATION:
+                    case NOTIFICATION2:
+                    default:
+                        channelID = CHANNEL_ID_NOTIFICATIONS0;
+                        title = context.getString(R.string.notificationChannel_notifications0_title);
+                        desc = context.getString(R.string.notificationChannel_notifications0_desc);
+                        importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
+                        break;
+                }
+            }
+
+            NotificationChannel channel = new NotificationChannel(channelID, title, importance);
+            channel.setDescription(desc);
+            channel.enableLights(true);
+            notificationManager.createNotificationChannel(channel);
+            return channelID;
+        }
+        return "";
+    }
+
+    public static NotificationCompat.Builder createNotificationBuilder(Context context, @Nullable AlarmClockItem alarm)
+    {
+        NotificationCompat.Builder builder;
+        if (Build.VERSION.SDK_INT >= 26) {
+            builder = new NotificationCompat.Builder(context, createNotificationChannel(context, ((alarm != null) ? alarm.type : null)));
+        } else {
+            builder = new NotificationCompat.Builder(context);
+        }
+        return builder;
+    }
 
     /**
      * createNotification
@@ -865,7 +1097,7 @@ public class AlarmNotifications extends BroadcastReceiver
      */
     public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
     {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, alarm);
         SuntimesData data = null;
 
         String eventString = alarm.getEvent();
@@ -1038,6 +1270,34 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+    public static Notification createBedtimeModeNotification(Context context)
+    {
+        NotificationCompat.Builder builder = createNotificationBuilder(context, null);
+        builder.setDefaults(Notification.DEFAULT_LIGHTS);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setCategory(NotificationCompat.CATEGORY_STATUS);
+        builder.setAutoCancel(false);
+        builder.setOngoing(true);
+        builder.setContentTitle(context.getString(R.string.configLabel_bedtime));
+        builder.setSmallIcon(R.drawable.ic_action_bedtime_light);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.setOnlyAlertOnce(false);
+
+        boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
+        builder.setContentText(context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active));
+
+        if (isPaused) {
+            PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_RESUME), PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(R.drawable.ic_action_bedtime, context.getString(R.string.configAction_resumeBedtime), pendingResume);
+        } else {
+            PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_PAUSE), PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(R.drawable.ic_action_pause, context.getString(R.string.configAction_pauseBedtime), pendingPause);
+        }
+
+        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_DISMISS), 0);
+        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.configAction_dismissBedtime), pendingDismiss);
+        return builder.build();
+    }
 
     public static Notification createProgressNotification(Context context) {
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock), "");
@@ -1048,7 +1308,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Notification createProgressNotification(Context context, String title, String message)
     {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, null);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setCategory(NotificationCompat.CATEGORY_PROGRESS);
@@ -1069,7 +1329,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static NotificationCompat.Builder warningNotificationBuilder(Context context)
     {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, null);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setCategory(NotificationCompat.CATEGORY_RECOMMENDATION);
@@ -1270,8 +1530,13 @@ public class AlarmNotifications extends BroadcastReceiver
         }
         public void stopSelf(@Nullable Integer startId)
         {
-            if (notification == null)
+            if (notification == null || notificationID == NOTIFICATION_SERVICE_IS_ACTIVE_ID)
             {
+                if (notificationID == NOTIFICATION_SERVICE_IS_ACTIVE_ID) {
+                    Log.i(TAG, "stopSelf: dismissing foreground notification");
+                    stopForeground(true);
+                }
+
                 Service service = serviceRef.get();
                 if (service != null) {
                     Log.i(TAG, "stopSelf: stopping service");
@@ -1323,6 +1588,11 @@ public class AlarmNotifications extends BroadcastReceiver
         public int onStartCommand(final Intent intent, int flags, final int startId)
         {
             super.onStartCommand(intent, flags, startId);
+
+            if (Build.VERSION.SDK_INT >= 26) {    // api26+ we have 5s to call startForeground; show a generic progress notification while the service is active
+                notifications.startForeground(NOTIFICATION_SERVICE_IS_ACTIVE_ID, createProgressNotification(NotificationService.this));
+            }
+
             if (intent != null)
             {
                 String action = intent.getAction();
@@ -1433,6 +1703,11 @@ public class AlarmNotifications extends BroadcastReceiver
                         notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
                         alarmListTask.execute();
 
+                    } else if (AlarmNotifications.ACTION_LOCATION_CHANGED.equals(action)) {
+                        Log.d(TAG, "ACTION_LOCATION_CHANGED received");
+                        notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
+                        findAppLocationAlarms(getApplicationContext(), rescheduleTaskListener(startId, null));
+
                     } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
                         Log.d(TAG, "TIMEZONE_CHANGED received");
                         boolean rescheduling = false;
@@ -1461,6 +1736,26 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "TIME_CHANGED received");
                         notifications.stopSelf(startId);
                         // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
+
+                    } else if (ACTION_BEDTIME.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME");
+                        triggerBedtimeMode(getApplicationContext(), true);
+                        notifications.stopSelf(startId);
+
+                    } else if (ACTION_BEDTIME_PAUSE.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME_PAUSE");
+                        pauseBedtimeMode(getApplicationContext());
+                        notifications.stopSelf(startId);
+
+                    } else if (ACTION_BEDTIME_RESUME.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME_RESUME");
+                        resumeBedtimeMode(getApplicationContext());
+                        notifications.stopSelf(startId);
+
+                    } else if (ACTION_BEDTIME_DISMISS.equals(action)) {
+                        Log.d(TAG, "ACTION_BEDTIME_DISMISS");
+                        triggerBedtimeMode(getApplicationContext(), false);
+                        notifications.stopSelf(startId);
 
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
                         Log.d(TAG, "ACTION_DELETE: clear all");
@@ -1499,7 +1794,71 @@ public class AlarmNotifications extends BroadcastReceiver
             return START_STICKY;
         }
 
+        public static void triggerBedtimeMode(Context context, boolean value)
+        {
+            BedtimeSettings.setBedtimeState(context, (value ? BedtimeSettings.STATE_BEDTIME_ACTIVE : BedtimeSettings.STATE_BEDTIME_INACTIVE));
+
+            if (value) {
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+            } else dismissNotification(context, NOTIFICATION_BEDTIME_ACTIVE_ID);
+
+            if (BedtimeSettings.loadPrefBedtimeDoNotDisturb(context))
+            {
+                if (Build.VERSION.SDK_INT >= 23)
+                {
+                    NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    if (notifications != null && BedtimeSettings.hasDoNotDisturbPermission(context))
+                    {
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            BedtimeSettings.setAutomaticZenRule(context, true);
+                        }
+                        BedtimeSettings.triggerDoNotDisturb(context, value);
+                    }
+                }
+            }
+            context.sendBroadcast(getFullscreenBroadcast(null));
+        }
+        public static void pauseBedtimeMode(Context context)
+        {
+            if (BedtimeSettings.isBedtimeModeActive(context))
+            {
+                BedtimeSettings.setBedtimeState(context, BedtimeSettings.STATE_BEDTIME_PAUSED);
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+                if (Build.VERSION.SDK_INT >= 24) {
+                    BedtimeSettings.triggerDoNotDisturb(context, false);
+                }
+                context.sendBroadcast(getFullscreenBroadcast(null));
+            }
+        }
+        public static void resumeBedtimeMode(Context context)
+        {
+            if (BedtimeSettings.isBedtimeModePaused(context))
+            {
+                BedtimeSettings.setBedtimeState(context, BedtimeSettings.STATE_BEDTIME_ACTIVE);
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+                if (Build.VERSION.SDK_INT >= 24) {
+                    BedtimeSettings.triggerDoNotDisturb(context, true);
+                }
+                context.sendBroadcast(getFullscreenBroadcast(null));
+            }
+        }
+
         private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener_clocktime(final int startId)
+        {
+            return rescheduleTaskListener(startId, new AlarmClockItemFilter()
+            {
+                @Override
+                public boolean passesFilter(AlarmClockItem item) {
+                    int state = item.state.getState();
+                    return (item.getEvent() == null && state != AlarmState.STATE_SOUNDING && state != AlarmState.STATE_SNOOZING);
+                }
+            });
+        }
+        public interface AlarmClockItemFilter {
+            boolean passesFilter(AlarmClockItem item);
+        }
+
+        private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener rescheduleTaskListener(final int startId, @Nullable final AlarmClockItemFilter filter)
         {
             return new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
             {
@@ -1512,7 +1871,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         public void onObservedAll()
                         {
                             long duration = System.currentTimeMillis() - startedAt;
-                            Log.d(TAG, "Re-schedule completed (time zone changed); took " + duration + "ms");
+                            Log.d(TAG, "Re-schedule completed; took " + duration + "ms");
                             new Handler(Looper.getMainLooper()).postDelayed(new Runnable()
                             {
                                 @Override
@@ -1539,8 +1898,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             @Override
                             public void onFinished(Boolean result, final AlarmClockItem item)
                             {
-                                int state = item.state.getState();
-                                if (item.getEvent() == null && state != AlarmState.STATE_SOUNDING && state != AlarmState.STATE_SNOOZING) {
+                                if (filter == null || filter.passesFilter(item)) {
                                     createAlarmOnReceiveListener(getApplicationContext(), startId, AlarmNotifications.ACTION_RESCHEDULE, notifyObserver).onFinished(result, item);
                                 } else notifyObserver.onFinished(false, item);
                             }
@@ -1551,7 +1909,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener clearTaskListener = new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
+        private final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener clearTaskListener = new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
         {
             @Override
             public void onItemsLoaded(Long[] ids)
@@ -1574,7 +1932,7 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         }
 
-        private static Intent getNotificationIntent(Context context, String action, Uri data, @Nullable Bundle extras)
+        public static Intent getNotificationIntent(Context context, String action, Uri data, @Nullable Bundle extras)
         {
             Intent intent = new Intent(context, NotificationService.class);
             intent.setAction(action);
@@ -1976,7 +2334,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids) {
-                            context.startActivity(getAlarmListIntent(context, item.rowID));         // open the alarm list
+                            //context.startActivity(getAlarmListIntent(context, item.rowID));         // open the alarm list
                             context.sendBroadcast(getFullscreenBroadcast(item.getUri()));           // dismiss fullscreen activity
                             notifications.dismissNotification(context, (int)item.rowID);
                             notifications.stopSelf(startId);
@@ -1994,14 +2352,19 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final Long itemID)
                 {
                     Log.d(TAG, "Alarm Deleted (onDeleted)");
+                    BedtimeSettings.clearAlarmID(getApplicationContext(), itemID);
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, itemID)));     // dismiss fullscreen activity
-                            Intent alarmListIntent = getAlarmListIntent(context, itemID);
-                            alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
-                            context.startActivity(alarmListIntent);                                                                             // open the alarm list
+                            Intent updateIntent = getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, itemID));
+                            updateIntent.putExtra(ACTION_DELETE, true);    // signal item was deleted
+                            context.sendBroadcast(updateIntent);     // dismiss fullscreen activity, update list UIs
+
+                            //Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                            //alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                            //context.startActivity(alarmListIntent);                                                                             // open the alarm list
+
                             notifications.dismissNotification(context, itemID.intValue());
                             notifications.stopSelf(startId);
                         }
@@ -2018,14 +2381,19 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final Long itemID)
                 {
                     Log.d(TAG, "Alarms Cleared (on Cleared)");
+                    BedtimeSettings.clearAlarmIDs(getApplicationContext());
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // clear upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            context.sendBroadcast(getFullscreenBroadcast(null));     // dismiss fullscreen activity
-                            Intent alarmListIntent = getAlarmListIntent(context, itemID);
-                            alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
-                            context.startActivity(alarmListIntent);                                 // open the alarm list
+                            Intent updateIntent = getFullscreenBroadcast(null);
+                            updateIntent.putExtra(ACTION_DELETE, true);
+                            context.sendBroadcast(updateIntent);     // dismiss fullscreen activity, update list UIs
+
+                            //Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                            //alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                            //context.startActivity(alarmListIntent);                                 // open the alarm list
+
                             notifications.dismissNotifications(context);
                             notifications.stopSelf();
                         }
@@ -2152,6 +2520,10 @@ public class AlarmNotifications extends BroadcastReceiver
         String eventID = item.getEvent();
         SolarEvents event = SolarEvents.valueOf(eventID, null);
         ArrayList<Integer> repeatingDays = (item.repeatingDays != null ? item.repeatingDays : AlarmClockItem.everyday());
+        
+        if (item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP)) {
+            item.location = WidgetSettings.loadLocationPref(context, 0);
+        }
 
         if (item.location != null && event != null)
         {

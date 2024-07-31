@@ -22,7 +22,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -45,6 +44,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
@@ -209,6 +209,22 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
+        Preference fullscreenNotificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN);
+        if (fullscreenNotificationPrefs != null)
+        {
+            fullscreenNotificationPrefs.setOnPreferenceChangeListener(onFullscreenNotificationPrefsClicked(context));
+
+            /*boolean fullScreenIntentsEnabled = false;   // TODO: use NotificationManager#canUseFullScreenIntent() here
+            if (fullScreenIntentsEnabled)
+            {
+                String enabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_on);
+                fullscreenNotificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_fullscreen_summary0, enabledString));
+            } else {
+                String disabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_off);
+                fullscreenNotificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
+            }*/
+        }
+
         Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
         if (volumesPrefs != null) {
             volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
@@ -299,6 +315,25 @@ public class AlarmPrefsFragment extends PreferenceFragment
                     : context.getString(R.string.configLabel_alarms_bootcompleted_info_never));
             bootCompletedPref.setSummary(context.getString(R.string.configLabel_alarms_bootcompleted_summary, infoSpan));
         }
+    }
+
+    /**
+     * opens screen to manage full-screen intent limits introduced in api34
+     * https://source.android.com/docs/core/permissions/fsi-limits
+     */
+    private static Preference.OnPreferenceChangeListener onFullscreenNotificationPrefsClicked(final Context context)
+    {
+        return new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue)
+            {
+                if (Build.VERSION.SDK_INT >= 34) {
+                    AlarmSettings.openFullScreenIntentSettings(context);
+                }
+                return false;
+            }
+        };
     }
 
     /***

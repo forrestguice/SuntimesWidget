@@ -41,6 +41,11 @@
 
         <menu>
 
+            <item android:id="@+id/mapOption_colors"
+                android:title="@string/configAction_colors"
+                android:icon="?attr/icActionAppearance"
+                app:showAsAction="never" />
+
             <group android:id="@+id/mapOption_group_light">
 
                 <item android:id="@+id/mapOption_sunlight"
@@ -101,6 +106,12 @@
                     android:title="@string/configAction_moon"
                     android:icon="@drawable/ic_moon"
                     app:showAsAction="never" />
+
+                <item android:id="@+id/action_calendar"
+                    android:title="@string/configAction_showCalendar"
+                    android:icon="?attr/icActionCalendar"
+                    app:showAsAction="never" />
+
             </menu>
     </item>
 

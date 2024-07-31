@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.settings.fragments;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +35,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -150,6 +150,11 @@ public class UIPrefsFragment extends PreferenceFragment
             manage_events.setOrder(-91);
         }
 
+        Preference navigation = fragment.findPreference("app_navigation_mode");
+        if (navigation != null) {
+            navigation.setOnPreferenceChangeListener(onNavigationChanged(fragment.getActivity(), navigation));
+        }
+
         PreferenceCategory category = (PreferenceCategory) fragment.findPreference("custom_events");
         initPref_ui_customevents((SuntimesSettingsActivity) activity, category);
 
@@ -159,18 +164,32 @@ public class UIPrefsFragment extends PreferenceFragment
     public static void initPref_ui_customevents(final SuntimesSettingsActivity context, final PreferenceCategory category)
     {
         ArrayList<Preference> eventPrefs = new ArrayList<>();
-        for (final String eventID : EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION))
+
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(context);
+        for (final String eventID : eventIDs)
         {
             EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
-            AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
 
             final CheckBoxPreference pref = new CheckBoxPreference(context);
             pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
-            pref.setOrder((event != null ? (int)event.getAngle() : 0));
             pref.setTitle(alias.getLabel());
             pref.setSummary(alias.getSummary(context));
             pref.setPersistent(false);
             pref.setChecked(true);
+
+            switch (alias.getType())
+            {
+                case SUN_ELEVATION:
+                    AlarmEventProvider.SunElevationEvent elevationEvent = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((elevationEvent != null ? (int)elevationEvent.getAngle() : 0));
+                    break;
+
+                case SHADOWLENGTH:
+                    AlarmEventProvider.ShadowLengthEvent shadowEvent = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((shadowEvent != null ? 1000 + (int)shadowEvent.getLength() : 1000));
+                    break;
+            }
+
             pref.setOnPreferenceChangeListener(customEventListener(context, eventID, category, pref));
             eventPrefs.add(pref);
         }
@@ -221,6 +240,17 @@ public class UIPrefsFragment extends PreferenceFragment
                             });
                     confirm.show();
                 }
+                return true;
+            }
+        };
+    }
+
+    protected static Preference.OnPreferenceChangeListener onNavigationChanged(final Context context, final Preference pref)
+    {
+        return new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };

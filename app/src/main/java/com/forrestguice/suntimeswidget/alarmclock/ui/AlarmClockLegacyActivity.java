@@ -49,7 +49,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,11 +58,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
-import com.forrestguice.suntimeswidget.AlarmDialog;
-import com.forrestguice.suntimeswidget.LocationConfigDialog;
+import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
@@ -379,14 +378,14 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             alarmEditDialog.setOnAcceptedListener(onItemDialogAccepted);
         }
 
-        AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        AlarmEventDialog eventDialog0 = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
         if (eventDialog0 != null)
         {
             initEventDialog(eventDialog0, null);
             eventDialog0.setOnAcceptedListener((eventDialog0.getType() == AlarmClockItem.AlarmType.ALARM) ? onAddAlarmAccepted : onAddNotificationAccepted);
         }
 
-        AlarmDialog eventDialog1 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+        AlarmEventDialog eventDialog1 = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
         if (eventDialog1 != null)
         {
             initEventDialog(eventDialog1, t_selectedLocation);
@@ -656,10 +655,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         //Log.d("DEBUG", "showAddDialog: " + type);
         FragmentManager fragments = getSupportFragmentManager();
-        AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        AlarmEventDialog eventDialog0 = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
         if (eventDialog0 == null)
         {
-            final AlarmDialog dialog = new AlarmDialog();
+            final AlarmEventDialog dialog = new AlarmEventDialog();
             dialog.setDialogTitle(getString((type == AlarmClockItem.AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
             initEventDialog(dialog, null);
             dialog.setType(type);
@@ -673,7 +672,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     protected void addAlarm(AlarmClockItem.AlarmType type)
     {
         FragmentManager fragments = getSupportFragmentManager();
-        AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        AlarmEventDialog dialog = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
         addAlarm(type, "", dialog.getChoice(), -1, -1, AlarmSettings.loadPrefVibrateDefault(this), AlarmSettings.getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
     protected void addAlarm(AlarmClockItem.AlarmType type, String label, String event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
@@ -734,7 +733,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         public void onClick(DialogInterface d, int which)
         {
             FragmentManager fragments = getSupportFragmentManager();
-            AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+            AlarmEventDialog dialog = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
 
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             t_selectedItem = null;
@@ -984,7 +983,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
      */
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
-        final AlarmDialog dialog = new AlarmDialog();
+        final AlarmEventDialog dialog = new AlarmEventDialog();
         dialog.setDialogTitle(getString((item.type == AlarmClockItem.AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
         initEventDialog(dialog, item.location);
         dialog.setChoice(item.getEvent());
@@ -995,7 +994,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT);
     }
 
-    private void initEventDialog(AlarmDialog dialog, Location forLocation)
+    private void initEventDialog(AlarmEventDialog dialog, Location forLocation)
     {
         SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(this, 0);
         SuntimesMoonData moonData = new SuntimesMoonData(this, 0);
@@ -1673,7 +1672,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
 

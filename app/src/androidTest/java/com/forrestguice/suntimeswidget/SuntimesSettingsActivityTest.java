@@ -26,7 +26,6 @@ import android.support.test.InstrumentationRegistry;
 
 import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -40,6 +39,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -55,7 +55,6 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withKey;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -448,7 +447,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyWidgetSettings(@NonNull Context context)
     {
-        ArrayAdapter widgetAdapter = SuntimesWidgetListActivity.WidgetListAdapter.createWidgetListAdapter(context);
+        ArrayAdapter widgetAdapter = WidgetListAdapter.createWidgetListAdapter(context);
         if (widgetAdapter.isEmpty())
             onView(withId(android.R.id.empty)).check(assertEnabled);
         else onView(withId(R.id.widgetList)).check(assertEnabled);

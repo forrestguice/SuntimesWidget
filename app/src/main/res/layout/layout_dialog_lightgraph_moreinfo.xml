@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_moreinfo"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginTop="8dp"
+        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
+        android:baselineAligned="false">
+
+        <LinearLayout android:id="@+id/layout_time_sunrise_early_layout"
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            android:background="?attr/selectableItemBackground">
+            <TextView android:labelFor="@+id/text_time_sunrise_early"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small" android:textStyle="bold"
+                android:text="@string/configLabel_earliest_sunrise" />
+            <TextView android:id="@+id/text_time_sunrise_early"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small"
+                android:singleLine="true" android:ellipsize="marquee"
+                tools:text="Month Day, Year" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/layout_time_sunset_late_layout"
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?attr/selectableItemBackground">
+            <TextView android:labelFor="@+id/text_time_sunrise_late"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small" android:textStyle="bold"
+                android:text="@string/configLabel_latest_sunset" />
+            <TextView android:id="@+id/text_time_sunset_late"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small"
+                android:singleLine="true" android:ellipsize="marquee"
+                tools:text="Month Day, Year" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
+        android:baselineAligned="false">
+
+        <LinearLayout android:id="@+id/layout_time_sunrise_late_layout"
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            android:background="?attr/selectableItemBackground">
+            <TextView android:labelFor="@+id/text_time_sunrise_late"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small" android:textStyle="bold"
+                android:text="@string/configLabel_latest_sunrise" />
+            <TextView android:id="@+id/text_time_sunrise_late"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small"
+                android:singleLine="true" android:ellipsize="marquee"
+                tools:text="Month Day, Year" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/layout_time_sunset_early_layout"
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?attr/selectableItemBackground">
+            <TextView android:labelFor="@+id/text_time_sunset_early"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small" android:textStyle="bold"
+                android:text="@string/configLabel_earliest_sunset" />
+            <TextView android:id="@+id/text_time_sunset_early"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small"
+                android:singleLine="true" android:ellipsize="marquee"
+                tools:text="Month Day, Year" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

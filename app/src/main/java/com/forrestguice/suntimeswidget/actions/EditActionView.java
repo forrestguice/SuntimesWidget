@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget.actions;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,12 +50,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -485,7 +487,7 @@ public class EditActionView extends LinearLayout
                 } catch (Exception e) {
                     Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
                     Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-                    SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+                    ViewUtils.themeSnackbar(getContext(), snackbar, null);
                     snackbar.show();
                     return;
                 }
@@ -505,7 +507,7 @@ public class EditActionView extends LinearLayout
         } catch (Exception e) {
             Log.e(TAG, "testIntent: unable to start + " + launchType + " :: " + e);
             Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-            SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+            ViewUtils.themeSnackbar(getContext(), snackbar, null);
             snackbar.show();
         }
     }
@@ -527,7 +529,7 @@ public class EditActionView extends LinearLayout
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.editintent, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 
         MenuItem[] restrictedItems = new MenuItem[] { menu.getMenu().findItem(R.id.saveIntent), menu.getMenu().findItem(R.id.loadIntent) };
         for (MenuItem item : restrictedItems)
@@ -633,17 +635,20 @@ public class EditActionView extends LinearLayout
      * @param context Context
      * @param id Intent id (or null)
      */
-    public void loadIntent(Context context, int appWidgetId, @Nullable String id)
+    public void loadIntent(Context context, int appWidgetId, @Nullable String id) {
+        loadIntent(context, appWidgetId, id, WidgetActions.defaultLaunchPrefValues());
+    }
+    public void loadIntent(Context context, int appWidgetId, @Nullable String id, ContentValues defaults)
     {
-        String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-        String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
-        String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
-        String packageString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
-        String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
-        String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
-        String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
-        String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
-        String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+        String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE));
+        String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC));
+        String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null, defLaunchPrefValue(defaults, ""));
+        String packageString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE));
+        String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE));
+        String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION));
+        String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA));
+        String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE));
+        String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS));
         Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         Set<String> tagSet = WidgetActions.loadActionTags(context, appWidgetId, id);
 
@@ -663,6 +668,13 @@ public class EditActionView extends LinearLayout
         lastLoadedID = id;
     }
     private String lastLoadedID = null;
+
+    public static String defLaunchPrefValue(@NonNull ContentValues values, String key)
+    {
+        if (values.containsKey(key)) {
+            return values.getAsString(key);
+        } else return WidgetActions.defaultLaunchPrefValue(key);
+    }
 
     /**
      * restoreDefaults

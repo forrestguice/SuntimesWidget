@@ -71,16 +71,29 @@ public class SuntimesRiseSetDataset
         init(context, appWidgetID);
     }
 
-    public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other)
+    public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other) {
+        this(other, WidgetSettings.TimeMode.values());
+    }
+
+    public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other, WidgetSettings.TimeMode[] modes)
     {
-        dataset.put(WidgetSettings.TimeMode.OFFICIAL.name(), this.dataActual = new SuntimesRiseSetData(other.dataActual));
-        dataset.put(WidgetSettings.TimeMode.CIVIL.name(), this.dataCivil = new SuntimesRiseSetData(other.dataCivil));
-        dataset.put(WidgetSettings.TimeMode.NAUTICAL.name(), this.dataNautical = new SuntimesRiseSetData(other.dataNautical));
-        dataset.put(WidgetSettings.TimeMode.ASTRONOMICAL.name(), this.dataAstro = new SuntimesRiseSetData(other.dataAstro));
-        dataset.put(WidgetSettings.TimeMode.NOON.name(), this.dataNoon = new SuntimesRiseSetData(other.dataNoon));
-        dataset.put(WidgetSettings.TimeMode.GOLD.name(), this.dataGold = new SuntimesRiseSetData(other.dataGold));
-        dataset.put(WidgetSettings.TimeMode.BLUE8.name(), this.dataBlue8 = new SuntimesRiseSetData(other.dataBlue8));
-        dataset.put(WidgetSettings.TimeMode.BLUE4.name(), this.dataBlue4 = new SuntimesRiseSetData(other.dataBlue4));
+        this.calculator = other.calculator;
+        this.calculatorDescriptor = other.calculatorDescriptor;
+
+        for (WidgetSettings.TimeMode mode : modes)
+        {
+            switch (mode)
+            {
+                case OFFICIAL: dataset.put(WidgetSettings.TimeMode.OFFICIAL.name(), this.dataActual = new SuntimesRiseSetData(other.dataActual)); break;
+                case CIVIL: dataset.put(WidgetSettings.TimeMode.CIVIL.name(), this.dataCivil = new SuntimesRiseSetData(other.dataCivil)); break;
+                case NAUTICAL: dataset.put(WidgetSettings.TimeMode.NAUTICAL.name(), this.dataNautical = new SuntimesRiseSetData(other.dataNautical)); break;
+                case ASTRONOMICAL: dataset.put(WidgetSettings.TimeMode.ASTRONOMICAL.name(), this.dataAstro = new SuntimesRiseSetData(other.dataAstro)); break;
+                case NOON: dataset.put(WidgetSettings.TimeMode.NOON.name(), this.dataNoon = new SuntimesRiseSetData(other.dataNoon)); break;
+                case GOLD: dataset.put(WidgetSettings.TimeMode.GOLD.name(), this.dataGold = new SuntimesRiseSetData(other.dataGold)); break;
+                case BLUE8: dataset.put(WidgetSettings.TimeMode.BLUE8.name(), this.dataBlue8 = new SuntimesRiseSetData(other.dataBlue8)); break;
+                case BLUE4: dataset.put(WidgetSettings.TimeMode.BLUE4.name(), this.dataBlue4 = new SuntimesRiseSetData(other.dataBlue4)); break;
+            }
+        }
     }
 
     private void init(Context context, int appWidgetID)
@@ -121,8 +134,8 @@ public class SuntimesRiseSetDataset
 
     public void calculateData()
     {
-        SuntimesCalculator calculator = null;
-        SuntimesCalculatorDescriptor descriptor = null;
+        SuntimesCalculator calculator = this.calculator;
+        SuntimesCalculatorDescriptor descriptor = this.calculatorDescriptor;
 
         boolean first = true;
         ArrayList<WidgetSettings.TimeMode> events0 = new ArrayList<WidgetSettings.TimeMode>();
@@ -130,7 +143,7 @@ public class SuntimesRiseSetDataset
 
         for (SuntimesRiseSetData data : dataset.values())
         {
-            if (first)
+            if (first && descriptor == null)
             {
                 data.calculate();
                 calculator = data.calculator();
@@ -155,9 +168,9 @@ public class SuntimesRiseSetDataset
             }
         }
 
-        SuntimesCalculator.SunPosition position0 = (calculator != null ? calculator.getSunPosition(nowThen(dataActual.calendar())) : null);
         if (events0.isEmpty())
         {
+            SuntimesCalculator.SunPosition position0 = (calculator != null ? calculator.getSunPosition(nowThen(dataActual.calendar())) : null);
             if (position0 == null) {
                 dataActual.dayLengthToday = -1;
                 dataCivil.dayLengthToday = -1;
@@ -174,9 +187,9 @@ public class SuntimesRiseSetDataset
             dataCivil.dayLengthToday = SuntimesData.DAY_MILLIS;
         }
 
-        SuntimesCalculator.SunPosition position1 = (calculator != null ? calculator.getSunPosition(nowThen(dataActual.getOtherCalendar())) : null);
         if (events1.isEmpty())
         {
+            SuntimesCalculator.SunPosition position1 = (calculator != null ? calculator.getSunPosition(nowThen(dataActual.getOtherCalendar())) : null);
             if (position1 == null) {
                 dataActual.dayLengthOther = -1;
                 dataCivil.dayLengthOther = -1;
@@ -261,11 +274,6 @@ public class SuntimesRiseSetDataset
             }
         }
         return new SearchResult(mode, nearest, isRising);
-    }
-
-    public SuntimesCalculator calculator()
-    {
-        return dataActual.calculator();
     }
 
     public Calendar todayIs()
@@ -371,10 +379,24 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public SuntimesCalculatorDescriptor calculatorMode()
-    {
-        return dataActual.calculatorMode();
+    public SuntimesCalculator calculator() {
+        return (calculator != null ? calculator : dataActual.calculator());
     }
+    public SuntimesCalculatorDescriptor calculatorMode() {
+        return (calculatorDescriptor != null ? calculatorDescriptor: dataActual.calculatorMode());
+    }
+
+    public void setCalculator(Context context, SuntimesCalculatorDescriptor value)
+    {
+        this.calculatorDescriptor = value;
+        this.calculator = new SuntimesCalculatorFactory(context, value).createCalculator(location(), timezone());
+    }
+    public void setCalculator(Context context, SuntimesCalculatorDescriptor calculatorDescriptor, SuntimesCalculator calculator) {
+        this.calculatorDescriptor = calculatorDescriptor;
+        this.calculator = calculator;
+    }
+    protected SuntimesCalculator calculator;
+    protected SuntimesCalculatorDescriptor calculatorDescriptor;
 
     public Calendar now()
     {

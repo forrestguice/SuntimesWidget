@@ -131,7 +131,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         date.add(Calendar.DATE, position - TODAY_POSITION);
 
         SuntimesRiseSetDataset sun = new SuntimesRiseSetDataset(context);
-        Set<String> eventIDs = EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(context);
         for (String eventID : eventIDs)
         {
             SuntimesRiseSetData d = new SuntimesRiseSetData(context, 0);
