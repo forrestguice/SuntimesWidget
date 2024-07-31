@@ -138,6 +138,13 @@ public class AlarmNotifications extends BroadcastReceiver
             ACTION_DISABLE, ACTION_TIMEOUT, ACTION_DELETE,
             ACTION_UPDATE_UI, ACTION_LOCATION_CHANGED,
     };
+    public static final String[] BEDTIME_ACTIONS = new String[] {
+            ACTION_BEDTIME, ACTION_BEDTIME_PAUSE, ACTION_BEDTIME_RESUME, ACTION_BEDTIME_DISMISS
+    };
+    public static final String[] SYSTEM_ACTIONS = new String[] {
+            Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_MY_PACKAGE_REPLACED,
+            Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_TIME_CHANGED
+    };
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -168,6 +175,11 @@ public class AlarmNotifications extends BroadcastReceiver
         for (String a : ALARM_ACTIONS) {
             if (a.equals(action)) {
                 return true;
+            }
+        }
+        for (String a : SYSTEM_ACTIONS) {
+            if (a.equals(action)) {
+                 return true;
             }
         }
         return false;

@@ -27,18 +27,9 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications.ACTION_BEDTIME;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications.ACTION_BEDTIME_DISMISS;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications.ACTION_BEDTIME_PAUSE;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications.ACTION_BEDTIME_RESUME;
-
 public class BedtimeBroadcastReceiver extends BroadcastReceiver
 {
     public static final String TAG = "BedtimeReceiver";
-
-    public static final String[] BEDTIME_ACTIONS = new String[] {
-            ACTION_BEDTIME, ACTION_BEDTIME_PAUSE, ACTION_BEDTIME_RESUME, ACTION_BEDTIME_DISMISS
-    };
 
     @Override
     public void onReceive(final Context context, Intent intent)
@@ -59,7 +50,7 @@ public class BedtimeBroadcastReceiver extends BroadcastReceiver
 
     protected boolean actionIsPermitted(String action)
     {
-        for (String a : BEDTIME_ACTIONS) {
+        for (String a : AlarmNotifications.BEDTIME_ACTIONS) {
             if (a.equals(action)) {
                 return true;
             }
