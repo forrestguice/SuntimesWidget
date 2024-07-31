@@ -9,14 +9,18 @@
 * adds "bedtime mode" to alarms; helps schedule do-not-disturb during sleep hours (#425).
 * adds "high brightness" option (#741) and swipeable buttons (#738) to the alarm screen.
 * adds "next alarm" quick settings tile, and 2x2 and 3x2 "next alarm" widgets (#766).
-* adds support for notification channels (api26+); a warning is shown when channels are muted.
+* adds support for notification channels (api26+).
 * adds permission `USE_FULL_SCREEN_INTENT` (needed for alarms over the lock screen) [PERMISSION]; fixes bug "alarms fail to display over lock screen" (#802).
 * adds permission `FOREGROUND_SERVICE` (needed for alarms and notifications) [PERMISSION].
 * adds permission `ACCESS_NOTIFICATION_POLICY` (needed to enable do-not-disturb at bedtime) [PERMISSION].
-* updates default widget themes, and adds to default widget actions.
+* fixes navigation bugs when using D-pad within alarm screens (Android TV).
+* fixes incorrect default places coordinates (3 places updated).
+* updates default app and widget themes, and adds additional default widget actions.
 * updates Time4A dependency from 4.4.2-2019c to 4.8-2021a.
-* updates targetSdkVersion (25 -> 26 -> 28) (#725).
-* increments minSdkVersion (10 -> 14) (#122); building for api10 is still possible by reverting changes in `build.gradle`.
+* updates constraint-layout dependency from 1.0.2 to 2.0.4.
+* updates targetSdkVersion (25 -> 26 -> 28) (#725), and build tools to 28.0.3.
+* increments minSdkVersion (10 -> 14) (#122); building for api10 remains possible for now by reverting changes in `build.gradle`.
+
 
 ### v0.15.16 (2024-06-17)
 * adds "online help" links to existing help dialogs (#797).
