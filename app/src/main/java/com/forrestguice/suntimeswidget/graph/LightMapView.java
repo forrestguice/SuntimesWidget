@@ -50,6 +50,8 @@ import java.util.concurrent.locks.Lock;
 public class LightMapView extends android.support.v7.widget.AppCompatImageView
 {
     private static final double MINUTES_IN_DAY = 24 * 60;
+    private static final double MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
+    private static final double ONE_DIVIDED_MILLIS_IN_DAY = 1d / MILLIS_IN_DAY;
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
@@ -489,7 +491,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return frame;
         }
 
-        public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapColors colors )
+        public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapColors colors)
         {
             if (w <= 0 || h <= 0)
             {
@@ -594,13 +596,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                             : colors.option_drawNow_pointSizePx;
                     int pointStroke = (int)Math.ceil(pointRadius / 3d);
 
-                    if (colors.option_lmt)
-                    {
+                    //if (colors.option_lmt)
+                    //{
                         TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
                         Calendar nowLmt = Calendar.getInstance(lmt);
                         nowLmt.setTimeInMillis(now.getTimeInMillis());
                         now = nowLmt;
-                    }
+                    //}
 
                     switch (colors.option_drawNow) {
                         case LightMapColors.DRAW_SUN2:
@@ -616,9 +618,31 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 }
             }
 
+            Bitmap retValue = b;
+            if (!colors.option_lmt)    // re-center around noon
+            {
+                Bitmap b0 = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
+                Canvas c0 = new Canvas(b0);
+
+                long zoneOffsetMs = data.timezone().getOffset(now.getTimeInMillis());
+                long lonOffsetMs = Math.round(data.location().getLongitudeAsDouble() * MILLIS_IN_DAY / 360d);
+                long offsetMs = zoneOffsetMs - lonOffsetMs;
+
+                float left = (float)(offsetMs * ONE_DIVIDED_MILLIS_IN_DAY * w);
+                if (left > 0) {
+                    c0.drawBitmap(b, left - w, 0, p);
+                }
+                c0.drawBitmap(b, left, 0, p);
+                if (left < 0) {
+                    c0.drawBitmap(b, left + w, 0, p);
+                }
+                retValue = b0;
+                b.recycle();
+            }
+
             //long bench_end = System.nanoTime();
             //Log.d("BENCH", "make lightmap :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
-            return b;
+            return retValue;
         }
 
         protected Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapColors options)
@@ -713,8 +737,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 return false;
             }
 
-            if (options.option_lmt)
-            {
+            //if (options.option_lmt)
+            //{
                 TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
                 if (riseTime != null)
                 {
@@ -728,7 +752,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     setTimeLmt.setTimeInMillis(setTime.getTimeInMillis());
                     setTime = setTimeLmt;
                 }
-            }
+            //}
 
             int w = c.getWidth();
             int h = c.getHeight();
