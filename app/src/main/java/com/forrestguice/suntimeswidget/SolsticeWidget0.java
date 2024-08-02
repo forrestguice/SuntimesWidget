@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset1;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
+import com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout_1x1_0;
 
@@ -108,7 +109,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
         boolean overrideMode = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
         if (overrideMode)
         {
-            boolean showCrossQuarter = AppSettings.loadShowCrossQuarterPref(context);    // TODO: add "tracking level" ui to config activity
+            boolean showCrossQuarter = SolsticeWidgetSettings.loadWidgetBool(context, appWidgetId, SolsticeWidgetSettings.PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, SolsticeWidgetSettings.PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER);   //AppSettings.loadShowCrossQuarterPref(context);
             int eventTrackingLevel = showCrossQuarter ? WidgetSettings.TRACKINGLEVEL_MAX : WidgetSettings.TRACKINGLEVEL_MIN; //WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
             SuntimesEquinoxSolsticeDataset dataset = (eventTrackingLevel > 0 ? new SuntimesEquinoxSolsticeDataset1(context, appWidgetId)
                                                                              : new SuntimesEquinoxSolsticeDataset(context, appWidgetId));
