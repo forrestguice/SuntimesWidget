@@ -647,7 +647,16 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         {
             if (options.option_drawNow > 0)
             {
-                int pointRadius = (options.option_drawNow_pointSizePx <= 0) ? (int)(c.getWidth() * (20 / (float)MINUTES_IN_DAY)) : options.option_drawNow_pointSizePx;
+                int pointRadius;
+                if ((options.option_drawNow_pointSizePx <= 0)) {
+                    pointRadius = (int)Math.ceil(c.getWidth() / (48d * 2d));      // a circle that is 1/2 hr wide
+                    int maxPointRadius = (int) (c.getHeight() / 16d);
+                    if (pointRadius + (pointRadius / 3d) > maxPointRadius) {
+                        pointRadius = maxPointRadius;
+                    }
+                } else {
+                    pointRadius = options.option_drawNow_pointSizePx;
+                }
                 int pointStroke = (int)Math.ceil(pointRadius / 3d);
 
                 switch (options.option_drawNow) {
@@ -1086,7 +1095,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         {
             int n = (int) (2 * MINUTES_IN_DAY - options.axisX_labels_interval);
             int h = c.getHeight();
-            float textSize = (float)(Math.sqrt(c.getWidth() * h) / options.axisX_labels_textsize_ratio);
+            float textSize = textSize(c, options.axisX_labels_textsize_ratio);
             int i = (int) options.axisX_labels_interval;
             while (i <= n)
             {
@@ -1103,7 +1112,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
         protected void drawAxisYLabels(Canvas c, Paint p, LineGraphOptions options)
         {
-            float textSize = (float)(Math.sqrt(c.getWidth() * c.getHeight()) / options.axisY_labels_textsize_ratio);
+            float textSize = textSize(c, options.axisY_labels_textsize_ratio);
             int i = -1 * (int) options.axisY_labels_interval;
             while (i < 90)
             {
@@ -1113,6 +1122,14 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 c.drawText((i > 0 ? "+" : "") + i + "°", 0 + (float)(1.25 * textSize), y + textSize/3 , p);
                 i += options.axisY_labels_interval;
             }
+        }
+
+        protected float textSize(Canvas c, float ratio)
+        {
+            //int s = (int)((c.getWidth() + c.getHeight()) / 2d);
+            //return (float)(Math.sqrt(s * (s/2d)) / ratio);
+            //return (float)(Math.sqrt(c.getWidth() * c.getHeight()) / ratio);
+            return (float)(c.getHeight() / ratio);
         }
 
         protected void drawGridX(Canvas c, Paint p, float interval, LineGraphOptions options)
@@ -1252,7 +1269,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public double axisX_width = 140;   // minutes
 
         public boolean axisX_labels_show = true;
-        public float axisX_labels_textsize_ratio = 20;
+        public float axisX_labels_textsize_ratio = 10;
         public float axisX_labels_interval = 60 * 3;  // minutes
 
         // Y-Axis
@@ -1261,7 +1278,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public int axisY_interval = 60 * 12;        // dp
 
         public boolean axisY_labels_show = true;
-        public float axisY_labels_textsize_ratio = 20;
+        public float axisY_labels_textsize_ratio = 10;
         public float axisY_labels_interval = 45;  // degrees
 
         // Grid-X

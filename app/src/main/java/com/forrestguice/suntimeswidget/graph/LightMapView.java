@@ -590,10 +590,17 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 // draw now marker
                 if (colors.option_drawNow > 0)
                 {
-                    int pointRadius = (colors.option_drawNow_pointSizePx <= 0)
-                            ? Math.max( (int)Math.ceil(c.getWidth() / (48d * 2d)),      // a circle that is 1/2 hr wide
-                                        (int)Math.ceil(c.getHeight() / (2.75d * 2d)) )     // a circle that is ~36% height of the graph
-                            : colors.option_drawNow_pointSizePx;
+                    int pointRadius;
+                    if (colors.option_drawNow_pointSizePx <= 0)
+                    {
+                        pointRadius = (int)Math.ceil(c.getWidth() / (48d * 2d));      // a circle that is 1/2 hr wide
+                        int maxPointRadius = (int)(c.getHeight() / 2d);
+                        if ((pointRadius + (pointRadius / 3d)) > maxPointRadius) {
+                            pointRadius = (maxPointRadius - (pointRadius/3));
+                        }
+                    } else {
+                        pointRadius = colors.option_drawNow_pointSizePx;
+                    }
                     int pointStroke = (int)Math.ceil(pointRadius / 3d);
 
                     //if (colors.option_lmt)
@@ -825,13 +832,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         private LightMapTaskListener listener = null;
-        public void setListener( LightMapTaskListener listener )
-        {
-            this.listener = listener;
+        public void setListener( LightMapTaskListener value ) {
+            listener = value;
         }
-        public void clearListener()
-        {
-            this.listener = null;
+        public void clearListener() {
+            listener = null;
         }
     }
 
