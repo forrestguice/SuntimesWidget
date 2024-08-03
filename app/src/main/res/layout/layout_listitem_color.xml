@@ -21,7 +21,6 @@
 
     <ImageButton
         android:id="@+id/colorButton"
-        style="@style/ColorEditButton" android:contentDescription="@string/configAction_chooseColor"
-        android:layout_marginEnd="4dp" android:layout_marginRight="4dp" />
+        style="@style/ColorEditButton1" android:contentDescription="@string/configAction_chooseColor" />
 
 </LinearLayout>
