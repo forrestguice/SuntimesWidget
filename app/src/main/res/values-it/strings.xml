@@ -1916,6 +1916,7 @@
     <string name="color_dialog_ok">Seleziona</string>
     <string name="color_dialog_cancel">Cancella</string>
     <string name="color_dialog_suggest">Suggest</string>   <!-- TODO -->
+    <string name="color_dialog_recent">Recent</string>    <!-- recent color list label -->    <!-- TODO -->
     <string name="color_dialog_tab1">1</string>
     <string name="color_dialog_tab2">2</string>
     <string name="color_dialog_tab3">3</string>
