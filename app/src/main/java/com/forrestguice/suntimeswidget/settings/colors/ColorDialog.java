@@ -398,7 +398,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         @Override
         public ColorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layout = LayoutInflater.from(parent.getContext());
-            View view = layout.inflate(R.layout.layout_listitem_color, parent, false);
+            View view = layout.inflate(ColorViewHolder.suggestedLayoutResID(), parent, false);
             return new ColorViewHolder(view);
         }
 
@@ -446,6 +446,10 @@ public class ColorDialog extends BottomSheetDialogFragment
         public ColorViewHolder(View itemView) {
             super(itemView);
             colorButton = (ImageButton)itemView.findViewById(R.id.colorButton);
+        }
+
+        public static int suggestedLayoutResID() {
+            return R.layout.layout_listitem_color;
         }
 
         public void bindColorToView(Integer color)
