@@ -50,7 +50,9 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -368,7 +370,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         Intent intent = new Intent(getActivity(), ColorActivity.class);
         intent.putExtra(ColorDialog.KEY_SHOWALPHA, true);
         intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
-        intent.putExtra(ColorDialog.KEY_RECENT, colorValues.getColors());
+        intent.putExtra(ColorDialog.KEY_RECENT, new ArrayList<>(new LinkedHashSet<>(colorValues.getColors())));
 
         if (defaultValues != null) {
             intent.putExtra(ColorDialog.KEY_SUGGESTED, defaultValues.getColor(key));
