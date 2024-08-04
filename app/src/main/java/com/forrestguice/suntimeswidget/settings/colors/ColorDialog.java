@@ -19,6 +19,8 @@
 package com.forrestguice.suntimeswidget.settings.colors;
 
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 
@@ -36,7 +38,7 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -78,22 +80,26 @@ public class ColorDialog extends BottomSheetDialogFragment
     private Button btn_suggest;
     private Button btn_cancel;
     private ViewPager colorPager;
-    private TabLayout colorPagerTabs;
-    private ColorPickerPagerAdapter colorPagerAdapter;
     protected Bundle colorPagerArgs = new Bundle();
+    private ColorPickerModel viewModel;
 
     private RecyclerView recentColors;
     private ColorsAdapter recentColors_adapter;
 
     public int getColor() {
-        return colorPagerArgs.getInt(KEY_COLOR);
+        return colorPagerArgs.getInt(KEY_COLOR, Color.WHITE);
     }
-    public void setColor( int color ) {
+    public void setColor( int color )
+    {
         colorPagerArgs.putInt(KEY_COLOR, color);
-        if (colorPagerAdapter != null)
-        {
-            colorPagerAdapter.setColor(color);
-            colorPagerAdapter.updateViews(getContext());
+        if (viewModel != null) {
+            viewModel.setColor(color);
+        }
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+        if (colorDialogListener != null) {
+            colorDialogListener.onColorChanged(color);
         }
     }
 
@@ -129,6 +135,9 @@ public class ColorDialog extends BottomSheetDialogFragment
         Context context = getContext();
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_colors, parent, false);
+
+        viewModel = ViewModelProviders.of(getActivity()).get(ColorPickerModel.class);
+        viewModel.setColor(getArguments().getInt(KEY_COLOR));
 
         if (savedState != null)
         {
@@ -206,7 +215,7 @@ public class ColorDialog extends BottomSheetDialogFragment
 
     private void initViews(Context context, View dialogContent)
     {
-        colorPagerTabs = (TabLayout) dialogContent.findViewById(R.id.color_pager_tabs);
+        TabLayout colorPagerTabs = (TabLayout) dialogContent.findViewById(R.id.color_pager_tabs);
         colorPager = (ViewPager) dialogContent.findViewById(R.id.color_pager);
 
         colorPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -217,8 +226,9 @@ public class ColorDialog extends BottomSheetDialogFragment
             public void onPageSelected(int position)
             {
                 Context context = getContext();
-                if (context != null) {
-                    SharedPreferences.Editor prefs = context.getSharedPreferences( PREFS_COLORDIALOG, Context.MODE_PRIVATE).edit();
+                if (context != null)
+                {
+                    SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_COLORDIALOG, Context.MODE_PRIVATE).edit();
                     prefs.putInt(KEY_COLORPICKER, position);
                     prefs.apply();
                 }
@@ -227,7 +237,15 @@ public class ColorDialog extends BottomSheetDialogFragment
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
-        colorPager.setAdapter(colorPagerAdapter = new ColorPickerPagerAdapter(getChildFragmentManager()));
+        ColorPickerPagerAdapter colorPagerAdapter = new ColorPickerPagerAdapter(getChildFragmentManager());
+        colorPagerAdapter.setAdapterListener(new ColorPickerPagerAdapter.AdapterListener()
+        {
+            @Override
+            public void onColorChanged(int value) {
+                setColor(value);
+            }
+        });
+        colorPager.setAdapter(colorPagerAdapter);
 
         colorPagerTabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(colorPager));
         colorPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(colorPagerTabs));
@@ -472,69 +490,60 @@ public class ColorDialog extends BottomSheetDialogFragment
     /**
      * ColorPickerPagerAdapter
      */
-    protected class ColorPickerPagerAdapter extends FragmentPagerAdapter
+    public static class ColorPickerPagerAdapter extends FragmentStatePagerAdapter
     {
-        protected ColorPickerFragment[] fragments;
-
-        public ColorPickerPagerAdapter(FragmentManager fragmentManager)
-        {
+        public ColorPickerPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
-
-            if (Build.VERSION.SDK_INT >= 14) {
-                fragments = new ColorPickerFragment[] { new QuadFlaskColorPickerFragment(), new QuadFlaskColorPickerFragment1(), new SimpleColorPickerFragment() };
-            } else {
-                fragments = new ColorPickerFragment[] { new SimpleColorPickerFragment() };
-            }
         }
+
+        public static class AdapterListener extends ColorChangeListener {
+            /* EMPTY */
+        }
+        public void setAdapterListener(AdapterListener listener) {
+            adapterListener = listener;
+        }
+        protected AdapterListener adapterListener = null;
 
         @Override
         public Fragment getItem(int position)
         {
-            fragments[position].setArguments(colorPagerArgs);
-            return fragments[position];
+            ColorPickerFragment item;
+            if (Build.VERSION.SDK_INT >= 14)
+            {
+                switch (position) {
+                    case 2: item = new QuadFlaskColorPickerFragment1(); break;
+                    case 1: item = new QuadFlaskColorPickerFragment(); break;
+                    case 0: default: item = new SimpleColorPickerFragment(); break;
+                }
+            } else {
+                switch (position) {
+                    case 0: default: item = new SimpleColorPickerFragment(); break;
+                }
+            }
+            item.setColorChangeListener(onColorChanged);
+            return item;
         }
+        private final int numFragments = (Build.VERSION.SDK_INT >= 14) ? 4 : 2;
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position)
-        {
-            fragments[position] = (ColorPickerFragment)super.instantiateItem(container, position);
-            fragments[position].setColorChangeListener(onColorChanged);
-            return fragments[position];
+        public int getCount() {
+            return numFragments;
         }
 
-        private ColorChangeListener onColorChanged = new ColorChangeListener() {
+        private final ColorChangeListener onColorChanged = new ColorChangeListener()
+        {
             @Override
             public void onColorChanged(int color)
             {
-                colorPagerArgs.putInt(KEY_COLOR, color);
-                if (colorDialogListener != null) {
-                    colorDialogListener.onColorChanged(color);
+                if (adapterListener != null) {
+                    adapterListener.onColorChanged(color);
                 }
-                updateViews(getContext());
             }
         };
 
         @Override
-        public int getCount() {
-            return fragments.length;
-        }
-
-        public void setColor(int color)
-        {
-            for (ColorPickerFragment fragment : fragments) {
-                if (fragment != null) {
-                    fragment.setColor(color);
-                }
-            }
-        }
-
-        public void updateViews(Context context)
-        {
-            for (ColorPickerFragment fragment : fragments) {
-                if (fragment != null) {
-                    fragment.updateViews(context);
-                }
-            }
+        public Bundle saveState() {
+            return null;
         }
     }
 
@@ -543,8 +552,17 @@ public class ColorDialog extends BottomSheetDialogFragment
      */
     public static class ColorPickerFragment extends Fragment
     {
+        protected ColorPickerModel viewModel;
+
         public ColorPickerFragment() {
             setArguments(new Bundle());
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            viewModel = ViewModelProviders.of(getActivity()).get(ColorPickerModel.class);
+            return null;
         }
 
         protected ColorDialog.ColorChangeListener listener;
@@ -553,19 +571,21 @@ public class ColorDialog extends BottomSheetDialogFragment
         }
 
         public void setColor( String hexValue ) {
-            setColor(Color.parseColor(hexValue.trim()));
+            setColor(Color.parseColor(hexValue.trim()), true);
         }
 
-        public void setColor( int color )
+        public void setColor( int color, boolean userTriggered )
         {
-            getArguments().putInt(KEY_COLOR, color);
-            if (listener != null) {
+            if (viewModel != null) {
+                viewModel.setColor(color);
+            }
+            if (listener != null && userTriggered) {
                 listener.onColorChanged(color);
             }
         }
 
         public int getColor() {
-            return getArguments().getInt(KEY_COLOR, Color.WHITE);
+            return (viewModel != null ? viewModel.getColor() : Color.WHITE);
         }
 
         public boolean showAlpha() {
@@ -573,6 +593,33 @@ public class ColorDialog extends BottomSheetDialogFragment
         }
 
         public void updateViews(Context context) {}
+        protected void setListeners() {}
+        protected void clearListeners() {}
+
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser)
+        {
+            super.setUserVisibleHint(isVisibleToUser);
+            if (isVisibleToUser && getView() != null) {
+                getView().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        clearListeners();
+                        updateViews(getActivity());
+                        setListeners();
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onViewStateRestored(Bundle bundle)
+        {
+            super.onViewStateRestored(bundle);
+            clearListeners();
+            updateViews(getActivity());
+            setListeners();
+        }
     }
 
     /**
@@ -605,23 +652,28 @@ public class ColorDialog extends BottomSheetDialogFragment
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+            super.onCreateView(inflater, container, savedInstanceState);
             View view = inflater.inflate(getLayoutResID(), container, false);
             initViews(view);
-
-            colorPicker.addOnColorChangedListener(new OnColorChangedListener() {
-                @Override
-                public void onColorChanged(int color) {
-                    setColor(color);
-                }
-            });
-
             updateViews(getContext());
+            colorPicker.addOnColorChangedListener(onColorChangedListener);
             return view;
         }
+
+        private final OnColorChangedListener onColorChangedListener = new OnColorChangedListener() {
+            @Override
+            public void onColorChanged(int color) {
+                setColor(color, true);
+                clearListeners();
+                updateViews(getActivity());
+                setListeners();
+            }
+        };
 
         @Override
         public void updateViews(Context context)
         {
+            super.updateViews(context);
             alphaSlider.setVisibility(showAlpha() ? View.VISIBLE : View.GONE);
             lightnessSlider.post(new Runnable() {
                 @Override
@@ -653,6 +705,22 @@ public class ColorDialog extends BottomSheetDialogFragment
             lightnessSlider = (LightnessSlider) view.findViewById(R.id.color_lightness1);
             colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker1);
             preview = view.findViewById(R.id.preview_color1);
+        }
+    }
+
+    /**
+     * ColorPickerModel
+     */
+    public static class ColorPickerModel extends ViewModel
+    {
+        protected int color = Color.WHITE;
+
+        public int getColor() {
+            return color;
+        }
+
+        public void setColor(int value) {
+            color = value;
         }
     }
 

@@ -136,7 +136,7 @@ public class ColorActivity extends AppCompatActivity
         return colorDialog;
     }
 
-    private ColorDialog.ColorDialogListener dialogListener = new ColorDialog.ColorDialogListener()
+    private final ColorDialog.ColorDialogListener dialogListener = new ColorDialog.ColorDialogListener()
     {
         @Override
         public void onAccepted(int color) {
