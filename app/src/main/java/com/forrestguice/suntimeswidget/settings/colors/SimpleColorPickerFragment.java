@@ -46,7 +46,7 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
 {
     protected EditText edit_r, edit_g, edit_b, edit_a, edit_hex;
     protected SeekBar seek_r, seek_g, seek_b, seek_a;
-    protected View preview, layout_a;
+    protected View layout_a;
     protected HashMap<EditText, TextWatcher> onTextChanged = new HashMap<>();
     protected HashMap<SeekBar, SeekBar.OnSeekBarChangeListener> onSeekBarChanged = new HashMap<>();
 
@@ -55,13 +55,16 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
     {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_colors_simple, container, false);
-        initViews(view);
+        initViews(getContext(), view);
         updateViews(getContext());
         return view;
     }
 
-    protected void initViews(View view)
+    @Override
+    protected void initViews(Context context, View view)
     {
+        super.initViews(context, view);
+
         edit_hex = (EditText) view.findViewById(R.id.color_edit_hex);
         edit_r = (EditText) view.findViewById(R.id.color_edit_r);
         edit_g = (EditText) view.findViewById(R.id.color_edit_g);
@@ -72,7 +75,6 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         seek_b = (SeekBar) view.findViewById(R.id.color_seek_b);
         seek_a = (SeekBar) view.findViewById(R.id.color_seek_a);
         layout_a = view.findViewById(R.id.color_layout_a);
-        preview = view.findViewById(R.id.preview_color);
 
         seek_r.setMax(255);
         seek_g.setMax(255);
@@ -266,8 +268,6 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         super.updateViews(context);
 
         int color = getColor();
-        preview.setBackgroundColor(color);
-
         int r = Color.red(color);
         int g = Color.green(color);
         int b = Color.blue(color);

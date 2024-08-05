@@ -19,6 +19,7 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -369,18 +370,20 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     protected Intent pickColorIntent(String key, int requestCode)
     {
+        Context context = getActivity();
+        int[] attr = { R.attr.timeCardBackground, R.attr.text_primaryColor };
+        TypedArray typedArray = context.obtainStyledAttributes(attr);
+        int colorUnder = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.card_bg));
+        @SuppressLint("ResourceType")
+        int colorOver = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_primary));
+        typedArray.recycle();
+
         Intent intent = new Intent(getActivity(), ColorActivity.class);
         intent.putExtra(ColorDialog.KEY_SHOWALPHA, true);
         intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
-
-        intent.putExtra(ColorDialog.KEY_RECENT, new ArrayList<>(new LinkedHashSet<>(colorValues.getColors())));
-
-        Context context = getActivity();
-        int[] attr = { R.attr.timeCardBackground };
-        TypedArray typedArray = context.obtainStyledAttributes(attr);
-        int colorUnder = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.card_bg));
-        typedArray.recycle();
         intent.putExtra(ColorDialog.KEY_COLOR_UNDER, colorUnder);
+        intent.putExtra(ColorDialog.KEY_COLOR_OVER, colorOver);
+        intent.putExtra(ColorDialog.KEY_RECENT, new ArrayList<>(new LinkedHashSet<>(colorValues.getColors())));
 
         if (defaultValues != null) {
             intent.putExtra(ColorDialog.KEY_SUGGESTED, defaultValues.getColor(key));

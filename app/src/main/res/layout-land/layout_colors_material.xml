@@ -16,7 +16,8 @@
             android:layout_width="@dimen/large_actionbar_size" android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="8dp"
-            android:gravity="center" android:background="@color/teal_900"
+            android:gravity="center"
+            android:background="@color/grey_900" android:textColor="@color/teal_500"
             android:textSize="?attr/text_size_small"
             android:text="@string/configLabel_themeColorText" />
 
@@ -24,17 +25,14 @@
             android:layout_width="match_parent" android:layout_height="0dp"  android:layout_weight="1"
             android:background="@color/teal_500" />
 
-        <!--<LinearLayout android:id="@+id/preview_color_under"
-            android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
-            android:background="@color/teal_700">
-
-            <TextView android:id="@+id/preview_color_text"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center" android:layout_margin="8dp"
-                android:textSize="?attr/text_size_small"
-                android:text="@string/configAction_colors" />
-
-        </LinearLayout>-->
+        <TextView android:id="@+id/preview_color_text1"
+            android:layout_width="@dimen/large_actionbar_size" android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:gravity="center"
+            android:background="@color/teal_500" android:textColor="@color/grey_900"
+            android:textSize="?attr/text_size_small"
+            android:text="@string/configLabel_themeColorText" />
 
     </LinearLayout>
 

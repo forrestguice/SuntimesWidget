@@ -27,7 +27,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 
@@ -38,9 +37,6 @@ public class MaterialColorPickerFragment extends ColorDialog.ColorPickerFragment
     protected ColorDialog.ColorsAdapter adapter;
     protected RecyclerView grid;
 
-    protected View preview;
-    protected TextView preview_text;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -48,7 +44,7 @@ public class MaterialColorPickerFragment extends ColorDialog.ColorPickerFragment
         setRetainInstance(true);
 
         View view = inflater.inflate(R.layout.layout_colors_material, container, false);
-        initViews(view);
+        initViews(getContext(), view);
         updateViews(getContext());
         return view;
     }
@@ -59,8 +55,9 @@ public class MaterialColorPickerFragment extends ColorDialog.ColorPickerFragment
         }
     }
 
-    protected void initViews(View view)
+    protected void initViews(Context context, View view)
     {
+        super.initViews(context, view);
         ArrayList<Integer> colorList = new ArrayList<Integer>();
 
         addAll(colorList, getResources().getIntArray(R.array.material_cyan));
@@ -104,33 +101,20 @@ public class MaterialColorPickerFragment extends ColorDialog.ColorPickerFragment
         grid.setLayoutManager(new GridLayoutManager(getActivity(), 14, GridLayoutManager.HORIZONTAL, false));
         grid.setAdapter(adapter);
         grid.scrollToPosition(0);
-
-        preview = view.findViewById(R.id.preview_color);
-        preview_text = (TextView) view.findViewById(R.id.preview_color_text);
     }
 
-    protected void setListeners() {
-    }
+    @Override
+    protected void setListeners() { /* EMPTY */ }
 
-    protected void clearListeners() {
-    }
+    @Override
+    protected void clearListeners() { /* EMPTY */ }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void updateViews(Context context)
     {
+        super.updateViews(context);
         adapter.setSelectedColor(getColor());
-        preview.setBackgroundColor(getColor());
-
-        if (preview_text != null && viewModel.hasColorUnder())
-        {
-            preview_text.setTextColor(getColor());
-            preview_text.setBackgroundColor(viewModel.getColorUnder());
-
-        } else if (preview_text != null) {
-            preview_text.setBackgroundColor(getColor());
-            preview_text.setTextColor(getColor());
-        }
     }
 
 }

@@ -30,6 +30,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -55,6 +56,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorChangedListener;
@@ -299,8 +301,11 @@ public class ColorDialog extends BottomSheetDialogFragment
     {
         PagerAdapter adapter = colorPager.getAdapter();
         ColorPickerFragment fragment = (ColorPickerFragment) adapter.instantiateItem(colorPager, colorPager.getCurrentItem());
-        if (fragment.isAdded() && fragment.getView() != null) {
+        if (fragment.isAdded() && fragment.getView() != null)
+        {
+            fragment.clearListeners();
             fragment.updateViews(context);
+            fragment.setListeners();
         }
 
         if (btn_suggest != null) {
@@ -608,15 +613,28 @@ public class ColorDialog extends BottomSheetDialogFragment
     {
         protected ColorPickerModel viewModel;
 
+        protected View preview;             // color as solid
+        protected TextView preview_text;    // color as text over card color
+        protected TextView preview_text1;   // color as background under default text color
+
         public ColorPickerFragment() {
             setArguments(new Bundle());
         }
 
+        @CallSuper
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             viewModel = ViewModelProviders.of(getActivity()).get(ColorPickerModel.class);
             return null;
+        }
+
+        @CallSuper
+        protected void initViews(Context context, View view)
+        {
+            preview = view.findViewById(R.id.preview_color);
+            preview_text = (TextView) view.findViewById(R.id.preview_color_text);
+            preview_text1 = (TextView) view.findViewById(R.id.preview_color_text1);
         }
 
         protected ColorDialog.ColorChangeListener listener;
@@ -646,7 +664,36 @@ public class ColorDialog extends BottomSheetDialogFragment
             return getArguments().getBoolean("showAlpha", false);
         }
 
-        public void updateViews(Context context) {}
+        @CallSuper
+        public void updateViews(Context context) {
+            updatePreview(context);
+        }
+
+        protected void updatePreview(Context context)
+        {
+            if (preview != null) {
+                preview.setBackgroundColor(getColor());
+            }
+
+            if (preview_text != null && viewModel.hasColorUnder()) {
+                preview_text.setTextColor(getColor());
+                preview_text.setBackgroundColor(viewModel.getColorUnder());
+
+            } else if (preview_text != null) {
+                preview_text.setBackgroundColor(getColor());
+                preview_text.setTextColor(getColor());
+            }
+
+            if (preview_text1 != null && viewModel.hasColorOver()) {
+                preview_text1.setTextColor(viewModel.getColorOver());
+                preview_text1.setBackgroundColor(getColor());
+
+            } else if (preview_text1 != null) {
+                preview_text1.setBackgroundColor(getColor());
+                preview_text1.setTextColor(getColor());
+            }
+        }
+
         protected void setListeners() {}
         protected void clearListeners() {}
 
@@ -685,22 +732,36 @@ public class ColorDialog extends BottomSheetDialogFragment
         protected AlphaSlider alphaSlider;
         protected LightnessSlider lightnessSlider;
         protected ColorPickerView colorPicker;
-        protected View preview;
 
         protected int getLayoutResID() {
             return R.layout.layout_colors_quadflask;
         }
 
-        protected void initViews(View view)
+        @Override
+        protected void initViews(Context context, View view)
+        {
+            super.initViews(context, view);
+            initViews1(context, view);
+            connectQuadFlaskViews();
+        }
+        protected void initViews1(Context context, View view)
         {
             alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha);
             lightnessSlider = (LightnessSlider) view.findViewById(R.id.color_lightness);
             colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker);
-            preview = view.findViewById(R.id.preview_color);
+        }
 
-            colorPicker.setLightnessSlider(lightnessSlider);
-            lightnessSlider.setColorPicker(colorPicker);
-            alphaSlider.setColorPicker(colorPicker);
+        protected void connectQuadFlaskViews()
+        {
+            if (colorPicker != null) {
+                colorPicker.setLightnessSlider(lightnessSlider);
+            }
+            if (lightnessSlider != null) {
+                lightnessSlider.setColorPicker(colorPicker);
+            }
+            if (alphaSlider != null) {
+                alphaSlider.setColorPicker(colorPicker);
+            }
         }
 
         @Override
@@ -708,7 +769,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         {
             super.onCreateView(inflater, container, savedInstanceState);
             View view = inflater.inflate(getLayoutResID(), container, false);
-            initViews(view);
+            initViews(getContext(), view);
             updateViews(getContext());
             colorPicker.addOnColorChangedListener(onColorChangedListener);
             return view;
@@ -737,7 +798,6 @@ public class ColorDialog extends BottomSheetDialogFragment
                 }
             });
             colorPicker.setColor(getColor(), false);
-            preview.setBackgroundColor(getColor());
         }
     }
 
@@ -753,12 +813,11 @@ public class ColorDialog extends BottomSheetDialogFragment
         }
 
         @Override
-        protected void initViews(View view)
+        protected void initViews1(Context context, View view)
         {
             alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha1);
             lightnessSlider = (LightnessSlider) view.findViewById(R.id.color_lightness1);
             colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker1);
-            preview = view.findViewById(R.id.preview_color1);
         }
     }
 
