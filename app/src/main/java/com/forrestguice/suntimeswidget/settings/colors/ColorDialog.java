@@ -61,9 +61,9 @@ import android.widget.TextView;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.slider.AlphaSlider;
-import com.flask.colorpicker.slider.LightnessSlider;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.colors.quadflask.LightnessSlider;
 
 import java.util.ArrayList;
 import java.util.List;
