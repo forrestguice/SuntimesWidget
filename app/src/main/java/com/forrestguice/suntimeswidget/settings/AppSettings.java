@@ -509,15 +509,18 @@ public class AppSettings
     /**
      * Is the current device a television? This implies limited features.
      */
-    public static boolean isTelevision(Context context)
+    public static boolean isTelevision(@NonNull Context context)
     {
-        if (Build.VERSION.SDK_INT >= 21) {
-            return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LEANBACK);
+        if (context != null)
+        {
+            if (Build.VERSION.SDK_INT >= 21) {
+                return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LEANBACK);
 
-        } else if (Build.VERSION.SDK_INT >= 13) {
-            UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
-            return (uiModeManager != null && (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION));
+            } else if (Build.VERSION.SDK_INT >= 13) {
+                UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+                return (uiModeManager != null && (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION));
 
+            } else return false;
         } else return false;
     }
 
