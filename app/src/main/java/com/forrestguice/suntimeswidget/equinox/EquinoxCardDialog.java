@@ -382,23 +382,26 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         //Log.d("DEBUG", "EquinoxDialog updated");
     }
 
-    protected boolean isImplemented(SuntimesEquinoxSolsticeDataset data) {
+    protected boolean isImplemented(@Nullable SuntimesEquinoxSolsticeDataset data) {
         return (data != null && data.isImplemented());
     }
-    protected void updateViews(Context context,  SuntimesEquinoxSolsticeDataset data) {
+    protected void updateViews(@NonNull Context context,  SuntimesEquinoxSolsticeDataset data) {
         updateViews(context, data.dataEquinoxSpring);
     }
 
-    protected boolean isImplemented(SuntimesEquinoxSolsticeData data) {
+    protected boolean isImplemented(@Nullable SuntimesEquinoxSolsticeData data) {
         return (data != null && data.isImplemented());
     }
-    protected void updateViews(Context context, SuntimesEquinoxSolsticeData data)
+    protected void updateViews(@NonNull Context context, SuntimesEquinoxSolsticeData data)
     {
-        text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
-        text_year_length.setText(styleYearDisplayText(context, data.calculator().getTropicalYearLength(data.calendar())));
+        if (context != null)
+        {
+            text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
+            text_year_length.setText(styleYearDisplayText(context, data.calculator().getTropicalYearLength(data.calendar())));
+        }
     }
 
-    protected CharSequence styleYearDisplayText(Context context, long yearLengthMillis)
+    protected CharSequence styleYearDisplayText(@NonNull Context context, long yearLengthMillis)
     {
         double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
         String timeString = utils.timeDeltaLongDisplayString(yearLengthMillis);
@@ -816,7 +819,10 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                 {
                     @Override
                     public void run() {
-                        updateViews(getContext(), card_adapter.initData(getContext(), position));
+                        Context context = getContext();
+                        if (context != null) {
+                            updateViews(context, card_adapter.initData(context, position));
+                        }
                     }
                 });
             }
