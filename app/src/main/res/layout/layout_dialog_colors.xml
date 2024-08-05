@@ -56,6 +56,11 @@
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:text="@string/color_dialog_tab3" />
 
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem4"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:text="@string/color_dialog_tab4" />
+
         </android.support.design.widget.TabLayout>
 
     </LinearLayout>

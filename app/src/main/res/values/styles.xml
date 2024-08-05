@@ -1159,10 +1159,19 @@
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:scaleType">fitXY</item>
         <item name="android:padding">3dp</item>
-        <item name="android:layout_marginLeft">0dp</item>
-        <item name="android:layout_marginRight">0dp</item>
-        <item name="android:layout_marginStart">0dp</item>
-        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_margin">0dp</item>
+    </style>
+    <style name="ColorEditButton1_land" parent="ColorEditButton1">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">24dp</item>
+    </style>
+    <style name="ColorEditButton2" parent="ColorEditButton">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:layout_margin">0dp</item>
     </style>
 
     <style name="SizeEdit" parent="@style/TextAppearance.AppCompat.Small">
