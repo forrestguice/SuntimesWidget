@@ -23,12 +23,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
@@ -370,7 +372,15 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         Intent intent = new Intent(getActivity(), ColorActivity.class);
         intent.putExtra(ColorDialog.KEY_SHOWALPHA, true);
         intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
+
         intent.putExtra(ColorDialog.KEY_RECENT, new ArrayList<>(new LinkedHashSet<>(colorValues.getColors())));
+
+        Context context = getActivity();
+        int[] attr = { R.attr.timeCardBackground };
+        TypedArray typedArray = context.obtainStyledAttributes(attr);
+        int colorUnder = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.card_bg));
+        typedArray.recycle();
+        intent.putExtra(ColorDialog.KEY_COLOR_UNDER, colorUnder);
 
         if (defaultValues != null) {
             intent.putExtra(ColorDialog.KEY_SUGGESTED, defaultValues.getColor(key));
