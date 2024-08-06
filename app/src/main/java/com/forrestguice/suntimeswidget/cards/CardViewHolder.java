@@ -693,6 +693,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         //Log.d("DEBUG", "startUpdateTask: " + this);
         if (lightmap != null) {
             lightmap.removeCallbacks(updateTask);
+            updateTask_isRunning = true;
             lightmap.post(updateTask);
         }
     }
@@ -702,7 +703,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         @Override
         public void run()
         {
-            if (lightmap != null)
+            if (lightmap != null && updateTask_isRunning)
             {
                 lightmap.getColors().now = Calendar.getInstance().getTimeInMillis();
                 //Log.d("DEBUG", "updating lightmap id-" + getAdapterPosition() + " @ " + lightmap.getNow() + "\t :: view-" + Integer.toHexString(lightmap.getColors().hashCode()));
@@ -711,6 +712,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             }
         }
     };
+    private boolean updateTask_isRunning = false;
     public static final int UPDATE_RATE = 30000;
 
     /**
@@ -720,6 +722,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     {
         //Log.d("DEBUG", "stopUpdateTask: " + this);
         if (lightmap != null) {
+            updateTask_isRunning = false;
             lightmap.removeCallbacks(updateTask);
         }
     }
