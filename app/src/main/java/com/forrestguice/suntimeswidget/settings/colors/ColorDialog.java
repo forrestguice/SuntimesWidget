@@ -45,7 +45,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -421,10 +420,16 @@ public class ColorDialog extends BottomSheetDialogFragment
      */
     public static class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder>
     {
-        private ArrayList<Integer> colors = new ArrayList<>();
+        private final ArrayList<Integer> colors = new ArrayList<>();
 
         public ColorsAdapter(List<Integer> colors) {
             this.colors.addAll(colors);
+            setHasStableIds(true);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
         }
 
         protected Integer itemLayoutResID = null;
@@ -611,7 +616,7 @@ public class ColorDialog extends BottomSheetDialogFragment
      */
     public static class ColorPickerFragment extends Fragment
     {
-        protected ColorPickerModel viewModel;
+        protected ColorPickerModel colorViewModel;
 
         protected View preview;             // color as solid
         protected TextView preview_text;    // color as text over card color
@@ -625,7 +630,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            viewModel = ViewModelProviders.of(getActivity()).get(ColorPickerModel.class);
+            colorViewModel = ViewModelProviders.of(getActivity()).get(ColorPickerModel.class);
             return null;
         }
 
@@ -648,8 +653,8 @@ public class ColorDialog extends BottomSheetDialogFragment
 
         public void setColor( int color, boolean userTriggered )
         {
-            if (viewModel != null) {
-                viewModel.setColor(color);
+            if (colorViewModel != null) {
+                colorViewModel.setColor(color);
             }
             if (listener != null && userTriggered) {
                 listener.onColorChanged(color);
@@ -657,7 +662,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         }
 
         public int getColor() {
-            return (viewModel != null ? viewModel.getColor() : Color.WHITE);
+            return (colorViewModel != null ? colorViewModel.getColor() : Color.WHITE);
         }
 
         public boolean showAlpha() {
@@ -675,17 +680,17 @@ public class ColorDialog extends BottomSheetDialogFragment
                 preview.setBackgroundColor(getColor());
             }
 
-            if (preview_text != null && viewModel.hasColorUnder()) {
+            if (preview_text != null && colorViewModel.hasColorUnder()) {
                 preview_text.setTextColor(getColor());
-                preview_text.setBackgroundColor(viewModel.getColorUnder());
+                preview_text.setBackgroundColor(colorViewModel.getColorUnder());
 
             } else if (preview_text != null) {
                 preview_text.setBackgroundColor(getColor());
                 preview_text.setTextColor(getColor());
             }
 
-            if (preview_text1 != null && viewModel.hasColorOver()) {
-                preview_text1.setTextColor(viewModel.getColorOver());
+            if (preview_text1 != null && colorViewModel.hasColorOver()) {
+                preview_text1.setTextColor(colorViewModel.getColorOver());
                 preview_text1.setBackgroundColor(getColor());
 
             } else if (preview_text1 != null) {
