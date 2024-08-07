@@ -13,6 +13,11 @@
                 android:icon="?attr/icActionAppearance"
                 app:showAsAction="never" />
 
+            <item android:id="@+id/graphOption_showCrosshair"
+                android:title="@string/graph_option_crosshair"
+                android:checkable="true"
+                app:showAsAction="never" />
+
             <item android:id="@+id/graphOption_showGrid"
                 android:title="@string/graph_option_grid"
                 android:checkable="true"

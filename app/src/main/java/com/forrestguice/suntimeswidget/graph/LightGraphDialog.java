@@ -75,6 +75,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.forrestguice.suntimeswidget.graph.LightGraphView.DEF_KEY_GRAPH_SHOWCROSSHAIR;
+import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWCROSSHAIR;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWLABELS;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
@@ -521,6 +523,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             options.showCivil = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCIVIL);
             options.showNautical = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWNAUTICAL);
             options.showAstro = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWASTRO);
+            options.option_drawNow_crosshair = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCROSSHAIR);
 
             if (data != null)
             {
@@ -664,6 +667,10 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         Menu menu = popup.getMenu();
 
+        MenuItem graphOption_showCrosshair = menu.findItem(R.id.graphOption_showCrosshair);
+        if (graphOption_showCrosshair != null) {
+            graphOption_showCrosshair.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCROSSHAIR));
+        }
         MenuItem graphOption_showGrid = menu.findItem(R.id.graphOption_showGrid);
         if (graphOption_showGrid != null) {
             graphOption_showGrid.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID));
@@ -731,6 +738,13 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                 case R.id.graphOption_showAxis:
                     toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews(context);
+                    return true;
+
+                case R.id.graphOption_showCrosshair:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCROSSHAIR);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, toggledValue);
                     item.setChecked(toggledValue);
                     updateViews(context);
                     return true;

@@ -99,6 +99,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     public static final String PREF_KEY_GRAPH_SHOWSEASONS = "showSeasons";
     public static final boolean DEF_KEY_GRAPH_SHOWSEASONS = true;
 
+    public static final String PREF_KEY_GRAPH_SHOWCROSSHAIR = "showCrosshair";
+    public static final boolean DEF_KEY_GRAPH_SHOWCROSSHAIR = true;
+
     public static final int MINUTES_IN_DAY = 24 * 60;
     public static final double MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 
@@ -597,8 +600,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 drawGrid(now, yearData, c, p, options);
                 drawAxisUnder(now, yearData, c, p, options);
                 drawAxisOver(now, yearData, c, p, options);
-                drawLabels(now, yearData, c, paintText, options);
                 drawNow(now, c, p, options);
+                drawLabels(now, yearData, c, paintText, options);
             }
 
             long bench_end = System.nanoTime();
@@ -737,6 +740,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                         ? (int) textSize(c, 365 / 7f) //(int)(c.getWidth() * (5 / 365d))
                         : options.option_drawNow_pointSizePx;
                 int pointStroke = (int)Math.ceil(pointRadius / 3d);
+
+                if (options.option_drawNow_crosshair) {
+                    drawVerticalLine(now, c, p, 2 * pointStroke / 3, options.colors.getColor(COLOR_SUN_STROKE), null);
+                    drawHorizontalLine(now, c, p, 2 * pointStroke / 3, options.colors.getColor(COLOR_SUN_STROKE), null);
+                }
 
                 switch (options.option_drawNow)
                 {
@@ -1537,6 +1545,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public boolean showCivil = true, showNautical = true, showAstro = true;
         public int option_drawNow = DRAW_NOW1;
         public int option_drawNow_pointSizePx = -1;    // when set, use a fixed point size
+
+        public boolean option_drawNow_crosshair = DEF_KEY_GRAPH_SHOWCROSSHAIR;
 
         public int densityDpi = DisplayMetrics.DENSITY_DEFAULT;
 

@@ -2174,6 +2174,7 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
+    <string name="graph_option_crosshair">Crosshair</string>  <!-- TODO -->
     <string name="graph_option_grid">Grid</string>
     <string name="graph_option_labels">Labels</string>
     <string name="graph_option_axis">Axis</string>
