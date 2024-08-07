@@ -457,8 +457,8 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     }
 
     /**
-     * @param value pair<day, hour>
-     * @return Calendar
+     * @param value pair<day, hour> where day is day_of_year and hour is lmt_hour
+     * @return Calendar a corresponding calendar with time zone configured by the dialog
      */
     protected Calendar getCalendar(Context context, @NonNull Pair<Double,Double> value)
     {
@@ -466,11 +466,18 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         SuntimesRiseSetDataset[] data = (graph != null ? graph.getData() : null);
         if (context != null && data != null && data.length > 0 && data[0] != null && data0 != null)
         {
-            Calendar calendar = Calendar.getInstance(data[0].timezone());
+            double hour = value.second;
+            double minute = (int)((hour - (int) hour) * 60d);
+            double second = (int)((minute - (int) minute) * 60d);
+            double millisecond = (int)((second - (int) second) * 1000d);
+
+            Calendar calendar = Calendar.getInstance(WidgetTimezones.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, data0.location().getLongitudeAsDouble(), data0.calculator()));
             calendar.set(Calendar.YEAR, data[0].calendar().get(Calendar.YEAR));
             calendar.set(Calendar.DAY_OF_YEAR, value.first.intValue());
-            calendar.set(Calendar.HOUR_OF_DAY, value.second.intValue());
-            calendar.set(Calendar.MINUTE, (int)((value.second - value.second.intValue()) * 60d));
+            calendar.set(Calendar.HOUR_OF_DAY, (int) hour);
+            calendar.set(Calendar.MINUTE, (int) minute);
+            calendar.set(Calendar.SECOND, (int) second);
+            calendar.set(Calendar.MILLISECOND, (int) millisecond);
 
             String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
             TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() :
@@ -534,43 +541,46 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             lightmap.updateViews(true);
         }
 
+        updateEarliestLatestText(context);
+    }
+
+    protected void updateEarliestLatestText(Context context)
+    {
         if (text_sunrise_early != null)
         {
-            Pair<Double,Double> value = options.t_sunrise_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            Calendar calendar = (value != null ? getCalendar(context, value) : null);
-            text_sunrise_early.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
-            if (calendar != null && context != null) {
-                layout_sunrise_early.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_earliest_sunrise), calendar.getTimeInMillis()));
-            } else layout_sunrise_early.setOnClickListener(null);
-
+            Pair<Double,Double> value = (options.t_earliest_latest_isReady.containsKey(WidgetSettings.TimeMode.OFFICIAL.name()))
+                    ? options.t_sunrise_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name()) : null;
+            updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, value, R.string.configLabel_earliest_sunrise);
         }
         if (text_sunrise_late != null)
         {
-            Pair<Double,Double> value = options.t_sunrise_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            Calendar calendar = (value != null ? getCalendar(context, value) : null);
-            text_sunrise_late.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
-            if (calendar != null && context != null) {
-                layout_sunrise_late.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_latest_sunrise), calendar.getTimeInMillis()));
-            } else layout_sunrise_late.setOnClickListener(null);
+            Pair<Double,Double> value = (options.t_earliest_latest_isReady.containsKey(WidgetSettings.TimeMode.OFFICIAL.name()))
+                    ? options.t_sunrise_latest.get(WidgetSettings.TimeMode.OFFICIAL.name()) : null;
+            updateEarliestLatestText(context, text_sunrise_late, layout_sunrise_late, value, R.string.configLabel_latest_sunrise);
         }
         if (text_sunset_early != null)
         {
-            Pair<Double,Double> value = options.t_sunset_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            Calendar calendar = (value != null ? getCalendar(context, value) : null);
-            text_sunset_early.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
-            if (calendar != null && context != null) {
-                layout_sunset_early.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_earliest_sunset), calendar.getTimeInMillis()));
-            } else layout_sunset_early.setOnClickListener(null);
+            Pair<Double,Double> value = (options.t_earliest_latest_isReady.containsKey(WidgetSettings.TimeMode.OFFICIAL.name()))
+                    ? options.t_sunset_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name()) : null;
+            updateEarliestLatestText(context, text_sunset_early, layout_sunset_early, value, R.string.configLabel_earliest_sunset);
         }
         if (text_sunset_late != null)
         {
-            Pair<Double,Double> value = options.t_sunset_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            Calendar calendar = (value != null ? getCalendar(context, value) : null);
-            text_sunset_late.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
-            if (calendar != null && context != null) {
-                layout_sunset_late.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_latest_sunset), calendar.getTimeInMillis()));
-            } else layout_sunset_late.setOnClickListener(null);
+            Pair<Double,Double> value = (options.t_earliest_latest_isReady.containsKey(WidgetSettings.TimeMode.OFFICIAL.name()))
+                    ? options.t_sunset_latest.get(WidgetSettings.TimeMode.OFFICIAL.name()) : null;
+            updateEarliestLatestText(context, text_sunset_late, layout_sunset_late, value, R.string.configLabel_latest_sunset);
         }
+    }
+
+    protected void updateEarliestLatestText(Context context, TextView textView, View layout, Pair<Double,Double> value, int labelResID)
+    {
+        Calendar calendar = (value != null ? getCalendar(context, value) : null);
+        if (calendar != null) {
+            textView.setText(utils.calendarDateTimeDisplayString(context, calendar).toString());
+        } else textView.setText("");
+        if (calendar != null && context != null) {
+            layout.setOnClickListener(onMoreInfoClicked(context.getString(labelResID), calendar.getTimeInMillis()));
+        } else layout.setOnClickListener(null);
     }
 
     private void startUpdateTask()

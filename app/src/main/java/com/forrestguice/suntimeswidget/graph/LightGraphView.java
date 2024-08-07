@@ -40,12 +40,12 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -60,6 +60,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 
+import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_SUN_FILL;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_SUN_STROKE;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_ASTRONOMICAL;
@@ -99,6 +100,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     public static final boolean DEF_KEY_GRAPH_SHOWSEASONS = true;
 
     public static final int MINUTES_IN_DAY = 24 * 60;
+    public static final double MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
@@ -216,9 +218,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 Context context = getContext();
                 Location location = ((data0 != null) ? data0.location() : null);
                 double longitude = ((location != null) ? location.getLongitudeAsDouble() : 0);
-                String tzId = WidgetTimezones.LocalMeanTime.TIMEZONEID; //WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
-                TimeZone timezone = //WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() :
-                        WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
+
+                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+                TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() : WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
 
                 data = LightGraphTask.createYearData(getContext(), data0, timezone);
                 handler.post(new Runnable() {
@@ -542,7 +544,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                     timezone = data0.calendar().getTimeZone();
                 }
 
-                Calendar date0 = Calendar.getInstance(timezone);
+                Calendar date0 = Calendar.getInstance(timezone);    // data uses the configured time zone; when drawn values are shifted by the lmt hour offset to center the graph
                 date0.setTimeInMillis(data0.calendar().getTimeInMillis());
                 date0.set(Calendar.MONTH, 0);
                 date0.set(Calendar.DAY_OF_MONTH, 1);
@@ -710,6 +712,10 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             return Math.round((day / options.graph_width) * c.getWidth() - (options.graph_x_offset / options.graph_width) * c.getWidth());
         }
 
+        /**
+         * @param hours lmt_hour
+         * @return bitmap coordinates
+         */
         protected double hoursToBitmapCoords(Canvas c, double hours, LightGraphOptions options)
         {
             int h = c.getHeight();
@@ -796,6 +802,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 drawPath(now, data, nightBoundary, true, c, paintPath, options);
                 drawPath(now, data, nightBoundary, false, c, paintPath, options);
 
+                publishMinMax(WidgetSettings.TimeMode.OFFICIAL.name(), c, options);
                 drawPathPoints(c, p, options);
             }
         }
@@ -829,6 +836,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
+        /**
+         * @param rising true rising event, false setting event
+         * @param hour lmt_hour
+         * @param day day_of_year
+         */
         private void trackMinMax(String mode, boolean rising, double hour, double day)
         {
             if (rising)
@@ -861,6 +873,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 options.t_sunset_earliest.remove(mode);
                 options.t_sunset_latest.remove(mode);
             }
+            options.t_earliest_latest_isReady.remove(mode);
         }
         private void publishMinMax(String mode, Canvas c, LightGraphOptions options)
         {
@@ -876,12 +889,17 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             {
                 if (point != null)
                 {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.DAY_OF_YEAR, point.first.intValue());
+                    double offset = lmtOffsetHours(calendar.getTimeInMillis()) - lmtOffsetHours();  // offset lmt_hour to lmt_hour + dst
+
                     float x = (float) daysToBitmapCoords(c, point.first, options);
-                    float y = (float) hoursToBitmapCoords(c, point.second, options);
+                    float y = (float) hoursToBitmapCoords(c, wrapHour(point.second + offset), options);
                     p.add(new float[] {x, y});
                 }
             }
             options.sunPath_points = p.toArray(new float[0][0]);
+            options.t_earliest_latest_isReady.put(mode, true);
             //Log.d("DEBUG", "sunPath_points: " + options.sunPath_points.length);
         }
 
@@ -895,6 +913,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             double hour;
             double hour_prev = (rising ? 0 : 24);  // previous iteration
             float x = 0, y = 0;
+            double lmtOffsetHours = lmtOffsetHours();
 
             Path path = null;
             int day = 0;
@@ -904,11 +923,19 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 event = (rising ? d.sunriseCalendarToday() : d.sunsetCalendarToday());
                 if (event != null)
                 {
-                    hour = event.get(Calendar.HOUR_OF_DAY) + (event.get(Calendar.MINUTE) / 60d) + (event.get(Calendar.SECOND) / (60d * 60d));
-                    trackMinMax(mode.name(), rising, hour, day);
+                    double tzHour = event.get(Calendar.HOUR_OF_DAY)
+                            + (event.get(Calendar.MINUTE) / 60d)
+                            + (event.get(Calendar.SECOND) / (60d * 60d))
+                            + (event.get(Calendar.MILLISECOND) / (60d * 60d * 1000d));
+                    hour = wrapHour(tzHour - lmtOffsetHours);    // lmt_hour + dst
+                    trackMinMax(mode.name(), rising, wrapHour(tzHour - lmtOffsetHours(event.getTimeInMillis())), day);
 
                 } else {
                     hour = (rising ? 0 : 24);
+                }
+
+                if (Math.abs(hour - hour_prev) > 12) {   // ignore sudden shifts (polar regions near graph edge)
+                    hour = hour_prev;
                 }
 
                 x = (float) daysToBitmapCoords(c, day, options);
@@ -949,10 +976,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 path = paths.get(paths.size()-1);
                 path.lineTo(x, (float)hoursToBitmapCoords(c, (rising ? 0 : 24), options));
                 path.close();
-            }
-
-            if (mode == WidgetSettings.TimeMode.OFFICIAL) {
-                publishMinMax(mode.name(), c, options);
             }
             return hours;
         }
@@ -1032,40 +1055,54 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
+        /**
+         * @return raw offset in hours between time zone and local mean time (ignores dst)
+         */
+        protected double lmtOffsetHours()
+        {
+            long lonOffsetMs = Math.round(options.location.getLongitudeAsDouble() * MILLIS_IN_DAY / 360d);
+            long rawOffsetMs = options.timezone.getRawOffset();
+            return (rawOffsetMs - lonOffsetMs) / (1000d * 60d * 60d);
+        }
+
+        /**
+         * @param date long date+time
+         * @return offset in hours between time zone and local mean time (with dst)
+         */
+        protected double lmtOffsetHours(long date)
+        {
+            long lonOffsetMs = Math.round(options.location.getLongitudeAsDouble() * MILLIS_IN_DAY / 360d);
+            long zoneOffsetMs = options.timezone.getOffset(date);
+            return (zoneOffsetMs - lonOffsetMs) / (1000d * 60d * 60d);
+        }
+
         protected void drawAxisX(Canvas c, Paint p, LightGraphOptions options)
         {
-            ArrayList<Double> hours = new ArrayList<>();
-
-            //for (int i=1; i<24; i++) {
-            //    hours.add((double) i);
-            //}
-
-            hours.add(0d);
-            //hours.add(3d);
-            hours.add(6d);
-            //hours.add(9d);
-            hours.add(12d);
-            //hours.add(15d);
-            hours.add(18d);
-            //hours.add(21d);
-
             Calendar calendar0 = Calendar.getInstance(options.timezone);
             Calendar calendar = Calendar.getInstance(yearData[0].timezone());
+            double offsetHours = lmtOffsetHours();
+
+            float textSize = textSize(c, options.axisY_labels_textsize_ratio);
+            float left = (float)(c.getWidth() - (1.5 * textSize));
 
             int w = c.getWidth();
-            for (Double hour : hours)
+            for (int hour = 0; hour < 24; hour++)
             {
-                calendar0.set(Calendar.HOUR_OF_DAY, hour.intValue());
-                calendar0.set(Calendar.MINUTE, (int)((hour - hour.intValue()) * 60d));
+                calendar0.set(Calendar.HOUR_OF_DAY, hour);
+                calendar0.set(Calendar.MINUTE, 0);  //calendar0.set(Calendar.MINUTE, (int)((hour - hour.intValue()) * 60d));
                 calendar0.set(Calendar.SECOND, 0);
                 calendar0.set(Calendar.MILLISECOND, 0);
 
+                float x = (hour % 6 == 0) ? 0 : left;
+
                 calendar.setTimeInMillis(calendar0.getTimeInMillis());
                 double h = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d);
-                float y = (float) hoursToBitmapCoords(c, h, options);
-                c.drawLine(0, y, w, y, p);
+                float y = (float) hoursToBitmapCoords(c, wrapHour(h - offsetHours), options);
+                c.drawLine(x, y, w, y, p);
             }
         }
+
+
         protected void drawXLabels(Canvas c, Paint p, LightGraphOptions options)
         {
             float textSize = textSize(c, options.axisY_labels_textsize_ratio);
@@ -1073,11 +1110,13 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
             p.setColor(options.colors.getColor(COLOR_LABELS_BG));
             //p.setAlpha(128);
-            c.drawRect(left, 0, left + (int)(1.5 * textSize), c.getHeight(), p);
+            float top = (textSize + (textSize/4));
+            c.drawRect(left, 0, left + (int)(1.5 * textSize), c.getHeight() - top, p);
             //p.setAlpha(255);
 
             Calendar calendar0 = Calendar.getInstance(options.timezone);
             Calendar calendar = Calendar.getInstance(yearData[0].timezone());
+            double offsetHours = lmtOffsetHours();
 
             int i = (int) options.axisY_labels_interval;
             while (i < 24)
@@ -1089,7 +1128,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
                 calendar.setTimeInMillis(calendar0.getTimeInMillis());
                 double h = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d);
-                float y = (float) hoursToBitmapCoords(c, h, options);
+                float y = (float) hoursToBitmapCoords(c, h - offsetHours, options);
 
                 p.setColor(options.colors.getColor(COLOR_LABELS));
                 p.setTextSize(textSize);
@@ -1098,7 +1137,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 i += options.axisY_labels_interval;
             }
         }
-
 
         protected void drawAxisY(Calendar now, SuntimesRiseSetDataset[] data, Canvas c, Paint p, LightGraphOptions options)
         {
@@ -1123,6 +1161,20 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 }
                 x0 = x;
             }
+
+            float textSize = textSize(c, options.axisY_labels_textsize_ratio);
+            float top = c.getHeight() - (textSize + (textSize/4));
+
+            int interval = 30;
+            int n = 365 - interval;
+            int i = interval;
+            while (i < n)
+            {
+                float x = (float) daysToBitmapCoords(c, i, options);
+                c.drawLine(x, top, x, h, p);
+                i += interval;
+            }
+
         }
         private Calendar drawAxisY_calendar = null;
 
@@ -1205,12 +1257,13 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         {
             int hourMin = 0;
             int hourMax = 24;
+            double offsetHours = lmtOffsetHours();
 
             int w = c.getWidth();
             int i = hourMin;
             while (i < hourMax)
             {
-                float y = (float) hoursToBitmapCoords(c, i, options);
+                float y = (float) hoursToBitmapCoords(c, i - offsetHours, options);
                 c.drawLine(0, y, w, y, p);
                 i += interval;
             }
@@ -1235,14 +1288,63 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             int h = c.getHeight();
             c.drawRect(0, 0, w, h, p);
         }
-        protected void drawPoint(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect) {
+
+        protected Path createHorizontalPath(@Nullable Calendar calendar, Canvas c)
+        {
+            if (calendar != null) {
+                return createHorizontalPath(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.getTimeZone(), c);
+            } else return null;
+        }
+        protected Path createHorizontalPath(double hour, TimeZone timezone, Canvas c) {
+            return createHorizontalPath((int) hour, (int)((hour - (int)hour) * 60), timezone, c);
+        }
+
+        protected Path createHorizontalPath(int hour, int minute, TimeZone timezone, Canvas c)
+        {
+            Calendar calendar0 = Calendar.getInstance(timezone);
+            calendar0.set(Calendar.DAY_OF_YEAR, 0);
+            calendar0.set(Calendar.HOUR_OF_DAY, hour);
+            calendar0.set(Calendar.MINUTE, minute);
+            calendar0.set(Calendar.SECOND, 0);
+            calendar0.set(Calendar.MILLISECOND, 0);
+
+            float x, y;
+            double lmtHour;
+            double lmtOffsetHours = lmtOffsetHours();
+
+            Path path = new Path();
+            for (int day=0; day<365; day++)
+            {
+                double tzHour = calendar0.get(Calendar.HOUR_OF_DAY) + (calendar0.get(Calendar.MINUTE) / 60d) + (calendar0.get(Calendar.SECOND) / (60d * 60d));
+                lmtHour = wrapHour(tzHour - lmtOffsetHours);
+                x = (float) daysToBitmapCoords(c, day, options);
+                y = (float) hoursToBitmapCoords(c, lmtHour, options);
+
+                if (day == 0) {
+                    path.moveTo(x, y);
+                } else {
+                    path.lineTo(x, y);
+                }
+                calendar0.add(Calendar.HOUR, 24);
+            }
+            return path;
+        }
+
+        protected void drawPoint(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+        {
             if (calendar != null)
             {
                 double day = calendar.get(Calendar.DAY_OF_YEAR);
-                double hour = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d) + (calendar.get(Calendar.SECOND) / (60d * 60d));
+                double tzHour = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d) + (calendar.get(Calendar.SECOND) / (60d * 60d));
+                double hour = wrapHour(tzHour - lmtOffsetHours());
                 drawPoint(day, hour, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
             }
         }
+
+        /**
+         * @param day day_of_year
+         * @param hour lmt_hour
+         */
         protected void drawPoint(double day, double hour, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
         {
             float x = (float) daysToBitmapCoords(c, day, options);
@@ -1267,7 +1369,34 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             c.drawCircle(x, y, radius, p);
         }
 
-        protected void drawVerticalLine(Calendar calendar, SuntimesCalculator calculator, Canvas c, Paint p, int lineWidth, int lineColor, DashPathEffect lineEffect) {
+        /**
+         * @param hour raw hour value
+         * @return hour value within range [0, 24]
+         */
+        protected double wrapHour(double hour)
+        {
+            double v = hour;
+            while (v < 0) {
+                v += 24;
+            }
+            while (v > 24) {
+                v -= 24;
+            }
+            return v;
+        }
+        protected double clampHour(double hour)
+        {
+            if (hour < 0) {
+                hour = 0;
+            }
+            if (hour > 24) {
+                hour = 24;
+            }
+            return hour;
+        }
+
+        protected void drawVerticalLine(@Nullable Calendar calendar, Canvas c, Paint p, int lineWidth, int lineColor, DashPathEffect lineEffect)
+        {
             if (calendar != null)
             {
                 double day = calendar.get(Calendar.DAY_OF_YEAR);
@@ -1276,9 +1405,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         }
         protected void drawVerticalLine(double day, Canvas c, Paint p, int lineWidth, int lineColor, @Nullable DashPathEffect lineEffect)
         {
-            float x = (float) daysToBitmapCoords(c, day, options);
-            c.drawLine(x, 0, x, c.getHeight(), p);
-
             p.setStyle(Paint.Style.STROKE);
             p.setStrokeWidth(lineWidth);
             p.setColor(lineColor);
@@ -1286,8 +1412,37 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             if (lineEffect != null) {
                 p.setPathEffect(lineEffect);
             }
+
+            float x = (float) daysToBitmapCoords(c, day, options);
+            c.drawLine(x, 0, x, c.getHeight(), p);
         }
 
+        /**
+         * @param calendar calendar with given time zone
+         */
+        protected void drawHorizontalLine(@Nullable Calendar calendar, Canvas c, Paint p, int lineWidth, int lineColor, @Nullable DashPathEffect lineEffect)
+        {
+            if (calendar != null)
+            {
+                double tzHour = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d) + (calendar.get(Calendar.SECOND) / (60d * 60d));
+                double hour = wrapHour(tzHour - lmtOffsetHours());
+                drawHorizontalLine(hour, c, p, lineWidth, lineColor, lineEffect);
+            }
+        }
+        protected void drawHorizontalLine(double hour, Canvas c, Paint p, int lineWidth, int lineColor, @Nullable DashPathEffect lineEffect)
+        {
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeWidth(lineWidth);
+            p.setColor(lineColor);
+
+            if (lineEffect != null) {
+                p.setPathEffect(lineEffect);
+            }
+
+            float y = (float) hoursToBitmapCoords(c, hour, options);
+            c.drawLine(0, y, c.getWidth(), y, p);
+        }
+        
         private LightGraphTaskListener listener = null;
         public void setListener( LightGraphTaskListener listener ) {
             this.listener = listener;
@@ -1405,6 +1560,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public final Map<String, Pair<Double,Double>> t_sunset_earliest = new HashMap<>();
         public final Map<String, Pair<Double,Double>> t_sunrise_latest = new HashMap<>();
         public final Map<String, Pair<Double,Double>> t_sunset_latest = new HashMap<>();
+        public final Map<String, Boolean> t_earliest_latest_isReady = new HashMap<>();
 
         public LightGraphOptions() {}
 
