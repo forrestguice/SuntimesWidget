@@ -24,6 +24,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -184,7 +185,14 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             options = graph.getOptions();
             options.init(context);
 
-            graph.setTaskListener(new LightGraphView.LightGraphTaskListener() {
+            graph.setTaskListener(new LightGraphView.LightGraphTaskListener()
+            {
+                @Override
+                public void onFinished(Bitmap result) {
+                    updateEarliestLatestText(getActivity());
+                }
+
+                @Override
                 public void onProgress(boolean value) {
                     showProgress(value);
                 }
@@ -551,26 +559,22 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         if (text_sunrise_early != null)
         {
-            Pair<Double,Double> value = (options.t_earliest_latest_isReady.containsKey(WidgetSettings.TimeMode.OFFICIAL.name()))
-                    ? options.t_sunrise_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name()) : null;
+            Pair<Double,Double> value = options.sunrise_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
             updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, value, R.string.configLabel_earliest_sunrise);
         }
         if (text_sunrise_late != null)
         {
-            Pair<Double,Double> value = (options.t_earliest_latest_isReady.containsKey(WidgetSettings.TimeMode.OFFICIAL.name()))
-                    ? options.t_sunrise_latest.get(WidgetSettings.TimeMode.OFFICIAL.name()) : null;
+            Pair<Double,Double> value = options.sunrise_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
             updateEarliestLatestText(context, text_sunrise_late, layout_sunrise_late, value, R.string.configLabel_latest_sunrise);
         }
         if (text_sunset_early != null)
         {
-            Pair<Double,Double> value = (options.t_earliest_latest_isReady.containsKey(WidgetSettings.TimeMode.OFFICIAL.name()))
-                    ? options.t_sunset_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name()) : null;
+            Pair<Double,Double> value = options.sunset_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
             updateEarliestLatestText(context, text_sunset_early, layout_sunset_early, value, R.string.configLabel_earliest_sunset);
         }
         if (text_sunset_late != null)
         {
-            Pair<Double,Double> value = (options.t_earliest_latest_isReady.containsKey(WidgetSettings.TimeMode.OFFICIAL.name()))
-                    ? options.t_sunset_latest.get(WidgetSettings.TimeMode.OFFICIAL.name()) : null;
+            Pair<Double,Double> value = options.sunset_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
             updateEarliestLatestText(context, text_sunset_late, layout_sunset_late, value, R.string.configLabel_latest_sunset);
         }
     }

@@ -885,6 +885,19 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         }
         private void publishMinMax(String mode, Canvas c, LightGraphOptions options)
         {
+            options.sunset_earliest.clear();
+            options.sunset_earliest.putAll(options.t_sunset_earliest);
+
+            options.sunset_latest.clear();
+            options.sunset_latest.putAll(options.t_sunset_latest);
+
+            options.sunrise_earliest.clear();
+            options.sunrise_earliest.putAll(options.t_sunrise_earliest);
+
+            options.sunrise_latest.clear();
+            options.sunrise_latest.putAll(options.t_sunrise_latest);
+            options.t_earliest_latest_isReady.put(mode, true);
+
             Pair<Double,Double>[] points = new Pair[] {
                     options.t_sunrise_earliest.get(mode),
                     options.t_sunrise_latest.get(mode),
@@ -907,7 +920,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 }
             }
             options.sunPath_points = p.toArray(new float[0][0]);
-            options.t_earliest_latest_isReady.put(mode, true);
             //Log.d("DEBUG", "sunPath_points: " + options.sunPath_points.length);
         }
 
@@ -1571,6 +1583,10 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public final Map<String, Pair<Double,Double>> t_sunrise_latest = new HashMap<>();
         public final Map<String, Pair<Double,Double>> t_sunset_latest = new HashMap<>();
         public final Map<String, Boolean> t_earliest_latest_isReady = new HashMap<>();
+        public final Map<String, Pair<Double,Double>> sunrise_earliest = new HashMap<>();
+        public final Map<String, Pair<Double,Double>> sunset_earliest = new HashMap<>();
+        public final Map<String, Pair<Double,Double>> sunrise_latest = new HashMap<>();
+        public final Map<String, Pair<Double,Double>> sunset_latest = new HashMap<>();
 
         public LightGraphOptions() {}
 
