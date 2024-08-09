@@ -37,7 +37,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -595,12 +594,13 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             if (yearData != null)
             {
                 Calendar now = Calendar.getInstance(yearData[0].timezone()); // graphTime(yearData[0], options);
-                options.location = yearData[0].location();
+                options.setLocation(yearData[0].location());
 
                 drawPaths(now, yearData, c, paintPath, options);
                 drawGrid(now, yearData, c, p, options);
                 drawAxisUnder(now, yearData, c, p, options);
                 drawAxisOver(now, yearData, c, p, options);
+                drawPoints(c, p, options);
                 drawNow(now, c, p, options);
                 drawLabels(now, yearData, c, paintText, options);
             }
@@ -763,9 +763,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        protected void drawPathPoints(Canvas c, Paint p, LightGraphOptions options)
+        protected void drawPoints(Canvas c, Paint p, LightGraphOptions options)
         {
-            if (options.sunPath_show_points)
+            if (options.sunPath_show_points && (options.sunPath_show_line || options.sunPath_show_fill))
             {
                 float[][] points = createPathPoints(c, options);
                 double pointSize = Math.sqrt(c.getWidth() * c.getHeight()) / options.sunPath_points_width;
@@ -811,8 +811,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 paintPath.setColor(options.colors.getColor(COLOR_NIGHT));
                 drawPath(now, data, nightBoundary, true, c, paintPath, options);
                 drawPath(now, data, nightBoundary, false, c, paintPath, options);
-
-                drawPathPoints(c, p, options);
             }
         }
 
@@ -865,7 +863,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             {
                 if (point != null)
                 {
-                    Calendar calendar = Calendar.getInstance();
+                    Calendar calendar = Calendar.getInstance(options.timezone);
                     calendar.set(Calendar.DAY_OF_YEAR, (int) point[0]);
                     double offset = lmtOffsetHours(calendar.getTimeInMillis()) - lmtOffsetHours();  // offset lmt_hour to lmt_hour + dst
 
@@ -1023,7 +1021,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
          */
         protected double lmtOffsetHours()
         {
-            long lonOffsetMs = Math.round(options.location.getLongitudeAsDouble() * MILLIS_IN_DAY / 360d);
+            long lonOffsetMs = Math.round(options.longitude * MILLIS_IN_DAY / 360d);
             long rawOffsetMs = options.timezone.getRawOffset();
             return (rawOffsetMs - lonOffsetMs) / (1000d * 60d * 60d);
         }
@@ -1033,7 +1031,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
          * @return offset in hours between time zone and local mean time (with dst)
          */
         protected double lmtOffsetHours(long date) {
-            return LightGraphView.lmtOffsetHours(date, options.timezone, options.location.getLongitudeAsDouble());
+            return LightGraphView.lmtOffsetHours(date, options.timezone, options.longitude);
         }
 
         protected void drawAxisX(Canvas c, Paint p, LightGraphOptions options)
@@ -1453,7 +1451,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public double gridY_minor_width = 400;       // minutes
         public float gridY_minor_interval = 5;       // days
 
-        public boolean sunPath_show_line = true;
+        public boolean sunPath_show_line = false;
         public boolean sunPath_show_fill = true;
         public boolean sunPath_show_points = DEF_KEY_GRAPH_SHOWPOINTS;
 
@@ -1475,7 +1473,12 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             is24 = ((timeFormat == WidgetSettings.TimeFormatMode.MODE_24HR) || (timeFormat == WidgetSettings.TimeFormatMode.MODE_SYSTEM && android.text.format.DateFormat.is24HourFormat(context)));
         }
 
+        public void setLocation(Location value) {
+            location = value;
+            longitude = location.getLongitudeAsDouble();
+        }
         public Location location = null;
+        public double longitude;
 
         public long offsetDays = 0;
         public long now = -1L;

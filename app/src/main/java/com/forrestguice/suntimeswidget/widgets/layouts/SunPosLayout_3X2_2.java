@@ -173,7 +173,6 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         options.axisX_width = options.axisY_width = 365;
 
         options.sunPath_show_points = true;
-        options.sunPath_show_line = true;
         options.sunPath_show_fill = true; //WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
 
         themeViewsAzimuthElevationText(context, views, theme);
