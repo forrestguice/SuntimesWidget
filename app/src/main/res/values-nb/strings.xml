@@ -19,7 +19,7 @@
     <string name="configAction_mapLocation_noapp">Kan ikke finne kartprogram!</string>
     <string name="configAction_showCalendar">Kalender</string>
     <string name="configAction_setAlarm">Alarm</string>
-    <string name="configAction_setTimeZone">Tidssone</string>
+    <string name="configAction_setTimeZone">Still inn tidssone</string>
     <string name="configAction_setDate">Dato</string>
     <string name="configAction_viewDate">Vis dato</string>
     <string name="configAction_viewDateWith">Vis dato</string>
@@ -27,14 +27,14 @@
     <string name="configAction_export">Eksporter</string>
     <string name="configAction_import">Importer</string>
     <string name="configAction_info">Mer info</string>
-    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
+    <string name="configAction_sortBy">Sorter etter</string>
     <string name="configAction_sunDialog">Solens posisjon</string>
     <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
     <string name="configAction_worldMap">Verdenskart</string>
-    <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
-    <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
-    <string name="configAction_clock">Clock</string>    <!-- TODO -->
-    <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
+    <string name="configAction_openNavDrawer">Åpne navigasjon</string>
+    <string name="configAction_closeNavDrawer">Lukk navigasjon</string>
+    <string name="configAction_clock">Klokke</string>
+    <string name="configAction_lightGraphDialog">Sollys</string>
     <string name="configAction_lineGraph">Høydegraf</string>
     <string name="configAction_seekAltitude">Søk høyde</string>        <!-- checkbox label -->
     <string name="configAction_search">Søk</string>        <!-- button (contentDescription) -->
@@ -335,17 +335,17 @@
     <string name="configLabel_appearance_scaleBase">Fyll hele cellen</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">Juster base:</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">Vis påskrifter</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_appearance_showIcons">Vis ikoner</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showEnabledOnly">Vis kun aktiverte elementer</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Vis tittel</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tittel:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Setting: navigation -->
-    <string name="configLabel_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode_simple">Simple (legacy)</string>   <!-- TODO -->
-    <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
+    <string name="configLabel_navigation">Navigasjon</string>           <!-- group title -->
+    <string name="configLabel_navigation_mode">Navigasjonsstil</string>      <!-- spinner label -->
+    <string name="configLabel_navigation_mode_simple">Enkel (gammel)</string>
+    <string name="configLabel_navigation_mode_sidebar">Sidefelt</string>
 
     <!-- Widget Setting: riseSetOrder -->
     <string name="configLabel_general_riseSetOrder">Rekkefølge:</string>     <!-- label -->
@@ -732,10 +732,10 @@
     <string name="configLabel_themeColorFall">Høstfarge</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vinterfarge</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSpring_text">Spring (text)</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorSummer_text">Summer (text)</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorFall_text">Autumn (text)</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorWinter_text">Winter (text)</string> <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorSpring_text">Vår (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer_text">Sommer (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorFall_text">Høst (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter_text">Vinter (tekst)</string> <!-- color label -->
 
     <string name="configLabel_themeColorAccent">Aksent</string> <!-- color label -->
     <string name="configLabel_themeColorAction">Handling</string> <!-- color label -->
@@ -745,8 +745,8 @@
     <string name="configLabel_themeColorMapSunShadow">Skygge</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Opplyst</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise_text">Moonrise (text)</string> <!-- color label -->   <!-- TODO -->
-    <string name="configLabel_themeColorMoonset_text">Moonset (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonrise_text">Måneoppgang (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset_text">Månenedgang (tekst)</string> <!-- color label -->
 
     <string name="configLabel_themeColorMoonrise">Måneoppgangsfarge</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Månenedgangsfarge</string> <!-- color label -->
@@ -757,44 +757,44 @@
 
     <string name="configLabel_themeColorMoonFullText">Full (tekst)</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNewText">Ny (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonApogeeText">Apogee (text)</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorMoonPerigeeText">Perigee (text)</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorMoonApogeeText">Apogeum (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonPerigeeText">Perigeum (tekst)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise_text">Sunrise (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorSunrise_text">Soloppgang (tekst)</string> <!-- color label -->
     <string name="configLabel_themeColorSunrise">Soloppgangsfarge</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset_text">Sunset (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorSunset_text">Solnedgang (tekst)</string> <!-- color label -->
     <string name="configLabel_themeColorSunset">Solnedgangsfarge</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="configLabel_themeColorNoon">Middagfarge</string>      <!-- color label -->
     <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorGraphSunFill">Sun (Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunStroke">Sun (Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathDayFill">Sun Path (Day Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathDayStroke">Sun Path (Day Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathNightFill">Sun Path (Night Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathNightStroke">Sun Path (Night Stroke)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphSunFill">Solen (fyll)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunStroke">Solen (strek)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunPathDayFill">Solens bane (dagfyll)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunPathDayStroke">Solens bane (dagstrek)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunPathNightFill">Solens bane (nattfyll)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunPathNightStroke">Solens bane (nattstrek)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphMoonFill">Moon (Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonStroke">Moon (Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonPathDayFill">Moon Path (Day Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonPathDayStroke">Moon Path (Day Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonPathNightFill">Moon Path (Night Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonPathNightStroke">Moon Path (Night Stroke)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphMoonFill">Månen (fyll)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonStroke">Månen (strek)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonPathDayFill">Månens bane (dagfyll)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonPathDayStroke">Månens bane (dagstrek)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonPathNightFill">Månens bane (nattfyll)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonPathNightStroke">Månens bane (nattstrek)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphPointFill">Points (Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphPointStroke">Points (Stroke)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphPointFill">Punkter (fyll)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphPointStroke">Punkter (strek)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphLabels">Labels (text)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphLabelsBG">Labels (background)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphLabels">Påskrifter (tekst)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphLabelsBG">Påskrifter (bakgrunn)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphBackground">Graph Background</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphAxis">Axis</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphGridMajor">Grid (major)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphGridMinor">Grid (minor)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphBackground">Grafbakgrunn</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphAxis">Akser</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphGridMajor">Rutenett (større)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphGridMinor">Rutenett (mindre)</string>         <!-- color label -->
 
     <string name="configLabel_themeColorFill">Fyll</string>         <!-- color label -->
     <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
@@ -871,7 +871,7 @@
     <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> på <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
     <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
-    <string name="shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
+    <string name="shadowevent_title">Skygge</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
 
     <string name="configLabel_manageEvents">Håndter hendelser</string>  <!-- settings activity / pref -->
     <string name="configLabel_manageEvents_summary">Legg til eller fjern egendefinerte hendelser.</string>
@@ -885,8 +885,8 @@
     <string name="configAction_deleteEvent">Slett</string>           <!-- button (contentDescription) -->
     <string name="configAction_clearEvents">Tøm</string>           <!-- button (contentDescription) -->
 
-    <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
-    <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_sunEvent">Legg til (solhøyde)</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addEvent_shadowEvent">Legg til (skyggelengde)</string>           <!-- button (contentDescription) -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
@@ -915,14 +915,14 @@
     <string name="editevent_dialog_angle_suffix">°</string>
     <string name="editevent_dialog_angle_error">Vinkel kreves!</string>
 
-    <string name="editevent_dialog_length">Shadow Length</string>    <!-- TODO -->
-    <string name="editevent_dialog_length_hint">6</string>    <!-- TODO -->
-    <string name="editevent_dialog_length_error">Shadow length is required!</string>    <!-- TODO -->
-    <string name="editevent_dialog_label_suggested1">Shadow Length</string>    <!-- TODO -->
+    <string name="editevent_dialog_length">Skyggelengde</string>
+    <string name="editevent_dialog_length_hint">6</string>
+    <string name="editevent_dialog_length_error">Skyggelengde kreves!</string>
+    <string name="editevent_dialog_label_suggested1">Skyggelengde</string>
 
-    <string name="editevent_dialog_height">Object Height</string>    <!-- TODO -->
-    <string name="editevent_dialog_height_hint">1</string>    <!-- TODO -->
-    <string name="editevent_dialog_height_error">Object height is required!</string>    <!-- TODO -->
+    <string name="editevent_dialog_height">Objekthøyde</string>
+    <string name="editevent_dialog_height_hint">1</string>
+    <string name="editevent_dialog_height_error">Objekthøyde kreves!</string>
 
     <string name="delevent_dialog_msg">Er du sikker på at du vil slette %1$s (%2$s)?\n\nAlarmer, varsler eller moduler som bruker denne hendelsen kan stoppe å virke og bør bli tildelt på nytt.</string>
     <string name="delevent_dialog_ok">Slett</string>
@@ -1079,9 +1079,9 @@
     <string name="configLabel_alarms_notifications_summary1">På låseskjerm: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Varsler er av. Alarmer kan mislykkes i å vises korrekt.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications_fullscreen">Full-screen Notifications</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_on">On</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_off">Off.\nAlarms may fail to display over the lock screen.</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_fullscreen">Fullskjermvarslinger</string>
+    <string name="configLabel_alarms_notifications_fullscreen_on">På</string>
+    <string name="configLabel_alarms_notifications_fullscreen_off">Av.\nAlarmer kan mislykkes i å vises over låseskjermen.</string>
     <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>        <!-- TODO -->
     <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
@@ -1117,7 +1117,7 @@
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
     <string name="configLabel_alarms_fadein_disabled">Av</string>
 
-    <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->    <!-- TODO -->
+    <string name="configLabel_alarmFullscreen">Fullskjerm</string>            <!-- group title -->
     <string name="configLabel_alarms_brightMode">Bright Alarms</string>    <!-- TODO -->
     <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
 
@@ -1331,7 +1331,7 @@
 
     <string name="place_label_AN">Antarktis</string>
     <string name="place_label_AF">Afrika</string>
-    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
+    <string name="place_label_AF_EG">Afrika (Egypt)</string>
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN">Asia (Kina)</string>
     <string name="place_label_AS_IN">Asia (India)</string>
@@ -1345,12 +1345,12 @@
     <string name="place_label_NA_CA">Nord-Amerika (Canada)</string>
     <string name="place_label_NA_US">Nord-Amerika (USA)</string>
     <string name="place_label_OC">Oseania</string>
-    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
+    <string name="place_label_OC_AU">Oseania (Australia)</string>
     <string name="place_label_SA">Sør- og Mellom-Amerika</string>
     <string name="place_label_other">Andre</string>
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string name="configLabel_launcherMode">Oppstartingsaktivitet</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
@@ -1456,7 +1456,7 @@
     <string name="configActionDesc_equinoxDialog">Solvervdialog</string>
     <string name="configActionDesc_moon">Månedialog</string>
     <string name="configActionDesc_sunDialog">Soldialog</string>
-    <string name="configActionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
+    <string name="configActionDesc_sunlightDialog">Sollysdialog</string>
     <string name="configActionDesc_setDate">Still inn dato</string>
     <string name="configActionDesc_setTimeZone">Still inn tidssone</string>
     <string name="configActionDesc_setLocation">Still inn sted</string>
@@ -1658,10 +1658,10 @@
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="configLabel_earliest_sunrise">Earliest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_earliest_sunset">Earliest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_latest_sunrise">Latest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_latest_sunset">Latest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
+    <string name="configLabel_earliest_sunrise">Tidligste soloppgang</string>       <!-- label / contentDescription -->
+    <string name="configLabel_earliest_sunset">Tidligste solnedgang</string>       <!-- label / contentDescription -->
+    <string name="configLabel_latest_sunrise">Seneste soloppgang</string>       <!-- label / contentDescription -->
+    <string name="configLabel_latest_sunset">Seneste solnedgang</string>       <!-- label / contentDescription -->
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
@@ -1670,9 +1670,9 @@
     <string name="graph_option_grid">Rutenett</string>
     <string name="graph_option_labels">Påskrifter</string>
     <string name="graph_option_axis">Akser</string>
-    <string name="graph_option_points">Points</string>    <!-- TODO -->
-    <string name="graph_option_twilights">Twilights</string>   <!-- TODO -->
-    <string name="graph_option_seasons">Seasons</string>  <!-- TODO -->
+    <string name="graph_option_points">Punkter</string>
+    <string name="graph_option_twilights">Tussmørke</string>
+    <string name="graph_option_seasons">Årstider</string>
     <string name="graph_option_filledpath">Fylt bane</string>
     <string name="graph_option_moon">Vis månen</string>
 
@@ -1827,12 +1827,12 @@
     <string name="timedate_dialog_cancel">Avbryt</string>
 
     <!-- Dialog: Use Timezone -->
-    <string name="timezone_dialog_title">Still inn tidssone</string>
+    <string name="timezone_dialog_title">Tidssone</string>
     <string name="timezone_dialog_ok">OK</string>
     <string name="timezone_dialog_cancel">Avbryt</string>
 
     <!-- Dialog: Set Location -->
-    <string name="location_dialog_title">Still inn sted</string>
+    <string name="location_dialog_title">Sted</string>
     <string name="location_dialog_ok">Oppdater</string>
     <string name="location_dialog_cancel">Avbryt</string>
     <string name="location_dialog_error_lat">Dette er ikke en gyldig breddegrad.</string>
@@ -1900,8 +1900,8 @@
     <string name="color_dialog_msg">Velg farge</string>
     <string name="color_dialog_ok">Velg</string>
     <string name="color_dialog_cancel">Avbryt</string>
-    <string name="color_dialog_suggest">Suggest</string>   <!-- TODO -->
-    <string name="color_dialog_recent">Recent</string>    <!-- recent color list label -->    <!-- TODO -->
+    <string name="color_dialog_suggest">Foreslå</string>
+    <string name="color_dialog_recent">Nylige</string>    <!-- recent color list label -->
     <string name="color_dialog_tab1">1</string>
     <string name="color_dialog_tab2">2</string>
     <string name="color_dialog_tab3">3</string>
@@ -1912,12 +1912,12 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
-    <string name="configAction_colors">Colors</string>    <!-- TODO -->
-    <string name="configAction_filterColors">Filter</string>    <!-- checkbox label -->    <!-- TODO -->
-    <string name="configAction_addColors">Add</string>    <!-- TODO -->
-    <string name="configAction_editColors">Edit</string>    <!-- TODO -->
-    <string name="configAction_saveColors">Save</string>    <!-- TODO -->
-    <string name="configAction_deleteColors">Delete</string>    <!-- TODO -->
+    <string name="configAction_colors">Farger</string>
+    <string name="configAction_filterColors">Filter</string>    <!-- checkbox label -->
+    <string name="configAction_addColors">Legg til</string>
+    <string name="configAction_editColors">Rediger</string>
+    <string name="configAction_saveColors">Lagre</string>
+    <string name="configAction_deleteColors">Slett</string>
     <string name="configAction_importColors">@string/configAction_import</string>    <!-- TODO -->
     <string name="configAction_exportColors">@string/configAction_export</string>    <!-- TODO -->
 
