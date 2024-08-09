@@ -54,7 +54,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -226,6 +225,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() : WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
 
                 data = LightGraphTask.createYearData(getContext(), data0, timezone);
+                options.earliestLatestData = EarliestLatestSunriseSunsetData.findEarliestLatest(WidgetSettings.TimeMode.OFFICIAL, data);
+
                 handler.post(new Runnable() {
                     @Override
                     public void run()
@@ -569,7 +570,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 long bench_end = System.nanoTime();
-                //Log.d("BENCH", "make light graph (data) :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+                Log.d("BENCH", "make light graph (data) :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
                 return yearData;
             }
             return null;
@@ -605,7 +606,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
 
             long bench_end = System.nanoTime();
-            //Log.d("BENCH", "make light graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+            Log.d("BENCH", "make light graph :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
             return b;
         }
         protected void initPaint()
@@ -766,8 +767,9 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         {
             if (options.sunPath_show_points)
             {
+                float[][] points = createPathPoints(c, options);
                 double pointSize = Math.sqrt(c.getWidth() * c.getHeight()) / options.sunPath_points_width;
-                for (float[] point : options.sunPath_points) {
+                for (float[] point : points) {
                     drawPoint(point[0], point[1], (int)pointSize, 0, c, p, options.colors.getColor(COLOR_POINT_FILL), options.colors.getColor(COLOR_POINT_STROKE), null);
                 }
             }
@@ -810,7 +812,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 drawPath(now, data, nightBoundary, true, c, paintPath, options);
                 drawPath(now, data, nightBoundary, false, c, paintPath, options);
 
-                publishMinMax(WidgetSettings.TimeMode.OFFICIAL.name(), c, options);
                 drawPathPoints(c, p, options);
             }
         }
@@ -844,82 +845,36 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        /**
-         * @param rising true rising event, false setting event
-         * @param hour lmt_hour
-         * @param day day_of_year
-         */
-        private void trackMinMax(String mode, boolean rising, double hour, double day)
+        private float[][] createPathPoints(Canvas c, LightGraphOptions options)
         {
-            if (rising)
+            EarliestLatestSunriseSunsetData data = options.earliestLatestData;
+            if (data == null) {
+                return null;
+            }
+
+            double[][] points = new double[][]
             {
-                Pair<Double,Double> value = options.t_sunrise_earliest.get(mode);
-                if (value == null || hour < value.second) {
-                    options.t_sunrise_earliest.put(mode, new Pair<>(day, hour));
-                }
-                value = options.t_sunrise_latest.get(mode);
-                if (value == null || hour > value.second) {
-                    options.t_sunrise_latest.put(mode, new Pair<>(day, hour));
-                }
-
-            } else {
-                Pair<Double,Double> value = options.t_sunset_earliest.get(mode);
-                if (value == null || hour < value.second) {
-                    options.t_sunset_earliest.put(mode, new Pair<>(day, hour));
-                }
-                value = options.t_sunset_latest.get(mode);
-                if (value == null || hour > value.second) {
-                    options.t_sunset_latest.put(mode, new Pair<>(day, hour));
-                }
-            }
-        }
-        private void resetMinMax(String mode, boolean rising) {
-            if (rising) {
-                options.t_sunrise_earliest.remove(mode);
-                options.t_sunrise_latest.remove(mode);
-            } else {
-                options.t_sunset_earliest.remove(mode);
-                options.t_sunset_latest.remove(mode);
-            }
-            options.t_earliest_latest_isReady.remove(mode);
-        }
-        private void publishMinMax(String mode, Canvas c, LightGraphOptions options)
-        {
-            options.sunset_earliest.clear();
-            options.sunset_earliest.putAll(options.t_sunset_earliest);
-
-            options.sunset_latest.clear();
-            options.sunset_latest.putAll(options.t_sunset_latest);
-
-            options.sunrise_earliest.clear();
-            options.sunrise_earliest.putAll(options.t_sunrise_earliest);
-
-            options.sunrise_latest.clear();
-            options.sunrise_latest.putAll(options.t_sunrise_latest);
-            options.t_earliest_latest_isReady.put(mode, true);
-
-            Pair<Double,Double>[] points = new Pair[] {
-                    options.t_sunrise_earliest.get(mode),
-                    options.t_sunrise_latest.get(mode),
-                    options.t_sunset_earliest.get(mode),
-                    options.t_sunset_latest.get(mode)
+                    new double[] { data.early_sunrise_day,  data.early_sunrise_hour },
+                    new double[] { data.early_sunset_day,  data.early_sunset_hour },
+                    new double[] { data.late_sunrise_day,  data.late_sunrise_hour },
+                    new double[] { data.late_sunset_day,  data.late_sunset_hour },
             };
 
             ArrayList<float[]> p = new ArrayList<>();
-            for (Pair<Double,Double> point : points)
+            for (double[] point : points)
             {
                 if (point != null)
                 {
                     Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.DAY_OF_YEAR, point.first.intValue());
+                    calendar.set(Calendar.DAY_OF_YEAR, (int) point[0]);
                     double offset = lmtOffsetHours(calendar.getTimeInMillis()) - lmtOffsetHours();  // offset lmt_hour to lmt_hour + dst
 
-                    float x = (float) daysToBitmapCoords(c, point.first, options);
-                    float y = (float) hoursToBitmapCoords(c, wrapHour(point.second + offset), options);
+                    float x = (float) daysToBitmapCoords(c, point[0], options);
+                    float y = (float) hoursToBitmapCoords(c, wrapHour(point[1] + offset), options);
                     p.add(new float[] {x, y});
                 }
             }
-            options.sunPath_points = p.toArray(new float[0][0]);
+            return p.toArray(new float[0][0]);
             //Log.d("DEBUG", "sunPath_points: " + options.sunPath_points.length);
         }
 
@@ -927,7 +882,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         {
             paths.clear();
             hours.clear();
-            resetMinMax(mode.name(), rising);
 
             Calendar event;
             double hour;
@@ -941,18 +895,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             {
                 SuntimesRiseSetData d = data[day].getData(mode.name());
                 event = (rising ? d.sunriseCalendarToday() : d.sunsetCalendarToday());
-                if (event != null)
-                {
-                    double tzHour = event.get(Calendar.HOUR_OF_DAY)
-                            + (event.get(Calendar.MINUTE) / 60d)
-                            + (event.get(Calendar.SECOND) / (60d * 60d))
-                            + (event.get(Calendar.MILLISECOND) / (60d * 60d * 1000d));
-                    hour = wrapHour(tzHour - lmtOffsetHours);    // lmt_hour + dst
-                    trackMinMax(mode.name(), rising, wrapHour(tzHour - lmtOffsetHours(event.getTimeInMillis())), day);
-
-                } else {
-                    hour = (rising ? 0 : 24);
-                }
+                hour = (event != null) ? wrapHour(tzHour(event) - lmtOffsetHours) : (rising ? 0 : 24);    // lmt_hour + dst
 
                 if (Math.abs(hour - hour_prev) > 12) {   // ignore sudden shifts (polar regions near graph edge)
                     hour = hour_prev;
@@ -1089,11 +1032,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
          * @param date long date+time
          * @return offset in hours between time zone and local mean time (with dst)
          */
-        protected double lmtOffsetHours(long date)
-        {
-            long lonOffsetMs = Math.round(options.location.getLongitudeAsDouble() * MILLIS_IN_DAY / 360d);
-            long zoneOffsetMs = options.timezone.getOffset(date);
-            return (zoneOffsetMs - lonOffsetMs) / (1000d * 60d * 60d);
+        protected double lmtOffsetHours(long date) {
+            return LightGraphView.lmtOffsetHours(date, options.timezone, options.location.getLongitudeAsDouble());
         }
 
         protected void drawAxisX(Canvas c, Paint p, LightGraphOptions options)
@@ -1335,8 +1275,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             Path path = new Path();
             for (int day=0; day<365; day++)
             {
-                double tzHour = calendar0.get(Calendar.HOUR_OF_DAY) + (calendar0.get(Calendar.MINUTE) / 60d) + (calendar0.get(Calendar.SECOND) / (60d * 60d));
-                lmtHour = wrapHour(tzHour - lmtOffsetHours);
+                lmtHour = wrapHour(tzHour(calendar0) - lmtOffsetHours);
                 x = (float) daysToBitmapCoords(c, day, options);
                 y = (float) hoursToBitmapCoords(c, lmtHour, options);
 
@@ -1354,9 +1293,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         {
             if (calendar != null)
             {
-                double day = calendar.get(Calendar.DAY_OF_YEAR);
-                double tzHour = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d) + (calendar.get(Calendar.SECOND) / (60d * 60d));
-                double hour = wrapHour(tzHour - lmtOffsetHours());
+                int day = calendar.get(Calendar.DAY_OF_YEAR);
+                double hour = wrapHour(tzHour(calendar) - lmtOffsetHours());
                 drawPoint(day, hour, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
             }
         }
@@ -1387,32 +1325,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
 
             c.drawCircle(x, y, radius, p);
-        }
-
-        /**
-         * @param hour raw hour value
-         * @return hour value within range [0, 24]
-         */
-        protected double wrapHour(double hour)
-        {
-            double v = hour;
-            while (v < 0) {
-                v += 24;
-            }
-            while (v > 24) {
-                v -= 24;
-            }
-            return v;
-        }
-        protected double clampHour(double hour)
-        {
-            if (hour < 0) {
-                hour = 0;
-            }
-            if (hour > 24) {
-                hour = 24;
-            }
-            return hour;
         }
 
         protected void drawVerticalLine(@Nullable Calendar calendar, Canvas c, Paint p, int lineWidth, int lineColor, DashPathEffect lineEffect)
@@ -1546,10 +1458,6 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public boolean sunPath_show_points = DEF_KEY_GRAPH_SHOWPOINTS;
 
         public double sunPath_width = 140;       // (1440 min/day) / 140 = 10 min wide
-        //public int sunPath_interval = 1;   // 1 day
-
-        public float[][] sunPath_points = new float[0][0];
-        //public int sunPath_points_color = Color.MAGENTA;
         public float sunPath_points_width = 150;
 
         public boolean localizeToHemisphere = true;
@@ -1578,15 +1486,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public TimeZone timezone = null;
         public LightGraphColorValues colors;
 
-        public final Map<String, Pair<Double,Double>> t_sunrise_earliest = new HashMap<>();
-        public final Map<String, Pair<Double,Double>> t_sunset_earliest = new HashMap<>();
-        public final Map<String, Pair<Double,Double>> t_sunrise_latest = new HashMap<>();
-        public final Map<String, Pair<Double,Double>> t_sunset_latest = new HashMap<>();
-        public final Map<String, Boolean> t_earliest_latest_isReady = new HashMap<>();
-        public final Map<String, Pair<Double,Double>> sunrise_earliest = new HashMap<>();
-        public final Map<String, Pair<Double,Double>> sunset_earliest = new HashMap<>();
-        public final Map<String, Pair<Double,Double>> sunrise_latest = new HashMap<>();
-        public final Map<String, Pair<Double,Double>> sunset_latest = new HashMap<>();
+        public EarliestLatestSunriseSunsetData earliestLatestData;
 
         public LightGraphOptions() {}
 
@@ -1632,4 +1532,118 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
     }
 
+    /**
+     * EarliestLatestSunriseSunsetData
+     */
+    public static class EarliestLatestSunriseSunsetData
+    {
+        public double longitude = 0;
+
+        public double early_sunrise_hour = -1;
+        public int early_sunrise_day = -1;
+
+        public double early_sunset_hour = -1;
+        public int early_sunset_day = -1;
+
+        public double late_sunrise_hour = -1;
+        public int late_sunrise_day = -1;
+
+        public double late_sunset_hour = -1;
+        public int late_sunset_day = -1;
+
+        public static EarliestLatestSunriseSunsetData findEarliestLatest(WidgetSettings.TimeMode mode, @NonNull SuntimesRiseSetDataset[] data)
+        {
+            long bench_start = System.nanoTime();
+            EarliestLatestSunriseSunsetData result = new EarliestLatestSunriseSunsetData();
+
+            if (data.length > 0 && data[0] != null) {
+                result.longitude = data[0].location().getLongitudeAsDouble();
+            }
+
+            int i = 0;
+            while (i < data.length)
+            {
+                SuntimesRiseSetData d = data[i].getData(mode.name());
+                Calendar risingEvent = d.sunriseCalendarToday();
+                if (risingEvent != null)
+                {
+                    double lmtRisingHour = lmtHour(risingEvent, result.longitude);
+                    if (result.early_sunrise_hour == -1 || lmtRisingHour < result.early_sunrise_hour) {
+                        result.early_sunrise_hour = lmtRisingHour;
+                        result.early_sunrise_day = risingEvent.get(Calendar.DAY_OF_YEAR);
+                    }
+                    if (result.late_sunrise_hour == -1 || lmtRisingHour > result.late_sunrise_hour) {
+                        result.late_sunrise_hour = lmtRisingHour;
+                        result.late_sunrise_day = risingEvent.get(Calendar.DAY_OF_YEAR);
+                    }
+                }
+
+                Calendar settingEvent = d.sunsetCalendarToday();
+                if (settingEvent != null)
+                {
+                    double lmtSettingHour = lmtHour(settingEvent, result.longitude);
+                    if (result.early_sunset_hour == -1 || lmtSettingHour < result.early_sunset_hour) {
+                        result.early_sunset_hour = lmtSettingHour;
+                        result.early_sunset_day = settingEvent.get(Calendar.DAY_OF_YEAR);
+                    }
+                    if (result.late_sunset_hour == -1 || lmtSettingHour > result.late_sunset_hour) {
+                        result.late_sunset_hour = lmtSettingHour;
+                        result.late_sunset_day = settingEvent.get(Calendar.DAY_OF_YEAR);
+                    }
+                }
+                i++;
+            }
+
+            long bench_end = System.nanoTime();
+            Log.d("BENCH", "findEarliestLatest :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+            return result;
+        }
+    }
+
+    /**
+     * @param hour raw hour value
+     * @return hour value within range [0, 24]
+     */
+    protected static double wrapHour(double hour)
+    {
+        double v = hour;
+        while (v < 0) {
+            v += 24;
+        }
+        while (v > 24) {
+            v -= 24;
+        }
+        return v;
+    }
+    protected static double clampHour(double hour)
+    {
+        if (hour < 0) {
+            hour = 0;
+        }
+        if (hour > 24) {
+            hour = 24;
+        }
+        return hour;
+    }
+
+    public static double lmtHour(@NonNull Calendar event, double longitude) {
+        return wrapHour(tzHour(event) - lmtOffsetHours(event.getTimeInMillis(), event.getTimeZone(), longitude));
+    }
+
+    public static double tzHour(@NonNull Calendar event)
+    {
+        return event.get(Calendar.HOUR_OF_DAY)
+                + (event.get(Calendar.MINUTE) / 60d)
+                + (event.get(Calendar.SECOND) / (60d * 60d))
+                + (event.get(Calendar.MILLISECOND) / (60d * 60d * 1000d));
+    }
+
+    public static double lmtOffsetHours(long date, TimeZone tz, double longitude)
+    {
+        long lonOffsetMs = Math.round(longitude * MILLIS_IN_DAY / 360d);
+        return (tz.getOffset(date) - lonOffsetMs) / (1000d * 60d * 60d);
+    }
+
 }
+
+

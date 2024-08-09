@@ -466,24 +466,19 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         return ((graph.getNow() == -1) ? now : graph.getNow() + offsetMillis);
     }
 
-    /**
-     * @param value pair<day, hour> where day is day_of_year and hour is lmt_hour
-     * @return Calendar a corresponding calendar with time zone configured by the dialog
-     */
-    protected Calendar getCalendar(Context context, @NonNull Pair<Double,Double> value)
+    protected Calendar getCalendar(Context context, int day, double hour)
     {
         SuntimesRiseSetDataset data0 = (graph != null ? graph.getData0() : null);
         SuntimesRiseSetDataset[] data = (graph != null ? graph.getData() : null);
         if (context != null && data != null && data.length > 0 && data[0] != null && data0 != null)
         {
-            double hour = value.second;
             double minute = (int)((hour - (int) hour) * 60d);
             double second = (int)((minute - (int) minute) * 60d);
             double millisecond = (int)((second - (int) second) * 1000d);
 
             Calendar calendar = Calendar.getInstance(WidgetTimezones.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, data0.location().getLongitudeAsDouble(), data0.calculator()));
             calendar.set(Calendar.YEAR, data[0].calendar().get(Calendar.YEAR));
-            calendar.set(Calendar.DAY_OF_YEAR, value.first.intValue());
+            calendar.set(Calendar.DAY_OF_YEAR, day);
             calendar.set(Calendar.HOUR_OF_DAY, (int) hour);
             calendar.set(Calendar.MINUTE, (int) minute);
             calendar.set(Calendar.SECOND, (int) second);
@@ -557,31 +552,26 @@ public class LightGraphDialog extends BottomSheetDialogFragment
 
     protected void updateEarliestLatestText(Context context)
     {
-        if (text_sunrise_early != null)
+        if (options.earliestLatestData != null)
         {
-            Pair<Double,Double> value = options.sunrise_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, value, R.string.configLabel_earliest_sunrise);
-        }
-        if (text_sunrise_late != null)
-        {
-            Pair<Double,Double> value = options.sunrise_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            updateEarliestLatestText(context, text_sunrise_late, layout_sunrise_late, value, R.string.configLabel_latest_sunrise);
-        }
-        if (text_sunset_early != null)
-        {
-            Pair<Double,Double> value = options.sunset_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            updateEarliestLatestText(context, text_sunset_early, layout_sunset_early, value, R.string.configLabel_earliest_sunset);
-        }
-        if (text_sunset_late != null)
-        {
-            Pair<Double,Double> value = options.sunset_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            updateEarliestLatestText(context, text_sunset_late, layout_sunset_late, value, R.string.configLabel_latest_sunset);
+            if (text_sunrise_early != null) {
+                updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, options.earliestLatestData.early_sunrise_day, options.earliestLatestData.early_sunrise_hour, R.string.configLabel_earliest_sunrise);
+            }
+            if (text_sunrise_late != null) {
+                updateEarliestLatestText(context, text_sunrise_late, layout_sunrise_late, options.earliestLatestData.late_sunrise_day, options.earliestLatestData.late_sunrise_hour, R.string.configLabel_latest_sunrise);
+            }
+            if (text_sunset_early != null) {
+                updateEarliestLatestText(context, text_sunset_early, layout_sunset_early, options.earliestLatestData.early_sunset_day, options.earliestLatestData.early_sunset_hour, R.string.configLabel_earliest_sunset);
+            }
+            if (text_sunset_late != null) {
+                updateEarliestLatestText(context, text_sunset_late, layout_sunset_late, options.earliestLatestData.late_sunset_day, options.earliestLatestData.late_sunset_hour, R.string.configLabel_latest_sunset);
+            }
         }
     }
 
-    protected void updateEarliestLatestText(Context context, TextView textView, View layout, Pair<Double,Double> value, int labelResID)
+    protected void updateEarliestLatestText(Context context, TextView textView, View layout, int day, double hour, int labelResID)
     {
-        Calendar calendar = (value != null ? getCalendar(context, value) : null);
+        Calendar calendar = getCalendar(context, day, hour);
         if (calendar != null) {
             textView.setText(utils.calendarDateTimeDisplayString(context, calendar).toString());
         } else textView.setText("");
