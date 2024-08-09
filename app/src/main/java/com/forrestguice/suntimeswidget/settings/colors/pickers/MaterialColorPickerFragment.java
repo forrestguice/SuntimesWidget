@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.settings.colors;
+package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModel;
@@ -32,12 +32,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
+import com.forrestguice.suntimeswidget.settings.colors.ColorsAdapter;
 
 import java.util.ArrayList;
 
-public class MaterialColorPickerFragment extends ColorDialog.ColorPickerFragment
+public class MaterialColorPickerFragment extends ColorPickerFragment
 {
-    protected ColorDialog.ColorsAdapter adapter;
+    protected ColorsAdapter adapter;
     protected RecyclerView grid;
     protected MaterialColorPickerModel materialColorModel;
 
@@ -57,15 +59,14 @@ public class MaterialColorPickerFragment extends ColorDialog.ColorPickerFragment
     protected void initViews(Context context, View view)
     {
         super.initViews(context, view);
-        adapter = new ColorDialog.ColorsAdapter(materialColorModel.materialColorList(context));
+        adapter = new ColorsAdapter(materialColorModel.materialColorList(context));
         adapter.setSelectedColor(getColor());
         adapter.setItemLayoutResID(R.layout.layout_listitem_color1);
-        adapter.setOnColorButtonClickListener(new ColorDialog.ColorChangeListener()
+        adapter.setOnColorButtonClickListener(new ColorChangeListener()
         {
             @Override
             public void onColorChanged(int color)
             {
-                super.onColorChanged(color);
                 setColor(color, true);
                 clearListeners();
                 updateViews(getActivity());

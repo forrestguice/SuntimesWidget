@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.settings.colors;
+package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -35,6 +35,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 
 import java.util.HashMap;
 
@@ -42,7 +43,7 @@ import java.util.HashMap;
  * QuadFlaskColorPickerFragment1
  * Circle Mode
  */
-public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
+public class SimpleColorPickerFragment extends ColorPickerFragment
 {
     protected EditText edit_r, edit_g, edit_b, edit_a, edit_hex;
     protected SeekBar seek_r, seek_g, seek_b, seek_a;
@@ -236,7 +237,7 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
     protected TextWatcher onValueChangedHex(final EditText edit) {
         return new ColorChooser.HexColorTextWatcher(showAlpha()) {
             @Override
-            protected void onValueChanged(String hexValue) {
+            public void onValueChanged(String hexValue) {
                 setColor(hexValue);
                 Log.d("DEBUG", "setColor: hexChanged: " + hexValue);
                 edit.setSelection(edit.getText().length());

@@ -69,6 +69,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
@@ -642,7 +643,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser createColorChooser(Context context, TextView label, EditText edit, ImageButton button, String id, @Nullable final Integer previewID)
     {
         ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
-        chooser.setColorChangeListener(new ColorDialog.ColorChangeListener() {
+        chooser.setColorChangeListener(new ColorChangeListener() {
             @Override
             public void onColorChanged(int color) {
                 addRecentColor(color);

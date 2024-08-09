@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2020 Forrest Guice
+    Copyright (C) 2017-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,29 +19,20 @@
 package com.forrestguice.suntimeswidget.settings.colors;
 
 import android.app.Dialog;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -55,19 +46,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
-import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorChangedListener;
-import com.flask.colorpicker.slider.AlphaSlider;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.colors.pickers.MaterialColorPickerFragment;
-import com.forrestguice.suntimeswidget.settings.colors.quadflask.LightnessSlider;
+import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
+import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerPagerAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ColorDialog extends BottomSheetDialogFragment
 {
@@ -88,7 +73,7 @@ public class ColorDialog extends BottomSheetDialogFragment
     private Button btn_cancel;
     private ViewPager colorPager;
     protected Bundle colorPagerArgs = new Bundle();
-    private ColorPickerModel viewModel;
+    private ColorPickerFragment.ColorPickerModel viewModel;
 
     private RecyclerView recentColors;
     private ColorsAdapter recentColors_adapter;
@@ -143,7 +128,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_colors, parent, false);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(ColorPickerModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(ColorPickerFragment.ColorPickerModel.class);
         viewModel.setColor(getArguments().getInt(KEY_COLOR));
         viewModel.setColorUnder(getArguments().getInt(KEY_COLOR_UNDER));
         viewModel.setColorOver(getArguments().getInt(KEY_COLOR_OVER));
@@ -397,486 +382,16 @@ public class ColorDialog extends BottomSheetDialogFragment
     }
 
     /**
-     * ColorChangeListener
-     */
-    public static abstract class ColorChangeListener {
-        public void onColorChanged(int color) {}
-    }
-
-    /**
      * ColorDialogListener
      */
-    public static abstract class ColorDialogListener extends ColorChangeListener
+    public interface ColorDialogListener extends ColorChangeListener
     {
-        public void onAccepted(int color) {}
-        public void onCanceled() {}
+        void onAccepted(int color);
+        void onCanceled();
     }
     public ColorDialogListener colorDialogListener = null;
     public void setColorDialogListener( ColorDialogListener listener ) {
         this.colorDialogListener = listener;
-    }
-
-    /**
-     * ColorsAdapter
-     */
-    public static class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder>
-    {
-        private final ArrayList<Integer> colors = new ArrayList<>();
-
-        public ColorsAdapter(List<Integer> colors) {
-            this.colors.addAll(colors);
-            setHasStableIds(true);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        protected Integer itemLayoutResID = null;
-        public void setItemLayoutResID(Integer value) {
-            itemLayoutResID = value;
-        }
-
-        public void setColors(List<Integer> colors)
-        {
-            this.colors.clear();
-            this.colors.addAll(colors);
-            notifyDataSetChanged();
-        }
-
-        public void setSelectedColor(int color)
-        {
-            int newPosition = colors.indexOf(color);
-            int oldPosition = ((selectedColor != null) ? colors.indexOf(selectedColor) : -1);
-            selectedColor = color;
-
-            notifyItemChanged(newPosition);
-            if (oldPosition != -1) {
-                notifyItemChanged(oldPosition);
-            }
-        }
-        public void clearSelectedColor()
-        {
-            int oldPosition = ((selectedColor != null) ? colors.indexOf(selectedColor) : -1);
-            selectedColor = null;
-
-            if (oldPosition != -1) {
-                notifyItemChanged(oldPosition);
-            }
-        }
-        protected Integer selectedColor = null;
-
-        @Override
-        public ColorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layout = LayoutInflater.from(parent.getContext());
-            int layoutResID = itemLayoutResID != null ? itemLayoutResID : ColorViewHolder.suggestedLayoutResID();
-            View view = layout.inflate(layoutResID, parent, false);
-            return new ColorViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ColorViewHolder holder, int position)
-        {
-            Integer color = (position >= 0 && position < colors.size()) ? colors.get(position) : null;
-            holder.bindColorToView(color, selectedColor != null && selectedColor.equals(color));
-            holder.colorButton.setOnClickListener(color != null ? onColorButtonClick(holder, color) : null);
-        }
-
-        @Override
-        public int getItemCount() {
-            return colors.size();
-        }
-
-
-        private View.OnClickListener onColorButtonClick(final ColorViewHolder holder, final int color)
-        {
-            return new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v) {
-                    holder.setSelected(true);
-                    setSelectedColor(color);
-                    if (onColorChangeListener != null) {
-                        onColorChangeListener.onColorChanged(color);
-                    }
-                }
-            };
-        }
-
-        private ColorChangeListener onColorChangeListener;
-        public void setOnColorButtonClickListener( ColorChangeListener listener ) {
-            onColorChangeListener = listener;
-        }
-    }
-
-    /**
-     * ColorViewHolder
-     */
-    public static class ColorViewHolder extends RecyclerView.ViewHolder
-    {
-        public Integer color;
-        public ImageButton colorButton;
-        public View colorButtonFrame;
-
-        public ColorViewHolder(View itemView) {
-            super(itemView);
-            colorButton = (ImageButton)itemView.findViewById(R.id.colorButton);
-            colorButtonFrame = itemView.findViewById(R.id.colorButtonFrame);
-        }
-
-        public static int suggestedLayoutResID() {
-            return R.layout.layout_listitem_color;
-        }
-
-        public void bindColorToView(Integer color, boolean isSelected)
-        {
-            this.color = color;
-            if (color != null)
-            {
-                Drawable d = colorButton.getDrawable();
-                if (d != null) {
-                    GradientDrawable g = (GradientDrawable) d.mutate();
-                    g.setColor(color);
-                    g.invalidateSelf();
-                }
-            }
-            colorButton.setVisibility(color != null ? View.VISIBLE : View.GONE);
-            setSelected(isSelected);
-        }
-
-        public void setSelected(boolean isSelected) {
-            colorButtonFrame.setBackgroundColor(isSelected ? Color.WHITE : Color.TRANSPARENT);
-        }
-    }
-
-    /**
-     * ColorPickerPagerAdapter
-     */
-    public static class ColorPickerPagerAdapter extends FragmentStatePagerAdapter
-    {
-        public ColorPickerPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        public static class AdapterListener extends ColorChangeListener {
-            /* EMPTY */
-        }
-        public void setAdapterListener(AdapterListener listener) {
-            adapterListener = listener;
-        }
-        protected AdapterListener adapterListener = null;
-
-        @Override
-        public Fragment getItem(int position)
-        {
-            ColorPickerFragment item;
-            if (Build.VERSION.SDK_INT >= 14)
-            {
-                switch (position) {
-                    case 3: item = new QuadFlaskColorPickerFragment1(); break;
-                    case 2: item = new QuadFlaskColorPickerFragment(); break;
-                    case 1: item = new MaterialColorPickerFragment(); break;
-                    case 0: default: item = new SimpleColorPickerFragment(); break;
-                }
-            } else {
-                switch (position) {
-                    case 1: item = new MaterialColorPickerFragment(); break;
-                    case 0: default: item = new SimpleColorPickerFragment(); break;
-                }
-            }
-            item.setColorChangeListener(onColorChanged);
-            return item;
-        }
-        private final int numFragments = (Build.VERSION.SDK_INT >= 14) ? 4 : 2;
-
-        @Override
-        public int getCount() {
-            return numFragments;
-        }
-
-        private final ColorChangeListener onColorChanged = new ColorChangeListener()
-        {
-            @Override
-            public void onColorChanged(int color)
-            {
-                if (adapterListener != null) {
-                    adapterListener.onColorChanged(color);
-                }
-            }
-        };
-
-        @Override
-        public Bundle saveState() {
-            return null;
-        }
-    }
-
-    /**
-     * ColorPickerFragment
-     */
-    public static class ColorPickerFragment extends Fragment
-    {
-        protected ColorPickerModel colorViewModel;
-
-        protected View preview;             // color as solid
-        protected TextView preview_text;    // color as text over card color
-        protected TextView preview_text1;   // color as background under default text color
-
-        public ColorPickerFragment() {
-            setArguments(new Bundle());
-        }
-
-        @CallSuper
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            colorViewModel = ViewModelProviders.of(getActivity()).get(ColorPickerModel.class);
-            colorViewModel.color.observe(getActivity(), onViewModelColorChanged);
-            return null;
-        }
-
-        @CallSuper
-        protected void initViews(Context context, View view)
-        {
-            preview = view.findViewById(R.id.preview_color);
-            preview_text = (TextView) view.findViewById(R.id.preview_color_text);
-            preview_text1 = (TextView) view.findViewById(R.id.preview_color_text1);
-        }
-
-        protected ColorDialog.ColorChangeListener listener;
-        public void setColorChangeListener(ColorDialog.ColorChangeListener listener) {
-            this.listener = listener;
-        }
-
-        public void setColor( String hexValue ) {
-            setColor(Color.parseColor(hexValue.trim()), true);
-        }
-
-        public void setColor( int color, boolean userTriggered )
-        {
-            if (colorViewModel != null) {
-                colorViewModel.setColor(color);
-            }
-            if (listener != null && userTriggered) {
-                listener.onColorChanged(color);
-            }
-        }
-
-        public int getColor() {
-            return (colorViewModel != null ? colorViewModel.color.getValue() : Color.WHITE);
-        }
-
-        public boolean showAlpha() {
-            return getArguments().getBoolean("showAlpha", false);
-        }
-
-        private final Observer<Integer> onViewModelColorChanged = new Observer<Integer>()
-        {
-            @Override
-            public void onChanged(@Nullable Integer color)
-            {
-                if (isAdded() && getView() != null) {
-                    clearListeners();
-                    updateViews(getActivity());
-                    setListeners();
-                }
-            }
-        };
-
-        @CallSuper
-        public void updateViews(Context context) {
-            updatePreview(context);
-        }
-
-        protected void updatePreview(Context context)
-        {
-            if (preview != null) {
-                preview.setBackgroundColor(getColor());
-            }
-
-            if (preview_text != null && colorViewModel.hasColorUnder()) {
-                preview_text.setTextColor(getColor());
-                preview_text.setBackgroundColor(colorViewModel.getColorUnder());
-
-            } else if (preview_text != null) {
-                preview_text.setBackgroundColor(getColor());
-                preview_text.setTextColor(getColor());
-            }
-
-            if (preview_text1 != null && colorViewModel.hasColorOver()) {
-                preview_text1.setTextColor(colorViewModel.getColorOver());
-                preview_text1.setBackgroundColor(getColor());
-
-            } else if (preview_text1 != null) {
-                preview_text1.setBackgroundColor(getColor());
-                preview_text1.setTextColor(getColor());
-            }
-        }
-
-        protected void setListeners() {}
-        protected void clearListeners() {}
-
-        @Override
-        public void setUserVisibleHint(boolean isVisibleToUser)
-        {
-            super.setUserVisibleHint(isVisibleToUser);
-            if (isVisibleToUser && getView() != null) {
-                getView().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        clearListeners();
-                        updateViews(getActivity());
-                        setListeners();
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void onViewStateRestored(Bundle bundle)
-        {
-            super.onViewStateRestored(bundle);
-            clearListeners();
-            updateViews(getActivity());
-            setListeners();
-        }
-    }
-
-    /**
-     * QuadFlaskColorPickerFragment
-     * Flower Mode
-     */
-    public static class QuadFlaskColorPickerFragment extends ColorPickerFragment
-    {
-        protected AlphaSlider alphaSlider;
-        protected LightnessSlider lightnessSlider;
-        protected ColorPickerView colorPicker;
-
-        protected int getLayoutResID() {
-            return R.layout.layout_colors_quadflask;
-        }
-
-        @Override
-        protected void initViews(Context context, View view)
-        {
-            super.initViews(context, view);
-            initViews1(context, view);
-            connectQuadFlaskViews();
-        }
-        protected void initViews1(Context context, View view)
-        {
-            alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha);
-            lightnessSlider = (LightnessSlider) view.findViewById(R.id.color_lightness);
-            colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker);
-        }
-
-        protected void connectQuadFlaskViews()
-        {
-            if (colorPicker != null) {
-                colorPicker.setLightnessSlider(lightnessSlider);
-            }
-            if (lightnessSlider != null) {
-                lightnessSlider.setColorPicker(colorPicker);
-            }
-            if (alphaSlider != null) {
-                alphaSlider.setColorPicker(colorPicker);
-            }
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            super.onCreateView(inflater, container, savedInstanceState);
-            View view = inflater.inflate(getLayoutResID(), container, false);
-            initViews(getContext(), view);
-            updateViews(getContext());
-            colorPicker.addOnColorChangedListener(onColorChangedListener);
-            return view;
-        }
-
-        private final OnColorChangedListener onColorChangedListener = new OnColorChangedListener() {
-            @Override
-            public void onColorChanged(int color) {
-                setColor(color, true);
-                clearListeners();
-                updateViews(getActivity());
-                setListeners();
-            }
-        };
-
-        @Override
-        public void updateViews(Context context)
-        {
-            super.updateViews(context);
-            alphaSlider.setVisibility(showAlpha() ? View.VISIBLE : View.GONE);
-            lightnessSlider.post(new Runnable() {
-                @Override
-                public void run() {
-                    lightnessSlider.setColor(getColor());
-                    alphaSlider.setColor(getColor());
-                }
-            });
-            colorPicker.setColor(getColor(), false);
-        }
-    }
-
-    /**
-     * QuadFlaskColorPickerFragment1
-     * Circle Mode
-     */
-    public static class QuadFlaskColorPickerFragment1 extends QuadFlaskColorPickerFragment
-    {
-        @Override
-        protected int getLayoutResID() {
-            return R.layout.layout_colors_quadflask1;
-        }
-
-        @Override
-        protected void initViews1(Context context, View view)
-        {
-            alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha1);
-            lightnessSlider = (LightnessSlider) view.findViewById(R.id.color_lightness1);
-            colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker1);
-        }
-    }
-
-    /**
-     * ColorPickerModel
-     */
-    public static class ColorPickerModel extends ViewModel
-    {
-        public MutableLiveData<Integer> color = new MutableLiveData<>();
-        protected Integer color_over = null;
-        protected Integer color_under = null;
-
-        public ColorPickerModel() {
-            color.setValue(Color.WHITE);
-        }
-
-        public Integer getColorOver() {
-            return color_over;
-        }
-        public void setColorOver(Integer value) {
-            color_over = value;
-        }
-        public boolean hasColorOver() {
-            return color_over != null;
-        }
-
-        public Integer getColorUnder() {
-            return color_under;
-        }
-        public void setColorUnder(Integer value) {
-            color_under = value;
-        }
-        public boolean hasColorUnder() {
-            return color_under != null;
-        }
-
-        public void setColor(int value) {
-            color.setValue(value);
-        }
     }
 
 }
