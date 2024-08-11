@@ -214,15 +214,14 @@ public class AlarmPrefsFragment extends PreferenceFragment
         {
             fullscreenNotificationPrefs.setOnPreferenceChangeListener(onFullscreenNotificationPrefsClicked(context));
 
-            /*boolean fullScreenIntentsEnabled = false;   // TODO: use NotificationManager#canUseFullScreenIntent() here
-            if (fullScreenIntentsEnabled)
+            if (canUseFullScreenIntent(context))    // TODO: replace with NotificationManager#canUseFullScreenIntent()
             {
                 String enabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_on);
                 fullscreenNotificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_fullscreen_summary0, enabledString));
             } else {
                 String disabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_off);
                 fullscreenNotificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
-            }*/
+            }
         }
 
         Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
@@ -271,6 +270,38 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 }
             });
         }
+    }
+
+    /**
+     * this method calls canUseFullScreenIntent (api34+) via reflection
+     */
+    private static boolean canUseFullScreenIntent(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 34)
+        {
+            String methodName = "canUseFullScreenIntent";
+            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null)
+            {
+                try {
+                    java.lang.reflect.Method method = notificationManager.getClass().getMethod(methodName);
+                    try {
+                        return (boolean) method.invoke(notificationManager);
+
+                    } catch (IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+                        Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
+                        return false;
+                    }
+                } catch (SecurityException | NoSuchMethodException e) {
+                    Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
+                    return false;
+                }
+            } else {
+                Log.e(AlarmNotifications.TAG, methodName + ": false; NotificationManager is null!");
+                return false;
+            }
+        }
+        return true;
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
