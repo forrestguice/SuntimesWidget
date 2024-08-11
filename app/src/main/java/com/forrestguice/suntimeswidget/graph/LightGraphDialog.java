@@ -50,6 +50,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
@@ -68,10 +69,12 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -974,6 +977,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         if (itemData != null)
         {
+            // share itemData
             String label = itemData.getStringExtra("label");
             long itemMillis = itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L);
             if (itemMillis != -1L)
@@ -1003,8 +1007,35 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             }
 
         } else {
-            // share graph bitmap
-            // TODO
+            // share the graph bitmap
+            graph.shareBitmap(new ExportTask.TaskListener()
+            {
+                @Override
+                public void onStarted() {
+                    showProgress(true);
+                }
+
+                @Override
+                public void onFinished(ExportTask.ExportResult result)
+                {
+                    showProgress(false);
+                    Context context = getContext();
+                    if (context != null)
+                    {
+                        if (result.getResult())
+                        {
+                            String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
+                            Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+                            ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile(), result.getMimeType());
+
+                        } else {
+                            File file = result.getExportFile();
+                            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            });
         }
     }
 

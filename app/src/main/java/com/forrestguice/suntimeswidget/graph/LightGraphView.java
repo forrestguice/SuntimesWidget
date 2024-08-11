@@ -39,6 +39,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -171,6 +172,14 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             updateViews(true);
         }
     }
+
+    @Override
+    public void setImageBitmap(Bitmap b)
+    {
+        super.setImageBitmap(b);
+        bitmap = b;
+    }
+    private Bitmap bitmap;
 
     public LightGraphOptions getOptions() {
         return options;
@@ -1383,6 +1392,25 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     }
 
     /**
+     * shareBitmap
+     */
+    public void shareBitmap(ExportTask.TaskListener listener)
+    {
+        if (bitmap != null)
+        {
+            LightGraphExportTask exportTask = new LightGraphExportTask(getContext(), "SuntimesLightGraph", true, true);
+            exportTask.setTaskListener(listener);
+            exportTask.setBitmaps(new Bitmap[] { bitmap });
+            exportTask.setWaitForFrames(animated);
+            exportTask.setZippedOutput(animated);
+            if (Build.VERSION.SDK_INT >= 11) {
+                exportTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);   // executes in parallel to draw task
+            } else exportTask.execute();
+
+        } else Log.w(LightGraphView.class.getSimpleName(), "shareBitmap: null!");
+    }
+
+    /**
      * LightGraphTaskListener
      */
     @SuppressWarnings("EmptyMethod")
@@ -1646,6 +1674,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         long lonOffsetMs = Math.round(longitude * MILLIS_IN_DAY / 360d);
         return (tz.getOffset(date) - lonOffsetMs) / (1000d * 60d * 60d);
     }
+
 
 }
 
