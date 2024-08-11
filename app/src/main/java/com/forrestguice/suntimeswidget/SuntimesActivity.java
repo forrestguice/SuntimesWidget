@@ -1774,23 +1774,25 @@ public class SuntimesActivity extends AppCompatActivity
     }
     protected void scheduleAlarm( String eventID )
     {
-        boolean isRising = eventID != null && eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
-        if (eventID != null && (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) ||
-                eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING))) {
-            eventID = eventID.substring(0, eventID.lastIndexOf("_"));
-        }
-
-        String alarmID = eventID;
-        if (EventSettings.hasEvent(this, eventID)) {
-            EventSettings.EventAlias event = EventSettings.loadEvent(this, eventID);
-            alarmID = event.getAliasUri() + (isRising ? AlarmEventProvider.SunElevationEvent.SUFFIX_RISING : AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING);
-        }
-
         if (dataset.isCalculated())
         {
+            boolean isRising = eventID != null && eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
+            if (eventID != null && (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) ||
+                    eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING))) {
+                eventID = eventID.substring(0, eventID.lastIndexOf("_"));
+            }
+
+            String alarmID = eventID;
+            if (EventSettings.hasEvent(this, eventID))
+            {
+                EventSettings.EventAlias event = EventSettings.loadEvent(this, eventID);
+                alarmID = event.getAliasUri() + (isRising ? AlarmEventProvider.SunElevationEvent.SUFFIX_RISING : AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING);
+            }
+
             AlarmCreateDialog dialog = new AlarmCreateDialog();
             dialog.loadSettings(SuntimesActivity.this);
             dialog.setEvent((alarmID != null ? alarmID : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));    // TODO: bug; dialog fails to switch tabs if already showing "by time"
+            dialog.setEvent((alarmID != null ? alarmID : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));
             dialog.setUseAppLocation(SuntimesActivity.this, true);
             dialog.setShowAlarmListButton(true);
             dialog.setOnAcceptedListener(onScheduleAlarm);
