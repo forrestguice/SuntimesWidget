@@ -85,9 +85,6 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
         View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorvalues, container, false);
-        if (savedState != null) {
-            onRestoreInstanceState(savedState);
-        }
 
         ImageButton overflow = (ImageButton) content.findViewById(R.id.overflow);
         if (overflow != null) {
@@ -108,6 +105,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         editID = (EditText) content.findViewById(R.id.editTextID);
         setID(null);
 
+        if (savedState != null) {
+            onRestoreInstanceState(savedState);
+        }
         updateViews();
         return content;
     }
@@ -199,11 +199,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     @Override
     public void onSaveInstanceState(@NonNull Bundle out)
     {
-        super.onSaveInstanceState(out);
         out.putParcelable("colorValues", colorValues);
         out.putParcelable("defaultValues", defaultValues);
         out.putStringArray("filterValues", filterValues.toArray(new String[0]));
         out.putString("editID", editID.getText().toString());
+        super.onSaveInstanceState(out);
     }
     protected void onRestoreInstanceState(@NonNull Bundle savedState)
     {
@@ -301,7 +301,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
 
     protected ColorValues colorValues = null;
-    public void setColorValues(ColorValues v) {
+    public void setColorValues(ColorValues v)
+    {
         colorValues = v;
         setID(null);
         updateViews();

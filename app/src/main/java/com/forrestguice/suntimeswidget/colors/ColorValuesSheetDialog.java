@@ -51,6 +51,8 @@ import java.util.TreeSet;
 
 public class ColorValuesSheetDialog extends BottomSheetDialogFragment
 {
+    public static final String DIALOG_SHEET = "ColorValuesSheet";
+
     public ColorValuesSheetDialog() {
         setArguments(new Bundle());
     }
@@ -163,12 +165,11 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
 
         //ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(getActivity()).inflate(R.layout.layout_dialog_colorsheet, parent, false);
+        initViews(dialogContent);
 
         if (savedState != null) {
             onRestoreInstanceState(savedState);
         }
-
-        initViews(dialogContent);
         return dialogContent;
     }
 
@@ -212,19 +213,24 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     {
         titleText = (TextView) dialogView.findViewById(R.id.dialog_title);
 
-        colorSheet = new ColorValuesSheetFragment();
-        colorSheet.setAppWidgetID(getAppWidgetID());
-        colorSheet.setColorTag(getColorTag());
-        colorSheet.setFilter(getFilter());
-        colorSheet.setApplyFilter(applyFilter());
-        colorSheet.setColorCollection(getColorCollection());
-        colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
-        colorSheet.setFragmentListener(fragmentListener);
-
         FragmentManager fragments = getChildFragmentManager();
-        FragmentTransaction transaction = fragments.beginTransaction();
-        transaction.replace(R.id.fragmentContainer2, colorSheet, "ColorValuesSheet");
-        transaction.commit();
+        colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
+        if (colorSheet == null)
+        {
+            colorSheet = new ColorValuesSheetFragment();
+            colorSheet.setAppWidgetID(getAppWidgetID());
+            colorSheet.setColorTag(getColorTag());
+            colorSheet.setFilter(getFilter());
+            colorSheet.setApplyFilter(applyFilter());
+            colorSheet.setColorCollection(getColorCollection());
+            colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
+            colorSheet.setFragmentListener(fragmentListener);
+
+            FragmentTransaction transaction = fragments.beginTransaction();
+            transaction.replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET);
+            transaction.commit();
+            fragments.executePendingTransactions();
+        }
 
         check_filter = (CheckBox) dialogView.findViewById(R.id.check_filter);
         if (check_filter != null)
@@ -269,6 +275,9 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         ViewUtils.disableTouchOutsideBehavior(getDialog());
     }
 
+    /**
+     * FragmentListener
+     */
     private final ColorValuesSheetFragment.FragmentListener fragmentListener = new ColorValuesSheetFragment.FragmentListener()
     {
         @Override
