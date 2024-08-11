@@ -209,8 +209,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
                 int[] appWidgetIds = extras.getIntArray(AppWidgetManager.EXTRA_APPWIDGET_IDS);
                 if (appWidgetIds != null)
                 {
-                    for (int appWidgetId : appWidgetIds) {
-                        onUpdate(context, AppWidgetManager.getInstance(context), new int[] { appWidgetId });
+                    for (int appWidgetId : appWidgetIds)
+                    {
+                        if (widgetIsStale(context, appWidgetId)) {
+                            Log.w(TAG, "AppWidget " + appWidgetId + " is stale! The scheduled update may have failed; updating now...");
+                            onUpdate(context, AppWidgetManager.getInstance(context), new int[] { appWidgetId });
+                        }
                         setUpdateAlarm(context, appWidgetId);
                     }
                 }
@@ -401,6 +405,10 @@ public class SuntimesWidget0 extends AppWidgetProvider
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.TimeMode.initDisplayStrings(context);
+    }
+
+    public static boolean widgetIsStale(Context context, int appWidgetId) {
+        return (WidgetSettings.getNextSuggestedUpdate(context, appWidgetId) < System.currentTimeMillis());
     }
 
     /**
