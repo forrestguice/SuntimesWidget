@@ -131,7 +131,7 @@
     <dimen name="widgetActivity_padding">0dp</dimen>  <!-- padding around activity title + content -->
     <dimen name="widgetActivity_padding_inner">8dp</dimen> <!-- padding around activity content -->
 
-    <integer name="widget_updateInterval">0</integer>
+    <integer name="widget_updateInterval">21600000</integer>   <!-- 6 hours -->
 
     <dimen name="aboutIcon_margin">0dip</dimen>
 
