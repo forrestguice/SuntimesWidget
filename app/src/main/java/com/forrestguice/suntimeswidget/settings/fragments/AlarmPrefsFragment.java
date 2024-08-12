@@ -51,6 +51,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -189,23 +190,26 @@ public class AlarmPrefsFragment extends PreferenceFragment
         Preference notificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
         if (notificationPrefs != null)
         {
-            boolean notificationsEnabled = NotificationManagerCompat.from(context).areNotificationsEnabled();
             notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
 
-            if (notificationsEnabled)
+            if (NotificationManagerCompat.from(context).areNotificationsEnabled())
             {
-                String enabledString = context.getString(R.string.configLabel_alarms_notifications_on);
-                if (isDeviceSecure(context) && !notificationsOnLockScreen(context))
-                {
-                    String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
-                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, disabledString);
-                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, disabledString, colorWarning));
+                if (areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
+                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
+
+                } else if (isDeviceSecure(context) && !notificationsOnLockScreen(context)) {
+                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, warning);
+                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, warning, colorWarning));
+
                 } else {
-                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, enabledString));
+                    String message = context.getString(R.string.configLabel_alarms_notifications_on);
+                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, message));
                 }
             } else {
-                String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
-                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
+                String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
             }
         }
 
@@ -273,35 +277,50 @@ public class AlarmPrefsFragment extends PreferenceFragment
     }
 
     /**
+     * this method calls areNotificationsPaused (api29+) via reflection
+     */
+    private static boolean areNotificationsPaused(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 29) {
+            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
+            return invokeBooleanMethod(context, notificationManager, "areNotificationsPaused", false);
+        } else return false;
+    }
+
+    /**
      * this method calls canUseFullScreenIntent (api34+) via reflection
      */
     private static boolean canUseFullScreenIntent(Context context)
     {
-        if (Build.VERSION.SDK_INT >= 34)
-        {
-            String methodName = "canUseFullScreenIntent";
+        if (Build.VERSION.SDK_INT >= 34) {
             Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (notificationManager != null)
-            {
-                try {
-                    java.lang.reflect.Method method = notificationManager.getClass().getMethod(methodName);
-                    try {
-                        return (boolean) method.invoke(notificationManager);
+            return invokeBooleanMethod(context, notificationManager, "canUseFullScreenIntent", true);
+        } else return true;
+    }
 
-                    } catch (IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
-                        Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
-                        return false;
-                    }
-                } catch (SecurityException | NoSuchMethodException e) {
+    private static boolean invokeBooleanMethod(Context context, Object object, String methodName, boolean defaultValue)
+    {
+        if (object != null)
+        {
+            try {
+                java.lang.reflect.Method method = object.getClass().getMethod(methodName);
+                try {
+                    boolean result = (boolean) method.invoke(object);
+                    Log.e(AlarmNotifications.TAG, methodName + ": successfully invoked: returned: " + result);
+                    return result;
+
+                } catch (IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
                     Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
-                    return false;
+                    return defaultValue;
                 }
-            } else {
-                Log.e(AlarmNotifications.TAG, methodName + ": false; NotificationManager is null!");
-                return false;
+            } catch (SecurityException | NoSuchMethodException e) {
+                Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
+                return defaultValue;
             }
+        } else {
+            Log.e(AlarmNotifications.TAG, methodName + ": false; object is null!");
+            return defaultValue;
         }
-        return true;
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
