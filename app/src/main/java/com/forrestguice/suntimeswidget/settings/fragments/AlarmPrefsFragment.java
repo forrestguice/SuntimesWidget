@@ -212,7 +212,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         Preference fullscreenNotificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN);
         if (fullscreenNotificationPrefs != null)
         {
-            fullscreenNotificationPrefs.setOnPreferenceChangeListener(onFullscreenNotificationPrefsClicked(context));
+            fullscreenNotificationPrefs.setOnPreferenceClickListener(onFullscreenNotificationPrefsClicked(context));
 
             if (canUseFullScreenIntent(context))    // TODO: replace with NotificationManager#canUseFullScreenIntent()
             {
@@ -352,12 +352,12 @@ public class AlarmPrefsFragment extends PreferenceFragment
      * opens screen to manage full-screen intent limits introduced in api34
      * https://source.android.com/docs/core/permissions/fsi-limits
      */
-    private static Preference.OnPreferenceChangeListener onFullscreenNotificationPrefsClicked(final Context context)
+    private static Preference.OnPreferenceClickListener onFullscreenNotificationPrefsClicked(final Context context)
     {
-        return new Preference.OnPreferenceChangeListener()
+        return new Preference.OnPreferenceClickListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue)
+            public boolean onPreferenceClick(Preference preference)
             {
                 if (Build.VERSION.SDK_INT >= 34) {
                     AlarmSettings.openFullScreenIntentSettings(context);

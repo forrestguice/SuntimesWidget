@@ -52,6 +52,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -814,8 +815,11 @@ public class AlarmSettings
      * shows the screen to manage permissions for full screen intents.
      */
     @TargetApi(34)
-    public static Intent getFullScreenIntentSettingsIntent(Context context) {
-        return new Intent(ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+    public static Intent getFullScreenIntentSettingsIntent(Context context)
+    {
+        Intent intent = new Intent(ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        return intent;
     }
     public static final String ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT = "android.settings.MANAGE_APP_USE_FULL_SCREEN_INTENT";    // TODO: remove and use constant from api29+
 
@@ -824,8 +828,10 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 34) {
             try {
                 context.startActivity(AlarmSettings.getFullScreenIntentSettingsIntent(context));
+
             } catch (ActivityNotFoundException e) {
                 Log.e("AlarmSettings", "Failed to launch 'fullscreen intent settings': " + e);
+                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
             }
         }
     }
