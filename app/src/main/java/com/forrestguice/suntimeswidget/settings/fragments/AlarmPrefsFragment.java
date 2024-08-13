@@ -198,7 +198,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);
                     notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
 
-                } else if (isDeviceSecure(context) && !notificationsOnLockScreen(context)) {
+                } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM)) {
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);
                     String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, warning);
                     notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, warning, colorWarning));
@@ -394,7 +394,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
      */
     private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context)
     {
-        final boolean notificationsOnLockScreen = notificationsOnLockScreen(context);
+        final boolean notificationsOnLockScreen = AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM);
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference)
@@ -480,23 +480,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
-    /**
-     * https://stackoverflow.com/questions/43438978/get-status-of-setting-control-notifications-on-your-lock-screen
-     * @param context
-     * @return true notifications allowed on lock screen (global setting)
-     */
-    public static boolean notificationsOnLockScreen(Context context)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {                  // per app "on lock screen" setting introduce in Android7
-            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);    // TODO
 
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {    // global "on lock screen" setting introduced in Android5
-            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);
-
-        } else {
-            return true;
-        }
-    }
 
     private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)
     {

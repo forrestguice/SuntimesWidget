@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ComponentName;
@@ -648,6 +649,37 @@ public class AlarmSettings
             }
         }
         return false;
+    }
+
+    /**
+     * areNotificationsAllowedOnLockScreen
+     * @return true notifications allowed on lock screen
+     */
+    public static boolean areNotificationsAllowedOnLockScreen(Context context, AlarmClockItem.AlarmType type)
+    {
+        if (Build.VERSION.SDK_INT >= 21)
+        {
+            // https://stackoverflow.com/questions/43438978/get-status-of-setting-control-notifications-on-your-lock-screen
+            boolean globalValue = (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);
+
+            if (Build.VERSION.SDK_INT >= 26)
+            {
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (notificationManager != null)
+                {
+                    String channelID = AlarmNotifications.createNotificationChannel(context, type);
+                    NotificationChannel channel = notificationManager.getNotificationChannel(channelID);
+                    return (globalValue && (channel.getLockscreenVisibility() != Notification.VISIBILITY_SECRET));
+
+                } else {
+                    return globalValue;
+                }
+            } else {
+                return globalValue;
+            }
+        } else {
+            return true;
+        }
     }
 
     /**
