@@ -792,6 +792,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         String updateFilter = getUpdateIntentFilter();
         Intent intent = new Intent(updateFilter);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.putExtra(KEY_WIDGETCLASS, getClass().toString());
 
