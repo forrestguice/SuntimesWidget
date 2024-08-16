@@ -9,7 +9,7 @@
     android:initialKeyguardLayout="@layout/layout_widget_solstice_1x1_0"
 
     android:minWidth="@dimen/widget_size_minWidth" android:minHeight="@dimen/widget_size_minHeight"
-    android:updatePeriodMillis="@integer/widget_updateInterval"
+    android:updatePeriodMillis="@integer/widget_updateInterval_daily"
     android:initialLayout="@layout/layout_widget_solstice_1x1_0"
     android:configure="com.forrestguice.suntimeswidget.SolsticeWidget0ConfigActivity">
 

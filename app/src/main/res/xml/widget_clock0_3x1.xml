@@ -3,7 +3,7 @@
                     xmlns:tools="http://schemas.android.com/tools"
                     tools:ignore="UnusedAttribute"
 
-    android:updatePeriodMillis="@integer/widget_updateInterval"
+    android:updatePeriodMillis="@integer/widget_updateInterval_hourly"
     android:widgetCategory="home_screen|keyguard"
     android:previewImage="@drawable/clockwidget_3x1_preview"
 
