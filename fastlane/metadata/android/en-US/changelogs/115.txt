@@ -1,0 +1,7 @@
+- fixes bug "widget does not update automatically" (#806).
+- fixes bug in the sunlight graph (show jump/skip due to dst).
+- adds "cross-hair" and "share" options to sunlight graph.
+- adds "material palette" (and other color dialog enhancements).
+- updates translation to Brazilian Portuguese.
+- updates translation to Norwegian.
+- updates translations to Simplified Chinese, and Traditional Chinese.

@@ -1,5 +1,24 @@
 ### ~
 
+### v0.16.1 (2024-08-19)
+* adds "material colors" (palette) to color dialog.
+* adds text color preview, and other miscellaneous color picker improvements.
+* adds "cross-hair" option to sunlight graph; adds "share bitmap" action.
+* fixes sunlight graph so that it shows jump/skip in time zone dst (#735).
+* fixes inconsistent text/point sizes between graph views.
+* fixes bug where the lightmap widget is rendered incorrectly (#812).
+* enhances Alarm Settings warnings; show a warning when alarm notifications are disabled on the lock screen (#332).
+* enhances Alarm Settings warnings; show warnings when alarm channel is muted, or notifications are temporarily paused/suspended.
+* fixes broken "full-screen notifications" preference click listener; the UI now reports the current state of the required permission (#802).
+* fixes bug "widget does not update automatically" (#806); periodically detects and recovers stale widgets.
+* fixes bug where the alarm dialog fails to switch to the correct tab when scheduling events.
+* fixes bug where dialog updates continue running after the dialog is closed.
+* fixes bugs in color dialog related to `FragmentPagerAdapter`; fixes crash in color dialog on rotation.
+* fixes bug where color sheet fails to retain state on rotation.
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#813 by James Liu).
+* updates translation to Norwegian (nb) (#817 by FTno).
+* updates translation to Brazilian Portuguese (pt-br) (#819 by naoliv).
+
 ### v0.16.0 (2024-07-31)
 * adds "sidebar navigation", and an option to change the "launcher activity" (#505).
 * adds support for custom events based on "shadow length" (#331).
