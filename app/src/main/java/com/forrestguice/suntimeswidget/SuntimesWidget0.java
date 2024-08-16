@@ -760,7 +760,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         Calendar updateTime = Calendar.getInstance();
         Calendar now = Calendar.getInstance();
 
-        if (now.before(suggestedUpdateTime))
+        if (suggestedUpdateTime != null && now.before(suggestedUpdateTime))
         {
             updateTime.setTimeInMillis(suggestedUpdateTime.getTimeInMillis());
             Log.d(TAG, "SuntimesWidget.getUpdateTimeMillis: next update is at: " + updateTime.getTimeInMillis());
