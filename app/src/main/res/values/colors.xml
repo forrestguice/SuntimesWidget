@@ -457,64 +457,6 @@
     <color name="fallColor_light">#CF461D</color>
     <color name="winterColor_light">#3277C7</color>
 
-    <!-- misc -->
-    <color name="transparent">#00000000</color>
-    <color name="white">#ffffffff</color>
-    <color name="grey_50">#fffafafa</color>
-    <color name="grey_100">#fff5f5f5</color>
-    <color name="grey_200">#ffEEEEEE</color>
-    <color name="grey_300">#ffe0e0e0</color>
-    <color name="grey_400">#ffBDBDBD</color>
-    <color name="grey_500l">#ffb0b0b0</color>
-    <color name="grey_500">#ff9e9e9e</color>
-    <color name="grey_600">#ff757575</color>
-    <color name="grey_700">#ff616161</color>
-    <color name="grey_800">#ff424242</color>
-    <color name="grey_850">#ff303030</color>
-    <color name="grey_900">#ff212121</color>
-    <color name="grey_999">#ff111111</color>
-    <color name="black">#ff000000</color>
-
-    <color name="teal_200">#ff80cbc4</color>
-    <color name="teal_500">#ff009688</color>
-
-    <color name="orange_a400">#FFFF9100</color>
-    <color name="orange_500">#FFFF9800</color>
-    <color name="deep_orange_800">#FFD84315</color>
-
-    <color name="pink_a100">#FFFF80AB</color>
-
-    <color name="red_a100">#FFFF8A80</color>
-    <color name="red_a400">#FFFF1744</color>
-    <color name="red_900">#FFB71C1C</color>
-
-    <color name="purple_a100">#FFEA80FC</color>
-    <color name="purple_200">#FFCE93D8</color>
-    <color name="purple_400">#FFAB47BC</color>
-    <color name="purple_500">#FF9C27B0</color>
-
-    <color name="deep_purple_a100">#FFB388FF</color>
-    <color name="deep_purple_100">#FFD1C4E9</color>
-
-    <color name="green_a100">#FFB9F6CA</color>
-
-    <color name="indigo_a100">#FF8C9EFF</color>
-    <color name="indigo_a200">#FF536DFE</color>
-    <color name="indigo_a400">#FF3D5AFE</color>
-    <color name="indigo_100">#FFC5CAE9</color>
-    <color name="indigo_200">#FF9FA8DA</color>
-    <color name="indigo_300">#FF7986CB</color>
-    <color name="indigo_400">#FF5C6BC0</color>
-    <color name="indigo_500">#FF3F51B5</color>
-
-    <color name="blue_a100">#FF82B1FF</color>
-    <color name="blue_100">#FFBBDEFB</color>
-    <color name="blue_200">#FF90CAF9</color>
-    <color name="blue_300">#FF64B5F6</color>
-    <color name="blue_400">#FF42A5F5</color>
-    <color name="blue_500">#FF2196F3</color>
-
-
     <!-- Dark -->
     <color name="dark_primaryColor">@color/grey_900</color>
     <color name="dark_primaryContainerColor">@color/grey_999</color>

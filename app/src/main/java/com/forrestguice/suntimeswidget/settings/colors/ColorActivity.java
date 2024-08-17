@@ -127,8 +127,19 @@ public class ColorActivity extends AppCompatActivity
                 Log.e("ColorActivity", e.toString());
             }
 
-        } else if (intent.hasExtra(ColorDialog.KEY_COLOR)) {
-            color = intent.getIntExtra(ColorDialog.KEY_COLOR, Color.WHITE);
+        } else  {
+            if (intent.hasExtra(ColorDialog.KEY_COLOR)) {
+                color = intent.getIntExtra(ColorDialog.KEY_COLOR, Color.WHITE);
+            }
+        }
+
+        if (intent.hasExtra(ColorDialog.KEY_COLOR_UNDER)) {
+            colorDialog.getArguments().putInt(ColorDialog.KEY_COLOR_UNDER,
+                    intent.getIntExtra(ColorDialog.KEY_COLOR_UNDER, color));
+        }
+        if (intent.hasExtra(ColorDialog.KEY_COLOR_OVER)) {
+            colorDialog.getArguments().putInt(ColorDialog.KEY_COLOR_OVER,
+                    intent.getIntExtra(ColorDialog.KEY_COLOR_OVER, color));
         }
 
         colorDialog.setColor(color);
@@ -136,7 +147,7 @@ public class ColorActivity extends AppCompatActivity
         return colorDialog;
     }
 
-    private ColorDialog.ColorDialogListener dialogListener = new ColorDialog.ColorDialogListener()
+    private final ColorDialog.ColorDialogListener dialogListener = new ColorDialog.ColorDialogListener()
     {
         @Override
         public void onAccepted(int color) {

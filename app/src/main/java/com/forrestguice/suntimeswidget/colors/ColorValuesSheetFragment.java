@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,9 @@ import java.util.Locale;
 
 public class ColorValuesSheetFragment extends ColorValuesFragment
 {
+    public static final String DIALOG_LIST = "listDialog";
+    public static final String DIALOG_EDIT = "editDialog";
+    
     public static final int MODE_SELECT = 0;
     public static final int MODE_EDIT = 1;
 
@@ -65,23 +69,44 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
         View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorsheet, container, false);
-
-        listDialog = new ColorValuesSelectFragment(); //(ColorValuesSelectFragment) fragments.findFragmentById(R.id.colorsCollectionFragment);
-        listDialog.setAppWidgetID(getAppWidgetID());
-        listDialog.setColorTag(getColorTag());
-        listDialog.setTheme(getThemeResID());
-
-        editDialog = new ColorValuesEditFragment();  // (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
-        editDialog.setTheme(getThemeResID());
-        editDialog.setFilter(getFilter());
-        editDialog.setApplyFilter(applyFilter());
-
-        getChildFragmentManager().beginTransaction().add(R.id.layout_color_sheet, listDialog).add(R.id.layout_color_sheet, editDialog).commit();
-
         if (savedState != null) {
             onRestoreInstanceState(savedState);
         }
+        initViews();
         return content;
+    }
+
+    protected void initViews()
+    {
+        FragmentManager fragments = getChildFragmentManager();
+        listDialog = (ColorValuesSelectFragment) fragments.findFragmentByTag(DIALOG_LIST);
+        editDialog = (ColorValuesEditFragment) fragments.findFragmentByTag(DIALOG_EDIT);
+
+        if (listDialog == null)
+        {
+            listDialog = new ColorValuesSelectFragment(); //(ColorValuesSelectFragment) fragments.findFragmentById(R.id.colorsCollectionFragment);
+            listDialog.setAppWidgetID(getAppWidgetID());
+            listDialog.setColorTag(getColorTag());
+            listDialog.setTheme(getThemeResID());
+
+            FragmentTransaction transaction = fragments.beginTransaction();
+            transaction.add(R.id.layout_color_sheet, listDialog, DIALOG_LIST);
+            transaction.addToBackStack(DIALOG_LIST);
+            transaction.commit();
+        }
+        if (editDialog == null)
+        {
+            editDialog = new ColorValuesEditFragment();  // (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
+            editDialog.setTheme(getThemeResID());
+            editDialog.setFilter(getFilter());
+            editDialog.setApplyFilter(applyFilter());
+
+            FragmentTransaction transaction = fragments.beginTransaction();
+            transaction.add(R.id.layout_color_sheet, editDialog, DIALOG_EDIT);
+            transaction.addToBackStack(DIALOG_EDIT);
+            transaction.commit();
+        }
+        fragments.executePendingTransactions();
     }
 
     @Override
@@ -89,7 +114,6 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     {
         super.onResume();
 
-        FragmentManager fragments = getChildFragmentManager();
         //listDialog = (ColorValuesSelectFragment) fragments.findFragmentById(R.id.colorsCollectionFragment);
         if (listDialog != null) {
             listDialog.setColorCollection(colorCollection);
@@ -130,11 +154,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected void onRestoreInstanceState(@NonNull Bundle savedState) {
         mode = savedState.getInt("mode");
+        colorCollection = savedState.getParcelable("colorCollection");
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt("mode", mode);
+        outState.putParcelable("colorCollection", colorCollection);
         super.onSaveInstanceState(outState);
     }
 
@@ -444,8 +470,8 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
     }
 
-    protected ColorValuesCollection colorCollection = null;
-    public void setColorCollection(ColorValuesCollection collection) {
+    protected ColorValuesCollection<ColorValues> colorCollection = null;
+    public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
         colorCollection = collection;
     }
 

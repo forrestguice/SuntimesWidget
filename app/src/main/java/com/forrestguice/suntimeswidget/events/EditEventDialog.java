@@ -50,12 +50,10 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmOffsetDialog;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
-import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.Toast;
-
-import java.util.Locale;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -804,10 +802,9 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     };
 
-    private final ColorDialog.ColorChangeListener onColorChanged = new ColorDialog.ColorChangeListener() {
+    private final ColorChangeListener onColorChanged = new ColorChangeListener() {
         @Override
         public void onColorChanged(int color) {
-            super.onColorChanged(color);
             setIsModified(true);
         }
     };

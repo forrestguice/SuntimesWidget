@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.settings.colors;
+package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -35,6 +35,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 
 import java.util.HashMap;
 
@@ -42,25 +43,29 @@ import java.util.HashMap;
  * QuadFlaskColorPickerFragment1
  * Circle Mode
  */
-public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
+public class SimpleColorPickerFragment extends ColorPickerFragment
 {
     protected EditText edit_r, edit_g, edit_b, edit_a, edit_hex;
     protected SeekBar seek_r, seek_g, seek_b, seek_a;
-    protected View preview, layout_a;
+    protected View layout_a;
     protected HashMap<EditText, TextWatcher> onTextChanged = new HashMap<>();
+    protected HashMap<SeekBar, SeekBar.OnSeekBarChangeListener> onSeekBarChanged = new HashMap<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_colors_simple, container, false);
-        initViews(view);
-        setListeners();
+        initViews(getContext(), view);
         updateViews(getContext());
         return view;
     }
 
-    protected void initViews(View view)
+    @Override
+    protected void initViews(Context context, View view)
     {
+        super.initViews(context, view);
+
         edit_hex = (EditText) view.findViewById(R.id.color_edit_hex);
         edit_r = (EditText) view.findViewById(R.id.color_edit_r);
         edit_g = (EditText) view.findViewById(R.id.color_edit_g);
@@ -71,17 +76,16 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         seek_b = (SeekBar) view.findViewById(R.id.color_seek_b);
         seek_a = (SeekBar) view.findViewById(R.id.color_seek_a);
         layout_a = view.findViewById(R.id.color_layout_a);
-        preview = view.findViewById(R.id.preview_color);
 
         seek_r.setMax(255);
         seek_g.setMax(255);
         seek_b.setMax(255);
         seek_a.setMax(255);
 
-        seek_r.setOnSeekBarChangeListener(onSliderChangedRGB(edit_r));
-        seek_g.setOnSeekBarChangeListener(onSliderChangedRGB(edit_g));
-        seek_b.setOnSeekBarChangeListener(onSliderChangedRGB(edit_b));
-        seek_a.setOnSeekBarChangeListener(onSliderChangedRGB(edit_a));
+        onSeekBarChanged.put(seek_r, onSliderChangedRGB(edit_r));
+        onSeekBarChanged.put(seek_g, onSliderChangedRGB(edit_g));
+        onSeekBarChanged.put(seek_b, onSliderChangedRGB(edit_b));
+        onSeekBarChanged.put(seek_a, onSliderChangedRGB(edit_a));
 
         onTextChanged.put(edit_r, onValueChangedRGB(edit_r));
         onTextChanged.put(edit_g, onValueChangedRGB(edit_g));
@@ -90,6 +94,7 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         onTextChanged.put(edit_hex, onValueChangedHex(edit_hex));
     }
 
+    @Override
     protected void setListeners()
     {
         edit_r.addTextChangedListener(onTextChanged.get(edit_r));
@@ -98,9 +103,14 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         edit_a.addTextChangedListener(onTextChanged.get(edit_a));
         edit_hex.addTextChangedListener(onTextChanged.get(edit_hex));
         edit_hex.setOnEditorActionListener(onHexEditAction);
+
+        seek_r.setOnSeekBarChangeListener(onSeekBarChanged.get(seek_r));
+        seek_g.setOnSeekBarChangeListener(onSeekBarChanged.get(seek_g));
+        seek_b.setOnSeekBarChangeListener(onSeekBarChanged.get(seek_b));
+        seek_a.setOnSeekBarChangeListener(onSeekBarChanged.get(seek_a));
     }
 
-    private TextView.OnEditorActionListener onHexEditAction = new TextView.OnEditorActionListener() {
+    private final TextView.OnEditorActionListener onHexEditAction = new TextView.OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL)
@@ -116,8 +126,14 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         }
     };
 
+    @Override
     protected void clearListeners()
     {
+        seek_r.setOnSeekBarChangeListener(null);
+        seek_g.setOnSeekBarChangeListener(null);
+        seek_b.setOnSeekBarChangeListener(null);
+        seek_a.setOnSeekBarChangeListener(null);
+
         edit_r.removeTextChangedListener(onTextChanged.get(edit_r));
         edit_g.removeTextChangedListener(onTextChanged.get(edit_g));
         edit_b.removeTextChangedListener(onTextChanged.get(edit_b));
@@ -173,7 +189,10 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
             @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                edit.setText(Integer.toString(progress));
+                Log.d("DEBUG", "onProgressChanged: " + progress + " (" + fromUser + ")");
+                if (fromUser) {
+                    edit.setText(Integer.toString(progress));
+                }
             }
 
             @Override
@@ -202,7 +221,8 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
                 {
                     int v = getRGBValue(s.toString());
                     int[] rgb = getRGB();
-                    setColor(Color.argb(getAlpha(), rgb[0], rgb[1], rgb[2]));
+                    Log.d("DEBUG", "setColor: afterTextChanged: " + v);
+                    setColor(Color.argb(getAlpha(), rgb[0], rgb[1], rgb[2]), true);
 
                     ignoreNextChange = true;
                     edit.setText(Integer.toString(v));
@@ -217,9 +237,9 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
     protected TextWatcher onValueChangedHex(final EditText edit) {
         return new ColorChooser.HexColorTextWatcher(showAlpha()) {
             @Override
-            protected void onValueChanged(String hexValue) {
-                //Log.d("DEBUG", "hexValue:" + hexValue +".");
+            public void onValueChanged(String hexValue) {
                 setColor(hexValue);
+                Log.d("DEBUG", "setColor: hexChanged: " + hexValue);
                 edit.setSelection(edit.getText().length());
             }
         };
@@ -246,11 +266,9 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
     @Override
     public void updateViews(Context context)
     {
-        clearListeners();
+        super.updateViews(context);
 
         int color = getColor();
-        preview.setBackgroundColor(color);
-
         int r = Color.red(color);
         int g = Color.green(color);
         int b = Color.blue(color);
@@ -267,8 +285,6 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         seek_g.setProgress(g);
         seek_b.setProgress(b);
         seek_a.setProgress(a);
-
-        setListeners();
     }
 
 }

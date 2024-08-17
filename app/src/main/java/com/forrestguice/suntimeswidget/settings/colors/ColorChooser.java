@@ -346,7 +346,7 @@ public class ColorChooser implements View.OnFocusChangeListener
             isRunning = false;
         }
 
-        protected void onValueChanged(String hexValue) {}
+        public void onValueChanged(String hexValue) {}
     }
 
     protected void onColorChanged( int newColor )
@@ -440,11 +440,21 @@ public class ColorChooser implements View.OnFocusChangeListener
     private final ColorDialog.ColorDialogListener colorDialogListener = new ColorDialog.ColorDialogListener()
     {
         @Override
+        public void onColorChanged(int color)
+        {
+            setColor(color);
+            ColorChooser.this.onColorChanged(getColor());
+        }
+
+        @Override
         public void onAccepted(int color)
         {
             setColor(color);
             ColorChooser.this.onColorChanged(getColor());
         }
+
+        @Override
+        public void onCanceled() {}
     };
 
     public void onResume()
@@ -459,8 +469,8 @@ public class ColorChooser implements View.OnFocusChangeListener
         }
     }
 
-    private ColorDialog.ColorChangeListener colorChangeListener = null;
-    public void setColorChangeListener(ColorDialog.ColorChangeListener listener) {
+    private ColorChangeListener colorChangeListener = null;
+    public void setColorChangeListener(ColorChangeListener listener) {
         colorChangeListener = listener;
     }
 

@@ -29,11 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_gravity="center" />
 
-        <View android:id="@+id/preview_color"
-            android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
-            android:background="@color/teal_500"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            android:layout_marginRight="0dp" android:layout_marginEnd="0dp" />
+        <include layout="@layout/layout_colors_preview"
+            android:layout_width="match_parent" android:layout_height="match_parent" />
 
     </LinearLayout>
 
