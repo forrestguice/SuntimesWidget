@@ -15,6 +15,7 @@
 * adds permission `ACCESS_NOTIFICATION_POLICY` (needed to enable do-not-disturb at bedtime) [PERMISSION].
 * fixes navigation bugs when using D-pad within alarm screens (Android TV).
 * fixes incorrect default places coordinates (3 places updated).
+* fixes bug "Sun Position screen altitude has the wrong colour during Nautical/Astronomical Twilight" (#805).
 * changes cross-quarter days to use "culturally neutral cross quarter day names" (#804).
 * updates default app and widget themes, and adds additional default widget actions.
 * updates Time4A dependency from 4.4.2-2019c to 4.8-2021a.

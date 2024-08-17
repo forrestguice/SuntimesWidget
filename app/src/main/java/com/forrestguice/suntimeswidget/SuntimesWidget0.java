@@ -27,6 +27,7 @@ import android.os.Build;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.content.Context;
@@ -198,13 +199,22 @@ public class SuntimesWidget0 extends AppWidgetProvider
             // TODO: handle TIME_SET better .. when automatic/network time is enabled this thing fires /frequently/ ...
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+            /**
+             * ACTION_APPWIDGET_UPDATE should be broadcast by the system at `R.dimen.widget_updateInterval`,
+             * or whenever the system feels like updating widgets.
+             */
             Log.d(TAG, "onReceive: ACTION_APPWIDGET_UPDATE :: " + getClass());
             if (extras != null)
             {
                 int[] appWidgetIds = extras.getIntArray(AppWidgetManager.EXTRA_APPWIDGET_IDS);
                 if (appWidgetIds != null)
                 {
-                    for (int appWidgetId : appWidgetIds) {
+                    for (int appWidgetId : appWidgetIds)
+                    {
+                        if (widgetIsStale(context, appWidgetId)) {
+                            Log.w(TAG, "AppWidget " + appWidgetId + " is stale! The scheduled update may have failed; updating now...");
+                            onUpdate(context, AppWidgetManager.getInstance(context), new int[] { appWidgetId });
+                        }
                         setUpdateAlarm(context, appWidgetId);
                     }
                 }
@@ -395,6 +405,10 @@ public class SuntimesWidget0 extends AppWidgetProvider
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.TimeMode.initDisplayStrings(context);
+    }
+
+    public static boolean widgetIsStale(Context context, int appWidgetId) {
+        return (WidgetSettings.getNextSuggestedUpdate(context, appWidgetId) < System.currentTimeMillis());
     }
 
     /**
@@ -704,8 +718,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
                 } else {
                     alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
                 }
-                Log.d(TAG, "setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
-            } else Log.d(TAG, "setUpdateAlarm: skipping " + alarmID);
+                Log.d(TAG, "SuntimesWidget.setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
+            } else Log.w(TAG, "SuntimesWidget.setUpdateAlarm: skipping " + alarmID);
         }
     }
 
@@ -720,7 +734,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             PendingIntent alarmIntent = getUpdateIntent(context, alarmID);
             alarmManager.cancel(alarmIntent);
-            Log.d(TAG, "unsetUpdateAlarm: unset alarm --> " + getUpdateIntentFilter() + "(" + alarmID + ")");
+            Log.d(TAG, "SuntimesWidget.unsetUpdateAlarm: unset alarm --> " + getUpdateIntentFilter() + "(" + alarmID + ")");
         }
     }
 
@@ -741,23 +755,23 @@ public class SuntimesWidget0 extends AppWidgetProvider
         }
     }
 
-    protected long getUpdateTimeMillis(Calendar suggestedUpdateTime)
+    protected long getUpdateTimeMillis(@Nullable Calendar suggestedUpdateTime)
     {
         Calendar updateTime = Calendar.getInstance();
         Calendar now = Calendar.getInstance();
 
-        if (now.before(suggestedUpdateTime))
+        if (suggestedUpdateTime != null && now.before(suggestedUpdateTime))
         {
             updateTime.setTimeInMillis(suggestedUpdateTime.getTimeInMillis());
-            Log.d(TAG, "getUpdateTimeMillis: next update is at: " + updateTime.getTimeInMillis());
+            Log.d(TAG, "SuntimesWidget.getUpdateTimeMillis: next update is at: " + updateTime.getTimeInMillis());
 
         } else {
-            updateTime.set(Calendar.MILLISECOND, 0);   // reset seconds, minutes, and hours to 0
-            updateTime.set(Calendar.MINUTE, 0);
+            updateTime.set(Calendar.MILLISECOND, 0);
+            updateTime.set(Calendar.MINUTE, 1);
             updateTime.set(Calendar.SECOND, 0);
             updateTime.set(Calendar.HOUR_OF_DAY, 0);
-            updateTime.add(Calendar.DAY_OF_MONTH, 1);  // and increment the date by 1 day
-            Log.d(TAG, "getUpdateTimeMillis: next update is at midnight: " + updateTime.getTimeInMillis());
+            updateTime.add(Calendar.DAY_OF_YEAR, 1);
+            Log.d(TAG, "SuntimesWidget.getUpdateTimeMillis: next update is at midnight: " + updateTime.getTimeInMillis());
         }
         return updateTime.getTimeInMillis();
     }
@@ -778,6 +792,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         String updateFilter = getUpdateIntentFilter();
         Intent intent = new Intent(updateFilter);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.putExtra(KEY_WIDGETCLASS, getClass().toString());
 
