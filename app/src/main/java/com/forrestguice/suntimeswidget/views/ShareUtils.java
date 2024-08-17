@@ -21,12 +21,17 @@ package com.forrestguice.suntimeswidget.views;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 
+import java.io.File;
 import java.util.Calendar;
 
 public class ShareUtils
@@ -58,6 +63,29 @@ public class ShareUtils
                 }
             }
             Toast.makeText(context, itemDisplay, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * shareFile
+     */
+    public static void shareFile(Context context, String authority, File file, String mimetype)
+    {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType(mimetype);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        try {
+            Uri shareURI = FileProvider.getUriForFile(context, authority, file);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+            if (Build.VERSION.SDK_INT >= 16) {
+                shareIntent.setClipData(ClipData.newRawUri("", shareURI));
+            }
+            context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
+
+        } catch (Exception e) {
+            Log.e("ShareUtils", "shareBitmap: Failed to share file URI! " + e);
         }
     }
 

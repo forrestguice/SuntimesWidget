@@ -487,7 +487,6 @@ public class WidgetThemePreview
             options.gridX_major_show = options.gridY_major_show = false;
             options.axisX_width = options.axisY_width = 365;
             options.sunPath_show_points = true;
-            options.sunPath_show_line = true;
             options.sunPath_show_fill = true;
 
             options.colors.setColor(LightGraphColorValues.COLOR_NIGHT, values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR));

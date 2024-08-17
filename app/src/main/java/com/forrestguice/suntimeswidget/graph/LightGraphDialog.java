@@ -24,6 +24,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -49,6 +50,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
@@ -67,14 +69,18 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.forrestguice.suntimeswidget.graph.LightGraphView.DEF_KEY_GRAPH_SHOWCROSSHAIR;
+import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWCROSSHAIR;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWLABELS;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
@@ -182,7 +188,14 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             options = graph.getOptions();
             options.init(context);
 
-            graph.setTaskListener(new LightGraphView.LightGraphTaskListener() {
+            graph.setTaskListener(new LightGraphView.LightGraphTaskListener()
+            {
+                @Override
+                public void onFinished(Bitmap result) {
+                    updateEarliestLatestText(getActivity());
+                }
+
+                @Override
                 public void onProgress(boolean value) {
                     showProgress(value);
                 }
@@ -456,21 +469,23 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         return ((graph.getNow() == -1) ? now : graph.getNow() + offsetMillis);
     }
 
-    /**
-     * @param value pair<day, hour>
-     * @return Calendar
-     */
-    protected Calendar getCalendar(Context context, @NonNull Pair<Double,Double> value)
+    protected Calendar getCalendar(Context context, int day, double hour)
     {
         SuntimesRiseSetDataset data0 = (graph != null ? graph.getData0() : null);
         SuntimesRiseSetDataset[] data = (graph != null ? graph.getData() : null);
         if (context != null && data != null && data.length > 0 && data[0] != null && data0 != null)
         {
-            Calendar calendar = Calendar.getInstance(data[0].timezone());
+            double minute = (int)((hour - (int) hour) * 60d);
+            double second = (int)((minute - (int) minute) * 60d);
+            double millisecond = (int)((second - (int) second) * 1000d);
+
+            Calendar calendar = Calendar.getInstance(WidgetTimezones.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, data0.location().getLongitudeAsDouble(), data0.calculator()));
             calendar.set(Calendar.YEAR, data[0].calendar().get(Calendar.YEAR));
-            calendar.set(Calendar.DAY_OF_YEAR, value.first.intValue());
-            calendar.set(Calendar.HOUR_OF_DAY, value.second.intValue());
-            calendar.set(Calendar.MINUTE, (int)((value.second - value.second.intValue()) * 60d));
+            calendar.set(Calendar.DAY_OF_YEAR, day);
+            calendar.set(Calendar.HOUR_OF_DAY, (int) hour);
+            calendar.set(Calendar.MINUTE, (int) minute);
+            calendar.set(Calendar.SECOND, (int) second);
+            calendar.set(Calendar.MILLISECOND, (int) millisecond);
 
             String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
             TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() :
@@ -514,6 +529,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             options.showCivil = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCIVIL);
             options.showNautical = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWNAUTICAL);
             options.showAstro = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWASTRO);
+            options.option_drawNow_crosshair = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCROSSHAIR);
 
             if (data != null)
             {
@@ -534,43 +550,37 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             lightmap.updateViews(true);
         }
 
-        if (text_sunrise_early != null)
-        {
-            Pair<Double,Double> value = options.t_sunrise_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            Calendar calendar = (value != null ? getCalendar(context, value) : null);
-            text_sunrise_early.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
-            if (calendar != null && context != null) {
-                layout_sunrise_early.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_earliest_sunrise), calendar.getTimeInMillis()));
-            } else layout_sunrise_early.setOnClickListener(null);
+        updateEarliestLatestText(context);
+    }
 
-        }
-        if (text_sunrise_late != null)
+    protected void updateEarliestLatestText(Context context)
+    {
+        if (options.earliestLatestData != null)
         {
-            Pair<Double,Double> value = options.t_sunrise_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            Calendar calendar = (value != null ? getCalendar(context, value) : null);
-            text_sunrise_late.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
-            if (calendar != null && context != null) {
-                layout_sunrise_late.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_latest_sunrise), calendar.getTimeInMillis()));
-            } else layout_sunrise_late.setOnClickListener(null);
+            if (text_sunrise_early != null) {
+                updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, options.earliestLatestData.early_sunrise_day, options.earliestLatestData.early_sunrise_hour, R.string.configLabel_earliest_sunrise);
+            }
+            if (text_sunrise_late != null) {
+                updateEarliestLatestText(context, text_sunrise_late, layout_sunrise_late, options.earliestLatestData.late_sunrise_day, options.earliestLatestData.late_sunrise_hour, R.string.configLabel_latest_sunrise);
+            }
+            if (text_sunset_early != null) {
+                updateEarliestLatestText(context, text_sunset_early, layout_sunset_early, options.earliestLatestData.early_sunset_day, options.earliestLatestData.early_sunset_hour, R.string.configLabel_earliest_sunset);
+            }
+            if (text_sunset_late != null) {
+                updateEarliestLatestText(context, text_sunset_late, layout_sunset_late, options.earliestLatestData.late_sunset_day, options.earliestLatestData.late_sunset_hour, R.string.configLabel_latest_sunset);
+            }
         }
-        if (text_sunset_early != null)
-        {
-            Pair<Double,Double> value = options.t_sunset_earliest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            Calendar calendar = (value != null ? getCalendar(context, value) : null);
-            text_sunset_early.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
-            if (calendar != null && context != null) {
-                layout_sunset_early.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_earliest_sunset), calendar.getTimeInMillis()));
-            } else layout_sunset_early.setOnClickListener(null);
-        }
-        if (text_sunset_late != null)
-        {
-            Pair<Double,Double> value = options.t_sunset_latest.get(WidgetSettings.TimeMode.OFFICIAL.name());
-            Calendar calendar = (value != null ? getCalendar(context, value) : null);
-            text_sunset_late.setText(calendar != null ? utils.calendarDateTimeDisplayString(context, calendar).toString() : "");
-            if (calendar != null && context != null) {
-                layout_sunset_late.setOnClickListener(onMoreInfoClicked(context.getString(R.string.configLabel_latest_sunset), calendar.getTimeInMillis()));
-            } else layout_sunset_late.setOnClickListener(null);
-        }
+    }
+
+    protected void updateEarliestLatestText(Context context, TextView textView, View layout, int day, double hour, int labelResID)
+    {
+        Calendar calendar = getCalendar(context, day, hour);
+        if (calendar != null) {
+            textView.setText(utils.calendarDateTimeDisplayString(context, calendar).toString());
+        } else textView.setText("");
+        if (calendar != null && context != null) {
+            layout.setOnClickListener(onMoreInfoClicked(context.getString(labelResID), calendar.getTimeInMillis()));
+        } else layout.setOnClickListener(null);
     }
 
     private void startUpdateTask()
@@ -654,6 +664,10 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         Menu menu = popup.getMenu();
 
+        MenuItem graphOption_showCrosshair = menu.findItem(R.id.graphOption_showCrosshair);
+        if (graphOption_showCrosshair != null) {
+            graphOption_showCrosshair.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCROSSHAIR));
+        }
         MenuItem graphOption_showGrid = menu.findItem(R.id.graphOption_showGrid);
         if (graphOption_showGrid != null) {
             graphOption_showGrid.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID));
@@ -721,6 +735,13 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                 case R.id.graphOption_showAxis:
                     toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews(context);
+                    return true;
+
+                case R.id.graphOption_showCrosshair:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCROSSHAIR);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, toggledValue);
                     item.setChecked(toggledValue);
                     updateViews(context);
                     return true;
@@ -956,6 +977,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         if (itemData != null)
         {
+            // share itemData
             String label = itemData.getStringExtra("label");
             long itemMillis = itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L);
             if (itemMillis != -1L)
@@ -985,8 +1007,35 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             }
 
         } else {
-            // share graph bitmap
-            // TODO
+            // share the graph bitmap
+            graph.shareBitmap(new ExportTask.TaskListener()
+            {
+                @Override
+                public void onStarted() {
+                    showProgress(true);
+                }
+
+                @Override
+                public void onFinished(ExportTask.ExportResult result)
+                {
+                    showProgress(false);
+                    Context context = getContext();
+                    if (context != null)
+                    {
+                        if (result.getResult())
+                        {
+                            String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
+                            Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+                            ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile(), result.getMimeType());
+
+                        } else {
+                            File file = result.getExportFile();
+                            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            });
         }
     }
 
