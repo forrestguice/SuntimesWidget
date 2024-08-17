@@ -577,12 +577,14 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     {
         stopUpdateTask();
         if (graph != null) {
+            updateTask_isRunning = true;
             graph.post(updateTask);
         }
     }
     private void stopUpdateTask()
     {
         if (graph != null) {
+            updateTask_isRunning = false;
             graph.removeCallbacks(updateTask);
         }
     }
@@ -597,11 +599,12 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                 updateTimeViews(getActivity());
                 updateGraphViews(getActivity());
             }
-            if (graph != null) {
+            if (graph != null && updateTask_isRunning) {
                 graph.postDelayed(this, UPDATE_RATE);
             }
         }
     };
+    private boolean updateTask_isRunning = false;
 
     @Override
     public void onSaveInstanceState( Bundle outState )

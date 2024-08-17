@@ -284,13 +284,17 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private void startUpdateTask()
     {
         stopUpdateTask();
-        if (sunElevation != null)
+        if (sunElevation != null) {
+            updateTask_isRunning = true;
             sunElevation.post(updateTask);
+        }
     }
     private void stopUpdateTask()
     {
-        if (sunElevation != null)
+        if (sunElevation != null) {
+            updateTask_isRunning = false;
             sunElevation.removeCallbacks(updateTask);
+        }
     }
 
     @Override
@@ -301,7 +305,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     }
 
     public static final int UPDATE_RATE = 3000;
-    private Runnable updateTask = new Runnable()
+    private final Runnable updateTask = new Runnable()
     {
         @Override
         public void run()
@@ -312,10 +316,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 updateSunPositionViews(data);
                 updateTimeText(data);
             }
-            if (sunElevation != null)
+            if (sunElevation != null && updateTask_isRunning) {
                 sunElevation.postDelayed(this, UPDATE_RATE);
+            }
         }
     };
+    private boolean updateTask_isRunning = false;
 
     public void initViews(final Context context, View dialogView)
     {

@@ -51,6 +51,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -189,40 +190,42 @@ public class AlarmPrefsFragment extends PreferenceFragment
         Preference notificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
         if (notificationPrefs != null)
         {
-            boolean notificationsEnabled = NotificationManagerCompat.from(context).areNotificationsEnabled();
             notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
 
-            if (notificationsEnabled)
+            if (NotificationManagerCompat.from(context).areNotificationsEnabled())
             {
-                String enabledString = context.getString(R.string.configLabel_alarms_notifications_on);
-                if (isDeviceSecure(context) && !notificationsOnLockScreen(context))
-                {
-                    String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
-                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, disabledString);
-                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, disabledString, colorWarning));
+                if (areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
+                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
+
+                } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM)) {
+                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, warning);
+                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, warning, colorWarning));
+
                 } else {
-                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, enabledString));
+                    String message = context.getString(R.string.configLabel_alarms_notifications_on);
+                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, message));
                 }
             } else {
-                String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
-                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
+                String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
             }
         }
 
         Preference fullscreenNotificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN);
         if (fullscreenNotificationPrefs != null)
         {
-            fullscreenNotificationPrefs.setOnPreferenceChangeListener(onFullscreenNotificationPrefsClicked(context));
+            fullscreenNotificationPrefs.setOnPreferenceClickListener(onFullscreenNotificationPrefsClicked(context));
 
-            /*boolean fullScreenIntentsEnabled = false;   // TODO: use NotificationManager#canUseFullScreenIntent() here
-            if (fullScreenIntentsEnabled)
+            if (canUseFullScreenIntent(context))    // TODO: replace with NotificationManager#canUseFullScreenIntent()
             {
                 String enabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_on);
                 fullscreenNotificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_fullscreen_summary0, enabledString));
             } else {
                 String disabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_off);
                 fullscreenNotificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
-            }*/
+            }
         }
 
         Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
@@ -270,6 +273,53 @@ public class AlarmPrefsFragment extends PreferenceFragment
                     return false;
                 }
             });
+        }
+    }
+
+    /**
+     * this method calls areNotificationsPaused (api29+) via reflection
+     */
+    private static boolean areNotificationsPaused(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 29) {
+            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
+            return invokeBooleanMethod(context, notificationManager, "areNotificationsPaused", false);
+        } else return false;
+    }
+
+    /**
+     * this method calls canUseFullScreenIntent (api34+) via reflection
+     */
+    private static boolean canUseFullScreenIntent(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 34) {
+            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
+            return invokeBooleanMethod(context, notificationManager, "canUseFullScreenIntent", true);
+        } else return true;
+    }
+
+    private static boolean invokeBooleanMethod(Context context, Object object, String methodName, boolean defaultValue)
+    {
+        if (object != null)
+        {
+            try {
+                java.lang.reflect.Method method = object.getClass().getMethod(methodName);
+                try {
+                    boolean result = (boolean) method.invoke(object);
+                    Log.e(AlarmNotifications.TAG, methodName + ": successfully invoked: returned: " + result);
+                    return result;
+
+                } catch (IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+                    Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
+                    return defaultValue;
+                }
+            } catch (SecurityException | NoSuchMethodException e) {
+                Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
+                return defaultValue;
+            }
+        } else {
+            Log.e(AlarmNotifications.TAG, methodName + ": false; object is null!");
+            return defaultValue;
         }
     }
 
@@ -321,12 +371,12 @@ public class AlarmPrefsFragment extends PreferenceFragment
      * opens screen to manage full-screen intent limits introduced in api34
      * https://source.android.com/docs/core/permissions/fsi-limits
      */
-    private static Preference.OnPreferenceChangeListener onFullscreenNotificationPrefsClicked(final Context context)
+    private static Preference.OnPreferenceClickListener onFullscreenNotificationPrefsClicked(final Context context)
     {
-        return new Preference.OnPreferenceChangeListener()
+        return new Preference.OnPreferenceClickListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue)
+            public boolean onPreferenceClick(Preference preference)
             {
                 if (Build.VERSION.SDK_INT >= 34) {
                     AlarmSettings.openFullScreenIntentSettings(context);
@@ -344,7 +394,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
      */
     private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context)
     {
-        final boolean notificationsOnLockScreen = notificationsOnLockScreen(context);
+        final boolean notificationsOnLockScreen = AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM);
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference)
@@ -430,23 +480,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
-    /**
-     * https://stackoverflow.com/questions/43438978/get-status-of-setting-control-notifications-on-your-lock-screen
-     * @param context
-     * @return true notifications allowed on lock screen (global setting)
-     */
-    public static boolean notificationsOnLockScreen(Context context)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {                  // per app "on lock screen" setting introduce in Android7
-            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);    // TODO
 
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {    // global "on lock screen" setting introduced in Android5
-            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);
-
-        } else {
-            return true;
-        }
-    }
 
     private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)
     {

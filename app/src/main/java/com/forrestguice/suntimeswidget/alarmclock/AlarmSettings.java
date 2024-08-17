@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ComponentName;
@@ -52,6 +53,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -650,6 +652,37 @@ public class AlarmSettings
     }
 
     /**
+     * areNotificationsAllowedOnLockScreen
+     * @return true notifications allowed on lock screen
+     */
+    public static boolean areNotificationsAllowedOnLockScreen(Context context, AlarmClockItem.AlarmType type)
+    {
+        if (Build.VERSION.SDK_INT >= 21)
+        {
+            // https://stackoverflow.com/questions/43438978/get-status-of-setting-control-notifications-on-your-lock-screen
+            boolean globalValue = (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);
+
+            if (Build.VERSION.SDK_INT >= 26)
+            {
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (notificationManager != null)
+                {
+                    String channelID = AlarmNotifications.createNotificationChannel(context, type);
+                    NotificationChannel channel = notificationManager.getNotificationChannel(channelID);
+                    return (globalValue && (channel.getLockscreenVisibility() != Notification.VISIBILITY_SECRET));
+
+                } else {
+                    return globalValue;
+                }
+            } else {
+                return globalValue;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * @return true optimization is disabled (recommended), false optimization is enabled (alarms may be delayed or fail to sound)
      */
     public static boolean isIgnoringBatteryOptimizations(Context context)
@@ -814,8 +847,11 @@ public class AlarmSettings
      * shows the screen to manage permissions for full screen intents.
      */
     @TargetApi(34)
-    public static Intent getFullScreenIntentSettingsIntent(Context context) {
-        return new Intent(ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+    public static Intent getFullScreenIntentSettingsIntent(Context context)
+    {
+        Intent intent = new Intent(ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        return intent;
     }
     public static final String ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT = "android.settings.MANAGE_APP_USE_FULL_SCREEN_INTENT";    // TODO: remove and use constant from api29+
 
@@ -824,8 +860,10 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 34) {
             try {
                 context.startActivity(AlarmSettings.getFullScreenIntentSettingsIntent(context));
+
             } catch (ActivityNotFoundException e) {
                 Log.e("AlarmSettings", "Failed to launch 'fullscreen intent settings': " + e);
+                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
             }
         }
     }

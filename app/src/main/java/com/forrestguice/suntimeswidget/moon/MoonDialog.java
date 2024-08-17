@@ -1252,22 +1252,30 @@ public class MoonDialog extends BottomSheetDialogFragment
     private void startUpdateTask()
     {
         stopUpdateTask();
-        if (currentphase != null) {
+        if (currentphase != null)
+        {
+            updateTask0_isRunning = true;
             currentphase.post(updateTask0);
+
+            updateTask1_isRunning = true;
             currentphase.post(updateTask1);
         }
     }
 
     private void stopUpdateTask()
     {
-        if (currentphase != null) {
+        if (currentphase != null)
+        {
+            updateTask0_isRunning = false;
             currentphase.removeCallbacks(updateTask0);
+
+            updateTask1_isRunning = false;
             currentphase.removeCallbacks(updateTask1);
         }
     }
 
     public static final int UPDATE_RATE0 = 3 * 1000;       // 3sec
-    private Runnable updateTask0 = new Runnable()
+    private final Runnable updateTask0 = new Runnable()
     {
         @Override
         public void run()
@@ -1276,13 +1284,16 @@ public class MoonDialog extends BottomSheetDialogFragment
             {
                 updateTimeText();
                 currentphase.updatePosition(getDialogCalendar());
-                currentphase.postDelayed(this, UPDATE_RATE0);
+                if (updateTask0_isRunning) {
+                    currentphase.postDelayed(this, UPDATE_RATE0);
+                }
             }
         }
     };
+    private boolean updateTask0_isRunning = false;
 
     public static final int UPDATE_RATE1 = 5 * 60 * 1000;  // 5min
-    private Runnable updateTask1 = new Runnable()
+    private final Runnable updateTask1 = new Runnable()
     {
         @Override
         public void run()
@@ -1290,10 +1301,13 @@ public class MoonDialog extends BottomSheetDialogFragment
             if (data != null && currentphase != null)
             {
                 currentphase.updateIllumination(getContext(), getDialogCalendar());
-                currentphase.postDelayed(this, UPDATE_RATE1);
+                if (updateTask1_isRunning) {
+                    currentphase.postDelayed(this, UPDATE_RATE1);
+                }
             }
         }
     };
+    private boolean updateTask1_isRunning = false;
 
     @Override
     public void onStop()

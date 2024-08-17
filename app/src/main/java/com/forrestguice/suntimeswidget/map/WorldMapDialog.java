@@ -229,13 +229,17 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private void startUpdateTask()
     {
         stopUpdateTask();
-        if (dialogContent != null)
+        if (dialogContent != null) {
+            updateTask_isRunning = true;
             dialogContent.post(updateTask);
+        }
     }
     private void stopUpdateTask()
     {
-        if (dialogContent != null)
+        if (dialogContent != null) {
+            updateTask_isRunning = false;
             dialogContent.removeCallbacks(updateTask);
+        }
     }
 
     @Override
@@ -247,7 +251,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     public static final int UPDATE_RATE = 3000;
     public static final int RESET_THRESHOLD[] = new int[] {60 * 1000, 2 * 60 * 1000 };    // (1m, 2m)
-    private Runnable updateTask = new Runnable()
+    private final Runnable updateTask = new Runnable()
     {
         @Override
         public void run()
@@ -271,10 +275,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     }
                 }
             }
-            if (dialogContent != null)
+            if (dialogContent != null && updateTask_isRunning) {
                 dialogContent.postDelayed(this, UPDATE_RATE);
+            }
         }
     };
+    private boolean updateTask_isRunning = false;
 
     @SuppressLint("ResourceType")
     private void initLocale(Context context)
