@@ -537,7 +537,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                 options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
                         : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
             }
-            options.is24 = (WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
+            options.is24 = SuntimesUtils.is24();
         }
 
         long nowMillis = Calendar.getInstance().getTimeInMillis();
