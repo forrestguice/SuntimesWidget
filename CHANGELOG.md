@@ -1,12 +1,13 @@
 ### ~
 
 ### v0.16.1 (2024-08-19)
-* adds "material colors" (palette) to color dialog.
+* adds "material palette" to the color dialog.
 * adds text color preview, and other miscellaneous color picker improvements.
 * adds "cross-hair" option to sunlight graph; adds "share bitmap" action.
 * fixes sunlight graph so that it shows jump/skip in time zone dst (#735).
 * fixes inconsistent text/point sizes between graph views.
 * fixes bug where the lightmap widget is rendered incorrectly (#812).
+* fixes bug where "sunlight dialog axis labels don't follow user settings (always 12 hour time)". (#824)
 * enhances Alarm Settings warnings; show a warning when alarm notifications are disabled on the lock screen (#332).
 * enhances Alarm Settings warnings; show warnings when alarm channel is muted, or notifications are temporarily paused/suspended.
 * fixes broken "full-screen notifications" preference click listener; the UI now reports the current state of the required permission (#802).
@@ -18,6 +19,7 @@
 * updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#813 by James Liu).
 * updates translation to Norwegian (nb) (#817 by FTno).
 * updates translation to Brazilian Portuguese (pt-br) (#819 by naoliv).
+* updates translation to Polish and Esperanto (eo, pl) (#824 by Verdulo).
 
 ### v0.16.0 (2024-07-31)
 * adds "sidebar navigation", and an option to change the "launcher activity" (#505).
