@@ -64,6 +64,7 @@ dependencies
     implementation group: 'net.time4j', name: 'time4j-android', version: '4.8-2021a'
     
     implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.jraska:falcon:1.0.4'

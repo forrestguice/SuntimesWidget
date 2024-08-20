@@ -19,16 +19,19 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
@@ -82,9 +85,6 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
         View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorvalues, container, false);
-        if (savedState != null) {
-            onRestoreInstanceState(savedState);
-        }
 
         ImageButton overflow = (ImageButton) content.findViewById(R.id.overflow);
         if (overflow != null) {
@@ -105,6 +105,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         editID = (EditText) content.findViewById(R.id.editTextID);
         setID(null);
 
+        if (savedState != null) {
+            onRestoreInstanceState(savedState);
+        }
         updateViews();
         return content;
     }
@@ -196,11 +199,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     @Override
     public void onSaveInstanceState(@NonNull Bundle out)
     {
-        super.onSaveInstanceState(out);
         out.putParcelable("colorValues", colorValues);
         out.putParcelable("defaultValues", defaultValues);
         out.putStringArray("filterValues", filterValues.toArray(new String[0]));
         out.putString("editID", editID.getText().toString());
+        super.onSaveInstanceState(out);
     }
     protected void onRestoreInstanceState(@NonNull Bundle savedState)
     {
@@ -298,7 +301,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
 
     protected ColorValues colorValues = null;
-    public void setColorValues(ColorValues v) {
+    public void setColorValues(ColorValues v)
+    {
         colorValues = v;
         setID(null);
         updateViews();
@@ -367,9 +371,19 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     protected Intent pickColorIntent(String key, int requestCode)
     {
+        Context context = getActivity();
+        int[] attr = { R.attr.timeCardBackground, R.attr.text_primaryColor };
+        TypedArray typedArray = context.obtainStyledAttributes(attr);
+        int colorUnder = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.card_bg));
+        @SuppressLint("ResourceType")
+        int colorOver = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_primary));
+        typedArray.recycle();
+
         Intent intent = new Intent(getActivity(), ColorActivity.class);
         intent.putExtra(ColorDialog.KEY_SHOWALPHA, true);
         intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
+        intent.putExtra(ColorDialog.KEY_COLOR_UNDER, colorUnder);
+        intent.putExtra(ColorDialog.KEY_COLOR_OVER, colorOver);
         intent.putExtra(ColorDialog.KEY_RECENT, new ArrayList<>(new LinkedHashSet<>(colorValues.getColors())));
 
         if (defaultValues != null) {

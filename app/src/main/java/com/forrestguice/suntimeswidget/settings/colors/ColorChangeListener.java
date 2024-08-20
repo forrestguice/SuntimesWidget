@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-    Copyright (C) 2019 Forrest Guice
+/**
+    Copyright (C) 2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -15,13 +14,11 @@
 
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
--->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:id="@+id/colorButtonFrame">
+*/
 
-    <ImageButton
-        android:id="@+id/colorButton"
-        style="@style/ColorEditButton1" android:contentDescription="@string/configAction_chooseColor" />
+package com.forrestguice.suntimeswidget.settings.colors;
 
-</FrameLayout>
+public interface ColorChangeListener
+{
+    void onColorChanged(int color);
+}
