@@ -132,11 +132,8 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_BRIGHTMODE_FADEIN = "app_alarms_bright_fadeinMillis";
     public static final int PREF_DEF_ALARM_BRIGHTMODE_FADEIN = 1000 * 60;   // 60 s
 
-    public static final String PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR = "app_alarms_bright_colorend";
-    public static final int PREF_DEF_ALARM_BRIGHTMODE_STARTCOLOR = Color.BLACK;
-
-    public static final String PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR = "app_alarms_bright_colorstart";
-    public static final int PREF_DEF_ALARM_BRIGHTMODE_ENDCOLOR = Color.WHITE;
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR = "app_alarms_bright_color_start";
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR = "app_alarms_bright_color_end";
 
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
     public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
@@ -425,13 +422,13 @@ public class AlarmSettings
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
             return new int[] {
-                    prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_DEF_ALARM_BRIGHTMODE_STARTCOLOR),
-                    prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR, PREF_DEF_ALARM_BRIGHTMODE_ENDCOLOR)
+                    prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_start)),
+                    prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_end))
             };
         } else {
             return new int[]{
-                    (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_DEF_ALARM_BRIGHTMODE_STARTCOLOR),
-                    (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR, PREF_DEF_ALARM_BRIGHTMODE_ENDCOLOR)
+                    (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_start)),
+                    (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_end))
             };
         }
     }
