@@ -269,6 +269,10 @@
         <attr name="zeroValueText" />
     </declare-styleable>
 
+    <declare-styleable name="ColorListPreference">
+        <attr name="colorValues" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="HelpPreference">
         <attr name="helpText" format="string" />
         <attr name="helpLink" format="string" />

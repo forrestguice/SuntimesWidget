@@ -1173,6 +1173,10 @@
         <item name="android:padding">3dp</item>
         <item name="android:layout_margin">0dp</item>
     </style>
+    <style name="ColorEditButton3" parent="ColorEditButton2">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
 
     <style name="SizeEdit" parent="@style/TextAppearance.AppCompat.Small">
         <item name="android:layout_width">50dp</item>
