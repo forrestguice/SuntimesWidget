@@ -102,6 +102,14 @@
             app:maxValue="@integer/maxAlarmFullscreenFadeinSeconds"
             android:defaultValue="@string/def_app_alarms_bright_fadein" />
 
+        <com.forrestguice.suntimeswidget.settings.colors.ColorListPreference
+            android:key="app_alarms_bright_color_end"
+            android:title="@string/configLabel_alarms_brightMode_color"
+            android:summary="@string/configLabel_alarms_brightMode_color_summary"
+            app:colorValues="@array/alarm_bright_colors_list"
+            android:widgetLayout="@layout/layout_pref_color"
+            android:defaultValue="@color/def_app_alarms_bright_color_end" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

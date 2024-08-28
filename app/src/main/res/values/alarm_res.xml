@@ -51,4 +51,74 @@
     <dimen name="clockcard_corners">4dp</dimen>
     <dimen name="clockcard_corners_controls">8dp</dimen>
 
+    <integer-array name="alarm_bright_colors_list">
+        <item>@color/white</item>
+        <item>@color/blue_grey_100</item>
+        <item>@color/brown_100</item>
+
+        <item>@color/yellow_a100</item>
+        <item>@color/yellow_a200</item>
+        <item>@color/yellow_a400</item>
+
+        <item>@color/lime_a100</item>
+        <item>@color/lime_a200</item>
+        <item>@color/lime_a400</item>
+
+        <item>@color/light_green_a100</item>
+        <item>@color/light_green_a200</item>
+        <item>@color/light_green_a400</item>
+
+        <item>@color/green_a100</item>
+        <item>@color/green_a200</item>
+        <item>@color/green_a400</item>
+
+        <item>@color/teal_a100</item>
+        <item>@color/teal_a200</item>
+        <item>@color/teal_a400</item>
+
+        <item>@color/cyan_a100</item>
+        <item>@color/cyan_a200</item>
+        <item>@color/cyan_a400</item>
+
+        <item>@color/light_blue_a100</item>
+        <item>@color/light_blue_a200</item>
+        <item>@color/light_blue_a400</item>
+
+        <item>@color/blue_a100</item>
+        <item>@color/blue_a200</item>
+        <item>@color/blue_a400</item>
+
+        <item>@color/indigo_a100</item>
+        <item>@color/indigo_a200</item>
+        <item>@color/indigo_a400</item>
+
+        <item>@color/deep_purple_a100</item>
+        <item>@color/deep_purple_a200</item>
+        <item>@color/deep_purple_a400</item>
+
+        <item>@color/purple_a100</item>
+        <item>@color/purple_a200</item>
+        <item>@color/purple_a400</item>
+
+        <item>@color/pink_a100</item>
+        <item>@color/pink_a200</item>
+        <item>@color/pink_a400</item>
+
+        <item>@color/red_a100</item>
+        <item>@color/red_a200</item>
+        <item>@color/red_a400</item>
+
+        <item>@color/deep_orange_a100</item>
+        <item>@color/deep_orange_a200</item>
+        <item>@color/deep_orange_a400</item>
+
+        <item>@color/orange_a100</item>
+        <item>@color/orange_a200</item>
+        <item>@color/orange_a400</item>
+
+        <item>@color/amber_a100</item>
+        <item>@color/amber_a200</item>
+        <item>@color/amber_a400</item>
+    </integer-array>
+
 </resources>

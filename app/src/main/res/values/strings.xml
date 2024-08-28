@@ -1254,6 +1254,9 @@
     <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>
     <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
+    <string name="configLabel_alarms_brightMode_color">Screen Color</string>   <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_color_summary">%s</string>
+
     <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->
     <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->
     <string name="configLabel_alarms_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->
