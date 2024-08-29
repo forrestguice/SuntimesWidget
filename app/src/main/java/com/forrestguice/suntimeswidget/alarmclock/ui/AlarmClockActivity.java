@@ -1188,6 +1188,13 @@ public class AlarmClockActivity extends AppCompatActivity
             list.clearSelection();
 
         } else {
+            for (SuntimesWarning warning : warnings)
+            {
+                if (warning.isShown()) {
+                    warning.dismiss();
+                    return;
+                }
+            }
             super.onBackPressed();
         }
     }

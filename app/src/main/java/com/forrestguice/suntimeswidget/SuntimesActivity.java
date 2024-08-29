@@ -311,7 +311,15 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (navigation != null && navigation.isNavigationDrawerOpen()) {
             navigation.closeNavigationDrawer();
+
         } else {
+            for (SuntimesWarning warning : warnings)
+            {
+                if (warning.isShown()) {
+                    warning.dismiss();
+                    return;
+                }
+            }
             super.onBackPressed();
         }
     }
