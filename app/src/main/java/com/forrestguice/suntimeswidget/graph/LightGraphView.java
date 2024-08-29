@@ -777,9 +777,12 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             if (options.sunPath_show_points && (options.sunPath_show_line || options.sunPath_show_fill))
             {
                 float[][] points = createPathPoints(c, options);
-                double pointSize = Math.sqrt(c.getWidth() * c.getHeight()) / options.sunPath_points_width;
-                for (float[] point : points) {
-                    drawPoint(point[0], point[1], (int)pointSize, 0, c, p, options.colors.getColor(COLOR_POINT_FILL), options.colors.getColor(COLOR_POINT_STROKE), null);
+                if (points != null)
+                {
+                    double pointSize = Math.sqrt(c.getWidth() * c.getHeight()) / options.sunPath_points_width;
+                    for (float[] point : points) {
+                        drawPoint(point[0], point[1], (int)pointSize, 0, c, p, options.colors.getColor(COLOR_POINT_FILL), options.colors.getColor(COLOR_POINT_STROKE), null);
+                    }
                 }
             }
         }
