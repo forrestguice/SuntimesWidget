@@ -75,6 +75,16 @@
 
     </PreferenceCategory>-->
 
+    <PreferenceCategory
+        android:title="@string/configLabel_bedtime"
+        android:key="app_bedtime_category">
+
+        <CheckBoxPreference
+            android:key="app_alarms_dnd_permission" android:persistent="false"
+            android:title="@string/configLabel_dnd"
+            android:summary="@string/configLabel_permissionGranted" />
+
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/configLabel_alarmFullscreen"

@@ -79,20 +79,16 @@
 
     </PreferenceCategory>
 
-    <!--<PreferenceCategory
+    <PreferenceCategory
         android:title="@string/configLabel_bedtime"
-        android:key="app_alarms_category3">
+        android:key="app_bedtime_category">
 
-        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
-            android:key="app_bedtime_sleepCycleMillis"
-            android:title="@string/configLabel_sleepCycle"
-            android:summary="%s"
-            android:defaultValue="@string/def_app_bedtime_sleepCycleMillis"
-            app:mode="minutes" app:minValue="@integer/minSleepCycleMinutes"
-            app:maxValue="@integer/maxSleepCycleMinutes"
-            />
+        <CheckBoxPreference
+            android:key="app_alarms_dnd_permission" android:persistent="false"
+            android:title="@string/configLabel_dnd"
+            android:summary="@string/configLabel_permissionGranted" />
 
-    </PreferenceCategory>-->
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/configLabel_alarmFullscreen"

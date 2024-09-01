@@ -86,6 +86,9 @@ public class BedtimeSettings
     public static final int STATE_BEDTIME_PAUSED = 2;
 
     public static final String PREF_KEY_BEDTIME_STATE = "app_bedtime_state";
+
+    public static final String PREF_KEY_BEDTIME_CATEGORY =  "app_bedtime_category";
+
     public static int getBedtimeState(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getInt(PREF_KEY_BEDTIME_STATE, STATE_BEDTIME_INACTIVE);

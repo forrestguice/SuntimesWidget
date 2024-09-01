@@ -38,6 +38,7 @@ import android.util.Log;
 import android.util.TypedValue;
 
 
+import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsPreferenceHelper;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
@@ -627,6 +628,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
         Preference autostart = findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
         AlarmPrefsFragment.removePrefFromCategory(autostart, alarmsCategory);
+
+        Preference dndPermission = findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
+        PreferenceCategory bedtimeCategory = (PreferenceCategory)findPreference(BedtimeSettings.PREF_KEY_BEDTIME_CATEGORY);
+        AlarmPrefsFragment.removePrefFromCategory(dndPermission, bedtimeCategory);
     }
 
     //////////////////////////////////////////////////

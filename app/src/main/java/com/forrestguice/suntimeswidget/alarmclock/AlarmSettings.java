@@ -73,6 +73,7 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_NOTIFICATIONS = "app_alarms_notifications";
     public static final String PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN = "app_alarms_notifications_fullscreen";
     public static final String PREF_KEY_ALARM_VOLUMES = "app_alarms_volumes";
+    public static final String PREF_KEY_ALARM_DND_PERMISSION = "app_alarms_dnd_permission";
 
     public static final String PREF_KEY_ALARM_HARDAREBUTTON_ACTION = "app_alarms_hardwarebutton_action";
     public static final String PREF_DEF_ALARM_HARDAREBUTTON_ACTION = AlarmNotifications.ACTION_SNOOZE;

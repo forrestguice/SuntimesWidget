@@ -2824,6 +2824,7 @@
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->
+    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
 
     <string name="drag_hint">Drag here</string>
 
