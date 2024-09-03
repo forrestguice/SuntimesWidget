@@ -121,6 +121,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String CHANNEL_ID_NOTIFICATIONS0 = "suntimes.channel.notifications0";
     public static final String CHANNEL_ID_NOTIFICATIONS1 = "suntimes.channel.notifications1";
     public static final String CHANNEL_ID_MISC = "suntimes.channel.misc";
+    public static final String CHANNEL_ID_BEDTIME = "suntimes.channel.bedtime";
 
     public static final int NOTIFICATION_SERVICE_IS_ACTIVE_ID = -1;
 
@@ -1021,20 +1022,39 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static String getNotificationChannelID(@Nullable AlarmClockItem.AlarmType type)
+    {
+        if (type == null) {
+            return CHANNEL_ID_MISC;
+        }
+        switch (type)
+        {
+            case ALARM: return CHANNEL_ID_ALARMS;
+            case NOTIFICATION1: return CHANNEL_ID_NOTIFICATIONS1;
+            case NOTIFICATION2:
+            case NOTIFICATION:
+            default: return CHANNEL_ID_NOTIFICATIONS0;
+        }
+    }
+
     /**
      * createNotificationChannel
      * @param type AlarmType
      * @return channelID
      */
     @TargetApi(26)
-    public static String createNotificationChannel(Context context, @Nullable AlarmClockItem.AlarmType type)
+    public static String createNotificationChannel(Context context, @Nullable AlarmClockItem.AlarmType type) {
+        return createNotificationChannel(context, getNotificationChannelID(type));
+    }
+    @TargetApi(26)
+    public static String createNotificationChannel(Context context, @Nullable String channelID)
     {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null)
         {
             int importance;
-            String channelID, title, desc;
-            if (type == null)
+            String title, desc;
+            if (channelID == null)
             {
                 channelID = CHANNEL_ID_MISC;
                 title = context.getString(R.string.notificationChannel_misc_title);
@@ -1042,26 +1062,28 @@ public class AlarmNotifications extends BroadcastReceiver
                 importance = NotificationManagerCompat.IMPORTANCE_LOW;
 
             } else {
-                switch (type)
+                switch (channelID)
                 {
-                    case ALARM:
-                        channelID = CHANNEL_ID_ALARMS;
+                    case CHANNEL_ID_BEDTIME:
+                        title = context.getString(R.string.notificationChannel_bedtime_title);
+                        desc = context.getString(R.string.notificationChannel_bedtime_desc);
+                        importance = NotificationManagerCompat.IMPORTANCE_MAX;
+                        break;
+
+                    case CHANNEL_ID_ALARMS:
                         title = context.getString(R.string.notificationChannel_alarms_title);
                         desc = context.getString(R.string.notificationChannel_alarms_desc);
                         importance = NotificationManagerCompat.IMPORTANCE_MAX;
                         break;
 
-                    case NOTIFICATION1:
-                        channelID = CHANNEL_ID_NOTIFICATIONS1;
+                    case CHANNEL_ID_NOTIFICATIONS1:
                         title = context.getString(R.string.notificationChannel_notifications1_title);
                         desc = context.getString(R.string.notificationChannel_notifications1_desc);
                         importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
                         break;
 
-                    case NOTIFICATION:
-                    case NOTIFICATION2:
+                    case CHANNEL_ID_NOTIFICATIONS0:
                     default:
-                        channelID = CHANNEL_ID_NOTIFICATIONS0;
                         title = context.getString(R.string.notificationChannel_notifications0_title);
                         desc = context.getString(R.string.notificationChannel_notifications0_desc);
                         importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
@@ -1078,11 +1100,14 @@ public class AlarmNotifications extends BroadcastReceiver
         return "";
     }
 
-    public static NotificationCompat.Builder createNotificationBuilder(Context context, @Nullable AlarmClockItem alarm)
+    public static NotificationCompat.Builder createNotificationBuilder(Context context, @Nullable AlarmClockItem alarm) {
+        return createNotificationBuilder(context, ((alarm != null) ? getNotificationChannelID(alarm.type) : null));
+    }
+    public static NotificationCompat.Builder createNotificationBuilder(Context context, @Nullable String channelID)
     {
         NotificationCompat.Builder builder;
         if (Build.VERSION.SDK_INT >= 26) {
-            builder = new NotificationCompat.Builder(context, createNotificationChannel(context, ((alarm != null) ? alarm.type : null)));
+            builder = new NotificationCompat.Builder(context, createNotificationChannel(context, channelID));
         } else {
             builder = new NotificationCompat.Builder(context);
         }
@@ -1272,10 +1297,10 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Notification createBedtimeModeNotification(Context context)
     {
-        NotificationCompat.Builder builder = createNotificationBuilder(context, null);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_BEDTIME);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
-        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-        builder.setCategory(NotificationCompat.CATEGORY_STATUS);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setCategory(NotificationCompat.CATEGORY_ALARM);
         builder.setAutoCancel(false);
         builder.setOngoing(true);
         builder.setContentTitle(context.getString(R.string.configLabel_bedtime));
@@ -1308,7 +1333,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Notification createProgressNotification(Context context, String title, String message)
     {
-        NotificationCompat.Builder builder = createNotificationBuilder(context, null);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_MISC);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setCategory(NotificationCompat.CATEGORY_PROGRESS);
@@ -1329,7 +1354,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static NotificationCompat.Builder warningNotificationBuilder(Context context)
     {
-        NotificationCompat.Builder builder = createNotificationBuilder(context, null);
+        NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_MISC);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setCategory(NotificationCompat.CATEGORY_RECOMMENDATION);

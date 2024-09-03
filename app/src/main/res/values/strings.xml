@@ -1207,6 +1207,8 @@
     <string name="notificationChannel_notifications1_desc">@string/alarmMode_notification1</string>  <!-- notification channel title -->
     <string name="notificationChannel_misc_title">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->
     <string name="notificationChannel_misc_desc">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->
+    <string name="notificationChannel_bedtime_title">@string/configLabel_bedtime</string>  <!-- notification channel title -->
+    <string name="notificationChannel_bedtime_desc">@string/configLabel_bedtime</string>  <!-- notification channel title -->
 
     <string name="configLabel_alarms_notifications_fullscreen">Full-screen Notifications</string>
     <string name="configLabel_alarms_notifications_fullscreen_on">On</string>
