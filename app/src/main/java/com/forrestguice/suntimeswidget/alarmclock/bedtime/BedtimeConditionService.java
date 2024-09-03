@@ -31,6 +31,7 @@ import android.service.notification.Condition;
 import android.service.notification.ConditionProviderService;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 
 @TargetApi(24)
@@ -144,8 +145,10 @@ public class BedtimeConditionService extends ConditionProviderService
     @TargetApi(24)
     public static void triggerBedtimeAutomaticZenRule(final Context context, boolean value)
     {
+        Log.d("DEBUG", "BedtimeConditionService :: triggerAutomaticZenRule: " + value);
         Intent intent = new Intent();
         intent.setAction(ACTION_BEDTIME_UPDATE);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
         context.sendBroadcast(intent);
     }
 
