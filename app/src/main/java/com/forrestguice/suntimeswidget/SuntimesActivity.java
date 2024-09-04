@@ -256,7 +256,8 @@ public class SuntimesActivity extends AppCompatActivity
     private SuntimesWarning timezoneWarning;
     private SuntimesWarning dateWarning;
     private SuntimesWarning locationPermissionWarning;
-    private List<SuntimesWarning> warnings;
+    private final List<SuntimesWarning> warnings = new ArrayList<>();
+    private final HashMap<String, View.OnClickListener> warningActions = new HashMap<>();
 
     private boolean verboseAccessibility = AppSettings.PREF_DEF_ACCESSIBILITY_VERBOSE;
 
@@ -1013,14 +1014,41 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initWarnings(Context context, Bundle savedState)
     {
-        timezoneWarning = new SuntimesWarning(WARNINGID_TIMEZONE);
-        dateWarning = new SuntimesWarning(WARNINGID_DATE);
-        locationPermissionWarning = new SuntimesWarning(WARNINGID_LOCATION_PERMISSION);
+        warnings.clear();
+        warningActions.clear();
 
-        warnings = new ArrayList<SuntimesWarning>();
-        warnings.add(timezoneWarning);
-        warnings.add(dateWarning);
+        locationPermissionWarning = new SuntimesWarning(WARNINGID_LOCATION_PERMISSION, context, getString(R.string.locationPermissionWarning));
+        locationPermissionWarning.setActionLabel(getString(R.string.configAction_appDetails));
         warnings.add(locationPermissionWarning);
+        warningActions.put(WARNINGID_LOCATION_PERMISSION, new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                AppSettings.openAppDetails(SuntimesActivity.this);
+            }
+        });
+
+        timezoneWarning = new SuntimesWarning(WARNINGID_TIMEZONE, context, getString(R.string.timezoneWarning));
+        timezoneWarning.setActionLabel(getString(R.string.configAction_setTimeZone));
+        warnings.add(timezoneWarning);
+        warningActions.put(WARNINGID_TIMEZONE, new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                configTimeZone();
+            }
+        });
+
+        dateWarning = new SuntimesWarning(WARNINGID_DATE, context, getString(R.string.dateWarning));
+        dateWarning.setActionLabel(getString(R.string.configAction_setDate));
+        warnings.add(dateWarning);
+        warningActions.put(WARNINGID_DATE, new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                configDate();
+            }
+        });
 
         restoreWarnings(savedState);
     }
@@ -2052,52 +2080,29 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (showWarnings && locationPermissionWarning.shouldShow() && !locationPermissionWarning.wasDismissed())
         {
-            locationPermissionWarning.initWarning(this, card_view, getString(R.string.locationPermissionWarning));
-            locationPermissionWarning.getSnackbar().setAction(getString(R.string.configAction_appDetails), new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view) {
-                    AppSettings.openAppDetails(SuntimesActivity.this);
-                }
-            });
+            locationPermissionWarning.initWarning(this, card_view, warningActions.get(locationPermissionWarning.getId()));
             locationPermissionWarning.show();
             return;
         }
 
         if (showWarnings && timezoneWarning.shouldShow() && !timezoneWarning.wasDismissed())
         {
-            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning));
-            timezoneWarning.getSnackbar().setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    configTimeZone();
-                }
-            });
+            timezoneWarning.initWarning(this, txt_timezone, warningActions.get(timezoneWarning.getId()));
             timezoneWarning.show();
             return;
         }
 
         if (showWarnings && dateWarning.shouldShow() && !dateWarning.wasDismissed())
         {
-            dateWarning.initWarning(this, card_view, getString(R.string.dateWarning));
-            dateWarning.getSnackbar().setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    configDate();
-                }
-            });
+            dateWarning.initWarning(this, card_view, warningActions.get(dateWarning.getId()));
             dateWarning.show();
             return;
         }
 
         // no warnings shown; clear previous (stale) messages
-        timezoneWarning.dismiss();
-        dateWarning.dismiss();
-        locationPermissionWarning.dismiss();
+        for (SuntimesWarning warning : warnings) {
+            warning.dismiss();
+        }
     }
 
     /**

@@ -25,6 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
@@ -42,12 +43,34 @@ public class SuntimesWarning
     public static final int ANNOUNCE_DELAY_MS = 500;
     public static final String KEY_WASDISMISSED = "userDismissedWarning";
     public static final String KEY_DURATION = "duration";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_ACTION_LABEL = "actionLabel";
 
-    public SuntimesWarning(String id)
-    {
+    public SuntimesWarning(String id) {
         this.id = id;
     }
-    protected String id = "";
+
+    public SuntimesWarning(String id, CharSequence message)
+    {
+        this.id = id;
+        setMessage(message);
+    }
+
+    public SuntimesWarning(String id, Context context, String msg)
+    {
+        this.id = id;
+        setMessage(context, msg);
+    }
+
+    protected String id;
+    public String getId() {
+        return id;
+    }
+
+    protected View parentView = null;
+    public View getParentView() {
+        return parentView;
+    }
 
     private Snackbar snackbar = null;
     public Snackbar getSnackbar() {
@@ -75,21 +98,42 @@ public class SuntimesWarning
         duration = value;
     }
 
-    protected String contentDescription = null;
-    protected View parentView = null;
-
-    public void initWarning(@NonNull Context context, View view, String msg)
+    protected CharSequence message = null;
+    protected CharSequence contentDescription = null;
+    public CharSequence getMessage() {
+        return message;
+    }
+    public void setMessage( CharSequence value ) {
+        message = value;
+        contentDescription = value;
+    }
+    public void setMessage( Context context, String msg )
     {
-        this.parentView = view;
         ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
-        SpannableStringBuilder message = SuntimesUtils.createSpan(context, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
-        this.contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
+        message = SuntimesUtils.createSpan(context, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
+        contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
+    }
 
+    protected CharSequence actionLabel = null;
+    public CharSequence getActionLabel() {
+        return actionLabel;
+    }
+    public void setActionLabel( @Nullable CharSequence value ) {
+        actionLabel = value;
+    }
+
+    public void initWarning(@NonNull Context context, View view, View.OnClickListener actionListener)
+    {
+        parentView = view;
         wasDismissed = false;
         snackbar = Snackbar.make(parentView, message, duration);
         snackbar.addCallback(snackbarListener);
         setContentDescription(contentDescription);
         themeWarning(context, snackbar);
+
+        if (actionLabel != null && actionListener != null) {
+            snackbar.setAction(actionLabel, actionListener);
+        }
     }
 
     @SuppressLint("ResourceType")
@@ -178,7 +222,7 @@ public class SuntimesWarning
         shouldShow = false;
     }
 
-    public void setContentDescription( String value )
+    public void setContentDescription( CharSequence value )
     {
         this.contentDescription = value;
         if (snackbar != null) {
@@ -208,8 +252,10 @@ public class SuntimesWarning
     {
         if (outState != null)
         {
-            outState.putBoolean(KEY_WASDISMISSED + id, wasDismissed);
-            outState.putInt(KEY_DURATION + id, duration);
+            outState.putCharSequence(id + "_" + KEY_MESSAGE, message);
+            outState.putCharSequence(id + "_" + KEY_ACTION_LABEL, actionLabel);
+            outState.putBoolean(id + "_" + KEY_WASDISMISSED, wasDismissed);
+            outState.putInt(id + "_" + KEY_DURATION, duration);
         }
     }
 
@@ -217,8 +263,10 @@ public class SuntimesWarning
     {
         if (savedState != null)
         {
-            wasDismissed = savedState.getBoolean(KEY_WASDISMISSED + id, false);
-            duration = savedState.getInt(KEY_DURATION + id, duration);
+            message = savedState.getCharSequence(id + "_" + KEY_MESSAGE);
+            actionLabel = savedState.getCharSequence(id + "_" + KEY_ACTION_LABEL);
+            wasDismissed = savedState.getBoolean(id + "_" + KEY_WASDISMISSED, false);
+            duration = savedState.getInt(id + "_" + KEY_DURATION, duration);
         }
     }
 

@@ -2401,7 +2401,7 @@ public class SuntimesUtils
      * @param view the View to trigger the accessibility event
      * @param msg text that will be read aloud (if accessibility enabled)
      */
-    public static void announceForAccessibility(View view, String msg)
+    public static void announceForAccessibility(View view, CharSequence msg)
     {
         if (view != null && msg != null)
         {

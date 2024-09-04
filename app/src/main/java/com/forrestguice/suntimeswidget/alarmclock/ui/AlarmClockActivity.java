@@ -159,6 +159,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private SuntimesWarning batteryOptimizationWarning_sony = null;   // remains null for non-sony devices
     private SuntimesWarning autostartWarning = null;    // remains null for non-xiomi devices
     private final List<SuntimesWarning> warnings = new ArrayList<SuntimesWarning>();
+    private final HashMap<String, View.OnClickListener> warningActions = new HashMap<>();
 
     private AppSettings.LocaleInfo localeInfo;
 
@@ -960,36 +961,78 @@ public class AlarmClockActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
     private void initWarnings(Context context, Bundle savedState)
     {
         warnings.clear();
+        warningActions.clear();
 
-        notificationWarning = new SuntimesWarning(WARNINGID_NOTIFICATIONS);
+        notificationWarning = new SuntimesWarning(WARNINGID_NOTIFICATIONS, context, getString(R.string.notificationsWarning));
+        notificationWarning.setActionLabel(getString(R.string.configLabel_alarms_notifications));
         warnings.add(notificationWarning);
+        warningActions.put(WARNINGID_NOTIFICATIONS, new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                AlarmPrefsFragment.openNotificationSettings(AlarmClockActivity.this);
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= 26)
         {
+            final AlarmClockItem.AlarmType[] types = AlarmClockItem.AlarmType.values();
             notificationChannelWarning = new SuntimesWarning[AlarmClockItem.AlarmType.values().length];
-            for (int i=0; i<notificationChannelWarning.length; i++) {
-                warnings.add(notificationChannelWarning[i] = new SuntimesWarning(WARNINGID_NOTIFICATIONS_CHANNEL + i));
+            for (int i=0; i<notificationChannelWarning.length; i++)
+            {
+                final int j = ((i < types.length) ? i : 0);
+                warnings.add(notificationChannelWarning[i] = new SuntimesWarning(WARNINGID_NOTIFICATIONS_CHANNEL + i, context, getString(R.string.notificationChannelWarning)));
+                notificationChannelWarning[i].setActionLabel(getString(R.string.configLabel_alarms_notifications));
+                warningActions.put(WARNINGID_NOTIFICATIONS_CHANNEL + i, new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view) {
+                        AlarmSettings.openChannelSettings(AlarmClockActivity.this, types[j]);
+                    }
+                });
             }
         }
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            batteryOptimizationWarning = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION);
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            String message = getString(AlarmSettings.aggressiveBatteryOptimizations(this) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
+            batteryOptimizationWarning = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION, context, "[w] " + message);
+            batteryOptimizationWarning.setActionLabel(getString(R.string.configLabel_alarms_optWhiteList));
             warnings.add(batteryOptimizationWarning);
+            warningActions.put(WARNINGID_BATTERY_OPTIMIZATION, new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    AlarmPrefsFragment.createBatteryOptimizationAlertDialog(AlarmClockActivity.this).show();
+                }
+            });
         }
 
         if (AlarmSettings.isSony())
         {
-            batteryOptimizationWarning_sony = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION_SONY);
+            batteryOptimizationWarning_sony = new SuntimesWarning(WARNINGID_BATTERY_OPTIMIZATION_SONY, context, getString(R.string.sonyStaminaModeWarning));
+            batteryOptimizationWarning_sony.setActionLabel(null);
             warnings.add(batteryOptimizationWarning_sony);
+            warningActions.put(WARNINGID_BATTERY_OPTIMIZATION_SONY, null);
         }
 
         if (AlarmSettings.isXiomi())
         {
-            autostartWarning = new SuntimesWarning(WARNINGID_AUTOSTART);
+            autostartWarning = new SuntimesWarning(WARNINGID_AUTOSTART, context, getString(R.string.autostartWarning));
+            autostartWarning.setActionLabel(getString(R.string.configLabel_alarms_autostart));
             warnings.add(autostartWarning);
+            warningActions.put(WARNINGID_AUTOSTART, new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    AlarmSettings.openAutostartSettings(AlarmClockActivity.this);
+                }
+            });
         }
 
         restoreWarnings(savedState);
@@ -1018,35 +1061,19 @@ public class AlarmClockActivity extends AppCompatActivity
         boolean showWarnings = AppSettings.loadShowWarningsPref(this);
         if (showWarnings && notificationWarning.shouldShow() && !notificationWarning.wasDismissed())
         {
-            notificationWarning.initWarning(this, addButton, getString(R.string.notificationsWarning));
-            notificationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view) {
-                    AlarmPrefsFragment.openNotificationSettings(AlarmClockActivity.this);
-                }
-            });
+            notificationWarning.initWarning(this, addButton, warningActions.get(notificationWarning.getId()));
             notificationWarning.show();
             return;
         }
 
         if (showWarnings && notificationChannelWarning != null)
         {
-            final AlarmClockItem.AlarmType[] types = AlarmClockItem.AlarmType.values();
             for (int i=0; i<notificationChannelWarning.length; i++)
             {
                 SuntimesWarning warning = notificationChannelWarning[i];
                 if (warning != null && warning.shouldShow() && !warning.wasDismissed())
                 {
-                    final int j = ((i < types.length) ? i : 0);
-                    warning.initWarning(this, addButton, getString(R.string.notificationChannelWarning));
-                    warning.getSnackbar().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View view) {
-                            AlarmSettings.openChannelSettings(AlarmClockActivity.this, types[j]);
-                        }
-                    });
+                    warning.initWarning(this, addButton, warningActions.get(warning.getId()));
                     warning.show();
                     return;
                 }
@@ -1056,15 +1083,7 @@ public class AlarmClockActivity extends AppCompatActivity
         if (showWarnings && batteryOptimizationWarning != null
                 && batteryOptimizationWarning.shouldShow() && !batteryOptimizationWarning.wasDismissed())
         {
-            String message = getString(AlarmSettings.aggressiveBatteryOptimizations(this) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
-            batteryOptimizationWarning.initWarning(this, addButton, "[w] " + message);
-            batteryOptimizationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_optWhiteList), new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view) {
-                    AlarmPrefsFragment.createBatteryOptimizationAlertDialog(AlarmClockActivity.this).show();
-                }
-            });
+            batteryOptimizationWarning.initWarning(this, addButton, warningActions.get(batteryOptimizationWarning.getId()));
             batteryOptimizationWarning.show();
             return;
         }
@@ -1072,7 +1091,7 @@ public class AlarmClockActivity extends AppCompatActivity
         if (showWarnings && batteryOptimizationWarning_sony != null
                 && batteryOptimizationWarning_sony.shouldShow() && !batteryOptimizationWarning_sony.wasDismissed())
         {
-            batteryOptimizationWarning_sony.initWarning(this, addButton, getString(R.string.sonyStaminaModeWarning));
+            batteryOptimizationWarning_sony.initWarning(this, addButton, warningActions.get(batteryOptimizationWarning_sony.getId()));
             batteryOptimizationWarning_sony.show();
             return;
         }
@@ -1080,14 +1099,7 @@ public class AlarmClockActivity extends AppCompatActivity
         if (showWarnings && autostartWarning != null
                 && autostartWarning.shouldShow() && !autostartWarning.wasDismissed())
         {
-            autostartWarning.initWarning(this, addButton, getString(R.string.autostartWarning));
-            autostartWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_autostart), new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view) {
-                    AlarmSettings.openAutostartSettings(AlarmClockActivity.this);
-                }
-            });
+            autostartWarning.initWarning(this, addButton, warningActions.get(autostartWarning.getId()));
             autostartWarning.show();
             return;
         }
