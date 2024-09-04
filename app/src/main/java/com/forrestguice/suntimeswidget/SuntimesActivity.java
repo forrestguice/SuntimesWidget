@@ -307,6 +307,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (navigation != null && navigation.isNavigationDrawerOpen()) {
             navigation.closeNavigationDrawer();
+            return;
 
         } else if (warnings.dismissWarning()) {
             return;

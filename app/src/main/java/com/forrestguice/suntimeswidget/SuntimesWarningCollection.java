@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -73,6 +74,10 @@ public abstract class SuntimesWarningCollection
         warningParent.put(warningID, parent);
         warningMap.put(warningID, warning);
         warnings.add(warning);
+    }
+
+    public boolean hasWarning(@NonNull String warningID) {
+        return warningMap.containsKey(warningID);
     }
 
     /**
