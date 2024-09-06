@@ -1224,6 +1224,8 @@
     <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>
     <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>
 
+    <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
+
     <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>

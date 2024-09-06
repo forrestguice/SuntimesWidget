@@ -1325,7 +1325,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     public static Notification createProgressNotification(Context context) {
-        return createProgressNotification(context, context.getString(R.string.app_name_alarmclock), "");
+        return createProgressNotification(context, context.getString(R.string.app_name_alarmclock), context.getString(R.string.configLabel_alarms_background_action_message, context.getString(R.string.app_name_alarmclock)));
     }
     public static Notification createProgressNotification(Context context, String message) {
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock),  message);
