@@ -55,6 +55,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.SuntimesWarningCollection;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
@@ -144,6 +145,9 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String WARNINGID_BATTERY_OPTIMIZATION = "BatteryOptimizationWarning";
     public static final String WARNINGID_BATTERY_OPTIMIZATION_SONY = "BatteryOptimizationWarning_sony";
     public static final String WARNINGID_AUTOSTART= "AutostartWarning";
+    public static final String WARNINGID_RESTRICTED_BUCKET = "RestrictedBucketWarning";
+
+    public static final String DIALOG_HELP = "HelpDialog";
 
     private AlarmListDialog list;
 
@@ -1016,6 +1020,18 @@ public class AlarmClockActivity extends AppCompatActivity
                         }
                     });
                 }
+
+                // restricted bucket warning
+                if (Build.VERSION.SDK_INT >= 28)
+                {
+                    addWarning(context, WARNINGID_RESTRICTED_BUCKET, getString(R.string.restrictedBucketWarning), addButton, getString(R.string.configAction_help), new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v) {
+                            showHelp_restrictedBucketWarning();
+                        }
+                    });
+                }
             }
         };
     }
@@ -1052,6 +1068,9 @@ public class AlarmClockActivity extends AppCompatActivity
         }
         if (warnings.hasWarning(WARNINGID_AUTOSTART)) {
             warnings.setShouldShow(WARNINGID_AUTOSTART, AlarmSettings.isAutostartDisabled(this));
+        }
+        if (warnings.hasWarning(WARNINGID_RESTRICTED_BUCKET)) {
+            warnings.setShouldShow(WARNINGID_RESTRICTED_BUCKET, AlarmSettings.isInRareOrRestrictedBucket(this));
         }
 
         warnings.setShowWarnings(AppSettings.loadShowWarningsPref(this));
@@ -1181,6 +1200,15 @@ public class AlarmClockActivity extends AppCompatActivity
         /**HelpDialog helpDialog = new HelpDialog();
          helpDialog.setContent(getString(R.string.help_alarmclock));
          helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);**/
+    }
+
+    protected void showHelp_restrictedBucketWarning()
+    {
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(getString(R.string.help_restricted_bucket));
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmClockActivity.this, R.string.help_restricted_bucket_path), DIALOG_HELP);
+        helpDialog.show(getSupportFragmentManager(), DIALOG_HELP);
     }
 
     /**

@@ -22,6 +22,7 @@ import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -728,6 +729,20 @@ public class AlarmSettings
     public static boolean isSony() {
         return "sony".equalsIgnoreCase(Build.MANUFACTURER);
     }
+
+    public static boolean isInRareOrRestrictedBucket(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 28)
+        {
+            UsageStatsManager statsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
+            if (statsManager != null) {
+                int bucket = statsManager.getAppStandbyBucket();
+                return (bucket == STANDBY_BUCKET_RESTRICTED || bucket == UsageStatsManager.STANDBY_BUCKET_RARE);
+            }
+        }
+        return false;
+    }
+    public static final int STANDBY_BUCKET_RESTRICTED = 0x0000002d;    // TODO: replace this with UsageStatsManager.STANDBY_BUCKET_RESTRICTED after targeting api30+
 
     /**
      * https://dontkillmyapp.com/xiomi

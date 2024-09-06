@@ -1171,7 +1171,10 @@
     <string name="configLabel_alarms_autostart_on">On</string>
     <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>
     <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w]</xliff:g> Autostart is disabled!\nAlarms may fail to work after reboot.</string>  <!-- snackbar message (xiomi devices only) -->
+
+    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
 
     <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
         <item>Samsung</item>
