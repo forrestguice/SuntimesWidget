@@ -1551,7 +1551,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialogInterface, int i)
         {
-            warnings.showWarnings();
+            warnings.showWarnings(SuntimesActivity.this);
         }
     };
     private void afterConfigDate()
@@ -1586,7 +1586,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             warnings.setWasDismissed(WARNINGID_LOCATION_PERMISSION, false);    // ignore previous dismissal
             warnings.setShouldShow(WARNINGID_LOCATION_PERMISSION, true);
-            warnings.showWarnings();
+            warnings.showWarnings(this);
         }
     }
 
@@ -1660,7 +1660,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
-            warnings.showWarnings();
+            warnings.showWarnings(SuntimesActivity.this);
         }
     };
 
@@ -2018,7 +2018,7 @@ public class SuntimesActivity extends AppCompatActivity
         showDatasourceUI(AppSettings.loadDatasourceUIPref(this));
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
-        warnings.showWarnings();
+        warnings.showWarnings(this);
 
         startTimeTask();
     }

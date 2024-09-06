@@ -38,15 +38,22 @@ public abstract class SuntimesWarningCollection
      */
     protected abstract void initWarnings(Context context);
 
-    protected WeakReference<Context> contextRef;
+    /**
+     * Concrete classes may implement this method (called from checkWarnings) to define warning conditions.
+     * @param context Context
+     * @param warningID warning id
+     * @return should return true if warning should be shown, false otherwise
+     */
+    protected boolean checkWarning(Context context, String warningID) {
+        return false;
+    }
+
     protected final List<SuntimesWarning> warnings = new ArrayList<>();
     protected final HashMap<String, SuntimesWarning> warningMap = new HashMap<>();
     protected final HashMap<String, View.OnClickListener> warningActions = new HashMap<>();
     protected final HashMap<String, View> warningParent = new HashMap<>();
 
-    public SuntimesWarningCollection(Context context, Bundle savedState)
-    {
-        contextRef = new WeakReference<>(context);
+    public SuntimesWarningCollection(Context context, Bundle savedState) {
         initWarnings(context, savedState);
     }
 
@@ -55,6 +62,16 @@ public abstract class SuntimesWarningCollection
         clearWarnings();
         initWarnings(context);
         restoreWarnings(savedState);
+        initWarningListener(context);
+    }
+
+    public void checkWarnings(Context context)
+    {
+        for (int i=0; i<warnings.size(); i++)
+        {
+            SuntimesWarning warning = warnings.get(i);
+            warning.setShouldShow(checkWarning(context, warning.getId()));
+        }
     }
 
     /**
@@ -95,9 +112,8 @@ public abstract class SuntimesWarningCollection
     /**
      * showWarnings
      */
-    public void showWarnings()
+    public void showWarnings(@Nullable Context context)
     {
-        Context context = contextRef.get();
         if (showWarnings && context != null)
         {
             for (int i=0; i<warnings.size(); i++)
@@ -236,12 +252,17 @@ public abstract class SuntimesWarningCollection
     /**
      * warningListener
      */
-    protected final SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener()
+    protected SuntimesWarning.SuntimesWarningListener warningListener;
+    public void initWarningListener(Context context)
     {
-        @Override
-        public void onShowNextWarning() {
-            showWarnings();
-        }
-    };
+        final WeakReference<Context> contextRef = new WeakReference<>(context);
+        warningListener = new SuntimesWarning.SuntimesWarningListener()
+        {
+            @Override
+            public void onShowNextWarning() {
+                showWarnings(contextRef.get());
+            }
+        };
+    }
 
 }

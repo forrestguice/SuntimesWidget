@@ -1033,6 +1033,40 @@ public class AlarmClockActivity extends AppCompatActivity
                     });
                 }
             }
+
+            @Override
+            protected boolean checkWarning(Context context, String warningID)
+            {
+                switch (warningID)
+                {
+                    case WARNINGID_NOTIFICATIONS:
+                        return !NotificationManagerCompat.from(context).areNotificationsEnabled();
+
+                    case WARNINGID_NOTIFICATIONS_CHANNEL + "0":
+                        return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[0]);
+
+                    case WARNINGID_NOTIFICATIONS_CHANNEL + "1":
+                        return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[1]);
+
+                    case WARNINGID_NOTIFICATIONS_CHANNEL + "2":
+                        return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[2]);
+
+                    case WARNINGID_BATTERY_OPTIMIZATION:
+                        return !AlarmSettings.isIgnoringBatteryOptimizations(context);
+
+                    case WARNINGID_BATTERY_OPTIMIZATION_SONY:
+                        return AlarmSettings.isSonyStaminaModeEnabled(context);
+
+                    case WARNINGID_AUTOSTART:
+                        return AlarmSettings.isAutostartDisabled(context);
+
+                    case WARNINGID_RESTRICTED_BUCKET:
+                        return AlarmSettings.isInRareOrRestrictedBucket(context);
+
+                    default:
+                        return false;
+                }
+            }
         };
     }
 
@@ -1044,37 +1078,12 @@ public class AlarmClockActivity extends AppCompatActivity
             sendBroadcast(new Intent(AlarmNotifications.getAlarmIntent(this, AlarmNotifications.ACTION_SCHEDULE, null)));
         }
 
-        warnings.setShouldShow(WARNINGID_NOTIFICATIONS, !NotificationManagerCompat.from(this).areNotificationsEnabled());
-        if (warnings.hasWarning(WARNINGID_NOTIFICATIONS_CHANNEL + 0))
-        {
-            AlarmClockItem.AlarmType[] types = AlarmClockItem.AlarmType.values();
-            for (int i=0; i<types.length; i++)
-            {
-                String warningID = WARNINGID_NOTIFICATIONS_CHANNEL + i;
-                if (warnings.hasWarning( warningID))
-                {
-                    boolean value = AlarmSettings.isChannelMuted(this, types[i]);
-                    warnings.setShouldShow(warningID, value);
-                    //Log.d("DEBUG", "setShouldShow: " + value);
-                }
-            }
-        }
-
-        if (warnings.hasWarning(WARNINGID_BATTERY_OPTIMIZATION)) {
-            warnings.setShouldShow(WARNINGID_BATTERY_OPTIMIZATION, !AlarmSettings.isIgnoringBatteryOptimizations(this));
-        }
-        if (warnings.hasWarning(WARNINGID_BATTERY_OPTIMIZATION_SONY)) {
-            warnings.setShouldShow(WARNINGID_BATTERY_OPTIMIZATION_SONY, AlarmSettings.isSonyStaminaModeEnabled(this));
-        }
-        if (warnings.hasWarning(WARNINGID_AUTOSTART)) {
-            warnings.setShouldShow(WARNINGID_AUTOSTART, AlarmSettings.isAutostartDisabled(this));
-        }
-        if (warnings.hasWarning(WARNINGID_RESTRICTED_BUCKET)) {
-            warnings.setShouldShow(WARNINGID_RESTRICTED_BUCKET, AlarmSettings.isInRareOrRestrictedBucket(this));
-        }
-
         warnings.setShowWarnings(AppSettings.loadShowWarningsPref(this));
-        warnings.showWarnings();
+        if (warnings.getShowWarnings())
+        {
+            warnings.checkWarnings(this);
+            warnings.showWarnings(this);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
