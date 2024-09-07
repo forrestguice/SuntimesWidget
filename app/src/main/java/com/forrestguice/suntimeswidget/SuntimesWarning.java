@@ -28,7 +28,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -44,7 +43,9 @@ public class SuntimesWarning
     public static final String KEY_WASDISMISSED = "userDismissedWarning";
     public static final String KEY_DURATION = "duration";
     public static final String KEY_MESSAGE = "message";
+    public static final String KEY_CONTENT_DESCRIPTION = "contentDescription";
     public static final String KEY_ACTION_LABEL = "actionLabel";
+    public static final String KEY_SHOULD_SHOW = "shouldShow";
 
     public SuntimesWarning(String id) {
         this.id = id;
@@ -167,7 +168,7 @@ public class SuntimesWarning
         }
     }
 
-    private Snackbar.Callback snackbarListener = new Snackbar.Callback()
+    private final Snackbar.Callback snackbarListener = new Snackbar.Callback()
     {
         @Override
         public void onDismissed(Snackbar snackbar, int event)
@@ -253,8 +254,10 @@ public class SuntimesWarning
         if (outState != null)
         {
             outState.putCharSequence(id + "_" + KEY_MESSAGE, message);
+            outState.putCharSequence(id + "_" + KEY_CONTENT_DESCRIPTION, contentDescription);
             outState.putCharSequence(id + "_" + KEY_ACTION_LABEL, actionLabel);
             outState.putBoolean(id + "_" + KEY_WASDISMISSED, wasDismissed);
+            outState.putBoolean(id + "_" + KEY_SHOULD_SHOW, shouldShow);
             outState.putInt(id + "_" + KEY_DURATION, duration);
         }
     }
@@ -264,8 +267,10 @@ public class SuntimesWarning
         if (savedState != null)
         {
             message = savedState.getCharSequence(id + "_" + KEY_MESSAGE);
+            contentDescription = savedState.getCharSequence(id + "_" + KEY_CONTENT_DESCRIPTION);
             actionLabel = savedState.getCharSequence(id + "_" + KEY_ACTION_LABEL);
             wasDismissed = savedState.getBoolean(id + "_" + KEY_WASDISMISSED, false);
+            shouldShow = savedState.getBoolean(id + "_" + KEY_SHOULD_SHOW, false);
             duration = savedState.getInt(id + "_" + KEY_DURATION, duration);
         }
     }

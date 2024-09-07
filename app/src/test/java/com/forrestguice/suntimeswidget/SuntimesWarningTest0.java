@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 
 import org.junit.Test;
@@ -37,21 +38,61 @@ public class SuntimesWarningTest0
         assertNull(warning0.warningListener);
         assertFalse(warning0.wasDismissed());
 
+        // setDuration, getDuration
         assertEquals(Snackbar.LENGTH_INDEFINITE, warning0.getDuration());
         warning0.setDuration(Snackbar.LENGTH_SHORT);
         assertEquals(Snackbar.LENGTH_SHORT, warning0.getDuration());
 
+        // setContentDescription
         assertNull(warning0.contentDescription);
         warning0.setContentDescription("desc");
         assertEquals("desc", warning0.contentDescription);
 
+        // setMessage, getMessage
+        assertNull(warning0.message);
+        warning0.setMessage("msg");
+        assertEquals("msg", warning0.getMessage());
+        assertEquals("msg", warning0.contentDescription);
+
+        // setActionLabel, getActionLabel
+        assertNull(warning0.getActionLabel());
+        warning0.setActionLabel("label");
+        assertEquals("label", warning0.getActionLabel());
+
+        // setShouldShow, shouldShow
         assertFalse(warning0.shouldShow());
         warning0.setShouldShow(true);
         assertTrue(warning0.shouldShow());
 
+        // setWarningListener
         TestWarningListener listener0 = new TestWarningListener();
         warning0.setWarningListener(listener0);
         assertEquals(listener0, warning0.warningListener);
+    }
+
+    @Test
+    public void test_SuntimesWarning_saveRestoreBundle()
+    {
+        SuntimesWarning warning0 = new SuntimesWarning("test");    // un-initialized warning
+        assertEquals("test", warning0.getId());
+        warning0.setMessage("msg");
+        warning0.setContentDescription("desc");
+        warning0.setActionLabel("label");
+        warning0.setDuration(100);
+        warning0.setShouldShow(true);
+
+        Bundle bundle0 = new Bundle();
+        warning0.save(bundle0);
+
+        SuntimesWarning warning1 = new SuntimesWarning("test");
+        warning1.restore(bundle0);
+
+        assertEquals(warning0.id, warning1.id);
+        assertEquals(warning0.message, warning1.message);
+        assertEquals(warning0.contentDescription, warning1.contentDescription);
+        assertEquals(warning0.actionLabel, warning1.actionLabel);
+        assertEquals(warning0.getDuration(), warning1.getDuration());
+        assertEquals(warning0.shouldShow(), warning1.shouldShow());
     }
 
     @Test
