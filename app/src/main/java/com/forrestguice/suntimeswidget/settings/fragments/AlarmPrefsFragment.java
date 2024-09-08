@@ -54,6 +54,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -252,6 +253,22 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
             AlarmSettings.PowerOffAlarmInfo info = AlarmSettings.loadPowerOffAlarmInfo(context);
             powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, info.getPermission())));
+        }
+
+        Preference dndPermission = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
+        if (dndPermission != null)
+        {
+            if (Build.VERSION.SDK_INT >= 23)
+            {
+                dndPermission.setOnPreferenceClickListener(onDndPermissionClicked(context));
+                dndPermission.setSummary(BedtimeSettings.hasDoNotDisturbPermission(context)
+                        ? context.getString(R.string.configLabel_permissionGranted)
+                        : SuntimesUtils.fromHtml(context.getString(R.string.privacy_permission_dnd)));
+
+            } else {
+                PreferenceCategory category = (PreferenceCategory)fragment.findPreference(BedtimeSettings.PREF_KEY_BEDTIME_CATEGORY);
+                removePrefFromCategory(dndPermission, category);  // dnd is api 23+
+            }
         }
 
         initPref_alarms_bootCompleted(fragment);
@@ -480,7 +497,17 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
-
+    private static Preference.OnPreferenceClickListener onDndPermissionClicked(final Context context)
+    {
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                BedtimeSettings.startDoNotDisturbAccessActivity(context);
+                return false;
+            }
+        };
+    }
 
     private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)
     {

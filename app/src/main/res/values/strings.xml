@@ -1171,7 +1171,10 @@
     <string name="configLabel_alarms_autostart_on">On</string>
     <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>
     <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w]</xliff:g> Autostart is disabled!\nAlarms may fail to work after reboot.</string>  <!-- snackbar message (xiomi devices only) -->
+
+    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
 
     <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
         <item>Samsung</item>
@@ -1207,6 +1210,8 @@
     <string name="notificationChannel_notifications1_desc">@string/alarmMode_notification1</string>  <!-- notification channel title -->
     <string name="notificationChannel_misc_title">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->
     <string name="notificationChannel_misc_desc">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->
+    <string name="notificationChannel_bedtime_title">@string/configLabel_bedtime</string>  <!-- notification channel title -->
+    <string name="notificationChannel_bedtime_desc">@string/configLabel_bedtime</string>  <!-- notification channel title -->
 
     <string name="configLabel_alarms_notifications_fullscreen">Full-screen Notifications</string>
     <string name="configLabel_alarms_notifications_fullscreen_on">On</string>
@@ -1221,6 +1226,8 @@
     <string name="configLabel_alarms_bootcompleted_info_never">Never</string>
     <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>
     <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>
+
+    <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
 
     <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>
@@ -2827,6 +2834,7 @@
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->
+    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
 
     <string name="drag_hint">Drag here</string>
 

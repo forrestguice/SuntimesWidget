@@ -5,6 +5,7 @@
     <!-- Help Paths (these should be prefixed by `help_url`) -->
     <string name="help_action_path" translatable="false">more/actions/addaction</string>
     <string name="help_battery_optimization_path" translatable="false">alarms/recommendations/#battery-optimization</string>
+    <string name="help_restricted_bucket_path" translatable="false">alarms/recommendations/#app-standby-bucket</string>   <!-- TODO: add to docs: #app-standby-bucket -->
     <string name="help_datasources_path" translatable="false">more/data/datasources</string>
     <string name="help_substitutions_path" translatable="false">more/data/datasubstitutions</string>
     <string name="help_worldmap_background_path" translatable="false">dialogs/worldmap/#set-background</string>
