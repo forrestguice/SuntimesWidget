@@ -175,7 +175,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     @Nullable
     public String getSelectedColorsID(Context context, int appWidgetID, @Nullable String tag) {
         SharedPreferences prefs = getSharedPreferences(context);
-        return prefs.getString(getSharedPrefsPrefix() + appWidgetID + "_" + KEY_SELECTED + ((tag != null) ? ("_" + tag) : ""), null);
+        return prefs.getString(getSelectedColorsKey(appWidgetID, tag), null);
     }
 
     public void setSelectedColorsID(Context context, @Nullable String colorsID) {
@@ -187,7 +187,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     public void setSelectedColorsID(Context context, @Nullable String colorsID, int appWidgetID, @Nullable String tag)
     {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString(getSharedPrefsPrefix() + appWidgetID + "_" + KEY_SELECTED + ((tag != null) ? ("_" + tag) : ""), colorsID);
+        editor.putString(getSelectedColorsKey(appWidgetID, tag), colorsID);
         editor.apply();
     }
 
@@ -200,8 +200,12 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     public void clearSelectedColorsID(Context context, int appWidgetID, @Nullable String tag)
     {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.remove(getSharedPrefsPrefix() + appWidgetID + "_" + KEY_SELECTED + ((tag != null) ? ("_" + tag) : ""));
+        editor.remove(getSelectedColorsKey(appWidgetID, tag));
         editor.apply();
+    }
+
+    public String getSelectedColorsKey(int appWidgetID, @Nullable String tag) {
+        return getSharedPrefsPrefix() + appWidgetID + "_" + KEY_SELECTED + ((tag != null) ? ("_" + tag) : "");
     }
 
     @Nullable
