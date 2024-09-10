@@ -289,13 +289,21 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         }
 
         @Override
-        public void requestHideSheet() {
+        public void requestHideSheet()
+        {
             dismiss();
+            if (dialogListener != null) {
+                requestHideSheet();
+            }
         }
 
         @Override
-        public void requestExpandSheet() {
+        public void requestExpandSheet()
+        {
             expandSheet(getDialog());
+            if (dialogListener != null) {
+                requestExpandSheet();
+            }
         }
 
         @Override
