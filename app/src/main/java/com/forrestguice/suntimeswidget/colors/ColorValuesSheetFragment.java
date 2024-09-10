@@ -88,6 +88,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listDialog.setAppWidgetID(getAppWidgetID());
             listDialog.setColorTag(getColorTag());
             listDialog.setTheme(getThemeResID());
+            listDialog.setShowBack(getShowBack());
 
             FragmentTransaction transaction = fragments.beginTransaction();
             transaction.add(R.id.layout_color_sheet, listDialog, DIALOG_LIST);
@@ -415,6 +416,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             toggleFragmentVisibility(getMode());
             onSelectColors(colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag()), "cancelEdit");
         }
+    }
+
+    public void setShowBack(boolean showBack) {
+        getArguments().putBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, showBack);
+    }
+    public boolean getShowBack() {
+        return getArguments().getBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, ColorValuesSelectFragment.DEF_SHOW_BACK);
     }
 
     public void setAppWidgetID(int id)
