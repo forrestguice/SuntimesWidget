@@ -44,7 +44,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 {
     public static final String ARG_APPWIDGETID = "appWidgetID";
     public static final int DEF_APPWIDGETID = 0;
-
+    
     public static final String ARG_ALLOW_EDIT = "allowEdit";
     public static final boolean DEF_ALLOW_EDIT = true;
 
@@ -224,6 +224,14 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
     };
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (onOverflowMenuItemSelected.onMenuItemClick(item)) {
+            return true;
+        } else { return super.onOptionsItemSelected(item); }
+    }
+
     protected void showOverflowMenu(Context context, View v)
     {
         PopupMenu popup = new PopupMenu(context, v);
@@ -345,14 +353,22 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
     protected void updateControls()
     {
-        String selectedColorsID = (colorCollection != null) ? colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag()) : null;
+        //String selectedColorsID = (colorCollection != null) ? colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag()) : null;
+        String selectedColorsID;
+        if (selector != null) {
+            ColorValuesItem selectedColors = (ColorValuesItem) selector.getSelectedItem();
+            selectedColorsID = (selectedColors != null ? selectedColors.colorsID : null);
+        } else {
+            selectedColorsID = (colorCollection != null) ? colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag()) : null;
+        }
+
         boolean isDefault = (selectedColorsID == null);
 
         if (editButton != null) {
             editButton.setVisibility(isDefault ? View.GONE : View.VISIBLE);
         }
         if (addButton != null) {
-            addButton.setVisibility(isDefault ? View.VISIBLE : View.GONE);
+            addButton.setVisibility(isDefault || !getShowMenu() ? View.VISIBLE : View.GONE);
         }
     }
 
