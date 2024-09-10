@@ -108,6 +108,7 @@
             android:key="app_alarms_bright_color_end"
             android:title="@string/configLabel_alarms_brightMode_color"
             android:summary="@string/configLabel_alarms_brightMode_color_summary"
+            android:numColumns="3"
             app:colorValues="@array/alarm_bright_colors_list"
             android:widgetLayout="@layout/layout_pref_color"
             android:defaultValue="@color/def_app_alarms_bright_color_end" />

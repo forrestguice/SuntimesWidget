@@ -97,6 +97,7 @@ public class ColorListPreference extends DialogPreference
                     }
                 }
             }
+            numColumns = a.getInt(R.styleable.ColorListPreference_android_numColumns, numColumns);
 
         } finally {
             a.recycle();

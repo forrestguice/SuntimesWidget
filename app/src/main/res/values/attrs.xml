@@ -275,6 +275,7 @@
 
     <declare-styleable name="ColorListPreference">
         <attr name="colorValues" format="reference" />
+        <attr name="android:numColumns" />
     </declare-styleable>
 
     <declare-styleable name="HelpPreference">
