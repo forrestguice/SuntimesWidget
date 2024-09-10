@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2023 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -35,6 +35,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -45,6 +46,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
@@ -255,15 +257,25 @@ public class AlarmPrefsFragment extends PreferenceFragment
             powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, info.getPermission())));
         }
 
-        Preference dndPermission = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
+        CheckBoxPreference dndPermission = (CheckBoxPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
         if (dndPermission != null)
         {
             if (Build.VERSION.SDK_INT >= 23)
             {
+                boolean bedtimeDndEnabled = BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
+                boolean hasDndPermission = BedtimeSettings.hasDoNotDisturbPermission(context);
+
+                SpannableString summary = (hasDndPermission
+                        ? new SpannableString(context.getString(R.string.configLabel_permissionGranted))
+                        : new SpannableString(SuntimesUtils.fromHtml(context.getString(R.string.privacy_permission_dnd))));
+
+                if (bedtimeDndEnabled && !hasDndPermission) {
+                    summary = SuntimesUtils.createColorSpan(summary, summary.toString(), summary.toString(), colorWarning);
+                }
+
+                dndPermission.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
                 dndPermission.setOnPreferenceClickListener(onDndPermissionClicked(context));
-                dndPermission.setSummary(BedtimeSettings.hasDoNotDisturbPermission(context)
-                        ? context.getString(R.string.configLabel_permissionGranted)
-                        : SuntimesUtils.fromHtml(context.getString(R.string.privacy_permission_dnd)));
+                dndPermission.setSummary(summary);
 
             } else {
                 PreferenceCategory category = (PreferenceCategory)fragment.findPreference(BedtimeSettings.PREF_KEY_BEDTIME_CATEGORY);
