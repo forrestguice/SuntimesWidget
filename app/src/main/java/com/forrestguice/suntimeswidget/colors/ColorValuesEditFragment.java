@@ -154,7 +154,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             onSaveColorValues();
         }
     };
-    protected void onSaveColorValues()
+    protected boolean onSaveColorValues()
     {
         if (validateInput())
         {
@@ -164,7 +164,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             if (listener != null) {
                 listener.onSaveClicked(colorsID, colorValues);
             }
+            return true;
         }
+        return false;
     }
 
     private View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
@@ -443,15 +445,18 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     protected void shareColors(Context context)
     {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, colorValues.toString());
-        startActivity(Intent.createChooser(intent, null));
+        if (colorValues != null)
+        {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, colorValues.toString());
+            startActivity(Intent.createChooser(intent, null));
+        }
     }
 
     protected void deleteColors(Context context)
     {
-        if (listener != null && allowDelete()) {
+        if (listener != null && allowDelete() && colorValues != null) {
             listener.onDeleteClicked(colorValues.getID());
         }
     }
@@ -489,7 +494,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    private PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -519,9 +524,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if (onOverflowMenuItemSelected.onMenuItemClick(item)) {
-            return true;
-        } else { return super.onOptionsItemSelected(item); }
+        //if (onOverflowMenuItemSelected.onMenuItemClick(item)) {
+        //    return true;
+        //} else {
+            return super.onOptionsItemSelected(item);
+        //}
     }
 
     protected void setBoolArg(String key, boolean value) {
