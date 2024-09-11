@@ -80,13 +80,13 @@ public class AlarmColorValues extends ResourceColorValues
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                0, 0,    // TODO: labels
-                0, 0,    // TODO: labels
-                0, 0,    // TODO: labels
-                0, 0,    // TODO: labels
-                0, 0,    // TODO: labels
-                0, 0,    // TODO: labels
-                0, 0, 0  // TODO: labels
+                R.string.configLabel_alarms_bg_startColor, R.string.configLabel_alarms_bg_endColor,
+                R.string.configLabel_alarms_soundingPulse_startColor, R.string.configLabel_alarms_soundingPulse_endColor,
+                R.string.configLabel_alarms_snoozingPulse_startColor, R.string.configLabel_alarms_snoozingPulse_endColor,
+                R.string.configLabel_alarms_text_primaryColor, R.string.configLabel_alarms_text_primaryColorInverse,
+                R.string.configLabel_alarms_text_secondaryColor, R.string.configLabel_alarms_text_secondaryColorInverse,
+                R.string.configLabel_alarms_text_timeColor, R.string.configLabel_alarms_text_timeColorInverse,
+                R.string.configLabel_themeColorAccent, R.string.configLabel_alarms_text_disabledColor, R.string.configLabel_themeColorAction,
         };
     }
     public int[] getColorsResDark() {
