@@ -1275,7 +1275,7 @@
     <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>
     <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_brightMode_colors">Bright Screen Colors</string>   <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
     <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
     <string-array name="brightMode_colors_previewKeys" translatable="false">
         <item>color_bright_bg_end</item>
