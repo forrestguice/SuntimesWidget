@@ -1419,6 +1419,7 @@
     <string name="restorebackup_dialog_item_colors">Colors</string>
     <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>
     <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>
+    <string name="restorebackup_dialog_item_colors_alarmcolors">Alarm Colors</string>  <!-- TODO -->
     <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string>
     <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string>
     <string name="restorebackup_dialog_item_placeitems">Places</string>
