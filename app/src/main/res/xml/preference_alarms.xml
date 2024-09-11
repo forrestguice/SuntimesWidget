@@ -96,6 +96,12 @@
             android:summary="@string/configLabel_alarms_brightMode_summary"
             android:defaultValue="@bool/def_app_alarms_bright" />
 
+        <Preference
+            android:key="app_alarms_bright_colors"
+            android:persistent="false"
+            android:title="@string/configLabel_alarms_brightMode_colors"
+            android:summary="@string/configLabel_alarms_brightMode_colors_summary" />
+
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_bright_fadeinMillis"
             android:title="@string/configLabel_alarms_brightMode_fadein"
@@ -104,20 +110,14 @@
             app:maxValue="@integer/maxAlarmFullscreenFadeinSeconds"
             android:defaultValue="@string/def_app_alarms_bright_fadein" />
 
-        <com.forrestguice.suntimeswidget.settings.colors.ColorListPreference
+        <!--<com.forrestguice.suntimeswidget.settings.colors.ColorListPreference
             android:key="app_alarms_bright_color_end"
             android:title="@string/configLabel_alarms_brightMode_color"
             android:summary="@string/configLabel_alarms_brightMode_color_summary"
             android:numColumns="3"
             app:colorValues="@array/alarm_bright_colors_list"
             android:widgetLayout="@layout/layout_pref_color"
-            android:defaultValue="@color/def_app_alarms_bright_color_end" />
-
-        <Preference
-            android:key="app_alarms_bright_colors"
-            android:persistent="false"
-            android:title="@string/configLabel_alarms_brightMode_colors"
-            android:summary="@string/configLabel_alarms_brightMode_colors_summary" />
+            android:defaultValue="@color/def_app_alarms_bright_color_end" />-->
 
     </PreferenceCategory>
 
