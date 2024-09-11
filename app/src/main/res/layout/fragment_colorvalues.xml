@@ -19,7 +19,7 @@
             android:layout_marginLeft="8dp" android:layout_marginRight="0dp"
             android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
             android:inputType="text"
-            android:hint="@string/hint_colorid" android:textSize="?attr/text_size_small"
+            android:hint="@string/hint_colorid" android:textSize="?attr/text_size_medium"
             android:importantForAutofill="no" />
 
         <ImageButton android:id="@+id/saveButton"
