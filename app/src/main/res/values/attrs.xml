@@ -278,6 +278,14 @@
         <attr name="android:numColumns" />
     </declare-styleable>
 
+    <declare-styleable name="ColorCollectionPreference">
+        <attr name="colorTag" format="string" />
+        <attr name="appWidgetID" format="integer" />
+        <attr name="showAlpha" format="boolean" />
+        <attr name="previewKeys" format="reference" />
+        <attr name="android:summary" />
+    </declare-styleable>
+
     <declare-styleable name="HelpPreference">
         <attr name="helpText" format="string" />
         <attr name="helpLink" format="string" />
