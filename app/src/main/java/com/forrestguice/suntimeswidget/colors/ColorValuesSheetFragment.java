@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.util.Locale;
@@ -105,6 +106,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         if (editDialog == null)
         {
             editDialog = new ColorValuesEditFragment();  // (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
+            editDialog.setShowAlpha(getShowAlpha());
             editDialog.setTheme(getThemeResID());
             editDialog.setFilter(getFilter());
             editDialog.setApplyFilter(applyFilter());
@@ -457,6 +459,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     }
     public boolean getShowMenu() {
         return getArguments().getBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, ColorValuesSelectFragment.DEF_SHOW_MENU);
+    }
+
+    public void setShowAlpha(boolean showAlpha) {
+        getArguments().putBoolean(ColorValuesEditFragment.ARG_SHOW_ALPHA, showAlpha);
+    }
+    public boolean getShowAlpha() {
+        return getArguments().getBoolean(ColorValuesEditFragment.ARG_SHOW_ALPHA, ColorValuesEditFragment.DEF_SHOW_ALPHA);
     }
 
     public void setAppWidgetID(int id)

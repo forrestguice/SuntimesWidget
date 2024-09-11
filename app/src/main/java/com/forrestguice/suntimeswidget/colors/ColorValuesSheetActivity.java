@@ -36,6 +36,7 @@ import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 
 public class ColorValuesSheetActivity extends AppCompatActivity
@@ -47,6 +48,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
 
     public static final String EXTRA_TITLE = "activityTitle";
     public static final String EXTRA_SUBTITLE = "activitySubtitle";
+    public static final String EXTRA_SHOW_ALPHA = ColorDialog.KEY_SHOWALPHA;
 
     public static final String DIALOG_SHEET = "ColorSheet";
     protected ColorValuesSheetFragment colorSheet;
@@ -83,6 +85,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             colorSheet.setShowMenu(false);
             colorSheet.setHideAfterSave(false);
             colorSheet.setPersistSelection(false);
+            colorSheet.setShowAlpha(intent.getBooleanExtra(EXTRA_SHOW_ALPHA, false));
             colorSheet.setFragmentListener(sheetListener);
         }
 

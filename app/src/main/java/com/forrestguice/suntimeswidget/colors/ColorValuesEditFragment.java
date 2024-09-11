@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 /*
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -63,6 +63,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 {
     public static final String ARG_ALLOW_DELETE = "allowDelete";
     public static final boolean DEF_ALLOW_DELETE = true;
+
+    public static final String ARG_SHOW_ALPHA = "showAlpha";
+    public static final boolean DEF_SHOW_ALPHA = false;
 
     protected EditText editID;
     protected GridLayout panel;
@@ -382,7 +385,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         typedArray.recycle();
 
         Intent intent = new Intent(getActivity(), ColorActivity.class);
-        intent.putExtra(ColorDialog.KEY_SHOWALPHA, true);
+        intent.putExtra(ColorDialog.KEY_SHOWALPHA, showAlpha());
         intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
         intent.putExtra(ColorDialog.KEY_COLOR_UNDER, colorUnder);
         intent.putExtra(ColorDialog.KEY_COLOR_OVER, colorOver);
@@ -465,6 +468,13 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
     public void setAllowDelete(boolean allowDelete) {
         setBoolArg(ARG_ALLOW_DELETE, allowDelete);
+    }
+
+    public boolean showAlpha() {
+        return getBoolArg(ARG_SHOW_ALPHA, DEF_SHOW_ALPHA);
+    }
+    public void setShowAlpha(boolean value) {
+        setBoolArg(ARG_SHOW_ALPHA, value);
     }
 
     public static final int REQUEST_IMPORT_THEME = 1000;
