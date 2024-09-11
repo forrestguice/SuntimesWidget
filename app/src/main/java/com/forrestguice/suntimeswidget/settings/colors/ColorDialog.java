@@ -116,8 +116,12 @@ public class ColorDialog extends BottomSheetDialogFragment
     public boolean showAlpha() {
         return colorPagerArgs.getBoolean(KEY_SHOWALPHA, false);
     }
-    public void setShowAlpha(boolean value) {
+    public void setShowAlpha(boolean value)
+    {
         colorPagerArgs.putBoolean(KEY_SHOWALPHA, value);
+        if (viewModel != null) {
+            viewModel.setShowAlpha(value);
+        }
         filterRecentColors();
     }
 
@@ -132,6 +136,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         viewModel.setColor(getArguments().getInt(KEY_COLOR));
         viewModel.setColorUnder(getArguments().getInt(KEY_COLOR_UNDER));
         viewModel.setColorOver(getArguments().getInt(KEY_COLOR_OVER));
+        viewModel.setShowAlpha(showAlpha());
 
         if (savedState != null)
         {

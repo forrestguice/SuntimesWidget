@@ -92,7 +92,7 @@ public class ColorPickerFragment extends Fragment
     }
 
     public boolean showAlpha() {
-        return getArguments().getBoolean("showAlpha", false);
+        return (colorViewModel != null && colorViewModel.showAlpha());
     }
 
     private final Observer<Integer> onViewModelColorChanged = new Observer<Integer>()
@@ -174,6 +174,7 @@ public class ColorPickerFragment extends Fragment
         public MutableLiveData<Integer> color = new MutableLiveData<>();
         protected Integer color_over = null;
         protected Integer color_under = null;
+        protected boolean showAlpha = false;
 
         public ColorPickerModel() {
             color.setValue(Color.WHITE);
@@ -201,6 +202,13 @@ public class ColorPickerFragment extends Fragment
 
         public void setColor(int value) {
             color.setValue(value);
+        }
+
+        public void setShowAlpha(boolean value) {
+            showAlpha = value;
+        }
+        public boolean showAlpha() {
+            return showAlpha;
         }
     }
 
