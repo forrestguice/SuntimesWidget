@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2023 Forrest Guice
+    Copyright (C) 2018-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,9 +31,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -41,12 +39,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -77,8 +73,10 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.AlarmColorValues;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValues;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -168,7 +166,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private int appThemeResID;
     private SuntimesTheme appThemeOverride = null;
     private boolean isBrightMode = false;
-    private AlarmColorValues colors;
+    private ColorValues colors;
 
     private void initTheme(Context context)
     {
@@ -183,8 +181,18 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             appThemeOverride = WidgetThemes.loadTheme(this, themeName);
         }
 
-        colors = (isBrightMode ? new BrightAlarmColorValues(context, true)
-                               : new AlarmColorValues(context, true));
+        if (isBrightMode)
+        {
+            BrightAlarmColorValuesCollection<BrightAlarmColorValues> collection = new BrightAlarmColorValuesCollection<>(context);
+            colors = collection.getSelectedColors(context, 0, BrightAlarmColorValues.TAG_ALARMCOLORS);
+            if (colors == null) {
+                colors = new BrightAlarmColorValues(context, false);
+            }
+
+        } else {
+            colors = new AlarmColorValues(context, true);
+        }
+
     }
 
     protected void initViews(Context context)
@@ -371,9 +379,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         SolarEvents.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
-        int[] bgColors = AlarmSettings.loadPrefAlarmBrightColors(context);
-        colors.setColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START, bgColors[0]);
-        colors.setColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_END, bgColors[1]);
+        //int[] bgColors = AlarmSettings.loadPrefAlarmBrightColors(context);
+        //colors.setColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START, bgColors[0]);
+        //colors.setColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_END, bgColors[1]);
 
         pulseSoundingDuration = getResources().getInteger(R.integer.anim_alarmscreen_sounding_pulse_duration);
         pulseSnoozingDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_pulse_duration);
@@ -890,7 +898,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             resetAnimateColors(labels, buttons);
             if (isBrightMode)
             {
-                int timeoutBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_END);
+                int timeoutBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START);
                 int timeoutTitleColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_PRIMARY, AlarmColorValues.COLOR_TEXT_PRIMARY_INVERSE);
                 int timeoutTimeColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_TIME, AlarmColorValues.COLOR_TEXT_TIME_INVERSE);
 
@@ -935,7 +943,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
-    protected int getContrastingTextColor(int backgroundColor, AlarmColorValues colors, String textColorID, String textColorInverseID)
+    protected int getContrastingTextColor(int backgroundColor, ColorValues colors, String textColorID, String textColorInverseID)
     {
         int textColor = colors.getColor(textColorID);
         int textInverseColor = colors.getColor(textColorInverseID);
@@ -1326,178 +1334,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     }
 
     /**
-     * AlarmColorValues
+     * isTextReadable
+     * @param textColor text color
+     * @param backgroundColor background color
+     * @return contrast ratio between textColor and backgroundColor is greater than 4.5
      */
-    public static class AlarmColorValues extends ResourceColorValues
-    {
-        public static final String COLOR_SOUNDING_PULSE_START = "color_sounding_pulse_start";
-        public static final String COLOR_SOUNDING_PULSE_END = "color_sounding_pulse_end";
-
-        public static final String COLOR_SNOOZING_PULSE_START = "color_snoozing_pulse_start";
-        public static final String COLOR_SNOOZING_PULSE_END = "color_snoozing_pulse_end";
-
-        public static final String COLOR_BRIGHT_BACKGROUND_START = "color_bright_bg_start";
-        public static final String COLOR_BRIGHT_BACKGROUND_END = "color_bright_bg_end";
-
-        public static final String COLOR_TEXT_PRIMARY = "color_text_primary";
-        public static final String COLOR_TEXT_PRIMARY_INVERSE = "color_text_primary_inverse";
-
-        public static final String COLOR_TEXT_SECONDARY = "color_text_secondary";
-        public static final String COLOR_TEXT_SECONDARY_INVERSE = "color_text_secondary_inverse";
-
-        public static final String COLOR_TEXT_TIME = "color_text_time";
-        public static final String COLOR_TEXT_TIME_INVERSE = "color_text_time_inverse";
-
-        public static final String COLOR_CONTROL_ENABLED = "color_control_enabled";
-        public static final String COLOR_CONTROL_DISABLED = "color_control_disabled";
-        public static final String COLOR_CONTROL_PRESSED = "color_control_pressed";
-
-        public String[] getColorKeys() {
-            return new String[] {
-                    COLOR_SOUNDING_PULSE_START, COLOR_SOUNDING_PULSE_END,
-                    COLOR_SNOOZING_PULSE_START, COLOR_SNOOZING_PULSE_END,
-                    COLOR_BRIGHT_BACKGROUND_START, COLOR_BRIGHT_BACKGROUND_END,
-                    COLOR_TEXT_PRIMARY, COLOR_TEXT_PRIMARY_INVERSE,
-                    COLOR_TEXT_SECONDARY, COLOR_TEXT_SECONDARY_INVERSE,
-                    COLOR_TEXT_TIME, COLOR_TEXT_TIME_INVERSE,
-                    COLOR_CONTROL_ENABLED, COLOR_CONTROL_DISABLED, COLOR_CONTROL_PRESSED
-            };
-        }
-        public int[] getColorAttrs() {
-            return new int[] {
-                    R.attr.sunsetColor, R.attr.sunriseColor,                // sounding pulse
-                    R.attr.dialogBackgroundAlt, R.attr.text_disabledColor,  // snoozing pulse
-                    0, 0,
-                    android.R.attr.textColorPrimary, android.R.attr.textColorPrimaryInverse,
-                    android.R.attr.textColorSecondary,  android.R.attr.textColorSecondaryInverse,
-                    android.R.attr.textColorPrimary, android.R.attr.textColorPrimaryInverse,
-                    R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.buttonPressColor
-            };
-        }
-        public int[] getColorLabelsRes() {
-            return new int[] {
-                    0, 0,    // TODO: labels
-                    0, 0,    // TODO: labels
-                    0, 0,    // TODO: labels
-                    0, 0,    // TODO: labels
-                    0, 0,    // TODO: labels
-                    0, 0,    // TODO: labels
-                    0, 0, 0  // TODO: labels
-            };
-        }
-        public int[] getColorsResDark() {
-            return new int[] {
-                    R.color.sunIcon_color_setting_dark, R.color.sunIcon_color_rising_dark,
-                    R.color.dialog_bg_alt_dark, R.color.text_disabled_dark,
-                    R.color.black, R.color.white,
-                    android.R.color.primary_text_dark, android.R.color.primary_text_light,
-                    android.R.color.secondary_text_dark, android.R.color.secondary_text_light,
-                    android.R.color.primary_text_dark, android.R.color.primary_text_light,
-                    R.color.text_accent_dark, R.color.text_disabled_dark, R.color.text_accent_dark
-            };
-        }
-        public int[] getColorsResLight() {
-            return new int[] {
-                    R.color.sunIcon_color_setting_light, R.color.sunIcon_color_rising_light,
-                    R.color.dialog_bg_alt_light, R.color.text_disabled_light,
-                    R.color.black, R.color.white,
-                    android.R.color.primary_text_light, android.R.color.primary_text_dark,
-                    android.R.color.secondary_text_light, android.R.color.secondary_text_dark,
-                    android.R.color.primary_text_light, android.R.color.primary_text_dark,
-                    R.color.text_accent_light, R.color.text_disabled_light, R.color.text_accent_light
-            };
-        }
-        public int[] getColorsFallback() {
-            return new int[] {
-                    Color.parseColor("#ff9900"), Color.parseColor("#ffd500"),
-                    Color.parseColor("#ff212121"), Color.parseColor("#ff9e9e9e"),
-                    Color.BLACK, Color.WHITE,
-                    Color.WHITE, Color.BLACK,
-                    Color.WHITE, Color.BLACK,
-                    Color.WHITE, Color.BLACK,
-                    Color.CYAN, Color.MAGENTA, Color.CYAN
-            };
-        }
-
-        public AlarmColorValues(ColorValues other) {
-            super(other);
-        }
-        public AlarmColorValues(SharedPreferences prefs, String prefix) {
-            super(prefs, prefix);
-        }
-        protected AlarmColorValues(Parcel in) {
-            super(in);
-        }
-        public AlarmColorValues() {
-            super();
-        }
-
-        public AlarmColorValues(Context context, boolean fallbackDarkTheme) {
-            super(context, fallbackDarkTheme);
-        }
-
-        public AlarmColorValues(String jsonString) {
-            super(jsonString);
-        }
-
-        public static final Creator<com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity.AlarmColorValues> CREATOR = new Creator<com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity.AlarmColorValues>()
-        {
-            public com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity.AlarmColorValues createFromParcel(Parcel in) {
-                return new com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity.AlarmColorValues(in);
-            }
-            public com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity.AlarmColorValues[] newArray(int size) {
-                return new com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity.AlarmColorValues[size];
-            }
-        };
-
-        public static com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity.AlarmColorValues getColorDefaults(Context context, boolean darkTheme) {
-            return new com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity.AlarmColorValues(new com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity.AlarmColorValues().getDefaultValues(context, darkTheme));
-        }
-    }
-
-    /**
-     * BrightAlarmColorValues
-     */
-    public static class BrightAlarmColorValues extends AlarmColorValues
-    {
-        public BrightAlarmColorValues(Context context, boolean fallbackDarkTheme) {
-            super(context, fallbackDarkTheme);
-        }
-
-        @Override
-        public int[] getColorAttrs() {
-            return new int[ getColorKeys().length ];    // 0 ... skip attrs
-        }
-        @Override
-        public int[] getColorsResDark() {
-            return getColorsResLight();    // dark/light colors are the same
-        }
-        @Override
-        public int[] getColorsResLight() {
-            return new int[] {
-                    R.color.sunIcon_color_setting_light, R.color.sunIcon_color_rising_light,
-                    R.color.dialog_bg_alt_light, R.color.text_disabled_light,
-                    R.color.black, R.color.white,
-                    android.R.color.primary_text_light, android.R.color.primary_text_dark,
-                    android.R.color.secondary_text_light, android.R.color.secondary_text_dark,
-                    android.R.color.primary_text_light, android.R.color.primary_text_dark,
-                    R.color.text_accent_light, R.color.text_disabled_light, R.color.text_accent_light
-            };
-        }
-        @Override
-        public int[] getColorsFallback() {
-            return new int[] {
-                    Color.parseColor("#ff9900"), Color.parseColor("#ffd500"),
-                    Color.parseColor("#ff212121"), Color.parseColor("#ff9e9e9e"),
-                    Color.BLACK, Color.WHITE,
-                    Color.WHITE, Color.BLACK,
-                    Color.WHITE, Color.BLACK,
-                    Color.WHITE, Color.BLACK,
-                    Color.CYAN, Color.MAGENTA, Color.CYAN
-            };
-        }
-    }
-
     public static boolean isTextReadable(int textColor, int backgroundColor) {
         return getContrastRatio(textColor, backgroundColor) > 4.5;    // AA minimum; https://www.w3.org/TR/WCAG21/#contrast-minimum
     }
