@@ -136,6 +136,7 @@ public class AlarmSettings
 
     public static final String PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR = "app_alarms_bright_color_start";
     public static final String PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR = "app_alarms_bright_color_end";
+    public static final String PREF_KEY_ALARM_BRIGHTMODE_COLORS = "app_alarms_bright_colors";
 
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
     public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s

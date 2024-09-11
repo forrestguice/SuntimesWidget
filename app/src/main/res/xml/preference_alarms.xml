@@ -113,6 +113,12 @@
             android:widgetLayout="@layout/layout_pref_color"
             android:defaultValue="@color/def_app_alarms_bright_color_end" />
 
+        <Preference
+            android:key="app_alarms_bright_colors"
+            android:persistent="false"
+            android:title="@string/configLabel_alarms_brightMode_colors"
+            android:summary="@string/configLabel_alarms_brightMode_colors_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

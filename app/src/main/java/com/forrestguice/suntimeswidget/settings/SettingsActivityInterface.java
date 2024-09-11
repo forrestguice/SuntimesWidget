@@ -38,6 +38,7 @@ public interface SettingsActivityInterface
     int REQUEST_TAPACTION_NOTE = 70;
     int REQUEST_MANAGE_EVENTS = 80;
     int REQUEST_WELCOME_SCREEN = 90;
+    int REQUEST_PICKCOLORS_BRIGHTALARM = 100;
 
     String RECREATE_ACTIVITY = "recreate_activity";
 }

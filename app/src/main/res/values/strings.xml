@@ -1264,6 +1264,9 @@
     <string name="configLabel_alarms_brightMode_color">Screen Color</string>   <!-- TODO -->
     <string name="configLabel_alarms_brightMode_color_summary">%s</string>
 
+    <string name="configLabel_alarms_brightMode_colors">Bright Screen Colors</string>   <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+
     <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->
     <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->
     <string name="configLabel_alarms_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->

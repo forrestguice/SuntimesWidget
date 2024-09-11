@@ -57,7 +57,11 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValues;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
@@ -234,6 +238,37 @@ public class AlarmPrefsFragment extends PreferenceFragment
         Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
         if (volumesPrefs != null) {
             volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
+        }
+
+        final Preference brightColorsPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BRIGHTMODE_COLORS);
+        if (brightColorsPref != null)
+        {
+            final int appWidgetID = 0;
+            final String colorTag = BrightAlarmColorValues.TAG_ALARMCOLORS;
+            final BrightAlarmColorValuesCollection<BrightAlarmColorValues> colorValues = new BrightAlarmColorValuesCollection<BrightAlarmColorValues>(context);
+            String selectedColorsID = colorValues.getSelectedColorsID(context, appWidgetID, colorTag);
+
+            brightColorsPref.setSummary(context.getString(R.string.configLabel_alarms_brightMode_colors_summary, (selectedColorsID != null ? selectedColorsID : context.getString(R.string.configLabel_tagDefault))));
+            brightColorsPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            {
+                @Override
+                public boolean onPreferenceClick(Preference preference)
+                {
+                    Activity activity = fragment.getActivity();
+                    if (activity != null)
+                    {
+                        Intent intent = new Intent(activity, ColorValuesSheetActivity.class);
+                        intent.putExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, appWidgetID);
+                        intent.putExtra(ColorValuesSheetActivity.EXTRA_COLORTAG, colorTag);
+                        intent.putExtra(ColorValuesSheetActivity.EXTRA_COLLECTION, colorValues);
+                        intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, brightColorsPref.getTitle());
+                        intent.putExtra(ColorValuesSheetActivity.EXTRA_SHOW_ALPHA, true);
+                        activity.startActivityForResult(intent, SettingsActivityInterface.REQUEST_PICKCOLORS_BRIGHTALARM);
+                        activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+                    }
+                    return false;
+                }
+            });
         }
 
         Preference powerOffAlarmsPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS);

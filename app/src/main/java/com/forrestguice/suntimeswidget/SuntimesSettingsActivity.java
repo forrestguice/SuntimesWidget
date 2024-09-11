@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2023 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,8 +37,10 @@ import android.support.annotation.StringRes;
 import android.util.Log;
 import android.util.TypedValue;
 
-
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsPreferenceHelper;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
@@ -187,6 +189,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             case SettingsActivityInterface.REQUEST_MANAGE_EVENTS:
                 onManageEvents(requestCode, resultCode, data);
                 break;
+
+            case SettingsActivityInterface.REQUEST_PICKCOLORS_BRIGHTALARM:
+                onPickColors(requestCode, resultCode, data);
+                break;
         }
     }
 
@@ -200,6 +206,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             case SettingsActivityInterface.REQUEST_TAPACTION_DATE0: return AppSettings.PREF_KEY_UI_DATETAPACTION;
             case SettingsActivityInterface.REQUEST_TAPACTION_DATE1: return AppSettings.PREF_KEY_UI_DATETAPACTION1;
             case SettingsActivityInterface.REQUEST_TAPACTION_NOTE:  return AppSettings.PREF_KEY_UI_NOTETAPACTION;
+            case SettingsActivityInterface.REQUEST_PICKCOLORS_BRIGHTALARM: return AlarmSettings.PREF_KEY_ALARM_BRIGHTMODE_COLORS;
             default: return null;
         }
     }
@@ -245,6 +252,27 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             } else if (adapterModified) {
                 rebuildActivity();
             }
+        }
+    }
+
+    private void onPickColors(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            String selection = data.getStringExtra(ColorValuesSheetActivity.EXTRA_SELECTED_COLORS_ID);
+            //Log.d("DEBUG", "onPickColors: " + selection);
+
+            int appWidgetID = data.getIntExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, 0);
+            String colorTag = data.getStringExtra(ColorValuesSheetActivity.EXTRA_COLORTAG);
+            ColorValuesCollection<ColorValues> collection = data.getParcelableExtra(ColorValuesSheetActivity.EXTRA_COLLECTION);
+
+            if (collection != null) {
+                collection.setSelectedColorsID(context, selection, appWidgetID, colorTag);
+            }
+
+            SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+            pref.putString(prefKeyForRequestCode(requestCode), selection);
+            pref.apply();
         }
     }
 
