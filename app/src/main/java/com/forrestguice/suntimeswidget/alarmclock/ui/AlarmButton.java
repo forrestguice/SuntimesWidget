@@ -92,6 +92,7 @@ public class AlarmButton extends RelativeLayout
     protected View dragHint;
     protected View[] hintViews;
     protected View[] allDragHints;
+    protected TextView[] allDragHintText;
     protected View[] allDragTargets;
     protected View shade;
 
@@ -164,6 +165,13 @@ public class AlarmButton extends RelativeLayout
             hint.setVisibility(View.GONE);
         }
 
+        allDragHintText = new TextView[] {
+                (TextView) findViewById(R.id.text_drag_hint_start),
+                (TextView) findViewById(R.id.text_drag_hint_top),
+                (TextView) findViewById(R.id.text_drag_hint_end),
+                (TextView) findViewById(R.id.text_drag_hint_bottom)
+        };
+
         dragHint = (activatedDirection == ACTIVATED_END ? allDragHints[2] : allDragHints[0]);
         dragHint.setVisibility(View.VISIBLE);
         dragHint.setAlpha(0);
@@ -177,9 +185,7 @@ public class AlarmButton extends RelativeLayout
         frameTop = findViewById(R.id.frame_top);
         frameBottom = findViewById(R.id.frame_bottom);
 
-        if (activatedDirection == ACTIVATED_END) {
-            frameEnd.setBackgroundColor(color_accent);
-        } else frameStart.setBackgroundColor(color_accent);
+        setAccentColor(color_accent);
 
         hintViews = new View[] { dragHint, (activatedDirection == ACTIVATED_END) ? frameEnd : frameStart };
         frameViews = new View[] { frameStart, frameTop, frameEnd, frameBottom };
@@ -481,6 +487,36 @@ public class AlarmButton extends RelativeLayout
             d.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         }
         thumbIcon.setImageDrawable(d);
+    }
+
+    public void setAccentColor(int color)
+    {
+        color_accent = color;
+
+        if (frameEnd != null && frameStart != null)
+        {
+            if (activatedDirection == ACTIVATED_END) {
+                frameEnd.setBackgroundColor(color_accent);
+            } else frameStart.setBackgroundColor(color_accent);
+        }
+
+        if (allDragHintText != null)
+        {
+            for (TextView text : allDragHintText) {
+                if (text != null) {
+                    text.setTextColor(color);
+                }
+            }
+        }
+
+        if (allDragTargets != null)
+        {
+            for (View dragTarget : allDragTargets) {
+                if (dragTarget != null) {
+                    dragTarget.setBackgroundColor(color);
+                }
+            }
+        }
     }
 
     @Override

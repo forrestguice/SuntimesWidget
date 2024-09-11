@@ -697,6 +697,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             if (button != null) {
                 button.setThumbTextColor(buttonColors);
                 button.setThumbImageTint(colors.getColor(AlarmColorValues.COLOR_CONTROL_ENABLED));
+                button.setAccentColor(colors.getColor(AlarmColorValues.COLOR_CONTROL_PRESSED));
             }
         }
     }
