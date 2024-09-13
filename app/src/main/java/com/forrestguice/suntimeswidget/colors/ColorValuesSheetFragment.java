@@ -97,6 +97,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listDialog.setTheme(getThemeResID());
             listDialog.setShowBack(getShowBack());
             listDialog.setShowMenu(getShowMenu());
+            listDialog.setPreviewKeys(previewKeys());
 
             FragmentTransaction transaction = fragments.beginTransaction();
             transaction.add(R.id.layout_color_sheet, listDialog, DIALOG_LIST);
@@ -199,6 +200,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             }
         }
         updateViews();
+    }
+
+    public void setPreviewKeys(String... keys) {
+        getArguments().putStringArray("previewKeys", keys);
+    }
+    public String[] previewKeys() {
+        return getArguments().getStringArray("previewKeys");
     }
 
     protected String suggestColorValuesID(Context context)

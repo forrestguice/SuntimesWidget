@@ -48,6 +48,8 @@ public class ColorValuesSheetActivity extends AppCompatActivity
 
     public static final String EXTRA_TITLE = "activityTitle";
     public static final String EXTRA_SUBTITLE = "activitySubtitle";
+    public static final String EXTRA_PREVIEW_KEYS = "previewKeys";
+
     public static final String EXTRA_SHOW_ALPHA = ColorDialog.KEY_SHOWALPHA;
 
     public static final String DIALOG_SHEET = "ColorSheet";
@@ -79,7 +81,8 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             colorSheet = new ColorValuesSheetFragment();
             colorSheet.setAppWidgetID(intent.getIntExtra(EXTRA_APPWIDGET_ID, 0));
             colorSheet.setColorTag(intent.getStringExtra(EXTRA_COLORTAG));
-            colorSheet.setColorCollection((ColorValuesCollection) intent.getParcelableExtra(EXTRA_COLLECTION));
+            colorSheet.setColorCollection((ColorValuesCollection<ColorValues>) intent.getParcelableExtra(EXTRA_COLLECTION));
+            colorSheet.setPreviewKeys(intent.getStringArrayExtra(EXTRA_PREVIEW_KEYS));
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
             colorSheet.setShowBack(false);
             colorSheet.setShowMenu(false);

@@ -59,10 +59,9 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
-import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
-import com.forrestguice.suntimeswidget.settings.colors.ColorCollectionPreference;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
@@ -241,7 +240,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
         }
 
-        final ColorCollectionPreference brightColorsPref = (ColorCollectionPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BRIGHTMODE_COLORS);
+        final ColorValuesCollectionPreference brightColorsPref = (ColorValuesCollectionPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BRIGHTMODE_COLORS);
         if (brightColorsPref != null)
         {
             brightColorsPref.setCollection(context, new BrightAlarmColorValuesCollection<BrightAlarmColorValues>(context));

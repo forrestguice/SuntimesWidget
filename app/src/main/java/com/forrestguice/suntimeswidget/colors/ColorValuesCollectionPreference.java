@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.settings.colors;
+package com.forrestguice.suntimeswidget.colors;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -29,34 +29,31 @@ import android.util.Log;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
-import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ColorCollectionPreference extends Preference
+public class ColorValuesCollectionPreference extends Preference
 {
-    public ColorCollectionPreference(Context context) {
+    public ColorValuesCollectionPreference(Context context) {
         super(context);
     }
 
-    public ColorCollectionPreference(Context context, AttributeSet attrs)
+    public ColorValuesCollectionPreference(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         setParams(context, attrs);
     }
 
     @TargetApi(21)
-    public ColorCollectionPreference(Context context, AttributeSet attrs, int defStyleAttr)
+    public ColorValuesCollectionPreference(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
         setParams(context, attrs);
     }
 
     @TargetApi(21)
-    public ColorCollectionPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+    public ColorValuesCollectionPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
         setParams(context, attrs);
@@ -116,7 +113,6 @@ public class ColorCollectionPreference extends Preference
     {
         previewKeys.clear();
         previewKeys.addAll(Arrays.asList(keys));
-        Log.d("DEBUG", "setPreviewKeys: " + keys[0]);
     }
 
     protected String colorTag = null;
@@ -192,10 +188,11 @@ public class ColorCollectionPreference extends Preference
                 if (activity != null)
                 {
                     Intent intent = new Intent(activity, ColorValuesSheetActivity.class);
+                    intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, getTitle());
                     intent.putExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, getAppWidgetID());
                     intent.putExtra(ColorValuesSheetActivity.EXTRA_COLORTAG, getColorTag());
                     intent.putExtra(ColorValuesSheetActivity.EXTRA_COLLECTION, getCollection());
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, getTitle());
+                    intent.putExtra(ColorValuesSheetActivity.EXTRA_PREVIEW_KEYS, previewKeys.toArray(new String[0]));
                     intent.putExtra(ColorValuesSheetActivity.EXTRA_SHOW_ALPHA, showAlpha());
                     activity.startActivityForResult(intent, getRequestCode());
                     activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);

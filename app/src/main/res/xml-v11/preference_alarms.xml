@@ -100,7 +100,7 @@
             android:summary="@string/configLabel_alarms_brightMode_summary"
             android:defaultValue="@bool/def_app_alarms_bright" />
 
-        <com.forrestguice.suntimeswidget.settings.colors.ColorCollectionPreference
+        <com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference
             android:key="app_alarms_bright_colors"
             android:persistent="false"
             app:colorTag="alarmcolors" app:appWidgetID="0" app:showAlpha="true"

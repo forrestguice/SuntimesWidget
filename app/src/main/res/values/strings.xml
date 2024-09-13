@@ -1279,10 +1279,10 @@
     <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
     <string-array name="brightMode_colors_previewKeys" translatable="false">
         <item>color_bright_bg_end</item>
-        <item>color_sounding_pulse_start</item>
+        <!--<item>color_sounding_pulse_start</item>
         <item>color_sounding_pulse_end</item>
         <item>color_control_enabled</item>
-        <item>color_control_pressed</item>
+        <item>color_control_pressed</item>-->
     </string-array>
 
     <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->

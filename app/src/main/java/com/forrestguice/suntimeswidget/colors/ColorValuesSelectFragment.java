@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 /*
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,9 +21,11 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +41,10 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ColorValuesSelectFragment extends ColorValuesFragment
 {
@@ -147,7 +153,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
     }
 
-    private AdapterView.OnItemSelectedListener onItemSelected = new AdapterView.OnItemSelectedListener() {
+    private final AdapterView.OnItemSelectedListener onItemSelected = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             onColorValuesSelected(position);
@@ -169,7 +175,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         } else return null;
     }
 
-    private View.OnClickListener onEditButtonClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
+    private final View.OnClickListener onEditButtonClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onEditSelectedItem();
@@ -183,7 +189,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
     }
 
-    private View.OnClickListener onAddButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onAddButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onAddItem();
@@ -205,7 +211,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
     }
 
-    private View.OnClickListener onBackButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onBackButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onBack();
@@ -217,7 +223,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
     }
 
-    private View.OnClickListener onMenuButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onMenuButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showOverflowMenu(getActivity(), v);
@@ -294,8 +300,15 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
     protected ArrayAdapter<ColorValuesItem> initAdapter(Context context)
     {
-        ColorValuesItem[] items = (colorCollection == null ? new ColorValuesItem[0] : ColorValuesItem.createItems(getActivity(), colorCollection.getCollection()));
-        return new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, items);
+        ColorValuesItem[] items = (colorCollection == null ? new ColorValuesItem[0] : ColorValuesItem.createItems(context, colorCollection, previewKeys()));
+        return new ColorValuesArrayAdapter(context, R.layout.layout_listitem_colors, items);
+    }
+
+    public void setPreviewKeys(String... keys) {
+        getArguments().putStringArray("previewKeys", keys);
+    }
+    public String[] previewKeys() {
+        return getArguments().getStringArray("previewKeys");
     }
 
     protected void onRestoreInstanceState(@NonNull Bundle savedState) { /* EMPTY */ }
@@ -372,8 +385,8 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
     }
 
-    protected ColorValuesCollection colorCollection = null;
-    public void setColorCollection(ColorValuesCollection collection) {
+    protected ColorValuesCollection<ColorValues> colorCollection = null;
+    public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
         colorCollection = collection;
         updateViews();
     }
@@ -452,25 +465,169 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     {
         public String displayString;
         public String colorsID;
+        public int[] previewColors;
 
-        public ColorValuesItem(String displayString, String colorsID) {
+        public ColorValuesItem(String displayString, String colorsID, int... previewColors)
+        {
             this.displayString = displayString;
             this.colorsID = colorsID;
+            this.previewColors = previewColors;
         }
 
         public String toString() {
             return displayString;
         }
 
-        public static ColorValuesItem[] createItems(Context context, String[] colorIDs)
+        public static ColorValuesItem[] createItems(Context context, ColorValuesCollection<ColorValues> collection, String[] previewKeys)
         {
+            String[] colorIDs = collection != null ? collection.getCollection() : new String[0];
             ColorValuesItem[] items = new ColorValuesItem[colorIDs.length+1];
-            items[0] = new ColorValuesItem(context.getString(R.string.configLabel_tagDefault), null);
 
+            items[0] = new ColorValuesItem(context.getString(R.string.configLabel_tagDefault), null, getPreviewColors(context, collection, null, previewKeys));
             for (int i=0; i<colorIDs.length; i++) {
-                items[i+1] = new ColorValuesItem(colorIDs[i], colorIDs[i]);
+                items[i+1] = new ColorValuesItem(colorIDs[i], colorIDs[i], getPreviewColors(context, collection, colorIDs[i], previewKeys));
             }
             return items;
+        }
+
+        public static int[] getPreviewColors(Context context, @Nullable ColorValuesCollection<ColorValues> collection, @Nullable String colorsID, @Nullable String[] previewKeys)
+        {
+            int[] colors = ((previewKeys != null) ? new int[previewKeys.length] : new int[0]);
+            if (collection != null && previewKeys != null && previewKeys.length > 0)
+            {
+                ColorValues values = ((collection != null) ? collection.getColors(context, colorsID) : null);
+                if (values == null) {
+                    values = collection.getDefaultColors(context);
+                }
+                for (int i=0; i<previewKeys.length; i++) {
+                    colors[i] = values.getColor(previewKeys[i]);
+                }
+            }
+            return colors;
+        }
+    }
+
+    /**
+     * ColorValuesArrayAdapter
+     */
+    public static class ColorValuesArrayAdapter extends ArrayAdapter<ColorValuesItem>
+    {
+        private int resourceID, dropDownResourceID;
+        private ColorValuesItem selectedItem;
+
+        public ColorValuesArrayAdapter(@NonNull Context context, int resource) {
+            super(context, resource);
+            init(context, resource);
+        }
+
+        public ColorValuesArrayAdapter(@NonNull Context context, int resource, @NonNull ColorValuesItem[] objects) {
+            super(context, resource, objects);
+            init(context, resource);
+        }
+
+        public ColorValuesArrayAdapter(@NonNull Context context, int resource, @NonNull List<ColorValuesItem> objects) {
+            super(context, resource, objects);
+            init(context, resource);
+        }
+
+        private void init(@NonNull Context context, int resource) {
+            resourceID = dropDownResourceID = resource;
+        }
+
+        public void setSelected( ColorValuesItem item ) {
+            selectedItem = item;
+            notifyDataSetChanged();
+        }
+
+        public ColorValuesItem getSelected() {
+            return selectedItem;
+        }
+
+        public List<ColorValuesItem> getItems()
+        {
+            ArrayList<ColorValuesItem> items = new ArrayList<>();
+            for (int i=0; i<getCount(); i++)
+            {
+                ColorValuesItem item = getItem(i);
+                if (item != null) {
+                    items.add(item);
+                }
+            }
+            return items;
+        }
+
+        @Override
+        public void setDropDownViewResource(int resID) {
+            super.setDropDownViewResource(resID);
+            dropDownResourceID = resID;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getItemView(position, convertView, parent, dropDownResourceID);
+        }
+
+        @Override
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getItemView(position, convertView, parent, resourceID);
+        }
+
+        private View getItemView(int position, View convertView, @NonNull ViewGroup parent, int resID)
+        {
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+                view = layoutInflater.inflate(resID, parent, false);
+            }
+
+            ColorValuesItem item = getItem(position);
+            if (item == null) {
+                Log.w("getItemView", "item at position " + position + " is null.");
+                return view;
+            }
+
+            TextView primaryText = (TextView) view.findViewById(android.R.id.text1);
+            if (primaryText != null) {
+                primaryText.setText(item.displayString);
+            }
+
+            int[] previewColors = item.previewColors;
+            View[] previews = new View[] { view.findViewById(R.id.colorPreview0), view.findViewById(R.id.colorPreview1), view.findViewById(R.id.colorPreview2) };
+            if (previews[0] != null && previewColors != null && previewColors.length > 0)
+            {
+                for (int i=0; i<previews.length; i++)
+                {
+                    View preview = previews[i];
+                    if (preview != null)
+                    {
+                        if (i < previewColors.length) {
+                            preview.setBackgroundColor(previewColors[i]);
+                            preview.setVisibility(View.VISIBLE);
+                        } else {
+                            preview.setVisibility(View.GONE);
+                        }
+                    }
+                }
+
+            } else {
+                for (View v : previews) {
+                    if (v != null) {
+                        v.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            /*if (selectedItem != null && item.colorsID.equals(selectedItem.colorsID)) {
+                Log.d("DEBUG", "getItemView: " + selectedItem.colorsID);
+                view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.text_accent_dark));
+            } else view.setBackgroundColor(Color.TRANSPARENT);
+            TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
+            if (secondaryText != null) {
+                secondaryText.setText(item.getSummary(getContext()));
+            }*/
+
+            return view;
         }
     }
 
