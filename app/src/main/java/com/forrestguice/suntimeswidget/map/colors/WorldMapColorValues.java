@@ -84,7 +84,8 @@ public class WorldMapColorValues extends ResourceColorValues
     public int[] getColorRoles() {
         return new int[] {
                 ROLE_BACKGROUND, ROLE_BACKGROUND,
-                ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_BACKGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_BACKGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND,
                 ROLE_FOREGROUND, ROLE_FOREGROUND,
                 ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND
         };

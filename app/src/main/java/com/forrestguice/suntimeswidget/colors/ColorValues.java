@@ -177,8 +177,13 @@ public abstract class ColorValues implements Parcelable
 
     public static final int ROLE_UNKNOWN = 0;
     public static final int ROLE_BACKGROUND = 100;
+    public static final int ROLE_BACKGROUND_PRIMARY = 125;
+    public static final int ROLE_BACKGROUND_INVERSE = 150;
     public static final int ROLE_FOREGROUND = 200;
     public static final int ROLE_TEXT = 300;
+    public static final int ROLE_TEXT_INVERSE = 325;
+    public static final int ROLE_TEXT_PRIMARY = 350;
+    public static final int ROLE_TEXT_PRIMARY_INVERSE = 375;
 
     public static final String SUFFIX_ROLE = "_ROLE";
     public void setRole(String key, int role) {
@@ -190,6 +195,16 @@ public abstract class ColorValues implements Parcelable
     }
     public boolean hasRole(String key) {
         return values.containsKey(key + SUFFIX_ROLE);
+    }
+    @Nullable
+    public String findColorWithRole(int role)
+    {
+        for (String key : values.keySet()) {
+            if (getRole(key) == role) {
+                return key;
+            }
+        }
+        return null;
     }
 
     public void setColor(String key, int color) {

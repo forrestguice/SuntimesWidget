@@ -115,6 +115,7 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
                 ROLE_TEXT, ROLE_BACKGROUND,
                 ROLE_BACKGROUND, ROLE_FOREGROUND,
                 ROLE_BACKGROUND, ROLE_FOREGROUND,
+                ROLE_BACKGROUND, ROLE_FOREGROUND,
                 ROLE_BACKGROUND, ROLE_FOREGROUND
         };
     }

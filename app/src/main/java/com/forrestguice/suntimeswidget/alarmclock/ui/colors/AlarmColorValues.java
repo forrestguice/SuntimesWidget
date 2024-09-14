@@ -91,12 +91,12 @@ public class AlarmColorValues extends ResourceColorValues
     }
     public int[] getColorRoles() {
         return new int[] {
-                ROLE_BACKGROUND, ROLE_BACKGROUND,
-                ROLE_FOREGROUND, ROLE_FOREGROUND,
-                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_BACKGROUND_INVERSE, ROLE_BACKGROUND_PRIMARY,
                 ROLE_TEXT, ROLE_TEXT,
-                ROLE_TEXT, ROLE_TEXT,
-                ROLE_TEXT, ROLE_TEXT,
+                ROLE_TEXT_INVERSE, ROLE_TEXT_INVERSE,
+                ROLE_TEXT_PRIMARY, ROLE_TEXT_PRIMARY_INVERSE,
+                ROLE_TEXT, ROLE_TEXT_INVERSE,
+                ROLE_TEXT, ROLE_TEXT_INVERSE,
                 ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND
         };
     }
