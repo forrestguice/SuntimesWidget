@@ -78,6 +78,13 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         return getArguments().getString("colorTag", null);
     }
 
+    public void setShowAlpha(boolean value) {
+        getArguments().putBoolean("showAlpha", value);
+    }
+    public boolean getShowAlpha() {
+        return getArguments().getBoolean("showAlpha", true);
+    }
+
     public void setApplyFilter(boolean value) {
         getArguments().putBoolean("applyFilter", value);
         if (colorSheet != null) {
@@ -224,6 +231,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             colorSheet.setApplyFilter(applyFilter());
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
+            colorSheet.setShowAlpha(getShowAlpha());
             colorSheet.setFragmentListener(fragmentListener);
 
             FragmentTransaction transaction = fragments.beginTransaction();
