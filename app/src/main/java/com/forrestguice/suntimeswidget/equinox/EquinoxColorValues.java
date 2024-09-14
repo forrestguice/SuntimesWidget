@@ -63,6 +63,14 @@ public class EquinoxColorValues extends ResourceColorValues
                 R.string.configLabel_themeColorWinter_text,
         };
     }
+    public int[] getColorRoles() {
+        return new int[] {
+                ROLE_TEXT,
+                ROLE_TEXT,
+                ROLE_TEXT,
+                ROLE_TEXT
+        };
+    }
     public int[] getColorsResDark() {
         return new int[] {
                 R.color.springColor_dark,

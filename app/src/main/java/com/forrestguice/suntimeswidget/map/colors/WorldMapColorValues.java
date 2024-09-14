@@ -81,6 +81,14 @@ public class WorldMapColorValues extends ResourceColorValues
                 R.string.configLabel_themeColorGraphAxis, R.string.configLabel_themeColorGraphGridMajor, R.string.configLabel_themeColorGraphGridMinor,
         };
     }
+    public int[] getColorRoles() {
+        return new int[] {
+                ROLE_BACKGROUND, ROLE_BACKGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND
+        };
+    }
     public int[] getColorsResDark() {
         return new int[] {
                 R.color.map_background_dark, R.color.map_foreground_dark,

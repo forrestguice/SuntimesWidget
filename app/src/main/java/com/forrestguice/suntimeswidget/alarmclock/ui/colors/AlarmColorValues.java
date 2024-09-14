@@ -89,6 +89,17 @@ public class AlarmColorValues extends ResourceColorValues
                 R.string.configLabel_themeColorAccent, R.string.configLabel_alarms_text_disabledColor, R.string.configLabel_themeColorAction,
         };
     }
+    public int[] getColorRoles() {
+        return new int[] {
+                ROLE_BACKGROUND, ROLE_BACKGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_TEXT, ROLE_TEXT,
+                ROLE_TEXT, ROLE_TEXT,
+                ROLE_TEXT, ROLE_TEXT,
+                ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND
+        };
+    }
     public int[] getColorsResDark() {
         return new int[] {
                 R.color.black, R.color.white,
