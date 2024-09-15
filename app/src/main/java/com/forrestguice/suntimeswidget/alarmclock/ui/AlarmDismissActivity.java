@@ -81,6 +81,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
@@ -947,7 +948,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     {
         int textColor = colors.getColor(textColorID);
         int textInverseColor = colors.getColor(textColorInverseID);
-        return isTextReadable(textColor, backgroundColor) ? textColor : textInverseColor;
+        return ColorUtils.isTextReadable(textColor, backgroundColor) ? textColor : textInverseColor;
     }
 
     protected CharSequence formatTimeDisplay(Context context, Calendar calendar)
@@ -1333,25 +1334,6 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
-    /**
-     * isTextReadable
-     * @param textColor text color
-     * @param backgroundColor background color
-     * @return contrast ratio between textColor and backgroundColor is greater than 4.5
-     */
-    public static boolean isTextReadable(int textColor, int backgroundColor) {
-        return getContrastRatio(textColor, backgroundColor) > 4.5;    // AA minimum; https://www.w3.org/TR/WCAG21/#contrast-minimum
-    }
-    public static double getLuminance(int color) {
-        return (0.2126 * Color.red(color) + 0.7152 * Color.green(color) + 0.0722 * Color.blue(color));
-    }
-    public static double getContrastRatio(int textColor, int backgroundColor)
-    {
-        double l_textColor = getLuminance(textColor);
-        double l_backgroundColor = getLuminance(backgroundColor);
-        double l1 = Math.max(l_textColor, l_backgroundColor);
-        double l2 = Math.min(l_textColor, l_backgroundColor);
-        return (l1 + 0.05) / (l2 + 0.05);
-    }
+
 
 }
