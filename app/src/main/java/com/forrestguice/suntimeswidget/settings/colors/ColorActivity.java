@@ -114,6 +114,7 @@ public class ColorActivity extends AppCompatActivity
         colorDialog.setRecentColors(intent.getIntegerArrayListExtra(ColorDialog.KEY_RECENT));
         colorDialog.setShowAlpha(intent.getBooleanExtra(ColorDialog.KEY_SHOWALPHA, false));
         colorDialog.setSuggestedColor(intent.getIntExtra(ColorDialog.KEY_SUGGESTED, Integer.MIN_VALUE));
+        colorDialog.setColorLabel(intent.getStringExtra(ColorDialog.KEY_LABEL));
 
         int color = Color.WHITE;
         Uri data = intent.getData();
