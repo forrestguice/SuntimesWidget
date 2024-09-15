@@ -58,7 +58,7 @@ public class AlarmColorValues extends ResourceColorValues
 
     public String[] getColorKeys() {
         return new String[] {
-                COLOR_BRIGHT_BACKGROUND_START, COLOR_BRIGHT_BACKGROUND_END,
+                COLOR_BRIGHT_BACKGROUND_END, COLOR_BRIGHT_BACKGROUND_START,
                 COLOR_SOUNDING_PULSE_START, COLOR_SOUNDING_PULSE_END,
                 COLOR_SNOOZING_PULSE_START, COLOR_SNOOZING_PULSE_END,
                 COLOR_TEXT_PRIMARY, COLOR_TEXT_PRIMARY_INVERSE,
@@ -80,7 +80,7 @@ public class AlarmColorValues extends ResourceColorValues
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_alarms_bg_startColor, R.string.configLabel_alarms_bg_endColor,
+                R.string.configLabel_alarms_bg_endColor, R.string.configLabel_alarms_bg_startColor,
                 R.string.configLabel_alarms_soundingPulse_startColor, R.string.configLabel_alarms_soundingPulse_endColor,
                 R.string.configLabel_alarms_snoozingPulse_startColor, R.string.configLabel_alarms_snoozingPulse_endColor,
                 R.string.configLabel_alarms_text_primaryColor, R.string.configLabel_alarms_text_primaryColorInverse,
@@ -91,18 +91,18 @@ public class AlarmColorValues extends ResourceColorValues
     }
     public int[] getColorRoles() {
         return new int[] {
-                ROLE_BACKGROUND_INVERSE, ROLE_BACKGROUND_PRIMARY,
+                ROLE_BACKGROUND_PRIMARY, ROLE_BACKGROUND_INVERSE,
                 ROLE_TEXT, ROLE_TEXT,
                 ROLE_TEXT_INVERSE, ROLE_TEXT_INVERSE,
                 ROLE_TEXT_PRIMARY, ROLE_TEXT_PRIMARY_INVERSE,
                 ROLE_TEXT, ROLE_TEXT_INVERSE,
-                ROLE_TEXT, ROLE_TEXT_INVERSE,
-                ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND
+                ROLE_TEXT_PRIMARY, ROLE_TEXT_PRIMARY_INVERSE,
+                ROLE_ACCENT, ROLE_FOREGROUND, ROLE_ACTION
         };
     }
     public int[] getColorsResDark() {
         return new int[] {
-                R.color.black, R.color.white,
+                R.color.white, R.color.black,
                 R.color.sunIcon_color_setting_dark, R.color.sunIcon_color_rising_dark,
                 R.color.dialog_bg_alt_dark, R.color.text_disabled_dark,
                 android.R.color.primary_text_dark, android.R.color.primary_text_light,
@@ -113,7 +113,7 @@ public class AlarmColorValues extends ResourceColorValues
     }
     public int[] getColorsResLight() {
         return new int[] {
-                R.color.black, R.color.white,
+                R.color.white, R.color.black,
                 R.color.sunIcon_color_setting_light, R.color.sunIcon_color_rising_light,
                 R.color.dialog_bg_alt_light, R.color.text_disabled_light,
                 android.R.color.primary_text_light, android.R.color.primary_text_dark,
@@ -124,7 +124,7 @@ public class AlarmColorValues extends ResourceColorValues
     }
     public int[] getColorsFallback() {
         return new int[] {
-                Color.BLACK, Color.WHITE,
+                Color.WHITE, Color.BLACK,
                 Color.parseColor("#ff9900"), Color.parseColor("#ffd500"),
                 Color.parseColor("#ff212121"), Color.parseColor("#ff9e9e9e"),
                 Color.WHITE, Color.BLACK,

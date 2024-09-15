@@ -184,6 +184,8 @@ public abstract class ColorValues implements Parcelable
     public static final int ROLE_TEXT_INVERSE = 325;
     public static final int ROLE_TEXT_PRIMARY = 350;
     public static final int ROLE_TEXT_PRIMARY_INVERSE = 375;
+    public static final int ROLE_ACCENT = 400;
+    public static final int ROLE_ACTION = 500;
 
     public static final String SUFFIX_ROLE = "_ROLE";
     public void setRole(String key, int role) {

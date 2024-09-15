@@ -43,7 +43,7 @@ public class BrightAlarmColorValues extends AlarmColorValues
     @Override
     public int[] getColorsResLight() {
         return new int[] {
-                R.color.black, R.color.white,
+                R.color.white, R.color.black,
                 R.color.sunIcon_color_setting_light, R.color.sunIcon_color_rising_light,
                 R.color.dialog_bg_alt_light, R.color.text_disabled_light,
                 android.R.color.primary_text_light, android.R.color.primary_text_dark,
@@ -55,7 +55,7 @@ public class BrightAlarmColorValues extends AlarmColorValues
     @Override
     public int[] getColorsFallback() {
         return new int[] {
-                Color.BLACK, Color.WHITE,
+                Color.WHITE, Color.BLACK,
                 Color.parseColor("#ff9900"), Color.parseColor("#ffd500"),
                 Color.parseColor("#ff212121"), Color.parseColor("#ff9e9e9e"),
                 Color.WHITE, Color.BLACK,

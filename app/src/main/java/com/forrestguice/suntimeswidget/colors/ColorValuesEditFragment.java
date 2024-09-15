@@ -29,10 +29,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.SpannableString;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -45,12 +47,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
+import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
@@ -252,6 +258,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
                 itemMargin = (int)context.getResources().getDimension(R.dimen.colortext_margin);
             }
 
+            int[] defaultColors = getDefaultColors(context);
+
             int c = 0;
             panel.removeAllViews();
             for (int i=0; i<keys.length; i++)
@@ -261,11 +269,58 @@ public class ColorValuesEditFragment extends ColorValuesFragment
                     continue;
                 }
 
+                boolean bold = true;
+                Integer textColor;
+                Integer backgroundColor;
+                switch (colorValues.getRole(keys[i]))
+                {
+                    case ColorValues.ROLE_BACKGROUND_PRIMARY: case ColorValues.ROLE_BACKGROUND:
+                    case ColorValues.ROLE_BACKGROUND_INVERSE: case ColorValues.ROLE_ACTION:
+                        bold = false;
+                        backgroundColor = colorValues.getColor(keys[i]);
+                        textColor = getContrastingColor(keys[i], ColorUtils.isTextReadable(defaultColors[0], backgroundColor)
+                                ? defaultColors[0] : defaultColors[2]);
+                        break;
+
+                    case ColorValues.ROLE_TEXT: case ColorValues.ROLE_TEXT_PRIMARY:
+                    case ColorValues.ROLE_TEXT_PRIMARY_INVERSE: case ColorValues.ROLE_TEXT_INVERSE:
+                    case ColorValues.ROLE_ACCENT: case ColorValues.ROLE_FOREGROUND:
+                        textColor = colorValues.getColor(keys[i]);
+                        backgroundColor = getContrastingColor(keys[i], defaultColors[1]);
+                        break;
+
+                    case ColorValues.ROLE_UNKNOWN:
+                    default:
+                        textColor = colorValues.getColor(keys[i]);
+                        backgroundColor = null;
+                        break;
+                }
+
+                SpannableString colorLabel = null;
+                String labelText = " " + colorValues.getLabel(keys[i]) + " ";
+
+                if (backgroundColor != null && textColor != null)
+                {
+                    float cornerRadiusPx = context.getResources().getDimension(R.dimen.chip_radius);
+                    colorLabel = SuntimesUtils.createRoundedBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, textColor, bold, backgroundColor, cornerRadiusPx, cornerRadiusPx);
+
+                } else if (textColor != null) {
+                    colorLabel = (bold ? SuntimesUtils.createBoldColorSpan(colorLabel, labelText, labelText, textColor)
+                                       : SuntimesUtils.createColorSpan(colorLabel, labelText, labelText, textColor));
+
+                } else {
+                    colorLabel = new SpannableString(" ");
+                }
+
                 TextView colorEdit = new TextView(getActivity());
-                colorEdit.setText(colorValues.getLabel(keys[i]));
-                colorEdit.setTextColor(colorValues.getColor(keys[i]));
+                colorEdit.setText(colorLabel);
                 colorEdit.setOnClickListener(onColorEditClick(keys[i]));
+                colorEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSizePx_medium(context));
                 colorEdit.setGravity(Gravity.CENTER);
+
+                //LinearLayout.LayoutParams colorEdit_layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                //colorEdit_layoutParams.gravity = Gravity.CENTER;
+                //colorEdit.setLayoutParams(colorEdit_layoutParams);
 
                 if (itemBackground != null) {
                     colorEdit.setBackgroundResource(itemBackground.resourceId);
@@ -374,22 +429,90 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
+    protected float getTextSizePx_medium(Context context)
+    {
+        int[] attr = { R.attr.text_size_medium };
+        TypedArray typedArray = context.obtainStyledAttributes(attr);
+        float textSize = typedArray.getDimension(0, context.getResources().getDimension(R.dimen.text_size_medium));
+        typedArray.recycle();
+        return textSize;
+    }
+
+    @SuppressLint("ResourceType")
+    protected int[] getDefaultColors(Context context)
+    {
+        int[] attr = { R.attr.timeCardBackground, R.attr.text_primaryColor, R.attr.text_primaryInverseColor };
+        TypedArray typedArray = context.obtainStyledAttributes(attr);
+        int backgroundColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.card_bg));
+        int textColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_primary));
+        int inverseTextColor = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.text_primary_inverse));
+        typedArray.recycle();
+        return new int[] { textColor, backgroundColor, inverseTextColor };
+    }
+
+    protected int[] getColorOverUnder(Context context, String key)
+    {
+        int[] defaultColors = getDefaultColors(context);
+        int colorOver = defaultColors[0];
+        int colorUnder = defaultColors[1];
+        Integer contrastingColor = getContrastingColor(key, null);
+
+        switch (colorValues.getRole(key))
+        {
+            case ColorValues.ROLE_BACKGROUND_PRIMARY:
+                colorOver = (contrastingColor != null) ? contrastingColor : defaultColors[0];
+                break;
+
+            case ColorValues.ROLE_FOREGROUND:
+            case ColorValues.ROLE_TEXT: case ColorValues.ROLE_TEXT_INVERSE:
+            case ColorValues.ROLE_TEXT_PRIMARY: case ColorValues.ROLE_TEXT_PRIMARY_INVERSE:
+                colorUnder = (contrastingColor != null) ? contrastingColor : defaultColors[1];
+                break;
+        }
+        return new int[] { colorOver, colorUnder };
+    }
+
+    @Nullable
+    protected Integer getContrastingColor(String key, Integer defaultValue)
+    {
+        String k;
+        switch (colorValues.getRole(key))
+        {
+            case ColorValues.ROLE_ACTION:
+            case ColorValues.ROLE_BACKGROUND: case ColorValues.ROLE_BACKGROUND_PRIMARY:
+                k = colorValues.findColorWithRole(ColorValues.ROLE_TEXT_PRIMARY);
+                return (k != null) ? Integer.valueOf(colorValues.getColor(k)) : defaultValue;
+
+            case ColorValues.ROLE_BACKGROUND_INVERSE:
+                k = colorValues.findColorWithRole(ColorValues.ROLE_TEXT_PRIMARY_INVERSE);
+                return (k != null) ? Integer.valueOf(colorValues.getColor(k)) : defaultValue;
+
+            case ColorValues.ROLE_TEXT: case ColorValues.ROLE_TEXT_PRIMARY:
+            case ColorValues.ROLE_ACCENT: case ColorValues.ROLE_FOREGROUND:
+                k = colorValues.findColorWithRole(ColorValues.ROLE_BACKGROUND_PRIMARY);
+                return (k != null) ? Integer.valueOf(colorValues.getColor(k)) : defaultValue;
+
+            case ColorValues.ROLE_TEXT_INVERSE:
+            case ColorValues.ROLE_TEXT_PRIMARY_INVERSE:
+                k = colorValues.findColorWithRole(ColorValues.ROLE_BACKGROUND_INVERSE);
+                return (k != null) ? Integer.valueOf(colorValues.getColor(k)) : defaultValue;
+
+            default:
+                return null;
+        }
+    }
+
     protected Intent pickColorIntent(String key, int requestCode)
     {
-        Context context = getActivity();
-        int[] attr = { R.attr.timeCardBackground, R.attr.text_primaryColor };
-        TypedArray typedArray = context.obtainStyledAttributes(attr);
-        int colorUnder = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.card_bg));
-        @SuppressLint("ResourceType")
-        int colorOver = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_primary));
-        typedArray.recycle();
-
         Intent intent = new Intent(getActivity(), ColorActivity.class);
         intent.putExtra(ColorDialog.KEY_SHOWALPHA, showAlpha());
         intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
-        intent.putExtra(ColorDialog.KEY_COLOR_UNDER, colorUnder);
-        intent.putExtra(ColorDialog.KEY_COLOR_OVER, colorOver);
         intent.putExtra(ColorDialog.KEY_RECENT, new ArrayList<>(new LinkedHashSet<>(colorValues.getColors())));
+        intent.putExtra(ColorDialog.KEY_LABEL, colorValues.getLabel(key));
+
+        int[] colorOverUnder = getColorOverUnder(getActivity(), key);
+        intent.putExtra(ColorDialog.KEY_COLOR_OVER, colorOverUnder[0]);
+        intent.putExtra(ColorDialog.KEY_COLOR_UNDER, colorOverUnder[1]);
 
         if (defaultValues != null) {
             intent.putExtra(ColorDialog.KEY_SUGGESTED, defaultValues.getColor(key));
