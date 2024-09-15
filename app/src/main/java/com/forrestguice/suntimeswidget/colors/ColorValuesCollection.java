@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -212,10 +213,10 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     public String getSelectedColorsLabel(Context context, int appWidgetID, @Nullable String tag)
     {
         String colorsID = getSelectedColorsID(context, appWidgetID, tag);
-        return getLabel(context, colorsID);
+        return getColorsLabel(context, colorsID);
     }
     @Nullable
-    public String getLabel(Context context, @Nullable String colorsID)
+    public String getColorsLabel(Context context, @Nullable String colorsID)
     {
         if (colorsID != null)
         {
@@ -224,6 +225,17 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
             return ColorValues.loadColorValuesLabel(prefs, prefix);
 
         } else return null;
+    }
+    @Nullable
+    public int[] getColors(Context context, @Nullable String colorsID, int defaultValue, String... keys)
+    {
+        if (colorsID != null)
+        {
+            SharedPreferences prefs = getCollectionSharedPreferences(context);
+            String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
+            return ColorValues.loadColorValuesColors(prefs, prefix, defaultValue, keys);
+
+        } else return new int[] { defaultValue };
     }
 
     @Nullable

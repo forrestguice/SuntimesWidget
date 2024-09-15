@@ -118,6 +118,19 @@ public abstract class ColorValues implements Parcelable
         Log.d("DEBUG", "loadColorValuesLabel: prefix: " + prefix);
         return prefs.getString(prefix + KEY_LABEL, null);
     }
+    public static int loadColorValuesColor(SharedPreferences prefs, String prefix, String key, int defaultColor) {
+        return prefs.getInt(prefix + key, defaultColor);
+    }
+    public static int[] loadColorValuesColors(SharedPreferences prefs, String prefix, int defaultColor, String... keys)
+    {
+        int[] retValue = new int[keys != null ? keys.length : 0];
+        if (keys != null) {
+            for (int i=0; i<retValue.length; i++) {
+                retValue[i] = prefs.getInt(prefix + keys[i], defaultColor);
+            }
+        }
+        return retValue;
+    }
 
     public boolean loadColorValues(String jsonString)
     {

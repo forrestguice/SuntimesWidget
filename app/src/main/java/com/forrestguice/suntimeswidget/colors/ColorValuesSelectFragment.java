@@ -43,7 +43,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ColorValuesSelectFragment extends ColorValuesFragment
@@ -485,25 +484,25 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
             items[0] = new ColorValuesItem(context.getString(R.string.configLabel_tagDefault), null, getPreviewColors(context, collection, null, previewKeys));
             for (int i=0; i<colorIDs.length; i++) {
-                items[i+1] = new ColorValuesItem(collection.getLabel(context, colorIDs[i]), colorIDs[i], getPreviewColors(context, collection, colorIDs[i], previewKeys));
+                items[i+1] = new ColorValuesItem(collection.getColorsLabel(context, colorIDs[i]), colorIDs[i], getPreviewColors(context, collection, colorIDs[i], previewKeys));
             }
             return items;
         }
 
         public static int[] getPreviewColors(Context context, @Nullable ColorValuesCollection<ColorValues> collection, @Nullable String colorsID, @Nullable String[] previewKeys)
         {
-            int[] colors = ((previewKeys != null) ? new int[previewKeys.length] : new int[0]);
-            if (collection != null && previewKeys != null && previewKeys.length > 0)
+            if (colorsID == null)
             {
-                ColorValues values = ((collection != null) ? collection.getColors(context, colorsID) : null);
-                if (values == null) {
-                    values = collection.getDefaultColors(context);
-                }
+                int[] colors = ((previewKeys != null) ? new int[previewKeys.length] : new int[0]);
+                ColorValues values = collection.getDefaultColors(context);
                 for (int i=0; i<previewKeys.length; i++) {
                     colors[i] = values.getColor(previewKeys[i]);
                 }
+                return colors;
+
+            } else {
+                return collection.getColors(context, colorsID, context.getColor(R.color.def_app_alarms_bright_color_end), previewKeys);
             }
-            return colors;
         }
     }
 
