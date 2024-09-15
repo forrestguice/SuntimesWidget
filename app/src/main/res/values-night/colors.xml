@@ -35,6 +35,7 @@
     <color name="text_disabled">@color/text_disabled_dark</color>
     <color name="text_accent">@color/text_accent_dark</color>
     <color name="text_primary">@color/text_primary_dark</color>
+    <color name="text_primary_inverse">@color/text_primary_inverse_dark</color>
     <color name="text_secondary">@color/text_secondary_dark</color>
     <color name="text_tertiary">@color/text_tertiary_dark</color>
     <color name="text_time">@color/text_time_dark</color>

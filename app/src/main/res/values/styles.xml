@@ -20,6 +20,7 @@
         <item name="hrColor">@color/hr</item>
         <item name="colorAccent">@color/text_accent</item>
         <item name="text_primaryColor">@color/text_primary</item>
+        <item name="text_primaryInverseColor">@color/text_primary_inverse</item>
         <item name="text_secondaryColor">@color/text_secondary</item>
         <item name="text_tertiaryColor">@color/text_tertiary</item>
         <item name="text_accentColor">@color/text_accent</item>
@@ -254,6 +255,7 @@
         <item name="hrColor">@color/hr_light</item>
         <item name="colorAccent">@color/text_accent_light</item>
         <item name="text_primaryColor">@color/text_primary_light</item>
+        <item name="text_primaryInverseColor">@color/text_primary_inverse_light</item>
         <item name="text_secondaryColor">@color/text_secondary_light</item>
         <item name="text_tertiaryColor">@color/text_tertiary_light</item>
         <item name="text_accentColor">@color/text_accent_light</item>
@@ -491,6 +493,7 @@
         <item name="hrColor">@color/hr_dark</item>
         <item name="colorAccent">@color/text_accent_dark</item>
         <item name="text_primaryColor">@color/text_primary_dark</item>
+        <item name="text_primaryInverseColor">@color/text_primary_inverse_dark</item>
         <item name="text_secondaryColor">@color/text_secondary_dark</item>
         <item name="text_tertiaryColor">@color/text_tertiary_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>

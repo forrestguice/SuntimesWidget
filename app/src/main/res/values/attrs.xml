@@ -16,6 +16,7 @@
     <attr name="hrColor" format="reference" />
 
     <attr name="text_primaryColor" format="reference" />
+    <attr name="text_primaryInverseColor" format="reference" />
     <attr name="text_secondaryColor" format="reference" />
     <attr name="text_tertiaryColor" format="reference" />
     <attr name="text_accentColor" format="reference" />

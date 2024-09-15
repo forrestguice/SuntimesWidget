@@ -44,6 +44,7 @@
     <color name="text_disabled">@color/text_disabled_light</color>
     <color name="text_accent">@color/text_accent_light</color>
     <color name="text_primary">@color/text_primary_light</color>
+    <color name="text_primary_inverse">@color/text_primary_inverse_light</color>
     <color name="text_secondary">@color/text_secondary_light</color>
     <color name="text_tertiary">@color/text_tertiary_light</color>
     <color name="text_time">@color/text_time_light</color>
@@ -133,6 +134,7 @@
     <!-- general -->
 
     <color name="text_primary_dark">@android:color/primary_text_dark</color>
+    <color name="text_primary_inverse_dark">@android:color/primary_text_light</color>
     <color name="text_secondary_dark">@android:color/secondary_text_dark</color>
     <color name="text_tertiary_dark">@android:color/tertiary_text_dark</color>
     <color name="text_time_dark">@android:color/primary_text_dark</color>
@@ -168,6 +170,7 @@
     <color name="table_moon_setting_dark">@color/moonIcon_color_setting_dark</color>
 
     <color name="text_primary_light">@android:color/primary_text_light</color>
+    <color name="text_primary_inverse_light">@android:color/primary_text_dark</color>
     <color name="text_secondary_light">@android:color/secondary_text_light</color>
     <color name="text_tertiary_light">@android:color/tertiary_text_light</color>
     <color name="text_time_light">@android:color/primary_text_light</color>
