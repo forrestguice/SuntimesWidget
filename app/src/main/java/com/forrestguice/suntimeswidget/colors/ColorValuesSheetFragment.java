@@ -262,11 +262,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             Context context = getActivity();
             if (context != null)
             {
+                String suggestedID = suggestColorValuesID(context);
                 ColorValues values = (colorsID == null)
                         ? colorCollection.getDefaultColors(context)
                         : colorCollection.getColors(context, colorsID);
                 editDialog.setColorValues(values);
-                editDialog.setID(suggestColorValuesID(context));
+                editDialog.setID(suggestedID);
+                editDialog.setLabel(suggestedID);
                 editDialog.setAllowDelete(false);
                 if (listener != null) {
                     editDialog.setDefaultValues(listener.getDefaultValues());
@@ -392,6 +394,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                 colorCollection.setSelectedColorsID(context, colorsID, getAppWidgetID(), getColorTag());
                 onSelectColors(colorCollection.getColors(context, colorsID), "onSaveClicked");
 
+                listDialog.updateViews();
                 setMode(MODE_SELECT);
                 toggleFragmentVisibility(getMode());
                 Toast.makeText(context, getString(R.string.msg_colors_saved, colorsID), Toast.LENGTH_SHORT).show();

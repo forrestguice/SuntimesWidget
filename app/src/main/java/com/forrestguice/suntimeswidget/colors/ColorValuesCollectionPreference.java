@@ -143,11 +143,12 @@ public class ColorValuesCollectionPreference extends Preference
 
     protected void updateSummary(Context context)
     {
-        String selectedColorsID = getSelectedColorsID(context);
+        //String selectedColorsID = getSelectedColorsID(context);
+        String selectedColorsLabel = getSelectedColorsLabel(context);
         if (summaryStringResID != 0) {
-            setSummary(context.getString(summaryStringResID, (selectedColorsID != null ? selectedColorsID : context.getString(R.string.configLabel_tagDefault))));
+            setSummary(context.getString(summaryStringResID, (selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.configLabel_tagDefault))));
         } else {
-            setSummary((selectedColorsID != null ? selectedColorsID : context.getString(R.string.configLabel_tagDefault)));
+            setSummary((selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.configLabel_tagDefault)));
         }
     }
     protected int summaryStringResID = 0;
@@ -170,6 +171,9 @@ public class ColorValuesCollectionPreference extends Preference
 
     protected String getSelectedColorsID(Context context) {
         return (collection != null ? collection.getSelectedColorsID(context, getAppWidgetID(), getColorTag()) : null);
+    }
+    protected String getSelectedColorsLabel(Context context) {
+        return (collection != null ? collection.getSelectedColorsLabel(context, getAppWidgetID(), getColorTag()) : null);
     }
 
     public void initPreferenceOnClickListener(final Activity activity, int requestCode)

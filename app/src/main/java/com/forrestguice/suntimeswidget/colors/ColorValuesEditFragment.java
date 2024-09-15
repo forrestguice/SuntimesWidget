@@ -73,7 +73,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     public static final String ARG_SHOW_ALPHA = "showAlpha";
     public static final boolean DEF_SHOW_ALPHA = false;
 
-    protected EditText editID;
+    protected EditText editID, editLabel;
     protected GridLayout panel;
     protected ImageButton cancelButton;
 
@@ -112,7 +112,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
         panel = (GridLayout) content.findViewById(R.id.colorPanel);
         editID = (EditText) content.findViewById(R.id.editTextID);
+        editLabel = (EditText) content.findViewById(R.id.editTextLabel);
         setID(null);
+        setLabel(null);
 
         if (savedState != null) {
             onRestoreInstanceState(savedState);
@@ -142,6 +144,20 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
+    /**
+     * @param colorsLabel value to set on edittext; use null to get the label from ColorValues
+     */
+    protected void setLabel(@Nullable String colorsLabel)
+    {
+        if (editLabel != null)
+        {
+            if (colorValues != null && colorsLabel == null) {
+                colorsLabel = colorValues.getLabel();
+            }
+            editLabel.setText(colorsLabel != null ? colorsLabel : "");
+        }
+    }
+
     protected boolean validateInput()
     {
         String colorsID = editID.getText().toString();
@@ -153,8 +169,15 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             editID.setError(getString(R.string.error_colorid_spaces));
             editID.setSelection(colorsID.indexOf(" "), colorsID.indexOf(" ") + 1);
             return false;
+        }
 
-        } else return true;
+        String colorsLabel = editLabel.getText().toString();
+        if (colorsLabel.trim().isEmpty()) {
+            editLabel.setError(getString(R.string.error_colorlabel_empty));
+            return false;
+        }
+
+        return true;
     }
 
     private View.OnClickListener onSaveButtonClicked = new View.OnClickListener() {
@@ -168,7 +191,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         if (validateInput())
         {
             String colorsID = editID.getText().toString();
+            String colorsLabel = editLabel.getText().toString();
             colorValues.setID(colorsID);
+            colorValues.setLabel(colorsLabel);
 
             if (listener != null) {
                 listener.onSaveClicked(colorsID, colorValues);
@@ -214,6 +239,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         out.putParcelable("defaultValues", defaultValues);
         out.putStringArray("filterValues", filterValues.toArray(new String[0]));
         out.putString("editID", editID.getText().toString());
+        out.putString("editLabel", editLabel.getText().toString());
         super.onSaveInstanceState(out);
     }
     protected void onRestoreInstanceState(@NonNull Bundle savedState)
@@ -225,6 +251,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             filterValues  = new TreeSet<>(Arrays.asList(filter));
         }
         setID(savedState.getString("editID"));
+        setLabel(savedState.getString("editLabel"));
     }
 
     @Override
@@ -365,6 +392,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     {
         colorValues = v;
         setID(null);
+        setLabel(null);
         updateViews();
     }
     public ColorValues getColorValues() {

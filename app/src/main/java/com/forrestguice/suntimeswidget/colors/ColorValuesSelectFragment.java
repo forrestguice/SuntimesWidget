@@ -485,7 +485,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
             items[0] = new ColorValuesItem(context.getString(R.string.configLabel_tagDefault), null, getPreviewColors(context, collection, null, previewKeys));
             for (int i=0; i<colorIDs.length; i++) {
-                items[i+1] = new ColorValuesItem(colorIDs[i], colorIDs[i], getPreviewColors(context, collection, colorIDs[i], previewKeys));
+                items[i+1] = new ColorValuesItem(collection.getLabel(context, colorIDs[i]), colorIDs[i], getPreviewColors(context, collection, colorIDs[i], previewKeys));
             }
             return items;
         }

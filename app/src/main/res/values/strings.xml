@@ -2538,6 +2538,7 @@
     <string name="suggest_colorid">Custom</string>       <!-- edittext hint -->
     <string name="hint_colorid">ID</string>              <!-- edittext hint -->
     <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->   <!-- TODO -->
+    <string name="error_colorlabel_empty">Label required</string>           <!-- edittext error text -->   <!-- TODO -->
     <string name="error_colorid_empty">ID required</string>                  <!-- edittext error text -->
     <string name="error_colorid_spaces">ID may not contains spaces</string>   <!-- edittext error text -->
     <string name="msg_colors_saved">Saved %s</string>        <!-- toast -->

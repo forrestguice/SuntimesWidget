@@ -58,6 +58,7 @@ public abstract class ColorValues implements Parcelable
     public void loadColorValues(@NonNull Parcel in)
     {
         setID(in.readString());
+        setLabel(in.readString());
         for (String key : getColorKeys())
         {
             setColor(key, in.readInt());
@@ -68,6 +69,7 @@ public abstract class ColorValues implements Parcelable
     public void writeToParcel(Parcel dest, int flags)
     {
         dest.writeString(getID());
+        dest.writeString(getLabel());
         for (String key : getColorKeys())
         {
             dest.writeInt(values.getAsInteger(key));
@@ -78,6 +80,7 @@ public abstract class ColorValues implements Parcelable
     public void loadColorValues(@NonNull ColorValues other)
     {
         setID(other.getID());
+        setLabel(other.getLabel());
         for (String key : other.getColorKeys())
         {
             setColor(key, other.getColor(key));
@@ -90,6 +93,7 @@ public abstract class ColorValues implements Parcelable
     public void loadColorValues(@NonNull ContentValues values)
     {
         setID(values.getAsString(KEY_ID));
+        setLabel(values.getAsString(KEY_LABEL));
         for (String key : getColorKeys())
         {
             setColor(key, values.getAsInteger(key));
@@ -101,10 +105,18 @@ public abstract class ColorValues implements Parcelable
 
     public void loadColorValues(SharedPreferences prefs, String prefix)
     {
-        setID(prefs.getString(prefix + KEY_ID, null));
+        setID(loadColorValuesID(prefs, prefix));
+        setLabel(loadColorValuesLabel(prefs, prefix));
         for (String key : getColorKeys()) {
             setColor(key, prefs.getInt(prefix + key, getFallbackColor()));
         }
+    }
+    public static String loadColorValuesID(SharedPreferences prefs, String prefix) {
+        return prefs.getString(prefix + KEY_ID, null);
+    }
+    public static String loadColorValuesLabel(SharedPreferences prefs, String prefix) {
+        Log.d("DEBUG", "loadColorValuesLabel: prefix: " + prefix);
+        return prefs.getString(prefix + KEY_LABEL, null);
     }
 
     public boolean loadColorValues(String jsonString)
@@ -112,6 +124,7 @@ public abstract class ColorValues implements Parcelable
         try {
             JSONObject json = new JSONObject(jsonString);
             setID(json.getString(KEY_ID));
+            setLabel(json.getString(KEY_LABEL));
             for (String key : getColorKeys())
             {
                 setColor(key, json.has(key) ? Color.parseColor(json.getString(key).trim()) : getFallbackColor());
@@ -131,6 +144,7 @@ public abstract class ColorValues implements Parcelable
     {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(prefix + KEY_ID, getID());
+        editor.putString(prefix + KEY_LABEL, getLabel());
         for (String key : getColorKeys()) {
             editor.putInt(prefix + key, values.getAsInteger(key));
         }
@@ -144,6 +158,7 @@ public abstract class ColorValues implements Parcelable
     {
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(prefix + KEY_ID);
+        editor.remove(prefix + KEY_LABEL);
         for (String key : getColorKeys()) {
             editor.remove(prefix + key);
         }
@@ -161,6 +176,16 @@ public abstract class ColorValues implements Parcelable
     }
     public String getID() {
         return values.getAsString(KEY_ID);
+    }
+
+    public static final String KEY_LABEL = "colorValuesLabel";
+    public void setLabel( String colorsLabel ) {
+        values.put(KEY_LABEL, colorsLabel);
+    }
+    public String getLabel()
+    {
+        String label = values.getAsString(KEY_LABEL);
+        return (label != null) ? label : getID();
     }
 
     public static final String SUFFIX_LABEL = "_LABEL";
@@ -264,6 +289,7 @@ public abstract class ColorValues implements Parcelable
         JSONObject result = new JSONObject();
         try {
             result.put(KEY_ID, getID());
+            result.put(KEY_LABEL, getLabel());
             for (String key : getColorKeys())
             {
                 result.put(key, "#" + Integer.toHexString(getColor(key)));

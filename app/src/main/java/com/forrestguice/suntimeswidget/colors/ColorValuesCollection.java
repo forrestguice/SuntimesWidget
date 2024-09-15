@@ -209,6 +209,24 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     }
 
     @Nullable
+    public String getSelectedColorsLabel(Context context, int appWidgetID, @Nullable String tag)
+    {
+        String colorsID = getSelectedColorsID(context, appWidgetID, tag);
+        return getLabel(context, colorsID);
+    }
+    @Nullable
+    public String getLabel(Context context, @Nullable String colorsID)
+    {
+        if (colorsID != null)
+        {
+            SharedPreferences prefs = getCollectionSharedPreferences(context);
+            String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
+            return ColorValues.loadColorValuesLabel(prefs, prefix);
+
+        } else return null;
+    }
+
+    @Nullable
     public abstract String getSharedPrefsName();
     public SharedPreferences getSharedPreferences(Context context)
     {
