@@ -919,7 +919,7 @@
     <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeName">Display:</string>               <!-- edit label -->
-    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->
+    <string name="configHint_themeName">@string/hint_label</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
@@ -936,7 +936,7 @@
     <string name="widgetLabel_distance">Distance</string>           <!-- label -->
 
     <string name="configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_bg_endColor">Background (End)</string>                   <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
     <string name="configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
     <string name="configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
     <string name="configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
@@ -1007,7 +1007,7 @@
 
     <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title -->
     <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title -->
-    <string name="editevent_dialog_label_label">Label</string>
+    <string name="editevent_dialog_label_label">@string/hint_label</string>
     <string name="editevent_dialog_label_hint">Event Label</string>
     <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
     <string name="editevent_dialog_label_suggested">Custom Angle</string>
@@ -1153,7 +1153,7 @@
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button -->
-    <string name="alarmlabel_hint">Label</string>        <!-- EditText hint -->
+    <string name="alarmlabel_hint">@string/hint_label</string>        <!-- EditText hint -->
 
     <string name="alarmnote_dialog_title">Note</string>        <!-- dialog title -->
 
@@ -2537,6 +2537,7 @@
 
     <string name="suggest_colorid">Custom</string>       <!-- edittext hint -->
     <string name="hint_colorid">ID</string>              <!-- edittext hint -->
+    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->   <!-- TODO -->
     <string name="error_colorid_empty">ID required</string>                  <!-- edittext error text -->
     <string name="error_colorid_spaces">ID may not contains spaces</string>   <!-- edittext error text -->
     <string name="msg_colors_saved">Saved %s</string>        <!-- toast -->
@@ -2859,6 +2860,8 @@
     <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
 
     <string name="drag_hint">Drag here</string>
+
+    <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
