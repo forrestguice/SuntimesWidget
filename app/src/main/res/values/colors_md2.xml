@@ -32,8 +32,8 @@
         <item>@color/grey_900</item>
         <item>@color/grey_999</item>
         <item>@color/grey_999</item>
-        <item>@color/grey_999</item>
-        <item>@color/grey_999</item>
+        <item>@color/white</item>
+        <item>@color/black</item>
     </integer-array>
 
     <color name="brown_50">#FFEFEBE9</color>
