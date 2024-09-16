@@ -24,6 +24,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
@@ -132,6 +133,59 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
                 return new String[0];
             }
         };
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String DEFAULT_SUNRISE = "sunrise";
+    public static final String DEFAULT_FOLIAGE = "foliage";
+
+    @Override
+    protected String[] getDefaultColorIDs() {
+        return new String[] { DEFAULT_SUNRISE, DEFAULT_FOLIAGE };
+    }
+    @Override
+    protected ColorValues getDefaultColors(Context context, @Nullable String colorsID)
+    {
+        if (colorsID == null) {
+            return getDefaultColors(context);
+        }
+
+        ColorValues v;
+        switch (colorsID)
+        {
+            case DEFAULT_SUNRISE:
+                v = new BrightAlarmColorValues_Sunrise(context, true);
+                break;
+
+            case DEFAULT_FOLIAGE:
+                v = new BrightAlarmColorValues_Foliage(context, true);
+                break;
+
+            default:
+                v = getDefaultColors(context);
+                break;
+        }
+        v.setID(colorsID);
+        v.setLabel(getDefaultLabel(context, colorsID));
+        return v;
+    }
+    public String getDefaultLabel(Context context, @Nullable String colorsID)
+    {
+        if (colorsID == null) {
+            return context.getString(R.string.brightMode_colors_label_default);
+        }
+        switch(colorsID)
+        {
+            case DEFAULT_SUNRISE:
+                return context.getString(R.string.brightMode_colors_label_sunrise);
+
+            case DEFAULT_FOLIAGE:
+                return context.getString(R.string.brightMode_colors_label_foliage);
+
+            default:
+                return colorsID;
+        }
     }
 
 }

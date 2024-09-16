@@ -1285,6 +1285,10 @@
         <item>color_control_pressed</item>-->
     </string-array>
 
+    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>  <!-- TODO -->
+    <string name="brightMode_colors_label_sunrise">@string/sunrise_short</string>  <!-- TODO -->
+    <string name="brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
+
     <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->
     <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->
     <string name="configLabel_alarms_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->
