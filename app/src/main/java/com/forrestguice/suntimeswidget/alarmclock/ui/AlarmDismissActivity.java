@@ -32,7 +32,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -867,8 +866,8 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             if (isBrightMode)
             {
                 int snoozeBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START);
-                int snoozeTitleColor = getContrastingTextColor(snoozeBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_PRIMARY, AlarmColorValues.COLOR_TEXT_PRIMARY_INVERSE);
-                int snoozeTimeColor = getContrastingTextColor(snoozeBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_TIME, AlarmColorValues.COLOR_TEXT_TIME_INVERSE);
+                int snoozeTitleColor = getContrastingTextColor(snoozeBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_PRIMARY_INVERSE, AlarmColorValues.COLOR_TEXT_PRIMARY);
+                int snoozeTimeColor = getContrastingTextColor(snoozeBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_TIME_INVERSE, AlarmColorValues.COLOR_TEXT_TIME);
 
                 animateBackground(new int[] { currentBackgroundColor(), snoozeBackgroundColor }, 1500, new LinearInterpolator());
                 animateColors(new int[] { currentTitleColor(), snoozeTitleColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(alarmTitle));
@@ -944,11 +943,14 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
-    protected int getContrastingTextColor(int backgroundColor, ColorValues colors, String textColorID, String textColorInverseID)
+    protected static int getContrastingTextColor(int backgroundColor, ColorValues colors, String textColorID0, String textColorID1)
     {
-        int textColor = colors.getColor(textColorID);
-        int textInverseColor = colors.getColor(textColorInverseID);
-        return ColorUtils.isTextReadable(textColor, backgroundColor) ? textColor : textInverseColor;
+        int textColor0 = colors.getColor(textColorID0);
+        int textColor1 = colors.getColor(textColorID1);
+        double r0 = ColorUtils.getContrastRatio(textColor0, backgroundColor);
+        double r1 = ColorUtils.getContrastRatio(textColor1, backgroundColor);
+        return (r0 > r1) ? textColor0 : textColor1;
+        //return ColorUtils.isTextReadable(textColor0, backgroundColor) ? textColor0 : textColor1;
     }
 
     protected CharSequence formatTimeDisplay(Context context, Calendar calendar)
