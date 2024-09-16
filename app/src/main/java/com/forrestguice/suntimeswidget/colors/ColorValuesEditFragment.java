@@ -268,7 +268,6 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    //protected TextView[] colorEdits;
     protected void updateViews()
     {
         if (panel != null && colorValues != null)
@@ -287,6 +286,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             }
 
             int[] defaultColors = getDefaultColors(context);
+            float textSizePx = getTextSizePx_medium(context);
 
             int c = 0;
             panel.removeAllViews();
@@ -343,12 +343,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
                 TextView colorEdit = new TextView(getActivity());
                 colorEdit.setText(colorLabel);
                 colorEdit.setOnClickListener(onColorEditClick(keys[i]));
-                colorEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSizePx_medium(context));
+                colorEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
                 colorEdit.setGravity(Gravity.CENTER);
-
-                //LinearLayout.LayoutParams colorEdit_layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                //colorEdit_layoutParams.gravity = Gravity.CENTER;
-                //colorEdit.setLayoutParams(colorEdit_layoutParams);
 
                 if (itemBackground != null) {
                     colorEdit.setBackgroundResource(itemBackground.resourceId);
