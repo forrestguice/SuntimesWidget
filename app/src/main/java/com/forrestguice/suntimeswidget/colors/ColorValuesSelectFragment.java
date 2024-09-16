@@ -374,7 +374,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             selectedColorsID = (colorCollection != null) ? colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag()) : null;
         }
 
-        boolean isDefault = (selectedColorsID == null);
+        boolean isDefault = ((colorCollection != null) ? colorCollection.isDefaultColorID(selectedColorsID) : (selectedColorsID == null));
 
         if (editButton != null) {
             editButton.setVisibility(isDefault ? View.GONE : View.VISIBLE);
@@ -494,9 +494,12 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             if (colorsID == null)
             {
                 int[] colors = ((previewKeys != null) ? new int[previewKeys.length] : new int[0]);
-                ColorValues values = collection.getDefaultColors(context);
-                for (int i=0; i<previewKeys.length; i++) {
-                    colors[i] = values.getColor(previewKeys[i]);
+                if (previewKeys != null)
+                {
+                    ColorValues values = collection.getDefaultColors(context);
+                    for (int i=0; i<previewKeys.length; i++) {
+                        colors[i] = values.getColor(previewKeys[i]);
+                    }
                 }
                 return colors;
 
