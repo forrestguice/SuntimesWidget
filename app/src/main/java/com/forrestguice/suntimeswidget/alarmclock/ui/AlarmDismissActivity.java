@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -801,6 +802,15 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             return colors.getColor(AlarmColorValues.COLOR_TEXT_TIME);
         }
     }
+    protected int currentTextColor()
+    {
+        if (clockText != null) {
+            return infoText.getCurrentTextColor();
+        } else {
+            return colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY);
+        }
+    }
+
     protected int currentBackgroundColor()
     {
         Drawable d = background.getBackground();
@@ -868,10 +878,12 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 int snoozeBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START);
                 int snoozeTitleColor = getContrastingTextColor(snoozeBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_PRIMARY_INVERSE, AlarmColorValues.COLOR_TEXT_PRIMARY);
                 int snoozeTimeColor = getContrastingTextColor(snoozeBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_TIME_INVERSE, AlarmColorValues.COLOR_TEXT_TIME);
+                int snoozeTextColor = getContrastingTextColor(snoozeBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_SECONDARY_INVERSE, AlarmColorValues.COLOR_TEXT_SECONDARY);
 
                 animateBackground(new int[] { currentBackgroundColor(), snoozeBackgroundColor }, 1500, new LinearInterpolator());
                 animateColors(new int[] { currentTitleColor(), snoozeTitleColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(alarmTitle));
                 animateColors(new int[] { currentTimeColor(), snoozeTimeColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(clockText));
+                animateColors(new int[] { currentTextColor(), snoozeTextColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(infoText));
             }
 
             if (Build.VERSION.SDK_INT >= 17)  // BUG: on some older devices modifying brightness turns off the screen
@@ -901,10 +913,12 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 int timeoutBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START);
                 int timeoutTitleColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_PRIMARY, AlarmColorValues.COLOR_TEXT_PRIMARY_INVERSE);
                 int timeoutTimeColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_TIME, AlarmColorValues.COLOR_TEXT_TIME_INVERSE);
+                int timeoutTextColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_SECONDARY, AlarmColorValues.COLOR_TEXT_SECONDARY_INVERSE);
 
                 animateBackground(new int[] { currentBackgroundColor(), timeoutBackgroundColor }, 1500, new AccelerateInterpolator());
                 animateColors(new int[] { currentTitleColor(), timeoutTitleColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(alarmTitle));
                 animateColors(new int[] { currentTimeColor(), timeoutTimeColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(clockText));
+                animateColors(new int[] { currentTextColor(), timeoutTextColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(infoText));
             }
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
@@ -928,6 +942,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 animateBackground(new int[] { colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START), soundingBackgroundColor }, AlarmSettings.loadPrefAlarmBrightFadeIn(this), new AccelerateInterpolator());
                 animateColors(new int[] { currentTitleColor(), soundingTitleColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(alarmTitle));
                 animateColors(new int[] { currentTimeColor(), soundingTimeColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(clockText));
+                infoText.setTextColor(Color.TRANSPARENT);
             }
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
