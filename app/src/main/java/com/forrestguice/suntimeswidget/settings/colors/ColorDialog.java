@@ -63,6 +63,7 @@ public class ColorDialog extends BottomSheetDialogFragment
     public static final String KEY_COLOR = "color";
     public static final String KEY_COLOR_UNDER = "color_under";
     public static final String KEY_COLOR_OVER = "color_over";
+    public static final String KEY_PREVIEW_MODE = "previewMode";
     public static final String KEY_RECENT = "recentColors";
     public static final String KEY_SUGGESTED = "suggestedColor";
     public static final String KEY_LABEL = "color_label";
@@ -146,6 +147,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         viewModel.setColor(getArguments().getInt(KEY_COLOR));
         viewModel.setColorUnder(getArguments().getInt(KEY_COLOR_UNDER));
         viewModel.setColorOver(getArguments().getInt(KEY_COLOR_OVER));
+        viewModel.setPreviewMode(getArguments().getInt(KEY_PREVIEW_MODE));
         viewModel.setShowAlpha(showAlpha());
 
         if (savedState != null)
