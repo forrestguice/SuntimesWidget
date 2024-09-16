@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -504,7 +505,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
                 return colors;
 
             } else {
-                return collection.getColors(context, colorsID, context.getColor(R.color.def_app_alarms_bright_color_end), previewKeys);
+                return collection.getColors(context, colorsID, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_end), previewKeys);
             }
         }
     }
