@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings.colors;
 
 import android.graphics.Color;
+import android.util.Log;
 
 public class ColorUtils
 {
@@ -31,8 +32,21 @@ public class ColorUtils
     public static boolean isTextReadable(int textColor, int backgroundColor) {
         return getContrastRatio(textColor, backgroundColor) > 4.5;    // AA minimum; https://www.w3.org/TR/WCAG21/#contrast-minimum
     }
-    public static double getLuminance(int color) {
-        return (0.2126 * Color.red(color) + 0.7152 * Color.green(color) + 0.0722 * Color.blue(color));
+
+    /**
+     * https://www.w3.org/TR/WCAG21/#dfn-relative-luminance
+     */
+    public static double getLuminance(int color)
+    {
+        double r0 = Color.red(color) / 255d;
+        double g0 = Color.green(color) / 255d;
+        double b0 = Color.blue(color) / 255d;
+
+        double r = ((r0 <= 0.04045) ? (r0 / 12.92) : Math.pow((r0 + 0.055) / 1.055, 2.4));
+        double g = ((g0 <= 0.04045) ? (g0 / 12.92) : Math.pow((g0 + 0.055) / 1.055, 2.4));
+        double b = ((b0 <= 0.04045) ? (b0 / 12.92) : Math.pow((b0 + 0.055) / 1.055, 2.4));
+
+        return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
     }
     public static double getContrastRatio(int textColor, int backgroundColor)
     {
