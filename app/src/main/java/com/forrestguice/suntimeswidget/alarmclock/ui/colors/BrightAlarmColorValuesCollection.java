@@ -137,12 +137,13 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String DEFAULT_SUNRISE = "sunrise";
-    public static final String DEFAULT_FOLIAGE = "foliage";
+    public static final String DEFAULT_ID_SUNRISE = "sunrise";
+    public static final String DEFAULT_ID_FOLIAGE = "foliage";
+    public static final String DEFAULT_ID_BLUESKY = "bluesky";
 
     @Override
     protected String[] getDefaultColorIDs() {
-        return new String[] { DEFAULT_SUNRISE, DEFAULT_FOLIAGE };
+        return new String[] { DEFAULT_ID_SUNRISE, DEFAULT_ID_FOLIAGE, DEFAULT_ID_BLUESKY};
     }
     @Override
     protected ColorValues getDefaultColors(Context context, @Nullable String colorsID)
@@ -154,12 +155,16 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
         ColorValues v;
         switch (colorsID)
         {
-            case DEFAULT_SUNRISE:
+            case DEFAULT_ID_SUNRISE:
                 v = new BrightAlarmColorValues_Sunrise(context, true);
                 break;
 
-            case DEFAULT_FOLIAGE:
+            case DEFAULT_ID_FOLIAGE:
                 v = new BrightAlarmColorValues_Foliage(context, true);
+                break;
+
+            case DEFAULT_ID_BLUESKY:
+                v = new BrightAlarmColorValues_BlueSky(context, true);
                 break;
 
             default:
@@ -177,11 +182,14 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
         }
         switch(colorsID)
         {
-            case DEFAULT_SUNRISE:
+            case DEFAULT_ID_SUNRISE:
                 return context.getString(R.string.brightMode_colors_label_sunrise);
 
-            case DEFAULT_FOLIAGE:
+            case DEFAULT_ID_FOLIAGE:
                 return context.getString(R.string.brightMode_colors_label_foliage);
+
+            case DEFAULT_ID_BLUESKY:
+                return context.getString(R.string.brightMode_colors_label_bluesky);
 
             default:
                 return colorsID;

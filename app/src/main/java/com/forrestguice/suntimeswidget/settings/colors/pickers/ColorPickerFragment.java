@@ -154,7 +154,7 @@ public class ColorPickerFragment extends Fragment
                 return String.format(Locale.getDefault(), "%.2f", ColorUtils.getContrastRatio(textColor, backgroundColor));
 
             case ColorPickerModel.PREVIEW_LUMINANCE:
-                return String.format(Locale.getDefault(), "%.2f", 100 * ColorUtils.getLuminance(getColor())) + "%"z;
+                return String.format(Locale.getDefault(), "%.2f", 100 * ColorUtils.getLuminance(getColor())) + "%";
 
             case ColorPickerModel.PREVIEW_TEXT:
             default:
