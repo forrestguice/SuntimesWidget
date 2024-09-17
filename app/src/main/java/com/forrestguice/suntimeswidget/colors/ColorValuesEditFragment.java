@@ -529,16 +529,20 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     protected Intent pickColorIntent(String key, int requestCode)
     {
+        int color = colorValues.getColor(key);
+        ArrayList<Integer> recentColors = new ArrayList<>(new LinkedHashSet<>(colorValues.getColors()));
+        recentColors.add(0, color);
+
         Intent intent = new Intent(getActivity(), ColorActivity.class);
         intent.putExtra(ColorDialog.KEY_SHOWALPHA, showAlpha());
-        intent.setData(Uri.parse("color://" + String.format("#%08X", colorValues.getColor(key))));
-        intent.putExtra(ColorDialog.KEY_RECENT, new ArrayList<>(new LinkedHashSet<>(colorValues.getColors())));
+        intent.setData(Uri.parse("color://" + String.format("#%08X", color)));
+        intent.putExtra(ColorDialog.KEY_RECENT, recentColors);
         intent.putExtra(ColorDialog.KEY_LABEL, colorValues.getLabel(key));
 
         int[] colorOverUnder = getColorOverUnder(getActivity(), key);
         intent.putExtra(ColorDialog.KEY_COLOR_OVER, colorOverUnder[0]);
         intent.putExtra(ColorDialog.KEY_COLOR_UNDER, colorOverUnder[1]);
-        intent.putExtra(ColorDialog.KEY_PREVIEW_MODE, ColorPickerFragment.ColorPickerModel.PREVIEW_CONTRAST_RATIO);
+        intent.putExtra(ColorDialog.KEY_PREVIEW_MODE, ColorPickerFragment.ColorPickerModel.PREVIEW_LUMINANCE);
 
         if (defaultValues != null) {
             intent.putExtra(ColorDialog.KEY_SUGGESTED, defaultValues.getColor(key));
