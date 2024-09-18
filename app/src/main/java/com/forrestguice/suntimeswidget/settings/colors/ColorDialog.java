@@ -46,6 +46,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -62,8 +63,10 @@ public class ColorDialog extends BottomSheetDialogFragment
     public static final String KEY_COLOR = "color";
     public static final String KEY_COLOR_UNDER = "color_under";
     public static final String KEY_COLOR_OVER = "color_over";
+    public static final String KEY_PREVIEW_MODE = "previewMode";
     public static final String KEY_RECENT = "recentColors";
     public static final String KEY_SUGGESTED = "suggestedColor";
+    public static final String KEY_LABEL = "color_label";
 
     public ColorDialog() {
         setArguments(colorPagerArgs);
@@ -113,11 +116,23 @@ public class ColorDialog extends BottomSheetDialogFragment
         }
     }
 
+    @Nullable
+    public String getColorLabel() {
+        return colorPagerArgs.getString(KEY_LABEL, null);
+    }
+    public void setColorLabel(String value) {
+        colorPagerArgs.putString(KEY_LABEL, value);
+    }
+
     public boolean showAlpha() {
         return colorPagerArgs.getBoolean(KEY_SHOWALPHA, false);
     }
-    public void setShowAlpha(boolean value) {
+    public void setShowAlpha(boolean value)
+    {
         colorPagerArgs.putBoolean(KEY_SHOWALPHA, value);
+        if (viewModel != null) {
+            viewModel.setShowAlpha(value);
+        }
         filterRecentColors();
     }
 
@@ -132,6 +147,8 @@ public class ColorDialog extends BottomSheetDialogFragment
         viewModel.setColor(getArguments().getInt(KEY_COLOR));
         viewModel.setColorUnder(getArguments().getInt(KEY_COLOR_UNDER));
         viewModel.setColorOver(getArguments().getInt(KEY_COLOR_OVER));
+        viewModel.setPreviewMode(getArguments().getInt(KEY_PREVIEW_MODE));
+        viewModel.setShowAlpha(showAlpha());
 
         if (savedState != null)
         {
@@ -210,6 +227,18 @@ public class ColorDialog extends BottomSheetDialogFragment
 
     private void initViews(Context context, View dialogContent)
     {
+        TextView subtitle = (TextView) dialogContent.findViewById(R.id.dialog_subtitle);
+        if (subtitle != null)
+        {
+            String colorLabel = getColorLabel();
+            if (colorLabel != null) {
+                subtitle.setText(colorLabel);
+                subtitle.setVisibility(View.VISIBLE);
+            } else {
+                subtitle.setVisibility(View.GONE);
+            }
+        }
+
         TabLayout colorPagerTabs = (TabLayout) dialogContent.findViewById(R.id.color_pager_tabs);
         colorPager = (ViewPager) dialogContent.findViewById(R.id.color_pager);
 

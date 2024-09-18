@@ -53,6 +53,11 @@ public class MoonApsisColorValues extends ResourceColorValues implements Parcela
                 R.string.configLabel_themeColorMoonApogeeText, R.string.configLabel_themeColorMoonPerigeeText
         };
     }
+    public int[] getColorRoles() {
+        return new int[] {
+                ROLE_TEXT, ROLE_TEXT
+        };
+    }
     public int[] getColorsResDark() {
         return new int[] {
                 R.color.table_moon_rising_dark, R.color.table_moon_setting_dark,

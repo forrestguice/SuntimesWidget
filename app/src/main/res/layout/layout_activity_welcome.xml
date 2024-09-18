@@ -8,9 +8,11 @@
 
     <LinearLayout android:id="@+id/indicator_layout"
         android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:minHeight="24dp"
         app:layout_constraintTop_toTopOf="@+id/button_next"
         app:layout_constraintBottom_toBottomOf="@+id/button_next"
-        android:orientation="horizontal" android:gravity="center" />
+        android:orientation="horizontal" android:gravity="center"
+        android:background="?attr/dialogBackgroundAlt" />
 
     <View
         android:layout_width="match_parent" android:layout_height="1dp"

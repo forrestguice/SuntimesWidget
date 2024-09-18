@@ -77,6 +77,15 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke
         };
     }
+    public int[] getColorRoles() {
+        return new int[] {
+                ROLE_FOREGROUND, ROLE_TEXT,
+                ROLE_FOREGROUND, ROLE_TEXT,
+                ROLE_FOREGROUND, ROLE_TEXT,
+                ROLE_FOREGROUND, ROLE_TEXT,
+                ROLE_FOREGROUND, ROLE_FOREGROUND
+        };
+    }
     public int[] getColorsResDark() {
         return new int[] {
                 R.color.sunIcon_color_rising_dark, R.color.table_rising_dark,

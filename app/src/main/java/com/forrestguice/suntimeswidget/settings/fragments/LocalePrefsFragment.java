@@ -27,6 +27,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -65,7 +66,7 @@ public class LocalePrefsFragment extends PreferenceFragment
         initPref_locale(fragment.getActivity(), localeModePref, localePref);
     }
 
-   public static void initPref_locale(final Activity activity, Preference localeModePref, ListPreference localePref)
+    public static Pair<CharSequence[], CharSequence[]> getEntries(final Activity activity)
     {
         final String[] localeDisplay = activity.getResources().getStringArray(R.array.locale_display);
         final String[] localeDisplayNative = activity.getResources().getStringArray(R.array.locale_display_native);
@@ -93,9 +94,14 @@ public class LocalePrefsFragment extends PreferenceFragment
             entries[i] = formattedDisplayString;
             values[i] = localeValues[j];
         }
+        return new Pair<>(entries, values);
+    }
 
-        localePref.setEntries(entries);
-        localePref.setEntryValues(values);
+    public static void initPref_locale(final Activity activity, Preference localeModePref, ListPreference localePref)
+    {
+        Pair<CharSequence[], CharSequence[]> a = getEntries(activity);
+        localePref.setEntries(a.first);
+        localePref.setEntryValues(a.second);
 
         AppSettings.LocaleMode localeMode = AppSettings.loadLocaleModePref(activity);
         localePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);

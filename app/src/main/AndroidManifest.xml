@@ -249,6 +249,12 @@
                 <data android:scheme="color" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".colors.ColorValuesSheetActivity"
+            android:label="@string/configAction_colors"
+            android:icon="@drawable/ic_palette"
+            android:exported="false">
+        </activity>
 
         <!-- FileProvider (export to file; places, themes) -->
         <provider

@@ -35,6 +35,8 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.AlarmColorValues;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -231,6 +233,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         if (keys.contains(SuntimesBackupTask.KEY_COLORS)) {
             c += importAppColors(context, SuntimesBackupTask.KEY_COLORS_APPCOLORS, 0, report, allValues.get(SuntimesBackupTask.KEY_COLORS_APPCOLORS));
             c += importMapColors(context, SuntimesBackupTask.KEY_COLORS_MAPCOLORS, 0, report, allValues.get(SuntimesBackupTask.KEY_COLORS_MAPCOLORS));
+            c += importAlarmColors(context, SuntimesBackupTask.KEY_COLORS_ALARMCOLORS, 0, report, allValues.get(SuntimesBackupTask.KEY_COLORS_ALARMCOLORS));
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS))
@@ -264,6 +267,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         prefTypes.putAll(BedtimeSettings.getPrefTypes());
         prefTypes.putAll(AppColorValuesCollection.getPrefTypes());
         prefTypes.putAll(WorldMapColorValuesCollection.getPrefTypes());
+        prefTypes.putAll(BrightAlarmColorValuesCollection.getPrefTypes());
 
         if (contentValues != null)
         {
@@ -294,7 +298,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             }
             @Override
             public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
-                return new AppColorValuesCollection<ColorValues>();
+                return new AppColorValuesCollection<ColorValues>(context);
             }
         }, report, contentValues);
     }
@@ -308,7 +312,21 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             }
             @Override
             public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
-                return new WorldMapColorValuesCollection<ColorValues>();
+                return new WorldMapColorValuesCollection<ColorValues>(context);
+            }
+        }, report, contentValues);
+    }
+    protected static int importAlarmColors(Context context, String key, int method, StringBuilder report, @Nullable ContentValues... contentValues)
+    {
+        return importColors(context, key, method, new ColorValuesImporter()
+        {
+            @Override
+            public ColorValues createColorValues(Context context) {
+                return new AlarmColorValues(context, true);
+            }
+            @Override
+            public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
+                return new BrightAlarmColorValuesCollection<ColorValues>(context);
             }
         }, report, contentValues);
     }

@@ -919,7 +919,7 @@
     <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeName">Display:</string>               <!-- edit label -->
-    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->
+    <string name="configHint_themeName">@string/hint_label</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
@@ -934,6 +934,20 @@
     <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">Distance</string>           <!-- label -->
+
+    <string name="configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
 
     <!--
          CUSTOM EVENTS
@@ -993,7 +1007,7 @@
 
     <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title -->
     <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title -->
-    <string name="editevent_dialog_label_label">Label</string>
+    <string name="editevent_dialog_label_label">@string/hint_label</string>
     <string name="editevent_dialog_label_hint">Event Label</string>
     <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
     <string name="editevent_dialog_label_suggested">Custom Angle</string>
@@ -1139,7 +1153,7 @@
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button -->
-    <string name="alarmlabel_hint">Label</string>        <!-- EditText hint -->
+    <string name="alarmlabel_hint">@string/hint_label</string>        <!-- EditText hint -->
 
     <string name="alarmnote_dialog_title">Note</string>        <!-- dialog title -->
 
@@ -1260,6 +1274,21 @@
 
     <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>
     <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+    <string-array name="brightMode_colors_previewKeys" translatable="false">
+        <item>color_bright_bg_end</item>
+        <!--<item>color_sounding_pulse_start</item>
+        <item>color_sounding_pulse_end</item>
+        <item>color_control_enabled</item>
+        <item>color_control_pressed</item>-->
+    </string-array>
+
+    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>  <!-- TODO -->
+    <string name="brightMode_colors_label_sunrise">@string/sunrise_short</string>  <!-- TODO -->
+    <string name="brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
+    <string name="brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->
     <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->
@@ -1416,6 +1445,7 @@
     <string name="restorebackup_dialog_item_colors">Colors</string>
     <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>
     <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>
+    <string name="restorebackup_dialog_item_colors_alarmcolors">Alarm Colors</string>  <!-- TODO -->
     <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string>
     <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string>
     <string name="restorebackup_dialog_item_placeitems">Places</string>
@@ -2512,6 +2542,8 @@
 
     <string name="suggest_colorid">Custom</string>       <!-- edittext hint -->
     <string name="hint_colorid">ID</string>              <!-- edittext hint -->
+    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->   <!-- TODO -->
+    <string name="error_colorlabel_empty">Label required</string>           <!-- edittext error text -->   <!-- TODO -->
     <string name="error_colorid_empty">ID required</string>                  <!-- edittext error text -->
     <string name="error_colorid_spaces">ID may not contains spaces</string>   <!-- edittext error text -->
     <string name="msg_colors_saved">Saved %s</string>        <!-- toast -->
@@ -2834,6 +2866,8 @@
     <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
 
     <string name="drag_hint">Drag here</string>
+
+    <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>

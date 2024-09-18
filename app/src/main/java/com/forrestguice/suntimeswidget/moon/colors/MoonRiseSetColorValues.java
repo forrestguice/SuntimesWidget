@@ -59,6 +59,12 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Parce
                 R.string.configLabel_themeColorMoonset, R.string.configLabel_themeColorMoonset_text,
         };
     }
+    public int[] getColorRoles() {
+        return new int[] {
+                ROLE_FOREGROUND, ROLE_TEXT,
+                ROLE_FOREGROUND, ROLE_TEXT
+        };
+    }
     public int[] getColorsResDark() {
         return new int[] {
                 R.color.moonIcon_color_rising_dark, R.color.table_moon_rising_dark,

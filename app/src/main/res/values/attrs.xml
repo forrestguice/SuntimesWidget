@@ -16,6 +16,7 @@
     <attr name="hrColor" format="reference" />
 
     <attr name="text_primaryColor" format="reference" />
+    <attr name="text_primaryInverseColor" format="reference" />
     <attr name="text_secondaryColor" format="reference" />
     <attr name="text_tertiaryColor" format="reference" />
     <attr name="text_accentColor" format="reference" />
@@ -267,6 +268,23 @@
         <attr name="minValue" />
         <attr name="maxValue" />
         <attr name="zeroValueText" />
+    </declare-styleable>
+
+    <declare-styleable name="ActionButtonPreference">
+        <attr name="actionButtonContentDescription" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorListPreference">
+        <attr name="colorValues" format="reference" />
+        <attr name="android:numColumns" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorCollectionPreference">
+        <attr name="colorTag" format="string" />
+        <attr name="appWidgetID" format="integer" />
+        <attr name="showAlpha" format="boolean" />
+        <attr name="previewKeys" format="reference" />
+        <attr name="android:summary" />
     </declare-styleable>
 
     <declare-styleable name="HelpPreference">

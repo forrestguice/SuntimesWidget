@@ -28,6 +28,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -58,6 +59,7 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
+import android.text.style.ReplacementSpan;
 import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -1858,6 +1860,42 @@ public class SuntimesUtils
                 span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, alignment);
                 text = text.subSequence(0, tagPos) + tag.getBlank() + text.subSequence(tagEnd, text.length());
             }
+        }
+        return span;
+    }
+
+    public static SpannableString createRoundedBackgroundColorSpan(SpannableString span, String text, String toColorize,
+                                                                   final int textColor, final boolean boldText,
+                                                                   final int backgroundColor, final float cornerRadiusPx, final float paddingPx)
+    {
+        ReplacementSpan replacementSpan = new ReplacementSpan()
+        {
+            @Override
+            public int getSize(@NonNull Paint p, CharSequence t, int start, int end, @Nullable Paint.FontMetricsInt fontMetrics) {
+                return (int) Math.ceil(p.measureText(t, start, end) + (2 * paddingPx));
+            }
+
+            @Override
+            public void draw(@NonNull Canvas c, CharSequence t, int start, int end, float x, int top, int y, int bottom, @NonNull Paint p)
+            {
+                p.setColor(backgroundColor);
+                RectF rect = new RectF(x, top, x + p.measureText(t, start, end) + (2 * paddingPx), bottom);
+                c.drawRoundRect(rect, cornerRadiusPx, cornerRadiusPx, p);
+
+                p.setColor(textColor);
+                p.setTypeface(boldText ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+                c.drawText(t, start, end, x + paddingPx, y, p);
+            }
+        };
+
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toColorize);
+        if (start >= 0)
+        {
+            int end = start + toColorize.length() + 1;  // 1 beyond last character
+            span.setSpan(replacementSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return span;
     }

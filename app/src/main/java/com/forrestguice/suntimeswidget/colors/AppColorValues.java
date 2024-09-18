@@ -83,6 +83,7 @@ public class AppColorValues extends ResourceColorValues
     }
 
     protected static String[] colorKeys;
+    protected static final int[] colorRoles;
     protected static final int[] colorAttrs;
     protected static final int[] colorResDark;
     protected static final int[] colorResLight;
@@ -92,6 +93,7 @@ public class AppColorValues extends ResourceColorValues
     static
     {
         ArrayList<String> keys = new ArrayList<>();
+        ArrayList<Integer> roleList = new ArrayList<>();
         ArrayList<Integer> attrs = new ArrayList<>();
         ArrayList<Integer> darkRes = new ArrayList<>();
         ArrayList<Integer> lightRes = new ArrayList<>();
@@ -134,6 +136,13 @@ public class AppColorValues extends ResourceColorValues
                 }
             }
 
+            int[] roles = r[i].getColorRoles();
+            for (int j=0; j<roles.length; j++) {
+                if (!keySet.contains(s[j])) {
+                    roleList.add(roles[j]);
+                }
+            }
+
             int[] f = r[i].getColorsFallback();
             for (int j=0; j<f.length; j++) {
                 if (!keySet.contains(s[j])) {
@@ -152,6 +161,7 @@ public class AppColorValues extends ResourceColorValues
         }
 
         colorKeys = keys.toArray(new String[0]);
+        colorRoles = toIntArray(roleList);
         colorAttrs = toIntArray(attrs);
         colorResDark = toIntArray(darkRes);
         colorResLight = toIntArray(lightRes);
@@ -168,6 +178,12 @@ public class AppColorValues extends ResourceColorValues
     public int[] getColorLabelsRes() {
         return colorResLabel;
     }
+
+    @Override
+    public int[] getColorRoles() {
+        return colorRoles;
+    }
+
     public int[] getColorsResDark() {
         return colorResDark;
     }

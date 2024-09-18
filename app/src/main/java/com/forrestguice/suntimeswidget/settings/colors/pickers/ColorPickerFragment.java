@@ -35,6 +35,9 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
+import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
+
+import java.util.Locale;
 
 /**
  * ColorPickerFragment
@@ -92,7 +95,7 @@ public class ColorPickerFragment extends Fragment
     }
 
     public boolean showAlpha() {
-        return getArguments().getBoolean("showAlpha", false);
+        return (colorViewModel != null && colorViewModel.showAlpha());
     }
 
     private final Observer<Integer> onViewModelColorChanged = new Observer<Integer>()
@@ -122,19 +125,41 @@ public class ColorPickerFragment extends Fragment
         if (preview_text != null && colorViewModel.hasColorUnder()) {
             preview_text.setTextColor(getColor());
             preview_text.setBackgroundColor(colorViewModel.getColorUnder());
+            preview_text.setText(getPreviewText(context, getColor(), colorViewModel.getColorUnder()));
 
         } else if (preview_text != null) {
             preview_text.setBackgroundColor(getColor());
             preview_text.setTextColor(getColor());
+            preview_text.setText(getPreviewText(context, getColor(), colorViewModel.getColorUnder()));
         }
 
         if (preview_text1 != null && colorViewModel.hasColorOver()) {
             preview_text1.setTextColor(colorViewModel.getColorOver());
             preview_text1.setBackgroundColor(getColor());
+            preview_text1.setText(getPreviewText(context, colorViewModel.getColorOver(), getColor()));
 
         } else if (preview_text1 != null) {
             preview_text1.setBackgroundColor(getColor());
             preview_text1.setTextColor(getColor());
+            preview_text1.setText(getPreviewText(context, colorViewModel.getColorOver(), getColor()));
+        }
+    }
+
+    @Nullable
+    protected String getPreviewText(Context context, int textColor, int backgroundColor)
+    {
+        switch (colorViewModel.getPreviewMode())
+        {
+            case ColorPickerModel.PREVIEW_CONTRAST_RATIO:
+                return String.format(Locale.getDefault(), "%.2f", ColorUtils.getContrastRatio(textColor, backgroundColor));
+
+            case ColorPickerModel.PREVIEW_LUMINANCE:
+                return String.format(Locale.getDefault(), "%.2f", 100 * ColorUtils.getLuminance(getColor())) + "%";
+
+            case ColorPickerModel.PREVIEW_TEXT:
+            default:
+                String text = colorViewModel.getPreviewText();
+                return (text != null) ? text : context.getString(R.string.configLabel_themeColorText);
         }
     }
 
@@ -174,6 +199,7 @@ public class ColorPickerFragment extends Fragment
         public MutableLiveData<Integer> color = new MutableLiveData<>();
         protected Integer color_over = null;
         protected Integer color_under = null;
+        protected boolean showAlpha = false;
 
         public ColorPickerModel() {
             color.setValue(Color.WHITE);
@@ -201,6 +227,33 @@ public class ColorPickerFragment extends Fragment
 
         public void setColor(int value) {
             color.setValue(value);
+        }
+
+        public void setShowAlpha(boolean value) {
+            showAlpha = value;
+        }
+        public boolean showAlpha() {
+            return showAlpha;
+        }
+
+        public static final int PREVIEW_TEXT = 0;
+        public static final int PREVIEW_LUMINANCE = 10;
+        public static final int PREVIEW_CONTRAST_RATIO = 20;
+
+        protected int previewMode = PREVIEW_CONTRAST_RATIO;
+        public int getPreviewMode() {
+            return previewMode;
+        }
+        public void setPreviewMode(int mode) {
+            previewMode = mode;
+        }
+
+        protected String previewText = null;
+        public String getPreviewText() {
+            return previewText;
+        }
+        public void setPreviewText(String value) {
+            previewText = value;
         }
     }
 

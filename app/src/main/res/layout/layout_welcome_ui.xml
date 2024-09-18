@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:gravity="center"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:paddingBottom="48dp" android:background="?attr/dialogBackgroundAlt">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll" android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <LinearLayout android:id="@+id/header"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+    <android.support.constraint.ConstraintLayout
         android:orientation="vertical" android:gravity="center"
-        android:layout_margin="16dp"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/scroll"
-        app:layout_constraintVertical_chainStyle="packed">
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/icon" android:layout_marginTop="8dp"
-            android:layout_width="96dp" android:layout_height="96dp" android:scaleType="fitCenter"
-            android:src="@drawable/ic_settings_128dp" app:tint="?attr/colorControlNormal"
-            tools:ignore="ContentDescription" />
-
-        <TextView android:id="@+id/text_title"
-            android:layout_height="wrap_content" android:layout_width="wrap_content"
-            android:gravity="start" android:layout_margin="8dp"
-            android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="?attr/text_size_xlarge"
-            android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
-            android:text="@string/configLabel_ui" />
-
-    </LinearLayout>
-
-    <ScrollView android:id="@+id/scroll"
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:paddingBottom="48dp" android:background="?attr/dialogBackgroundAlt">
+
+        <LinearLayout android:id="@+id/header"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:gravity="center"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/options_layout"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/icon" android:layout_marginTop="8dp"
+                android:layout_width="96dp" android:layout_height="96dp" android:scaleType="fitCenter"
+                android:src="@drawable/ic_settings_128dp" app:tint="?attr/colorControlNormal"
+                tools:ignore="ContentDescription" />
+
+            <TextView android:id="@+id/text_title"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:gravity="start" android:layout_margin="8dp"
+                android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="?attr/text_size_xlarge"
+                android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
+                android:text="@string/configLabel_ui" />
+
+        </LinearLayout>
 
         <LinearLayout android:id="@+id/options_layout" android:orientation="vertical"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="48dp">
+            android:layout_marginTop="16dp" android:layout_marginBottom="48dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -108,8 +107,5 @@
 
         </LinearLayout>
 
-    </ScrollView>
-
-
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

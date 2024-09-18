@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="dark_text_high">#DEFFFFFF</color>      // 87%
+    <color name="dark_text_medium">#99FFFFFF</color>    // 60%
+    <color name="dark_text_disabled">#61FFFFFF</color>  // 38%
+
+    <color name="light_text_high">#DE000000</color>      // 87%
+    <color name="light_text_medium">#99000000</color>    // 60%
+    <color name="light_text_disabled">#61000000</color>  // 38%
+
     <color name="transparent">#00000000</color>
     <color name="white">#ffffffff</color>
     <color name="black">#ff000000</color>
@@ -32,8 +40,8 @@
         <item>@color/grey_900</item>
         <item>@color/grey_999</item>
         <item>@color/grey_999</item>
-        <item>@color/grey_999</item>
-        <item>@color/grey_999</item>
+        <item>@color/white</item>
+        <item>@color/black</item>
     </integer-array>
 
     <color name="brown_50">#FFEFEBE9</color>
@@ -46,6 +54,7 @@
     <color name="brown_700">#FF5D4037</color>
     <color name="brown_800">#FF4E342E</color>
     <color name="brown_900">#FF3E2723</color>
+    <color name="brown_999">#FF180704</color>
 
     <integer-array name="material_brown">
         <item>@color/brown_50</item>
@@ -61,7 +70,7 @@
         <item>@color/brown_900</item>
         <item>@color/brown_900</item>
         <item>@color/brown_900</item>
-        <item>@color/brown_900</item>
+        <item>@color/brown_999</item>
     </integer-array>
 
     <color name="blue_grey_50">#FFECEFF1</color>
@@ -74,6 +83,7 @@
     <color name="blue_grey_700">#FF455A64</color>
     <color name="blue_grey_800">#FF37474F</color>
     <color name="blue_grey_900">#FF263238</color>
+    <color name="blue_grey_999">#FF151B1E</color>
 
     <integer-array name="material_blue_grey">
         <item>@color/blue_grey_50</item>
@@ -89,7 +99,7 @@
         <item>@color/blue_grey_900</item>
         <item>@color/blue_grey_900</item>
         <item>@color/blue_grey_900</item>
-        <item>@color/blue_grey_900</item>
+        <item>@color/blue_grey_999</item>
     </integer-array>
 
     <color name="cyan_50">#FFE0F7FA</color>

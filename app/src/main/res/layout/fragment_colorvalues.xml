@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout android:id="@+id/layout_header" android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -10,16 +13,16 @@
         <ImageButton android:id="@+id/cancelButton"
             style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionBack"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:tooltipText="@android:string/cancel"
+            android:tooltipText="@string/dialog_cancel"
             android:contentDescription="@android:string/cancel" />
 
-        <EditText android:id="@+id/editTextID"
+        <EditText android:id="@+id/editTextLabel"
             android:layout_width="0dp" android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp" android:layout_marginRight="0dp"
             android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
             android:inputType="text"
-            android:hint="@string/hint_colorid" android:textSize="?attr/text_size_small"
+            android:hint="@string/hint_colorlabel" android:textSize="?attr/text_size_medium"
             android:importantForAutofill="no" />
 
         <ImageButton android:id="@+id/saveButton"
@@ -42,14 +45,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <GridLayout android:id="@+id/colorPanel" android:columnCount="2"
+        <LinearLayout
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:gravity="top|start"
-            android:useDefaultMargins="false"
-            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
-            android:layout_marginTop="4dp" android:layout_marginBottom="8dp">
+            android:orientation="vertical">
 
-        </GridLayout>
+            <GridLayout android:id="@+id/colorPanel" android:columnCount="2"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:orientation="vertical" android:gravity="top|start"
+                android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+                android:layout_marginTop="4dp" android:layout_marginBottom="8dp"
+                android:useDefaultMargins="false" />
+
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="16dp" android:layout_marginRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:labelFor="@+id/editTextID"
+                    android:textSize="?attr/text_size_small"
+                    android:text="@string/configLabel_themeID" />
+
+                <EditText android:id="@+id/editTextID"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="200dp"
+                    android:inputType="text" tools:text="ID"
+                    android:hint="@string/hint_colorid" android:textSize="?attr/text_size_small"
+                    android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+                    android:importantForAutofill="no" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </ScrollView>
 

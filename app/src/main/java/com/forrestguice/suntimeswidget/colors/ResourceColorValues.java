@@ -36,6 +36,7 @@ public abstract class ResourceColorValues extends ColorValues
     public abstract String[] getColorKeys();
     public abstract int[] getColorAttrs();
     public abstract int[] getColorLabelsRes();
+    public abstract int[] getColorRoles();
     public abstract int[] getColorsResDark();
     public abstract int[] getColorsResLight();
     public abstract int[] getColorsFallback();
@@ -55,11 +56,17 @@ public abstract class ResourceColorValues extends ColorValues
         if (BuildConfig.DEBUG && (getColorKeys().length != getColorsFallback().length)) {
             throw new AssertionError("COLORS and COLORS_FALLBACK have different lengths! These arrays should be one-to-one.");
         }
+        if (BuildConfig.DEBUG && (getColorRoles().length != getColorKeys().length)) {
+            throw new AssertionError("COLOR_ROLES and COLOR_KEYS have different lengths! These arrays should be one-to-one.");
+        }
         String[] colorKeys = getColorKeys();
+        int[] colorRoles = getColorRoles();
         int[] fallbackColors = getColorsFallback();
-        for (int i=0; i<colorKeys.length; i++) {
+        for (int i=0; i<colorKeys.length; i++)
+        {
             setColor(colorKeys[i], fallbackColors[i]);
             setLabel(colorKeys[i], colorKeys[i]);
+            setRole(colorKeys[i], colorRoles[i]);
         }
     }
 
@@ -69,13 +76,18 @@ public abstract class ResourceColorValues extends ColorValues
         if (BuildConfig.DEBUG && (getColorKeys().length != getColorAttrs().length)) {
             throw new AssertionError("COLORS and COLORS_ATTR have different lengths! These arrays should be one-to-one." + getColorKeys().length + " != " + getColorAttrs().length);
         }
+        if (BuildConfig.DEBUG && (getColorRoles().length != getColorKeys().length)) {
+            throw new AssertionError("COLOR_ROLES and COLOR_KEYS have different lengths! These arrays should be one-to-one.");
+        }
         String[] colorKeys = getColorKeys();
+        int[] colorRoles = getColorRoles();
         int[] labelsResID = getColorLabelsRes();
         int[] defaultResID = darkTheme ? getColorsResDark() : getColorsResLight();
         TypedArray a = context.obtainStyledAttributes(getColorAttrs());
         for (int i=0; i<colorKeys.length; i++) {
             setColor(colorKeys[i], ContextCompat.getColor(context, a.getResourceId(i, defaultResID[i])));
             setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
+            setRole(colorKeys[i], colorRoles[i]);
         }
         a.recycle();
     }
@@ -94,13 +106,19 @@ public abstract class ResourceColorValues extends ColorValues
             }
         };
 
+        if (BuildConfig.DEBUG && (getColorRoles().length != getColorKeys().length)) {
+            throw new AssertionError("COLOR_ROLES and COLOR_KEYS have different lengths! These arrays should be one-to-one.");
+        }
+
         String[] colorKeys = getColorKeys();
+        int[] colorRoles = getColorRoles();
         int[] labelsResID = getColorLabelsRes();
         int[] defaultResID = darkTheme ? getColorsResDark() : getColorsResLight();
         for (int i=0; i<colorKeys.length; i++)
         {
             values.setColor(colorKeys[i], ContextCompat.getColor(context, defaultResID[i]));
             values.setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
+            values.setRole(colorKeys[i], colorRoles[i]);
         }
         values.setID(darkTheme ? context.getString(R.string.widgetThemes_dark) : context.getString(R.string.widgetThemes_light));
         return values;

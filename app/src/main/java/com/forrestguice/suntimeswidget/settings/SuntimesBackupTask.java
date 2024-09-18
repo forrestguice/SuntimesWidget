@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
@@ -91,6 +92,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     public static final String KEY_COLORS = "Colors";
     public static final String KEY_COLORS_APPCOLORS = KEY_COLORS + "_" + "AppColors";
     public static final String KEY_COLORS_MAPCOLORS = KEY_COLORS + "_" + "MapColors";
+    public static final String KEY_COLORS_ALARMCOLORS = KEY_COLORS + "_" + "AlarmColors";
 
     public static final String[] ALL_KEYS = new String[] {
             KEY_APPSETTINGS, KEY_COLORS, KEY_WIDGETSETTINGS, KEY_ALARMITEMS, KEY_EVENTITEMS, KEY_PLACEITEMS, KEY_ACTIONS, KEY_WIDGETTHEMES
@@ -245,7 +247,14 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 out.write(",\n".getBytes());
             }
             out.write(("\"" + KEY_COLORS_MAPCOLORS + "\": ").getBytes());    // include Map Colors
-            writeColorsJSONArray(context, new WorldMapColorValuesCollection<ColorValues>(), out);
+            writeColorsJSONArray(context, new WorldMapColorValuesCollection<ColorValues>(context), out);
+            c++;
+
+            if (c > 0) {
+                out.write(",\n".getBytes());
+            }
+            out.write(("\"" + KEY_COLORS_ALARMCOLORS + "\": ").getBytes());    // include Alarm Colors
+            writeColorsJSONArray(context, new BrightAlarmColorValuesCollection<ColorValues>(context), out);
             c++;
         }
 
@@ -461,6 +470,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         }
         if (SuntimesBackupTask.KEY_COLORS_MAPCOLORS.equals(key)) {
             return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_mapcolors));
+        }
+        if (SuntimesBackupTask.KEY_COLORS_ALARMCOLORS.equals(key)) {
+            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_alarmcolors));
         }
         if (SuntimesBackupTask.KEY_WIDGETSETTINGS.equals(key)) {
             return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_widgetsettings));

@@ -70,7 +70,14 @@ public class LightMapColorValues extends ResourceColorValues implements Parcelab
                 R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
                 R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
         };
-    };
+    }
+    public int[] getColorRoles() {
+        return new int[] {
+                ROLE_BACKGROUND, ROLE_BACKGROUND, ROLE_BACKGROUND, ROLE_BACKGROUND, ROLE_BACKGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND
+        };
+    }
     @Override
     public int[] getColorsResDark() {
         return new int[] {
