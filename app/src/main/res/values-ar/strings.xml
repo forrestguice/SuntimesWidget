@@ -943,6 +943,20 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">المسافة</string>           <!-- label -->
 
+    <string name="configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
+
     <!--
          CUSTOM EVENTS
     -->
@@ -1180,6 +1194,9 @@
     <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "مُفعل", "مُعطَّل" -->
     <string name="autostartWarning"><xliff:g id="warningTag">[w] التشغيل التلقائي معطل!\nقد تفشل التنبيهات في العمل بعد إعادة التشغيل.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
+    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
+
     <string name="configLabel_alarms_notifications">الإشعارات</string>
     <string name="configLabel_alarms_notifications_on">مُفعل</string>
     <string name="configLabel_alarms_notifications_off">مُعطَّل.\nقد تفشل التنبيهات في العرض بشكل صحيح.</string>
@@ -1200,6 +1217,8 @@
     <string name="configLabel_alarms_bootcompleted_info_never">أبدًا</string>
     <string name="configLabel_alarms_bootcompleted_action_confirm">إعادة جدولة جميع التنبيهات والإشعارات؟</string>
     <string name="configLabel_alarms_bootcompleted_action_message">جارٍ إعادة جدولة التنبيهات والإشعارات..</string>
+
+    <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">كتم الصوت بعد</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
@@ -1231,6 +1250,14 @@
 
     <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
     <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+
+    <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+
+    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="brightMode_colors_label_sunrise">@string/sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
+    <string name="brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->       <!-- TODO -->
     <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->    <!-- TODO -->
@@ -1397,6 +1424,7 @@
     <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
     <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>   <!-- TODO -->
     <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>   <!-- TODO -->
+    <string name="restorebackup_dialog_item_colors_alarmcolors">Alarm Colors</string>  <!-- TODO -->
     <string name="restorebackup_dialog_item_widgetsettings">إعدادات الودجات</string>
     <string name="restorebackup_dialog_item_widgetthemes">سمات الودجات</string>
     <string name="restorebackup_dialog_item_placeitems">الأماكن</string>
@@ -1901,6 +1929,7 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
+    <string name="graph_option_crosshair">Crosshair</string>  <!-- TODO -->
     <string name="graph_option_grid">الشبكة</string>
     <string name="graph_option_labels">التسميات</string>
     <string name="graph_option_axis">المحاور</string>
@@ -2238,6 +2267,8 @@
 
     <string name="suggest_colorid">Custom</string>       <!-- edittext hint -->    <!-- TODO -->
     <string name="hint_colorid">ID</string>              <!-- edittext hint -->    <!-- TODO -->
+    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
+    <string name="error_colorlabel_empty">Label required</string>           <!-- edittext error text -->   <!-- TODO -->
     <string name="error_colorid_empty">ID required</string>                  <!-- edittext error text -->    <!-- TODO -->
     <string name="error_colorid_spaces">ID may not contains spaces</string>   <!-- edittext error text -->    <!-- TODO -->
     <string name="msg_colors_saved">Saved %s</string>        <!-- toast -->    <!-- TODO -->
@@ -2551,8 +2582,10 @@
     <string name="feature_not_supported_by_source">هذه الميزة غير مدعومة بواسطة مصدر البيانات الحالي.</string>
     <string name="reboot_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتفعيل التغييرات.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتحقيق التأثير الكامل للتغييرات.</string>   <!-- toast; app restart may be required -->
+    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
 
     <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">موافق</string>
     <string name="dialog_cancel">إلغاء</string>
