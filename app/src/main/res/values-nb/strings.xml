@@ -1136,13 +1136,13 @@
     <string name="configLabel_alarms_fadein_disabled">Av</string>
 
     <string name="configLabel_alarmFullscreen">Fullskjerm</string>            <!-- group title -->
-    <string name="configLabel_alarms_brightMode">Bright Alarms</string>    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
+    <string name="configLabel_alarms_brightMode">Lyse alarmer</string>
+    <string name="configLabel_alarms_brightMode_summary">Fullskjermalarmer er i utgangspunktet mørke, endrer så langsomt farge og øker i lysstyrke.</string>
 
-    <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_fadein">Øk lysstyrke gradvis</string>
+    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_colors">Farge for lyse alarmer</string>
     <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
 
     <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
@@ -1288,17 +1288,17 @@
 
     <string name="configAction_createBackup">Opprett sikkerhetskopi</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
     <string name="configAction_restoreBackup">Gjenopprett sikkerhetskopi</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
-    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
-    <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>   <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>   <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors_alarmcolors">Alarm Colors</string>  <!-- TODO -->
-    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarmer</string>
+    <string name="restorebackup_dialog_item_appsettings">App-innstillinger</string>
+    <string name="restorebackup_dialog_item_colors">Farger</string>
+    <string name="restorebackup_dialog_item_colors_appcolors">App-farger</string>
+    <string name="restorebackup_dialog_item_colors_mapcolors">Kartfarger</string>
+    <string name="restorebackup_dialog_item_colors_alarmcolors">Alarmfarger</string>
+    <string name="restorebackup_dialog_item_widgetsettings">Modulinnstillinger</string>
+    <string name="restorebackup_dialog_item_widgetthemes">Modultemaer</string>
+    <string name="restorebackup_dialog_item_placeitems">Steder</string>
+    <string name="restorebackup_dialog_item_eventitems">Hendelser</string>
+    <string name="restorebackup_dialog_item_actions">Handlinger</string>
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
@@ -1694,7 +1694,7 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="graph_option_crosshair">Crosshair</string>  <!-- TODO -->
+    <string name="graph_option_crosshair">Trådkors</string>
     <string name="graph_option_grid">Rutenett</string>
     <string name="graph_option_labels">Påskrifter</string>
     <string name="graph_option_axis">Akser</string>
@@ -2246,7 +2246,7 @@
     <string name="feature_not_supported_by_source">Denne funksjonen er ikke støttet av gjeldende datakilde.</string>
     <string name="reboot_required_message">En omstart kan behøves for at endringer skal tre i kraft.</string>
     <string name="restart_required_message">En app-omstart kan behøves for at endringer skal tre i kraft.</string>   <!-- toast; app restart may be required -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="configLabel_permissionGranted">Tillatelse gitt</string>
 
     <string name="drag_hint">Drag here</string>    <!-- TODO -->
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
