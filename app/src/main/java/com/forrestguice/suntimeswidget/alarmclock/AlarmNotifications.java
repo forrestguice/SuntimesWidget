@@ -2315,6 +2315,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             notifications.startForeground((int)item.rowID, notification);  // update notification
                         }
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
+                        notifications.stopSelf(startId);
                     }
                 }
             };
@@ -2343,6 +2344,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     } else {
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
+                        notifications.stopSelf(startId);
                     }
                 }
             };
