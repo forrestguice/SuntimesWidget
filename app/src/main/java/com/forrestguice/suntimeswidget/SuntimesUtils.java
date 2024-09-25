@@ -1244,8 +1244,11 @@ public class SuntimesUtils
      *   %lon .. the location (longitude)
      *   %s .. the data source
      *   %i .. moon illumination (SuntimesMoonData only)
+     *
      *   %h .. observer height setting (meters)
      *   %H .. observer height setting (formatted, meters or feet depending on settings)
+     *   %es@event .. shadow length at event (unformatted, meters)
+     *   %eS@event .. shadow length at event (formatted, meters or feet depending on settings)
      *
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
@@ -1268,6 +1271,8 @@ public class SuntimesUtils
         HashMap<SolarEvents, String> patterns_eZ = getPatternsForEvent_eZ(events);   // azimuth
         HashMap<SolarEvents, String> patterns_eD = getPatternsForEvent_eD(events);   // declination
         HashMap<SolarEvents, String> patterns_eR = getPatternsForEvent_eR(events);   // right-ascension
+        HashMap<SolarEvents, String> patterns_es = getPatternsForEvent_es(events);   // shadow length (unformatted, meters)
+        HashMap<SolarEvents, String> patterns_eS = getPatternsForEvent_eS(events);   // shadow length display (formatted, meters or feet)
 
         if (data == null) {
             displayString = removePatterns(displayString, Arrays.asList(patterns));
@@ -1278,6 +1283,8 @@ public class SuntimesUtils
             displayString = removePatterns(displayString, patterns_eZ.values());
             displayString = removePatterns(displayString, patterns_eD.values());
             displayString = removePatterns(displayString, patterns_eR.values());
+            displayString = removePatterns(displayString, patterns_es.values());
+            displayString = removePatterns(displayString, patterns_eS.values());
             return displayString;
         }
 
@@ -1302,8 +1309,8 @@ public class SuntimesUtils
         float height = WidgetSettings.loadObserverHeightPref(context, data.appWidgetID());    // %h
         displayString = displayString.replaceAll(observerHeightPattern0, height + "");
 
+        WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
         if (displayString.contains(observerHeightPattern1)) {    // %H
-            WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
             displayString = displayString.replaceAll(observerHeightPattern1, formatAsHeight(context, height, lengthUnit, 2, true).toString());
         }
 
@@ -1316,9 +1323,12 @@ public class SuntimesUtils
             String pattern_eZ = patterns_eZ.get(event);
             String pattern_eD = patterns_eD.get(event);
             String pattern_eR = patterns_eR.get(event);
+            String pattern_es = patterns_es.get(event);
+            String pattern_eS = patterns_eS.get(event);
 
             if (!displayString.contains(pattern_em) && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT) && !displayString.contains(pattern_eA)
-                    && !displayString.contains(pattern_eZ) && !displayString.contains(pattern_eD) && !displayString.contains(pattern_eR)) {
+                    && !displayString.contains(pattern_eZ) && !displayString.contains(pattern_eD) && !displayString.contains(pattern_eR)
+                    && !displayString.contains(pattern_es) && !displayString.contains(pattern_eS)) {
                 continue;
             }
 
@@ -1357,6 +1367,11 @@ public class SuntimesUtils
                     Double value = getRightAscensionForEvent(event, d);
                     displayString = displayString.replaceAll(pattern_eR, (value != null ? formatAsRightAscension(value, 1).toString() : ""));
                 }
+                if (displayString.contains(pattern_es) || displayString.contains(pattern_eS)) {
+                    Double value = getShadowLengthForEvent(context, event, d);
+                    displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
+                    displayString = displayString.replaceAll(pattern_eS, (value != null ? formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
+                }
 
             } else {
                 displayString = displayString.replaceAll(pattern_em, "");
@@ -1366,6 +1381,8 @@ public class SuntimesUtils
                 displayString = displayString.replaceAll(pattern_eZ, "");
                 displayString = displayString.replaceAll(pattern_eD, "");
                 displayString = displayString.replaceAll(pattern_eR, "");
+                displayString = displayString.replaceAll(pattern_es, "");
+                displayString = displayString.replaceAll(pattern_eS, "");
             }
 
         }
@@ -1506,6 +1523,21 @@ public class SuntimesUtils
     }
 
     @Nullable
+    public static Double getShadowLengthForEvent(Context context, SolarEvents event, @Nullable SuntimesRiseSetData data)
+    {
+        if (data != null)
+        {
+            SuntimesCalculator calculator = data.calculator();
+            Calendar datetime = getCalendarForEvent(event, data);
+            double objHeight = WidgetSettings.loadObserverHeightPref(context, data.appWidgetID());
+            return (datetime != null && calculator != null ? calculator.getShadowLength(objHeight, datetime) : null);
+
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
     public static Calendar getCalendarForEvent(SolarEvents event, @NonNull SuntimesRiseSetData data)
     {
         switch (event)
@@ -1629,6 +1661,30 @@ public class SuntimesUtils
         return patterns;
     }
 
+    @Nullable
+    public static String getPatternForEvent_es(SolarEvents event) {
+        return getPatternForEvent("%es@", event);    // shadow length (meters)
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_es(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_es(event));
+        }
+        return patterns;
+    }
+
+    @Nullable
+    public static String getPatternForEvent_eS(SolarEvents event) {
+        return getPatternForEvent("%eS@", event);    // formatted shadow length (meters or feet)
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_eS(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_eS(event));
+        }
+        return patterns;
+    }
+
     public static String removePatterns(String displayString, Collection<String> patterns) {
         String value = displayString;
         for (String pattern : patterns) {
@@ -1662,6 +1718,8 @@ public class SuntimesUtils
         HashMap<SolarEvents, String> patterns4 = getPatternsForEvent_eZ(events);
         HashMap<SolarEvents, String> patterns5 = getPatternsForEvent_eD(events);
         HashMap<SolarEvents, String> patterns6 = getPatternsForEvent_eR(events);
+        HashMap<SolarEvents, String> patterns_es = getPatternsForEvent_es(events);
+        HashMap<SolarEvents, String> patterns_eS = getPatternsForEvent_eS(events);
 
         if (dataset != null && dataset.isCalculated())
         {
@@ -1674,8 +1732,11 @@ public class SuntimesUtils
                 String pattern_eZ = patterns4.get(event);   // %eZ .. event azimuth (formatted)
                 String pattern_eD = patterns5.get(event);   // %eD .. event declination (formatted)
                 String pattern_eR = patterns6.get(event);   // %eR .. event right ascension (formatted)
+                String pattern_es = patterns_es.get(event);   // %eS .. event shadow length (meters)
+                String pattern_eS = patterns_eS.get(event);   // %eS .. event shadow length (formatted)
                 if (!displayString.contains(pattern_em) && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT) && !displayString.contains(pattern_eA)
-                        && !displayString.contains(pattern_eZ) && !displayString.contains(pattern_eD) && !displayString.contains(pattern_eR)) {
+                        && !displayString.contains(pattern_eZ) && !displayString.contains(pattern_eD) && !displayString.contains(pattern_eR)
+                        && !displayString.contains(pattern_es) && !displayString.contains(pattern_eS)) {
                     continue;
                 }
 
@@ -1711,6 +1772,13 @@ public class SuntimesUtils
                         Double value = getRightAscensionForEvent(event, data);
                         displayString = displayString.replaceAll(pattern_eR, value != null ? formatAsRightAscension(value, 1).toString() : "");
                     }
+                    if (displayString.contains(pattern_es) || displayString.contains(pattern_eS))
+                    {
+                        WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+                        Double value = getShadowLengthForEvent(context, event, data);
+                        displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
+                        displayString = displayString.replaceAll(pattern_eS, (value != null ? formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
+                    }
                 } else {
                     displayString = displayString.replaceAll(pattern_em, "");
                     displayString = displayString.replaceAll(pattern_et, "");
@@ -1719,6 +1787,8 @@ public class SuntimesUtils
                     displayString = displayString.replaceAll(pattern_eZ, "");
                     displayString = displayString.replaceAll(pattern_eD, "");
                     displayString = displayString.replaceAll(pattern_eR, "");
+                    displayString = displayString.replaceAll(pattern_es, "");
+                    displayString = displayString.replaceAll(pattern_eS, "");
                 }
             }
         } else {
@@ -1729,6 +1799,8 @@ public class SuntimesUtils
             displayString = removePatterns(displayString, patterns4.values());
             displayString = removePatterns(displayString, patterns5.values());
             displayString = removePatterns(displayString, patterns6.values());
+            displayString = removePatterns(displayString, patterns_es.values());
+            displayString = removePatterns(displayString, patterns_eS.values());
         }
         return displayStringForTitlePattern(context, displayString, (dataset != null ? dataset.dataActual : null));
     }
