@@ -18,14 +18,12 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -38,7 +36,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -64,15 +61,12 @@ import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.lang.reflect.Method;
 import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
@@ -1267,11 +1261,15 @@ public class SuntimesUtils
         HashMap<SolarEvents, String> patterns_em = getPatternsForEvent_em(events);
         HashMap<SolarEvents, String> patterns_et = getPatternsForEvent_et(events);
         HashMap<SolarEvents, String> patterns_eT = getPatternsForEvent_eT(events);
-        HashMap<SolarEvents, String> patterns_eA = getPatternsForEvent_eA(events);   // angle/elevation
-        HashMap<SolarEvents, String> patterns_eZ = getPatternsForEvent_eZ(events);   // azimuth
-        HashMap<SolarEvents, String> patterns_eD = getPatternsForEvent_eD(events);   // declination
-        HashMap<SolarEvents, String> patterns_eR = getPatternsForEvent_eR(events);   // right-ascension
-        HashMap<SolarEvents, String> patterns_es = getPatternsForEvent_es(events);   // shadow length (unformatted, meters)
+        HashMap<SolarEvents, String> patterns_ea = getPatternsForEvent_ea(events);   // angle/elevation
+        HashMap<SolarEvents, String> patterns_eA = getPatternsForEvent_eA(events);   // angle/elevation (formatted)
+        HashMap<SolarEvents, String> patterns_ez = getPatternsForEvent_ez(events);   // azimuth
+        HashMap<SolarEvents, String> patterns_eZ = getPatternsForEvent_eZ(events);   // azimuth (formatted)
+        HashMap<SolarEvents, String> patterns_ed = getPatternsForEvent_ed(events);   // declination
+        HashMap<SolarEvents, String> patterns_eD = getPatternsForEvent_eD(events);   // declination (formatted)
+        HashMap<SolarEvents, String> patterns_er = getPatternsForEvent_er(events);   // right-ascension
+        HashMap<SolarEvents, String> patterns_eR = getPatternsForEvent_eR(events);   // right-ascension (formatted)
+        HashMap<SolarEvents, String> patterns_es = getPatternsForEvent_es(events);   // shadow length (meters)
         HashMap<SolarEvents, String> patterns_eS = getPatternsForEvent_eS(events);   // shadow length display (formatted, meters or feet)
 
         if (data == null) {
@@ -1279,9 +1277,13 @@ public class SuntimesUtils
             displayString = removePatterns(displayString, patterns_em.values());
             displayString = removePatterns(displayString, patterns_et.values());
             displayString = removePatterns(displayString, patterns_eT.values());
+            displayString = removePatterns(displayString, patterns_ea.values());
             displayString = removePatterns(displayString, patterns_eA.values());
+            displayString = removePatterns(displayString, patterns_ez.values());
             displayString = removePatterns(displayString, patterns_eZ.values());
+            displayString = removePatterns(displayString, patterns_ed.values());
             displayString = removePatterns(displayString, patterns_eD.values());
+            displayString = removePatterns(displayString, patterns_er.values());
             displayString = removePatterns(displayString, patterns_eR.values());
             displayString = removePatterns(displayString, patterns_es.values());
             displayString = removePatterns(displayString, patterns_eS.values());
@@ -1319,15 +1321,23 @@ public class SuntimesUtils
             String pattern_em = patterns_em.get(event);
             String pattern_et = patterns_et.get(event);
             String pattern_eT = patterns_eT.get(event);
+            String pattern_ea = patterns_ea.get(event);
             String pattern_eA = patterns_eA.get(event);
+            String pattern_ez = patterns_ez.get(event);
             String pattern_eZ = patterns_eZ.get(event);
+            String pattern_ed = patterns_ed.get(event);
             String pattern_eD = patterns_eD.get(event);
+            String pattern_er = patterns_er.get(event);
             String pattern_eR = patterns_eR.get(event);
             String pattern_es = patterns_es.get(event);
             String pattern_eS = patterns_eS.get(event);
 
-            if (!displayString.contains(pattern_em) && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT) && !displayString.contains(pattern_eA)
-                    && !displayString.contains(pattern_eZ) && !displayString.contains(pattern_eD) && !displayString.contains(pattern_eR)
+            if (!displayString.contains(pattern_em)
+                    && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT)
+                    && !displayString.contains(pattern_ea) && !displayString.contains(pattern_eA)
+                    && !displayString.contains(pattern_ez) && !displayString.contains(pattern_eZ)
+                    && !displayString.contains(pattern_ed) && !displayString.contains(pattern_eD)
+                    && !displayString.contains(pattern_er) && !displayString.contains(pattern_eR)
                     && !displayString.contains(pattern_es) && !displayString.contains(pattern_eS)) {
                 continue;
             }
@@ -1351,20 +1361,24 @@ public class SuntimesUtils
                 if (displayString.contains(pattern_eT)) {
                     displayString = displayString.replaceAll(pattern_eT, calendarTimeShortDisplayString(context, eventTime, true).toString());
                 }
-                if (displayString.contains(pattern_eA)) {
+                if (displayString.contains(pattern_ea) || displayString.contains(pattern_eA)) {
                     Double angle = (d.angle() != null ? Double.valueOf(d.angle()) : getAltitudeForEvent(event, d));
+                    displayString = displayString.replaceAll(pattern_ea, (angle != null ? angle + "" : ""));
                     displayString = displayString.replaceAll(pattern_eA, (angle != null ? formatAsDegrees(angle, 1) : ""));
                 }
-                if (displayString.contains(pattern_eZ)) {
+                if (displayString.contains(pattern_ez) || displayString.contains(pattern_eZ)) {
                     Double value = getAzimuthForEvent(event, d);
+                    displayString = displayString.replaceAll(pattern_ez, (value != null ? value + "" : ""));
                     displayString = displayString.replaceAll(pattern_eZ, (value != null ? formatAsDirection(value, 1) : ""));
                 }
-                if (displayString.contains(pattern_eD)) {
+                if (displayString.contains(pattern_ed) || displayString.contains(pattern_eD)) {
                     Double value = getDeclinationForEvent(event, d);
+                    displayString = displayString.replaceAll(pattern_ed, (value != null ? value + "" : ""));
                     displayString = displayString.replaceAll(pattern_eD, (value != null ? formatAsDeclination(value, 1).toString() : ""));
                 }
-                if (displayString.contains(pattern_eR)) {
+                if (displayString.contains(pattern_er) || displayString.contains(pattern_eR)) {
                     Double value = getRightAscensionForEvent(event, d);
+                    displayString = displayString.replaceAll(pattern_er, (value != null ? value + "" : ""));
                     displayString = displayString.replaceAll(pattern_eR, (value != null ? formatAsRightAscension(value, 1).toString() : ""));
                 }
                 if (displayString.contains(pattern_es) || displayString.contains(pattern_eS)) {
@@ -1377,9 +1391,13 @@ public class SuntimesUtils
                 displayString = displayString.replaceAll(pattern_em, "");
                 displayString = displayString.replaceAll(pattern_et, "");
                 displayString = displayString.replaceAll(pattern_eT, "");
+                displayString = displayString.replaceAll(pattern_ea, "");
                 displayString = displayString.replaceAll(pattern_eA, "");
+                displayString = displayString.replaceAll(pattern_ez, "");
                 displayString = displayString.replaceAll(pattern_eZ, "");
+                displayString = displayString.replaceAll(pattern_ed, "");
                 displayString = displayString.replaceAll(pattern_eD, "");
+                displayString = displayString.replaceAll(pattern_er, "");
                 displayString = displayString.replaceAll(pattern_eR, "");
                 displayString = displayString.replaceAll(pattern_es, "");
                 displayString = displayString.replaceAll(pattern_eS, "");
@@ -1614,6 +1632,18 @@ public class SuntimesUtils
     }
 
     @Nullable
+    public static String getPatternForEvent_ea(SolarEvents event) {
+        return getPatternForEvent("%ea@", event);    // angle (deg)
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_ea(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_ea(event));
+        }
+        return patterns;
+    }
+
+    @Nullable
     public static String getPatternForEvent_eA(SolarEvents event) {
         return getPatternForEvent("%eA@", event);    // formatted angle (deg)
     }
@@ -1621,6 +1651,18 @@ public class SuntimesUtils
         HashMap<SolarEvents,String> patterns = new HashMap<>();
         for (SolarEvents event : events) {
             patterns.put(event, getPatternForEvent_eA(event));
+        }
+        return patterns;
+    }
+
+    @Nullable
+    public static String getPatternForEvent_ez(SolarEvents event) {
+        return getPatternForEvent("%ez@", event);
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_ez(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_ez(event));
         }
         return patterns;
     }
@@ -1638,6 +1680,18 @@ public class SuntimesUtils
     }
 
     @Nullable
+    public static String getPatternForEvent_ed(SolarEvents event) {
+        return getPatternForEvent("%ed@", event);
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_ed(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_ed(event));
+        }
+        return patterns;
+    }
+
+    @Nullable
     public static String getPatternForEvent_eD(SolarEvents event) {
         return getPatternForEvent("%eD@", event);
     }
@@ -1645,6 +1699,18 @@ public class SuntimesUtils
         HashMap<SolarEvents,String> patterns = new HashMap<>();
         for (SolarEvents event : events) {
             patterns.put(event, getPatternForEvent_eD(event));
+        }
+        return patterns;
+    }
+
+    @Nullable
+    public static String getPatternForEvent_er(SolarEvents event) {
+        return getPatternForEvent("%er@", event);    // angle (deg)
+    }
+    public static HashMap<SolarEvents, String> getPatternsForEvent_er(SolarEvents[] events) {
+        HashMap<SolarEvents,String> patterns = new HashMap<>();
+        for (SolarEvents event : events) {
+            patterns.put(event, getPatternForEvent_er(event));
         }
         return patterns;
     }
@@ -1711,31 +1777,44 @@ public class SuntimesUtils
         String displayString = titlePattern;
 
         SolarEvents[] events = getRiseSetDatasetEvents();
-        HashMap<SolarEvents, String> patterns0 = getPatternsForEvent_em(events);
-        HashMap<SolarEvents, String> patterns1 = getPatternsForEvent_et(events);
-        HashMap<SolarEvents, String> patterns2 = getPatternsForEvent_eT(events);
-        HashMap<SolarEvents, String> patterns3 = getPatternsForEvent_eA(events);
-        HashMap<SolarEvents, String> patterns4 = getPatternsForEvent_eZ(events);
-        HashMap<SolarEvents, String> patterns5 = getPatternsForEvent_eD(events);
-        HashMap<SolarEvents, String> patterns6 = getPatternsForEvent_eR(events);
+        HashMap<SolarEvents, String> patterns_em = getPatternsForEvent_em(events);
+        HashMap<SolarEvents, String> patterns_et = getPatternsForEvent_et(events);
+        HashMap<SolarEvents, String> patterns_eT = getPatternsForEvent_eT(events);
+        HashMap<SolarEvents, String> patterns_ea = getPatternsForEvent_ea(events);
+        HashMap<SolarEvents, String> patterns_eA = getPatternsForEvent_eA(events);
+        HashMap<SolarEvents, String> patterns_ez = getPatternsForEvent_ez(events);
+        HashMap<SolarEvents, String> patterns_eZ = getPatternsForEvent_eZ(events);
+        HashMap<SolarEvents, String> patterns_ed = getPatternsForEvent_ed(events);
+        HashMap<SolarEvents, String> patterns_eD = getPatternsForEvent_eD(events);
+        HashMap<SolarEvents, String> patterns_er = getPatternsForEvent_er(events);
+        HashMap<SolarEvents, String> patterns_eR = getPatternsForEvent_eR(events);
         HashMap<SolarEvents, String> patterns_es = getPatternsForEvent_es(events);
         HashMap<SolarEvents, String> patterns_eS = getPatternsForEvent_eS(events);
 
         if (dataset != null && dataset.isCalculated())
         {
-            for (SolarEvents event : patterns0.keySet())
+            for (SolarEvents event : patterns_em.keySet())
             {
-                String pattern_em = patterns0.get(event);   // %em .. eventMillis
-                String pattern_et = patterns1.get(event);   // %et .. eventTime (formatted)
-                String pattern_eT = patterns2.get(event);   // %eT .. eventTime (formatted)
-                String pattern_eA = patterns3.get(event);   // %eA .. event angle (formatted)
-                String pattern_eZ = patterns4.get(event);   // %eZ .. event azimuth (formatted)
-                String pattern_eD = patterns5.get(event);   // %eD .. event declination (formatted)
-                String pattern_eR = patterns6.get(event);   // %eR .. event right ascension (formatted)
+                String pattern_em = patterns_em.get(event);   // %em .. eventMillis
+                String pattern_et = patterns_et.get(event);   // %et .. eventTime (formatted)
+                String pattern_eT = patterns_eT.get(event);   // %eT .. eventTime (formatted)
+                String pattern_ea = patterns_ea.get(event);   // %eA .. event angle
+                String pattern_eA = patterns_eA.get(event);   // %eA .. event angle (formatted)
+                String pattern_ez = patterns_ez.get(event);   // %eZ .. event azimuth
+                String pattern_eZ = patterns_eZ.get(event);   // %eZ .. event azimuth (formatted)
+                String pattern_ed = patterns_ed.get(event);   // %eD .. event declination
+                String pattern_eD = patterns_eD.get(event);   // %eD .. event declination (formatted)
+                String pattern_er = patterns_er.get(event);   // %er .. event right ascension
+                String pattern_eR = patterns_eR.get(event);   // %eR .. event right ascension (formatted)
                 String pattern_es = patterns_es.get(event);   // %eS .. event shadow length (meters)
                 String pattern_eS = patterns_eS.get(event);   // %eS .. event shadow length (formatted)
-                if (!displayString.contains(pattern_em) && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT) && !displayString.contains(pattern_eA)
-                        && !displayString.contains(pattern_eZ) && !displayString.contains(pattern_eD) && !displayString.contains(pattern_eR)
+
+                if (!displayString.contains(pattern_em)
+                        && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT)
+                        && !displayString.contains(pattern_ea) && !displayString.contains(pattern_eA)
+                        && !displayString.contains(pattern_ez) && !displayString.contains(pattern_eZ)
+                        && !displayString.contains(pattern_ed) && !displayString.contains(pattern_eD)
+                        && !displayString.contains(pattern_er) && !displayString.contains(pattern_eR)
                         && !displayString.contains(pattern_es) && !displayString.contains(pattern_eS)) {
                     continue;
                 }
@@ -1756,20 +1835,24 @@ public class SuntimesUtils
                     if (displayString.contains(pattern_eT)) {
                         displayString = displayString.replaceAll(pattern_eT, calendarTimeShortDisplayString(context, eventTime, true).toString());
                     }
-                    if (displayString.contains(pattern_eA)) {
+                    if (displayString.contains(pattern_ea) || displayString.contains(pattern_eA)) {
                         Double angle = getAltitudeForEvent(event, data);
+                        displayString = displayString.replaceAll(pattern_ea, angle != null ? angle + "" : "");
                         displayString = displayString.replaceAll(pattern_eA, angle != null ? formatAsDegrees(angle, 1) : "");
                     }
-                    if (displayString.contains(pattern_eZ)) {
+                    if (displayString.contains(pattern_ez) || displayString.contains(pattern_eZ)) {
                         Double value = getAzimuthForEvent(event, data);
+                        displayString = displayString.replaceAll(pattern_ez, (value != null ? value + "" : ""));
                         displayString = displayString.replaceAll(pattern_eZ, value != null ? formatAsDirection(value, 1) : "");
                     }
-                    if (displayString.contains(pattern_eD)) {
+                    if (displayString.contains(pattern_ed) || displayString.contains(pattern_eD)) {
                         Double value = getDeclinationForEvent(event, data);
+                        displayString = displayString.replaceAll(pattern_ed, (value != null ? value + "" : ""));
                         displayString = displayString.replaceAll(pattern_eD, value != null ? formatAsDeclination(value, 1).toString() : "");
                     }
-                    if (displayString.contains(pattern_eR)) {
+                    if (displayString.contains(pattern_er) || displayString.contains(pattern_eR)) {
                         Double value = getRightAscensionForEvent(event, data);
+                        displayString = displayString.replaceAll(pattern_er, (value != null ? value + "" : ""));
                         displayString = displayString.replaceAll(pattern_eR, value != null ? formatAsRightAscension(value, 1).toString() : "");
                     }
                     if (displayString.contains(pattern_es) || displayString.contains(pattern_eS))
@@ -1783,22 +1866,30 @@ public class SuntimesUtils
                     displayString = displayString.replaceAll(pattern_em, "");
                     displayString = displayString.replaceAll(pattern_et, "");
                     displayString = displayString.replaceAll(pattern_eT, "");
+                    displayString = displayString.replaceAll(pattern_ea, "");
                     displayString = displayString.replaceAll(pattern_eA, "");
+                    displayString = displayString.replaceAll(pattern_ez, "");
                     displayString = displayString.replaceAll(pattern_eZ, "");
+                    displayString = displayString.replaceAll(pattern_ed, "");
                     displayString = displayString.replaceAll(pattern_eD, "");
+                    displayString = displayString.replaceAll(pattern_er, "");
                     displayString = displayString.replaceAll(pattern_eR, "");
                     displayString = displayString.replaceAll(pattern_es, "");
                     displayString = displayString.replaceAll(pattern_eS, "");
                 }
             }
         } else {
-            displayString = removePatterns(displayString, patterns0.values());
-            displayString = removePatterns(displayString, patterns1.values());
-            displayString = removePatterns(displayString, patterns2.values());
-            displayString = removePatterns(displayString, patterns3.values());
-            displayString = removePatterns(displayString, patterns4.values());
-            displayString = removePatterns(displayString, patterns5.values());
-            displayString = removePatterns(displayString, patterns6.values());
+            displayString = removePatterns(displayString, patterns_em.values());
+            displayString = removePatterns(displayString, patterns_et.values());
+            displayString = removePatterns(displayString, patterns_eT.values());
+            displayString = removePatterns(displayString, patterns_ea.values());
+            displayString = removePatterns(displayString, patterns_eA.values());
+            displayString = removePatterns(displayString, patterns_ez.values());
+            displayString = removePatterns(displayString, patterns_eZ.values());
+            displayString = removePatterns(displayString, patterns_ed.values());
+            displayString = removePatterns(displayString, patterns_eD.values());
+            displayString = removePatterns(displayString, patterns_er.values());
+            displayString = removePatterns(displayString, patterns_eR.values());
             displayString = removePatterns(displayString, patterns_es.values());
             displayString = removePatterns(displayString, patterns_eS.values());
         }
