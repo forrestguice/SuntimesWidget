@@ -1244,6 +1244,8 @@ public class SuntimesUtils
      *   %lon .. the location (longitude)
      *   %s .. the data source
      *   %i .. moon illumination (SuntimesMoonData only)
+     *   %h .. observer height setting (meters)
+     *   %H .. observer height setting (formatted, meters or feet depending on settings)
      *
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
@@ -1254,7 +1256,9 @@ public class SuntimesUtils
         String modePattern = "%M";
         String modePatternShort = "%m";
         String orderPattern = "%o";
-        String[] patterns = new String[] { modePattern, modePatternShort, orderPattern };
+        String observerHeightPattern0 = "%h";
+        String observerHeightPattern1 = "%H";
+        String[] patterns = new String[] { modePattern, modePatternShort, orderPattern, observerHeightPattern0, observerHeightPattern1 };
 
         SolarEvents[] events = { SolarEvents.SUNRISE, SolarEvents.NOON, SolarEvents.SUNSET };
         HashMap<SolarEvents, String> patterns_em = getPatternsForEvent_em(events);
@@ -1294,6 +1298,14 @@ public class SuntimesUtils
 
         WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
         displayString = displayString.replaceAll(orderPattern, order.toString());
+
+        float height = WidgetSettings.loadObserverHeightPref(context, data.appWidgetID());    // %h
+        displayString = displayString.replaceAll(observerHeightPattern0, height + "");
+
+        if (displayString.contains(observerHeightPattern1)) {    // %H
+            WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+            displayString = displayString.replaceAll(observerHeightPattern1, formatAsHeight(context, height, lengthUnit, 2, true).toString());
+        }
 
         for (SolarEvents event : events)
         {
