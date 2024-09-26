@@ -1,5 +1,27 @@
 ### ~
 
+### v0.16.2 (2024-09-23)
+* adds "bright alarm colors"; allows customization of fullscreen alarm colors (#741).
+* adds "do-not-disturb" preference that indicates the state of the required permission (#818).
+* adds "app restricted" warning; "Alarms may fail to work reliably" when the app is in the rare or restricted app-standby-bucket.
+* fixes crash in sunlight widget (#735).
+* fixes missing "bright alarm" setting on Android 14 (#741).
+* fixes bug where bedtime do-not-disturb fails to activate (#818).
+* fixes bug where bedtime notifications are hidden due to low priority (adds a separate bedtime notification channel).
+* fixes bug where the alarm foreground service fails to stop after triggering notifications.
+* fixes missing notification text when the alarm foreground service does periodic work.
+* fixes text contrast/readability issues when modifying custom colors (support for "color roles").
+* enhances custom colors to allow for user-defined labels.
+* fixes bug where color dialog fails to show the alpha slider, and other miscellaneous improvements.
+* fixes bug where the "tap action" preference click area is misaligned.
+* fixes bug where welcome activity is cropped in landscape orientation (Android TV).
+* fixes the "back" gesture so that it dismisses visible warnings first (Android TV).
+* fixes inaccurate default place coordinates; Bangui, Conakry.
+* updates build; removes jcenter; updates `com.jraska:falcon` to `2.2.0` (#825).
+* updates translation to Norwegian (nb) (#832 by FTno).
+* updates translation to Polish and Esperanto (eo, pl) (#833 by Verdulo).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#836 by James Liu).
+
 ### v0.16.1 (2024-08-19)
 * adds "material palette" to the color dialog.
 * adds text color preview, and other miscellaneous color picker improvements.
