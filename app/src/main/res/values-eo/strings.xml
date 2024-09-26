@@ -309,8 +309,8 @@
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Aspekto</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Aspekto</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Baskuli inter aranĝoj por plenigi disponeblan spacon</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_theme">Haŭto:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Baskuligi inter aranĝoj por plenigi disponeblan spacon</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleText">Skali tekstojn kaj bildsimbolojn</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleBase">Plenigi tutan ĉelon</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">Ĝisrandigi al:</string>  <!-- spinner label -->
@@ -476,7 +476,7 @@
     <string name="actionMode_update_all">Aktualigi ĉiujn fenestraĵojn</string>           <!-- setting -->
     <string name="actionMode_config">Reagordi fenestraĵon</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Ekigi aplikaĵon</string>      <!-- setting -->
-    <string name="actionMode_flipToNextItem">Baskuli vidon</string>      <!-- setting -->
+    <string name="actionMode_flipToNextItem">Baskuligi vidon</string>      <!-- setting -->
 
     <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- Android-rilata termino, netradukita -->
     <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- Android-rilata termino, netradukita -->
@@ -657,8 +657,8 @@
     <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
-    <string name="configLabel_widgetThemeList">Fenestraĵa etoso</string>
-    <string name="configLabel_widgetThemeListSelect">Elekti etoson</string>
+    <string name="configLabel_widgetThemeList">Fenestraĵa haŭto</string>
+    <string name="configLabel_widgetThemeListSelect">Elekti haŭton</string>
     <string name="configAction_addTheme">Aldoni</string>           <!-- button (contentDescription) -->
     <string name="configAction_selectTheme">Elekti</string>     <!-- button (contentDescription) -->
     <string name="configAction_editTheme">Redakti</string>         <!-- button (contentDescription) -->
@@ -691,13 +691,13 @@
     <string name="edittheme_error_textsize_max">Grando estu plena nombro &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
     <string name="edittheme_flag_default">norma</string>  <!-- content description -->
 
-    <string name="deletetheme_dialog_title">Forigi etoson</string>        <!-- dialog title -->
+    <string name="deletetheme_dialog_title">Forigi haŭton</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">Ĉu vi certe volas forigi <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
     <string name="deletetheme_dialog_ok">Forigi</string>        <!-- button -->
     <string name="deletetheme_dialog_cancel">Nuligi</string>    <!-- button -->
 
-    <string name="configLabel_widgetThemeAdd">Aldoni etoson</string>     <!-- title text -->
-    <string name="configLabel_widgetThemeEdit">Redakti etoson</string>   <!-- title text -->
+    <string name="configLabel_widgetThemeAdd">Aldoni haŭton</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">Redakti haŭton</string>   <!-- title text -->
     <string name="configAction_saveTheme">Konservi</string>           <!-- button (contentDescription) -->
     <string name="configAction_chooseColor">Elekti koloron</string> <!-- button (contentDescription) -->
 
@@ -820,7 +820,7 @@
     <string name="configHint_themePadding">[maldekstren, supren, dekstren, malsupren]</string> <!-- edit hint -->
 
     <string name="configLabel_themeID">Identigilo:</string>                      <!-- edit label -->
-    <string name="configHint_themeID">Identigilo de etoso</string>                  <!-- edit hint -->
+    <string name="configHint_themeID">Identigilo de haŭto</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeName">Vidigi:</string>               <!-- edit label -->
     <string name="configHint_themeName">Etikedo</string>                   <!-- edit hint -->
@@ -836,6 +836,19 @@
     <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
     <string name="widgetLabel_distance">Distanco</string>           <!-- label -->
 
+    <string name="configLabel_alarms_bg_startColor">Fono (komenca)</string>               <!-- color label -->
+    <string name="configLabel_alarms_bg_endColor">Fono (fina)</string>                <!-- color label -->
+    <string name="configLabel_alarms_soundingPulse_startColor">Pulsado (alarme)</string>      <!-- color label -->
+    <string name="configLabel_alarms_soundingPulse_endColor">Pulsado (alarme)</string>        <!-- color label -->
+    <string name="configLabel_alarms_snoozingPulse_startColor">Pulsado (dormete)</string>      <!-- color label -->
+    <string name="configLabel_alarms_snoozingPulse_endColor">Pulsado (dormete)</string>        <!-- color label -->
+    <string name="configLabel_alarms_text_primaryColor">Ĉefa teksto</string>                         <!-- color label -->
+    <string name="configLabel_alarms_text_primaryColorInverse">Ĉefa teksto (inverse)</string>        <!-- color label -->
+    <string name="configLabel_alarms_text_secondaryColor">Malĉefa teksto</string>                     <!-- color label -->
+    <string name="configLabel_alarms_text_secondaryColorInverse">Malĉefa teksto (inverse)</string>    <!-- color label -->
+    <string name="configLabel_alarms_text_timeColor">Teksto de tempo</string>                               <!-- color label -->
+    <string name="configLabel_alarms_text_timeColorInverse">Teksto de tempo (inverse)</string>              <!-- color label -->
+    <string name="configLabel_alarms_text_disabledColor">Malaktiva</string>                            <!-- color label -->
 
     <!--
          CUSTOM EVENTS
@@ -1057,6 +1070,9 @@
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
     <string name="autostartWarning"><xliff:g id="warningTag">[w] Memstarto estas malŝaltita!\nAlarmoj povos ne funkcii post restarto.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
+    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Aplikaĵo estas limigita!\nAlarmoj povos ne funkcii ĝuste.</string>  <!-- snackbar message -->
+    <string name="help_restricted_bucket">La aplikaĵo apartenas al la aro de malofte uzataj aŭ limigitaj aplikaĵoj. Alarmoj povos ne funkcii ĝuste.</string>
+
     <string name="configLabel_alarms_notifications">Sciigoj</string>
     <string name="configLabel_alarms_notifications_on">Aktivaj</string>
     <string name="configLabel_alarms_notifications_off">Malaktivaj.\nAlarmoj povas ne vidiĝi ĝuste.</string>
@@ -1077,6 +1093,8 @@
     <string name="configLabel_alarms_bootcompleted_info_never">neniam</string>
     <string name="configLabel_alarms_bootcompleted_action_confirm">Ĉu replani ĉiujn alarmojn kaj sciigojn?</string>
     <string name="configLabel_alarms_bootcompleted_action_message">Replanado de alarmoj kaj sciigoj…</string>
+
+    <string name="configLabel_alarms_background_action_message">%s laboras fone.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
     <string name="configLabel_alarms_silenceAfter">Silentiĝi (ne-malaktivigi) post</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
@@ -1108,6 +1126,14 @@
 
     <string name="configLabel_alarms_brightMode_fadein">Laŭgrade pliigi helecon</string>
     <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_brightMode_colors">Koloroj de helegaj alarmoj</string>
+    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+
+    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="brightMode_colors_label_sunrise">flava</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="brightMode_colors_label_foliage">helverda</string>
+    <string name="brightMode_colors_label_bluesky">helblua</string>
 
     <string name="configLabel_alarms_nextAlarm">Alarmo</string>                             <!-- widget label ("next alarm") -->
     <string name="configLabel_alarms_nextAlarm_none">neniu alarmo</string>            <!-- widget text (no alarm set msg) -->
@@ -1154,7 +1180,7 @@
         <item quantity="other">%s tagoj</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
     
-    <string name="configLabel_alarmMisc">alia</string>
+    <string name="configLabel_alarmMisc">Aliaj</string>
     <string name="configLabel_alarms_showlauncher">Bildsimbolo en lanĉilo</string>
     <string name="configLabel_alarms_showlauncher_summary">Montri la bildsimbolon “Suntempoj: alarmoj” en aplikaĵlanĉilo.</string>
 
@@ -1250,8 +1276,9 @@
     <string name="restorebackup_dialog_item_colors">Koloroj</string>
     <string name="restorebackup_dialog_item_colors_appcolors">Koloroj de aplikaĵo</string>
     <string name="restorebackup_dialog_item_colors_mapcolors">Koloroj de mapo</string>
+    <string name="restorebackup_dialog_item_colors_alarmcolors">Koloroj de alarmoj</string>
     <string name="restorebackup_dialog_item_widgetsettings">Agordoj pri fenestraĵoj</string>
-    <string name="restorebackup_dialog_item_widgetthemes">Etosoj de fenestraĵoj</string>
+    <string name="restorebackup_dialog_item_widgetthemes">Haŭtoj de fenestraĵoj</string>
     <string name="restorebackup_dialog_item_placeitems">Lokoj</string>
     <string name="restorebackup_dialog_item_eventitems">Okazaĵoj</string>
     <string name="restorebackup_dialog_item_actions">Agoj</string>
@@ -1366,7 +1393,7 @@
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Jarsezon-mezoj</string>
-    <string name="configLabel_ui_showCrossQuarter_summary">Inkluzivi mezpunktojn inter senekstremoj kaj tagnoktegalecoj.</string>
+    <string name="configLabel_ui_showCrossQuarter_summary">Inkluzivi mezpunktojn inter sunekstremoj kaj tagnoktegalecoj.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Montri sunekstremon / tagnoktegalecon</string>
@@ -1405,8 +1432,8 @@
     <string name="configLabel_ui_showbluehour">Blua horo</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Hela etoso</string>
-    <string name="appThemes_darkTheme">Malhela etoso</string>
+    <string name="appThemes_lightTheme">Hela haŭto</string>
+    <string name="appThemes_darkTheme">Malhela haŭto</string>
     <string name="appThemes_nightMode">Hela / Malhela (dum nokta reĝimo)</string>
     <string name="appThemes_systemDefault">Laŭ operaciumo</string>
     <string name="appThemes_systemDefault1">Kontrasta (laŭ operaciumo)</string>
@@ -1449,12 +1476,12 @@
     <string name="configActionDesc_setDate">Agordi daton</string>
     <string name="configActionDesc_setTimeZone">Agordi horzonon</string>
     <string name="configActionDesc_setLocation">Agordi pozicion</string>
-    <string name="configActionDesc_swapCards">Baskuli langetojn (hodiaŭ/morgaŭ)</string>
+    <string name="configActionDesc_swapCards">Baskuligi langetojn (hodiaŭ/morgaŭ)</string>
     <string name="configActionDesc_nextCard">Montri sekvan langeton</string>
     <string name="configActionDesc_prevCard">Montri antaŭan langeton</string>
     <string name="configActionDesc_setAlarmForNote">Agordi averton pri noto</string>
     <string name="configActionDesc_alarmList">Listo de alarmoj</string>
-    <string name="configActionDesc_themeList">Listo de etosoj</string>
+    <string name="configActionDesc_themeList">Listo de haŭtoj</string>
     <string name="configActionDesc_actionList">Listo de agoj</string>
     <string name="configActionDesc_widgetList">Listo de fenestraĵoj</string>
     <string name="configActionDesc_nextSunrise">Montri sekvan sunleviĝon</string>
@@ -1562,6 +1589,7 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
+    <string name="graph_option_crosshair">Kruco</string>
     <string name="graph_option_grid">Krado (detala)</string>
     <string name="graph_option_labels">Etikedoj</string> 
     <string name="graph_option_axis">Krado</string>
@@ -1850,8 +1878,8 @@
     <string name="locationexport_dialog_message">Elportado de la datumbazo al csv-dosiero.</string>
 
     <!-- Dialog: Export Themes -->
-    <string name="themesexport_dialog_title">Elporti etosojn</string>
-    <string name="themesexport_dialog_message">Elportado de etosoj al dosiero…</string>
+    <string name="themesexport_dialog_title">Elporti haŭtojn</string>
+    <string name="themesexport_dialog_message">Elportado de haŭtoj al dosiero…</string>
 
     <!-- Dialog: Export -->
     <string name="msg_export_success">Provizore kopiita al <xliff:g id="filepath">%s</xliff:g></string>
@@ -1859,17 +1887,17 @@
     <string name="msg_export_to">Elporti per</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
-    <string name="themesimport_dialog_title">Enporti etosojn</string>
-    <string name="themesimport_dialog_message">Enportado de etosoj el dosiero…</string>
+    <string name="themesimport_dialog_title">Enporti haŭtojn</string>
+    <string name="themesimport_dialog_message">Enportado de haŭtoj el dosiero…</string>
 
     <string name="msg_import_success">Enportis <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Malsukcesis enporti el <xliff:g id="filepath">%s</xliff:g>!</string>
-    <string name="msg_import_noresults">Enportis nenion; ne trovis novajn etosojn.</string>
+    <string name="msg_import_noresults">Enportis nenion; ne trovis novajn haŭtojn.</string>
     <string name="msg_import_label_file">dosiero</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">
-        <item quantity="one">%d etoson</item>
-        <item quantity="other">%d etosojn</item>
+        <item quantity="one">%d haŭton</item>
+        <item quantity="other">%d haŭtojn</item>
     </plurals>
 
     <!-- Dialog: Color -->
@@ -1899,6 +1927,8 @@
 
     <string name="suggest_colorid">Propra</string>       <!-- edittext hint -->
     <string name="hint_colorid">Nomo</string>              <!-- edittext hint -->
+    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
+    <string name="error_colorlabel_empty">Etikedo postulata</string>           <!-- edittext error text -->
     <string name="error_colorid_empty">Nomo postulata</string>                  <!-- edittext error text -->
     <string name="error_colorid_spaces">Nomo ne enhavu spacetojn</string>   <!-- edittext error text -->
     <string name="msg_colors_saved">Konservis kolorojn %s</string>        <!-- toast -->
@@ -1966,7 +1996,7 @@
     <!-- Dialog: Help -->  
     <string name="help_dialog_title">Helpo</string>
     <string name="help_appearance_allowresize"><![CDATA[
-      <big>Baskuli inter aranĝoj por plenigi disponeblan spacon</big><br/><br/>
+      <big>Baskuligi inter aranĝoj por plenigi disponeblan spacon</big><br/><br/>
       <i><b>[aktiva]</b></i> La fenestraĵo ŝanĝos sian aranĝon depende de disponebla spaco.<br/><br/>
       <i><b>[malaktiva]</b></i> La fenestraĵo tenos sian komencan aranĝon dum aligrandigo. Uzu tion ĉi kun la eblo “<i>Skali tekstojn kaj bildsimbolojn</i>” por tre grandaj fenestraĵoj.<br/>
     ]]></string>
@@ -2142,10 +2172,10 @@
           Por <b>reagordi ekzistantan fenestraĵon</b>, elektu ĝin el la jena listo.<br/>
     ]]></string>
     <string name="help_themelist">
-          [Icon Add] Krei novan etoson aŭ [Icon Copy] kopii ekzistantan.\n
+          [Icon Add] Krei novan haŭton aŭ [Icon Copy] kopii ekzistantan.\n
           \n
-          [Icon Edit] Redakti aŭ [Icon Delete] forigi etosojn.\n
-          Oni ne povas modifii [Icon Default] implicitajn etosojn.
+          [Icon Edit] Redakti aŭ [Icon Delete] forigi haŭtojn.\n
+          Oni ne povas modifii [Icon Default] implicitajn haŭtojn.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
     <string name="help_calendar"><![CDATA[Aldoni okazaĵojn (lunfazojn, sunekstremojn kaj tagnoktegalecojn) al la aplikaĵo de kalendaro.<br />
@@ -2158,7 +2188,7 @@
     <string name="privacy_policy0"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniun reklamon</b>, <b>neniun analizilon</b>, <b>neniun spurilon</b> kaj <b>neniun malnecesan permeson</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniun reklamon</b>, <b>neniun analizilon</b>, <b>neniun spurilon</b> kaj <b>neniun malnecesan permeson</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>
-    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzata por elporti/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzata por elporti/sekurkopii datumojn al dosieroj (ekz. lokojn, haŭtojn).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[La permeso por <b>legi eksteran konservejon</b> estas uzata por ludi sonojn troviĝantajn en la SD‑karto. <br/><br/>Tiu permeso estas malnepra, la implicita sono estos ludata, se tiu permeso mankas. Tiu permeso ne estas bezonata por ludi sonojn de la sistemo (konservo de aŭdvidaĵoj).]]></string>
     <string name="privacy_permission_dnd"><![CDATA[La aplikaĵo Suntempoj bezonas la permeson por aliri <b>senĝenan reĝimon</b> por ŝanĝi tiun ĉi agordon je dormtempo.]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Ĉu peti la permeson nun?]]></string>
@@ -2172,8 +2202,10 @@
     <string name="feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
     <string name="reboot_required_message">Restarto de la aparato povas esti necesa por apliki ŝanĝojn.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">Restarto de la aplikaĵo povas esti necesa por apliki ŝanĝojn.</string>   <!-- toast; app restart may be required -->
+    <string name="configLabel_permissionGranted">Permeso akirita</string>
 
-    <string name="drag_hint">Ŝovi tien</string>
+    <string name="drag_hint">Ŝovu tien ĉi</string>
+    <string name="hint_label">Etikedo</string>        <!-- edittext hint -->
 
     <string name="dialog_ok">Bone</string>
     <string name="dialog_cancel">Nuligi</string>

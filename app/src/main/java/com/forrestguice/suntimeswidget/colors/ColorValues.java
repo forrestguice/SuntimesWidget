@@ -115,7 +115,6 @@ public abstract class ColorValues implements Parcelable
         return prefs.getString(prefix + KEY_ID, null);
     }
     public static String loadColorValuesLabel(SharedPreferences prefs, String prefix) {
-        Log.d("DEBUG", "loadColorValuesLabel: prefix: " + prefix);
         return prefs.getString(prefix + KEY_LABEL, null);
     }
     public static int loadColorValuesColor(SharedPreferences prefs, String prefix, String key, int defaultColor) {
