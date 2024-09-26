@@ -736,7 +736,7 @@ public class WidgetActions
             return utils.displayStringForTitlePattern(context, pattern, (SuntimesMoonData) data);
 
         } else if (data instanceof SuntimesEquinoxSolsticeData) {
-            return utils.displayStringForTitlePattern(context, pattern, (SuntimesMoonData) data);
+            return utils.displayStringForTitlePattern(context, pattern, (SuntimesEquinoxSolsticeData) data);
 
         } else {
             return utils.displayStringForTitlePattern(context, pattern, data);

@@ -859,19 +859,19 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">距离</string>           <!-- label -->
 
-    <string name="configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_alarms_bg_startColor">背景（开始）</string>               <!-- color label -->
+    <string name="configLabel_alarms_bg_endColor">背景（结束）</string>                <!-- color label -->
+    <string name="configLabel_alarms_soundingPulse_startColor">脉冲（响铃）</string>      <!-- color label -->
+    <string name="configLabel_alarms_soundingPulse_endColor">脉冲（响铃）</string>        <!-- color label -->
+    <string name="configLabel_alarms_snoozingPulse_startColor">脉冲（延时）</string>      <!-- color label -->
+    <string name="configLabel_alarms_snoozingPulse_endColor">脉冲（延时）</string>        <!-- color label -->
+    <string name="configLabel_alarms_text_primaryColor">主要文本</string>                         <!-- color label -->
+    <string name="configLabel_alarms_text_primaryColorInverse">主要文本（反向）</string>        <!-- color label -->
+    <string name="configLabel_alarms_text_secondaryColor">次要文本</string>                     <!-- color label -->
+    <string name="configLabel_alarms_text_secondaryColorInverse">次要文本（反向）</string>    <!-- color label -->
+    <string name="configLabel_alarms_text_timeColor">时间文本</string>                               <!-- color label -->
+    <string name="configLabel_alarms_text_timeColorInverse">时间文本（反向）</string>              <!-- color label -->
+    <string name="configLabel_alarms_text_disabledColor">禁用</string>                            <!-- color label -->
 
     <!--
          CUSTOM EVENTS
@@ -1087,8 +1087,8 @@
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
     <string name="autostartWarning"><xliff:g id="warningTag">[w] 自动启动被禁用！\n重启后闹钟可能无法可靠地运作。</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
-    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
-    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
+    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> 应用被限制！\n闹钟可能无法可靠地运作。</string>  <!-- snackbar message -->
+    <string name="help_restricted_bucket">应用被置于罕见或受限应用待机类别中。闹钟可能无法可靠地运作。</string>
 
     <string name="configLabel_alarms_notifications">通知</string>
     <string name="configLabel_alarms_notifications_on">打开</string>
@@ -1111,7 +1111,7 @@
     <string name="configLabel_alarms_bootcompleted_action_confirm">重新安排所有闹钟和通知？</string>
     <string name="configLabel_alarms_bootcompleted_action_message">重新安排所有闹钟和通知…</string>
 
-    <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
+    <string name="configLabel_alarms_background_action_message">%s 正在后台执行任务。</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
     <string name="configLabel_alarms_silenceAfter">在…后静音</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
@@ -1144,13 +1144,13 @@
     <string name="configLabel_alarms_brightMode_fadein">逐渐增加亮度</string>
     <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_colors">明亮闹钟颜色</string>
     <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
 
     <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
     <string name="brightMode_colors_label_sunrise">@string/sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
-    <string name="brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
-    <string name="brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
+    <string name="brightMode_colors_label_foliage">绿叶</string>
+    <string name="brightMode_colors_label_bluesky">蓝天</string>
 
     <string name="configLabel_alarms_nextAlarm">闹钟</string>                             <!-- widget label ("next alarm") -->
     <string name="configLabel_alarms_nextAlarm_none">没有设定闹钟</string>            <!-- widget text (no alarm set msg) -->
@@ -1293,7 +1293,7 @@
     <string name="restorebackup_dialog_item_colors">颜色</string>
     <string name="restorebackup_dialog_item_colors_appcolors">应用颜色</string>
     <string name="restorebackup_dialog_item_colors_mapcolors">地图颜色</string>
-    <string name="restorebackup_dialog_item_colors_alarmcolors">Alarm Colors</string>  <!-- TODO -->
+    <string name="restorebackup_dialog_item_colors_alarmcolors">闹钟颜色</string>
     <string name="restorebackup_dialog_item_widgetsettings">小部件设置</string>
     <string name="restorebackup_dialog_item_widgetthemes">小部件主题</string>
     <string name="restorebackup_dialog_item_placeitems">地点</string>
@@ -1708,7 +1708,7 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="graph_option_crosshair">Crosshair</string>  <!-- TODO -->
+    <string name="graph_option_crosshair">十字线</string>
     <string name="graph_option_grid">网格</string>
     <string name="graph_option_labels">标签</string>
     <string name="graph_option_axis">轴</string>
@@ -1964,7 +1964,7 @@
     <string name="suggest_colorid">自定义</string>       <!-- edittext hint -->
     <string name="hint_colorid">ID</string>              <!-- edittext hint -->
     <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
-    <string name="error_colorlabel_empty">Label required</string>           <!-- edittext error text -->   <!-- TODO -->
+    <string name="error_colorlabel_empty">标签 必需</string>           <!-- edittext error text --> 
     <string name="error_colorid_empty">ID 必需</string>                  <!-- edittext error text -->
     <string name="error_colorid_spaces">ID 不能包含空格</string>   <!-- edittext error text -->
     <string name="msg_colors_saved">已保存 %s</string>        <!-- toast -->
@@ -2236,10 +2236,10 @@
     <string name="feature_not_supported_by_source">当前数据源不支持此功能。</string>
     <string name="reboot_required_message">可能需要重启设备以使变更生效。</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">可能需要重启应用以使变更生效。</string>   <!-- toast; app restart may be required -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="configLabel_permissionGranted">权限已授予</string>
 
     <string name="drag_hint">拖拽到这里</string>
-    <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
+    <string name="hint_label">标签</string>        <!-- edittext hint -->
 
     <string name="dialog_ok">确认</string>
     <string name="dialog_cancel">取消</string>
