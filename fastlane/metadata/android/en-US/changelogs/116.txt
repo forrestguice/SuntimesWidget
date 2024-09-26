@@ -4,3 +4,5 @@
 - fixes text readability when modifying custom colors.
 - adds "bright alarm colors" (customize the alarm screen).
 - updates translation to Norwegian.
+- updates translation to Polish and Esperanto.
+- updates translations to Simplified Chinese, and Traditional Chinese.

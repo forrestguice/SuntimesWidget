@@ -19,6 +19,8 @@
 * fixes inaccurate default place coordinates; Bangui, Conakry.
 * updates build; removes jcenter; updates `com.jraska:falcon` to `2.2.0` (#825).
 * updates translation to Norwegian (nb) (#832 by FTno).
+* updates translation to Polish and Esperanto (eo, pl) (#833 by Verdulo).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#836 by James Liu).
 
 ### v0.16.1 (2024-08-19)
 * adds "material palette" to the color dialog.
