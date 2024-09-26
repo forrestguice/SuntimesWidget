@@ -1257,19 +1257,19 @@ public class SuntimesUtils
         String[] patterns = new String[] { modePattern, modePatternShort, orderPattern };
 
         SolarEvents[] events = { SolarEvents.SUNRISE, SolarEvents.NOON, SolarEvents.SUNSET };
-        HashMap<SolarEvents, String> patterns_em = DataSubstitutions.getPatternsForEvent_em(events);
-        HashMap<SolarEvents, String> patterns_et = DataSubstitutions.getPatternsForEvent_et(events);
-        HashMap<SolarEvents, String> patterns_eT = DataSubstitutions.getPatternsForEvent_eT(events);
-        HashMap<SolarEvents, String> patterns_ea = DataSubstitutions.getPatternsForEvent_ea(events);   // angle/elevation
-        HashMap<SolarEvents, String> patterns_eA = DataSubstitutions.getPatternsForEvent_eA(events);   // angle/elevation (formatted)
-        HashMap<SolarEvents, String> patterns_ez = DataSubstitutions.getPatternsForEvent_ez(events);   // azimuth
-        HashMap<SolarEvents, String> patterns_eZ = DataSubstitutions.getPatternsForEvent_eZ(events);   // azimuth (formatted)
-        HashMap<SolarEvents, String> patterns_ed = DataSubstitutions.getPatternsForEvent_ed(events);   // declination
-        HashMap<SolarEvents, String> patterns_eD = DataSubstitutions.getPatternsForEvent_eD(events);   // declination (formatted)
-        HashMap<SolarEvents, String> patterns_er = DataSubstitutions.getPatternsForEvent_er(events);   // right-ascension
-        HashMap<SolarEvents, String> patterns_eR = DataSubstitutions.getPatternsForEvent_eR(events);   // right-ascension (formatted)
-        HashMap<SolarEvents, String> patterns_es = DataSubstitutions.getPatternsForEvent_es(events);   // shadow length (meters)
-        HashMap<SolarEvents, String> patterns_eS = DataSubstitutions.getPatternsForEvent_eS(events);   // shadow length display (formatted, meters or feet)
+        HashMap<SolarEvents, String> patterns_em = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_em_at, events);
+        HashMap<SolarEvents, String> patterns_et = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_et_at, events);
+        HashMap<SolarEvents, String> patterns_eT = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eT_at, events);
+        HashMap<SolarEvents, String> patterns_ea = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ea_at, events);   // angle/elevation
+        HashMap<SolarEvents, String> patterns_eA = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eA_at, events);   // angle/elevation (formatted)
+        HashMap<SolarEvents, String> patterns_ez = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ez_at, events);   // azimuth
+        HashMap<SolarEvents, String> patterns_eZ = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eZ_at, events);   // azimuth (formatted)
+        HashMap<SolarEvents, String> patterns_ed = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ed_at, events);   // declination
+        HashMap<SolarEvents, String> patterns_eD = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eD_at, events);   // declination (formatted)
+        HashMap<SolarEvents, String> patterns_er = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_er_at, events);   // right-ascension
+        HashMap<SolarEvents, String> patterns_eR = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eR_at, events);   // right-ascension (formatted)
+        HashMap<SolarEvents, String> patterns_es = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_es_at, events);   // shadow length (meters)
+        HashMap<SolarEvents, String> patterns_eS = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eS_at, events);   // shadow length display (formatted, meters or feet)
 
         if (data == null) {
             displayString = DataSubstitutions.removePatterns(displayString, Arrays.asList(patterns));
@@ -1638,19 +1638,19 @@ public class SuntimesUtils
         String displayString = titlePattern;
 
         SolarEvents[] events = getRiseSetDatasetEvents();
-        HashMap<SolarEvents, String> patterns_em = DataSubstitutions.getPatternsForEvent_em(events);
-        HashMap<SolarEvents, String> patterns_et = DataSubstitutions.getPatternsForEvent_et(events);
-        HashMap<SolarEvents, String> patterns_eT = DataSubstitutions.getPatternsForEvent_eT(events);
-        HashMap<SolarEvents, String> patterns_ea = DataSubstitutions.getPatternsForEvent_ea(events);
-        HashMap<SolarEvents, String> patterns_eA = DataSubstitutions.getPatternsForEvent_eA(events);
-        HashMap<SolarEvents, String> patterns_ez = DataSubstitutions.getPatternsForEvent_ez(events);
-        HashMap<SolarEvents, String> patterns_eZ = DataSubstitutions.getPatternsForEvent_eZ(events);
-        HashMap<SolarEvents, String> patterns_ed = DataSubstitutions.getPatternsForEvent_ed(events);
-        HashMap<SolarEvents, String> patterns_eD = DataSubstitutions.getPatternsForEvent_eD(events);
-        HashMap<SolarEvents, String> patterns_er = DataSubstitutions.getPatternsForEvent_er(events);
-        HashMap<SolarEvents, String> patterns_eR = DataSubstitutions.getPatternsForEvent_eR(events);
-        HashMap<SolarEvents, String> patterns_es = DataSubstitutions.getPatternsForEvent_es(events);
-        HashMap<SolarEvents, String> patterns_eS = DataSubstitutions.getPatternsForEvent_eS(events);
+        HashMap<SolarEvents, String> patterns_em = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_em_at, events);
+        HashMap<SolarEvents, String> patterns_et = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_et_at, events);
+        HashMap<SolarEvents, String> patterns_eT = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eT_at, events);
+        HashMap<SolarEvents, String> patterns_ea = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ea_at, events);   // angle/elevation
+        HashMap<SolarEvents, String> patterns_eA = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eA_at, events);   // angle/elevation (formatted)
+        HashMap<SolarEvents, String> patterns_ez = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ez_at, events);   // azimuth
+        HashMap<SolarEvents, String> patterns_eZ = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eZ_at, events);   // azimuth (formatted)
+        HashMap<SolarEvents, String> patterns_ed = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ed_at, events);   // declination
+        HashMap<SolarEvents, String> patterns_eD = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eD_at, events);   // declination (formatted)
+        HashMap<SolarEvents, String> patterns_er = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_er_at, events);   // right-ascension
+        HashMap<SolarEvents, String> patterns_eR = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eR_at, events);   // right-ascension (formatted)
+        HashMap<SolarEvents, String> patterns_es = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_es_at, events);   // shadow length (meters)
+        HashMap<SolarEvents, String> patterns_eS = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eS_at, events);   // shadow length display (formatted, meters or feet)
 
         if (dataset != null && dataset.isCalculated())
         {
