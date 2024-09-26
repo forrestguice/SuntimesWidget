@@ -39,6 +39,64 @@ import java.util.List;
 
 public class DataSubstitutions
 {
+    public static final String PATTERN_m = "%m";    // mode (short)
+    public static final String PATTERN_M = "%M";    // mode
+    public static final String PATTERN_o = "%o";    // order
+    public static final String PATTERN_loc = "%loc";
+    public static final String PATTERN_lat = "%lat";
+    public static final String PATTERN_lon = "%lon";
+    public static final String PATTERN_lel = "%lel";
+    public static final String PATTERN_eot = "%eot";
+    public static final String PATTERN_eot_m = "%eot_m";
+    public static final String PATTERN_t = "%t";
+    public static final String PATTERN_s = "%s";
+    public static final String PATTERN_id = "%id";
+    public static final String PATTERN_d = "%d";
+    public static final String PATTERN_dY = "%dY";
+    public static final String PATTERN_dD = "%dD";
+    public static final String PATTERN_dd = "%dd";
+    public static final String PATTERN_dT = "%dT";
+    public static final String PATTERN_dt = "%dt";
+    public static final String PATTERN_dm = "%dm";
+    public static final String PATTERN_h = "%h";
+    public static final String PATTERN_H = "%H";
+    public static final String PATTERN_PERCENT = "%%";
+
+    public static final String PATTERN_em_at = "%em@";    // event millis
+    public static final String PATTERN_et_at = "%et@";    // event time (formatted)
+    public static final String PATTERN_eT_at = "%eT@";    // event time (formatted with seconds)
+    public static final String PATTERN_ea_at = "%ea@";    // angle/elevation
+    public static final String PATTERN_eA_at = "%eA@";    // angle/elevation (formatted)
+    public static final String PATTERN_ez_at = "%ez@";    // azimuth
+    public static final String PATTERN_eZ_at = "%eZ@";    // azimuth (formatted)
+    public static final String PATTERN_ed_at = "%ed@";    // declination
+    public static final String PATTERN_eD_at = "%eD@";    // declination (formatted)
+    public static final String PATTERN_er_at = "%er@";    // right-ascension
+    public static final String PATTERN_eR_at = "%eR@";    // right-ascension (formatted)
+    public static final String PATTERN_es_at = "%es@";    // shadow length (meters)
+    public static final String PATTERN_eS_at = "%eS@";    // shadow length display (formatted, meters or feet)
+
+    public static final String SUFFIX_MORNING_ASTRONOMICAL = "ar";
+    public static final String SUFFIX_EVENING_ASTRONOMICAL = "as";
+    public static final String SUFFIX_MORNING_NAUTICAL = "nr";
+    public static final String SUFFIX_EVENING_NAUTICAL = "ns";
+    public static final String SUFFIX_MORNING_CIVIL = "cr";
+    public static final String SUFFIX_EVENING_CIVIL = "cs";
+    public static final String SUFFIX_SUNRISE = "sr";
+    public static final String SUFFIX_NOON = "sn";
+    public static final String SUFFIX_MIDNIGHT = "sm";
+    public static final String SUFFIX_SUNSET = "ss";
+    public static final String SUFFIX_MORNING_GOLDEN = "gr";
+    public static final String SUFFIX_EVENING_GOLDEN = "gs";
+    public static final String SUFFIX_MORNING_BLUE4 = "b4r";
+    public static final String SUFFIX_EVENING_BLUE4 = "b4s";
+    public static final String SUFFIX_MORNING_BLUE8 = "b8r";
+    public static final String SUFFIX_EVENING_BLUE8 = "b8s";
+    public static final String SUFFIX_MOONRISE = "lr";
+    public static final String SUFFIX_MOONSET = "ls";
+    public static final String SUFFIX_MOONNOON = "ln";
+    public static final String SUFFIX_MOONNIGHT = "lm";
+
     @Nullable
     public static <T extends SuntimesData> SuntimesCalculator.Position getPositionForEvent(SolarEvents event, @Nullable T data)
     {
@@ -155,26 +213,26 @@ public class DataSubstitutions
     {
         switch (event)
         {
-            case MORNING_ASTRONOMICAL: return prefix + "ar";
-            case EVENING_ASTRONOMICAL: return prefix + "as";
-            case MORNING_NAUTICAL: return prefix + "nr";
-            case EVENING_NAUTICAL: return prefix + "ns";
-            case MORNING_CIVIL: return prefix + "cr";
-            case EVENING_CIVIL: return prefix + "cs";
-            case SUNRISE: return prefix + "sr";
-            case NOON: return prefix + "sn";
-            //case MIDNIGHT: return prefix + "sm";    // TODO: midnight
-            case SUNSET: return prefix + "ss";
-            case MORNING_GOLDEN: return prefix + "gr";
-            case EVENING_GOLDEN: return prefix + "gs";
-            case MORNING_BLUE4: return prefix + "b4r";
-            case EVENING_BLUE4: return prefix + "b4s";
-            case MORNING_BLUE8: return prefix + "b8r";
-            case EVENING_BLUE8: return prefix + "b8s";
-            case MOONRISE: return prefix + "lr";
-            case MOONSET: return prefix + "ls";
-            case MOONNOON: return prefix + "ln";
-            case MOONNIGHT: return prefix + "lm";
+            case MORNING_ASTRONOMICAL: return prefix + SUFFIX_MORNING_ASTRONOMICAL;
+            case EVENING_ASTRONOMICAL: return prefix + SUFFIX_EVENING_ASTRONOMICAL;
+            case MORNING_NAUTICAL: return prefix + SUFFIX_MORNING_NAUTICAL;
+            case EVENING_NAUTICAL: return prefix + SUFFIX_EVENING_NAUTICAL;
+            case MORNING_CIVIL: return prefix + SUFFIX_MORNING_CIVIL;
+            case EVENING_CIVIL: return prefix + SUFFIX_EVENING_CIVIL;
+            case SUNRISE: return prefix + SUFFIX_SUNRISE;
+            case NOON: return prefix + SUFFIX_NOON;
+            //case MIDNIGHT: return prefix + SUFFIX_MIDNIGHT;    // TODO: midnight
+            case SUNSET: return prefix + SUFFIX_SUNSET;
+            case MORNING_GOLDEN: return prefix + SUFFIX_MORNING_GOLDEN;
+            case EVENING_GOLDEN: return prefix + SUFFIX_EVENING_GOLDEN;
+            case MORNING_BLUE4: return prefix + SUFFIX_MORNING_BLUE4;
+            case EVENING_BLUE4: return prefix + SUFFIX_EVENING_BLUE4;
+            case MORNING_BLUE8: return prefix + SUFFIX_MORNING_BLUE8;
+            case EVENING_BLUE8: return prefix + SUFFIX_EVENING_BLUE8;
+            case MOONRISE: return prefix + SUFFIX_MOONRISE;
+            case MOONSET: return prefix + SUFFIX_MOONSET;
+            case MOONNOON: return prefix + SUFFIX_MOONNOON;
+            case MOONNIGHT: return prefix + SUFFIX_MOONNIGHT;
             default: return null;
         }
     }
@@ -194,158 +252,11 @@ public class DataSubstitutions
         return patterns;
     }
 
-    @Nullable
-    public static String getPatternForEvent_em(SolarEvents event) {
-        return getPatternForEvent("%em@", event);    // miliseconds
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_em(SolarEvents[] events) {
+    public static HashMap<SolarEvents, String> getPatternsForEvent(final String pattern, SolarEvents[] events)
+    {
         return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
             public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_em(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_et(SolarEvents event) {
-        return getPatternForEvent("%et@", event);    // formatted time
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_et(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_et(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eT(SolarEvents event) {
-        return getPatternForEvent("%eT@", event);    // formatted time (wth seconds)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eT(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_eT(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_ea(SolarEvents event) {
-        return getPatternForEvent("%ea@", event);    // angle (deg)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_ea(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_ea(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eA(SolarEvents event) {
-        return getPatternForEvent("%eA@", event);    // formatted angle (deg)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eA(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_eA(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_ez(SolarEvents event) {
-        return getPatternForEvent("%ez@", event);
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_ez(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_ez(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eZ(SolarEvents event) {
-        return getPatternForEvent("%eZ@", event);
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eZ(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_eZ(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_ed(SolarEvents event) {
-        return getPatternForEvent("%ed@", event);
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_ed(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_ed(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eD(SolarEvents event) {
-        return getPatternForEvent("%eD@", event);
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eD(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_eD(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_er(SolarEvents event) {
-        return getPatternForEvent("%er@", event);    // angle (deg)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_er(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_er(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eR(SolarEvents event) {
-        return getPatternForEvent("%eR@", event);    // formatted angle (deg)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eR(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_eR(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_es(SolarEvents event) {
-        return getPatternForEvent("%es@", event);    // shadow length (meters)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_es(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_es(event);
-            }
-        });
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eS(SolarEvents event) {
-        return getPatternForEvent("%eS@", event);    // formatted shadow length (meters or feet)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eS(SolarEvents[] events) {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
-            public String getPatternForEvent(SolarEvents event) {
-                return getPatternForEvent_eS(event);
+                return DataSubstitutions.getPatternForEvent(pattern, event);
             }
         });
     }
@@ -402,27 +313,23 @@ public class DataSubstitutions
     public static <T extends SuntimesData> String displayStringForTitlePattern0(Context context, String titlePattern, @Nullable T data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData) data);
-        String modePattern = "%M";
-        String modePatternShort = "%m";
-        String orderPattern = "%o";
-        String[] patterns = new String[] { modePattern, modePatternShort, orderPattern };
+        String[] patterns = new String[] { PATTERN_M, PATTERN_m, PATTERN_o };
 
         List<String> positionPatterns = new ArrayList<>();
-
         SolarEvents[] events = SolarEvents.values(); //{ SolarEvents.SUNRISE, SolarEvents.NOON, SolarEvents.SUNSET };
-        HashMap<SolarEvents, String> patterns_em = appendTo(getPatternsForEvent_em(events), positionPatterns);
-        HashMap<SolarEvents, String> patterns_et = appendTo(getPatternsForEvent_et(events), positionPatterns);
-        HashMap<SolarEvents, String> patterns_eT = appendTo(getPatternsForEvent_eT(events), positionPatterns);
-        HashMap<SolarEvents, String> patterns_ea = appendTo(getPatternsForEvent_ea(events), positionPatterns);   // angle/elevation
-        HashMap<SolarEvents, String> patterns_eA = appendTo(getPatternsForEvent_eA(events), positionPatterns);   // angle/elevation (formatted)
-        HashMap<SolarEvents, String> patterns_ez = appendTo(getPatternsForEvent_ez(events), positionPatterns);   // azimuth
-        HashMap<SolarEvents, String> patterns_eZ = appendTo(getPatternsForEvent_eZ(events), positionPatterns);   // azimuth (formatted)
-        HashMap<SolarEvents, String> patterns_ed = appendTo(getPatternsForEvent_ed(events), positionPatterns);   // declination
-        HashMap<SolarEvents, String> patterns_eD = appendTo(getPatternsForEvent_eD(events), positionPatterns);   // declination (formatted)
-        HashMap<SolarEvents, String> patterns_er = appendTo(getPatternsForEvent_er(events), positionPatterns);   // right-ascension
-        HashMap<SolarEvents, String> patterns_eR = appendTo(getPatternsForEvent_eR(events), positionPatterns);   // right-ascension (formatted)
-        HashMap<SolarEvents, String> patterns_es = appendTo(getPatternsForEvent_es(events), positionPatterns);   // shadow length (meters)
-        HashMap<SolarEvents, String> patterns_eS = appendTo(getPatternsForEvent_eS(events), positionPatterns);   // shadow length display (formatted, meters or feet)
+        HashMap<SolarEvents, String> patterns_em = appendTo(getPatternsForEvent(PATTERN_em_at, events), positionPatterns);
+        HashMap<SolarEvents, String> patterns_et = appendTo(getPatternsForEvent(PATTERN_et_at, events), positionPatterns);
+        HashMap<SolarEvents, String> patterns_eT = appendTo(getPatternsForEvent(PATTERN_eT_at, events), positionPatterns);
+        HashMap<SolarEvents, String> patterns_ea = appendTo(getPatternsForEvent(PATTERN_ea_at, events), positionPatterns);   // angle/elevation
+        HashMap<SolarEvents, String> patterns_eA = appendTo(getPatternsForEvent(PATTERN_eA_at, events), positionPatterns);   // angle/elevation (formatted)
+        HashMap<SolarEvents, String> patterns_ez = appendTo(getPatternsForEvent(PATTERN_ez_at, events), positionPatterns);   // azimuth
+        HashMap<SolarEvents, String> patterns_eZ = appendTo(getPatternsForEvent(PATTERN_eZ_at, events), positionPatterns);   // azimuth (formatted)
+        HashMap<SolarEvents, String> patterns_ed = appendTo(getPatternsForEvent(PATTERN_ed_at, events), positionPatterns);   // declination
+        HashMap<SolarEvents, String> patterns_eD = appendTo(getPatternsForEvent(PATTERN_eD_at, events), positionPatterns);   // declination (formatted)
+        HashMap<SolarEvents, String> patterns_er = appendTo(getPatternsForEvent(PATTERN_er_at, events), positionPatterns);   // right-ascension
+        HashMap<SolarEvents, String> patterns_eR = appendTo(getPatternsForEvent(PATTERN_eR_at, events), positionPatterns);   // right-ascension (formatted)
+        HashMap<SolarEvents, String> patterns_es = appendTo(getPatternsForEvent(PATTERN_es_at, events), positionPatterns);   // shadow length (meters)
+        HashMap<SolarEvents, String> patterns_eS = appendTo(getPatternsForEvent(PATTERN_eS_at, events), positionPatterns);   // shadow length display (formatted, meters or feet)
 
         if (data == null)
         {
@@ -451,11 +358,11 @@ public class DataSubstitutions
                 }
             }
         }
-        displayString = displayString.replaceAll(modePatternShort, modeDisplayShort);
-        displayString = displayString.replaceAll(modePattern, modeDisplayLong);
+        displayString = displayString.replaceAll(PATTERN_m, modeDisplayShort);
+        displayString = displayString.replaceAll(PATTERN_M, modeDisplayLong);
 
         WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
-        displayString = displayString.replaceAll(orderPattern, order.toString());
+        displayString = displayString.replaceAll(PATTERN_o, order.toString());
 
         for (SolarEvents event : events)
         {
@@ -567,25 +474,25 @@ public class DataSubstitutions
     public static String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesData data)
     {
         String displayString = titlePattern;
-        String locPattern = "%loc";
-        String latPattern = "%lat";
-        String lonPattern = "%lon";
-        String altPattern = "%lel";
-        String eotPattern = "%eot";
-        String eotMillisPattern = "%eot_m";
-        String timezoneIDPattern = "%t";
-        String datasourcePattern = "%s";
-        String widgetIDPattern = "%id";
-        String datePattern = "%d";
-        String dateYearPattern = "%dY";
-        String dateDayPattern = "%dD";
-        String dateDayPatternShort = "%dd";
-        String dateTimePattern = "%dT";
-        String dateTimePatternShort = "%dt";
-        String dateMillisPattern = "%dm";
-        String observerHeightPattern0 = "%h";
-        String observerHeightPattern1 = "%H";
-        String percentPattern = "%%";
+        String locPattern = PATTERN_loc;            // "%loc";
+        String latPattern = PATTERN_lat;            // "%lat";
+        String lonPattern = PATTERN_lon;            // "%lon";
+        String altPattern = PATTERN_lel;            // "%lel";
+        String eotPattern = PATTERN_eot;            // "%eot";
+        String eotMillisPattern = PATTERN_eot_m;    // "%eot_m";
+        String timezoneIDPattern = PATTERN_t;       // "%t";
+        String datasourcePattern = PATTERN_s;       // "%s";
+        String widgetIDPattern = PATTERN_id;        // "%id";
+        String datePattern = PATTERN_d;             // "%d";
+        String dateYearPattern = PATTERN_dY;        // "%dY";
+        String dateDayPattern = PATTERN_dD;         // "%dD";
+        String dateDayPatternShort = PATTERN_dd;    //"%dd";
+        String dateTimePattern = PATTERN_dT;        //"%dT";
+        String dateTimePatternShort = PATTERN_dt;   //"%dt";
+        String dateMillisPattern = PATTERN_dm;      //"%dm";
+        String observerHeightPattern0 = PATTERN_h;  //"%h";
+        String observerHeightPattern1 = PATTERN_H;  //"%H";
+        String percentPattern = PATTERN_PERCENT;    // "%%";
 
         if (data == null)
         {
