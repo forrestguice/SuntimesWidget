@@ -282,7 +282,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
                     found = now.before(eventCalendars[1]) && now.after(eventCalendars[0]);
                 }
 
-            } else if (SolarEvents.SUNRISE.name().equals(eventID) || SolarEvents.SUNSET.name().equals(eventID) || SolarEvents.NOON.name().equals(eventID) ||
+            } else if (SolarEvents.SUNRISE.name().equals(eventID) || SolarEvents.SUNSET.name().equals(eventID) || SolarEvents.NOON.name().equals(eventID) || SolarEvents.MIDNIGHT.name().equals(eventID) ||
                     SolarEvents.MORNING_CIVIL.name().equals(eventID) || SolarEvents.EVENING_CIVIL.name().equals(eventID) || SolarEvents.MORNING_NAUTICAL.name().equals(eventID) ||
                     SolarEvents.EVENING_NAUTICAL.name().equals(eventID) || SolarEvents.MORNING_ASTRONOMICAL.name().equals(eventID) || SolarEvents.EVENING_ASTRONOMICAL.name().equals(eventID) ||
                     SolarEvents.MORNING_BLUE4.name().equals(eventID) || SolarEvents.EVENING_BLUE4.name().equals(eventID) || SolarEvents.MORNING_BLUE8.name().equals(eventID) ||
