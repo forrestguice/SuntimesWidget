@@ -62,7 +62,7 @@ public class EventIcons
             case FIRSTQUARTER: return (northward) ? R.drawable.svg_moon_q3 : R.drawable.svg_moon_q1;
             case THIRDQUARTER: return (northward) ? R.drawable.svg_moon_q1 : R.drawable.svg_moon_q3;
 
-            case NOON: return getResID(context, R.attr.sunnoonIcon, R.drawable.ic_noon_large);
+            case NOON: case MIDNIGHT: return getResID(context, R.attr.sunnoonIcon, R.drawable.ic_noon_large);
             case NEWMOON: return getResID(context, R.attr.moonPhaseIcon0, R.drawable.ic_moon_new);
             case FULLMOON: return getResID(context, R.attr.moonPhaseIcon2, R.drawable.ic_moon_full);
 
@@ -164,7 +164,7 @@ public class EventIcons
         switch (event)
         {
             case FIRSTQUARTER: case THIRDQUARTER:
-            case FULLMOON: case NEWMOON: case NOON:
+            case FULLMOON: case NEWMOON: case NOON: case MIDNIGHT:
                 return (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
             default:
                 return (int)context.getResources().getDimension(R.dimen.eventIcon_margin);
@@ -178,7 +178,7 @@ public class EventIcons
     {
         switch (event)
         {
-            case FULLMOON: case NEWMOON: case NOON:
+            case FULLMOON: case NEWMOON: case NOON: case MIDNIGHT:
                 return (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
             default:
                 return 0;
