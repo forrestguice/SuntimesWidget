@@ -86,7 +86,7 @@ public class NextEventTileService extends ClockTileService
     {
         if (dataset == null) {
             dataset = new SuntimesRiseSetDataset(context, appWidgetId());
-            dataset.calculateData();
+            dataset.calculateData(context);
         }
         return dataset;
     }

@@ -98,7 +98,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.info_time_lightmap_labels, visibility);
 
-        LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
+        LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(context);
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), colors);
         views.setImageViewBitmap(R.id.info_time_lightmap, bitmap);
 

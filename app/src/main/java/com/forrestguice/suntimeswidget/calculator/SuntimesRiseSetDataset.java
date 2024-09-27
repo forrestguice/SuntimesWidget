@@ -138,7 +138,7 @@ public class SuntimesRiseSetDataset
         dataset.put(WidgetSettings.TimeMode.BLUE4.name(), dataBlue4);
     }
 
-    public void calculateData()
+    public void calculateData(Context context)
     {
         SuntimesCalculator calculator = this.calculator;
         SuntimesCalculatorDescriptor descriptor = this.calculatorDescriptor;
@@ -151,14 +151,14 @@ public class SuntimesRiseSetDataset
         {
             if (first && descriptor == null)
             {
-                data.calculate();
+                data.calculate(context);
                 calculator = data.calculator();
                 descriptor = data.calculatorMode();
                 first = false;
 
             } else {
                 data.setCalculator(calculator, descriptor);
-                data.calculate();
+                data.calculate(context);
             }
 
             WidgetSettings.TimeMode mode = data.timeMode();

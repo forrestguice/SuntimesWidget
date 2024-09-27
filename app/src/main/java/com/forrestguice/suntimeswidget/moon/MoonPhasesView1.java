@@ -455,7 +455,7 @@ public class MoonPhasesView1 extends LinearLayout
                 moon.setTodayIs(date);
             }
 
-            moon.calculate();
+            moon.calculate(context);
             return moon;
         }
 

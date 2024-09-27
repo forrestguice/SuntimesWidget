@@ -1795,7 +1795,7 @@ public class SuntimesUtils
         }
 
         if (!data.isCalculated()) {
-            data.calculate();
+            data.calculate(context);
         }
 
         Location location = data.location();

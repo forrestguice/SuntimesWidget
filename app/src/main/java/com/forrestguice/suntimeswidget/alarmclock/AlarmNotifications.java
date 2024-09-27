@@ -667,7 +667,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (alarm.hasActionID(AlarmClockItem.ACTIONID_MAIN))
         {
             SuntimesData data = getData(context, alarm);
-            data.calculate();
+            data.calculate(context);
             WidgetActions.startIntent(context.getApplicationContext(), 0, alarm.getActionID(AlarmClockItem.ACTIONID_MAIN), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
         }
     }
@@ -1140,7 +1140,7 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             if (data == null) {
                 data = getData(context, alarm);
-                data.calculate();
+                data.calculate(context);
             }
             notificationMsg += ((eventDisplay != null) ? "\n\n" : "") + alarm.note;
             notificationMsg = utils.displayStringForTitlePattern(context, notificationMsg, data);
@@ -1189,7 +1189,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         {
                             if (data == null) {
                                 data = getData(context, alarm);
-                                data.calculate();
+                                data.calculate(context);
                             }
                             String reminderActionID = alarm.getActionID(AlarmClockItem.ACTIONID_REMINDER);
                             Intent reminderIntent = WidgetActions.createIntent(context, 0, reminderActionID, data, null);
@@ -2252,7 +2252,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (item.hasActionID(AlarmClockItem.ACTIONID_DISMISS))           // trigger dismiss action
                     {
                         SuntimesData data = getData(context, item);
-                        data.calculate();
+                        data.calculate(context);
                         WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(AlarmClockItem.ACTIONID_DISMISS), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
                     }
 
@@ -2622,7 +2622,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         Calendar day = Calendar.getInstance();
         sunData.setTodayIs(day);
-        sunData.calculate();
+        sunData.calculate(context);
         eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
         if (eventTime != null)
         {
@@ -2646,7 +2646,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.w("AlarmReceiverItem", "updateAlarmTime: sunEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             sunData.setTodayIs(day);
-            sunData.calculate();
+            sunData.calculate(context);
             eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
             if (eventTime != null)
             {
@@ -2674,7 +2674,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         Calendar day = Calendar.getInstance();
         moonData.setTodayIs(day);
-        moonData.calculate();
+        moonData.calculate(context);
         Calendar eventTime = moonEventCalendar(event, moonData, true);
         if (eventTime != null)
         {
@@ -2697,7 +2697,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.w("AlarmReceiverItem", "updateAlarmTime: moonEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             moonData.setTodayIs(day);
-            moonData.calculate();
+            moonData.calculate(context);
             eventTime = moonEventCalendar(event, moonData, true);
             if (eventTime != null)
             {
@@ -2742,7 +2742,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Calendar day = Calendar.getInstance();
         day.setTimeInMillis(now.getTimeInMillis());
         moonData.setTodayIs(day);
-        moonData.calculate();
+        moonData.calculate(context);
 
         int c = 0;
         Calendar eventTime = moonData.moonPhaseCalendar(phase);
@@ -2764,7 +2764,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.w("AlarmReceiverItem", "updateAlarmTime: moonPhaseEvent advancing to next cycle.. " + c);
             day.setTimeInMillis(eventTime.getTimeInMillis() + (24 * 60 * 60 * 1000));
             moonData.setTodayIs(day);
-            moonData.calculate();
+            moonData.calculate(context);
             eventTime = moonData.moonPhaseCalendar(phase);
             eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
@@ -2783,7 +2783,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         Calendar day = Calendar.getInstance();
         data.setTodayIs(day);
-        data.calculate();
+        data.calculate(context);
 
         Calendar eventTime = data.eventCalendarUpcoming(day);
         eventTime.set(Calendar.SECOND, 0);
@@ -2803,7 +2803,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.w("AlarmReceiverItem", "updateAlarmTime: seasonEvent advancing..");
             day.setTimeInMillis(eventTime.getTimeInMillis() + 1000 * 60 * 60 * 24);
             data.setTodayIs(day);
-            data.calculate();
+            data.calculate(context);
             eventTime = data.eventCalendarUpcoming(day);
             eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);

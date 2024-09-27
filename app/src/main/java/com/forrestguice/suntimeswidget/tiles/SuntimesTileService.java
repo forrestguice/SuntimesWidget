@@ -185,7 +185,7 @@ public abstract class SuntimesTileService extends TileService
     {
         if (data == null || replace) {
             data = new SuntimesRiseSetData2(context, appWidgetId());
-            data.calculate();
+            data.calculate(context);
         }
         return data;
     }

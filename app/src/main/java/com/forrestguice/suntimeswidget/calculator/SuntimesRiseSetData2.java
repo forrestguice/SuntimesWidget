@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -34,7 +33,6 @@ import java.util.Calendar;
  */
 public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 {
-    private Context context;
     private Calendar[] calendar = {null, null, null};
     private Calendar[] sunrise = {null, null, null};
     private Calendar[] sunset = {null, null, null};
@@ -43,25 +41,21 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
     public SuntimesRiseSetData2(Context context, int appWidgetId)
     {
         super(context, appWidgetId);
-        this.context = context;
         initFromSettings(context, appWidgetId);
     }
     public SuntimesRiseSetData2(Context context, int appWidgetId, String calculatorName)
     {
         super(context, appWidgetId, calculatorName);
-        this.context = context;
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesRiseSetData2(SuntimesRiseSetData2 other)
     {
         super(other);
-        this.context = other.context;
         initFromOther(other, other.layoutID);
     }
     public SuntimesRiseSetData2(SuntimesRiseSetData2 other, int layoutID)
     {
         super(other, layoutID);
-        this.context = other.context;
         initFromOther(other, layoutID);
     }
 
@@ -188,9 +182,10 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 
     /**
      * Calculate
+     * @param context
      */
     @Override
-    public void calculate()
+    public void calculate(Context context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -307,7 +302,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         dayLengthToday = determineDayLength(sunrise[1], sunset[1]);
         dayLengthOther = determineDayLength(sunrise[i], sunset[i]);
 
-        super.calculate();
+        super.calculate(context);
     }
 
 }

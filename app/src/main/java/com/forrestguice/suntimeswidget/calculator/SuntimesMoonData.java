@@ -206,11 +206,12 @@ public class SuntimesMoonData extends SuntimesMoonData0
 
     /**
      * calculate
+     * @param context
      */
     @Override
-    public void calculate()
+    public void calculate(Context context)
     {
-        super.calculate();
+        super.calculate(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

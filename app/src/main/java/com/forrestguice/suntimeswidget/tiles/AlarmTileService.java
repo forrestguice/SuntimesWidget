@@ -196,7 +196,7 @@ public class AlarmTileService extends ClockTileService
             if (WidgetSettings.loadShowLabelsPref(context, appWidgetId(), DEF_SHOW_LABELS))
             {
                 SuntimesData data = AlarmNotifications.getData(context, item);
-                data.calculate();
+                data.calculate(context);
 
                 if (item.label != null || item.note != null) {
                     msg.append("\n");

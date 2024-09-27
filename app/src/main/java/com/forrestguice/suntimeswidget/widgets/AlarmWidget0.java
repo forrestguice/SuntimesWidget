@@ -82,7 +82,7 @@ public class AlarmWidget0 extends SuntimesWidget0
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, AlarmLayout layout, Class widgetClass)
     {
         SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
-        data.calculate();
+        data.calculate(context);
         layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);
 

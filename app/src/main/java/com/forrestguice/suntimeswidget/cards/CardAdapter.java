@@ -140,14 +140,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         for (String id : sun.getDataModes()) {
             sun.getData(id).setCompareMode(options.comparisonMode);
         }
-        sun.calculateData();
+        sun.calculateData(context);
 
         SuntimesMoonData moon = null;
         if (options.showMoon)
         {
             moon = new SuntimesMoonData(context, 0, "moon");
             moon.setTodayIs(date);
-            moon.calculate();
+            moon.calculate(context);
         }
 
         return new Pair<>(sun, moon);
