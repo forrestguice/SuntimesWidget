@@ -22,7 +22,6 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -37,8 +36,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
-import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_3x2_0;
 
 import java.util.Calendar;
 
