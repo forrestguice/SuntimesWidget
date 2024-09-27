@@ -165,6 +165,7 @@ public class DataSubstitutions
 
         switch (event)
         {
+            case MIDNIGHT: return data.calculator().getSolarMidnightCalendarForDate(data.calendar());
             case NOON: return data.calculator().getSolarNoonCalendarForDate(data.calendar());
             case SUNRISE: return data.calculator().getOfficialSunriseCalendarForDate(data.calendar());
             case MORNING_CIVIL: return data.calculator().getCivilSunriseCalendarForDate(data.calendar());
@@ -225,7 +226,7 @@ public class DataSubstitutions
             case EVENING_CIVIL: return prefix + SUFFIX_EVENING_CIVIL;
             case SUNRISE: return prefix + SUFFIX_SUNRISE;
             case NOON: return prefix + SUFFIX_NOON;
-            //case MIDNIGHT: return prefix + SUFFIX_MIDNIGHT;    // TODO: midnight
+            case MIDNIGHT: return prefix + SUFFIX_MIDNIGHT;
             case SUNSET: return prefix + SUFFIX_SUNSET;
             case MORNING_GOLDEN: return prefix + SUFFIX_MORNING_GOLDEN;
             case EVENING_GOLDEN: return prefix + SUFFIX_EVENING_GOLDEN;
