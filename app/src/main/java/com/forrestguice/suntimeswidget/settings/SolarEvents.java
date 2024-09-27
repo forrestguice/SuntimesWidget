@@ -50,7 +50,7 @@ public enum SolarEvents
     MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIconLarge, 0, true),                                // 4
     SUNRISE("sunrise", "sunrise", R.attr.sunriseIconLarge, 0, true),                                                  // 5
     MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIconLarge, 0, true),                           // 6
-    NOON("solar noon", "solar noon", R.attr.sunnoonIcon, 0, false),                                                    // 7
+    NOON("solar noon", "solar noon", R.attr.sunnoonIcon, 0, false),                                                   // 7
     EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIconLarge, 0, false),                            // 8
     SUNSET("sunset", "sunset", R.attr.sunsetIconLarge, 0, false),                                                      // 9
     EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIconLarge, 0, false),                                 // 10
@@ -78,7 +78,9 @@ public enum SolarEvents
     CROSS_SPRING("cross-quarter", "spring cross-quarter", R.attr.springColor, 3, false),                          // 27
     CROSS_SUMMER("cross-quarter", "summer cross-quarter", R.attr.summerColor, 3, false),                         // 28
     CROSS_AUTUMNAL("cross-quarter", "autumnal cross-quarter", R.attr.fallColor, 3, false),                        // 29
-    CROSS_WINTER("cross-quarter", "winter cross-quarter", R.attr.winterColor, 3, false)                          // 30
+    CROSS_WINTER("cross-quarter", "winter cross-quarter", R.attr.winterColor, 3, false),                          // 30
+
+    MIDNIGHT("solar midnight", "solar midnight", R.attr.sunnoonIcon, 0, true),                                        // 31
 
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
@@ -171,6 +173,8 @@ public enum SolarEvents
         {
             values[i].setDisplayString(modes_short[i], modes_long[i]);
         }
+
+        MIDNIGHT.setDisplayString(context.getString(R.string.timeMode_midnight_short), context.getString(R.string.timeMode_midnight));
     }
 
     public static SolarEvents valueOf(String value, SolarEvents defaultType)
@@ -199,7 +203,7 @@ public enum SolarEvents
                 MORNING_ASTRONOMICAL, MORNING_NAUTICAL, MORNING_BLUE8, MORNING_CIVIL, MORNING_BLUE4,
                 SUNRISE, MORNING_GOLDEN,
                 NOON, EVENING_GOLDEN,
-                SUNSET, EVENING_BLUE4, EVENING_CIVIL, EVENING_BLUE8, EVENING_NAUTICAL, EVENING_ASTRONOMICAL,
+                SUNSET, EVENING_BLUE4, EVENING_CIVIL, EVENING_BLUE8, EVENING_NAUTICAL, EVENING_ASTRONOMICAL, MIDNIGHT,
                 MOONRISE, MOONNOON, MOONSET, MOONNIGHT,
                 NEWMOON, FIRSTQUARTER, FULLMOON, THIRDQUARTER,
                 CROSS_SPRING, CROSS_SUMMER, CROSS_AUTUMNAL, CROSS_WINTER,
@@ -232,7 +236,7 @@ public enum SolarEvents
             {
                 case NEWMOON:
                 case FULLMOON:
-                case NOON:
+                case NOON: case MIDNIGHT:
                     width = height = (int)resources.getDimension(R.dimen.sunIconLarge_width);
                     break;
 
@@ -402,6 +406,8 @@ public enum SolarEvents
             return WidgetSettings.TimeMode.GOLD;
         else if (NOON.name().equals(eventID))
             return WidgetSettings.TimeMode.NOON;
+        else if (MIDNIGHT.name().equals(eventID))
+            return WidgetSettings.TimeMode.MIDNIGHT;
         else if (SUNSET.name().equals(eventID) || SUNRISE.name().equals(eventID))
             return WidgetSettings.TimeMode.OFFICIAL;
         else return null;
@@ -413,6 +419,7 @@ public enum SolarEvents
         }
         switch (mode) {
             case NOON: return SolarEvents.NOON;
+            case MIDNIGHT: return SolarEvents.MIDNIGHT;
             case OFFICIAL: return (rising ? SolarEvents.SUNRISE : SolarEvents.SUNSET);
             case CIVIL: return (rising ? SolarEvents.MORNING_CIVIL : SolarEvents.EVENING_CIVIL);
             case NAUTICAL: return (rising ? SolarEvents.MORNING_NAUTICAL : SolarEvents.EVENING_NAUTICAL);

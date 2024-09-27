@@ -421,6 +421,8 @@
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Noon</string>                    <!-- setting -->
     <string name="timeMode_noon">Solar Noon</string>                    <!-- setting -->
+    <string name="timeMode_midnight_short">Midnight</string>                    <!-- setting -->   <!-- TODO -->
+    <string name="timeMode_midnight">Solar Midnight</string>                    <!-- setting -->   <!-- TODO -->
     <string name="timeMode_official_short">Actual</string>              <!-- setting -->
     <string name="timeMode_official">Actual Time</string>               <!-- setting -->
     <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->

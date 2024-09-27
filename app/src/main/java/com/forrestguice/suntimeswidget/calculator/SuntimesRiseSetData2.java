@@ -272,6 +272,10 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
                     sunrise[i] = sunset[i] = calculator.getSolarNoonCalendarForDate(calendar[i]);
                     break;
 
+                case MIDNIGHT:
+                    sunrise[i] = sunset[i] = calculator.getSolarMidnightCalendarForDate(calendar[i]);
+                    break;
+
                 case CIVIL:
                     sunrise[i] = calculator.getCivilSunriseCalendarForDate(calendar[i]);
                     sunset[i] = calculator.getCivilSunsetCalendarForDate(calendar[i]);

@@ -393,6 +393,11 @@ public class SuntimesRiseSetData extends SuntimesData
                     sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarNoonCalendarForDate(otherCalendar);
                     break;
 
+                case MIDNIGHT:
+                    sunriseCalendarToday = sunsetCalendarToday = calculator.getSolarMidnightCalendarForDate(todaysCalendar);
+                    sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarMidnightCalendarForDate(otherCalendar);
+                    break;
+
                 case CIVIL:
                     sunriseCalendarToday = calculator.getCivilSunriseCalendarForDate(todaysCalendar);
                     sunsetCalendarToday = calculator.getCivilSunsetCalendarForDate(todaysCalendar);
