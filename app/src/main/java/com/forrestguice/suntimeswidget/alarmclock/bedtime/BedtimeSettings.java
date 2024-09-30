@@ -75,6 +75,9 @@ public class BedtimeSettings
     public static final String PREF_KEY_BEDTIME_DND_FILTER = "app_bedtime_dnd_filter";
     public static final int PREF_DEF_BEDTIME_DND_FILTER = DND_FILTER_PRIORITY;
 
+    public static final String PREF_KEY_BEDTIME_DND_RULEBASED = "app_bedtime_dnd_rulebased";
+    public static final boolean PREF_DEF_BEDTIME_DND_RULEBASED = true;
+
     public static final String PREF_KEY_BEDTIME_REMINDER = "app_bedtime_reminder";
     public static final boolean PREF_DEF_BEDTIME_REMINDER = false;
 
@@ -145,6 +148,12 @@ public class BedtimeSettings
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putBoolean(PREF_KEY_BEDTIME_DND, value);
         prefs.apply();
+    }
+
+    public static boolean loadPrefBedtimeDoNotDisturbRuleBased(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_BEDTIME_DND_RULEBASED, PREF_DEF_BEDTIME_DND_RULEBASED);
     }
 
     public static int loadPrefBedtimeDoNotDisturbFilter(Context context) {
@@ -411,17 +420,20 @@ public class BedtimeSettings
 
     public static void triggerDoNotDisturb(Context context, boolean value)
     {
-        if (Build.VERSION.SDK_INT >= 24) {
+        boolean useDndRule = BedtimeSettings.loadPrefBedtimeDoNotDisturbRuleBased(context);
+        if (Build.VERSION.SDK_INT >= 24 && useDndRule) {
             BedtimeConditionService.triggerBedtimeAutomaticZenRule(context, value);
 
         } else if (Build.VERSION.SDK_INT >= 23) {
             NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             if (notifications != null && hasDoNotDisturbPermission(context))
-            try {
-                int policy = (value ? NotificationManager.INTERRUPTION_FILTER_ALARMS : NotificationManager.INTERRUPTION_FILTER_ALL);
-                notifications.setInterruptionFilter(policy);    // do-not-disturb requires `android.permission.ACCESS_NOTIFICATION_POLICY`
-            } catch (SecurityException e) {
-                Log.w("BedtimeSettings", "Failed to toggle do-not-disturb! " + e);
+            {
+                try {
+                    int policy = (value ? NotificationManager.INTERRUPTION_FILTER_ALARMS : NotificationManager.INTERRUPTION_FILTER_ALL);
+                    notifications.setInterruptionFilter(policy);    // do-not-disturb requires `android.permission.ACCESS_NOTIFICATION_POLICY`
+                } catch (SecurityException e) {
+                    Log.w("BedtimeSettings", "Failed to toggle do-not-disturb! " + e);
+                }
             }
         }
     }
