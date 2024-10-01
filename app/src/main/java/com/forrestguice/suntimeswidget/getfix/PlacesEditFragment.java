@@ -609,7 +609,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         {
             Window window = getDialog().getWindow();
             if (window != null) {
-                View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
+                View decorView = window.getDecorView().findViewById(ViewUtils.getTouchOutsideResourceID());
                 decorView.setOnClickListener(null);
             }
         }

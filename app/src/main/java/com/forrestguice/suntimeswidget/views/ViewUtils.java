@@ -142,7 +142,7 @@ public class ViewUtils
     {
         Window window = (dialog != null ? dialog.getWindow() : null);
         if (window != null) {
-            View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
+            View decorView = window.getDecorView().findViewById(getTouchOutsideResourceID());
             decorView.setOnClickListener(null);
         }
     }
@@ -172,13 +172,13 @@ public class ViewUtils
         snackbarView.setBackgroundColor(colors[2]);
         snackbar.setActionTextColor(colors[1]);
 
-        TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView snackbarText = (TextView)snackbarView.findViewById(getSnackbarTextResourceID());
         if (snackbarText != null) {
             snackbarText.setTextColor(colors[0]);
             snackbarText.setMaxLines(3);
         }
 
-        View snackbarAction = snackbarView.findViewById(android.support.design.R.id.snackbar_action);
+        View snackbarAction = snackbarView.findViewById(getSnackbarActionResourceID());
         if (snackbarAction != null) {
             if (Build.VERSION.SDK_INT >= 16)
             {
@@ -186,6 +186,21 @@ public class ViewUtils
                 snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
             }
         }
+    }
+
+    public static int getTouchOutsideResourceID() {
+        return android.support.design.R.id.touch_outside;    // support libraries
+        //return com.google.android.material.R.id.touch_outside;   // androidx
+    }
+
+    public static int getSnackbarTextResourceID() {
+        return android.support.design.R.id.snackbar_text;    // support libraries
+        //return com.google.android.material.R.id.snackbar_text;   // androidx
+    }
+
+    public static int getSnackbarActionResourceID() {
+        return android.support.design.R.id.snackbar_action;    // support libraries
+        //return com.google.android.material.R.id.snackbar_action;   // androidx
     }
 
     public static int getBottomSheetResourceID() {
