@@ -65,5 +65,6 @@
     <string name="def_app_alarms_dismiss_challenge" translatable="false">NONE</string>
 
     <string name="def_app_bedtime_sleepCycleMillis" translatable="false">5400000</string>   <!-- 90m -->
+    <bool name="def_app_bedtime_dnd_rulebased">true</bool>
 
 </resources>

@@ -27,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 
@@ -76,7 +77,6 @@ public class BedtimeSettings
     public static final int PREF_DEF_BEDTIME_DND_FILTER = DND_FILTER_PRIORITY;
 
     public static final String PREF_KEY_BEDTIME_DND_RULEBASED = "app_bedtime_dnd_rulebased";
-    public static final boolean PREF_DEF_BEDTIME_DND_RULEBASED = true;
 
     public static final String PREF_KEY_BEDTIME_REMINDER = "app_bedtime_reminder";
     public static final boolean PREF_DEF_BEDTIME_REMINDER = false;
@@ -153,7 +153,7 @@ public class BedtimeSettings
     public static boolean loadPrefBedtimeDoNotDisturbRuleBased(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PREF_KEY_BEDTIME_DND_RULEBASED, PREF_DEF_BEDTIME_DND_RULEBASED);
+        return prefs.getBoolean(PREF_KEY_BEDTIME_DND_RULEBASED, context.getResources().getBoolean(R.bool.def_app_bedtime_dnd_rulebased));
     }
 
     public static int loadPrefBedtimeDoNotDisturbFilter(Context context) {

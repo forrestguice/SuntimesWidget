@@ -1407,7 +1407,7 @@
     <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>
     <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>
 
-    <string name="configLabel_dnd_rulebased">Use \'Do Not Disturb\' rule</string>    <!-- TODO -->
+    <string name="configLabel_dnd_rulebased">\'Do Not Disturb\' rules</string>    <!-- TODO -->
     <string name="configLabel_dnd_rulebased_summary">Trigger \'Do Not Disturb\' settings using an automatic rule (recommended).</string>    <!-- TODO -->
 
     <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->

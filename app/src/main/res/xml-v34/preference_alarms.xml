@@ -96,7 +96,8 @@
         <CheckBoxPreference
             android:key="app_bedtime_dnd_rulebased"
             android:title="@string/configLabel_dnd_rulebased"
-            android:summary="@string/configLabel_dnd_rulebased_summary" />
+            android:summary="@string/configLabel_dnd_rulebased_summary"
+            android:defaultValue="@bool/def_app_bedtime_dnd_rulebased" />
 
     </PreferenceCategory>
 
