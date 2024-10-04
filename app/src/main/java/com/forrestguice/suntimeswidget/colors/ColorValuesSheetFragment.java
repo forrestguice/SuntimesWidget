@@ -300,7 +300,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         public void onDeleteClicked(@Nullable String colorsID)
         {
             Context context = getActivity();
-            if (context != null && colorsID != null)
+            if (context != null && !colorCollection.isDefaultColorID(colorsID))
             {
                 String title = context.getString(R.string.colorsdelete_dialog_title);
                 String message = context.getString(R.string.colorsdelete_dialog_message, colorsID);
@@ -479,6 +479,10 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         return getArguments().getBoolean(ColorValuesEditFragment.ARG_SHOW_ALPHA, ColorValuesEditFragment.DEF_SHOW_ALPHA);
     }
 
+    public String getSelectedID() {
+        return (listDialog != null ? listDialog.getSelectedID() : null);
+    }
+
     public void setAppWidgetID(int id)
     {
         getArguments().putInt("appWidgetID", id);
@@ -535,6 +539,9 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     protected ColorValuesCollection<ColorValues> colorCollection = null;
     public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
         colorCollection = collection;
+    }
+    public ColorValuesCollection<?> getColorCollection() {
+        return colorCollection;
     }
 
     protected void requestPeekHeight(int height) {

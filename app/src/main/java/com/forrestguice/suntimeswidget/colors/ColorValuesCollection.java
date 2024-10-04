@@ -118,6 +118,9 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     }
     protected boolean isDefaultColorID(String colorsID)
     {
+        if (colorsID == null) {
+            return true;
+        }
         for (String id : getDefaultColorIDs()) {
             if (id.equals(colorsID)) {
                 return true;

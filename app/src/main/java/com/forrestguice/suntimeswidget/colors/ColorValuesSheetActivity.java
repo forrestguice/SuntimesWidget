@@ -200,6 +200,12 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_colorsheet, menu);
+
+        MenuItem deleteItem = menu.findItem(R.id.action_colors_delete);
+        if (deleteItem != null) {
+            deleteItem.setEnabled(!colorSheet.getColorCollection().isDefaultColorID(colorSheet.getSelectedID()));
+        }
+
         return true;
     }
 

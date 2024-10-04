@@ -247,8 +247,14 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         popup.setOnMenuItemClickListener(onOverflowMenuItemSelected);
         popup.show();
     }
-    protected void onPrepareOverflowMenu(Context context, Menu menu) { /* EMPTY */ }
-    private PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
+    protected void onPrepareOverflowMenu(Context context, Menu menu)
+    {
+        MenuItem deleteItem = menu.findItem(R.id.action_colors_delete);
+        if (deleteItem != null) {
+            deleteItem.setEnabled(!colorCollection.isDefaultColorID(getSelectedID()));
+        }
+    }
+    private final PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
