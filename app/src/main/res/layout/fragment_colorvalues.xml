@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout android:id="@+id/layout_header" android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -38,47 +35,33 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/layout_header"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout android:id="@+id/layout_id"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical|start"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/layout_header">
 
-        <LinearLayout
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:labelFor="@+id/editTextID"
+            android:textSize="?attr/text_size_small"
+            android:text="@string/configLabel_themeID" />
 
-            <GridLayout android:id="@+id/colorPanel" android:columnCount="2"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:orientation="vertical" android:gravity="top|start"
-                android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
-                android:layout_marginTop="4dp" android:layout_marginBottom="8dp"
-                android:useDefaultMargins="false" />
+        <EditText android:id="@+id/editTextID"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="200dp"
+            android:inputType="text" tools:text="ID"
+            android:hint="@string/hint_colorid" android:textSize="?attr/text_size_small"
+            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:importantForAutofill="no" />
 
-            <LinearLayout android:orientation="horizontal"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="16dp" android:layout_marginRight="16dp">
+    </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:labelFor="@+id/editTextID"
-                    android:textSize="?attr/text_size_small"
-                    android:text="@string/configLabel_themeID" />
-
-                <EditText android:id="@+id/editTextID"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="200dp"
-                    android:inputType="text" tools:text="ID"
-                    android:hint="@string/hint_colorid" android:textSize="?attr/text_size_small"
-                    android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                    android:importantForAutofill="no" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+    <android.support.v7.widget.RecyclerView android:id="@+id/colorPanel"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_id" app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_max="350dp"
+        app:spanCount="2" tools:itemCount="6" />
 
 </android.support.constraint.ConstraintLayout>
