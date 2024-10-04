@@ -221,9 +221,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
             if (selection != null)
             {
-                SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                pref.putString(prefKeyForRequestCode(requestCode), selection);
-                pref.apply();
+                String key = prefKeyForRequestCode(requestCode);
+                if (key != null)
+                {
+                    SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                    pref.putString(key, selection);
+                    pref.apply();
+                }
                 rebuildActivity();
             }
 
@@ -243,9 +247,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
             if (selection != null)
             {
-                SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                pref.putString(prefKeyForRequestCode(requestCode), selection);
-                pref.apply();
+                String key = prefKeyForRequestCode(requestCode);
+                if (key != null)
+                {
+                    SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                    pref.putString(key, selection);
+                    pref.apply();
+                }
                 rebuildActivity();
                 Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
 
@@ -270,9 +278,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                 collection.setSelectedColorsID(context, selection, appWidgetID, colorTag);
             }
 
-            SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-            pref.putString(prefKeyForRequestCode(requestCode), selection);
-            pref.apply();
+            String key = prefKeyForRequestCode(requestCode);
+            if (key != null)
+            {
+                SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                pref.putString(key, selection);
+                pref.apply();
+            }
         }
     }
 
