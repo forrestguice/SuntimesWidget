@@ -473,9 +473,9 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         public String colorsID;
         public int[] previewColors;
 
-        public ColorValuesItem(String displayString, String colorsID, int... previewColors)
+        public ColorValuesItem(@Nullable String displayString, @Nullable String colorsID, int... previewColors)
         {
-            this.displayString = displayString;
+            this.displayString = (displayString != null ? displayString : colorsID);
             this.colorsID = colorsID;
             this.previewColors = previewColors;
         }
