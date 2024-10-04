@@ -116,7 +116,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     public String getDefaultLabel(Context context, @NonNull String colorsID) {
         return colorsID;
     }
-    protected boolean isDefaultColorID(String colorsID)
+    public boolean isDefaultColorID(String colorsID)
     {
         if (colorsID == null) {
             return true;

@@ -38,6 +38,7 @@ import android.util.Log;
 import android.util.TypedValue;
 
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
@@ -191,6 +192,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                 break;
 
             case SettingsActivityInterface.REQUEST_PICKCOLORS_BRIGHTALARM:
+            case SettingsActivityInterface.REQUEST_PICKCOLORS_DARK:
+            case SettingsActivityInterface.REQUEST_PICKCOLORS_LIGHT:
                 onPickColors(requestCode, resultCode, data);
                 break;
         }
@@ -200,13 +203,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     {
         switch(requestCode)
         {
-            case SettingsActivityInterface.REQUEST_PICKTHEME_DARK:  return AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
+            case SettingsActivityInterface.REQUEST_PICKTHEME_DARK: return AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
             case SettingsActivityInterface.REQUEST_PICKTHEME_LIGHT: return AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
             case SettingsActivityInterface.REQUEST_TAPACTION_CLOCK: return AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
             case SettingsActivityInterface.REQUEST_TAPACTION_DATE0: return AppSettings.PREF_KEY_UI_DATETAPACTION;
             case SettingsActivityInterface.REQUEST_TAPACTION_DATE1: return AppSettings.PREF_KEY_UI_DATETAPACTION1;
             case SettingsActivityInterface.REQUEST_TAPACTION_NOTE:  return AppSettings.PREF_KEY_UI_NOTETAPACTION;
             case SettingsActivityInterface.REQUEST_PICKCOLORS_BRIGHTALARM: return AlarmSettings.PREF_KEY_ALARM_BRIGHTMODE_COLORS;
+            case SettingsActivityInterface.REQUEST_PICKCOLORS_DARK: case SettingsActivityInterface.REQUEST_PICKCOLORS_LIGHT:
             default: return null;
         }
     }
@@ -268,11 +272,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         if (resultCode == RESULT_OK)
         {
             String selection = data.getStringExtra(ColorValuesSheetActivity.EXTRA_SELECTED_COLORS_ID);
-            //Log.d("DEBUG", "onPickColors: " + selection);
-
             int appWidgetID = data.getIntExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, 0);
             String colorTag = data.getStringExtra(ColorValuesSheetActivity.EXTRA_COLORTAG);
             ColorValuesCollection<ColorValues> collection = data.getParcelableExtra(ColorValuesSheetActivity.EXTRA_COLLECTION);
+            //Log.d("DEBUG", "onPickColors: " + selection);
 
             if (collection != null) {
                 collection.setSelectedColorsID(context, selection, appWidgetID, colorTag);
@@ -284,6 +287,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                 SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
                 pref.putString(key, selection);
                 pref.apply();
+
+            } else {
+                rebuildActivity();
             }
         }
     }

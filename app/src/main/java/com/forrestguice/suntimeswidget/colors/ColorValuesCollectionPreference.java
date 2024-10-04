@@ -191,19 +191,25 @@ public class ColorValuesCollectionPreference extends Preference
             {
                 if (activity != null)
                 {
-                    Intent intent = new Intent(activity, ColorValuesSheetActivity.class);
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, getTitle());
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, getAppWidgetID());
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_COLORTAG, getColorTag());
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_COLLECTION, getCollection());
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_PREVIEW_KEYS, previewKeys.toArray(new String[0]));
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_SHOW_ALPHA, showAlpha());
-                    activity.startActivityForResult(intent, getRequestCode());
+                    Intent intent = createPreferenceOnClickIntent(activity, getCollection(), getAppWidgetID(), getColorTag(), getTitle(), showAlpha(), previewKeys.toArray(new String[0]));
+                    activity.startActivityForResult(intent, requestCode);
                     activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 }
                 return false;
             }
         };
+    }
+
+    public static Intent createPreferenceOnClickIntent(final Activity activity, final ColorValuesCollection<?> collection, final int appWidgetID, final String colorTag, final CharSequence title, final boolean showAlpha, final String[] previewKeys)
+    {
+        Intent intent = new Intent(activity, ColorValuesSheetActivity.class);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, title);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, appWidgetID);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_COLORTAG, colorTag);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_COLLECTION, collection);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_PREVIEW_KEYS, previewKeys);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_SHOW_ALPHA, showAlpha);
+        return intent;
     }
 
 }
