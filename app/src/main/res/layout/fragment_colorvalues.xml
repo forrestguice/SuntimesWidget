@@ -40,7 +40,7 @@
         android:orientation="horizontal" android:gravity="center_vertical|start"
         android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_header">
+        app:layout_constraintTop_toBottomOf="@+id/colorPanel">
 
         <TextView
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
     <android.support.v7.widget.RecyclerView android:id="@+id/colorPanel"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_id" app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header" app:layout_constraintBottom_toTopOf="@+id/layout_id"
         app:layout_constraintHeight_max="350dp"
         app:spanCount="2" tools:itemCount="6" />
 
