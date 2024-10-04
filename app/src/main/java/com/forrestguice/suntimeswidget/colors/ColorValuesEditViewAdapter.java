@@ -46,8 +46,10 @@ public class ColorValuesEditViewAdapter extends RecyclerView.Adapter<ColorValues
     }
 
     private ColorValues colors = null;
-    public void setColorValues(ColorValues values) {
+    public void setColorValues(ColorValues values)
+    {
         colors = values;
+        notifyDataSetChanged();
     }
     public ColorValues getColors() {
         return colors;

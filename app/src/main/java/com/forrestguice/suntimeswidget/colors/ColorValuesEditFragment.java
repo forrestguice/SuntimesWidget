@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,7 +38,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
@@ -228,11 +226,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     };
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
-        //adapter.setColorValues(getColorValues());
-        //adapter.setFilter(getFilter());
     }
 
     @Override
@@ -260,6 +255,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
         setID(savedState.getString("editID"));
         setLabel(savedState.getString("editLabel"));
+
+        if (adapter != null) {
+            adapter.setColorValues(getColorValues());
+            adapter.setFilter(getFilter());
+        }
     }
 
     @Override
@@ -275,32 +275,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    protected void updateViews()
-    {
-        if (adapter != null) {
-            adapter.setFilter(applyFilter() ? getFilter() : null);
-        }
-    }
-
-    private GridLayout.LayoutParams getItemLayoutParams(int i) {
-        if (Build.VERSION.SDK_INT >= 21)
-        {
-            return new GridLayout.LayoutParams(GridLayout.spec(i/2, GridLayout.FILL, 1f),
-                    GridLayout.spec(i%2, GridLayout.FILL, 1f));
-
-        } else {
-            return new GridLayout.LayoutParams(GridLayout.spec(i/2, GridLayout.CENTER),
-                    GridLayout.spec(i%2, GridLayout.CENTER));
-        }
-    }
-
-    public View.OnClickListener onColorEditClick(final String colorKey) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickColor(colorKey);
-            }
-        };
+    protected void updateViews() {
     }
 
     protected ColorValues colorValues = null;
@@ -310,10 +285,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         setID(null);
         setLabel(null);
 
-        if (adapter != null)
-        {
+        if (adapter != null) {
             adapter.setColorValues(colorValues);
-            adapter.notifyDataSetChanged();
         }
         updateViews();
     }
@@ -331,7 +304,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     public void setApplyFilter(boolean value) {
         getArguments().putBoolean("applyFilter", value);
-        if (isAdded()) {
+        if (isAdded())
+        {
+            if (adapter != null) {
+                adapter.setFilter(applyFilter() ? getFilter() : null);
+            }
             updateViews();
         }
     }
