@@ -71,6 +71,17 @@ public class ColorValuesEditViewAdapter extends RecyclerView.Adapter<ColorValues
         return ((position >= 0 && position < keys.length) ? keys[position] : null);
     }
 
+    public int findPositionForKey(String key)
+    {
+        String[] keys = getKeys();
+        for (int i=0; i<keys.length; i++) {
+            if (keys[i].equals(key)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     protected Integer itemLayoutResID = null;
     public void setItemLayoutResID(Integer value) {
         itemLayoutResID = value;

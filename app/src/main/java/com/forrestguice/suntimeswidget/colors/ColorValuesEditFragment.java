@@ -341,6 +341,10 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     protected void setColor(String key, int color) {
         colorValues.setColor(key, color);
+        int position = adapter.findPositionForKey(key);
+        if (position >= 0) {
+            adapter.notifyItemChanged(position);
+        }
         updateViews();
     }
 
