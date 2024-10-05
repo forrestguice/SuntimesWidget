@@ -110,6 +110,7 @@
             android:key="app_alarms_bright_colors"
             android:persistent="false"
             app:colorTag="alarmcolors" app:appWidgetID="0" app:showAlpha="true"
+            app:previewMode="@integer/colorpicker_preview_luminance"
             android:widgetLayout="@layout/layout_pref_colors" app:previewKeys="@array/brightMode_colors_previewKeys"
             android:title="@string/configLabel_alarms_brightMode_colors"
             android:summary="@string/configLabel_alarms_brightMode_colors_summary" />

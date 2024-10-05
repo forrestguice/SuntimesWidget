@@ -319,7 +319,7 @@ public class UIPrefsFragment extends PreferenceFragment
         };
     }
 
-    private static ActionButtonPreference.ActionButtonPreferenceListener createThemeListPreferenceListener(final Activity activity, final ColorValuesCollection<?> collection, final int requestCode, final int appWidgetID, final String colorTag, final CharSequence title, final boolean showAlpha, final String[] previewKeys)
+    private static ActionButtonPreference.ActionButtonPreferenceListener createThemeListPreferenceListener(final Activity activity, final ColorValuesCollection<?> collection, final int requestCode, final int appWidgetID, final String colorTag, final CharSequence title, final boolean showAlpha, @Nullable final Integer previewMode, final String[] previewKeys)
     {
         return new ActionButtonPreference.ActionButtonPreferenceListener ()
         {
@@ -328,7 +328,7 @@ public class UIPrefsFragment extends PreferenceFragment
             {
                 if (activity != null)
                 {
-                    Intent intent = ColorValuesCollectionPreference.createPreferenceOnClickIntent(activity, collection, appWidgetID, colorTag, title, showAlpha, previewKeys);
+                    Intent intent = ColorValuesCollectionPreference.createPreferenceOnClickIntent(activity, collection, appWidgetID, colorTag, title, showAlpha, previewMode, previewKeys);
                     activity.startActivityForResult(intent, requestCode);
                     activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 }
@@ -409,7 +409,7 @@ public class UIPrefsFragment extends PreferenceFragment
             if (currentIndex >= 0)
             {
                 listPref.setValueIndex(currentIndex);
-                listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, colorCollection, requestCode, (isLightTheme ? 0 : 1), AppColorValues.TAG_APPCOLORS, null, true, null));
+                listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, colorCollection, requestCode, (isLightTheme ? 0 : 1), AppColorValues.TAG_APPCOLORS, null, true, null, null));
                 listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
 
             } else {
@@ -420,7 +420,7 @@ public class UIPrefsFragment extends PreferenceFragment
                 } else {
                     Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + themeName);
                     listPref.setValueIndex(0);
-                    listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, colorCollection, requestCode, (isLightTheme ? 0 : 1), AppColorValues.TAG_APPCOLORS, null, true, null));
+                    listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, colorCollection, requestCode, (isLightTheme ? 0 : 1), AppColorValues.TAG_APPCOLORS, null, true, null, null));
                     listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
                 }
             }
