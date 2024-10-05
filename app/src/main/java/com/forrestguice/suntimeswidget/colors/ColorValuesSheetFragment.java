@@ -19,6 +19,7 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -67,6 +68,11 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         onModeChanged();
     }
 
+    protected ColorValuesEditFragment.ColorValuesEditViewModel editViewModel;
+    public ColorValuesEditFragment.ColorValuesEditViewModel getEditViewModel() {
+        return editViewModel;
+    }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
@@ -76,6 +82,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
         View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorsheet, container, false);
+        editViewModel = ViewModelProviders.of(getActivity()).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
         if (savedState != null) {
             onRestoreInstanceState(savedState);
         }
@@ -107,7 +114,6 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         if (editDialog == null)
         {
             editDialog = new ColorValuesEditFragment();  // (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
-            editDialog.setShowAlpha(getShowAlpha());
             editDialog.setTheme(getThemeResID());
             editDialog.setFilter(getFilter());
             editDialog.setApplyFilter(applyFilter());
@@ -470,13 +476,6 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     }
     public boolean getShowMenu() {
         return getArguments().getBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, ColorValuesSelectFragment.DEF_SHOW_MENU);
-    }
-
-    public void setShowAlpha(boolean showAlpha) {
-        getArguments().putBoolean(ColorValuesEditFragment.ARG_SHOW_ALPHA, showAlpha);
-    }
-    public boolean getShowAlpha() {
-        return getArguments().getBoolean(ColorValuesEditFragment.ARG_SHOW_ALPHA, ColorValuesEditFragment.DEF_SHOW_ALPHA);
     }
 
     public String getSelectedID() {

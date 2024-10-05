@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -228,6 +229,9 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         titleText = (TextView) dialogView.findViewById(R.id.dialog_title);
         check_filter = (CheckBox) dialogView.findViewById(R.id.check_filter);
 
+        ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel.class);
+        editViewModel.setShowAlpha(getShowAlpha());
+
         FragmentManager fragments = getChildFragmentManager();
         colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
@@ -239,7 +243,6 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             colorSheet.setApplyFilter(applyFilter());
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
-            colorSheet.setShowAlpha(getShowAlpha());
 
             FragmentTransaction transaction = fragments.beginTransaction();
             transaction.replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET);

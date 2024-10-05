@@ -20,6 +20,7 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -58,9 +59,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     public static final String ARG_ALLOW_DELETE = "allowDelete";
     public static final boolean DEF_ALLOW_DELETE = true;
 
-    public static final String ARG_SHOW_ALPHA = "showAlpha";
-    public static final boolean DEF_SHOW_ALPHA = false;
-
+    protected ColorValuesEditViewModel viewModel;
     protected EditText editID, editLabel;
     protected RecyclerView panel;
     protected ColorValuesEditViewAdapter adapter;
@@ -83,6 +82,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
         View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorvalues, container, false);
+
+        viewModel = ViewModelProviders.of(getActivity()).get(ColorValuesEditViewModel.class);
 
         ImageButton overflow = (ImageButton) content.findViewById(R.id.overflow);
         if (overflow != null) {
@@ -339,7 +340,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         return filterValues.isEmpty() || filterValues.contains(key);
     }
 
-    protected void setColor(String key, int color) {
+    protected void setColor(String key, int color)
+    {
         colorValues.setColor(key, color);
         int position = adapter.findPositionForKey(key);
         if (position >= 0) {
@@ -385,19 +387,23 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     protected Intent pickColorIntent(String key, int requestCode)
     {
         int color = colorValues.getColor(key);
+        viewModel.setColor(color);
+
         ArrayList<Integer> recentColors = new ArrayList<>(new LinkedHashSet<>(colorValues.getColors()));
         recentColors.add(0, color);
 
+        int[] colorOverUnder = getColorOverUnder(getActivity(), key);
+        viewModel.setColorOver(colorOverUnder[0]);
+        viewModel.setColorUnder(colorOverUnder[1]);
+
         Intent intent = new Intent(getActivity(), ColorActivity.class);
-        intent.putExtra(ColorDialog.KEY_SHOWALPHA, showAlpha());
+        intent.putExtra(ColorDialog.KEY_SHOWALPHA, viewModel.showAlpha());
         intent.setData(Uri.parse("color://" + String.format("#%08X", color)));
         intent.putExtra(ColorDialog.KEY_RECENT, recentColors);
         intent.putExtra(ColorDialog.KEY_LABEL, colorValues.getLabel(key));
-
-        int[] colorOverUnder = getColorOverUnder(getActivity(), key);
-        intent.putExtra(ColorDialog.KEY_COLOR_OVER, colorOverUnder[0]);
-        intent.putExtra(ColorDialog.KEY_COLOR_UNDER, colorOverUnder[1]);
-        intent.putExtra(ColorDialog.KEY_PREVIEW_MODE, ColorPickerFragment.ColorPickerModel.PREVIEW_LUMINANCE);
+        intent.putExtra(ColorDialog.KEY_COLOR_OVER, viewModel.getColorOver());
+        intent.putExtra(ColorDialog.KEY_COLOR_UNDER, viewModel.getColorUnder());
+        intent.putExtra(ColorDialog.KEY_PREVIEW_MODE, viewModel.getPreviewMode());
 
         if (defaultValues != null) {
             intent.putExtra(ColorDialog.KEY_SUGGESTED, defaultValues.getColor(key));
@@ -478,13 +484,6 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         setBoolArg(ARG_ALLOW_DELETE, allowDelete);
     }
 
-    public boolean showAlpha() {
-        return getBoolArg(ARG_SHOW_ALPHA, DEF_SHOW_ALPHA);
-    }
-    public void setShowAlpha(boolean value) {
-        setBoolArg(ARG_SHOW_ALPHA, value);
-    }
-
     public static final int REQUEST_IMPORT_THEME = 1000;
     protected void importFromTheme(Context context) {
         startActivityForResult(pickThemeIntent(), REQUEST_IMPORT_THEME);
@@ -560,6 +559,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         Bundle args = getArguments();
         return args != null ? args.getBoolean(key, defValue) : defValue;
     }
+
+    /**
+     * ColorValuesEditViewModel
+     */
+    public static class ColorValuesEditViewModel extends ColorPickerFragment.ColorPickerModel {}
 
     /**
      * FragmentListener

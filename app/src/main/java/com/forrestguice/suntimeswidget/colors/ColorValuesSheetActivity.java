@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     public static final String EXTRA_TITLE = "activityTitle";
     public static final String EXTRA_SUBTITLE = "activitySubtitle";
     public static final String EXTRA_PREVIEW_KEYS = "previewKeys";
+    public static final String EXTRA_PREVIEW_MODE = "previewMode";
 
     public static final String EXTRA_SHOW_ALPHA = ColorDialog.KEY_SHOWALPHA;
 
@@ -75,6 +77,10 @@ public class ColorValuesSheetActivity extends AppCompatActivity
         Intent intent = getIntent();
         FragmentManager fragments = getSupportFragmentManager();
 
+        ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
+        editViewModel.setShowAlpha(intent.getBooleanExtra(EXTRA_SHOW_ALPHA, false));
+        editViewModel.setPreviewMode(intent.getIntExtra(EXTRA_PREVIEW_MODE, ColorValuesEditFragment.ColorValuesEditViewModel.PREVIEW_TEXT));
+
         colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
         {
@@ -88,7 +94,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             colorSheet.setShowMenu(false);
             colorSheet.setHideAfterSave(false);
             colorSheet.setPersistSelection(false);
-            colorSheet.setShowAlpha(intent.getBooleanExtra(EXTRA_SHOW_ALPHA, false));
+
             colorSheet.setFragmentListener(sheetListener);
         }
 
