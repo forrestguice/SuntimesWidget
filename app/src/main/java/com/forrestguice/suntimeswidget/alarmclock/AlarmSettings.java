@@ -690,10 +690,11 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 23)
         {
             PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            if (powerManager != null)
+            if (powerManager != null) {
                 return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
-            else return false;
-        } else return true;
+            }
+        }
+        return true;
     }
 
     /***
