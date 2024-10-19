@@ -62,6 +62,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -542,6 +543,12 @@ public class AlarmNotifications extends BroadcastReceiver
     public static Intent getBedtimeBroadcast(String action) {
         Intent intent = new Intent(action);
         intent.setPackage(BuildConfig.APPLICATION_ID);
+        return intent;
+    }
+    public static Intent getManageBedtimeIntent(Context context)
+    {
+        Intent intent = new Intent(context, BedtimeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 
@@ -1310,6 +1317,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
         builder.setContentText(context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active));
+        builder.setContentIntent(PendingIntent.getActivity(context, builder.hashCode(), getManageBedtimeIntent(context), PendingIntent.FLAG_UPDATE_CURRENT));
 
         if (isPaused) {
             PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_RESUME), PendingIntent.FLAG_UPDATE_CURRENT);
