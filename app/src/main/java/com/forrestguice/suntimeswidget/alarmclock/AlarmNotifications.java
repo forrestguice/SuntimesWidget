@@ -1333,13 +1333,13 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     public static Notification createProgressNotification(Context context) {
-        return createProgressNotification(context, context.getString(R.string.app_name_alarmclock), context.getString(R.string.configLabel_alarms_background_action_message, context.getString(R.string.app_name_alarmclock)));
+        return createProgressNotification(context, null, context.getString(R.string.configLabel_alarms_background_action_message, context.getString(R.string.app_name_alarmclock)));
     }
     public static Notification createProgressNotification(Context context, String message) {
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock),  message);
     }
 
-    public static Notification createProgressNotification(Context context, String title, String message)
+    public static Notification createProgressNotification(Context context, @Nullable String title, @NonNull String message)
     {
         NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_MISC);
         builder.setDefaults(Notification.DEFAULT_LIGHTS);
@@ -1348,14 +1348,16 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setProgress(0,0,true);
         builder.setAutoCancel(false);
         builder.setOngoing(true);
-        builder.setContentTitle(title);
+        if (title != null) {
+            builder.setContentTitle(title);
+        }
         builder.setContentText(message);
         builder.setSmallIcon(R.drawable.ic_action_alarms_light);
         //builder.setColor(ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark))
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setOnlyAlertOnce(false);
 
-        PendingIntent pendingView = PendingIntent.getActivity(context, title.hashCode(), getAlarmListIntent(context, null), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingView = PendingIntent.getActivity(context, message.hashCode(), getAlarmListIntent(context, null), PendingIntent.FLAG_UPDATE_CURRENT);
         builder.addAction(R.drawable.ic_action_settings, context.getString(R.string.app_name_alarmclock), pendingView);
         return builder.build();
     }
