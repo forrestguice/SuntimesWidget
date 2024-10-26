@@ -86,7 +86,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         switch (mapMode)
         {
             case MERCATOR_SIMPLE:
-                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);   // TODO: mercator drawable
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_mercator);
                 options.map_night = null;
                 options.hasTransparentBaseMap = true;
                 projection = new WorldMapMercator();

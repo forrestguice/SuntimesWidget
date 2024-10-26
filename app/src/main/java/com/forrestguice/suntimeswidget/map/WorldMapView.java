@@ -126,7 +126,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         switch (mode)
         {
             case MERCATOR_SIMPLE:
-                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);    // TODO: mercator drawable
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_mercator);
                 options.map_night = null;
                 options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
