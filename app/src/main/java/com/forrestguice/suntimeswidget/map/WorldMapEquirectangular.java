@@ -133,9 +133,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             return null;
         }
 
-        if (matrix == null) {
-            matrix = initMatrix();
-        }
+        double[] matrix = getMatrix();
 
         double[] mid = new double[2];
         mid[0] = w/2d;
@@ -377,7 +375,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public double[] getMatrix() {
+    public double[] getMatrix()
+    {
+        if (matrix == null) {
+            matrix = initMatrix();
+        }
         return matrix;
     }
 

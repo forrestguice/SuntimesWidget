@@ -804,6 +804,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
             switch (item.getItemId())
             {
+                case R.id.action_worldmap_simplemercator:
                 case R.id.action_worldmap_simplerectangular:
                 case R.id.action_worldmap_bluemarble:
                 case R.id.action_worldmap_simpleazimuthal:
