@@ -125,6 +125,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         this.mode = mode;
         switch (mode)
         {
+            case MERCATOR_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);    // TODO: mercator drawable
+                options.map_night = null;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
+                options.hasTransparentBaseMap = true;
+                break;
+
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
                 options.map_night = null;
@@ -344,6 +351,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         WorldMapTask.WorldMapProjection projection;
         switch (mode)
         {
+            case MERCATOR_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
             case EQUIAZIMUTHAL_SIMPLE2:
@@ -405,6 +413,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public static WorldMapTask.WorldMapProjection getMapProjection(WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
         switch (mode) {
+            case MERCATOR_SIMPLE: return new WorldMapMercator();
             case EQUIAZIMUTHAL_SIMPLE: return new WorldMapEquiazimuthal();
             case EQUIAZIMUTHAL_SIMPLE1: return new WorldMapEquiazimuthal1();
             case EQUIAZIMUTHAL_SIMPLE2: return new WorldMapEquiazimuthal2();

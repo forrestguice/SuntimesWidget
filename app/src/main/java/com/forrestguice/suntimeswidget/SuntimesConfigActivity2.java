@@ -205,6 +205,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         modes.add(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
+        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.MERCATOR_SIMPLE);
 
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]))
         {
