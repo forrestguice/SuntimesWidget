@@ -25,8 +25,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -87,6 +85,13 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         {
             case MERCATOR_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_mercator);
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
+                projection = new WorldMapMercator();
+                break;
+
+            case VANDERGRINTEN_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_van_der_grinten);
                 options.map_night = null;
                 options.hasTransparentBaseMap = true;
                 projection = new WorldMapMercator();

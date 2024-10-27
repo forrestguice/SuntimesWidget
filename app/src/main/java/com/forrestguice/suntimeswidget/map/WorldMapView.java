@@ -19,9 +19,7 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -35,7 +33,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
@@ -127,6 +124,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         {
             case MERCATOR_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_mercator);
+                options.map_night = null;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
+                options.hasTransparentBaseMap = true;
+                break;
+
+            case VANDERGRINTEN_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_van_der_grinten);
                 options.map_night = null;
                 options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
@@ -352,6 +356,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         switch (mode)
         {
             case MERCATOR_SIMPLE:
+            case VANDERGRINTEN_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
             case EQUIAZIMUTHAL_SIMPLE2:
@@ -413,6 +418,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public static WorldMapTask.WorldMapProjection getMapProjection(WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
         switch (mode) {
+            case VANDERGRINTEN_SIMPLE: return new WorldMapVanDerGrinten();
             case MERCATOR_SIMPLE: return new WorldMapMercator();
             case EQUIAZIMUTHAL_SIMPLE: return new WorldMapEquiazimuthal();
             case EQUIAZIMUTHAL_SIMPLE1: return new WorldMapEquiazimuthal1();

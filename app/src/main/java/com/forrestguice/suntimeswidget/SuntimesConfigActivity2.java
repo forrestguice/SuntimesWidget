@@ -22,8 +22,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -206,6 +204,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.MERCATOR_SIMPLE);
+        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.VANDERGRINTEN_SIMPLE);
 
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]))
         {

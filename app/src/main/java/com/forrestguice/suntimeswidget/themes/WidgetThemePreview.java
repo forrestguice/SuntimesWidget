@@ -333,6 +333,7 @@ public class WidgetThemePreview
         switch (mode)
         {
             case MERCATOR_SIMPLE:
+            case VANDERGRINTEN_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
             case EQUIAZIMUTHAL_SIMPLE2:
