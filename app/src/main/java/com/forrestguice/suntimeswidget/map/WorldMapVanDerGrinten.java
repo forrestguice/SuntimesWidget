@@ -22,6 +22,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -42,7 +46,11 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
     {
         if (lat == 0) {
-            lat += 0.01d;
+            lat = 0.01d;
+        } else if (lat == 90) {
+            lat = 89.9;
+        } else if (lat == -90) {
+            lat = -89.9;
         }
         if (lon == 0) {
             lon += 0.01d;
@@ -168,19 +176,46 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         Bitmap masked = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);    // mask final image to fit within a circle
         Canvas maskedCanvas = new Canvas(masked);
         maskedCanvas.drawCircle(w/2f, h/2f, w/2f - 2f, paintMask_srcOver);
+
+        /* // mask out polar regions
+        double[] mid = new double[] { w/2d, h/2d };
+        Path pole0 = createPolarMaskPath(w, h, mid, true);
+        Path pole1 = createPolarMaskPath(w, h, mid, false);
+        paintMask_srcIn.setColor(Color.TRANSPARENT);
+        maskedCanvas.drawPath(pole0, paintMask_srcIn);
+        maskedCanvas.drawPath(pole1, paintMask_srcIn);
+        */
+
+        paintMask_srcIn.setColor(Color.WHITE);
         maskedCanvas.drawBitmap(b, 0, 0, paintMask_srcIn);
         b.recycle();
         return masked;
     }
 
+    protected Path createPolarMaskPath(int w, int h, double[] mid, boolean northward)
+    {
+        Path path = new Path();
+        path.moveTo(0, northward ? 0 : h);
+
+        int[] p;
+        double latitude = northward ? 88 : -88;
+        for (int longitude=(int)-180; longitude <= 180; longitude+=2)
+        {
+            p = toBitmapCoords(w, h, mid, latitude, longitude);
+            path.lineTo((float) p[0], (float) p[1]);
+        }
+
+        path.lineTo(w, northward ? 0 : h);
+        path.close();
+        return path;
+    }
+
     private ArrayList<float[]> grid_x = null, grid_y = null;
-    private double[] grid_mid;
     private boolean grid_initialized = false;
 
     protected void initGrid(int w, int h, double[] mid)
     {
         long bench_start = System.nanoTime();
-        grid_mid = mid;
         grid_x = new ArrayList<>();
         grid_y = new ArrayList<>();
         for (int i=0; i<=180; i+=15) {
@@ -327,7 +362,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     protected float[] createLongitudePath(int w, int h, double[] mid, double longitude) {
-        return createLongitudePath(w, h, mid, longitude, -88, 88);
+        return createLongitudePath(w, h, mid, longitude, -90, 90);
     }
     protected float[] createLongitudePath(int w, int h, double[] mid, double longitude, double minLatitude, double maxLatitude)
     {
