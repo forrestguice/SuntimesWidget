@@ -37,9 +37,8 @@ public class WorldMapMercator extends WorldMapEquirectangular
     @Override
     public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
     {
-        double radLat = Math.toRadians(lat);
         double x = Math.toRadians(lon - 0);    // minus center_longitude
-        double y = Math.log(Math.tan(PI_OVER_4 + (0.5d * radLat)));
+        double y = Math.log(Math.tan(PI_OVER_4 + (0.5d * Math.toRadians(lat))));
 
         int[] p = new int[2];
         p[0] = (int) (mid[0] + ((x / Math.PI) * mid[0]));
@@ -132,7 +131,7 @@ public class WorldMapMercator extends WorldMapEquirectangular
 
         paintGrid.setColor(options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR));
         paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
-        for (int i=0; i < 90; i = i + 5)
+        for (int i=0; i < 90; i = i + 15)
         {
             int[] pNorth = toBitmapCoords(w, h, mid, i, 0);
             int[] pSouth = toBitmapCoords(w, h, mid, -i, 0);
