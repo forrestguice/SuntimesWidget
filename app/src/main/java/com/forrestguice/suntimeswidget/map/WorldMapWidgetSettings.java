@@ -80,6 +80,7 @@ public class WorldMapWidgetSettings
     public static final String PROJ4_AEQD1 = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
     public static final String PROJ4_MERC = "+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
     public static final String PROJ4_VANDG = "+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m +no_defs";
+    public static final String PROJ4_SINU = "+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6378140 +b=6356750 +units=m +no_defs ";
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
@@ -141,6 +142,7 @@ public class WorldMapWidgetSettings
         EQUIAZIMUTHAL_SIMPLE2("Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1),
         MERCATOR_SIMPLE("Mercator", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Mercator", PROJ4_MERC),   // TODO: layout
         VANDERGRINTEN_SIMPLE("Van der Grinten", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Van der Grinten", PROJ4_VANDG),
+        SINUSOIDAL_SIMPLE("Sinusoidal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Sinuisoidal", PROJ4_SINU),
         ;
 
         private final int layoutID;
@@ -210,6 +212,7 @@ public class WorldMapWidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            SINUSOIDAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplesinusoidal));
             VANDERGRINTEN_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplevandergrinten));
             MERCATOR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplemercator));
             EQUIAZIMUTHAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal));
@@ -218,6 +221,7 @@ public class WorldMapWidgetSettings
             EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
 
+            SINUSOIDAL_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_sinusoidal));
             VANDERGRINTEN_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_vandergrinten));
             MERCATOR_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_mercator));
             EQUIAZIMUTHAL_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));

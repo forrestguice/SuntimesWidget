@@ -136,6 +136,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 options.hasTransparentBaseMap = true;
                 break;
 
+            case SINUSOIDAL_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_sinusoidal);
+                options.map_night = null;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
+                options.hasTransparentBaseMap = true;
+                break;
+
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
                 options.map_night = null;
@@ -383,6 +390,12 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 }
                 break;
 
+            case SINUSOIDAL_SIMPLE:
+                projection = getMapProjection(mode);
+                w = getWidth();
+                h = w / 2;
+                break;
+
             case EQUIRECTANGULAR_BLUEMARBLE:
             case EQUIRECTANGULAR_SIMPLE:
             default:
@@ -418,6 +431,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public static WorldMapTask.WorldMapProjection getMapProjection(WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
         switch (mode) {
+            case SINUSOIDAL_SIMPLE: return new WorldMapSinusoidal();
             case VANDERGRINTEN_SIMPLE: return new WorldMapVanDerGrinten();
             case MERCATOR_SIMPLE: return new WorldMapMercator();
             case EQUIAZIMUTHAL_SIMPLE: return new WorldMapEquiazimuthal();

@@ -538,6 +538,8 @@
     <string name="widgetMode_sunPosMap_simplerectangular">Basic Map</string>  <!-- setting -->  <!-- TODO: "Basic" to "Basic Map" -->
     <string name="widgetMode_sunPosMap_simplemercator">Mercator</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode_sunPosMap_simplevandergrinten">Van der Grinten</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplesinusoidal">Mercator equal-area</string>    <!-- aka sinusoidal, Sanson-Flamsteed, Mercator equal-area -->       <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplemollweide">Mollweide</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
@@ -547,6 +549,7 @@
     <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>
     <string name="worldmap_projection_mercator">Mercator</string>    <!-- TODO -->
     <string name="worldmap_projection_vandergrinten">Van der Grinten</string>    <!-- TODO -->
+    <string name="worldmap_projection_sinusoidal">Mercator equal-area</string>    <!-- aka sinusoidal, Sanson-Flamsteed, Mercator equal-area -->    <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->

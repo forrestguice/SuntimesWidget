@@ -170,9 +170,12 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options) {
+        return makeMaskedBitmap(w, h, super.makeBitmap(data, w, h, options));
+    }
+
+    protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b)
     {
-        Bitmap b = super.makeBitmap(data, w, h, options);
         Bitmap masked = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);    // mask final image to fit within a circle
         Canvas maskedCanvas = new Canvas(masked);
         maskedCanvas.drawCircle(w/2f, h/2f, w/2f - 2f, paintMask_srcOver);
@@ -186,7 +189,6 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         maskedCanvas.drawPath(pole1, paintMask_srcIn);
         */
 
-        paintMask_srcIn.setColor(Color.WHITE);
         maskedCanvas.drawBitmap(b, 0, 0, paintMask_srcIn);
         b.recycle();
         return masked;

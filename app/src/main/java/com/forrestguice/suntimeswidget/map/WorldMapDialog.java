@@ -805,6 +805,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             switch (item.getItemId())
             {
                 case R.id.action_worldmap_simplemercator:
+                case R.id.action_worldmap_simplesinusoidal:
                 case R.id.action_worldmap_simplevandergrinten:
                 case R.id.action_worldmap_simplerectangular:
                 case R.id.action_worldmap_bluemarble:
@@ -965,6 +966,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         switch (mode) {
             case MERCATOR_SIMPLE: return R.id.action_worldmap_simplemercator;
             case VANDERGRINTEN_SIMPLE: return R.id.action_worldmap_simplevandergrinten;
+            case SINUSOIDAL_SIMPLE: return R.id.action_worldmap_simplesinusoidal;
             case EQUIAZIMUTHAL_SIMPLE: return R.id.action_worldmap_simpleazimuthal;
             case EQUIAZIMUTHAL_SIMPLE1: return R.id.action_worldmap_simpleazimuthal_south;
             case EQUIAZIMUTHAL_SIMPLE2: return R.id.action_worldmap_simpleazimuthal_location;
@@ -976,6 +978,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         switch (item.getItemId()) {
             case R.id.action_worldmap_simplemercator: return WorldMapWidgetSettings.WorldMapWidgetMode.MERCATOR_SIMPLE;
             case R.id.action_worldmap_simplevandergrinten: return WorldMapWidgetSettings.WorldMapWidgetMode.VANDERGRINTEN_SIMPLE;
+            case R.id.action_worldmap_simplesinusoidal: return WorldMapWidgetSettings.WorldMapWidgetMode.SINUSOIDAL_SIMPLE;
             case R.id.action_worldmap_simpleazimuthal: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE;
             case R.id.action_worldmap_simpleazimuthal_south: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
             case R.id.action_worldmap_simpleazimuthal_location: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2;
