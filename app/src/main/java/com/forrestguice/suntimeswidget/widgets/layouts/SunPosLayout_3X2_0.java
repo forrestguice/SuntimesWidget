@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal1;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal2;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
+import com.forrestguice.suntimeswidget.map.WorldMapHammer;
 import com.forrestguice.suntimeswidget.map.WorldMapMercator;
 import com.forrestguice.suntimeswidget.map.WorldMapSinusoidal;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
@@ -103,6 +104,13 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
                 options.map_night = null;
                 options.hasTransparentBaseMap = true;
                 projection = new WorldMapSinusoidal();
+                break;
+
+            case HAMMER_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_hammer);
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
+                projection = new WorldMapHammer();
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE:

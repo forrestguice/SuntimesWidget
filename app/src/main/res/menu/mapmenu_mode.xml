@@ -28,6 +28,11 @@
             android:icon="?attr/icActionWorldMap"
             app:showAsAction="never" />
 
+        <item android:id="@+id/action_worldmap_simplehammer"
+            android:title="@string/widgetMode_sunPosMap_simplehammer"
+            android:icon="?attr/icActionWorldMap"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_worldmap_simpleazimuthal"
             android:title="@string/widgetMode_sunPosMap_simpleazimuthal"
             android:icon="?attr/icActionWorldMap"

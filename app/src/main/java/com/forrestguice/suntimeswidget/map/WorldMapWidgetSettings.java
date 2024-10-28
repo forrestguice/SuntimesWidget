@@ -80,7 +80,8 @@ public class WorldMapWidgetSettings
     public static final String PROJ4_AEQD1 = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
     public static final String PROJ4_MERC = "+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
     public static final String PROJ4_VANDG = "+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m +no_defs";
-    public static final String PROJ4_SINU = "+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6378140 +b=6356750 +units=m +no_defs ";
+    public static final String PROJ4_SINU = "+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6378140 +b=6356750 +units=m +no_defs";
+    public static final String PROJ4_HAMMER = "+proj=hammer +lon_0=0 +x_0=0 +y_0=0 +a=6378140 +b=6356750 +units=m +no_defs";    // TODO
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
@@ -143,6 +144,7 @@ public class WorldMapWidgetSettings
         MERCATOR_SIMPLE("Mercator", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Mercator", PROJ4_MERC),   // TODO: layout
         VANDERGRINTEN_SIMPLE("Van der Grinten", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Van der Grinten", PROJ4_VANDG),
         SINUSOIDAL_SIMPLE("Sinusoidal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Sinuisoidal", PROJ4_SINU),
+        HAMMER_SIMPLE("Hammer", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Hammer", PROJ4_HAMMER),
         ;
 
         private final int layoutID;
@@ -212,6 +214,7 @@ public class WorldMapWidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            HAMMER_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplehammer));
             SINUSOIDAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplesinusoidal));
             VANDERGRINTEN_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplevandergrinten));
             MERCATOR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplemercator));
@@ -221,6 +224,7 @@ public class WorldMapWidgetSettings
             EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
 
+            HAMMER_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_hammer));
             SINUSOIDAL_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_sinusoidal));
             VANDERGRINTEN_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_vandergrinten));
             MERCATOR_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_mercator));
