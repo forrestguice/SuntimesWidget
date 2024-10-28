@@ -1691,6 +1691,10 @@ public class AlarmNotifications extends BroadcastReceiver
                         final long startTime = SystemClock.elapsedRealtime();
                         AlarmSettings.savePrefLastBootCompleted_started(getApplicationContext(), startTime);
 
+                        if (Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
+                            BedtimeSettings.moveSettingsToDeviceSecureStorage(getApplicationContext());
+                        }
+
                         if (Build.VERSION.SDK_INT < 24) {    // ACTION_LOCKED_BOOT_COMPLETED requires api 24+; for older devices run that code here instead
                             onLockedBootCompleted(getApplicationContext());
                         }

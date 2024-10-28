@@ -294,6 +294,21 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
+        CheckBoxPreference dndRuleBased = (CheckBoxPreference) fragment.findPreference(BedtimeSettings.PREF_KEY_BEDTIME_DND_RULEBASED);
+        if (dndRuleBased != null)
+        {
+            dndRuleBased.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturbRuleBased(context));
+            dndRuleBased.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue)
+                {
+                    BedtimeSettings.savePrefBedtimeDoNotDisturbRuleBased(context, (Boolean) newValue);
+                    return true;
+                }
+            });
+        }
+
         initPref_alarms_bootCompleted(fragment);
 
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);

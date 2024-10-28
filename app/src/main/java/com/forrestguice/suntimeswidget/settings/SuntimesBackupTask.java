@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -82,6 +83,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     public static final String KEY_VERSION = "Version";               // type version; "version":"107"
 
     public static final String KEY_APPSETTINGS = "AppSettings";
+    public static final String KEY_APPSETTINGS_DEVICESECURE = KEY_APPSETTINGS + "_" + "DeviceSecure";
     public static final String KEY_WIDGETSETTINGS = "WidgetSettings";
     public static final String KEY_WIDGETTHEMES = "WidgetThemes";
     public static final String KEY_ALARMITEMS = "AlarmItems";
@@ -165,6 +167,17 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             SharedPreferences appPrefs = PreferenceManager.getDefaultSharedPreferences(context);
             writeAppSettingsJSONObject(context, appPrefs, out);
             c++;
+
+            if (Build.VERSION.SDK_INT >= 24)
+            {
+                if (c > 0) {
+                    out.write(",\n".getBytes());
+                }
+                out.write(("\"" + KEY_APPSETTINGS_DEVICESECURE + "\": ").getBytes());    // include "device secure" settings
+                SharedPreferences appPrefs1 = PreferenceManager.getDefaultSharedPreferences(context.createDeviceProtectedStorageContext());
+                writeAppSettingsJSONObject(context, appPrefs1, out);
+                c++;
+            }
         }
 
         if (includedKeys.containsKey(KEY_WIDGETSETTINGS) && includedKeys.get(KEY_WIDGETSETTINGS) && appWidgetIds.size() > 0)

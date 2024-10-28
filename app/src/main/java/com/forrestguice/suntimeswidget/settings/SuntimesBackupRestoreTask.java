@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -226,8 +227,14 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             c += importPlaceItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
         }
 
-        if (keys.contains(SuntimesBackupTask.KEY_APPSETTINGS)) {
+        if (keys.contains(SuntimesBackupTask.KEY_APPSETTINGS))
+        {
             c += (importAppSettings(context, report, allValues.get(SuntimesBackupTask.KEY_APPSETTINGS)) ? 1 : 0);
+            BedtimeSettings.moveSettingsToDeviceSecureStorage(context);
+
+            if (Build.VERSION.SDK_INT >= 24) {
+                c += (importAppSettings(context.createDeviceProtectedStorageContext(), report, allValues.get(SuntimesBackupTask.KEY_APPSETTINGS_DEVICESECURE)) ? 1 : 0);
+            }
         }
 
         if (keys.contains(SuntimesBackupTask.KEY_COLORS)) {
