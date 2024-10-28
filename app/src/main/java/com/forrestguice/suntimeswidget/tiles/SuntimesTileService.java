@@ -157,6 +157,7 @@ public abstract class SuntimesTileService extends TileService
         if (configClass != null)
         {
             Intent intent = new Intent(context, getConfigActivityClass(context));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId());
             intent.putExtra(ClockWidget0ConfigActivity.EXTRA_RECONFIGURE, true);
             return intent;
