@@ -317,6 +317,10 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         return b;
     }
 
+    protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b) {
+        return b;
+    }
+
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override

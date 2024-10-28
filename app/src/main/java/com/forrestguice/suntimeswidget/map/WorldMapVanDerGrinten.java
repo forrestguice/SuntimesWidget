@@ -150,7 +150,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         }
 
         long bench_end = System.nanoTime();
-        Log.d(WorldMapView.LOGTAG, "make mercator world map :: initMatrix :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + size[0] + ", " + size[1]);
+        Log.d(WorldMapView.LOGTAG, "make van der grinten world map :: initMatrix :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + size[0] + ", " + size[1]);
         return v;
     }
 
@@ -170,9 +170,8 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
+    protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b)
     {
-        Bitmap b = super.makeBitmap(data, w, h, options);
         Bitmap masked = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);    // mask final image to fit within a circle
         Canvas maskedCanvas = new Canvas(masked);
         maskedCanvas.drawCircle(w/2f, h/2f, w/2f - 2f, paintMask_srcOver);
@@ -190,6 +189,11 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         maskedCanvas.drawBitmap(b, 0, 0, paintMask_srcIn);
         b.recycle();
         return masked;
+    }
+
+    @Override
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options) {
+        return makeMaskedBitmap(w, h, super.makeBitmap(data, w, h, options));
     }
 
     protected Path createPolarMaskPath(int w, int h, double[] mid, boolean northward)
@@ -210,8 +214,8 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         return path;
     }
 
-    private ArrayList<float[]> grid_x = null, grid_y = null;
-    private boolean grid_initialized = false;
+    protected ArrayList<float[]> grid_x = null, grid_y = null;
+    protected boolean grid_initialized = false;
 
     protected void initGrid(int w, int h, double[] mid)
     {
@@ -253,11 +257,11 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         }
     }
 
-    private float[] majorline_equator_east, majorline_equator_west;
-    private float[] majorline_tropics_north, majorline_tropics_south;
-    private float[] majorline_polar_north, majorline_polar_south;
-    private float[] majorline_dateline, majorline_prime, majorline_prime_east, majorline_prime_west;
-    private boolean majorline_initialized = false;
+    protected float[] majorline_equator_east, majorline_equator_west;
+    protected float[] majorline_tropics_north, majorline_tropics_south;
+    protected float[] majorline_polar_north, majorline_polar_south;
+    protected float[] majorline_dateline, majorline_prime, majorline_prime_east, majorline_prime_west;
+    protected boolean majorline_initialized = false;
 
     protected void initMajorLines(int w, int h, double[] mid)
     {

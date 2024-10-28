@@ -18,6 +18,11 @@
             android:icon="?attr/icActionWorldMap"
             app:showAsAction="never" />
 
+        <item android:id="@+id/action_worldmap_simplemollweide"
+            android:title="@string/widgetMode_sunPosMap_simplemollweide"
+            android:icon="?attr/icActionWorldMap"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_worldmap_simplevandergrinten"
             android:title="@string/widgetMode_sunPosMap_simplevandergrinten"
             android:icon="?attr/icActionWorldMap"
