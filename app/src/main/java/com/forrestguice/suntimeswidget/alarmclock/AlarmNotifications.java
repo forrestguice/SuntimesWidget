@@ -134,6 +134,13 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final int NOTIFICATION_BEDTIME_ACTIVE_ID = -1000;
 
+    public static final String ACTION_LOCKED_BOOT_COMPLETED;
+    static {
+        if (Build.VERSION.SDK_INT >= 24) {
+            ACTION_LOCKED_BOOT_COMPLETED = Intent.ACTION_LOCKED_BOOT_COMPLETED;
+        } else ACTION_LOCKED_BOOT_COMPLETED = "android.intent.action.LOCKED_BOOT_COMPLETED";
+    }
+
     public static final String[] ALARM_ACTIONS = new String[] {
             ACTION_SHOW, ACTION_SILENT, ACTION_DISMISS, ACTION_SNOOZE,
             ACTION_SCHEDULE, ACTION_RESCHEDULE, ACTION_RESCHEDULE1,
@@ -144,7 +151,8 @@ public class AlarmNotifications extends BroadcastReceiver
             ACTION_BEDTIME, ACTION_BEDTIME_PAUSE, ACTION_BEDTIME_RESUME, ACTION_BEDTIME_DISMISS
     };
     public static final String[] SYSTEM_ACTIONS = new String[] {
-            Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_MY_PACKAGE_REPLACED,
+            Intent.ACTION_BOOT_COMPLETED, ACTION_LOCKED_BOOT_COMPLETED,
+            Intent.ACTION_MY_PACKAGE_REPLACED,
             Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_TIME_CHANGED
     };
 
@@ -1672,11 +1680,20 @@ public class AlarmNotifications extends BroadcastReceiver
                     itemTask.execute(ContentUris.parseId(data));
 
                 } else {
-                    if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action))
+                    if (AlarmNotifications.ACTION_LOCKED_BOOT_COMPLETED.equals(action))
                     {
+                        Log.d(TAG, "ACTION_LOCKED_BOOT_COMPLETED received");
+                        onLockedBootCompleted(getContext());
+                        notifications.stopSelf(startId);
+
+                    } else if (Intent.ACTION_BOOT_COMPLETED.equals(action) || AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
                         Log.d(TAG, action + ": schedule all (prevCompleted=" + AlarmSettings.bootCompletedWasRun(getApplicationContext()) + ")");
                         final long startTime = SystemClock.elapsedRealtime();
                         AlarmSettings.savePrefLastBootCompleted_started(getApplicationContext(), startTime);
+
+                        if (Build.VERSION.SDK_INT < 24) {    // ACTION_LOCKED_BOOT_COMPLETED requires api 24+; for older devices run that code here instead
+                            onLockedBootCompleted(getApplicationContext());
+                        }
 
                         AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
                         alarmListTask.setParam_enabledOnly(true);
@@ -1774,22 +1791,22 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     } else if (ACTION_BEDTIME.equals(action)) {
                         Log.d(TAG, "ACTION_BEDTIME");
-                        triggerBedtimeMode(getApplicationContext(), true);
+                        triggerBedtimeMode(getContext(), true);
                         notifications.stopSelf(startId);
 
                     } else if (ACTION_BEDTIME_PAUSE.equals(action)) {
                         Log.d(TAG, "ACTION_BEDTIME_PAUSE");
-                        pauseBedtimeMode(getApplicationContext());
+                        pauseBedtimeMode(getContext());
                         notifications.stopSelf(startId);
 
                     } else if (ACTION_BEDTIME_RESUME.equals(action)) {
                         Log.d(TAG, "ACTION_BEDTIME_RESUME");
-                        resumeBedtimeMode(getApplicationContext());
+                        resumeBedtimeMode(getContext());
                         notifications.stopSelf(startId);
 
                     } else if (ACTION_BEDTIME_DISMISS.equals(action)) {
                         Log.d(TAG, "ACTION_BEDTIME_DISMISS");
-                        triggerBedtimeMode(getApplicationContext(), false);
+                        triggerBedtimeMode(getContext(), false);
                         notifications.stopSelf(startId);
 
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
@@ -1827,6 +1844,24 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             return START_STICKY;
+        }
+
+        protected Context getContext()
+        {
+            if (Build.VERSION.SDK_INT >= 24)
+            {
+                return (AlarmSettings.isUserUnlocked(getApplicationContext())
+                        ? getApplicationContext()
+                        : getApplicationContext().createDeviceProtectedStorageContext());
+            }
+            return getApplicationContext();
+        }
+
+        protected void onLockedBootCompleted(Context context)
+        {
+            if (BedtimeSettings.isBedtimeModeActive(context)) {
+                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+            }
         }
 
         public static void triggerBedtimeMode(Context context, boolean value)

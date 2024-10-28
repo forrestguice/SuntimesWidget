@@ -88,16 +88,19 @@ public class BedtimeSettings
     public static final int STATE_BEDTIME_ACTIVE = 1;
     public static final int STATE_BEDTIME_PAUSED = 2;
 
-    public static final String PREF_KEY_BEDTIME_STATE = "app_bedtime_state";
+    public static final String PREF_KEY_BEDTIME_STATE = "app_bedtime_state";                        // device protected storage
 
     public static final String PREF_KEY_BEDTIME_CATEGORY =  "app_bedtime_category";
 
-    public static int getBedtimeState(Context context) {
+    public static int getBedtimeState(Context context0)
+    {
+        Context context = AlarmSettings.getDeviceProtectedStorageContext(context0);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getInt(PREF_KEY_BEDTIME_STATE, STATE_BEDTIME_INACTIVE);
     }
-    public static void setBedtimeState(Context context, int value)
+    public static void setBedtimeState(Context context0, int value)
     {
+        Context context = AlarmSettings.getDeviceProtectedStorageContext(context0);    // make available while user is locked
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putInt(PREF_KEY_BEDTIME_STATE, value);
         prefs.apply();

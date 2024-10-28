@@ -19,9 +19,11 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.Service;
 import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
 import android.content.ActivityNotFoundException;
@@ -40,6 +42,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
@@ -680,6 +683,44 @@ public class AlarmSettings
         } else {
             return true;
         }
+    }
+
+    /**
+     * @return true device has been unlocked at least once (app now has access to credential protected storage)
+     */
+    public static boolean isUserUnlocked(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 17)
+        {
+            UserManager userManager = (UserManager) context.getSystemService(Service.USER_SERVICE);
+            if (userManager != null) {
+                return userManager.isUserUnlocked();
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return true device has a lock screen
+     */
+    public static boolean isDeviceSecure(Context context)
+    {
+        if (android.os.Build.VERSION.SDK_INT >= 23)
+        {
+            KeyguardManager manager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+            if (manager != null) {
+                return manager.isDeviceSecure();
+            }
+        }
+        return false;
+    }
+
+    public static Context getDeviceProtectedStorageContext(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 24) {
+            return context.createDeviceProtectedStorageContext();
+        }
+        return context;
     }
 
     /**

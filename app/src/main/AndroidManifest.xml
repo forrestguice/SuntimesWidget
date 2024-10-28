@@ -373,6 +373,7 @@
         <service
             android:name=".alarmclock.bedtime.BedtimeConditionService"
             android:enabled="@bool/api_post_24"
+            android:directBootAware="true"
             android:label="@string/configLabel_bedtime"
             android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
             <intent-filter>
@@ -384,10 +385,13 @@
                 android:value="com.forrestguice.suntimeswidget/com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity" />
         </service>
 
-        <service android:name=".alarmclock.AlarmNotifications$NotificationService" />
-        <receiver android:name=".alarmclock.AlarmNotifications">
+        <service android:name=".alarmclock.AlarmNotifications$NotificationService"
+            android:directBootAware="true" />
+        <receiver android:name=".alarmclock.AlarmNotifications"
+            android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 <!--<action android:name="android.intent.action.TIME_SET" />-->
@@ -404,6 +408,7 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".alarmclock.bedtime.BedtimeBroadcastReceiver"
+            android:directBootAware="true"
             android:exported="true"
             android:permission="suntimes.permission.READ_CALCULATOR">
             <intent-filter>
