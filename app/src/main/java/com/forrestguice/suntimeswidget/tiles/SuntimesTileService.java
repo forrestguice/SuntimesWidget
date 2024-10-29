@@ -123,6 +123,29 @@ public abstract class SuntimesTileService extends TileService
         Tile tile = getQsTile();
         toggleState(tile).updateTile();
 
+        Log.i(TAG, "onClick");
+        if (isLocked()) {
+            if (onClick_locked()) {
+                return;
+            }
+        }
+        onClick_unlocked();
+    }
+
+    /**
+     * @return true click was handled (return), false click unhandled (fall through)
+     */
+    protected boolean onClick_locked()
+    {
+        Intent lockScreenIntent = getLockScreenIntent(getApplicationContext());
+        if (lockScreenIntent != null) {
+            startActivityAndCollapse(lockScreenIntent);
+            return true;
+        }
+        return false;
+    }
+    protected void onClick_unlocked()
+    {
         Dialog dialog = createDialog(getApplicationContext());
         if (dialog != null) {
             showDialog(createDialog(getApplicationContext()));
@@ -136,7 +159,6 @@ public abstract class SuntimesTileService extends TileService
                 startActivityAndCollapse(configIntent);
             }
         }
-        //Log.i(TAG, "onClick");
     }
 
     protected Tile toggleState(Tile tile)
@@ -177,6 +199,11 @@ public abstract class SuntimesTileService extends TileService
         if (intent != null) {
             return intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         } else return AlarmNotifications.getSuntimesIntent(getApplicationContext());
+    }
+
+    @Nullable
+    protected Intent getLockScreenIntent(Context context) {
+        return null;
     }
 
     protected SuntimesRiseSetData2 initData(Context context) {
