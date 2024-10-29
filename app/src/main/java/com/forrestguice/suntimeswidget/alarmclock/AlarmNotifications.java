@@ -1863,8 +1863,13 @@ public class AlarmNotifications extends BroadcastReceiver
 
         protected void onLockedBootCompleted(Context context)
         {
-            if (BedtimeSettings.isBedtimeModeActive(context)) {
-                showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+            if (BedtimeSettings.isBedtimeModeActive(context))
+            {
+                if (BedtimeSettings.isBedtimeModePaused(context)) {
+                    showNotification(context, createBedtimeModeNotification(context), NOTIFICATION_BEDTIME_ACTIVE_ID);
+                } else {
+                    triggerBedtimeMode(context, true);
+                }
             }
         }
 
