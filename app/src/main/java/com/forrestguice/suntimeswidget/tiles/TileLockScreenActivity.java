@@ -35,6 +35,10 @@ public class TileLockScreenActivity extends SuntimesTileActivity
         final int appWidgetID = getIntent().getIntExtra(EXTRA_APPWIDGETID, 0);
         switch (appWidgetID)
         {
+            case AlarmTileService.ALARMTILE_APPWIDGET_ID: return new AlarmTileBase(this);
+            case BedtimeTileService.BEDTIMETILE_APPWIDGET_ID: return new BedtimeTileBase(this);
+            case ClockTileService.CLOCKTILE_APPWIDGET_ID: return new ClockTileBase(this);
+            case NextEventTileService.NEXTEVENTTILE_APPWIDGET_ID: return new NextEventTileBase(this);
             default: return null;
         }
     }

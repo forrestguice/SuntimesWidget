@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,52 +20,30 @@ package com.forrestguice.suntimeswidget.tiles;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 
-import com.forrestguice.suntimeswidget.ClockWidget0ConfigActivity;
-import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.settings.WidgetActions;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-
+/**
+ * SuntimesTileService
+ * @see SuntimesTileBase
+ */
 @TargetApi(24)
 public abstract class SuntimesTileService extends TileService
 {
+    protected abstract int appWidgetId();
+    protected abstract SuntimesTileBase initTileBase();
+    protected SuntimesTileBase base = initTileBase();
+
     public static final String TAG = "AlarmTile";
     protected static final SuntimesUtils utils = new SuntimesUtils();
-
-    protected int appWidgetId() {
-        return 0;
-    }
-
-    @Nullable
-    @SuppressWarnings("rawtypes")
-    protected Class getConfigActivityClass(Context context) {
-        return null;
-    }
-
-    @Nullable
-    protected Dialog createDialog(final Context context) {
-        return null;
-    }
-
-    protected void initDefaults(Context context) {
-    }
 
     protected void initLocale(Context context) {
         SuntimesUtils.initDisplayStrings(context);
@@ -78,7 +56,7 @@ public abstract class SuntimesTileService extends TileService
     @Override
     public void onTileAdded() {
         super.onTileAdded();
-        initDefaults(getApplicationContext());
+        base.initDefaults(getApplicationContext());
         Log.i(TAG, "onTileAdded");
     }
 
@@ -92,7 +70,7 @@ public abstract class SuntimesTileService extends TileService
     public void onStartListening()
     {
         super.onStartListening();
-        initData(getApplicationContext(), true);
+        base.initData(getApplicationContext(), true);
         initLocale(getApplicationContext());
         updateTile(getApplicationContext());
         //Log.i(TAG, "onStartListening");
@@ -104,12 +82,11 @@ public abstract class SuntimesTileService extends TileService
         //Log.i(TAG, "onStopListening");
     }
 
-
     protected Tile updateTileState(Context context, Tile tile)
     {
-        SuntimesRiseSetData2 data = initData(context);
+        SuntimesRiseSetData2 data = base.initData(context);
         tile.setState((data.isCalculated())
-                ? data.isDay(now(context))
+                ? data.isDay(base.now(context))
                 ? Tile.STATE_ACTIVE
                 : Tile.STATE_INACTIVE
                 : Tile.STATE_UNAVAILABLE);
@@ -137,22 +114,27 @@ public abstract class SuntimesTileService extends TileService
      */
     protected boolean onClick_locked()
     {
-        Intent lockScreenIntent = getLockScreenIntent(getApplicationContext());
-        if (lockScreenIntent != null) {
-            startActivityAndCollapse(lockScreenIntent);
+        Intent lockScreenIntent = base.getLockScreenIntent(getApplicationContext());
+        if (lockScreenIntent != null)
+        {
+            lockScreenIntent.putExtra(TileLockScreenActivity.EXTRA_APPWIDGETID, appWidgetId());
+            lockScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            lockScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(lockScreenIntent);
             return true;
         }
         return false;
     }
     protected void onClick_unlocked()
     {
-        Dialog dialog = createDialog(getApplicationContext());
+        ContextThemeWrapper context = new ContextThemeWrapper(getApplicationContext(), AppSettings.loadTheme(getApplicationContext()));
+        Dialog dialog = base.createDialog(context);
         if (dialog != null) {
-            showDialog(createDialog(getApplicationContext()));
+            showDialog(dialog);
 
         } else {
-            Intent launchIntent = getLaunchIntent(getApplicationContext());
-            Intent configIntent = getConfigIntent(getApplicationContext());
+            Intent launchIntent = base.getLaunchIntent(context);
+            Intent configIntent = base.getConfigIntent(context);
             if (launchIntent != null) {
                 startActivityAndCollapse(launchIntent);
             } else if (configIntent != null) {
@@ -169,73 +151,6 @@ public abstract class SuntimesTileService extends TileService
             default: tile.setState(Tile.STATE_ACTIVE); break;
         }
         return tile;
-    }
-
-    @SuppressWarnings("rawtypes")
-    @Nullable
-    protected Intent getConfigIntent(Context context)
-    {
-        Class configClass = getConfigActivityClass(context);
-        if (configClass != null)
-        {
-            Intent intent = new Intent(context, getConfigActivityClass(context));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId());
-            intent.putExtra(ClockWidget0ConfigActivity.EXTRA_RECONFIGURE, true);
-            return intent;
-        } else return null;
-    }
-
-    @NonNull
-    protected String getLaunchIntentTitle(Context context) {
-        String title = WidgetActions.loadActionLaunchPref(context, appWidgetId(), null, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-        return (title != null ? title : context.getString(R.string.app_name));
-    }
-
-    @Nullable
-    protected Intent getLaunchIntent(Context context)
-    {
-        Intent intent = WidgetActions.createIntent(context.getApplicationContext(), appWidgetId(), null, initData(context), SuntimesActivity.class);
-        if (intent != null) {
-            return intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        } else return AlarmNotifications.getSuntimesIntent(getApplicationContext());
-    }
-
-    @Nullable
-    protected Intent getLockScreenIntent(Context context) {
-        return null;
-    }
-
-    protected SuntimesRiseSetData2 initData(Context context) {
-        return initData(context, false);
-    }
-    protected SuntimesRiseSetData2 initData(Context context, boolean replace)
-    {
-        if (data == null || replace) {
-            data = new SuntimesRiseSetData2(context, appWidgetId());
-            data.calculate();
-        }
-        return data;
-    }
-    protected SuntimesRiseSetData2 data = null;
-
-    protected Location location(Context context) {
-        return WidgetSettings.loadLocationPref(context, appWidgetId());
-    }
-
-    protected TimeZone timezone(Context context)
-    {
-        initData(context);
-        return (data != null ? data.timezone() : WidgetTimezones.localMeanTime(context, location(context)));
-    }
-
-    public static boolean isLocalTime(String tzID) {
-        return WidgetTimezones.LocalMeanTime.TIMEZONEID.equals(tzID) || WidgetTimezones.ApparentSolarTime.TIMEZONEID.equals(tzID)
-                || WidgetTimezones.SiderealTime.TZID_LMST.equalsIgnoreCase(tzID);
-    }
-
-    protected Calendar now(Context context) {
-        return Calendar.getInstance(timezone(context));
     }
 
 }

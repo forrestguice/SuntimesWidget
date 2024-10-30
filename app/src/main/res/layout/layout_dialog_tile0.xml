@@ -39,7 +39,7 @@
 
             <TextView android:id="@android:id/title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:layout_gravity="center_vertical" android:gravity="center_vertical"
                 android:layout_marginBottom="2dp"
                 android:textSize="?attr/text_size_xlarge"

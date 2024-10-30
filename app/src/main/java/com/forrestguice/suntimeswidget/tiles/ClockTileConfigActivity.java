@@ -54,7 +54,7 @@ public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
     }
 
     public boolean getDefaultLocationFromApp() {
-        return ClockTileService.DEF_LOCATION_FROM_APP;
+        return ClockTileBase.DEF_LOCATION_FROM_APP;
     }
 
 }
