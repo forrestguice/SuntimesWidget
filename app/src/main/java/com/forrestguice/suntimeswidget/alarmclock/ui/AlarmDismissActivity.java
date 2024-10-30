@@ -151,6 +151,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         initTheme(this);
         super.onCreate(icicle);
         initLocale(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         setContentView(R.layout.layout_activity_dismissalarm);
 
         Intent intent = getIntent();
