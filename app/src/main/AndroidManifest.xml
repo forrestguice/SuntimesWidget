@@ -464,6 +464,8 @@
         </service>
         <activity android:name=".tiles.NextEventTileConfigActivity" />
 
+        <activity android:name=".tiles.TileLockScreenActivity" android:theme="@style/LockScreenActivityStyle" />
+
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

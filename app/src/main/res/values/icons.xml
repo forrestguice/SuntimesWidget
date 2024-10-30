@@ -105,5 +105,7 @@
     <drawable name="ic_action_previous_item_ref">@drawable/ic_action_previous_item_light</drawable>
 
     <drawable name="popupmenu_frame_ref">@drawable/popupmenu_frame_light</drawable>
+    <drawable name="tilecard_bg_ref">@drawable/tilecard_bg_light</drawable>
+
 
 </resources>
