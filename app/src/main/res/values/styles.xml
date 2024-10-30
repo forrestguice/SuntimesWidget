@@ -762,6 +762,7 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_ref1</item>
     </style>
     <style name="AppTheme.System1.Small" parent="AppTheme.System1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -836,6 +837,7 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_light1</item>
     </style>
     <style name="AppTheme.Light1.Small" parent="AppTheme.Light1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -912,6 +914,7 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_dark1</item>
     </style>
     <style name="AppTheme.Dark1.Small" parent="AppTheme.Dark1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -1354,10 +1357,12 @@
     </style>
 
     <style name="LockScreenActivityStyle" parent="AppTheme.System">
-        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>

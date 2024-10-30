@@ -47,7 +47,7 @@ public abstract class SuntimesTileActivity extends AppCompatActivity
         super.onCreate(savedState);
         setShowWhenLocked();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         tileBase = initTileBase();
         if (tileBase == null)

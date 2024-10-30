@@ -106,6 +106,7 @@
 
     <drawable name="popupmenu_frame_ref">@drawable/popupmenu_frame_light</drawable>
     <drawable name="tilecard_bg_ref">@drawable/tilecard_bg_light</drawable>
+    <drawable name="tilecard_bg_ref1">@drawable/tilecard_bg_light1</drawable>
 
 
 </resources>

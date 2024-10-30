@@ -1,8 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:orientation="vertical" android:layout_gravity="center">
 
-    <include layout="@layout/layout_dialog_tile0" />
+    <LinearLayout
+        android:layout_gravity="end"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical|end">
+
+        <ImageButton
+            android:id="@+id/button_settings"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/configAction_settings"
+            android:src="?attr/icActionSettings" />
+
+    </LinearLayout>
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:paddingTop="?attr/dialogPreferredPadding"
+        android:paddingLeft="?attr/dialogPreferredPadding" android:paddingRight="?attr/dialogPreferredPadding"
+        android:paddingBottom="8dp"
+        android:layout_gravity="center">
+
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp" android:layout_marginEnd="56dp" android:layout_marginRight="32dp">
+
+            <ImageView
+                android:id="@android:id/icon"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:layout_gravity="center_vertical"
+                android:src="?attr/icActionAlarm" />
+
+            <TextView android:id="@android:id/title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_gravity="center_vertical" android:gravity="center_vertical"
+                android:layout_marginBottom="2dp"
+                android:textSize="?attr/text_size_xlarge"
+                android:textStyle="bold" tools:text="Title" />
+
+        </LinearLayout>
+
+        <TextView android:id="@android:id/message"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textSize="?attr/text_size_medium" tools:text="a line \nanother line \nand another" />
+
+    </LinearLayout>
 
 </FrameLayout>

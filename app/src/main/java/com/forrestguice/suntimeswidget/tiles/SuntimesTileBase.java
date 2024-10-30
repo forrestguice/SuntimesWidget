@@ -110,7 +110,7 @@ public abstract class SuntimesTileBase
     {
         SuntimesUtils.initDisplayStrings(context);
 
-        View view = getLayoutInflater(context).inflate(R.layout.layout_dialog_tile0, null);
+        View view = getLayoutInflater(context).inflate(R.layout.layout_dialog_tile, null);
         dialogView_title = view.findViewById(android.R.id.title);
         dialogView_message = view.findViewById(android.R.id.message);
 
