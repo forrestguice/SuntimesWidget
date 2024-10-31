@@ -19,6 +19,11 @@
             android:title="@string/configAction_exportWidget"
             app:showAsAction="never" />
 
+        <item android:id="@+id/action_reset"
+            android:icon="?attr/icActionDelete"
+            android:title="@string/configAction_restoreDefaults"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_about"
             android:icon="?attr/icActionAbout"
             android:title="@string/configAction_aboutWidget"

@@ -2248,6 +2248,31 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
     public static final int UNDO_IMPORT_MILLIS = 12000;
 
+    /**
+     * clear settings (restore defaults)
+     */
+    protected void confirmResetWidget(final Context context)
+    {
+        String title = context.getString(R.string.configAction_restoreDefaults);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
+                .setMessage(context.getString(R.string.resetwidget_dialog_message))
+                .setPositiveButton(context.getString(R.string.configAction_restoreDefaults), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        resetWidget();
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+    protected void resetWidget()
+    {
+        WidgetSettings.deletePrefs(this, appWidgetId);
+        onResetWidget();
+        loadSettings(this);
+    }
+    protected void onResetWidget() { /* EMPTY */ }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3024,6 +3049,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
             case R.id.action_save:
                 addWidget();
+                return true;
+
+            case R.id.action_reset:
+                confirmResetWidget(this);
                 return true;
 
             case android.R.id.home:
