@@ -688,9 +688,10 @@ public class AlarmSettings
     /**
      * @return true device has been unlocked at least once (app now has access to credential protected storage)
      */
+    @TargetApi(24)
     public static boolean isUserUnlocked(Context context)
     {
-        if (Build.VERSION.SDK_INT >= 17)
+        if (Build.VERSION.SDK_INT >= 24)
         {
             UserManager userManager = (UserManager) context.getSystemService(Service.USER_SERVICE);
             if (userManager != null) {

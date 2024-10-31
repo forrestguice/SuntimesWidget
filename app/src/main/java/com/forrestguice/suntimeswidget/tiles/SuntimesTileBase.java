@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.tiles;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.KeyguardManager;
@@ -26,6 +27,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,6 +35,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -110,6 +113,7 @@ public abstract class SuntimesTileBase
     {
         SuntimesUtils.initDisplayStrings(context);
 
+        @SuppressLint("InflateParams")
         View view = getLayoutInflater(context).inflate(R.layout.layout_dialog_tile, null);
         dialogView_title = view.findViewById(android.R.id.title);
         dialogView_message = view.findViewById(android.R.id.message);
@@ -218,21 +222,44 @@ public abstract class SuntimesTileBase
         if (activity != null)
         {
             KeyguardManager keyguardManager = (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
-            if (keyguardManager != null && keyguardManager.isKeyguardSecure())
-            {
-                keyguardManager.requestDismissKeyguard(activity, new KeyguardManager.KeyguardDismissCallback()
-                {
-                    @Override
-                    public void onDismissSucceeded() {
-                        r.run();
-                    }
-                });
+            if (keyguardManager != null && isKeyguardSecure(keyguardManager)) {
+                requestDismissKeyguard(activity, keyguardManager, r);
+
             } else {
                 r.run();
             }
         } else {
             r.run();
         }
+    }
+
+    protected void requestDismissKeyguard(@NonNull Activity activity, @NonNull KeyguardManager keyguardManager, @Nullable final Runnable r)
+    {
+        if (Build.VERSION.SDK_INT >= 26)
+        {
+            keyguardManager.requestDismissKeyguard(activity, new KeyguardManager.KeyguardDismissCallback()
+            {
+                @Override
+                public void onDismissSucceeded() {
+                    if (r != null) {
+                        r.run();
+                    }
+                }
+            });
+
+        } else {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+            if (r != null) {
+                r.run();  // TODO: run only on success; how?
+            }
+        }
+    }
+
+    protected boolean isKeyguardSecure(@NonNull KeyguardManager keyguardManager)
+    {
+        if (Build.VERSION.SDK_INT >= 16) {
+            return keyguardManager.isKeyguardSecure();
+        } else return false;
     }
 
     @NonNull
