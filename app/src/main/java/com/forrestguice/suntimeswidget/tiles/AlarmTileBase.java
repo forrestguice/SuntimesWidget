@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.tiles;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -38,6 +39,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
 
@@ -47,7 +49,10 @@ import java.util.TimeZone;
 @TargetApi(24)
 public class AlarmTileBase extends SuntimesTileBase
 {
+    public static final WidgetSettings.ActionMode DEF_ACTION_MODE = WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
+    public static final ContentValues DEF_ACTION_VALUES =  WidgetActions.SuntimesAction.OPEN_ALARM_LIST.toContentValues();
     public static final boolean DEF_SHOW_LABELS = true;    // show alarm label and note as part of dialog
+
     protected static SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmTileBase(@Nullable Activity activity) {
@@ -73,6 +78,15 @@ public class AlarmTileBase extends SuntimesTileBase
     @Nullable
     protected Intent getLockScreenIntent(Context context) {
         return new Intent(context, TileLockScreenActivity.class);
+    }
+
+    @Override
+    protected void initDefaults(Context context)
+    {
+        super.initDefaults(context);
+        WidgetSettings.saveShowLabelsPref(context, appWidgetId(), DEF_SHOW_LABELS);
+        WidgetSettings.saveActionModePref(context, appWidgetId(), DEF_ACTION_MODE);
+        WidgetActions.saveActionLaunchPref(context, DEF_ACTION_VALUES, appWidgetId());
     }
 
     @Nullable

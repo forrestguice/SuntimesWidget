@@ -71,6 +71,19 @@ public class NextEventTileBase extends SuntimesTileBase
         return new Intent(context, TileLockScreenActivity.class);
     }
 
+    public static final boolean DEF_LOCATION_FROM_APP = true;
+    public static final WidgetSettings.TimezoneMode DEF_TIMEZONE_MODE = WidgetSettings.TimezoneMode.SOLAR_TIME;
+    public static final WidgetSettings.ActionMode DEF_ACTION_MODE = WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
+
+    @Override
+    protected void initDefaults(Context context)
+    {
+        super.initDefaults(context);
+        WidgetSettings.saveActionModePref(context, appWidgetId(), DEF_ACTION_MODE);
+        WidgetSettings.saveTimezoneModePref(context, appWidgetId(), DEF_TIMEZONE_MODE);
+        WidgetSettings.saveLocationFromAppPref(context, appWidgetId(), DEF_LOCATION_FROM_APP);
+    }
+
     /**
      * initDataset
      */
@@ -149,13 +162,15 @@ public class NextEventTileBase extends SuntimesTileBase
                 : (nextEvent.isRising() ? R.drawable.svg_sunrise : R.drawable.svg_sunset);
         Drawable d = ContextCompat.getDrawable(context, icon);
 
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
-        int[] attrs = { R.attr.sunriseColor, R.attr.sunsetColor };
-        TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
-        int colorId = a.getResourceId(nextEvent.isRising() ? 0 : 1, R.color.text_primary);
-        a.recycle();
-        DrawableCompat.setTint(d, ContextCompat.getColor(context, colorId));
-
+        if (d != null)
+        {
+            ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
+            int[] attrs = {R.attr.sunriseColor, R.attr.sunsetColor};
+            TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
+            int colorId = a.getResourceId(nextEvent.isRising() ? 0 : 1, R.color.text_primary);
+            a.recycle();
+            DrawableCompat.setTint(d, ContextCompat.getColor(context, colorId));
+        }
         return d;
     }
 

@@ -189,20 +189,15 @@ public abstract class SuntimesTileBase
             @Override
             public void onClick(View view)
             {
-                Log.d("DEBUG", "onActionClickListener0");
                 unlockAndRun(activityRef.get(), new Runnable()
                 {
                     @Override
                     public void run()
                     {
-                        Log.d("DEBUG", "onActionClickListener1");
                         if (intent != null)
                         {
-                            Log.d("DEBUG", "onActionClickListener2");
-                            //Context context = activityRef.get();
                             Context context = contextRef.get();
                             if (context != null) {
-                                Log.d("DEBUG", "onActionClickListener3");
                                 context.startActivity(intent);
                             }
                             d.dismiss();

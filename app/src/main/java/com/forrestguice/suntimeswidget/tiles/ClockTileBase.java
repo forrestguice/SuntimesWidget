@@ -42,6 +42,8 @@ import java.util.TimeZone;
 public class ClockTileBase extends SuntimesTileBase
 {
     public static final boolean DEF_LOCATION_FROM_APP = true;
+    public static final WidgetSettings.TimezoneMode DEF_TIMEZONE_MODE = WidgetSettings.TimezoneMode.SOLAR_TIME;
+    public static final WidgetSettings.ActionMode DEF_ACTION_MODE = WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
 
     protected SuntimesUtils utils = new SuntimesUtils();
 
@@ -74,6 +76,8 @@ public class ClockTileBase extends SuntimesTileBase
     protected void initDefaults(Context context)
     {
         super.initDefaults(context);
+        WidgetSettings.saveActionModePref(context, appWidgetId(), DEF_ACTION_MODE);
+        WidgetSettings.saveTimezoneModePref(context, appWidgetId(), DEF_TIMEZONE_MODE);
         WidgetSettings.saveLocationFromAppPref(context, appWidgetId(), DEF_LOCATION_FROM_APP);
     }
 
