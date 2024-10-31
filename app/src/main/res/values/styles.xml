@@ -1356,14 +1356,12 @@
         <item name="android:antialias">true</item>
     </style>
 
-    <style name="LockScreenActivityStyle" parent="AppTheme.System">
-
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <style name="LockScreenActivityStyleBase" parent="AppTheme.System">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
+    </style>
+    <style name="LockScreenActivityStyle" parent="LockScreenActivityStyleBase">
         <item name="text_size_tiny">@dimen/text_size_tiny</item>
         <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
         <item name="text_size_small">@dimen/text_size_small</item>
