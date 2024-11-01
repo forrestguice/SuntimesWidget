@@ -1243,6 +1243,9 @@
     <string name="configLabel_bedtime_tile_active">Dormtempo (aktiva)</string>
     <string name="configLabel_bedtime_tile_paused">Dormtempo (paŭzigita)</string>
 
+    <string name="configLabel_dnd_rulebased">DND Rules</string>    <!-- TODO -->
+    <string name="configLabel_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>    <!-- TODO -->
+
     <string name="configLabel_bedtime_zenrule_name">Dormtempo (Suntempoj)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
     <string name="configAction_dnd_allow">Doni permeson</string>              <!-- button label when requesting permission -->
@@ -1299,6 +1302,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Konjekti</b>. Enportotaj agordoj estos aplikitaj al la ekzistantaj fenestraĵoj laŭ speco.<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>Senpere enporti</b>. Enportotaj agordoj estos senpere aplikitaj. Funkcias ĝuste nur se identigiloj de fenestraĵoj ne ŝanĝiĝis.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+    <string name="resetwidget_dialog_message">Ĉu vi certe volas restarigi implicitajn valorojn?</string>    <!-- TODO: verify -->
     
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>Forviŝi</b>. Alarmoj estos forigitaj antaŭ enporti ilin el sekurkopio.<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>Teni ekzistantajn</b>. La ekzistantaj alarmoj teniĝos (povas kaŭzi duobligitajn alarmojn).<br/>]]></string>

@@ -1255,6 +1255,9 @@
   <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>    <!-- TODO -->
   <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>    <!-- TODO -->
 
+  <string name="configLabel_dnd_rulebased">DND Rules</string>    <!-- TODO -->
+  <string name="configLabel_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>    <!-- TODO -->
+
   <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->    <!-- TODO -->
 
   <string name="configAction_dnd_allow">Allow Access</string>              <!-- button label when requesting permission -->    <!-- TODO -->
@@ -1311,6 +1314,7 @@
   <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
   <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
   <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+  <string name="resetwidget_dialog_message">Sollen die Voreinstellungen wiederhergestellt werden?</string>    <!-- TODO: verify -->
 
   <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
   <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
