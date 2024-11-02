@@ -178,8 +178,12 @@ public abstract class SuntimesTileBase
             }
         });
 
-        if (settingsButton != null) {
-            settingsButton.setOnClickListener(onActionClickListener(activityRef, contextRef, d, configIntent));
+        if (settingsButton != null)
+        {
+            settingsButton.setVisibility(configIntent != null ? View.VISIBLE : View.GONE);
+            if (configIntent != null) {
+                settingsButton.setOnClickListener(onActionClickListener(activityRef, contextRef, d, configIntent));
+            }
         }
 
         refreshUpdateTaskViews(context, d);
