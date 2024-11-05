@@ -1,5 +1,20 @@
 ### ~
 
+### v0.16.3 (2024-11-04)
+* enhances the quick settings tiles to support displaying their dialogs over the lock screen.
+* improves the appearance of the quick settings tile dialogs (replaces AlertDialog).
+* fixes app crash when configuring quick settings tiles.
+* fixes bug where quick settings tiles use the wrong default values.
+* adds a "restore defaults" action to the widget configuration activity.
+* enhances "bedtime mode" to support Direct Boot; responds to `LOCKED_BOOT_COMPLETED` to restore bedtime state after a reboot.
+* adds "DND rules" option to "bedtime mode"; this advanced option allows choosing between using automatic DND rules, or overriding DND directly (#818).
+* fixes the bedtime notification tap action; tapping the notification opens the bedtime activity.
+* revises the notification text displayed when the alarm foreground service does periodic work.
+* fixes bug where battery optimization warning is displayed on devices without power management (Android TV).
+* fixes miscellaneous bugs in the color picker; cropped text on smaller screens; state lost when changing orientation; edit/delete buttons mistakenly enabled for default items; empty/invisible list items.
+* drops support for overriding the app theme using widget themes (this functionality is replaced by the "custom colors" UI).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#839 by James Liu).
+
 ### v0.16.2 (2024-09-23)
 * adds "bright alarm colors"; allows customization of fullscreen alarm colors (#741).
 * adds "do-not-disturb" preference that indicates the state of the required permission (#818).
