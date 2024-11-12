@@ -1249,7 +1249,7 @@
     <string name="msg_bedtime_paused">Tryb czasu snu jest wstrzymany.</string>              <!-- textview text -->
     <string name="msg_bedtime_set">Czas snu rozpocznie się o</string>                                        <!-- textview text (next line shows time) -->
     <string name="msg_bedtime_notset">Czas snu nie jest ustawiony.</string>                            <!-- textview text -->
-    <string name="msg_bedtime_reminder">Wyśietl przypomnienie %1$s przed czasem snu.</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
+    <string name="msg_bedtime_reminder">Wyświetl przypomnienie %1$s przed czasem snu.</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
     <string name="msg_bedtime_wakeup_set">Pobudka o</string>                                 <!-- textview text (next line shows time) -->
     <string name="msg_bedtime_wakeup_notset">Czas pobudki nie jest ustawiony.</string>                <!-- textview text -->
     <string name="msg_bedtime_note">Czas snu rozpocznie się za %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
@@ -1263,8 +1263,8 @@
     <string name="configLabel_bedtime_tile_active">Czas snu (aktywny)</string>
     <string name="configLabel_bedtime_tile_paused">Czas snu (wstrzymany)</string>
 
-    <string name="configLabel_dnd_rulebased">DND Rules</string>    <!-- TODO -->
-    <string name="configLabel_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>    <!-- TODO -->
+    <string name="configLabel_dnd_rulebased">Reguła dla trybu „Nie przeszkadzać”</string>
+    <string name="configLabel_dnd_rulebased_summary">Kontroluj ustawienie trybu „Nie przeszkadzać” za pomocą automatycznej reguły.</string>
 
     <string name="configLabel_bedtime_zenrule_name">Czasu snu (Czasy Słońca)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
@@ -1322,7 +1322,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Próbuj zgadnąć</b>. Zaimportowane ustawienia zostaną zastosowane do istniejących widżetów według rodzajów.<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>Bezpośredni import</b>. Zaimportowane ustawienia zostaną zastosowane bezpośrednio. Zadziała to tylko dla widżetów o niezmienionych identyfikatorach.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
-    <string name="resetwidget_dialog_message">Czy na pewno chcesz przywrócić wartości domyślne?</string>    <!-- TODO: verify -->
+    <string name="resetwidget_dialog_message">Czy na pewno chcesz przywrócić wartości domyślne?</string>
 
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>Wyczyść</b>. Istniejące alarmy zostaną usunięte przed zaimportowaniem alarmów z kopii zapasowej.<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>Zachowaj istniejące</b>. Istniejące alarmy zostaną zachowane (może dać duplikaty).<br/>]]></string>
@@ -1984,7 +1984,7 @@
     <!-- Dialog: About -->
     <string name="about_dialog_title">O programie</string>
     <string name="app_name">Czasy Słońca</string>
-    <string name="app_name_alarmclock">Czasy Słońca: alarm</string>
+    <string name="app_name_alarmclock">Czasy Słońca: alarmy</string>
     <string name="app_name_widget0">Czasy Słońca</string>
     <string name="app_name_widget1">Czasy Słońca (przełączalny)</string>
     <string name="app_name_widget2">Pozycja Słońca</string>
@@ -2132,14 +2132,14 @@
     ]]></string>
 
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Dziesiejszy:</b> czasy wschodu i zachodu dla dziesiejszej daty.<br/><br/>
+          <b>Dzisiejszy:</b> czasy wschodu i zachodu dla dzisiejszej daty.<br/><br/>
           <b>Poprzedni / następny:</b> czasy poprzedniego i następnego wydarzenia.<br/>
     ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
           <b>Równonoc wiosenna:</b> początek astronomicznej wiosny. Ma miejsce w <em>marcu</em> na półkuli północnej i we <em>wrześniu</em> na półkuli południowej.<br/><br/>
           <b>Przesilenie letnie:</b> początek astronomicznego lata. Ma miejsce w <em>czerwcu</em> na półkuli północnej i w <em>grudniu</em> na półkuli południowej.<br/><br/>
           <b>Równonoc jesienna:</b> początek astronomicznej jesieni. Ma miejsce we <em>wrześniu</em> na półkuli północnej i w <em>marcu</em> na półkuli południowej.<br/><br/>
-          <b>Przesilenie zimowe:</b> początek astronomicznej zimy. Ma miejsce w <em>grudniu</em> na półkuli północnej i w <em>czerwcu</em> na pólkuli południowej.<br/>
+          <b>Przesilenie zimowe:</b> początek astronomicznej zimy. Ma miejsce w <em>grudniu</em> na półkuli północnej i w <em>czerwcu</em> na półkuli południowej.<br/>
     ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
           <b>Rok tropiczny (zwrotnikowy):</b> pełny cykl wszystkich pór roku. Długość <em>roku tropicznego</em> jest mierzona od jednej <em>równonocy wiosennej</em> do następnej. Trwa średnio <em>≈365,24&nbsp;dni</em>, a dokładna długość zmienia się każdego roku (maksymalnie o 30&nbsp;minut).<br/>
