@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2021-2022 Forrest Guice
+    Copyright (C) 2021-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 
 import android.support.annotation.Nullable;
@@ -40,6 +41,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * AlarmAddon
@@ -311,6 +319,52 @@ public class AlarmAddon
             Log.e("AlarmAddon", "checkUriPermission: Package not found! " + e);
         }
         return hasPermission;
+    }
+
+    public static boolean queryDisplayStringsWithTimeout(@NonNull final AlarmEvent.AlarmEventItem item, @Nullable final ContentResolver resolver, long timeoutAfter)
+    {
+        if (item == null || resolver == null) {
+            Log.w("AlarmAddon", "queryDisplayStrings: item or resolver is null, returning early!");
+            return false;
+        }
+        if (Build.VERSION.SDK_INT < 24) {
+            return queryDisplayStrings(item, resolver);
+        }
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        final CompletableFuture<Boolean> future = new CompletableFuture<>();
+        final Future<?> task = executor.submit(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try {
+                    long bench_start = System.nanoTime();
+                    boolean result = queryDisplayStrings(item, resolver);
+                    long bench_end = System.nanoTime();
+                    Log.d("AlarmAddon", "BENCH: querying " + item.getUri()  + " took " + ((bench_end - bench_start) / 1000000.0) + " ms");
+                    future.complete(result);
+
+                } catch (Exception e) {
+                    future.completeExceptionally(e);
+                }
+            }
+        });
+
+        Boolean result = null;
+        try {
+            result = (Boolean) future.get(timeoutAfter, TimeUnit.MILLISECONDS);
+
+        } catch (TimeoutException e) {
+            Log.e("AlarmAddon", "queryDisplayStrings: failed to query AlarmEventItem display strings; request timed out! " + item.getUri());
+
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e("AlarmAddon", "queryDisplayStrings: failed to query AlarmEventItem display strings; " + item.getUri() + ": " + e);
+
+        } finally {
+            task.cancel(true);
+        }
+        return (result != null && result);
     }
 
     public static boolean queryDisplayStrings(@NonNull AlarmEvent.AlarmEventItem item, @Nullable ContentResolver resolver)

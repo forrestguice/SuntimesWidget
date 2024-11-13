@@ -120,6 +120,8 @@ public class AlarmEvent
      */
     public static class AlarmEventItem
     {
+        public static final long MAX_WAIT_MS = 1000;
+
         protected SolarEvents event;
         protected String title = "", summary = null;
         protected AlarmEventPhrase phrase = null;
@@ -139,7 +141,7 @@ public class AlarmEvent
         {
             event = null;
             uri = AlarmAddon.getEventInfoUri(authority, name);
-            resolved = AlarmAddon.queryDisplayStrings(this, resolver);
+            resolved = AlarmAddon.queryDisplayStringsWithTimeout(this, resolver, MAX_WAIT_MS);
         }
 
         public AlarmEventItem( @Nullable String eventUri, @Nullable ContentResolver resolver)
@@ -148,7 +150,7 @@ public class AlarmEvent
             if (event == null) {
                 uri = eventUri;
                 title = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : "";
-                resolved = AlarmAddon.queryDisplayStrings(this, resolver);
+                resolved = AlarmAddon.queryDisplayStringsWithTimeout(this, resolver, MAX_WAIT_MS);
             }
         }
 
