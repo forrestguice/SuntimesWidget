@@ -64,6 +64,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -92,13 +93,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class AlarmNotifications extends BroadcastReceiver
 {
@@ -2926,8 +2920,17 @@ public class AlarmNotifications extends BroadcastReceiver
                     + CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE + "=? AND "
                     + CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE + "=?";
         }
+        return queryAddonAlarmTimeWithTimeout(resolver, uri_calc, selection, selectionArgs, offset, now, MAX_WAIT_MS);
+    }
 
-        return queryAddonAlarmTimeWithTimeout(context, resolver, uri_calc, selection, selectionArgs, offset, now, MAX_WAIT_MS);
+    public static final long MAX_WAIT_MS = 990;
+    protected static Calendar queryAddonAlarmTimeWithTimeout(@Nullable final ContentResolver resolver, final Uri uri_calc, final String selection, final String[] selectionArgs, final long offset, final Calendar now, long timeoutAfter)
+    {
+        return ExecutorUtils.getResult(TAG, new ExecutorUtils.ResultTask<Calendar>() {
+            public Calendar getResult() {
+                return queryAddonAlarmTime(resolver, uri_calc, selection, selectionArgs, offset, now);
+            }
+        }, timeoutAfter);
     }
 
     protected static Calendar queryAddonAlarmTime(@Nullable ContentResolver resolver, Uri uri_calc, String selection, String[] selectionArgs, long offset, Calendar now)
@@ -2970,47 +2973,6 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.e(TAG, "updateAlarmTime: failed to query alarm time; null ContentResolver! " + uri_calc);
             return null;
         }
-    }
-
-    public static final long MAX_WAIT_MS = 990;
-    public static Calendar queryAddonAlarmTimeWithTimeout(final Context context, final ContentResolver resolver, final Uri uri_calc, final String selection, final String[] selectionArgs, final long offset, final Calendar now, long timeoutAfter)
-    {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        final CompletableFuture<Object> future = new CompletableFuture<>();
-        final Future<?> task = executor.submit(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                try {
-                    long bench_start = System.nanoTime();
-                    Calendar result = queryAddonAlarmTime(resolver, uri_calc, selection, selectionArgs, offset, now);
-                    long bench_end = System.nanoTime();
-                    Log.d(TAG, "BENCH: querying " + uri_calc  + " took " + ((bench_end - bench_start) / 1000000.0) + " ms");
-                    future.complete(result);
-
-                } catch (Exception e) {
-                    future.completeExceptionally(e);
-                }
-            }
-        });
-
-        Calendar calendar = null;
-        try {
-            calendar = (Calendar) future.get(timeoutAfter, TimeUnit.MILLISECONDS);
-
-        } catch (TimeoutException e) {
-            Log.e(TAG, "updateAlarmTime: failed to query alarm time; request timed out! " + uri_calc);
-            Notification warningNotification = createWarningNotification(context, "Failed to schedule addon alarm! The request timed out...\n\n" + uri_calc);    // TODO: i18n
-            showNotification(context, warningNotification, NOTIFICATION_ERROR_ID);
-
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "updateAlarmTime: failed to query alarm time; " + uri_calc + ": " + e);
-
-        } finally {
-            task.cancel(true);
-        }
-        return calendar;
     }
 
     @Nullable

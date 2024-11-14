@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -137,21 +138,30 @@ public class AlarmEvent
             resolved = true;
         }
 
-        public AlarmEventItem( @NonNull String authority, @NonNull String name, @Nullable ContentResolver resolver)
+        public AlarmEventItem( @NonNull String authority, @NonNull String name, @Nullable final ContentResolver resolver)
         {
             event = null;
             uri = AlarmAddon.getEventInfoUri(authority, name);
-            resolved = AlarmAddon.queryDisplayStringsWithTimeout(this, resolver, MAX_WAIT_MS);
+            resolved = ExecutorUtils.runTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
         }
 
-        public AlarmEventItem( @Nullable String eventUri, @Nullable ContentResolver resolver)
+        public AlarmEventItem( @Nullable String eventUri, @Nullable final ContentResolver resolver)
         {
             event = SolarEvents.valueOf(eventUri, null);
             if (event == null) {
                 uri = eventUri;
                 title = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : "";
-                resolved = AlarmAddon.queryDisplayStringsWithTimeout(this, resolver, MAX_WAIT_MS);
+                resolved = ExecutorUtils.runTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
             }
+        }
+
+        private ExecutorUtils.ResultTask<Boolean> resolveItemTask(@Nullable final ContentResolver resolver)
+        {
+            return new ExecutorUtils.ResultTask<Boolean>() {
+                public Boolean getResult() {
+                    return AlarmAddon.queryDisplayStrings(AlarmEventItem.this, resolver);
+                }
+            };
         }
 
         @NonNull

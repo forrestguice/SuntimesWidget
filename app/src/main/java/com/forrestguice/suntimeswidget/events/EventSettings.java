@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -157,9 +158,14 @@ public class EventSettings
         }
 
         private String summary;
-        public String getSummary(Context context) {
+        public String getSummary(final Context context) {
             if (summary == null) {
-                summary = resolveSummary(context);
+                summary = ExecutorUtils.getResult("getSummary", new ExecutorUtils.ResultTask<String>()
+                {
+                    public String getResult() {
+                        return resolveSummary(context);
+                    }
+                }, 1000);
             }
             return summary;
         }

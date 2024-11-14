@@ -321,52 +321,6 @@ public class AlarmAddon
         return hasPermission;
     }
 
-    public static boolean queryDisplayStringsWithTimeout(@NonNull final AlarmEvent.AlarmEventItem item, @Nullable final ContentResolver resolver, long timeoutAfter)
-    {
-        if (item == null || resolver == null) {
-            Log.w("AlarmAddon", "queryDisplayStrings: item or resolver is null, returning early!");
-            return false;
-        }
-        if (Build.VERSION.SDK_INT < 24) {
-            return queryDisplayStrings(item, resolver);
-        }
-
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        final CompletableFuture<Boolean> future = new CompletableFuture<>();
-        final Future<?> task = executor.submit(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                try {
-                    long bench_start = System.nanoTime();
-                    boolean result = queryDisplayStrings(item, resolver);
-                    long bench_end = System.nanoTime();
-                    Log.d("AlarmAddon", "BENCH: querying " + item.getUri()  + " took " + ((bench_end - bench_start) / 1000000.0) + " ms");
-                    future.complete(result);
-
-                } catch (Exception e) {
-                    future.completeExceptionally(e);
-                }
-            }
-        });
-
-        Boolean result = null;
-        try {
-            result = (Boolean) future.get(timeoutAfter, TimeUnit.MILLISECONDS);
-
-        } catch (TimeoutException e) {
-            Log.e("AlarmAddon", "queryDisplayStrings: failed to query AlarmEventItem display strings; request timed out! " + item.getUri());
-
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e("AlarmAddon", "queryDisplayStrings: failed to query AlarmEventItem display strings; " + item.getUri() + ": " + e);
-
-        } finally {
-            task.cancel(true);
-        }
-        return (result != null && result);
-    }
-
     public static boolean queryDisplayStrings(@NonNull AlarmEvent.AlarmEventItem item, @Nullable ContentResolver resolver)
     {
         boolean retValue = false;
