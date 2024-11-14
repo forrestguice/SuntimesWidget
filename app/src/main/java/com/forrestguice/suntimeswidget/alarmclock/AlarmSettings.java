@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.lang.ref.WeakReference;
@@ -535,15 +536,22 @@ public class AlarmSettings
                 + (type == AlarmClockItem.AlarmType.ALARM ? R.raw.alarmsound : R.raw.notifysound));
     }
 
+    public static final long MAX_WAIT_MS = 990;
     public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type) {
         return getDefaultRingtoneUri(context, type, false);
     }
-    public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type, boolean resolveDefaults)
+    public static Uri getDefaultRingtoneUri(final Context context, final AlarmClockItem.AlarmType type, boolean resolveDefaults)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String uriString = prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_URI_ALARM : PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, VALUE_RINGTONE_DEFAULT);
         if (resolveDefaults && VALUE_RINGTONE_DEFAULT.equals(uriString)) {
-            return new AlarmSettings().setDefaultRingtone(context, type);
+            return ExecutorUtils.getResult("defaultRingtoneUri", new ExecutorUtils.ResultTask<Uri>()
+            {
+                public Uri getResult() {
+                    Uri result = new AlarmSettings().setDefaultRingtone(context, type);
+                    return (result != null ? result : Uri.parse(VALUE_RINGTONE_DEFAULT));
+                }
+            }, MAX_WAIT_MS);
         } else return (uriString != null ? Uri.parse(uriString) : Uri.parse(VALUE_RINGTONE_DEFAULT));
     }
     public static String getDefaultRingtoneName(Context context, AlarmClockItem.AlarmType type)
