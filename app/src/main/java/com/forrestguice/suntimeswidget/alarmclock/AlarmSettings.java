@@ -64,6 +64,7 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.concurrent.Callable;
 
 import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 
@@ -545,9 +546,9 @@ public class AlarmSettings
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String uriString = prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_URI_ALARM : PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, VALUE_RINGTONE_DEFAULT);
         if (resolveDefaults && VALUE_RINGTONE_DEFAULT.equals(uriString)) {
-            return ExecutorUtils.getResult("defaultRingtoneUri", new ExecutorUtils.ResultTask<Uri>()
+            return ExecutorUtils.getResult("defaultRingtoneUri", new Callable<Uri>()
             {
-                public Uri getResult() {
+                public Uri call() {
                     Uri result = new AlarmSettings().setDefaultRingtone(context, type);
                     return (result != null ? result : Uri.parse(VALUE_RINGTONE_DEFAULT));
                 }

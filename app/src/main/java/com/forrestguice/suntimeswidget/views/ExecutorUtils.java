@@ -22,7 +22,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,46 +32,63 @@ import java.util.concurrent.TimeoutException;
 
 public class ExecutorUtils
 {
-    public interface ResultTask<T>
+    public static boolean runTask(String tag, @NonNull final Callable<Boolean> r, long timeoutAfter)
     {
-        @Nullable
-        T getResult();
+        Boolean result = getResult(tag, r, timeoutAfter);
+        return (result != null && result);
     }
 
     @Nullable
-    public static <T> T getResult(String tag, @NonNull final ResultTask<T> r, long timeoutAfter)
+    public static <T> T getResult(String tag, @NonNull final Callable<T> callable, long timeoutAfter)
+    {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        final Future<T> task = executor.submit(callable);
+        try {
+            return task.get(timeoutAfter, TimeUnit.MILLISECONDS);
+
+        } catch (TimeoutException | InterruptedException | ExecutionException e) {
+            Log.e(tag, "getResult: failed! " + e);
+            return null;
+
+        } finally {
+            task.cancel(true);
+            executor.shutdownNow();
+        }
+    }
+
+    // same as above, except using CompletableFuture
+    /*@TargetApi(24)
+    @Nullable
+    public static <T> T getResult(String tag, @NonNull final Callable<T> callable, long timeoutAfter)
     {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         final CompletableFuture<T> future = new CompletableFuture<>();
         final Future<?> task = executor.submit(new Runnable()
         {
             @Override
-            public void run() {
-                try {
-                    future.complete(r.getResult());
-                } catch (Exception e) {
-                    future.completeExceptionally(e);
+            public void run()
+            {
+                if (Build.VERSION.SDK_INT >= 24)
+                {
+                    try {
+                        future.complete(callable.call());
+                    } catch (Exception e) {
+                        future.completeExceptionally(e);
+                    }
                 }
             }
         });
 
-        T result = null;
         try {
-            result = future.get(timeoutAfter, TimeUnit.MILLISECONDS);
+            return future.get(timeoutAfter, TimeUnit.MILLISECONDS);
 
         } catch (TimeoutException | InterruptedException | ExecutionException e) {
             Log.e(tag, "getResult: failed! " + e);
+            return null;
 
         } finally {
             task.cancel(true);
             executor.shutdownNow();
         }
-        return result;
-    }
-
-    public static boolean runTask(String tag, @NonNull final ResultTask<Boolean> r, long timeoutAfter)
-    {
-        Boolean result = getResult(tag, r, timeoutAfter);
-        return (result != null && result);
-    }
+    }*/
 }

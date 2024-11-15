@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_BASIC;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_DAILY;
@@ -155,10 +156,10 @@ public class AlarmEvent
             }
         }
 
-        private ExecutorUtils.ResultTask<Boolean> resolveItemTask(@Nullable final ContentResolver resolver)
+        private Callable<Boolean> resolveItemTask(@Nullable final ContentResolver resolver)
         {
-            return new ExecutorUtils.ResultTask<Boolean>() {
-                public Boolean getResult() {
+            return new Callable<Boolean>() {
+                public Boolean call() {
                     return AlarmAddon.queryDisplayStrings(AlarmEventItem.this, resolver);
                 }
             };

@@ -70,12 +70,14 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -147,8 +149,20 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         if (blocking)
         {
             ExecutorService executor = Executors.newSingleThreadExecutor();
-            for (String uri : widgetInfoProviders) {
-                addAll(createWidgetListItemsWithTimeout(context, uri, executor, MAX_WAIT_MS));
+            for (final String uri : widgetInfoProviders)
+            {
+                ArrayList<WidgetListItem> items = ExecutorUtils.getResult("WidgetListAdapter", new Callable<ArrayList<WidgetListItem>>()
+                {
+                    @Override
+                    public ArrayList<WidgetListItem> call()
+                    {
+                        long bench_start = System.nanoTime();
+                        ArrayList<WidgetListItem> result = createWidgetListItems(context, uri);
+                        Log.d("WidgetListAdapter", "BENCH: querying " + uri  + " took " + ((System.nanoTime() - bench_start) / 1000000.0) + " ms");
+                        return result;
+                    }
+                }, MAX_WAIT_MS);
+                addAll(items);
             }
             executor.shutdownNow();
 
@@ -172,6 +186,8 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             });
         }
     }
+
+    public static final long MAX_WAIT_MS = 1000;
 
     private ExecutorService executor;
     protected ExecutorService initExecutorService()
@@ -287,45 +303,6 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             items.add(new WidgetListItem(packageName, widgetClass, id, ContextCompat.getDrawable(context, widgetIcon), title, summary, configClass));
         }
         return items;
-    }
-
-    public static final long MAX_WAIT_MS = 1000;
-
-    public static ArrayList<WidgetListItem> createWidgetListItemsWithTimeout(@NonNull final Context context, @NonNull final String contentUri, ExecutorService executor, long timeoutAfter)
-    {
-        final CompletableFuture<ArrayList<WidgetListItem>> future = new CompletableFuture<>();
-        final Future<?> task = executor.submit(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                try {
-                    long bench_start = System.nanoTime();
-                    ArrayList<WidgetListItem> result = createWidgetListItems(context, contentUri);
-                    long bench_end = System.nanoTime();
-                    Log.d("WidgetListAdapter", "BENCH: querying " + contentUri  + " took " + ((bench_end - bench_start) / 1000000.0) + " ms");
-                    future.complete(result);
-
-                } catch (Exception e) {
-                    future.completeExceptionally(e);
-                }
-            }
-        });
-
-        ArrayList<WidgetListItem> result = null;
-        try {
-            result = future.get(timeoutAfter, TimeUnit.MILLISECONDS);
-
-        } catch (TimeoutException e) {
-            Log.e("WidgetListAdapter", "queryDisplayStrings: failed to query AlarmEventItem display strings; request timed out! " + contentUri);
-
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e("WidgetListAdapter", "queryDisplayStrings: failed to query AlarmEventItem display strings; " + contentUri + ": " + e);
-
-        } finally {
-            task.cancel(true);
-        }
-        return (result != null ? result : new ArrayList<WidgetListItem>());
     }
 
     public static ArrayList<WidgetListItem> createWidgetListItems(@NonNull Context context, @NonNull String contentUri)

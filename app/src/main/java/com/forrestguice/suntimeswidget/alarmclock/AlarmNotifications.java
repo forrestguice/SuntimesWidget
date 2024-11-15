@@ -93,6 +93,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.concurrent.Callable;
 
 public class AlarmNotifications extends BroadcastReceiver
 {
@@ -2926,8 +2927,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final long MAX_WAIT_MS = 990;
     protected static Calendar queryAddonAlarmTimeWithTimeout(@Nullable final ContentResolver resolver, final Uri uri_calc, final String selection, final String[] selectionArgs, final long offset, final Calendar now, long timeoutAfter)
     {
-        return ExecutorUtils.getResult(TAG, new ExecutorUtils.ResultTask<Calendar>() {
-            public Calendar getResult() {
+        return ExecutorUtils.getResult(TAG, new Callable<Calendar>() {
+            public Calendar call() {
                 return queryAddonAlarmTime(resolver, uri_calc, selection, selectionArgs, offset, now);
             }
         }, timeoutAfter);

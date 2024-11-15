@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -160,9 +161,9 @@ public class EventSettings
         private String summary;
         public String getSummary(final Context context) {
             if (summary == null) {
-                summary = ExecutorUtils.getResult("getSummary", new ExecutorUtils.ResultTask<String>()
+                summary = ExecutorUtils.getResult("getSummary", new Callable<String>()
                 {
-                    public String getResult() {
+                    public String call() {
                         return resolveSummary(context);
                     }
                 }, 1000);
