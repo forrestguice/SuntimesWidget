@@ -1892,7 +1892,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                             notifications.showNotification(context, createAutostartWarningNotification(context), NOTIFICATION_AUTOSTART_WARNING_ID);
                                         }
                                     }
-                                    notifications.dismissNotification(context, NOTIFICATION_SCHEDULE_ALL_ID);
+                                    //notifications.dismissNotification(context, NOTIFICATION_SCHEDULE_ALL_ID);
                                     notifications.stopSelf(startId);
                                 }
                             }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));
@@ -1920,7 +1920,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                 }
             });
-            notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
+            //notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
             alarmListTask.execute();
         }
 
