@@ -160,6 +160,7 @@ public class AlarmNotifications extends BroadcastReceiver
     };
 
     private static SuntimesUtils utils = new SuntimesUtils();
+    private static final long AFTER_BOOT_COMPLETED_DELAY_MS = 10 * 1000;
 
     /**
      * onReceive
@@ -172,8 +173,21 @@ public class AlarmNotifications extends BroadcastReceiver
         final String action = intent.getAction();
         Uri data = intent.getData();
         Log.d(TAG, "onReceive: " + action + ", " + data);
-        if (action != null) {
-            if (actionIsPermitted(action)) {
+        if (action != null)
+        {
+            if (action.equals(ACTION_BOOT_COMPLETED) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action))
+            {
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
+                        getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), PendingIntent.FLAG_UPDATE_CURRENT);
+                long atTime = System.currentTimeMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
+                addTimeout(context, pendingIntent, atTime, AlarmManager.RTC_WAKEUP);
+
+                if (Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
+                    BedtimeSettings.moveSettingsToDeviceSecureStorage(context);
+                }
+                Log.d(TAG, "onReceive: ACTION_AFTER_BOOT_COMPLETED scheduled for a moment from now...");
+
+            } else if (actionIsPermitted(action)) {
                 if (Build.VERSION.SDK_INT >= 26) {
                     context.startForegroundService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
                 } else {
@@ -1703,22 +1717,9 @@ public class AlarmNotifications extends BroadcastReceiver
                         onLockedBootCompleted(getContext());
                         notifications.stopSelf(startId);
 
-                    } else if (ACTION_BOOT_COMPLETED.equals(action) || AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
+                    } else if (AlarmNotifications.ACTION_AFTER_BOOT_COMPLETED.equals(action) || AlarmNotifications.ACTION_SCHEDULE.equals(action)) {
                         Log.d(TAG, action + ": schedule all (prevCompleted=" + AlarmSettings.bootCompletedWasRun(getApplicationContext()) + ")");
-
-                        if (Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
-                            BedtimeSettings.moveSettingsToDeviceSecureStorage(getApplicationContext());
-                        }
-
-                        if (Build.VERSION.SDK_INT < 24) {    // ACTION_LOCKED_BOOT_COMPLETED requires api 24+; for older devices run that code here instead
-                            onLockedBootCompleted(getApplicationContext());
-                        }
-                        boolean deferToLater = (ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action));
-                        onBootCompleted(getApplicationContext(), startId, deferToLater);
-
-                    } else if (AlarmNotifications.ACTION_AFTER_BOOT_COMPLETED.equals(action)) {
-                        Log.d(TAG, "ACTION_AFTER_BOOT_COMPLETED received");
-                        onAfterBootCompleted(getContext(), startId);
+                        onAfterBootCompleted(getApplicationContext(), startId);
 
                     } else if (AlarmNotifications.ACTION_LOCATION_CHANGED.equals(action)) {
                         Log.d(TAG, "ACTION_LOCATION_CHANGED received");
@@ -1834,34 +1835,14 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         }
 
-        protected void onBootCompleted(Context context, final int startId, boolean deferToLater)
-        {
-            if (context != null)
-            {
-                if (deferToLater)
-                {
-                    Intent intent = getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    long oneMomentFromNow = Calendar.getInstance().getTimeInMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
-                    addTimeout(context, pendingIntent, oneMomentFromNow, AlarmManager.RTC_WAKEUP);
-                    stopSelf(startId);
-
-                } else {
-                    onAfterBootCompleted(context, startId);
-                }
-
-            } else {
-                Log.e(TAG, "onBootCompleted: context is null!");
-                stopSelf(startId);
-            }
-        }
-
-        private static final long AFTER_BOOT_COMPLETED_DELAY_MS = 10 * 1000;
-
         protected void onAfterBootCompleted(Context context, final int startId)
         {
             final long startTime = SystemClock.elapsedRealtime();
             AlarmSettings.savePrefLastBootCompleted_started(getApplicationContext(), startTime);
+
+            if (Build.VERSION.SDK_INT < 24) {    // ACTION_LOCKED_BOOT_COMPLETED requires api 24+; for older devices run that code here instead
+                onLockedBootCompleted(getApplicationContext());
+            }
 
             AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
             alarmListTask.setParam_enabledOnly(true);
