@@ -110,6 +110,15 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_UPDATE_UI = "suntimeswidget.alarm.ui.update";
     public static final String ACTION_LOCATION_CHANGED = "suntimeswidget.alarm.location_changed";  // signals home location is changed/reconfigured; reschedule these alarms
 
+    public static final String ACTION_BOOT_COMPLETED = Intent.ACTION_BOOT_COMPLETED;     // signals work to be done during BOOT_COMPLETED
+    public static final String ACTION_AFTER_BOOT_COMPLETED = "suntimeswidget.alarm.AFTER_BOOT_COMPLETED";    // signals work to be done sometime shortly after BOOT_COMPLETED
+    public static final String ACTION_LOCKED_BOOT_COMPLETED;
+    static {
+        if (Build.VERSION.SDK_INT >= 24) {
+            ACTION_LOCKED_BOOT_COMPLETED = Intent.ACTION_LOCKED_BOOT_COMPLETED;
+        } else ACTION_LOCKED_BOOT_COMPLETED = "android.intent.action.LOCKED_BOOT_COMPLETED";
+    }
+
     public static final String ACTION_BEDTIME = "suntimeswidget.alarm.start_bedtime";              // enable bedtime mode
     public static final String ACTION_BEDTIME_PAUSE = "suntimeswidget.alarm.pause_bedtime";        // pause bedtime mode
     public static final String ACTION_BEDTIME_RESUME = "suntimeswidget.alarm.resume_bedtime";      // resume bedtime mode
@@ -134,24 +143,18 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final int NOTIFICATION_BEDTIME_ACTIVE_ID = -1000;
 
-    public static final String ACTION_LOCKED_BOOT_COMPLETED;
-    static {
-        if (Build.VERSION.SDK_INT >= 24) {
-            ACTION_LOCKED_BOOT_COMPLETED = Intent.ACTION_LOCKED_BOOT_COMPLETED;
-        } else ACTION_LOCKED_BOOT_COMPLETED = "android.intent.action.LOCKED_BOOT_COMPLETED";
-    }
-
     public static final String[] ALARM_ACTIONS = new String[] {
             ACTION_SHOW, ACTION_SILENT, ACTION_DISMISS, ACTION_SNOOZE,
             ACTION_SCHEDULE, ACTION_RESCHEDULE, ACTION_RESCHEDULE1,
             ACTION_DISABLE, ACTION_TIMEOUT, ACTION_DELETE,
             ACTION_UPDATE_UI, ACTION_LOCATION_CHANGED,
+            ACTION_AFTER_BOOT_COMPLETED,
     };
     public static final String[] BEDTIME_ACTIONS = new String[] {
             ACTION_BEDTIME, ACTION_BEDTIME_PAUSE, ACTION_BEDTIME_RESUME, ACTION_BEDTIME_DISMISS
     };
     public static final String[] SYSTEM_ACTIONS = new String[] {
-            Intent.ACTION_BOOT_COMPLETED, ACTION_LOCKED_BOOT_COMPLETED,
+            ACTION_BOOT_COMPLETED, ACTION_LOCKED_BOOT_COMPLETED,
             Intent.ACTION_MY_PACKAGE_REPLACED,
             Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_TIME_CHANGED
     };
@@ -338,6 +341,20 @@ public class AlarmNotifications extends BroadcastReceiver
         } else Log.e(TAG, "addAlarmTimeout: context is null!");
     }
 
+    protected static void addTimeout(Context context, PendingIntent pendingIntent, long timeoutAt, int type)
+    {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null)
+        {
+            if (Build.VERSION.SDK_INT >= 23) {
+                alarmManager.setExactAndAllowWhileIdle(type, timeoutAt, pendingIntent);
+            } else if (Build.VERSION.SDK_INT >= 19) {
+                alarmManager.setExact(type, timeoutAt, pendingIntent);
+            } else alarmManager.set(type, timeoutAt, pendingIntent);
+        } else {
+            Log.e(TAG, "addTimeout: AlarmManager is null!");
+        }
+    }
 
     protected static void addNotificationTimeouts(Context context, Uri data)
     {
@@ -1686,10 +1703,8 @@ public class AlarmNotifications extends BroadcastReceiver
                         onLockedBootCompleted(getContext());
                         notifications.stopSelf(startId);
 
-                    } else if (Intent.ACTION_BOOT_COMPLETED.equals(action) || AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
+                    } else if (ACTION_BOOT_COMPLETED.equals(action) || AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
                         Log.d(TAG, action + ": schedule all (prevCompleted=" + AlarmSettings.bootCompletedWasRun(getApplicationContext()) + ")");
-                        final long startTime = SystemClock.elapsedRealtime();
-                        AlarmSettings.savePrefLastBootCompleted_started(getApplicationContext(), startTime);
 
                         if (Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
                             BedtimeSettings.moveSettingsToDeviceSecureStorage(getApplicationContext());
@@ -1698,66 +1713,12 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (Build.VERSION.SDK_INT < 24) {    // ACTION_LOCKED_BOOT_COMPLETED requires api 24+; for older devices run that code here instead
                             onLockedBootCompleted(getApplicationContext());
                         }
+                        boolean deferToLater = (ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action));
+                        onBootCompleted(getApplicationContext(), startId, deferToLater);
 
-                        AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
-                        alarmListTask.setParam_enabledOnly(true);
-                        alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
-                            @Override
-                            public void onItemsLoaded(final Long[] ids)
-                            {
-                                final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener()
-                                {
-                                    @Override
-                                    public void onObservedAll() {
-                                        final long endTime = SystemClock.elapsedRealtime();
-                                        final long duration = endTime - startTime;
-                                        AlarmSettings.savePrefLastBootCompleted_finished(getApplicationContext(), System.currentTimeMillis(), duration);
-                                        Log.d(TAG, "schedule all completed (took " + duration + "ms); " + AlarmSettings.bootCompletedWasRun(getApplicationContext()));
-                                        new Handler(Looper.getMainLooper()).postDelayed(new Runnable()
-                                        {
-                                            @Override
-                                            public void run()
-                                            {
-                                                Context context = getApplicationContext();
-                                                sendBroadcast(getFullscreenBroadcast(null));
-                                                if (ids.length > 0) {    // show warning if alarms where rescheduled
-                                                    if (!AlarmSettings.isIgnoringBatteryOptimizations(context)) {
-                                                        notifications.showNotification(context, createBatteryOptWarningNotification(context), NOTIFICATION_BATTERYOPT_WARNING_ID);
-                                                    }
-                                                    if (AlarmSettings.hasAutostartSettings(context) && AlarmSettings.isAutostartDisabled(context)) {
-                                                        notifications.showNotification(context, createAutostartWarningNotification(context), NOTIFICATION_AUTOSTART_WARNING_ID);
-                                                    }
-                                                }
-                                                notifications.dismissNotification(context, NOTIFICATION_SCHEDULE_ALL_ID);
-                                                notifications.stopSelf(startId);
-                                            }
-                                        }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));
-                                    }
-                                });
-
-                                if (ids.length == 0) {
-                                    observer.notify(null);
-                                    return;
-                                }
-
-                                AlarmDatabaseAdapter.AlarmItemTaskListener notifyObserver = new AlarmDatabaseAdapter.AlarmItemTaskListener()
-                                {
-                                    @Override
-                                    public void onFinished(Boolean result, AlarmClockItem item) {
-                                        Log.d(TAG, "schedule " + item.rowID + " completed!");
-                                        observer.notify(item.rowID);
-                                    }
-                                };
-                                for (long id : ids)
-                                {
-                                    AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), startId, AlarmNotifications.ACTION_RESCHEDULE, notifyObserver));
-                                    itemTask.execute(id);
-                                }
-                            }
-                        });
-                        notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
-                        alarmListTask.execute();
+                    } else if (AlarmNotifications.ACTION_AFTER_BOOT_COMPLETED.equals(action)) {
+                        Log.d(TAG, "ACTION_AFTER_BOOT_COMPLETED received");
+                        onAfterBootCompleted(getContext(), startId);
 
                     } else if (AlarmNotifications.ACTION_LOCATION_CHANGED.equals(action)) {
                         Log.d(TAG, "ACTION_LOCATION_CHANGED received");
@@ -1871,6 +1832,96 @@ public class AlarmNotifications extends BroadcastReceiver
                     triggerBedtimeMode(context, true);
                 }
             }
+        }
+
+        protected void onBootCompleted(Context context, final int startId, boolean deferToLater)
+        {
+            if (context != null)
+            {
+                if (deferToLater)
+                {
+                    Intent intent = getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    long oneMomentFromNow = Calendar.getInstance().getTimeInMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
+                    addTimeout(context, pendingIntent, oneMomentFromNow, AlarmManager.RTC_WAKEUP);
+                    stopSelf(startId);
+
+                } else {
+                    onAfterBootCompleted(context, startId);
+                }
+
+            } else {
+                Log.e(TAG, "onBootCompleted: context is null!");
+                stopSelf(startId);
+            }
+        }
+
+        private static final long AFTER_BOOT_COMPLETED_DELAY_MS = 10 * 1000;
+
+        protected void onAfterBootCompleted(Context context, final int startId)
+        {
+            final long startTime = SystemClock.elapsedRealtime();
+            AlarmSettings.savePrefLastBootCompleted_started(getApplicationContext(), startTime);
+
+            AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
+            alarmListTask.setParam_enabledOnly(true);
+            alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                @Override
+                public void onItemsLoaded(final Long[] ids)
+                {
+                    final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener()
+                    {
+                        @Override
+                        public void onObservedAll() {
+                            final long endTime = SystemClock.elapsedRealtime();
+                            final long duration = endTime - startTime;
+                            AlarmSettings.savePrefLastBootCompleted_finished(getApplicationContext(), System.currentTimeMillis(), duration);
+                            Log.d(TAG, "schedule all completed (took " + duration + "ms); " + AlarmSettings.bootCompletedWasRun(getApplicationContext()));
+                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    Context context = getApplicationContext();
+                                    sendBroadcast(getFullscreenBroadcast(null));
+                                    if (ids.length > 0) {    // show warning if alarms where rescheduled
+                                        if (!AlarmSettings.isIgnoringBatteryOptimizations(context)) {
+                                            notifications.showNotification(context, createBatteryOptWarningNotification(context), NOTIFICATION_BATTERYOPT_WARNING_ID);
+                                        }
+                                        if (AlarmSettings.hasAutostartSettings(context) && AlarmSettings.isAutostartDisabled(context)) {
+                                            notifications.showNotification(context, createAutostartWarningNotification(context), NOTIFICATION_AUTOSTART_WARNING_ID);
+                                        }
+                                    }
+                                    notifications.dismissNotification(context, NOTIFICATION_SCHEDULE_ALL_ID);
+                                    notifications.stopSelf(startId);
+                                }
+                            }, (ids.length > 0 ? NOTIFICATION_SCHEDULE_ALL_DURATION : 0));
+                        }
+                    });
+
+                    if (ids.length == 0) {
+                        observer.notify(null);
+                        return;
+                    }
+
+                    AlarmDatabaseAdapter.AlarmItemTaskListener notifyObserver = new AlarmDatabaseAdapter.AlarmItemTaskListener()
+                    {
+                        @Override
+                        public void onFinished(Boolean result, AlarmClockItem item) {
+                            Log.d(TAG, "schedule " + item.rowID + " completed!");
+                            observer.notify(item.rowID);
+                        }
+                    };
+                    for (long id : ids)
+                    {
+                        AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                        itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), startId, AlarmNotifications.ACTION_RESCHEDULE, notifyObserver));
+                        itemTask.execute(id);
+                    }
+                }
+            });
+            notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
+            alarmListTask.execute();
         }
 
         public static void triggerBedtimeMode(Context context, boolean value)
