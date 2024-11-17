@@ -26,7 +26,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 
@@ -175,13 +178,9 @@ public class AlarmNotifications extends BroadcastReceiver
         Log.d(TAG, "onReceive: " + action + ", " + data);
         if (action != null)
         {
-            if (action.equals(ACTION_BOOT_COMPLETED) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action))
+            if (ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action))
             {
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
-                        getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), PendingIntent.FLAG_UPDATE_CURRENT);
-                long atTime = System.currentTimeMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
-                addTimeout(context, pendingIntent, atTime, AlarmManager.RTC_WAKEUP);
-
+                scheduleAfterBootCompleted(context);
                 if (Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
                     BedtimeSettings.moveSettingsToDeviceSecureStorage(context);
                 }
@@ -195,6 +194,19 @@ public class AlarmNotifications extends BroadcastReceiver
                 }
             } else Log.e(TAG, "onReceive: `" + action + "` is not on the list of permitted actions! Ignoring...");
         } else Log.w(TAG, "onReceive: null action!");
+    }
+
+    protected void scheduleAfterBootCompleted(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 24) {
+            AlarmJobService.scheduleJobAfterBootCompleted(context);
+
+        } else {
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
+                    getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), PendingIntent.FLAG_UPDATE_CURRENT);
+            long atTime = System.currentTimeMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
+            addTimeout(context, pendingIntent, atTime, AlarmManager.RTC_WAKEUP);
+        }
     }
 
     protected boolean actionIsPermitted(String action)
