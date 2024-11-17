@@ -1590,8 +1590,8 @@
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
 
     <!-- App Setting: Show Equinox / Solstice (date) -->
-    <string name="configLabel_ui_showEquinoxDate">Show Solstice / Equinox (Date)</string>    <!-- TODO -->
-    <string name="configLabel_ui_showEquinoxDate_summary">Show the date of next solstice or equinox.</string>   <!-- TODO -->
+    <string name="configLabel_ui_showEquinoxDate">Solstice Date</string>    <!-- TODO -->
+    <string name="configLabel_ui_showEquinoxDate_summary">Include the date when showing time until next solstice or equinox.</string>   <!-- TODO -->
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
