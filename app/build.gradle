@@ -58,11 +58,10 @@ dependencies
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 
-    implementation 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     implementation group: 'net.time4j', name: 'time4j-android', version: '4.8-2021a'
     implementation project(path: ":lib-quadflask-colorpicker")    //implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.jraska:falcon:2.2.0'
