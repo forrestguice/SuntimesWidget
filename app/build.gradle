@@ -62,8 +62,7 @@ dependencies
     implementation 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     implementation 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
     implementation group: 'net.time4j', name: 'time4j-android', version: '4.8-2021a'
-    
-    implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
+    implementation project(path: ":lib-quadflask-colorpicker")    //implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     testImplementation 'junit:junit:4.12'
