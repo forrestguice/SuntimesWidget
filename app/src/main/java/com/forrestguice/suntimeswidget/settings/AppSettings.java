@@ -124,6 +124,8 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWEQUINOX = "app_ui_showequinox";
     public static final boolean PREF_DEF_UI_SHOWEQUINOX = true;
 
+    public static final String PREF_KEY_UI_SHOWEQUINOXDATE = "app_ui_showequinox_date";
+
     public static final String PREF_KEY_UI_SHOWCROSSQUARTER = "app_ui_showcrossquarter";
     public static final boolean PREF_DEF_UI_SHOWCROSSQUARTER = true;
 
@@ -567,6 +569,18 @@ public class AppSettings
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putBoolean(PREF_KEY_UI_SHOWEQUINOX, value);
+        pref.apply();
+    }
+
+    public static boolean loadShowEquinoxDatePref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWEQUINOXDATE, context.getResources().getBoolean(R.bool.def_app_ui_showequinox_date));
+    }
+    public static void saveShowEquinoxDatePref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_SHOWEQUINOXDATE, value);
         pref.apply();
     }
 
