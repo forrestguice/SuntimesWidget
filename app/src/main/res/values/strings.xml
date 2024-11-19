@@ -1581,6 +1581,10 @@
     <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
     <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
 
+    <!-- App Setting: Moon Phase Date -->
+    <string name="configLabel_ui_showMoonPhaseDate">Show Phase Dates</string>    <!-- TODO -->
+    <string name="configLabel_ui_showMoonPhaseDate_summary">Include the date when showing moon phases.</string>   <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>
