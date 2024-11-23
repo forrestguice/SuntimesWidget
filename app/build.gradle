@@ -61,7 +61,7 @@ dependencies
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     implementation group: 'net.time4j', name: 'time4j-android', version: '4.8-2021a'
-    implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
+    implementation project(path: ":lib-quadflask-colorpicker")    //implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.jraska:falcon:2.2.0'
