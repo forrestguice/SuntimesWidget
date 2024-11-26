@@ -611,9 +611,31 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                         now = nowLmt;
                     //}
 
-                    switch (colors.option_drawNow) {
-                        case LightMapColors.DRAW_SUN2:
-                            DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
+                    DashPathEffect dashed;
+                    switch (colors.option_drawNow)
+                    {
+                        case LightMapColors.DRAW_SUN_CIRCLEDOT_DASHED:
+                            dashed = new DashPathEffect(new float[] {4, 2}, 0);
+                            drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
+                            drawPoint(now, pointStroke, 0, c, p, colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
+                            break;
+
+                        case LightMapColors.DRAW_SUN_CIRCLEDOT_SOLID:
+                            drawPoint(now, pointRadius, pointStroke, c, p, colors.values.getColor(LightMapColorValues.COLOR_SUN_FILL), colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
+                            drawPoint(now, pointStroke, 0, c, p, colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
+                            break;
+
+                        case LightMapColors.DRAW_SUN_LINE_DASHED:
+                            dashed = new DashPathEffect(new float[] {4, 2}, 0);
+                            drawVerticalLine(now, pointStroke, c, p, colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
+                            break;
+
+                        case LightMapColors.DRAW_SUN_LINE_SOLID:
+                            drawVerticalLine(now, pointStroke, c, p, colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
+                            break;
+
+                        case LightMapColors.DRAW_SUN_CIRCLE_DASHED:
+                            dashed = new DashPathEffect(new float[] {4, 2}, 0);
                             drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
                             break;
 
@@ -804,6 +826,55 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return true;
         }
 
+        protected void drawVerticalLine(Calendar calendar, int width, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
+        {
+            if (calendar != null)
+            {
+                int w = c.getWidth();
+                int h = c.getHeight();
+
+                double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+                int x = (int) Math.round((minute / MINUTES_IN_DAY) * w);
+
+                p.setStyle(Paint.Style.STROKE);
+                p.setStrokeWidth(width);
+                p.setColor(color);
+
+                if (effect != null) {
+                    p.setPathEffect(effect);
+                }
+
+                c.drawLine(x, 0, x, h, p);
+            }
+        }
+
+        protected void drawCross(Calendar calendar, int width, int radius, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
+        {
+            if (calendar != null)
+            {
+                int w = c.getWidth();
+                int h = c.getHeight();
+
+                double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+                int cX = (int) Math.round((minute / MINUTES_IN_DAY) * w);
+                int cY = h / 2;
+
+                p.setStyle(Paint.Style.STROKE);
+                p.setStrokeWidth(width);
+                p.setColor(color);
+
+                if (effect != null) {
+                    p.setPathEffect(effect);
+                }
+
+                c.drawLine(cX, cY, cX + radius, cY, p);
+                c.drawLine(cX, cY, cX - radius, cY, p);
+                c.drawLine(cX, cY, cX, cY + radius, p);
+                c.drawLine(cX, cY, cX, cY - radius, p);
+            }
+        }
+
+
         protected void drawPoint(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
         {
             if (calendar != null)
@@ -865,10 +936,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     public static class LightMapColors
     {
         public static final int DRAW_NONE = 0;
-        public static final int DRAW_SUN1 = 1;    // solid stroke
-        public static final int DRAW_SUN2 = 2;    // dashed stroke
+        public static final int DRAW_SUN1 = 1;    // (circle) solid stroke
+        public static final int DRAW_SUN_CIRCLE_DASHED = 2;    // (circle) dashed stroke
+        public static final int DRAW_SUN_LINE_SOLID = 3;
+        public static final int DRAW_SUN_LINE_DASHED = 4;
+        public static final int DRAW_SUN_CIRCLEDOT_SOLID = 5;
+        public static final int DRAW_SUN_CIRCLEDOT_DASHED = 6;
 
-        public int option_drawNow = DRAW_SUN1;
+        public int option_drawNow = DRAW_SUN_CIRCLEDOT_SOLID;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
         public boolean option_lmt = false;
 

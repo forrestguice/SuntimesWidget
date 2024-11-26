@@ -370,7 +370,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         updateLightmapColors(context, colors);
         lightmapLayout.setVisibility(options.showLightmap ? View.VISIBLE : View.GONE);
         LightMapView.LightMapColors lightmapOptions = lightmap.getColors();
-        lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
+        //lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_SOLID : LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_DASHED;
+        lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN_LINE_SOLID : LightMapView.LightMapColors.DRAW_SUN_LINE_DASHED;
+        //lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN_CIRCLE_DASHED;
         lightmapOptions.option_lmt = true;
         lightmap.setData(options.showLightmap ? sun : null);
         //Log.d("DEBUG", "bindDataToPosition: " + sun.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
