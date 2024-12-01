@@ -1,5 +1,18 @@
 ### ~
 
+### v0.16.4 (2024-12-02)
+* fixes bug "boot completed hangs after phone restart" (#842).
+* fixes bug "FGS not allowed to start from BOOT_COMPLETED!" (Android 15).
+* fixes bug where "moon dialog displays the wrong phase label" (#843).
+* fixes bug where custom color labels are invisible when ellipsized (missing text).
+* fixes bug where text is cropped in moon day widget (#845).
+* fixes bugs in widget previews; missing padding, missing map foreground.
+* adds "preview" action to the "bright alarm colors" selector.
+* adds `AFTER_BOOT_COMPLETED`; changes `ACTION_BOOT_COMPLETED` so that it defers scheduling alarms until a few moments later (#842).
+* adds time-out when querying various content providers to avoid potential ANRs if a provider fails to respond.
+* updates build; replaces jitpack.io artifacts, adds git submodule.
+* updates translation to Polish and Esperanto (eo, pl) (#841 by Verdulo).
+
 ### v0.16.3 (2024-11-04)
 * enhances the quick settings tiles to support displaying their dialogs over the lock screen.
 * improves the appearance of the quick settings tile dialogs (replaces AlertDialog).
