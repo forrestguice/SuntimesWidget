@@ -64,6 +64,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -92,6 +93,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.concurrent.Callable;
 
 public class AlarmNotifications extends BroadcastReceiver
 {
@@ -133,6 +135,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final int NOTIFICATION_AUTOSTART_WARNING_ID = -30;
 
     public static final int NOTIFICATION_BEDTIME_ACTIVE_ID = -1000;
+
+    public static final int NOTIFICATION_ERROR_ID = -9999;
 
     public static final String ACTION_LOCKED_BOOT_COMPLETED;
     static {
@@ -1386,6 +1390,19 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder;
     }
 
+    public static Notification createWarningNotification(Context context, String message)
+    {
+        NotificationCompat.Builder builder = warningNotificationBuilder(context);
+        builder.setContentText(message);
+
+        NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
+        style.setBigContentTitle(context.getString(R.string.app_name_alarmclock));
+        style.bigText(message);
+        builder.setStyle(style);
+
+        return builder.build();
+    }
+
     public static Notification createAutostartWarningNotification(Context context)
     {
         NotificationCompat.Builder builder = warningNotificationBuilder(context);
@@ -2611,7 +2628,7 @@ public class AlarmNotifications extends BroadcastReceiver
             eventTime = updateAlarmTime_solarEvent(context, event, item.location, item.offset, item.repeating, repeatingDays, now);
 
         } else if (eventID != null) {
-            eventTime = updateAlarmTime_addonEvent(context.getContentResolver(), eventID, item.location, item.offset, item.repeating, repeatingDays, now);
+            eventTime = updateAlarmTime_addonEvent(context, context.getContentResolver(), eventID, item.location, item.offset, item.repeating, repeatingDays, now);
 
         } else {
             modifyHourMinute = false;    // "clock time" alarms should leave "hour" and "minute" values untouched
@@ -2866,7 +2883,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
-    protected static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    protected static Calendar updateAlarmTime_addonEvent(Context context, @Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
             //Log.w(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! using EVERYDAY instead..");
@@ -2875,38 +2892,53 @@ public class AlarmNotifications extends BroadcastReceiver
 
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         long nowMillis = now.getTimeInMillis();
-
         Uri uri_id = Uri.parse(eventID);
         Uri uri_calc = Uri.parse(AlarmAddon.getEventCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
-        if (resolver != null)
-        {
-            StringBuilder repeatingDaysString = new StringBuilder("[");
-            if (repeating) {
-                for (int i = 0; i < repeatingDays.size(); i++) {
-                    repeatingDaysString.append(repeatingDays.get(i));
-                    if (i != repeatingDays.size() - 1) {
-                        repeatingDaysString.append(",");
-                    }
+
+        StringBuilder repeatingDaysString = new StringBuilder("[");
+        if (repeating) {
+            for (int i = 0; i < repeatingDays.size(); i++) {
+                repeatingDaysString.append(repeatingDays.get(i));
+                if (i != repeatingDays.size() - 1) {
+                    repeatingDaysString.append(",");
                 }
             }
-            repeatingDaysString.append("]");
+        }
+        repeatingDaysString.append("]");
 
-            String[] selectionArgs = new String[] { Long.toString(nowMillis), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString() };
-            String selection = AlarmEventContract.EXTRA_ALARM_NOW + "=? AND "
-                             + AlarmEventContract.EXTRA_ALARM_OFFSET + "=? AND "
-                             + AlarmEventContract.EXTRA_ALARM_REPEAT + "=? AND "
-                             + AlarmEventContract.EXTRA_ALARM_REPEAT_DAYS + "=?";
+        String[] selectionArgs = new String[] { Long.toString(nowMillis), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString() };
+        String selection = AlarmEventContract.EXTRA_ALARM_NOW + "=? AND "
+                + AlarmEventContract.EXTRA_ALARM_OFFSET + "=? AND "
+                + AlarmEventContract.EXTRA_ALARM_REPEAT + "=? AND "
+                + AlarmEventContract.EXTRA_ALARM_REPEAT_DAYS + "=?";
 
-            if (location != null)
-            {
-                selectionArgs = new String[] { Long.toString(nowMillis), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString(),
-                                               location.getLatitude(), location.getLongitude(), location.getAltitude() };
-                selection += " AND "
-                        + CalculatorProviderContract.COLUMN_CONFIG_LATITUDE + "=? AND "
-                        + CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE + "=? AND "
-                        + CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE + "=?";
+        if (location != null)
+        {
+            selectionArgs = new String[] { Long.toString(nowMillis), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString(),
+                    location.getLatitude(), location.getLongitude(), location.getAltitude() };
+            selection += " AND "
+                    + CalculatorProviderContract.COLUMN_CONFIG_LATITUDE + "=? AND "
+                    + CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE + "=? AND "
+                    + CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE + "=?";
+        }
+        return queryAddonAlarmTimeWithTimeout(resolver, uri_calc, selection, selectionArgs, offset, now, MAX_WAIT_MS);
+    }
+
+    public static final long MAX_WAIT_MS = 990;
+    protected static Calendar queryAddonAlarmTimeWithTimeout(@Nullable final ContentResolver resolver, final Uri uri_calc, final String selection, final String[] selectionArgs, final long offset, final Calendar now, long timeoutAfter)
+    {
+        return ExecutorUtils.getResult(TAG, new Callable<Calendar>() {
+            public Calendar call() {
+                return queryAddonAlarmTime(resolver, uri_calc, selection, selectionArgs, offset, now);
             }
+        }, timeoutAfter);
+    }
 
+    protected static Calendar queryAddonAlarmTime(@Nullable ContentResolver resolver, Uri uri_calc, String selection, String[] selectionArgs, long offset, Calendar now)
+    {
+        if (resolver != null)
+        {
+            long nowMillis = now.getTimeInMillis();
             Cursor cursor = resolver.query(uri_calc, AlarmEventContract.QUERY_EVENT_CALC_PROJECTION, selection, selectionArgs, null);
             if (cursor != null)
             {
