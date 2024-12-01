@@ -172,6 +172,11 @@ public class ColorValuesCollectionPreference extends Preference
         return previewMode;
     }
 
+    protected ColorValuesSheetActivity.PreviewColorsIntentBuilder previewIntentBuilder = null;
+    public void setPreviewIntentBuilder(ColorValuesSheetActivity.PreviewColorsIntentBuilder value) {
+        previewIntentBuilder = value;
+    }
+
     protected int requestCode = 0;
     public int getRequestCode() {
         return requestCode;
@@ -202,7 +207,7 @@ public class ColorValuesCollectionPreference extends Preference
             {
                 if (activity != null)
                 {
-                    Intent intent = createPreferenceOnClickIntent(activity, getCollection(), getAppWidgetID(), getColorTag(), getTitle(), showAlpha(), previewMode, previewKeys.toArray(new String[0]));
+                    Intent intent = createPreferenceOnClickIntent(activity, getCollection(), getAppWidgetID(), getColorTag(), getTitle(), showAlpha(), previewMode, previewKeys.toArray(new String[0]), previewIntentBuilder);
                     activity.startActivityForResult(intent, requestCode);
                     activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 }
@@ -211,7 +216,7 @@ public class ColorValuesCollectionPreference extends Preference
         };
     }
 
-    public static Intent createPreferenceOnClickIntent(final Activity activity, final ColorValuesCollection<?> collection, final int appWidgetID, final String colorTag, final CharSequence title, final boolean showAlpha, @Nullable final Integer previewMode, final String[] previewKeys)
+    public static Intent createPreferenceOnClickIntent(final Activity activity, final ColorValuesCollection<?> collection, final int appWidgetID, final String colorTag, final CharSequence title, final boolean showAlpha, @Nullable final Integer previewMode, final String[] previewKeys, @Nullable ColorValuesSheetActivity.PreviewColorsIntentBuilder previewIntentBuilder)
     {
         Intent intent = new Intent(activity, ColorValuesSheetActivity.class);
         intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, title);
@@ -222,6 +227,9 @@ public class ColorValuesCollectionPreference extends Preference
         intent.putExtra(ColorValuesSheetActivity.EXTRA_SHOW_ALPHA, showAlpha);
         if (previewMode != null) {
             intent.putExtra(ColorValuesSheetActivity.EXTRA_PREVIEW_MODE, previewMode);
+        }
+        if (previewIntentBuilder != null) {
+            intent.putExtra(ColorValuesSheetActivity.EXTRA_PREVIEW_INTENTBUILDER, previewIntentBuilder);
         }
         return intent;
     }

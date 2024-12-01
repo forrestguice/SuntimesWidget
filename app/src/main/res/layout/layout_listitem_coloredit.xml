@@ -5,5 +5,6 @@
     android:padding="@dimen/colortext_margin"
     android:background="?attr/selectableItemBackground"
     android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="?attr/text_size_small" android:textStyle="bold"
-    android:singleLine="true" android:gravity="center"
+    android:gravity="center"
+    android:singleLine="true" android:ellipsize="end"
     tools:text="Primary" />

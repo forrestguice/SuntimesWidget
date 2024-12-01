@@ -99,7 +99,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     public static final String EXTRA_TEST = "test";
     public static final String EXTRA_TEST_CHALLENGE_ID = "testChallengeID";
+    public static final String EXTRA_TEST_BRIGHTMODE = "testBrightMode";
+    public static final String EXTRA_TEST_BRIGHTMODE_ID = "testBrightModeID";
 
+    public static final String ACTION_PREVIEW = "suntimeswidget.alarm.preview";
     public static final String ACTION_SNOOZE = AlarmNotifications.ACTION_SNOOZE;
     public static final String ACTION_DISMISS = AlarmNotifications.ACTION_DISMISS;
 
@@ -172,7 +175,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     private void initTheme(Context context)
     {
-        isBrightMode = AlarmSettings.loadPrefAlarmBrightMode(this);
+        isBrightMode = AlarmSettings.loadPrefAlarmBrightMode(this) || getIntent().getBooleanExtra(EXTRA_TEST_BRIGHTMODE, false);
         appTheme = //(isBrightMode ? AppSettings.AppThemeInfo.getExtendedThemeName("light", AppSettings.loadTextSizePref(context)) :
                 AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
@@ -186,7 +189,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         if (isBrightMode)
         {
             BrightAlarmColorValuesCollection<BrightAlarmColorValues> collection = new BrightAlarmColorValuesCollection<>(context);
-            colors = collection.getSelectedColors(context, 0, BrightAlarmColorValues.TAG_ALARMCOLORS);
+            String param_colorsID = getIntent().getStringExtra(EXTRA_TEST_BRIGHTMODE_ID);
+
+            colors = (!getIntent().hasExtra(EXTRA_TEST_BRIGHTMODE)) ? collection.getSelectedColors(context, 0, BrightAlarmColorValues.TAG_ALARMCOLORS)
+                                                                    : collection.getColors(context, param_colorsID);
             if (colors == null) {
                 colors = new BrightAlarmColorValues(context, false);
             }
@@ -718,11 +724,28 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
+    protected AlarmClockItem getPreviewAlarmItem(Context context, long alarmID)
+    {
+        AlarmClockItem item = new AlarmClockItem();
+        item.enabled = true;
+        item.rowID = alarmID;
+        item.label = context.getString(R.string.configAction_preview);
+        item.note = context.getString(R.string.configLabel_alarms_brightMode_summary);
+        item.setState(AlarmState.STATE_SOUNDING);
+        return item;
+    }
+
     public void setAlarmID(final Context context, long alarmID) {
         setAlarmID(context, alarmID, null);
     }
     public void setAlarmID(final Context context, long alarmID, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener listener)
     {
+        if (ACTION_PREVIEW.equals(getIntent().getAction()))
+        {
+            setAlarmItem(context, getPreviewAlarmItem(context, alarmID));
+            return;
+        }
+
         AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
         task.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
             @Override
