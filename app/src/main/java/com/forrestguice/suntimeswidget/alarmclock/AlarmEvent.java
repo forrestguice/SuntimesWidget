@@ -38,9 +38,11 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_BASIC;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_DAILY;
@@ -120,6 +122,8 @@ public class AlarmEvent
      */
     public static class AlarmEventItem
     {
+        public static final long MAX_WAIT_MS = 1000;
+
         protected SolarEvents event;
         protected String title = "", summary = null;
         protected AlarmEventPhrase phrase = null;
@@ -135,21 +139,30 @@ public class AlarmEvent
             resolved = true;
         }
 
-        public AlarmEventItem( @NonNull String authority, @NonNull String name, @Nullable ContentResolver resolver)
+        public AlarmEventItem( @NonNull String authority, @NonNull String name, @Nullable final ContentResolver resolver)
         {
             event = null;
             uri = AlarmAddon.getEventInfoUri(authority, name);
-            resolved = AlarmAddon.queryDisplayStrings(this, resolver);
+            resolved = ExecutorUtils.runTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
         }
 
-        public AlarmEventItem( @Nullable String eventUri, @Nullable ContentResolver resolver)
+        public AlarmEventItem( @Nullable String eventUri, @Nullable final ContentResolver resolver)
         {
             event = SolarEvents.valueOf(eventUri, null);
             if (event == null) {
                 uri = eventUri;
                 title = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : "";
-                resolved = AlarmAddon.queryDisplayStrings(this, resolver);
+                resolved = ExecutorUtils.runTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
             }
+        }
+
+        private Callable<Boolean> resolveItemTask(@Nullable final ContentResolver resolver)
+        {
+            return new Callable<Boolean>() {
+                public Boolean call() {
+                    return AlarmAddon.queryDisplayStrings(AlarmEventItem.this, resolver);
+                }
+            };
         }
 
         @NonNull
