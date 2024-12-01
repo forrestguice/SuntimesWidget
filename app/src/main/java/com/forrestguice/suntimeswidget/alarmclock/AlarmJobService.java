@@ -77,8 +77,7 @@ public class AlarmJobService extends JobService
     public static void scheduleJobAfterBootCompleted(Context context)
     {
         JobInfo.Builder job = new JobInfo.Builder(AlarmJobService.JOB_AFTER_BOOT_COMPLETED, new ComponentName(context, AlarmJobService.class))
-                .setRequiresBatteryNotLow(false).setRequiresCharging(false).setRequiresDeviceIdle(false).setRequiresStorageNotLow(false)  // defaults
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE).setRequiredNetwork(null)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
                 .setMinimumLatency(AFTER_BOOT_COMPLETED_DELAY_MS)
                 .setOverrideDeadline(AFTER_BOOT_COMPLETED_DELAY_MS + AFTER_BOOT_COMPLETED_WINDOW_MS);
 
