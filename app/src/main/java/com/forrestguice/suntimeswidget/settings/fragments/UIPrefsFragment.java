@@ -328,7 +328,7 @@ public class UIPrefsFragment extends PreferenceFragment
             {
                 if (activity != null)
                 {
-                    Intent intent = ColorValuesCollectionPreference.createPreferenceOnClickIntent(activity, collection, appWidgetID, colorTag, title, showAlpha, previewMode, previewKeys);
+                    Intent intent = ColorValuesCollectionPreference.createPreferenceOnClickIntent(activity, collection, appWidgetID, colorTag, title, showAlpha, previewMode, previewKeys, null);
                     activity.startActivityForResult(intent, requestCode);
                     activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 }
