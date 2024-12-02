@@ -139,6 +139,8 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWMAPBUTTON = "app_ui_showmapbutton";
     public static final boolean PREF_DEF_UI_SHOWMAPBUTTON = true;
 
+    public static final String PREF_KEY_UI_SHOWCOORDINATES = "app_ui_showcoordinates";
+
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
@@ -200,7 +202,7 @@ public class AppSettings
             PREF_KEY_LOCALE_MODE, PREF_KEY_LOCALE, PREF_KEY_UI_SHOWWARNINGS,
             PREF_KEY_UI_DATETAPACTION, PREF_KEY_UI_DATETAPACTION1, PREF_KEY_UI_CLOCKTAPACTION, PREF_KEY_UI_NOTETAPACTION,
             PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
-            PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON, PREF_KEY_UI_SHOWHEADER_TEXT,
+            PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWCOORDINATES, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON, PREF_KEY_UI_SHOWHEADER_TEXT,
             PREF_KEY_UI_EMPHASIZEFIELD, PREF_KEY_UI_SHOWFIELDS, PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_UI_TIMEZONESORT,
             PREF_KEY_UI_MOONPHASECOLUMNS,
             PREF_KEY_GETFIX_MINELAPSED, PREF_KEY_GETFIX_MAXELAPSED, PREF_KEY_GETFIX_MAXAGE, PREF_KEY_GETFIX_PASSIVE,
@@ -217,7 +219,7 @@ public class AppSettings
     };
     public static final String[] BOOL_KEYS = new String[]
     {
-            PREF_KEY_UI_SHOWWARNINGS, PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON,
+            PREF_KEY_UI_SHOWWARNINGS, PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWCOORDINATES, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON,
             PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
             PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_GETFIX_PASSIVE, PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG_DONOTSHOWAGAIN
     };
@@ -650,6 +652,12 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWMAPBUTTON, PREF_DEF_UI_SHOWMAPBUTTON);
+    }
+
+    public static boolean loadShowCoordinatesPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWCOORDINATES, context.getResources().getBoolean(R.bool.def_app_ui_showcoordinates));
     }
 
     public static boolean[] loadShowFieldsPref( Context context )
