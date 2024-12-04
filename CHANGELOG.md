@@ -1,6 +1,6 @@
 ### ~
 
-### v0.16.4 (2024-12-02)
+### v0.16.4 (2024-12-04)
 * fixes bug "boot completed hangs after phone restart" (#842).
 * fixes bug "FGS not allowed to start from BOOT_COMPLETED!" (Android 15).
 * fixes bug where "moon dialog displays the wrong phase label" (#843).
