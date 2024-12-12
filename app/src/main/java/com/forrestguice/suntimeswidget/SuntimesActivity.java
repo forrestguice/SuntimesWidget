@@ -1942,15 +1942,15 @@ public class SuntimesActivity extends AppCompatActivity
             if (AppSettings.loadShowCoordinatesPref(context)) {
                 String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
                 locationSubtitle = new SpannableString(locationString);
+            } else {
+                locationSubtitle = null;
             }
         }
 
         if (actionBar != null)
         {
             actionBar.setTitle(locationTitle);
-            if (locationSubtitle != null) {
-                actionBar.setSubtitle(locationSubtitle);
-            }
+            actionBar.setSubtitle(locationSubtitle);
         }
 
         //
