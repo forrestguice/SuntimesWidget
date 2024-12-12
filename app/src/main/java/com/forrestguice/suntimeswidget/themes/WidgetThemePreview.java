@@ -296,6 +296,7 @@ public class WidgetThemePreview
             options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
             options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR));
             options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR));
+            options.foregroundColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR);
             options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, values.getAsInteger(SuntimesThemeContract.THEME_MAP_SHADOWCOLOR));
             options.colors.setColor(WorldMapColorValues.COLOR_MOON_LIGHT, values.getAsInteger(SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR));
 

@@ -253,7 +253,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         setResult(RESULT_CANCELED, cancelIntent);
 
         WidgetThemes.initThemes(context);
-        themeValues = WidgetSettings.loadThemePref(this, appWidgetId).toContentValues();
+        SuntimesTheme theme = WidgetSettings.loadThemePref(this, appWidgetId);
+        int[] padding = theme.getPaddingPixels(context);    // caches pixel values
+        themeValues = theme.toContentValues();
 
         initViews(context);
         loadSettings(context);
@@ -2941,7 +2943,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         //Log.d("DEBUG", "onThemeSelectionChanged");
         ThemeDescriptor theme = (ThemeDescriptor) spinner_theme.getSelectedItem();
-        this.themeValues = WidgetThemes.loadTheme(this, theme.name()).toContentValues();
+
+        SuntimesTheme t = WidgetThemes.loadTheme(this, theme.name());
+        t.getPaddingPixels(this);
+        this.themeValues = t.toContentValues();
         themeViews(themeValues);
 
         updateWidgetModeAdapter(spinner_1x1mode, themeValues);    // refresh widget previews

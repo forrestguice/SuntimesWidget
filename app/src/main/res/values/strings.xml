@@ -1277,6 +1277,10 @@
 
     <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>
     <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+
+    <string name="configAction_preview">Preview</string>    <!-- TODO -->
+    <string name="configAction_previewColors">@string/configAction_preview</string>
+
     <string-array name="brightMode_colors_previewKeys" translatable="false">
         <item>color_bright_bg_end</item>
         <!--<item>color_sounding_pulse_start</item>

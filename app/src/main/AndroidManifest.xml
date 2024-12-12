@@ -375,6 +375,10 @@
                 android:value="com.forrestguice.suntimeswidget/com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity" />
         </service>
 
+        <service android:name=".alarmclock.AlarmJobService"
+            android:enabled="@bool/api_post_24"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
         <service android:name=".alarmclock.AlarmNotifications$NotificationService"
             android:directBootAware="true" />
         <receiver android:name=".alarmclock.AlarmNotifications"
