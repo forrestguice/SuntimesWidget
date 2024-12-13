@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -71,251 +71,279 @@
 
         <include layout="@layout/layout_listitem_alarmtime" />
 
-        <TextView style="@style/ChipTrayLabel"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/configLabel_alarmEdit_scheduleTray" />
+        <!-- Tray: Schedule -->
+        <LinearLayout android:id="@+id/tray_schedule" android:orientation="vertical"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <LinearLayout style="@style/ChipTray"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <TextView style="@style/ChipTrayLabel"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/configLabel_alarmEdit_scheduleTray" />
 
-            <LinearLayout
+            <LinearLayout style="@style/ChipTray"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="start|center_vertical"
-                android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
+                android:paddingLeft="4dp" android:paddingRight="4dp">
 
-                <FrameLayout android:id="@+id/chip_offset" android:contentDescription="@string/configAction_setAlarmOffset"
-                    android:layout_width="wrap_content" android:layout_height="match_parent"
-                    android:orientation="horizontal" android:gravity="start|center_vertical">
-
-                    <TextView
-                        android:id="@+id/text_offset" style="@style/ChipText" android:gravity="center"
-                        android:layout_width="wrap_content" android:layout_height="match_parent" android:minWidth="100dp"
-                        tools:text="at" />
-
-                </FrameLayout>
-
-                <FrameLayout android:id="@+id/chip_event" android:contentDescription="@string/configAction_setAlarmEvent"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content">
-
-                    <TextView android:id="@+id/text_event" style="@style/ChipText1"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:drawableLeft="?attr/icActionTime" android:drawableStart="?attr/icActionTime"
-                        tools:text="Nautical Twilight (end)" />
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="start|center_vertical"
-                android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
-
-                <FrameLayout android:id="@+id/chip_location" android:contentDescription="@string/configAction_setAlarmLocation"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content">
-
-                    <TextView android:id="@+id/text_location" style="@style/ChipText1"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
-                        tools:text="Location" />
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <FrameLayout android:id="@+id/chip_repeat" android:contentDescription="@string/configAction_setAlarmRepeat"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:layout_gravity="start" android:padding="0dp"
-                android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
-
-                <TextView android:id="@+id/text_repeat" style="@style/ChipText1"
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:drawableLeft="?attr/icActionCalendar" android:drawableStart="?attr/icActionCalendar"
-                    android:text="@string/alarmOption_repeat" tools:text="Sun, Mon, Tue, Wed, Thu, Fri" />
+                    tools:ignore="MissingConstraints">
 
-            </FrameLayout>
+                    <android.support.constraint.helper.Flow
+                        android:id="@+id/flow0" app:constraint_referenced_ids="chip_offset,chip_event,chip_location,chip_repeat"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        app:flow_horizontalAlign="start" app:flow_horizontalBias="0"
+                        app:flow_verticalBias="0" app:flow_verticalGap="0dp" app:flow_horizontalGap="0dp"
+                        app:flow_maxElementsWrap="3" app:flow_wrapMode="chain" />
 
+                    <FrameLayout android:id="@+id/chip_offset" android:contentDescription="@string/configAction_setAlarmOffset"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="start|center_vertical">
 
+                        <TextView
+                            android:id="@+id/text_offset" style="@style/ChipText" android:gravity="center"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100dp"
+                            android:minHeight="@dimen/chip_minHeight"
+                            tools:text="at" />
+
+                    </FrameLayout>
+
+                    <FrameLayout android:id="@+id/chip_event" android:contentDescription="@string/configAction_setAlarmEvent"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                        <TextView android:id="@+id/text_event" style="@style/ChipText1"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:minHeight="@dimen/chip_minHeight"
+                            android:drawableLeft="?attr/icActionTime" android:drawableStart="?attr/icActionTime"
+                            tools:text="Nautical Twilight (end)" />
+
+                    </FrameLayout>
+
+                    <FrameLayout android:id="@+id/chip_location" android:contentDescription="@string/configAction_setAlarmLocation"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                        <TextView android:id="@+id/text_location" style="@style/ChipText1"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:minHeight="@dimen/chip_minHeight"
+                            android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
+                            tools:text="Location" />
+
+                    </FrameLayout>
+
+                    <FrameLayout android:id="@+id/chip_repeat" android:contentDescription="@string/configAction_setAlarmRepeat"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:layout_gravity="start" android:padding="0dp">
+
+                        <TextView android:id="@+id/text_repeat" style="@style/ChipText1"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:minHeight="@dimen/chip_minHeight"
+                            android:drawableLeft="?attr/icActionCalendar" android:drawableStart="?attr/icActionCalendar"
+                            android:text="@string/alarmOption_repeat" tools:text="Sun, Mon, Tue, Wed, Thu, Fri" />
+
+                    </FrameLayout>
+
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
         </LinearLayout>
 
+        <!-- Tray: Before Alert -->
+        <LinearLayout android:id="@+id/tray_beforeAlert" android:orientation="vertical"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <LinearLayout android:id="@+id/option_chips" android:orientation="vertical"
+            <TextView style="@style/ChipTrayLabel"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+                android:text="@string/configLabel_alarmEdit_beforeAlertTray" />
+
+            <LinearLayout
+                android:id="@+id/layout_options2" style="@style/ChipTray"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/option_repeat"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:animateLayoutChanges="true">
+                android:paddingLeft="4dp" android:paddingRight="4dp">
 
-                <LinearLayout android:id="@+id/tray_beforeAlert" android:orientation="vertical"
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
-
-                    <TextView style="@style/ChipTrayLabel"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-                        android:text="@string/configLabel_alarmEdit_beforeAlertTray" />
-
-                    <LinearLayout
-                        android:id="@+id/layout_options2" style="@style/ChipTray"
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:gravity="start|center_vertical" android:orientation="horizontal">
-
-                        <LinearLayout android:animateLayoutChanges="true"
-                            android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                            android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <FrameLayout style="@style/ChipArea" android:id="@+id/chip_reminder"
-                                android:paddingEnd="14dp" android:paddingRight="14dp" android:layout_width="wrap_content" android:layout_height="match_parent">
-
-                                <android.support.v7.widget.AppCompatCheckBox
-                                    android:id="@+id/check_reminder" style="@style/ChipTextBase"
-                                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                    android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
-                                    android:button="?attr/checkReminder" android:paddingLeft="8dp" android:paddingStart="8dp"
-                                    tools:text="12h reminder" android:checked="false" />  <!-- TODO -->
-
-                            </FrameLayout>
-
-                            <FrameLayout android:id="@+id/chip_action2" android:visibility="visible"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:contentDescription="@string/configAction_setAlarmAction">
-
-                                <TextView
-                                    android:id="@+id/text_action2"
-                                    style="@style/ChipText1"
-                                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                    android:button="@android:color/transparent"
-                                    android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
-                                    tools:text="No Action" />
-
-                            </FrameLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <TextView style="@style/ChipTrayLabel"
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-                    android:text="@string/configLabel_alarmEdit_onAlertTray" />
+                    tools:ignore="MissingConstraints">
 
-                <LinearLayout style="@style/ChipTray"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/layout_chips0"
+                    <android.support.constraint.helper.Flow
+                        android:id="@+id/flow1" app:constraint_referenced_ids="chip_reminder,chip_action2"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:gravity="start|center_vertical" android:orientation="horizontal"
-                        android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        app:flow_horizontalAlign="start" app:flow_horizontalBias="0"
+                        app:flow_verticalBias="0" app:flow_verticalGap="0dp" app:flow_horizontalGap="0dp"
+                        app:flow_maxElementsWrap="6" app:flow_wrapMode="chain" />
 
-                        <!--<TextView android:id="@+id/text_ringtone" style="@style/ChipText1"
-                            android:layout_width="0dp" android:layout_weight="1"
-                            android:drawableLeft="?attr/icActionSoundDisabled" android:drawableStart="?attr/icActionSoundDisabled"
-                            tools:text="No Sound" />-->
+                    <FrameLayout android:id="@+id/chip_reminder"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content">   <!-- TODO: margins not applied correctly without this wrapper... -->
+                        <FrameLayout style="@style/ChipArea"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:paddingEnd="14dp" android:paddingRight="14dp"
+                            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                            android:minHeight="@dimen/chip_minHeight">
 
-                        <FrameLayout android:id="@+id/chip_ringtone" android:contentDescription="@string/configAction_setAlarmSound"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/text_ringtone"
-                                style="@style/ChipText1"
+                            <android.support.v7.widget.AppCompatCheckBox
+                                android:id="@+id/check_reminder" style="@style/ChipTextBase"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:button="@android:color/transparent"
-                                android:drawableLeft="?attr/icActionSoundDisabled" android:drawableStart="?attr/icActionSoundDisabled"
-                                tools:text="No Sound" />
+                                android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
+                                android:button="?attr/checkReminder" android:paddingLeft="8dp" android:paddingStart="8dp"
+                                tools:text="12h reminder" android:checked="false" />  <!-- TODO -->
 
                         </FrameLayout>
+                    </FrameLayout>
 
+                    <FrameLayout android:id="@+id/chip_action2" android:visibility="visible"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:contentDescription="@string/configAction_setAlarmAction">
 
-                        <FrameLayout style="@style/ChipArea" android:id="@+id/chip_vibrate"
-                            android:paddingEnd="14dp" android:paddingRight="14dp" android:layout_width="wrap_content" android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/text_action2" style="@style/ChipText1"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:minHeight="@dimen/chip_minHeight"
+                            android:button="@android:color/transparent"
+                            android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
+                            tools:text="No Action" />
+
+                    </FrameLayout>
+
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Tray: On Alert -->
+        <LinearLayout android:id="@+id/tray_onAlert" android:orientation="vertical"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <TextView style="@style/ChipTrayLabel"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+                android:text="@string/configLabel_alarmEdit_onAlertTray" />
+
+            <LinearLayout style="@style/ChipTray"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingLeft="4dp" android:paddingRight="4dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints">
+
+                    <android.support.constraint.helper.Flow
+                        android:id="@+id/flow2" app:constraint_referenced_ids="chip_ringtone,chip_vibrate,chip_action0"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        app:flow_horizontalAlign="start" app:flow_horizontalBias="0"
+                        app:flow_verticalBias="0" app:flow_verticalGap="0dp" app:flow_horizontalGap="0dp"
+                        app:flow_maxElementsWrap="6" app:flow_wrapMode="chain" />
+
+                    <!--<TextView android:id="@+id/text_ringtone" style="@style/ChipText1"
+                        android:layout_width="0dp" android:layout_weight="1"
+                        android:drawableLeft="?attr/icActionSoundDisabled" android:drawableStart="?attr/icActionSoundDisabled"
+                        tools:text="No Sound" />-->
+
+                    <FrameLayout android:id="@+id/chip_ringtone" android:contentDescription="@string/configAction_setAlarmSound"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/text_ringtone" style="@style/ChipText1"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:minHeight="@dimen/chip_minHeight"
+                            android:button="@android:color/transparent"
+                            android:drawableLeft="?attr/icActionSoundDisabled" android:drawableStart="?attr/icActionSoundDisabled"
+                            tools:text="No Sound" />
+
+                    </FrameLayout>
+
+                    <FrameLayout android:id="@+id/chip_vibrate"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content">    <!-- TODO: margins not applied correctly without this wrapper... -->
+                        <FrameLayout style="@style/ChipArea"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:minHeight="@dimen/chip_minHeight">
 
                             <android.support.v7.widget.AppCompatCheckBox
                                 android:id="@+id/check_vibrate" style="@style/ChipTextBase"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
                                 android:button="?attr/checkVibrate" android:paddingLeft="8dp" android:paddingStart="8dp"
+                                android:layout_marginRight="14dp" android:layout_marginEnd="14dp"
                                 android:text="@string/alarmOption_vibrate" android:checked="true" />
 
                         </FrameLayout>
+                    </FrameLayout>
 
-                    </LinearLayout>
+                    <FrameLayout android:id="@+id/chip_action0" android:contentDescription="@string/configAction_setAlarmAction"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:minHeight="@dimen/chip_minHeight">
 
-                    <LinearLayout
-                        android:id="@+id/layout_chips1"
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:gravity="start|center_vertical" android:orientation="horizontal"
-                        android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
+                        <TextView
+                            android:id="@+id/text_action0" style="@style/ChipText1"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:minHeight="@dimen/chip_minHeight"
+                            android:button="@android:color/transparent"
+                            android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
+                            tools:text="No Action" />
 
-                        <FrameLayout android:id="@+id/chip_action0" android:contentDescription="@string/configAction_setAlarmAction"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content">
+                    </FrameLayout>
 
-                            <TextView
-                                android:id="@+id/text_action0"
-                                style="@style/ChipText1"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:button="@android:color/transparent"
-                                android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
-                                tools:text="No Action" />
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <TextView style="@style/ChipTrayLabel"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-                    android:text="@string/configLabel_alarmEdit_onDismissTray"/>
-
-                <LinearLayout
-                    android:id="@+id/layout_options1" style="@style/ChipTray"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:gravity="start|center_vertical" android:orientation="horizontal">
-
-                    <LinearLayout android:animateLayoutChanges="true"
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
-
-                        <FrameLayout android:id="@+id/chip_dismiss_challenge" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:contentDescription="@string/configLabel_alarms_dismissChallenge">
-
-                            <TextView android:id="@+id/text_dismiss_challenge" style="@style/ChipText1"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:button="@android:color/transparent" android:maxEms="9"
-                                android:drawableLeft="?attr/icActionDismiss" android:drawableStart="?attr/icActionDismiss"
-                                tools:text="Addon alarm challenge dismiss" />
-
-                        </FrameLayout>
-
-                        <FrameLayout android:id="@+id/chip_action1" android:contentDescription="@string/configAction_setAlarmAction"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/text_action1"
-                                style="@style/ChipText1"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:button="@android:color/transparent"
-                                android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
-                                tools:text="No Action" />
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
+                </android.support.constraint.ConstraintLayout>
             </LinearLayout>
+        </LinearLayout>
 
+        <!-- Tray: On Dismiss -->
+        <LinearLayout android:id="@+id/tray_onDismiss" android:orientation="vertical"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <TextView style="@style/ChipTrayLabel"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+                android:text="@string/configLabel_alarmEdit_onDismissTray"/>
+
+            <LinearLayout
+                android:id="@+id/layout_options1" style="@style/ChipTray"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingLeft="4dp" android:paddingRight="4dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints">
+
+                    <android.support.constraint.helper.Flow
+                        android:id="@+id/flow3" app:constraint_referenced_ids="chip_dismiss_challenge,chip_action1"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        app:flow_horizontalAlign="start" app:flow_horizontalBias="0"
+                        app:flow_verticalBias="0" app:flow_verticalGap="0dp" app:flow_horizontalGap="0dp"
+                        app:flow_maxElementsWrap="2" app:flow_wrapMode="chain" />
+
+                    <FrameLayout android:id="@+id/chip_dismiss_challenge" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:contentDescription="@string/configLabel_alarms_dismissChallenge">
+
+                        <TextView android:id="@+id/text_dismiss_challenge" style="@style/ChipText1"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:minHeight="@dimen/chip_minHeight"
+                            android:button="@android:color/transparent" android:maxEms="9"
+                            android:drawableLeft="?attr/icActionDismiss" android:drawableStart="?attr/icActionDismiss"
+                            tools:text="Addon alarm challenge dismiss" />
+
+                    </FrameLayout>
+
+                    <FrameLayout android:id="@+id/chip_action1" android:contentDescription="@string/configAction_setAlarmAction"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/text_action1" style="@style/ChipText1"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:minHeight="@dimen/chip_minHeight"
+                            android:button="@android:color/transparent"
+                            android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
+                            tools:text="No Action" />
+
+                    </FrameLayout>
+
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
-
 </FrameLayout>
