@@ -55,84 +55,91 @@
 
         </LinearLayout>
 
-        <LinearLayout android:orientation="horizontal"
-            android:layout_width="match_parent" android:layout_height="match_parent"
+        <ScrollView android:id="@+id/scroll0"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+        <android.support.constraint.ConstraintLayout android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
             android:baselineAligned="false">
 
-            <include layout="@layout/layout_listitem_alarmtime"
+            <LinearLayout android:id="@+id/alarm_time_preview"
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                android:layout_gravity="center"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tray_schedule">
+                <include layout="@layout/layout_listitem_alarmtime"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp" />
+            </LinearLayout>
 
             <!-- Tray: Schedule -->
             <LinearLayout android:id="@+id/tray_schedule" android:orientation="vertical"
-                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/alarm_time_preview"
+                app:layout_constraintEnd_toEndOf="parent">
                 <include layout="@layout/layout_listitem_alarmclock1_tray_schedule" />
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout android:id="@+id/column0" android:orientation="vertical"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/alarm_time_preview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/alarm_time_preview">
 
-        <LinearLayout android:id="@+id/option_chips" android:orientation="horizontal"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/option_repeat"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:animateLayoutChanges="true"
-            android:baselineAligned="false">
+                <!-- Tray: Before Alert -->
+                <LinearLayout android:id="@+id/tray_beforeAlert" android:orientation="vertical"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+                    <include layout="@layout/layout_listitem_alarmclock1_tray_beforealert" />
+                </LinearLayout>
 
-            <!-- Tray: Before Alert -->
-            <LinearLayout android:id="@+id/tray_beforeAlert" android:orientation="vertical"
-                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-                <include layout="@layout/layout_listitem_alarmclock1_tray_beforealert" />
+                <!-- Tray: On Dismiss -->
+                <LinearLayout android:id="@+id/tray_onDismiss" android:orientation="vertical"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+                    <include layout="@layout/layout_listitem_alarmclock1_tray_ondismiss" />
+                </LinearLayout>
+
             </LinearLayout>
 
-            <!-- Tray: On Alert -->
-            <LinearLayout android:id="@+id/tray_onAlert" android:orientation="vertical"
-                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-                <include layout="@layout/layout_listitem_alarmclock1_tray_onalert" />
+            <LinearLayout android:id="@+id/column1" android:orientation="vertical"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/column0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tray_schedule">
+
+                <!-- Tray: On Alert -->
+                <LinearLayout android:id="@+id/tray_onAlert" android:orientation="vertical"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+                    <include layout="@layout/layout_listitem_alarmclock1_tray_onalert" />
+                </LinearLayout>
+
+                <!-- Tray: Notes -->
+                <LinearLayout android:orientation="vertical"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                    <TextView style="@style/ChipTrayLabel" android:visibility="invisible"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
+                        android:text="" />
+
+                    <TextView
+                        android:drawableLeft="?attr/icActionAddLabel" android:drawableStart="?attr/icActionAddLabel"
+                        android:id="@+id/edit_note" android:background="?attr/selectableItemBackground"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                        android:layout_marginBottom="12dp" android:drawablePadding="8dp"
+                        android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_small"
+                        android:maxLines="8" tools:text="note\nlinetwo\nlinethree\nline four\nline 5\nline 6"
+                        android:contentDescription="@string/configAction_setAlarmNote" />
+
+                    <!-- empty tray -->
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout android:id="@+id/option_chips1" android:orientation="horizontal"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/option_repeat"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:baselineAligned="false">
-
-            <!-- Tray: On Dismiss -->
-            <LinearLayout android:id="@+id/tray_onDismiss" android:orientation="vertical"
-                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
-                <include layout="@layout/layout_listitem_alarmclock1_tray_ondismiss" />
-            </LinearLayout>
-
-            <LinearLayout android:orientation="vertical"
-                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-
-                <TextView style="@style/ChipTrayLabel" android:visibility="invisible"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-                    android:text="" />
-
-                <TextView
-                    android:drawableLeft="?attr/icActionAddLabel" android:drawableStart="?attr/icActionAddLabel"
-                    android:id="@+id/edit_note" android:background="?attr/selectableItemBackground"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                    android:layout_marginBottom="12dp" android:drawablePadding="8dp"
-                    android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_small"
-                    android:maxLines="8" tools:text="note\nlinetwo\nlinethree\nline four\nline 5\nline 6"
-                    android:contentDescription="@string/configAction_setAlarmNote" />
-
-                <!-- empty tray -->
-            </LinearLayout>
-        </LinearLayout>
-
+        </android.support.constraint.ConstraintLayout>
+        </ScrollView>
     </LinearLayout>
-
 </FrameLayout>
