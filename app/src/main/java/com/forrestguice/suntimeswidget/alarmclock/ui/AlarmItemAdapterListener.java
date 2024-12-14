@@ -37,5 +37,6 @@ public interface AlarmItemAdapterListener
     void onRequestAction(AlarmClockItem forItem, int actionNum);
     void onRequestDismissChallenge(AlarmClockItem forItem);
     void onRequestSnoozeLimit(AlarmClockItem forItem);
+    void onRequestSnoozeLength(AlarmClockItem forItem);
     void onRequestDialog(AlarmClockItem forItem);
 }

@@ -455,6 +455,7 @@ public class AlarmEditDialog extends DialogFragment
         holder.chip_action2.setOnClickListener(pickAction(2));
         holder.chip_dismissChallenge.setOnClickListener(pickDismissChallenge());
         holder.chip_snoozeLimit.setOnClickListener(pickSnoozeLimit());
+        holder.chip_snoozeLength.setOnClickListener(pickSnoozeLength());
         holder.layout_datetime.setOnClickListener(triggerPreviewOffsetListener(holder));
     }
 
@@ -724,6 +725,18 @@ public class AlarmEditDialog extends DialogFragment
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onRequestSnoozeLimit(item);
+                }
+            }
+        });
+    }
+
+    private View.OnClickListener pickSnoozeLength()
+    {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestSnoozeLength(item);
                 }
             }
         });

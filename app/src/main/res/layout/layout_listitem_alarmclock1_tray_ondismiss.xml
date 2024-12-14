@@ -18,13 +18,13 @@
 
             <android.support.constraint.helper.Flow
                 android:id="@+id/flow3"
-                app:constraint_referenced_ids="chip_dismiss_challenge,chip_action1,chip_snoozeLimit"
+                app:constraint_referenced_ids="chip_dismiss_challenge,chip_action1,chip_snoozeLimit,chip_snoozeLength"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 app:flow_horizontalAlign="start" app:flow_horizontalBias="0"
                 app:flow_verticalBias="0" app:flow_verticalGap="0dp"
-                app:flow_horizontalGap="0dp" app:flow_maxElementsWrap="3" app:flow_wrapMode="chain" />
+                app:flow_horizontalGap="0dp" app:flow_maxElementsWrap="4" app:flow_wrapMode="chain" />
 
             <FrameLayout
                 android:id="@+id/chip_dismiss_challenge"
@@ -69,6 +69,21 @@
                     android:button="@android:color/transparent"
                     android:drawableLeft="?attr/icActionSnooze" android:drawableStart="?attr/icActionSnooze"
                     tools:text="Snooze Limit: none" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/chip_snoozeLength"
+                android:contentDescription="@string/configLabel_alarms_snooze"
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_snoozeLength" style="@style/ChipText1"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:minHeight="@dimen/chip_minHeight"
+                    android:button="@android:color/transparent"
+                    android:drawableLeft="?attr/icActionSnooze" android:drawableStart="?attr/icActionSnooze"
+                    tools:text="Snooze for\n10 minutes" />
 
             </FrameLayout>
 

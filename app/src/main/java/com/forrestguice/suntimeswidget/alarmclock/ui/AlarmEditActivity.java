@@ -52,6 +52,8 @@ import android.view.View;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.settings.IntegerPickerDialog;
+import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
+import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -104,6 +106,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
     private static final String DIALOGTAG_SNOOZELIMIT = "snoozelimit";
+    private static final String DIALOGTAG_SNOOZELENGTH = "snoozelength";
     private static final String DIALOGTAG_HELP = "alarmhelp";
     private static final int HELP_PATH_ID = R.string.help_alarms_edit_path;
 
@@ -734,6 +737,34 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     }
 
     /**
+     * pickSnoozeLength
+     * @param item AlarmClockItem
+     */
+    protected void pickSnoozeLength(@NonNull AlarmClockItem item)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        MillisecondPickerDialog dialog = new MillisecondPickerDialog();
+        dialog.setMode(MillisecondPickerHelper.MODE_MINUTES);
+        dialog.setParamMinMax(getResources().getInteger(R.integer.minAlarmSnoozeMinutes), getResources().getInteger(R.integer.maxAlarmSnoozeMinutes));
+        dialog.setValue((int) item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(AlarmEditActivity.this)));
+        dialog.setDialogListener(onSnoozeLengthDialogListener(item));
+        dialog.setDialogTitle(getString(R.string.configLabel_alarms_snooze));
+        dialog.show(fragments, DIALOGTAG_SNOOZELENGTH);
+    }
+
+    private MillisecondPickerDialog.DialogListener onSnoozeLengthDialogListener(final AlarmClockItem forItem)
+    {
+        return new MillisecondPickerDialog.DialogListener()
+        {
+            @Override
+            public void onDialogAccepted(long value) {
+                forItem.setFlag(AlarmClockItem.FLAG_SNOOZE, value);
+                editor.notifyItemChanged();
+            }
+        };
+    }
+
+    /**
      * pickDismissChallenge
      */
     protected void pickDismissChallenge(@NonNull final AlarmClockItem item) {
@@ -1344,6 +1375,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     public void onRequestSnoozeLimit(AlarmClockItem forItem) {
         pickSnoozeLimit(forItem);
+    }
+
+    @Override
+    public void onRequestSnoozeLength(AlarmClockItem forItem) {
+        pickSnoozeLength(forItem);
     }
 
     @Override
