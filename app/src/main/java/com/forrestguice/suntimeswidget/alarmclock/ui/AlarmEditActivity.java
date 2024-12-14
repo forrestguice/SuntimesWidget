@@ -1312,6 +1312,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     }
 
     @Override
+    public void onRequestSnoozeLimit(AlarmClockItem forItem) {
+        Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show();    // TODO
+    }
+
+    @Override
     public void onRequestDialog(AlarmClockItem forItem) { /* EMPTY */ }
 
 }
