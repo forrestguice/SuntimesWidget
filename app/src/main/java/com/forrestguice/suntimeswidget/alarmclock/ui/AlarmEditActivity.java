@@ -416,6 +416,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 AlarmClockItem item = editor.getItem();
                 boolean isAlarm = (item != null && item.type == AlarmClockItem.AlarmType.ALARM);
 
+                MenuItem item_snoozeLimit = optionsMenu.findItem(R.id.setAlarmSnoozeLimit);
+                if (item_snoozeLimit != null) {
+                    item_snoozeLimit.setVisible(isAlarm);
+                }
+
+                MenuItem item_snoozeLength = optionsMenu.findItem(R.id.setAlarmSnoozeLength);
+                if (item_snoozeLength != null) {
+                    item_snoozeLength.setVisible(isAlarm);
+                }
+
                 MenuItem item_menuDismissChallenge = optionsMenu.findItem(R.id.menuAlarmDismissChallenge);
                 if (item_menuDismissChallenge != null) {
                     item_menuDismissChallenge.setVisible(isAlarm);
@@ -496,6 +506,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
             case R.id.setAlarmSound:
                 editor.itemView.chip_ringtone.performClick();
+                return true;
+
+            case R.id.setAlarmSnoozeLimit:
+                editor.itemView.chip_snoozeLimit.performClick();
+                return true;
+
+            case R.id.setAlarmSnoozeLength:
+                editor.itemView.chip_snoozeLength.performClick();
                 return true;
 
             case R.id.setAlarmDismissChallenge:

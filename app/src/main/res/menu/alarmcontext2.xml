@@ -68,5 +68,15 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             </menu>
         </item>
 
+        <item android:id="@+id/setAlarmSnoozeLimit"
+            android:title="@string/configLabel_alarms_snoozeLimit"
+            android:icon="?attr/icActionSnooze"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/setAlarmSnoozeLength"
+            android:title="@string/configLabel_alarms_snooze"
+            android:icon="?attr/icActionSnooze"
+            app:showAsAction="never" />
+
     </group>
 </menu>
