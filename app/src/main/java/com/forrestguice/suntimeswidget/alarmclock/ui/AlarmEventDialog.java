@@ -494,6 +494,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
             {
                 Intent intent = new Intent(getActivity(), EventListActivity.class);
                 intent.putExtra(EventListActivity.EXTRA_EXPANDED, true);
+                intent.putExtra(EventListActivity.EXTRA_LOCATION, getLocation());
                 startActivityForResult(intent, REQUEST_EVENTALIAS);
                 return true;
 

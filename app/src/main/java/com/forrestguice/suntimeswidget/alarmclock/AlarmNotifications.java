@@ -2925,7 +2925,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
-    protected static Calendar updateAlarmTime_addonEvent(Context context, @Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    public static Calendar updateAlarmTime_addonEvent(Context context, @Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
             //Log.w(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! using EVERYDAY instead..");
