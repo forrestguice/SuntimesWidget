@@ -782,6 +782,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         PopupMenu popup = new PopupMenu(this, v);
         Menu menu = popup.getMenu();
 
+        AlarmSettings.DismissChallenge selectedChallenge = item.getDismissChallenge(this, true);
         ArrayList<AlarmSettings.DismissChallenge> challenges0 = new ArrayList<AlarmSettings.DismissChallenge>(Arrays.asList(AlarmSettings.DismissChallenge.values()));
         challenges0.remove(AlarmSettings.DismissChallenge.ADDON);
         final AlarmSettings.DismissChallenge[] challenges = challenges0.toArray(new AlarmSettings.DismissChallenge[0]);
@@ -789,6 +790,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         for (int i=0; i<challenges.length; i++) {
             MenuItem menuItem = menu.add(Menu.NONE, i, i, challenges[i].getDisplayString());
             menuItem.setIcon(icDismissResId);
+            menuItem.setCheckable(true);
+            menuItem.setChecked((selectedChallenge.getID() == challenges[i].getID()));
         }
 
         int c = challenges.length + 1;
@@ -796,6 +799,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         for (AlarmAddon.DismissChallengeInfo addonInfo : addons) {
             MenuItem menuItem = menu.add(Menu.NONE, (int)addonInfo.getDismissChallengeID(), c, addonInfo.getTitle());
             menuItem.setIcon(icExtensionResId);
+            menuItem.setCheckable(true);
+            menuItem.setChecked((selectedChallenge.getID() == addonInfo.getDismissChallengeID()));
             c++;
         }
 
@@ -810,6 +815,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             }
         }));
 
+        menu.setGroupCheckable(0, true, true);
         PopupMenuCompat.forceActionBarIcons(popup.getMenu());
         popup.show();
     }

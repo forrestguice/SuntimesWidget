@@ -36,7 +36,6 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:minHeight="@dimen/chip_minHeight"
                     android:button="@android:color/transparent"
-                    android:maxEms="9"
                     android:drawableLeft="?attr/icActionDismiss" android:drawableStart="?attr/icActionDismiss"
                     tools:text="Addon alarm challenge dismiss" />
 
