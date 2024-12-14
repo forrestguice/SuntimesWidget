@@ -51,6 +51,7 @@ import android.view.SubMenu;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
+import com.forrestguice.suntimeswidget.settings.IntegerPickerDialog;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -102,6 +103,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private static final String DIALOGTAG_TIME = "alarmtime";
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
+    private static final String DIALOGTAG_SNOOZELIMIT = "snoozelimit";
     private static final String DIALOGTAG_HELP = "alarmhelp";
     private static final int HELP_PATH_ID = R.string.help_alarms_edit_path;
 
@@ -702,6 +704,34 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * pickSnoozeLimit
+     * @param item AlarmClockItem
+     */
+    protected void pickSnoozeLimit(@NonNull AlarmClockItem item)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        IntegerPickerDialog dialog = new IntegerPickerDialog();
+        dialog.setParamMinMax(0, getResources().getInteger(R.integer.maxAlarmSnoozeLimit));
+        dialog.setValue((int) item.getFlag(AlarmClockItem.FLAG_SNOOZE_LIMIT, AlarmSettings.loadPrefAlarmSnoozeLimit(AlarmEditActivity.this)));
+        dialog.setDialogListener(onSnoozeLimitDialogListener(item));
+        dialog.setDialogTitle(getString(R.string.configLabel_alarms_snoozeLimit));
+        dialog.setParamZeroText(getString(R.string.configLabel_alarms_snoozeLimit_none));
+        dialog.show(fragments, DIALOGTAG_SNOOZELIMIT);
+    }
+
+    private IntegerPickerDialog.DialogListener onSnoozeLimitDialogListener(final AlarmClockItem forItem)
+    {
+        return new IntegerPickerDialog.DialogListener()
+        {
+            @Override
+            public void onDialogAccepted(long value) {
+                forItem.setFlag(AlarmClockItem.FLAG_SNOOZE_LIMIT, value);
+                editor.notifyItemChanged();
+            }
+        };
+    }
 
     /**
      * pickDismissChallenge
@@ -1313,7 +1343,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     @Override
     public void onRequestSnoozeLimit(AlarmClockItem forItem) {
-        Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show();    // TODO
+        pickSnoozeLimit(forItem);
     }
 
     @Override
