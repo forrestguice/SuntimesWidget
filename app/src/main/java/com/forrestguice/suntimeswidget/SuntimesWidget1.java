@@ -81,7 +81,6 @@ public class SuntimesWidget1 extends SuntimesWidget0
         {
             if (action != null && action.equals(WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM.name()))
             {
-                Log.d("DEBUG", "time to flip!");
                 RemoteViews views = getWidgetViews(context, null, appWidgetId);
                 views.showNext(R.id.view_flip);
                 AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, views);
