@@ -29,7 +29,9 @@
     <bool name="def_app_ui_showwarnings" translatable="false">true</bool>
     <bool name="def_app_ui_showmoon" translatable="false">true</bool>
     <bool name="def_app_ui_showmoon_noon" translatable="false">false</bool>
+    <bool name="def_app_ui_showmoon_phases_showdate" translatable="false">true</bool>
     <bool name="def_app_ui_showequinox" translatable="false">true</bool>
+    <bool name="def_app_ui_showequinox_date" translatable="false">true</bool>
     <bool name="def_app_ui_showcrossquarter" translatable="false">true</bool>
     <bool name="def_app_ui_showlightmap" translatable="false">true</bool>
     <bool name="def_app_ui_showgoldhour" translatable="false">true</bool>

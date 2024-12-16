@@ -1950,6 +1950,7 @@ public class SuntimesActivity extends AppCompatActivity
         //
         boolean enableEquinox = AppSettings.loadShowEquinoxPref(this);
         showEquinoxView(enableEquinox && card_equinoxSolstice.isImplemented(context));
+        card_equinoxSolstice.setShowDate(AppSettings.loadShowEquinoxDatePref(context));
         card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(context, AppWidgetManager.INVALID_APPWIDGET_ID));
         card_equinoxSolstice.updateViews(context);
         card_equinoxSolstice.post(updateEquinoxViewColumnWidth);

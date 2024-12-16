@@ -333,6 +333,17 @@ public class EquinoxCardView extends LinearLayout
     }
 
     /**
+     * setShowDate
+     * @param value 
+     */
+    public void setShowDate(boolean value) {
+        options.showDate = value;
+    }
+    public boolean getShowDate() {
+        return options.showDate;
+    }
+
+    /**
      * setTrackingMode
      * @param mode
      */
