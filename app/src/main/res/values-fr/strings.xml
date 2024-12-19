@@ -26,15 +26,15 @@
     <string name="configAction_share">Partager</string>
     <string name="configAction_export">Exporter</string>
     <string name="configAction_import">Importer</string>
-    <string name="configAction_info">More Info</string>   <!-- TODO -->
-    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
+    <string name="configAction_info">Plus d'info</string>   <!-- TODO -->
+    <string name="configAction_sortBy">Trier par</string>                <!-- TODO -->
     <string name="configAction_sunDialog">Position du soleil</string>
     <string name="configAction_equinoxDialog">Solstice / Équinoxe</string>
     <string name="configAction_worldMap">Carte mondiale</string>
-    <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
-    <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
-    <string name="configAction_clock">Clock</string>    <!-- TODO -->
-    <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
+    <string name="configAction_openNavDrawer">Ouvrir la navigation</string>  <!-- TODO -->
+    <string name="configAction_closeNavDrawer">Fermer la navigation</string>  <!-- TODO -->
+    <string name="configAction_clock">Horloge</string>    <!-- TODO -->
+    <string name="configAction_lightGraphDialog">Lumière du Soleil</string>  <!-- TODO -->
     <string name="configAction_lineGraph">Graphique d\'altitude</string>
     <string name="configAction_seekAltitude">Chercher l\'altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Rechercher</string>        <!-- button (contentDescription) -->
@@ -1627,66 +1627,66 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
-    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_play">Lecture</string>       <!-- button (contentDescription) --> <!-- TODO -->
     <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_record">Enregistrement</string>   <!-- button (contentDescription) --> <!-- TODO -->
     <string name="worldmap_dialog_action_next">Suivant</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_prev">Précédent</string>   <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
     <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
-    <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
-    <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
+    <string name="worldmap_dialog_option_sunlight">Lumière du soleil</string>              <!-- TODO -->
+    <string name="worldmap_dialog_option_moonlight">Clair de lune</string>            <!-- TODO -->
+    <string name="worldmap_dialog_option_all">Les deux</string>                       <!-- TODO -->
     <string name="worldmap_dialog_option_location">Emplacement</string>
     <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
-    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
-    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
-    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
-    <string name="worldmap_dialog_option_latitudes">Major Lines</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
+    <string name="worldmap_dialog_option_center">Centrer sur la position</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_current">Centrer: %s</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_msg">Centre de la carte défini à la position courante \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear">Reset du centre de la carte</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear_msg">Centre de la carte reset to default \n[%s]</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Définir fond</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Effacer fond</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_warning0">Cette image n'a pas le bon ratio.. excepté %2$s, mais trouver %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
+    <string name="worldmap_dialog_option_background_error0">Impossible d'ouvrir un fond de carte.</string>    <!-- toast message; io error --> <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Lignes Principales</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
     <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_debuglines">Lignes de Débug</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Teinte</string>  <!-- TODO -->
     <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
+    <string name="worldmap_dialog_speed_1d">&#215; 1j</string>    <!-- TODO -->
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <string name="help_worldmap_background">
       <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\nFor best results select an image matching these properties.
+      \n\nPour de meilleur résultats sélectionner une image qui match avec ces propriétés.
     </string>    <!-- TODO -->
 
     <!-- Dialog: Light Graph -->
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="configLabel_earliest_sunrise">Earliest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_earliest_sunset">Earliest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_latest_sunrise">Latest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_latest_sunset">Latest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
+    <string name="configLabel_earliest_sunrise">Lever de Soleil le plus tôt</string>       <!-- label / contentDescription -->    <!-- TODO -->
+    <string name="configLabel_earliest_sunset">Crépuscule de Soleil le plus tôt</string>       <!-- label / contentDescription -->    <!-- TODO -->
+    <string name="configLabel_latest_sunrise">Dernier Lever de Soleil</string>       <!-- label / contentDescription -->    <!-- TODO -->
+    <string name="configLabel_latest_sunset">Dernier Crépuscule de Soleil</string>       <!-- label / contentDescription -->    <!-- TODO -->
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="graph_option_crosshair">Crosshair</string>  <!-- TODO -->
-    <string name="graph_option_grid">Grid</string>              <!-- TODO -->
+    <string name="graph_option_crosshair">Mire</string>  <!-- TODO -->
+    <string name="graph_option_grid">Grille</string>              <!-- TODO -->
     <string name="graph_option_labels">Labels</string>          <!-- TODO -->
-    <string name="graph_option_axis">Axis</string>              <!-- TODO -->
+    <string name="graph_option_axis">Axes</string>              <!-- TODO -->
     <string name="graph_option_points">Points</string>    <!-- TODO -->
-    <string name="graph_option_twilights">Twilights</string>   <!-- TODO -->
-    <string name="graph_option_seasons">Seasons</string>  <!-- TODO -->
-    <string name="graph_option_filledpath">Filled Path</string> <!-- TODO -->
-    <string name="graph_option_moon">Show Moon</string>         <!-- TODO -->
+    <string name="graph_option_twilights">Crépuscules</string>   <!-- TODO -->
+    <string name="graph_option_seasons">Saisons</string>  <!-- TODO -->
+    <string name="graph_option_filledpath">Chemin rempli</string> <!-- TODO -->
+    <string name="graph_option_moon">Montrer la Lune</string>         <!-- TODO -->
 
-    <string name="seekAltitude_configHint">degrees</string>   <!-- TODO -->
+    <string name="seekAltitude_configHint">degrées</string>   <!-- TODO -->
     <string name="seekAltitude_suffix">°∠</string>
     <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>
     <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
@@ -1695,7 +1695,7 @@
 
     <!-- Dialog: Moon -->
     <string name="moon_dialog_title">@string/configAction_moon</string>
-    <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
+    <string name="moon_dialog_controls">Controls de Lecture</string>   <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planifier une alarme pour le</string>
