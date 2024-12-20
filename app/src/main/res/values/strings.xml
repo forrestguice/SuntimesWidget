@@ -1268,6 +1268,16 @@
     <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
     <string name="configLabel_alarms_fadein_disabled">Off</string>
 
+    <string name="configLabel_alarms_fadein_method">Gradually increase volume (curve)</string>    <!-- TODO -->
+    <string-array name="fadeInMethod_display">      <!-- one-to-one with fadeInMethod_values -->
+        <item>Linear</item>
+        <item>Cubic</item>
+    </string-array>    <!-- TODO -->
+    <string-array name="fadeInMethod_values" translatable="false">
+        <item>0</item>    <!-- handler (linear) -->
+        <item>1</item>    <!-- handler (cubic) -->
+    </string-array>
+
     <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->
     <string name="configLabel_alarms_brightMode">Bright Alarms</string>
     <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>

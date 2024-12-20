@@ -144,6 +144,15 @@ public class AlarmSettings
 
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
 
+    public static final int FADE_HANDLER_LINEAR = 0;
+    public static final int FADE_HANDLER_CUBIC = 1;
+
+    public static final int FADE_VSHAPER_LINEAR = 10;    // VolumeShaper (api26+)
+    public static final int FADE_VSHAPER_CUBIC = 11;
+    public static final int FADE_VSHAPER_SCURVE = 12;
+
+    public static final String PREF_KEY_ALARM_FADEIN_METHOD = "app_alarms_fadeinMethod";    // int as String
+
     public static final int SORT_BY_ALARMTIME = 0;
     public static final int SORT_BY_CREATION = 10;
 
@@ -176,7 +185,7 @@ public class AlarmSettings
             PREF_KEY_ALARM_POWEROFFALARMS, PREF_KEY_ALARM_UPCOMING_ALARMID,
             PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET,
             PREF_KEY_ALARM_BRIGHTMODE, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, // PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR,
-            PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_DISMISS_CHALLENGE,
+            PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_FADEIN_METHOD, PREF_KEY_ALARM_DISMISS_CHALLENGE,
             PREF_KEY_ALARM_SORT, PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
             PREF_KEY_ALARM_BOOTCOMPLETED, PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, PREF_KEY_ALARM_BOOTCOMPLETED_DURATION, PREF_KEY_ALARM_BOOTCOMPLETED_RESULT,
     };
@@ -445,6 +454,13 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 11) {
             return prefs.getInt(PREF_KEY_ALARM_FADEIN, Integer.parseInt(context.getString(R.string.def_app_alarms_fadein)));
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN, Long.parseLong(context.getString(R.string.def_app_alarms_fadein)));
+    }
+    public static int loadPrefAlarmFadeInMethod(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return Integer.parseInt(prefs.getString(PREF_KEY_ALARM_FADEIN_METHOD, context.getString(R.string.def_app_alarms_fadein_method)));
+        } else return (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN_METHOD, Long.parseLong(context.getString(R.string.def_app_alarms_fadein_method)));
     }
 
     public static void saveSystemTimeZoneInfo(Context context) {
