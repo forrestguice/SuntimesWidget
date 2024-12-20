@@ -144,7 +144,6 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_BRIGHTMODE_COLORS = "app_alarms_bright_colors";
 
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
-    public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
 
     public static final int SORT_BY_ALARMTIME = 0;
     public static final int SORT_BY_CREATION = 10;
@@ -445,8 +444,8 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getInt(PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
-        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
+            return prefs.getInt(PREF_KEY_ALARM_FADEIN, Integer.parseInt(context.getString(R.string.def_app_alarms_fadein)));
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN, Long.parseLong(context.getString(R.string.def_app_alarms_fadein)));
     }
 
     public static void saveSystemTimeZoneInfo(Context context) {
