@@ -55,7 +55,7 @@
     <string name="def_app_alarms_snoozeLimit" translatable="false">0</string>      <!-- no snooze limit -->
     <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
     <bool name="def_app_alarms_bright" translatable="false">false</bool>                            <!-- bright mode alarms -->
-    <string name="def_app_alarms_bright_fadein" translatable="false">60000</string>                 <!-- alarm bright mode fade in 60s -->
+    <string name="def_app_alarms_bright_fadein" translatable="false">30000</string>                 <!-- alarm bright mode fade in 30s -->
     <color name="def_app_alarms_bright_color_start" translatable="false">@color/black</color>       <!-- alarm bright mode start color -->
     <color name="def_app_alarms_bright_color_end" translatable="false">@color/white</color>         <!-- alarm bright mode end color -->
     <string name="def_app_alarms_fadein" translatable="false">30000</string>       <!-- fade-in 30s to full volume -->

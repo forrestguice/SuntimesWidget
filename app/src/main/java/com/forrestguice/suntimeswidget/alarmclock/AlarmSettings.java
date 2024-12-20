@@ -137,7 +137,6 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_BRIGHTMODE = "app_alarms_bright";
 
     public static final String PREF_KEY_ALARM_BRIGHTMODE_FADEIN = "app_alarms_bright_fadeinMillis";
-    public static final int PREF_DEF_ALARM_BRIGHTMODE_FADEIN = 1000 * 60;   // 60 s
 
     //public static final String PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR = "app_alarms_bright_color_start";
     //public static final String PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR = "app_alarms_bright_color_end";
@@ -420,8 +419,8 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
-        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
+            return prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_FADEIN, Integer.parseInt(context.getString(R.string.def_app_alarms_bright_fadein)));
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, Long.parseLong(context.getString(R.string.def_app_alarms_bright_fadein)));
     }
 
     /*public static int[] loadPrefAlarmBrightColors(Context context)
