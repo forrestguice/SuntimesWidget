@@ -869,7 +869,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 isFadingIn = true;
                 elapsed += FADEIN_STEP_MILLIS;
                 float volume = elapsed / (float) duration;
-                player.setVolume(volume, t_volume = 1);
+                player.setVolume(volume, t_volume = volume);
 
                 //Log.d("DEBUG", "fadeIn: " + elapsed + ":" + volume);
                 if ((elapsed + FADEIN_STEP_MILLIS) <= duration) {
