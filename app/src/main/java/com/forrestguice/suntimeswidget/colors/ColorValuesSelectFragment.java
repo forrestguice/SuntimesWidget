@@ -286,7 +286,11 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         Context context = getActivity();
         if (colorCollection != null && context != null)
         {
-            ColorValues colors = colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag());
+            ColorValues colors = colorCollection.getColors(context, getSelectedID());
+            if (colors == null) {
+                colors = colorCollection.getDefaultColors(context);
+            }
+
             if (colors != null)
             {
                 Intent intent = new Intent(Intent.ACTION_SEND);
